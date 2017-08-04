@@ -1,46 +1,29 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import "../"
 
-ApplicationWindow {
+Item {
     id: balanceView
-    visible: true
-    width: 640
-    height: 480
-    title: qsTr("Balance View")
-
-//    header: Rectangle {
-//    id: header
-//    width: parent.width
-//    height: 50
-//    color: "grey"
-
-//        Text {
-//            id: topText
-//            anchors.centerIn: parent
-//            text: "Wallet"
-//            color: "white"
-//        }
-//    }
 
     ColumnLayout {
         id: column
         width: balanceView.width
 
-        Rectangle {
-            id: picture
-            width: 100
-            height: 100
+        Image {
+            id: graftWalletLogo
+            source: "/imgs/graft_wallet_logo.png"
+            width: 200
+            height: 200
             Layout.alignment: Qt.AlignCenter
             Layout.topMargin: 40
-            color: "red"
         }
 
         Text {
             text: "Balance"
             color: "grey"
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 40
+            Layout.topMargin: 50
             font.pointSize: 15
         }
 
@@ -48,7 +31,7 @@ ApplicationWindow {
             text: "1.2g"
             color: "black"
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 25
+            Layout.topMargin: 20
             font.pointSize: 19
         }
 
@@ -56,7 +39,8 @@ ApplicationWindow {
             text: "145USD"
             color: "grey"
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 20
+            Layout.topMargin: 15
+            Layout.bottomMargin: 50
             font.pointSize: 15
         }
 
@@ -65,6 +49,7 @@ ApplicationWindow {
             text: "Pay"
             Layout.alignment: Qt.AlignCenter
             font.pointSize: 18
+            Layout.preferredWidth: parent.width * 3 / 4
         }
     }
 }

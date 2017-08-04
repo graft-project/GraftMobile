@@ -19,9 +19,9 @@
         <file>resources/imgs/graft_logo.png</file>
         <file>resources/imgs/graft_pos_logo.png</file>
         <file>resources/imgs/graft_pos_logo_small.png</file>
-        <file>resources/imgs/graft_wallet_logo.png</file>
-        <file>resources/imgs/graft_wallet_logo_small.png</file>
-        <file>resources/imgs/menu_icon.png</file>
+        <file alias="/graft_wallet_logo.png">resources/imgs/graft_wallet_logo.png</file>
+        <file alias="/graft_wallet_logo_small.png">resources/imgs/graft_wallet_logo_small.png</file>
+        <file alias="/menu_icon.png">resources/imgs/menu_icon.png</file>
         <file>resources/imgs/paid_icon.png</file>
     </qresource>
 </RCC>

@@ -9,12 +9,12 @@ ApplicationWindow {
     height: 480
     title: qsTr("WALLET")
 
-    Header {
+    header: Header {
 
     }
 
     BalanceView {
-
+        anchors.fill: parent
     }
 //    Loader {
 //      source:"balanceView.qml";

@@ -2,14 +2,22 @@ import QtQuick 2.0
 
 Rectangle {
     id: header
-    color: "grey"
     width: parent.width
     height: 50
+    color: "grey"
 
-    Text {
-        anchors.centerIn: parent
-        color: "white"
-        font.
-        text: "Wallet"
+        Image {
+            id: menuButton
+            source: "/imgs/menu_icon.png"
+            width: 23
+            height: 23
+//            Layout.alignment: Qt.AlignCenter
+//            Layout.topMargin: 40
+        }
+        Text {
+            id: topText
+            anchors.centerIn: parent
+            text: "Wallet"
+            color: "white"
+        }
     }
-}
