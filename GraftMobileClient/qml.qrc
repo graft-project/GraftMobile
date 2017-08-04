@@ -1,6 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
+    </qresource>
+    <qresource prefix="/pos">
+        <file alias="/main.qml">resources/pos/main.qml</file>
+    </qresource>
+    <qresource prefix="/wallet">
+        <file alias="/main.qml">resources/wallet/main.qml</file>
+    </qresource>
+    <qresource prefix="/imgs">
         <file>resources/imgs/arrow.png</file>
         <file>resources/imgs/arrow_grey.png</file>
         <file>resources/imgs/back.png</file>
@@ -13,11 +21,5 @@
         <file>resources/imgs/graft_wallet_logo_small.png</file>
         <file>resources/imgs/menu_icon.png</file>
         <file>resources/imgs/paid_icon.png</file>
-    </qresource>
-    <qresource prefix="/pos">
-        <file alias="/main.qml">resources/pos/main.qml</file>
-    </qresource>
-    <qresource prefix="/wallet">
-        <file alias="/main.qml">resources/wallet/main.qml</file>
     </qresource>
 </RCC>
