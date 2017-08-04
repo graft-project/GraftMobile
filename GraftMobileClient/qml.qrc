@@ -1,11 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
+        <file alias="Header.qml">resources/Header.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="/main.qml">resources/wallet/main.qml</file>
+        <file alias="/BalanceView.qml">resources/wallet/BalanceView.qml</file>
     </qresource>
 </RCC>
