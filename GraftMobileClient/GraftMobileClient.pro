@@ -2,6 +2,17 @@ QT += qml quick
 
 CONFIG += c++11
 
+contains(DEFINES, POS_BUILD) {
+TARGET = Graft.PointOfSale
+
+QMAKE_INFO_PLIST += info_pos.plist
+}
+contains(DEFINES, WALLET_BUILD) {
+TARGET = Graft.Wallet
+
+QMAKE_INFO_PLIST += info_wallet.plist
+}
+
 SOURCES += main.cpp
 
 RESOURCES += qml.qrc
