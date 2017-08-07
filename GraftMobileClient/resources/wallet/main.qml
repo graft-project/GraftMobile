@@ -10,7 +10,7 @@ ApplicationWindow {
     title: qsTr("WALLET")
 
     header: Header {
-        headerText: "Wallet"
+        headerText: qsTr("Wallet")
         menuIcon: "qrc:/imgs/menu_icon.png"
         cartIcon: "qrc:/imgs/cart_icon.png"
     }
