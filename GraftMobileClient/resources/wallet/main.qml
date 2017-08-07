@@ -15,8 +15,6 @@ ApplicationWindow {
         cartIcon: "qrc:/imgs/cart_icon.png"
     }
 
-    BalanceView {
-        anchors.fill: parent
-    }
+
 }
 
