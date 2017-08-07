@@ -1,9 +1,10 @@
-import QtQuick 2.0
-import QtGraphicalEffects 1.0
+import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
+import QtGraphicalEffects 1.0
+import QtQuick.Controls.Material 2.2
 
 Item {
-    id: item1
     ListView {
         id: listView
         anchors.rightMargin: 0
@@ -14,56 +15,49 @@ Item {
         model: fruitModel
         delegate: fruitDelegate
 
-
-        Rectangle{
-            x: 270
-            y: 351
-            width: 186
-            height: 32
-            color: "#757575"
-            radius: 10
+        RoundButton {
+            width: 191
+            height: 47
+            radius: 11
+            highlighted: true
+            Material.elevation: 0
+            Material.accent: "#757575"
             anchors.horizontalCenterOffset: 0
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 97
+            anchors.bottomMargin: 94
 
-            Text
-            {
+            Text {
                 id: namebutton
                 color: "#FFFFFF"
                 text: qsTr("Checkout")
-                horizontalAlignment: Text.AlignHCenter
-                styleColor: "#201e1e"
                 font {
-                    family: "Liberation Sans Narrow"
-                    pixelSize: 17
+                    family: "Liberation Sans"
+                    pixelSize: 16
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
 
-        Rectangle {
-            x: 288
-            y: 387
-            width: 47
-            height: 47
-            color: "#d7d7d7"
+        RoundButton {
+            width: 57
+            height: 57
             radius: 100
+            highlighted: true
+            Material.elevation: 0
+            Material.accent: "#d7d7d7"
+            anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 17
-            anchors.right: parent.right
             anchors.rightMargin: 17
 
-
-            Text
-            {
-                id: plus
-                color: "#b3b3b5"
+            Text {
+                id: plusbutton
+                color: "#757575"
                 text: qsTr("+")
-                horizontalAlignment: Text.AlignHCenter
                 font {
-                    family: "Liberation Sans Narrow"
+                    family: "Tlwg Typewriter"
                     pixelSize: 44
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -77,27 +71,25 @@ Item {
 
         ListElement {
             name: "Hairout 1"
-            cost: 25
             image: "qrc:/examples/bob-haircuts.png"
+            cost: 25
         }
 
         ListElement {
             name: "Hairout 2"
-            cost: 20
             image: "qrc:/examples/images.png"
+            cost: 20
         }
     }
-
 
     Component {
         id: fruitDelegate
         ColumnLayout {
+            height: 70
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 70
-            spacing: 3
             RowLayout {
-                spacing: 10
+                spacing: 8
                 Layout.rightMargin: 12
                 Layout.leftMargin: 12
 
@@ -125,28 +117,26 @@ Item {
                 }
 
                 Text {
-                    //                Layout.preferredWidth: 50
                     text: name
                     Layout.fillWidth: true
                     color: "#757575"
                     font {
-                        family: "Liberation Sans Narrow"
+                        family: "Liberation Sans"
                         pixelSize: 15
                     }
                 }
                 Text {
-                    //                Layout.preferredWidth: 50
-                    text: '$' + cost
+                    text: "$ " + cost
                     color: "#757575"
                     font {
-                        family: "Liberation Sans Narrow"
+                        family: "Liberation Sans"
                         pixelSize: 15
                     }
                 }
             }
 
             Rectangle{
-                Layout.preferredHeight: 1.7
+                Layout.preferredHeight: 1.6
                 Layout.alignment: Qt.AlignBottom
                 Layout.fillWidth: true
                 color: "#bababa"
