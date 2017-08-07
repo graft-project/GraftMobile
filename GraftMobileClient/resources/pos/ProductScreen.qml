@@ -3,47 +3,39 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
+import QtQuick.Controls.Universal 2.2
 
 Item {
     ListView {
-        id: listView
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
+        id: listGoods
         anchors.fill: parent
-        model: fruitModel
-        delegate: fruitDelegate
+        model: goodsModel
+        delegate: goodsDelegate
 
         RoundButton {
-            width: 191
-            height: 47
-            radius: 11
+            topPadding: 15
+            bottomPadding: 15
+            leftPadding: 61
+            rightPadding: 61
             highlighted: true
             Material.elevation: 0
             Material.accent: "#757575"
-            anchors.horizontalCenterOffset: 0
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 94
-
-            Text {
-                id: namebutton
-                color: "#FFFFFF"
-                text: qsTr("Checkout")
-                font {
-                    family: "Liberation Sans"
-                    pixelSize: 16
-                }
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+            text: qsTr("Checkout")
+            font {
+                family: "Liberation Sans"
+                pixelSize: 16
+                capitalization: Font.MixedCase
             }
         }
 
         RoundButton {
-            width: 57
-            height: 57
-            radius: 100
+            topPadding: 24
+            bottomPadding: 24
+            leftPadding: 40
+            rightPadding: 24
             highlighted: true
             Material.elevation: 0
             Material.accent: "#d7d7d7"
@@ -67,7 +59,7 @@ Item {
     }
 
     ListModel {
-        id: fruitModel
+        id: goodsModel
 
         ListElement {
             name: "Hairout 1"
@@ -83,7 +75,7 @@ Item {
     }
 
     Component {
-        id: fruitDelegate
+        id: goodsDelegate
         ColumnLayout {
             height: 70
             anchors.left: parent.left
@@ -102,7 +94,7 @@ Item {
 
                     Rectangle {
                         id: circle
-                        width:  picture.width
+                        width: picture.width
                         height: picture.height
                         radius: picture.width / 2
                         visible: false
@@ -135,11 +127,11 @@ Item {
                 }
             }
 
-            Rectangle{
+            Rectangle {
                 Layout.preferredHeight: 1.6
                 Layout.alignment: Qt.AlignBottom
                 Layout.fillWidth: true
-                color: "#bababa"
+                color: "#d7d7d7"
             }
         }
     }
