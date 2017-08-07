@@ -5,15 +5,15 @@ Rectangle {
     height: 60
     color: "#707070"
 
-    property alias menuIcon : menuIcon.source
-    property alias headerText : headerText.text
-    property alias cartIcon : cartIcon.source
+    property alias menuIcon: menuIcon.source
+    property alias headerText: headerText.text
+    property alias cartIcon: cartIcon.source
 
     RowLayout {
         anchors.fill: parent
         Layout.topMargin: 10
 
-        Image{
+        Image {
             id: menuIcon
             Layout.maximumWidth: 20
             Layout.maximumHeight: 20
