@@ -10,8 +10,8 @@ ApplicationWindow {
     title: qsTr("WALLET")
 
     header: Header {
-        headerText.text: "Wallet"
-        leftIcon.source: "/imgs/menu_icon.png"
-        rightIcon.source: "/imgs/cart_icon.png"
+        headerText: "Wallet"
+        menuIcon: "qrc:/imgs/menu_icon.png"
+        cartIcon: "qrc:/imgs/cart_icon.png"
     }
 }
