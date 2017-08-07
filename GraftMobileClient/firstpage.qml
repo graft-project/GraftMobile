@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 Item {
     id: item1
     ListView {
+        id: listView
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
@@ -15,18 +16,15 @@ Item {
 
         Rectangle{
             x: 270
-            y: 360
+            y: 351
             width: 186
-            height: 30
-
-            Layout.preferredHeight: 40
-            Layout.alignment: Qt.AlignBottom
-            Layout.fillWidth: true
+            height: 32
             color: "#757575"
             radius: 10
+            anchors.horizontalCenterOffset: 0
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 20
+            anchors.bottomMargin: 97
 
             Text
             {
@@ -38,6 +36,34 @@ Item {
                 font {
                     family: "Liberation Sans Narrow"
                     pixelSize: 17
+                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+
+        Rectangle {
+            x: 288
+            y: 387
+            width: 47
+            height: 47
+            color: "#d7d7d7"
+            radius: 100
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 17
+            anchors.right: parent.right
+            anchors.rightMargin: 17
+
+
+            Text
+            {
+                id: plus
+                color: "#b3b3b5"
+                text: qsTr("+")
+                horizontalAlignment: Text.AlignHCenter
+                font {
+                    family: "Liberation Sans Narrow"
+                    pixelSize: 44
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -66,13 +92,13 @@ Item {
         id: fruitDelegate
         ColumnLayout {
             anchors.left: parent.left
-            anchors.leftMargin: 17
             anchors.right: parent.right
-            anchors.rightMargin: 17
             height: 70
             spacing: 3
             RowLayout {
                 spacing: 10
+                Layout.rightMargin: 12
+                Layout.leftMargin: 12
 
                 OpacityMask {
                     id: opacityMask
@@ -102,6 +128,10 @@ Item {
                     text: name
                     Layout.fillWidth: true
                     color: "#757575"
+                    font {
+                        family: "Liberation Sans Narrow"
+                        pixelSize: 15
+                    }
                     //                Rectangle {
                     //                color: "red"
                     //                anchors.fill: parent
@@ -111,7 +141,10 @@ Item {
                     //                Layout.preferredWidth: 50
                     text: '$' + cost
                     color: "#757575"
-
+                    font {
+                        family: "Liberation Sans Narrow"
+                        pixelSize: 15
+                    }
                     //                Rectangle {
                     //                color: "red"
                     //                anchors.fill: parent
@@ -123,7 +156,7 @@ Item {
                 Layout.preferredHeight: 1.7
                 Layout.alignment: Qt.AlignBottom
                 Layout.fillWidth: true
-                color: "#757575"
+                color: "#bababa"
             }
         }
     }
