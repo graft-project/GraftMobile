@@ -14,6 +14,7 @@ Item {
         model: fruitModel
         delegate: fruitDelegate
 
+
         Rectangle{
             x: 270
             y: 351
@@ -132,10 +133,6 @@ Item {
                         family: "Liberation Sans Narrow"
                         pixelSize: 15
                     }
-                    //                Rectangle {
-                    //                color: "red"
-                    //                anchors.fill: parent
-                    //                }
                 }
                 Text {
                     //                Layout.preferredWidth: 50
@@ -145,10 +142,6 @@ Item {
                         family: "Liberation Sans Narrow"
                         pixelSize: 15
                     }
-                    //                Rectangle {
-                    //                color: "red"
-                    //                anchors.fill: parent
-                    //                }
                 }
             }
 
