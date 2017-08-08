@@ -5,23 +5,16 @@ import QtQuick.Layouts 1.3
 import "../"
 
 ColumnLayout {
-    property string gText
-    property string moneyText
     property int amountGraft: 0
     property int amountMoney: 0
 
     spacing: 50
-    Layout.fillWidth: true
-    anchors.leftMargin: 100
-    anchors.rightMargin: 100
 
     Image {
         id: graftWalletLogo
         Layout.alignment: Qt.AlignCenter
         Layout.topMargin: 50
-        width: 150
-        height: 150
-        source: "/imgs/graft_wallet_logo.png"
+        source: "qrc:/imgs/graft_wallet_logo.png"
     }
 
     ColumnLayout {
@@ -40,7 +33,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignCenter
             font.pointSize: 19
             color: "black"
-            text: gText = amountGraft + "g"
+            text: amountGraft + "g"
         }
 
         Text {
@@ -48,12 +41,12 @@ ColumnLayout {
             font.pointSize: 15
             font.bold: true
             color: "grey"
-            text: moneyText = amountMoney + "USD"
+            text: amountMoney + "USD"
         }
     }
 
     RoundButton {
-        id: buttonPay
+        id: payButton
         topPadding: 15
         bottomPadding: 15
         highlighted: true
@@ -64,7 +57,7 @@ ColumnLayout {
         text: qsTr("Pay")
         font {
             family: "Liberation Sans"
-            pixelSize: 18
+            pointSize: 18
             capitalization: Font.MixedCase
         }
     }
