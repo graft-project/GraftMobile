@@ -15,3 +15,4 @@ ApplicationWindow {
         cartIcon: "qrc:/imgs/cart_icon.png"
     }
 }
+
