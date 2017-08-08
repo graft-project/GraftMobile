@@ -26,5 +26,6 @@
         <file>resources/imgs/graft_wallet_logo_small.png</file>
         <file>resources/imgs/menu_icon.png</file>
         <file>resources/imgs/paid_icon.png</file>
+        <file alias="plus_icon.png">resources/imgs/plus_icon.png</file>
     </qresource>
 </RCC>

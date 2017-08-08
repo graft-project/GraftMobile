@@ -3,63 +3,56 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
-import QtQuick.Controls.Universal 2.2
 
 Item {
     ListView {
-        id: listGoods
+        id: productList
         anchors.fill: parent
-        model: goodsModel
-        delegate: goodsDelegate
+        model: productModel
+        delegate: productDelegate
 
         RoundButton {
+            id: addButton
+            radius: 14
             topPadding: 15
             bottomPadding: 15
-            leftPadding: 61
-            rightPadding: 61
             highlighted: true
             Material.elevation: 0
             Material.accent: "#757575"
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 94
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.left: parent.left
+            anchors.leftMargin: 40
             text: qsTr("Checkout")
             font {
-                family: "Liberation Sans"
-                pixelSize: 16
+                family: "Liberation Sans Narrow"
+                pointSize: 14
                 capitalization: Font.MixedCase
             }
         }
 
         RoundButton {
-            topPadding: 24
-            bottomPadding: 24
-            leftPadding: 40
-            rightPadding: 24
+            padding: 21
+            width: height
             highlighted: true
             Material.elevation: 0
             Material.accent: "#d7d7d7"
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 17
-            anchors.rightMargin: 17
-
-            Text {
-                id: plusbutton
-                color: "#757575"
-                text: qsTr("+")
-                font {
-                    family: "Tlwg Typewriter"
-                    pixelSize: 44
-                }
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+            contentItem: Image {
+                source: "qrc:/imgs/plus_icon.png"
             }
+            anchors.top: addButton.bottom
+            anchors.topMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 5
         }
     }
 
     ListModel {
-        id: goodsModel
+        id: productModel
 
         ListElement {
             name: "Hairout 1"
@@ -75,13 +68,15 @@ Item {
     }
 
     Component {
-        id: goodsDelegate
+        id: productDelegate
+
         ColumnLayout {
             height: 70
             anchors.left: parent.left
             anchors.right: parent.right
+
             RowLayout {
-                spacing: 8
+                spacing: 16
                 Layout.rightMargin: 12
                 Layout.leftMargin: 12
 
@@ -99,6 +94,7 @@ Item {
                         radius: picture.width / 2
                         visible: false
                     }
+
                     Image {
                         id: picture
                         source: image
@@ -113,16 +109,17 @@ Item {
                     Layout.fillWidth: true
                     color: "#757575"
                     font {
-                        family: "Liberation Sans"
-                        pixelSize: 15
+                        family: "Liberation Sans Narrow"
+                        pointSize: 15
                     }
                 }
+
                 Text {
                     text: "$ " + cost
                     color: "#757575"
                     font {
-                        family: "Liberation Sans"
-                        pixelSize: 15
+                        family: "Liberation Sans Narrow"
+                        pointSize: 15
                     }
                 }
             }
