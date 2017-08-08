@@ -56,7 +56,7 @@ ColumnLayout {
         highlighted: true
         Material.elevation: 0
         Material.accent: "#757575"
-        Layout.preferredWidth: parent.width
+        Layout.fillWidth: true
         Layout.alignment: Qt.AlignCenter
         text: qsTr("Pay")
         font {
