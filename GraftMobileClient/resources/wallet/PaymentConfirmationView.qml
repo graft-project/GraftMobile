@@ -21,7 +21,6 @@ Item {
             topMargin: 50
             leftMargin: 30
             rightMargin: 30
-            bottom: parent.bottom
         }
 
         TotalView {
@@ -52,6 +51,7 @@ Item {
                 font{
                     pointSize: 12
                     family: "Liberation Sans"
+                    bold: true
                 }
             }
         }
