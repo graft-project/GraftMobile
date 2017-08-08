@@ -7,7 +7,7 @@ import "../"
 
 Item {
     property alias currencyModel: graftCBox.model
-    property alias mtotalAmount: totalViewScreen.totalAmount
+    property alias mtotalAmount: totalViewItem.totalAmount
     property int balanceInGraft: 0
     property int balanceInUSD: 0
 
@@ -24,7 +24,7 @@ Item {
         }
 
         TotalView {
-            id: totalViewScreen
+            id: totalViewItem
             Layout.preferredWidth: parent.width
         }
 
