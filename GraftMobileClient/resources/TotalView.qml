@@ -4,54 +4,47 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout{
 
-    anchors.fill: parent
-
-    property string text2: "$ "
-    property string text4: "$ "
-    property int setTextField2: 0
-    property int setTextField4: 0
+    property int amountPerItem: 0
 
     RowLayout {
-
-        Layout.preferredWidth: column.width
+        Layout.preferredWidth: parent.width
 
         Text {
-            text: "Haircut 1"
+            text: qsTr("Haircut 1")
             Layout.alignment: Qt.AlignLeft
             font.pixelSize: 20
-            color: "grey"
+            color: "#707070"
         }
 
         Text {
-            text: text2 += setTextField2
+            text: "$ " + amountPerItem
             Layout.alignment: Qt.AlignRight
             font.pixelSize: 20
-            color: "grey"
+            color: "#707070"
         }
     }
 
     Rectangle {
         height: 2
-        Layout.preferredWidth: parent.width
-        color: "grey"
+        Layout.fillWidth: true
+        color: "#707070"
     }
 
     RowLayout {
-
-        Layout.preferredWidth: column.width
+        Layout.preferredWidth: parent.width
 
         Text {
-            text: "Total: "
+            text: qsTr("Total: ")
             Layout.alignment: Qt.AlignLeft
             font.pixelSize: 20
-            color: "grey"
+            color: "#707070"
         }
 
         Text {
-            text: text4 += setTextField4
+            text: "$ " + amountPerItem
             Layout.alignment: Qt.AlignRight
             font.pixelSize: 20
-            color: "grey"
+            color: "#707070"
         }
     }
 }

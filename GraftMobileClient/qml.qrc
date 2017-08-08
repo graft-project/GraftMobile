@@ -9,7 +9,8 @@
     </qresource>
     <qresource prefix="/wallet">
         <file alias="/main.qml">resources/wallet/main.qml</file>
-        <file alias="/PaymentConfirmationView.qml">resources/wallet/PaymentConfirmationView.qml</file>
+		<file alias="/PaymentConfirmationView.qml">resources/wallet/PaymentConfirmationView.qml</file>
+        <file alias="/BalanceView.qml">resources/wallet/BalanceView.qml</file>
     </qresource>
     <qresource prefix="/imgs">
         <file alias="/arrow.png">resources/imgs/arrow.png</file>
