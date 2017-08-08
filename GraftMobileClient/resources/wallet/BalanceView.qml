@@ -30,7 +30,7 @@ ColumnLayout {
             font.pointSize: 15
             font.bold: true
             color: "grey"
-            text: "Balance"
+            text: qsTr("Balance")
         }
 
         Text {
@@ -53,6 +53,6 @@ ColumnLayout {
         Layout.alignment: Qt.AlignCenter
         Layout.preferredWidth: parent.width * 0.75
         font.pointSize: 18
-        text: "Pay"
+        text: qsTr("Pay")
     }
 }
