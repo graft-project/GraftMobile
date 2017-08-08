@@ -23,8 +23,10 @@ ColumnLayout {
 
         Text {
             Layout.alignment: Qt.AlignCenter
-            font.pointSize: 15
-            font.bold: true
+            font {
+                pointSize: 15
+                bold: true
+            }
             color: "grey"
             text: qsTr("Balance")
         }
@@ -38,8 +40,10 @@ ColumnLayout {
 
         Text {
             Layout.alignment: Qt.AlignCenter
-            font.pointSize: 15
-            font.bold: true
+            font {
+                pointSize: 15
+                bold: true
+            }
             color: "grey"
             text: amountMoney + "USD"
         }
