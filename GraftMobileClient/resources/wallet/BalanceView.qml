@@ -58,6 +58,8 @@ ColumnLayout {
         Material.accent: "#757575"
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignCenter
+        Layout.leftMargin: 100
+        Layout.rightMargin: 100
         text: qsTr("Pay")
         font {
             family: "Liberation Sans"
