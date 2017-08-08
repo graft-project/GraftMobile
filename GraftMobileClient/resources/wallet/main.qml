@@ -14,5 +14,13 @@ ApplicationWindow {
         menuIcon: "qrc:/imgs/menu_icon.png"
         cartIcon: "qrc:/imgs/cart_icon.png"
     }
+
+    PaymentConfirmationView {
+        anchors.fill: parent
+        currencyModel: ["Graft"]
+        balanceInGraft: 1
+        balanceInUSD: 200
+        mtotalAmount: 100
+    }
 }
 
