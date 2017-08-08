@@ -9,9 +9,7 @@ Item {
 
     ColumnLayout {
         id: column
-
         spacing: 100
-
         anchors {
             left: parent.left
             right: parent.right
@@ -34,18 +32,13 @@ Item {
 
         Rectangle {
             id: confirmButton
-
-            height: 25
-            width: 200
-
-            color: "grey"
-            radius: 8
-
             Layout.fillWidth: true
-
             Layout.leftMargin: 30
             Layout.rightMargin: 30
-
+            height: 25
+            width: 200
+            radius: 8
+            color: "grey"
             Text {
                 font.capitalization: Font.MixedCase
                 anchors.centerIn: parent

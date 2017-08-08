@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
         <file alias="/TotalView.qml">resources/TotalView.qml</file>
+        <file alias="Header.qml">resources/Header.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
