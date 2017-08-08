@@ -39,15 +39,15 @@ Item {
             highlighted: true
             Material.elevation: 0
             Material.accent: "#d7d7d7"
-            contentItem: Image {
-                source: "qrc:/imgs/plus_icon.png"
-            }
             anchors.top: addButton.bottom
             anchors.topMargin: 20
             anchors.right: parent.right
             anchors.rightMargin: 5
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 5
+            contentItem: Image {
+                source: "qrc:/imgs/plus_icon.png"
+            }
         }
     }
 
