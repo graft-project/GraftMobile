@@ -47,8 +47,8 @@ Item {
                 }
 
                 RowLayout {
+                    Layout.topMargin: 12
                     Text {
-                        Layout.topMargin: 12
                         Layout.leftMargin: 12
                         color: "#707070"
                         text: qsTr("Balance:\t")
@@ -58,7 +58,6 @@ Item {
                         }
                     }
                     Text {
-                        Layout.topMargin: 12
                         color: "#707070"
                         text: qsTr("%1g / %2USD").arg(balanceInGraft).arg(balanceInUSD)
                         font {
