@@ -27,7 +27,7 @@ ColumnLayout {
                 pointSize: 15
                 bold: true
             }
-            color: "grey"
+            color: "#707070"
             text: qsTr("Balance")
         }
 
@@ -44,7 +44,7 @@ ColumnLayout {
                 pointSize: 15
                 bold: true
             }
-            color: "grey"
+            color: "#707070"
             text: amountMoney + "USD"
         }
     }
@@ -55,7 +55,7 @@ ColumnLayout {
         bottomPadding: 15
         highlighted: true
         Material.elevation: 0
-        Material.accent: "#757575"
+        Material.accent: "#707070"
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignCenter
         Layout.leftMargin: 100

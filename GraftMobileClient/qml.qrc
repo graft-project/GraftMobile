@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
+        <file alias="/TotalView.qml">resources/TotalView.qml</file>
         <file alias="/Header.qml">resources/Header.qml</file>
         <file alias="/QRScanningScreen.qml">resources/QRScanningScreen.qml</file>
     </qresource>
@@ -9,6 +10,7 @@
     </qresource>
     <qresource prefix="/wallet">
         <file alias="/main.qml">resources/wallet/main.qml</file>
+        <file alias="/PaymentConfirmationView.qml">resources/wallet/PaymentConfirmationView.qml</file>
         <file alias="/BalanceView.qml">resources/wallet/BalanceView.qml</file>
     </qresource>
     <qresource prefix="/imgs">
