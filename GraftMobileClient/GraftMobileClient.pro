@@ -3,12 +3,25 @@ QT += qml quick
 CONFIG += c++11
 
 contains(DEFINES, POS_BUILD) {
+
+android {
+TARGET = GraftPointOfSale
+}
+else {
 TARGET = Graft.PointOfSale
+}
 
 QMAKE_INFO_PLIST += info_pos.plist
 }
 contains(DEFINES, WALLET_BUILD) {
+
+android {
+TARGET = GraftWallet
+}
+else {
 TARGET = Graft.Wallet
+}
+
 
 QMAKE_INFO_PLIST += info_wallet.plist
 }
