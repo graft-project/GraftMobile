@@ -22,7 +22,7 @@ Item {
         TextField {
             id: title
             Layout.fillWidth: true
-            placeholderText: "Title: "
+            placeholderText: qsTr("Title: ")
         }
 
         RowLayout {
@@ -33,7 +33,7 @@ Item {
             TextField {
                 id: price
                 bottomPadding: 3
-                placeholderText: "Price: "
+                placeholderText: qsTr("Price: ")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
                 Layout.preferredHeight: graftCBox.height
