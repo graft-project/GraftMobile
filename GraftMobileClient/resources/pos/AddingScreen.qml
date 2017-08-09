@@ -1,29 +1,28 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
-import QtQuick.Controls.Styles 1.4
 
 Item {
+    property alias currencyModel: graftCBox.model
+
     ColumnLayout {
         spacing: 3
-        anchors.top: parent.top
-        anchors.topMargin: 55
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
-        anchors.left: parent.left
-        anchors.leftMargin: 20
-        anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors {
+            top: parent.top
+            topMargin: 55
+            bottom: parent.bottom
+            bottomMargin: 20
+            left: parent.left
+            leftMargin: 20
+            right: parent.right
+            rightMargin: 20
+        }
 
         TextField {
             id: title
-            placeholderText: "Title: "
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            horizontalAlignment: Text.AlignLeft
-            transformOrigin: Item.Center
+            placeholderText: "Title: "
         }
 
         RowLayout {
@@ -81,10 +80,10 @@ Item {
 
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                text: "ADD PHOTO"
+                text: qsTr("ADD PHOTO")
                 color: "#757575"
                 font {
-                    family: "Liberation Sans Narrow"
+                    family: "Liberation Sans"
                     pointSize: 10
                 }
             }
@@ -104,7 +103,7 @@ Item {
             Layout.bottomMargin: 20
             text: qsTr("Confirm")
             font {
-                family: "Liberation Sans Narrow"
+                family: "Liberation Sans"
                 pointSize: 13
                 capitalization: Font.MixedCase
             }
