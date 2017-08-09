@@ -12,8 +12,11 @@ Item {
         delegate: productDelegate
     }
 
-    ProductDelegate {
+    Component {
         id: productDelegate
+        ProductDelegate {
+            width: productList.width
+        }
     }
 
     RoundButton {
@@ -32,7 +35,7 @@ Item {
         anchors.leftMargin: 40
         text: qsTr("Checkout")
         font {
-            family: "Liberation Sans Narrow"
+            family: "Liberation Sans"
             pointSize: 14
             capitalization: Font.MixedCase
         }
