@@ -6,7 +6,7 @@ Rectangle {
     color: "#707070"
 
     property alias menuIcon: menuIcon.source
-//    property alias headerText: headerText.text
+    property alias headerText: headerText.text
     property alias cartIcon: cartIcon.source
 
     RowLayout {
@@ -20,13 +20,13 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft
         }
 
-//        Text {
-//            id: headerText
-//            Layout.fillWidth: true
-//            horizontalAlignment: Text.AlignHCenter
-//            font.pixelSize: 15
-//            color: "white"
-//        }
+        Text {
+            id: headerText
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 15
+            color: "white"
+        }
 
         Image {
             id: cartIcon
