@@ -7,6 +7,7 @@
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
+        <file alias="/PaymentScreen.qml">resources/pos/PaymentScreen.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="/main.qml">resources/wallet/main.qml</file>
