@@ -16,6 +16,9 @@ Item {
         id: productDelegate
         ProductDelegate {
             width: productList.width
+            productImage: image
+            productName: name
+            productPrice: cost
         }
     }
 
@@ -27,12 +30,14 @@ Item {
         highlighted: true
         Material.elevation: 0
         Material.accent: "#757575"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 94
-        anchors.right: parent.right
-        anchors.rightMargin: 40
-        anchors.left: parent.left
-        anchors.leftMargin: 40
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: 94
+            right: parent.right
+            rightMargin: 40
+            left: parent.left
+            leftMargin: 40
+        }
         text: qsTr("Checkout")
         font {
             family: "Liberation Sans"
@@ -47,12 +52,14 @@ Item {
         highlighted: true
         Material.elevation: 0
         Material.accent: "#d7d7d7"
-        anchors.top: addButton.bottom
-        anchors.topMargin: 20
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors {
+            top: addButton.bottom
+            topMargin: 20
+            right: parent.right
+            rightMargin: 5
+            bottom: parent.bottom
+            bottomMargin: 5
+        }
         contentItem: Image {
             source: "qrc:/imgs/plus_icon.png"
         }

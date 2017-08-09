@@ -6,17 +6,23 @@ import QtQuick.Controls.Material 2.2
 
 
 Rectangle {
+    property alias productImage: picture.source
+    property alias productName: productText.text
+    property int productPrice
+
     height: layout.height
     color: mouseArea.pressed ? "#f2f2f2" : "transparent"
 
     ColumnLayout {
         id: layout
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
 
         RowLayout {
-            Layout.topMargin: 6
             spacing: 16
+            Layout.topMargin: 6
             Layout.rightMargin: 12
             Layout.leftMargin: 12
 
@@ -37,7 +43,6 @@ Rectangle {
 
                 Image {
                     id: picture
-                    source: image
                     width: 50
                     height: 55
                     visible: false
@@ -45,7 +50,7 @@ Rectangle {
             }
 
             Text {
-                text: name
+                id: productText
                 Layout.fillWidth: true
                 color: "#757575"
                 font {
@@ -55,7 +60,8 @@ Rectangle {
             }
 
             Text {
-                text: "$ " + cost
+                id: price
+                text: "$ " + productPrice
                 color: "#757575"
                 font {
                     family: "Liberation Sans"
