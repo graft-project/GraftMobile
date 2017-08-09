@@ -60,7 +60,7 @@ Item {
                     Text {
                         Layout.topMargin: 12
                         color: "#707070"
-                        text: qsTr(balanceInGraft + "g / " + balanceInUSD + "USD")
+                        text: qsTr("%1g / %2USD").arg(balanceInGraft).arg(balanceInUSD)
                         font {
                             pointSize: 12
                             family: "Liberation Sans"
