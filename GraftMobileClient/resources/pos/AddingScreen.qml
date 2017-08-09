@@ -36,8 +36,8 @@ Item {
                 placeholderText: "Price: "
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
-                validator: IntValidator {}
                 Layout.preferredHeight: graftCBox.height
+                validator: IntValidator {}
             }
 
             ColumnLayout {
@@ -49,9 +49,6 @@ Item {
                     Layout.fillWidth: true
                     Material.background: "#00707070"
                     Material.foreground: "#99757577"
-                    model: ListModel {
-                        ListElement { key: qsTr("Graft")}
-                    }
                 }
 
                 Rectangle {
