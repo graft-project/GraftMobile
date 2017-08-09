@@ -7,7 +7,7 @@ import "../"
 
 Item {
     property alias currencyModel: graftCBox.model
-    property alias mtotalAmount: totalViewItem.totalAmount
+    property alias totalAmount: totalViewItem.totalAmount
     property int balanceInGraft: 0
     property int balanceInUSD: 0
 
@@ -49,9 +49,10 @@ Item {
                 RowLayout {
                     Text {
                         Layout.topMargin: 12
+                        Layout.leftMargin: 12
                         color: "#707070"
                         text: qsTr("Balance:\t")
-                        font{
+                        font {
                             pointSize: 12
                             family: "Liberation Sans"
                         }
@@ -60,7 +61,7 @@ Item {
                         Layout.topMargin: 12
                         color: "#707070"
                         text: qsTr(balanceInGraft + "g / " + balanceInUSD + "USD")
-                        font{
+                        font {
                             pointSize: 12
                             family: "Liberation Sans"
                             bold: true
@@ -86,7 +87,5 @@ Item {
                 }
             }
         }
-
-
     }
 }
