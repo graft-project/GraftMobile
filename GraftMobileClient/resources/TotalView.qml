@@ -8,14 +8,14 @@ RowLayout {
     Text {
         text: qsTr("Total: ")
         Layout.alignment: Qt.AlignLeft
-        font.pointSize: 20
+        font.pointSize: 12
         color: "#707070"
     }
 
     Text {
         text: "$ " + totalAmount
         Layout.alignment: Qt.AlignRight
-        font.pointSize: 20
+        font.pointSize: 12
         color: "#707070"
     }
 }

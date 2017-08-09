@@ -13,7 +13,7 @@ Item {
 
     ColumnLayout {
         id: column
-        spacing: 100
+        spacing: 50
         anchors {
             left: parent.left
             right: parent.right
@@ -27,52 +27,66 @@ Item {
             id: totalViewItem
             Layout.preferredWidth: parent.width
         }
-
         ColumnLayout {
-            Layout.fillWidth: true
-            spacing: 0
+            spacing: 170
 
-            ComboBox {
-                id: graftCBox
+            ColumnLayout {
                 Layout.fillWidth: true
-                Material.background: "#00707070"
-            }
+                spacing: -5
 
-            Rectangle {
-                height: 2
+                ComboBox {
+                    id: graftCBox
+                    Layout.fillWidth: true
+                    Material.background: "transparent"
+                }
+
+                Rectangle {
+                    height: 2
+                    Layout.fillWidth: true
+                    color: "#707070"
+                }
+
+                RowLayout {
+                    Text {
+                        Layout.topMargin: 12
+                        color: "#707070"
+                        text: qsTr("Balance:\t")
+                        font{
+                            pointSize: 12
+                            family: "Liberation Sans"
+                        }
+                    }
+                    Text {
+                        Layout.topMargin: 12
+                        color: "#707070"
+                        text: qsTr(balanceInGraft + "g / " + balanceInUSD + "USD")
+                        font{
+                            pointSize: 12
+                            family: "Liberation Sans"
+                            bold: true
+                        }
+                    }
+                }
+            }
+            RoundButton {
+                id: confirmButton
+                highlighted: true
+                Material.elevation: 0
+                Material.accent: "#707070"
                 Layout.fillWidth: true
-                color: "#707070"
-            }
-
-            Text {
-                Layout.topMargin: 12
-                color: "#707070"
-                text: qsTr("Balance:\t" + balanceInGraft + "g / " + balanceInUSD + "USD")
-                font{
-                    pointSize: 12
+                Layout.alignment: Qt.AlignCenter
+                Layout.leftMargin: 20
+                Layout.rightMargin: 20
+                radius: 15
+                text: qsTr("Confirm")
+                font {
                     family: "Liberation Sans"
-                    bold: true
+                    pointSize: 18
+                    capitalization: Font.MixedCase
                 }
             }
         }
 
-        RoundButton {
-            id: confirmButton
-            topPadding: 15
-            bottomPadding: 15
-            highlighted: true
-            Material.elevation: 0
-            Material.accent: "#707070"
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignCenter
-            Layout.leftMargin: 70
-            Layout.rightMargin: 70
-            text: qsTr("Confirm")
-            font {
-                family: "Liberation Sans"
-                pointSize: 18
-                capitalization: Font.MixedCase
-            }
-        }
+
     }
 }
