@@ -3,13 +3,13 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout {
     property int price: 20
-    property alias productName: productName.text
+    property alias productName: productText.text
 
     RowLayout {
         Layout.preferredWidth: parent.width
 
         Text {
-            id: productName
+            id: productText
             text: qsTr("Haircut %1").arg(index+1)
             Layout.alignment: Qt.AlignLeft
             font.pointSize: 12
