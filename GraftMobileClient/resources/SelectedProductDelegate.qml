@@ -10,7 +10,6 @@ ColumnLayout {
 
         Text {
             id: productText
-            text: qsTr("Haircut %1").arg(index+1)
             Layout.alignment: Qt.AlignLeft
             font.pointSize: 12
             color: "#707070"
