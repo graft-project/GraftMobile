@@ -22,7 +22,6 @@ ColumnLayout {
     }
 
     ColumnLayout {
-
         ComboBox {
             id: graftCBox
             Layout.fillWidth: true
@@ -42,6 +41,7 @@ ColumnLayout {
                     family: "Liberation Sans"
                 }
             }
+            
             Text {
                 color: "#707070"
                 text: qsTr("%1g / %2USD").arg(balanceInGraft).arg(balanceInUSD)
