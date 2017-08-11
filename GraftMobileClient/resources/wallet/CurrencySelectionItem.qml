@@ -27,21 +27,13 @@ ColumnLayout {
             id: graftCBox
             Layout.fillWidth: true
             Material.background: "transparent"
-            Layout.leftMargin: -12
-            Layout.rightMargin: -12
+            editable: true
+            contentItem.enabled: false
             font.pointSize: 11
             Material.foreground: "#707070"
         }
 
-        Rectangle {
-            height: 2
-            Layout.topMargin: -20
-            Layout.fillWidth: true
-            color: "#707070"
-        }
-
         RowLayout {
-            Layout.topMargin: -10
             Text {
                 color: "#707070"
                 text: qsTr("Balance:\t")

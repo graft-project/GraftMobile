@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQml 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
@@ -99,7 +100,7 @@ Item {
                     highlighted: true
                     topPadding: 15
                     bottomPadding: 15
-                    Material.elevation: 0
+                    Material.elevation: 1
                     Material.accent: "#707070"
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignCenter
@@ -112,14 +113,12 @@ Item {
                         pointSize: 12
                         capitalization: Font.MixedCase
                     }
-                }
-            }
-
-            Rectangle {
-                color: "transparent"
-                BusyIndicator {
-                    anchors.centerIn: parent
-                    running: image.status === Image.Loading
+                    onClicked: {
+                        timer.running = true
+                        busyIndicator.visible = true
+                        busyIndicator.running = true
+                        column.enabled = false
+                    }
                 }
             }
 
@@ -141,6 +140,26 @@ Item {
                     text: qsTr("PAID !")
                 }
             }
+        }
+    }
+
+    BusyIndicator {
+        id: busyIndicator
+        visible: false
+        anchors.verticalCenterOffset: -60
+        anchors.centerIn: parent
+    }
+
+    Timer {
+        id: timer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            stack.currentIndex = 1
+            running: false
+            column.enabled = true
+            busyIndicator.visible = false
         }
     }
 }
