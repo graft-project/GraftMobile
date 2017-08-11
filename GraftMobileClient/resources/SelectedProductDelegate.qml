@@ -5,8 +5,11 @@ ColumnLayout {
     property int price: 20
     property alias productName: productText.text
 
+    spacing: 12
+
     RowLayout {
         Layout.preferredWidth: parent.width
+        Layout.topMargin: 12
 
         Text {
             id: productText
@@ -26,6 +29,6 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 2
-        color: "#707070"
+        color: "#d7d7d7"
     }
 }
