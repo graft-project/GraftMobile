@@ -5,8 +5,12 @@ import QtQuick.Layouts 1.3
 import "../"
 
 ColumnLayout {
-    property int amountGraft: 0
-    property int amountMoney: 0
+    id: rootItem
+
+    signal payButtonClicked()
+
+    property real amountGraft: 0
+    property real amountMoney: 0
 
     spacing: 50
 
@@ -66,5 +70,6 @@ ColumnLayout {
             pointSize: 18
             capitalization: Font.MixedCase
         }
+        onPressed: rootItem.payButtonClicked()
     }
 }
