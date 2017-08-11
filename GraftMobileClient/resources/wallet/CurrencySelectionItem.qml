@@ -26,10 +26,10 @@ ColumnLayout {
         ComboBox {
             id: graftCBox
             Layout.fillWidth: true
-            Material.background: "transparent"
             editable: true
             contentItem.enabled: false
             font.pointSize: 11
+            Material.background: "transparent"
             Material.foreground: "#707070"
         }
 

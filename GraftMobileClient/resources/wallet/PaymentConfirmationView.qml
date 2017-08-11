@@ -8,13 +8,17 @@ import "../"
 
 Item {
     property alias totalAmount: totalViewItem.totalAmount
+    property alias currencyModel: currencyItem.currencyModel
+    property alias balanceInGraft: currencyItem.balanceInGraft
+    property alias balanceInUSD: currencyItem.balanceInUSD
+    property alias productModel: productList.model
 
     ListModel {
-        id: productModel
+        id: testProductModel
 
         ListElement {
             name: "Hairout 1"
-            cost: 25
+            cost: 20
         }
 
         ListElement {
@@ -59,7 +63,7 @@ Item {
                 id: productList
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-                model: productModel
+                model: testProductModel
                 clip: true
                 delegate: SelectedProductDelegate {
                     width: productList.width
@@ -89,10 +93,8 @@ Item {
             ColumnLayout {
                 spacing: 50
                 CurrencySelectionItem {
+                    id: currencyItem
                     Layout.fillWidth: true
-                    currencyModel: ["Graft"]
-                    balanceInGraft: 1
-                    balanceInUSD: 200
                 }
 
                 RoundButton {
@@ -146,8 +148,10 @@ Item {
     BusyIndicator {
         id: busyIndicator
         visible: false
-        anchors.verticalCenterOffset: -60
-        anchors.centerIn: parent
+        anchors {
+            verticalCenterOffset: -60
+            centerIn: parent
+        }
     }
 
     Timer {
