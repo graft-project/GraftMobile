@@ -9,15 +9,13 @@ Rectangle {
 
     property alias headerText: headerText.text
     property alias cartEnable: cartIcon.visible
-    property bool menuState: true
+    property bool isMenuState: true
 
-    onMenuStateChanged: {
-        if (menuState == true)
-        {
+    onIsMenuStateChanged: {
+        if (isMenuState) {
             menuIcon.source = "qrc:/imgs/menu_icon.png"
         }
-        else
-        {
+        else {
             menuIcon.source = "qrc:/imgs/back.png"
         }
     }
