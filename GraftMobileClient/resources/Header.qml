@@ -5,9 +5,22 @@ Rectangle {
     height: 60
     color: "#707070"
 
-    property alias menuIcon: menuIcon.source
+    signal clickMenuIcon()
+
     property alias headerText: headerText.text
-    property alias cartIcon: cartIcon.source
+    property alias cartIcon: cartIcon.visible
+    property bool menuState: true
+
+    onMenuStateChanged: {
+        if (menuState == true)
+        {
+            menuIcon.source = "qrc:/imgs/menu_icon.png"
+        }
+        else
+        {
+            menuIcon.source = "qrc:/imgs/back.png"
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
@@ -18,6 +31,12 @@ Rectangle {
             Layout.maximumWidth: 20
             Layout.maximumHeight: 20
             Layout.alignment: Qt.AlignLeft
+            source: "qrc:/imgs/menu_icon.png"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: clickMenuIcon()
+            }
         }
 
         Text {
@@ -34,6 +53,7 @@ Rectangle {
             Layout.maximumHeight: 20
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: 15
+            source: "qrc:/imgs/cart_icon.png"
         }
     }
 }

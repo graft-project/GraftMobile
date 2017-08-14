@@ -11,27 +11,43 @@ ApplicationWindow {
     title: qsTr("WALLET")
 
     header: Header {
+        id: mainHader
         headerText: qsTr("Wallet")
-        menuIcon: "qrc:/imgs/menu_icon.png"
-        cartIcon: "qrc:/imgs/cart_icon.png"
+
+        onClickMenuIcon: {
+            menuState = true
+            stack.pop()
+        }
     }
 
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: screen1
+        initialItem: initialScreen
     }
 
     BalanceView {
-        id: screen1
+        id: initialScreen
         amountGraft: 2
         amountMoney: 145
-        onPayButtonClicked: {
-            var component = Qt.createComponent("qrc:/QRScanningScreen.qml");
-            var sprite = component.createObject(root);
+        onPayButtonClicked: openQRScanningScreen()
+    }
 
-            stack.push(sprite)
-        }
+    function openQRScanningScreen()
+    {
+        var componentQRScanningScreen = Qt.createComponent("qrc:/QRScanningScreen.qml");
+        var qrCodeScanScreen = componentQRScanningScreen.createObject(root);
+        mainHader.headerText = qsTr("Pay")
+        mainHader.menuState = false
+        qrCodeScanScreen.detectQRCode.connect(openPaymetnConfirmationView)
+        stack.push(qrCodeScanScreen)
+    }
+
+    function openPaymetnConfirmationView()
+    {
+        var componentPaymentConfirmationView = Qt.createComponent("qrc:/wallet/PaymentConfirmationView.qml");
+        var paymentConfirmationView = componentPaymentConfirmationView.createObject(root);
+        stack.push(paymentConfirmationView)
     }
 }
 
