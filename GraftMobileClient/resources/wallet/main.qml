@@ -10,44 +10,38 @@ ApplicationWindow {
     height: 480
     title: qsTr("WALLET")
 
-    header: Header {
-        id: mainHader
-        headerText: qsTr("Wallet")
-
-        onClickMenuIcon: {
-            menuState = true
-            stack.pop()
-        }
-    }
-
     StackView {
         id: stack
         anchors.fill: parent
         initialItem: initialScreen
+        focus: true
+        Keys.onReleased: {
+            if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
+                pop()
+                event.accepted = true
+            }
+        }
     }
 
     BalanceView {
         id: initialScreen
         amountGraft: 2
         amountMoney: 145
-        onPayButtonClicked: openQRScanningScreen()
+        pushScreen: openQRScanningScreen
     }
 
     function openQRScanningScreen()
     {
-        var componentQRScanningScreen = Qt.createComponent("qrc:/QRScanningScreen.qml");
-        var qrCodeScanScreen = componentQRScanningScreen.createObject(root);
-        mainHader.headerText = qsTr("Pay")
-        mainHader.menuState = false
-        qrCodeScanScreen.detectQRCode.connect(openPaymetnConfirmationView)
-        stack.push(qrCodeScanScreen)
+        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": openPaymentConfirmationView})
     }
 
-    function openPaymetnConfirmationView()
+    function openPaymentConfirmationView()
     {
-        var componentPaymentConfirmationView = Qt.createComponent("qrc:/wallet/PaymentConfirmationView.qml");
-        var paymentConfirmationView = componentPaymentConfirmationView.createObject(root);
-        stack.push(paymentConfirmationView)
+        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen})
+    }
+
+    function openBalanceScreen() {
+        stack.pop(initialScreen)
     }
 }
 

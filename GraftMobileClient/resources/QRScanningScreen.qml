@@ -2,14 +2,14 @@ import QtQuick 2.9
 import QtMultimedia 5.9
 import QtQuick.Controls 2.2
 
-Item {
+BaseScreen {
+    id: root
     signal detectQRCode()
 
     onVisibleChanged: {
-        if(visible == true)
+        if (visible) {
             camera.start()
-        else
-            camera.stop()
+        }
     }
 
     Camera {
@@ -30,9 +30,12 @@ Item {
     }
 
     Timer {
-        interval: 5000;
+        interval: 1000;
         running: true;
         repeat: false;
-        onTriggered: detectQRCode()
+        onTriggered: {
+            camera.stop()
+            root.pushScreen()
+        }
     }
 }

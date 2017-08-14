@@ -8,7 +8,7 @@ Rectangle {
     signal clickMenuIcon()
 
     property alias headerText: headerText.text
-    property alias cartIcon: cartIcon.visible
+    property alias cartEnable: cartIcon.visible
     property bool menuState: true
 
     onMenuStateChanged: {
