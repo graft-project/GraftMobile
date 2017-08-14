@@ -5,7 +5,7 @@
         <file alias="/Header.qml">resources/Header.qml</file>
         <file alias="/QRScanningScreen.qml">resources/QRScanningScreen.qml</file>
         <file alias="/SelectedProductDelegate.qml">resources/SelectedProductDelegate.qml</file>
-     </qresource>
+    </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
         <file alias="/PaymentScreen.qml">resources/pos/PaymentScreen.qml</file>
