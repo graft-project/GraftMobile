@@ -4,8 +4,11 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 import "../components"
+import "../"
 
-Item {
+BaseScreen {
+    id: mainScreen
+
     ListView {
         id: productList
         anchors.fill: parent
@@ -34,6 +37,9 @@ Item {
             left: parent.left
             leftMargin: 40
         }
+        onClicked: {
+            mainScreen.pushScreen.initialCheckout()
+        }
     }
 
     RoundButton {
@@ -52,6 +58,9 @@ Item {
         }
         contentItem: Image {
             source: "qrc:/imgs/plus_icon.png"
+        }
+        onClicked: {
+            mainScreen.pushScreen.openAddScreen()
         }
     }
 
