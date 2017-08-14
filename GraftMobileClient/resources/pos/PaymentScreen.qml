@@ -2,18 +2,17 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Controls.Styles 1.4
-import QtGraphicalEffects 1.0
 import "../"
 
 ColumnLayout {
     property int price
+    property alias productListModel: productView.model
 
     RowLayout {
         Layout.topMargin: 20
-        Layout.leftMargin: 15
-        Layout.rightMargin: 15
-        Layout.bottomMargin: 15
+        Layout.leftMargin: 23
+        Layout.rightMargin: 23
+        Layout.bottomMargin: 20
         Layout.preferredWidth: parent.width
         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
@@ -23,7 +22,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignLeft
 
             Text {
-                id: firstTitle
+                id: totalTitle
                 text: qsTr("Total: ")
                 color: "#757575"
                 font {
@@ -44,7 +43,7 @@ ColumnLayout {
             }
 
             Text {
-                id: secondTitle
+                id: helpText
                 text: qsTr("Scan with wallet")
                 color: "#757575"
                 font {
@@ -71,7 +70,7 @@ ColumnLayout {
     }
 
     ListModel {
-        id: selectedProduct
+        id: productList
 
         ListElement {
             name: "Hairout 1"
@@ -100,18 +99,18 @@ ColumnLayout {
     }
 
     ListView {
-        id: viewProduct
+        id: productView
         clip: true
-        model: selectedProduct
+        model: productList
         enabled: !confirmation.visible
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: 15
-        Layout.rightMargin: 15
+        Layout.leftMargin: 23
+        Layout.rightMargin: 23
         Layout.topMargin: 9
         Layout.bottomMargin: 9
         delegate: SelectedProductDelegate {
-            width: viewProduct.width
+            width: productView.width
             productName: name
             price: cost
         }
@@ -121,7 +120,7 @@ ColumnLayout {
             running: true
             onTriggered: {
                 control.visible = true
-                bottomCancel.visible = true
+                cancelBotton.visible = true
             }
         }
 
@@ -136,8 +135,8 @@ ColumnLayout {
             running: true
             onTriggered: {
                 confirmation.visible = true
-                bottomOk.visible = true
-                bottomCancel.visible = false
+                okBotton.visible = true
+                cancelBotton.visible = false
             }
         }
 
@@ -162,9 +161,8 @@ ColumnLayout {
                     color: "#757575"
                     Layout.alignment: Qt.AlignHCenter
                     font {
-                        bold: true
                         family: "Liberation Sans"
-                        pointSize: 14
+                        pointSize: 16
                     }
                 }
             }
@@ -172,7 +170,7 @@ ColumnLayout {
     }
 
     RoundButton {
-        id: bottomCancel
+        id: cancelBotton
         visible: false
         radius: 14
         topPadding: 10
@@ -194,7 +192,7 @@ ColumnLayout {
     }
 
     RoundButton {
-        id: bottomOk
+        id: okBotton
         visible: false
         radius: 14
         topPadding: 10
