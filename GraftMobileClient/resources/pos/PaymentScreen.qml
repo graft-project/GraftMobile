@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import "../components"
 import "../"
 
 ColumnLayout {
@@ -116,13 +117,54 @@ ColumnLayout {
         }
 
         Timer {
-            interval: 100
+            interval: 1000
             running: true
             onTriggered: {
-                control.visible = true
-                cancelButton.visible = true
+                parent.state = "twirlState"
+                delay.running = true
             }
         }
+
+        Timer {
+            id: delay
+            interval: 4000
+            running: true
+            onTriggered: {
+                parent.state = "checkState"
+            }
+        }
+
+        states: [
+            State {
+                name: "twirlState"
+                PropertyChanges {
+                    target: cancelButton
+                    visible: true
+                }
+
+                PropertyChanges {
+                    target: control
+                    visible: true
+                }
+            },
+            State {
+                name: "checkState"
+                PropertyChanges {
+                    target: confirmation
+                    visible: true
+                }
+
+                PropertyChanges {
+                    target: okButton
+                    visible: true
+                }
+
+                PropertyChanges {
+                    target: cancelButton
+                    visible: false
+                }
+            }
+        ]
 
         BusyIndicator {
             id: control
@@ -130,20 +172,10 @@ ColumnLayout {
             anchors.centerIn: parent
         }
 
-        Timer {
-            interval: 4000
-            running: true
-            onTriggered: {
-                confirmation.visible = true
-                okButton.visible = true
-                cancelButton.visible = false
-            }
-        }
-
         Rectangle {
             id: confirmation
-            visible: false
             color: "#99ffffff"
+            visible: false
             anchors.fill: parent
 
             ColumnLayout {
@@ -169,47 +201,15 @@ ColumnLayout {
         }
     }
 
-    RoundButton {
+    WideRoundButton {
         id: cancelButton
-        visible: false
-        radius: 14
-        topPadding: 10
-        bottomPadding: 10
-        highlighted: true
-        Material.elevation: 0
-        Material.accent: "#757575"
-        Layout.alignment: Qt.AlignCenter
-        Layout.fillWidth: true
-        Layout.leftMargin: 40
-        Layout.rightMargin: 40
-        Layout.bottomMargin: 10
         text: qsTr("Cancel")
-        font {
-            family: "Liberation Sans"
-            pointSize: 13
-            capitalization: Font.MixedCase
-        }
+        visible: false
     }
 
-    RoundButton {
+    WideRoundButton {
         id: okButton
-        visible: false
-        radius: 14
-        topPadding: 10
-        bottomPadding: 10
-        highlighted: true
-        Material.elevation: 0
-        Material.accent: "#757575"
-        Layout.alignment: Qt.AlignCenter
-        Layout.fillWidth: true
-        Layout.leftMargin: 40
-        Layout.rightMargin: 40
-        Layout.bottomMargin: 10
         text: qsTr("OK")
-        font {
-            family: "Liberation Sans"
-            pointSize: 13
-            capitalization: Font.MixedCase
-        }
+        visible: false
     }
 }

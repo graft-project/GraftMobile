@@ -5,6 +5,7 @@
         <file alias="/Header.qml">resources/Header.qml</file>
         <file alias="/QRScanningScreen.qml">resources/QRScanningScreen.qml</file>
         <file alias="/SelectedProductDelegate.qml">resources/SelectedProductDelegate.qml</file>
+        <file>main.cpp</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
@@ -40,5 +41,8 @@
         <file alias="/plus_icon.png">resources/imgs/plus_icon.png</file>
         <file alias="/g_icon_black.png">resources/imgs/g_icon_black.png</file>
         <file alias="/g_icon_small.png">resources/imgs/g_icon_small.png</file>
+    </qresource>
+    <qresource prefix="/components">
+        <file alias="/WideRoundButton.qml">resources/components/WideRoundButton.qml</file>
     </qresource>
 </RCC>
