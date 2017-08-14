@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
+import "../components"
 
 Item {
     ListView {
@@ -22,14 +23,9 @@ Item {
         }
     }
 
-    RoundButton {
+    WideRoundButton {
         id: addButton
-        radius: 14
-        topPadding: 15
-        bottomPadding: 15
-        highlighted: true
-        Material.elevation: 0
-        Material.accent: "#757575"
+        text: qsTr("Checkout")
         anchors {
             bottom: parent.bottom
             bottomMargin: 94
@@ -37,12 +33,6 @@ Item {
             rightMargin: 40
             left: parent.left
             leftMargin: 40
-        }
-        text: qsTr("Checkout")
-        font {
-            family: "Liberation Sans"
-            pointSize: 14
-            capitalization: Font.MixedCase
         }
     }
 
