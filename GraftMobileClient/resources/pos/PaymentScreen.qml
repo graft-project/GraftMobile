@@ -70,7 +70,7 @@ ColumnLayout {
     }
 
     ListModel {
-        id: productList
+        id: productModel
 
         ListElement {
             name: "Hairout 1"
@@ -101,7 +101,7 @@ ColumnLayout {
     ListView {
         id: productView
         clip: true
-        model: productList
+        model: productModel
         enabled: !confirmation.visible
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -120,7 +120,7 @@ ColumnLayout {
             running: true
             onTriggered: {
                 control.visible = true
-                cancelBotton.visible = true
+                cancelButton.visible = true
             }
         }
 
@@ -135,8 +135,8 @@ ColumnLayout {
             running: true
             onTriggered: {
                 confirmation.visible = true
-                okBotton.visible = true
-                cancelBotton.visible = false
+                okButton.visible = true
+                cancelButton.visible = false
             }
         }
 
@@ -170,7 +170,7 @@ ColumnLayout {
     }
 
     RoundButton {
-        id: cancelBotton
+        id: cancelButton
         visible: false
         radius: 14
         topPadding: 10
@@ -192,7 +192,7 @@ ColumnLayout {
     }
 
     RoundButton {
-        id: okBotton
+        id: okButton
         visible: false
         radius: 14
         topPadding: 10
