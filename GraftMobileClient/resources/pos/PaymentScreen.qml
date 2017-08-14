@@ -18,12 +18,11 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
         ColumnLayout {
-            id: totalCost
+            id: totalCostLayout
             spacing: 11
             Layout.alignment: Qt.AlignLeft
 
             Text {
-                id: totalTitle
                 text: qsTr("Total: ")
                 color: "#757575"
                 font {
@@ -33,7 +32,6 @@ ColumnLayout {
             }
 
             Text {
-                id: cost
                 text: qsTr("$ %1").arg(price)
                 color: "#757575"
                 font {
@@ -44,7 +42,6 @@ ColumnLayout {
             }
 
             Text {
-                id: helpText
                 text: qsTr("Scan with wallet")
                 color: "#757575"
                 font {
@@ -55,11 +52,11 @@ ColumnLayout {
         }
 
         Image {
-            id: qRCodePicture
+            id: qrCodePicture
             source: "qrc:/examples/QRCode_images.png"
             Layout.alignment: Qt.AlignRight
-            Layout.preferredHeight: totalCost.height
-            Layout.preferredWidth: totalCost.height
+            Layout.preferredHeight: totalCostLayout.height
+            Layout.preferredWidth: totalCostLayout.height
         }
     }
 
@@ -103,7 +100,7 @@ ColumnLayout {
         id: productView
         clip: true
         model: productModel
-        enabled: !confirmation.visible
+        enabled: !confirmationRect.visible
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.leftMargin: 23
@@ -121,14 +118,13 @@ ColumnLayout {
             running: true
             onTriggered: {
                 parent.state = "twirlState"
-                delay.running = true
+                delay.start()
             }
         }
 
         Timer {
             id: delay
             interval: 4000
-            running: true
             onTriggered: {
                 parent.state = "checkState"
             }
@@ -143,14 +139,14 @@ ColumnLayout {
                 }
 
                 PropertyChanges {
-                    target: control
+                    target: busyIndictor
                     visible: true
                 }
             },
             State {
                 name: "checkState"
                 PropertyChanges {
-                    target: confirmation
+                    target: confirmationRect
                     visible: true
                 }
 
@@ -167,13 +163,13 @@ ColumnLayout {
         ]
 
         BusyIndicator {
-            id: control
+            id: busyIndictor
             visible: false
             anchors.centerIn: parent
         }
 
         Rectangle {
-            id: confirmation
+            id: confirmationRect
             color: "#99ffffff"
             visible: false
             anchors.fill: parent
