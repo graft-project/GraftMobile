@@ -10,17 +10,17 @@ ColumnLayout {
     property int price
 
     RowLayout {
-        Layout.preferredWidth: parent.width
         Layout.topMargin: 20
         Layout.leftMargin: 15
         Layout.rightMargin: 15
-        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
         Layout.bottomMargin: 15
+        Layout.preferredWidth: parent.width
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
         ColumnLayout {
             id: totalCost
+            spacing: 11
             Layout.alignment: Qt.AlignLeft
-            spacing: 12
 
             Text {
                 id: firstTitle
@@ -56,60 +56,45 @@ ColumnLayout {
 
         Image {
             id: qRCodePicture
+            source: "qrc:/examples/QRCode_images.png"
             Layout.alignment: Qt.AlignRight
             Layout.preferredHeight: totalCost.height
             Layout.preferredWidth: totalCost.height
-            source: "qrc:/examples/QRCode_images.png"
         }
     }
 
     Rectangle {
+        color: "#d7d7d7"
         Layout.preferredHeight: 1.6
         Layout.alignment: Qt.AlignBottom
         Layout.fillWidth: true
-        color: "#d7d7d7"
     }
 
     ListModel {
         id: selectedProduct
+
         ListElement {
             name: "Hairout 1"
             cost: 20
         }
+
         ListElement {
             name: "Hairout 2"
             cost: 20
         }
+
         ListElement {
             name: "Hairout 3"
             cost: 20
         }
+
         ListElement {
             name: "Hairout 4"
             cost: 20
         }
+
         ListElement {
             name: "Hairout 5"
-            cost: 20
-        }
-        ListElement {
-            name: "Hairout 6"
-            cost: 20
-        }
-        ListElement {
-            name: "Hairout 7"
-            cost: 20
-        }
-        ListElement {
-            name: "Hairout 8"
-            cost: 20
-        }
-        ListElement {
-            name: "Hairout 9"
-            cost: 20
-        }
-        ListElement {
-            name: "Hairout 10"
             cost: 20
         }
     }
@@ -118,13 +103,13 @@ ColumnLayout {
         id: viewProduct
         clip: true
         model: selectedProduct
+        enabled: !confirmation.visible
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: 10
-        Layout.rightMargin: 10
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
-        enabled: !time.visible
+        Layout.leftMargin: 15
+        Layout.rightMargin: 15
+        Layout.topMargin: 9
+        Layout.bottomMargin: 9
         delegate: SelectedProductDelegate {
             width: viewProduct.width
             productName: name
@@ -132,39 +117,40 @@ ColumnLayout {
         }
 
         Timer {
-            interval: 1000
+            interval: 100
             running: true
             onTriggered: {
                 control.visible = true
                 bottomCancel.visible = true
-
             }
         }
 
         BusyIndicator {
             id: control
-            anchors.centerIn: parent
             visible: false
+            anchors.centerIn: parent
         }
 
         Timer {
-            interval: 3000
+            interval: 4000
             running: true
             onTriggered: {
-                time.visible = true
+                confirmation.visible = true
                 bottomOk.visible = true
                 bottomCancel.visible = false
             }
         }
 
         Rectangle {
-            id: time
+            id: confirmation
             visible: false
-            anchors.fill: parent
             color: "#99ffffff"
+            anchors.fill: parent
+
             ColumnLayout {
-                spacing: 11
+                spacing: 12
                 anchors.centerIn: parent
+
                 Image {
                     source: "qrc:/imgs/paid_icon.png"
                     Layout.preferredHeight: 100
@@ -172,10 +158,11 @@ ColumnLayout {
                 }
 
                 Text {
-                    Layout.alignment: Qt.AlignHCenter
                     text: qsTr("PAID !")
                     color: "#757575"
+                    Layout.alignment: Qt.AlignHCenter
                     font {
+                        bold: true
                         family: "Liberation Sans"
                         pointSize: 14
                     }
@@ -188,8 +175,8 @@ ColumnLayout {
         id: bottomCancel
         visible: false
         radius: 14
-        topPadding: 13
-        bottomPadding: 13
+        topPadding: 10
+        bottomPadding: 10
         highlighted: true
         Material.elevation: 0
         Material.accent: "#757575"
@@ -208,10 +195,10 @@ ColumnLayout {
 
     RoundButton {
         id: bottomOk
-        radius: 14
         visible: false
-        topPadding: 13
-        bottomPadding: 13
+        radius: 14
+        topPadding: 10
+        bottomPadding: 10
         highlighted: true
         Material.elevation: 0
         Material.accent: "#757575"
