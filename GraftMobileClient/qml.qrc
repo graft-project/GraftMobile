@@ -9,6 +9,7 @@
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
+        <file alias="/PaymentScreen.qml">resources/pos/PaymentScreen.qml</file>
         <file alias="/AddingScreen.qml">resources/pos/AddingScreen.qml</file>
         <file alias="/ProductScreen.qml">resources/pos/ProductScreen.qml</file>
         <file alias="/ProductDelegate.qml">resources/pos/ProductDelegate.qml</file>
@@ -22,6 +23,7 @@
     <qresource prefix="/examples">
         <file alias="/bob-haircuts.png">resources/examples/bob-haircuts.png</file>
         <file alias="/images.png">resources/examples/images.png</file>
+        <file alias="/QRCode_images.png">resources/examples/QRCode_images.png</file>
     </qresource>
     <qresource prefix="/imgs">
         <file alias="/arrow.png">resources/imgs/arrow.png</file>
@@ -39,5 +41,8 @@
         <file alias="/plus_icon.png">resources/imgs/plus_icon.png</file>
         <file alias="/g_icon_black.png">resources/imgs/g_icon_black.png</file>
         <file alias="/g_icon_small.png">resources/imgs/g_icon_small.png</file>
+    </qresource>
+    <qresource prefix="/components">
+        <file alias="/WideRoundButton.qml">resources/components/WideRoundButton.qml</file>
     </qresource>
 </RCC>

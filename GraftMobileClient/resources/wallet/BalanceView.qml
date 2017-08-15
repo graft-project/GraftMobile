@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
 import "../"
+import "../components"
 
 BaseScreen {
     id: rootItem
@@ -15,12 +16,15 @@ BaseScreen {
     ColumnLayout {
 
         anchors.fill: parent
-        spacing: 50
+        spacing: 30
 
         Image {
             id: graftWalletLogo
             Layout.alignment: Qt.AlignCenter
             Layout.topMargin: 50
+            Layout.preferredHeight: parent.width / 2
+            Layout.preferredWidth: parent.width / 2
+            fillMode: Image.PreserveAspectFit
             source: "qrc:/imgs/graft_wallet_logo.png"
         }
 
@@ -56,23 +60,8 @@ BaseScreen {
             }
         }
 
-        RoundButton {
-            id: payButton
-            topPadding: 15
-            bottomPadding: 15
-            highlighted: true
-            Material.elevation: 0
-            Material.accent: "#707070"
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignCenter
-            Layout.leftMargin: 100
-            Layout.rightMargin: 100
+        WideRoundButton {
             text: qsTr("Pay")
-            font {
-                family: "Liberation Sans"
-                pointSize: 18
-                capitalization: Font.MixedCase
-            }
             onPressed: {
                 rootItem.pushScreen()
             }

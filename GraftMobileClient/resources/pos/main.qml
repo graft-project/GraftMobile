@@ -14,8 +14,4 @@ ApplicationWindow {
         menuIcon: "qrc:/imgs/menu_icon.png"
         cartIcon: "qrc:/imgs/cart_icon.png"
     }
-
-    ProductScreen {
-        anchors.fill: parent
-    }
 }
