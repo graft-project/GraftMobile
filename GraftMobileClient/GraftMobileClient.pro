@@ -26,7 +26,9 @@ TARGET = Graft.Wallet
 QMAKE_INFO_PLIST += info_wallet.plist
 }
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    PosSources/productitem.cpp \
+    PosSources/productmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -51,3 +53,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    PosSources/productitem.h \
+    PosSources/productmodel.h

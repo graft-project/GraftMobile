@@ -61,7 +61,7 @@ BaseScreen {
     }
 
     ListModel {
-        id: productModel
+        id: testProductModel
 
         ListElement {
             name: "Hairout 1"
