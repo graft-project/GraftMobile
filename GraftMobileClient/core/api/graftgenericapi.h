@@ -12,6 +12,13 @@ class GraftGenericAPI : public QObject
 {
     Q_OBJECT
 public:
+    enum OperationStatus
+    {
+        StatusApproved = 0,
+        StatusProcessing = 1,
+        StatusRejected =  2
+    };
+
     explicit GraftGenericAPI(const QUrl &url, QObject *parent = nullptr);
     virtual ~GraftGenericAPI();
 

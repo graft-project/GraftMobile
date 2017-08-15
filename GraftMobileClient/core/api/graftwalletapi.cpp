@@ -2,7 +2,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
-#include <QApplication>
 #include <QJsonObject>
 #include <QDebug>
 
@@ -20,7 +19,7 @@ void GraftWalletAPI::readyToPay(const QString &pid, const QString &keyImage)
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
-    connect(mReply, SIGNAL(finished()), this, SLOT(receiveReadyToPayResponse()));
+    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveReadyToPayResponse);
 }
 
 void GraftWalletAPI::rejectPay(const QString &pid)
@@ -31,7 +30,7 @@ void GraftWalletAPI::rejectPay(const QString &pid)
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
-    connect(mReply, SIGNAL(finished()), this, SLOT(receiveRejectPayResponse()));
+    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveRejectPayResponse);
 }
 
 void GraftWalletAPI::pay(const QString &pid, const QString &transaction)
@@ -43,7 +42,7 @@ void GraftWalletAPI::pay(const QString &pid, const QString &transaction)
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
-    connect(mReply, SIGNAL(finished()), this, SLOT(receivePayResponse()));
+    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
 }
 
 void GraftWalletAPI::getPayStatus(const QString &pid)
@@ -54,7 +53,7 @@ void GraftWalletAPI::getPayStatus(const QString &pid)
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
-    connect(mReply, SIGNAL(finished()), this, SLOT(receivePayStatusResponse()));
+    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayStatusResponse);
 }
 
 void GraftWalletAPI::receiveReadyToPayResponse()

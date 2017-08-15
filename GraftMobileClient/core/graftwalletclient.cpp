@@ -5,12 +5,13 @@
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : QObject(parent)
 {
-    mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.value(0))), this);
-    connect(mApi, SIGNAL(readyToPayReceived(int,QString)),
-            this, SLOT(receiveReadyToPay(int,QString)));
-    connect(mApi, SIGNAL(rejectPayReceived(int)), this, SLOT(receiveRejectPay(int)));
-    connect(mApi, SIGNAL(payReceived(int)), this, SLOT(receivePay(int)));
-    connect(mApi, SIGNAL(getPayStatusReceived(int,int)), this, SLOT(receivePayStatus(int,int)));
+    mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
+    connect(mApi, &GraftWalletAPI::readyToPayReceived,
+            this, &GraftWalletClient::receiveReadyToPay);
+    connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
+    connect(mApi, &GraftWalletAPI::payReceived, this, &GraftWalletClient::receivePay);
+    connect(mApi, &GraftWalletAPI::getPayStatusReceived,
+            this, &GraftWalletClient::receivePayStatus);
 }
 
 void GraftWalletClient::readyToPay(const QString &data)
@@ -48,8 +49,9 @@ void GraftWalletClient::receiveRejectPay(int result)
 
 void GraftWalletClient::receivePay(int result)
 {
-    emit payReceived(result == 0);
-    if (result == 0)
+    const bool isSomeName = (result == 0);
+    emit payReceived(isSomeName);
+    if (isSomeName)
     {
         getPayStatus();
     }
@@ -59,15 +61,15 @@ void GraftWalletClient::receivePayStatus(int result, int payStatus)
 {
     if (result == 0)
     {
-        if (payStatus == 1)
+        if (payStatus == GraftWalletAPI::StatusProcessing)
         {
             getPayStatus();
         }
-        else if (payStatus == 0)
+        else if (payStatus == GraftWalletAPI::StatusApproved)
         {
             emit payStatusReceived(true);
         }
-        else if (payStatus == 2)
+        else if (payStatus == GraftWalletAPI::StatusRejected)
         {
             emit payStatusReceived(false);
         }

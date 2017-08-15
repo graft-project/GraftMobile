@@ -2,7 +2,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
-#include <QApplication>
 #include <QJsonObject>
 #include <QDebug>
 
@@ -20,7 +19,7 @@ void GraftPOSAPI::sale(const QString &pid, const QString &transaction)
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
-    connect(mReply, SIGNAL(finished()), this, SLOT(receiveSaleResponse()));
+    connect(mReply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveSaleResponse);
 }
 
 void GraftPOSAPI::getSaleStatus(const QString &pid)
@@ -31,7 +30,7 @@ void GraftPOSAPI::getSaleStatus(const QString &pid)
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
-    connect(mReply, SIGNAL(finished()), this, SLOT(receiveSaleStatusResponse()));
+    connect(mReply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveSaleStatusResponse);
 }
 
 void GraftPOSAPI::receiveSaleResponse()
