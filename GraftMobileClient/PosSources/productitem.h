@@ -12,9 +12,9 @@ public:
     double cost() const;
 
 private:
-    QString m_image;
-    QString m_name;
-    double m_cost;
+    QString mimage;
+    QString mname;
+    double mcost;
 };
 
 #endif // PRODUCTITEM_H

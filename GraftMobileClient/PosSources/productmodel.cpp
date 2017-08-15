@@ -6,15 +6,15 @@ ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
 int ProductModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return m_products.count();
+    return mproducts.count();
 }
 
 QVariant ProductModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= m_products.count())
+    if (index.row() < 0 || index.row() >= mproducts.count())
         return QVariant();
 
-    const ProductItem &productItem = m_products[index.row()];
+    const ProductItem &productItem = mproducts[index.row()];
     if (role == TitleRole)
         return productItem.name();
     else if (role == CostRole)
@@ -36,6 +36,6 @@ QHash<int, QByteArray> ProductModel::roleNames() const
 void ProductModel::add(const QString &name, double cost, const QString &currency)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_products << ProductItem("qrc:/examples/bob-haircuts.png", name, cost);
+    mproducts << ProductItem("qrc:/examples/bob-haircuts.png", name, cost);
     endInsertRows();
 }

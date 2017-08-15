@@ -59,20 +59,4 @@ BaseScreen {
         }
         onClicked: mainScreen.pushScreen.openAddScreen()
     }
-
-    ListModel {
-        id: testProductModel
-
-        ListElement {
-            name: "Hairout 1"
-            image: "qrc:/examples/bob-haircuts.png"
-            cost: 25
-        }
-
-        ListElement {
-            name: "Hairout 2"
-            image: "qrc:/examples/images.png"
-            cost: 20
-        }
-    }
 }

@@ -8,20 +8,22 @@ class ProductModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
+    explicit ProductModel(QObject *parent = 0);
     enum ProductRoles {
         TitleRole = Qt::UserRole + 1,
         CostRole,
         ImageRole
     };
-    ProductModel(QObject *parent = 0);
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
+
+protected:
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 public slots:
     void add(const QString &name, double cost, const QString &currency = QString());
 
 private:
-    QList<ProductItem> m_products;
+    QList<ProductItem> mproducts;
 };
 #endif // PRODUCTMODEL_H
