@@ -37,9 +37,7 @@ BaseScreen {
             left: parent.left
             leftMargin: 40
         }
-        onClicked: {
-            mainScreen.pushScreen.initialCheckout()
-        }
+        onClicked: mainScreen.pushScreen.initialCheckout()
     }
 
     RoundButton {
@@ -59,9 +57,7 @@ BaseScreen {
         contentItem: Image {
             source: "qrc:/imgs/plus_icon.png"
         }
-        onClicked: {
-            mainScreen.pushScreen.openAddScreen()
-        }
+        onClicked: mainScreen.pushScreen.openAddScreen()
     }
 
     ListModel {

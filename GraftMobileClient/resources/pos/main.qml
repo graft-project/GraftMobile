@@ -13,6 +13,13 @@ ApplicationWindow {
         id: stack
         anchors.fill: parent
         initialItem: mainScreen
+        focus: true
+        Keys.onReleased: {
+            if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
+                pop()
+                event.accepted = true
+            }
+        }
     }
 
     ProductScreen {
@@ -21,9 +28,9 @@ ApplicationWindow {
     }
 
     function productPush() {
-        var map = {}
-        map ["openAddScreen"] = openAddingScreen
-        map ["initialCheckout"] = openPaymentScreen
+        var transitionsMap = {}
+        transitionsMap["openAddScreen"] = openAddingScreen
+        transitionsMap["initialCheckout"] = openPaymentScreen
         return map
     }
 
