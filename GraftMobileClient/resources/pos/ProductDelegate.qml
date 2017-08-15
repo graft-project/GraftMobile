@@ -6,9 +6,9 @@ import QtQuick.Controls.Material 2.2
 import "../"
 
 Rectangle {
+    property int productPrice
     property alias productImage: picture.source
     property alias productName: productText.text
-    property int productPrice
 
     height: layout.height
     color: mouseArea.pressed ? "#f2f2f2" : "transparent"
