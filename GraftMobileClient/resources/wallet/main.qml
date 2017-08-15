@@ -30,13 +30,11 @@ ApplicationWindow {
         pushScreen: openQRScanningScreen
     }
 
-    function openQRScanningScreen()
-    {
+    function openQRScanningScreen() {
         stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": openPaymentConfirmationView})
     }
 
-    function openPaymentConfirmationView()
-    {
+    function openPaymentConfirmationView() {
         stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen})
     }
 
