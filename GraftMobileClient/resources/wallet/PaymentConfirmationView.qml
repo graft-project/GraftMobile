@@ -140,7 +140,7 @@ BaseScreen {
 
     Timer {
         id: timer
-        interval: 2000;
+        interval: 2000
         onTriggered: root.state = "afterPaid"
     }
 
