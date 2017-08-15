@@ -4,7 +4,7 @@ import QtQuick.Controls 2.2
 
 BaseScreen {
     id: root
-    signal detectQRCode()
+    signal qrCodeDetected()
 
     onVisibleChanged: {
         if (visible) {
@@ -12,12 +12,14 @@ BaseScreen {
         }
     }
 
+    title: qsTr("Pay")
+
     Camera {
         id: camera
         focus {
             focusMode: Camera.FocusMacro
             focusPointMode: Camera.FocusPointCustom
-            customFocusPoint: Qt.point(0.2, 0.2)
+            customFocusPoint: Qt.point(0.5, 0.5) // Focus relative to the frame center
         }
     }
 
@@ -30,9 +32,8 @@ BaseScreen {
     }
 
     Timer {
-        interval: 1000;
-        running: true;
-        repeat: false;
+        interval: 1000
+        running: true
         onTriggered: {
             camera.stop()
             root.pushScreen()

@@ -11,7 +11,7 @@ BaseScreen {
     property real amountGraft: 0
     property real amountMoney: 0
 
-    title: qsTr("mnbvc")
+    title: qsTr("Wallet")
 
     ColumnLayout {
 

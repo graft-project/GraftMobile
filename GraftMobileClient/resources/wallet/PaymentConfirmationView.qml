@@ -14,6 +14,8 @@ BaseScreen {
     property alias balanceInUSD: currencyItem.balanceInUSD
     property alias productModel: productList.model
 
+    title: qsTr("Pay")
+
     ListModel {
         id: testProductModel
 

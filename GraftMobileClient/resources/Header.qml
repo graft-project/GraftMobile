@@ -5,7 +5,7 @@ Rectangle {
     height: 60
     color: "#707070"
 
-    signal clickMenuIcon()
+    signal menuIconClicked()
 
     property alias headerText: headerText.text
     property alias cartEnable: cartIcon.visible
@@ -14,8 +14,7 @@ Rectangle {
     onIsMenuStateChanged: {
         if (isMenuState) {
             menuIcon.source = "qrc:/imgs/menu_icon.png"
-        }
-        else {
+        } else {
             menuIcon.source = "qrc:/imgs/back.png"
         }
     }
@@ -33,7 +32,7 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: clickMenuIcon()
+                onClicked: menuIconClicked()
             }
         }
 
