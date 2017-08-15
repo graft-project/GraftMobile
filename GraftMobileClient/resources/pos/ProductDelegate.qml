@@ -4,11 +4,10 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 
-
 Rectangle {
+    property int productPrice
     property alias productImage: picture.source
     property alias productName: productText.text
-    property int productPrice
 
     height: layout.height
     color: mouseArea.pressed ? "#f2f2f2" : "transparent"

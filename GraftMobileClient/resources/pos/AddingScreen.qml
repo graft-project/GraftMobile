@@ -3,8 +3,10 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import "../components"
+import "../"
 
-Item {
+BaseScreen {
+    id: additionItem
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
@@ -89,6 +91,7 @@ Item {
 
         WideRoundButton {
             text: qsTr("Confirm")
+            onClicked: additionItem.pushScreen()
         }
     }
 }
