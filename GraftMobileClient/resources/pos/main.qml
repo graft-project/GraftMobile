@@ -31,7 +31,7 @@ ApplicationWindow {
         var transitionsMap = {}
         transitionsMap["openAddScreen"] = openAddingScreen
         transitionsMap["initialCheckout"] = openPaymentScreen
-        return map
+        return transitionsMap
     }
 
     function stackPop() {
