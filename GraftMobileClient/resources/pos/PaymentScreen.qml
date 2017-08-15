@@ -6,7 +6,7 @@ import "../components"
 import "../"
 
 BaseScreen {
-    property int price
+    property int price: 100
     property alias productListModel: productView.model
 
     ColumnLayout {

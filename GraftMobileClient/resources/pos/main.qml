@@ -9,12 +9,6 @@ ApplicationWindow {
     height: 480
     title: qsTr("POS")
 
-    //    header: Header {
-    //        headerText: qsTr("Point of Sale")
-    //        menuIcon: "qrc:/imgs/menu_icon.png"
-    //        cartIcon: "qrc:/imgs/cart_icon.png"
-    //    }
-
     StackView {
         id: stack
         anchors.fill: parent
@@ -33,21 +27,15 @@ ApplicationWindow {
         return map
     }
 
-    function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop})
-    }
-
     function stackPop() {
         stack.pop()
+    }
+
+    function openAddingScreen() {
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop})
     }
 
     function openPaymentScreen() {
         stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": stackPop})
     }
-
-
-
-
-
-
 }

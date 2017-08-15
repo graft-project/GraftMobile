@@ -5,81 +5,81 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 import "../"
 
-    Rectangle {
-        property alias productImage: picture.source
-        property alias productName: productText.text
-        property int productPrice
+Rectangle {
+    property alias productImage: picture.source
+    property alias productName: productText.text
+    property int productPrice
 
-        height: layout.height
-        color: mouseArea.pressed ? "#f2f2f2" : "transparent"
+    height: layout.height
+    color: mouseArea.pressed ? "#f2f2f2" : "transparent"
 
-        ColumnLayout {
-            id: layout
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+    ColumnLayout {
+        id: layout
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
 
-            RowLayout {
-                spacing: 16
-                Layout.topMargin: 6
-                Layout.rightMargin: 12
-                Layout.leftMargin: 12
+        RowLayout {
+            spacing: 16
+            Layout.topMargin: 6
+            Layout.rightMargin: 12
+            Layout.leftMargin: 12
 
-                OpacityMask {
-                    id: opacityMask
-                    Layout.preferredWidth: 50
-                    Layout.preferredHeight: 50
-                    source: picture
-                    maskSource: circle
+            OpacityMask {
+                id: opacityMask
+                Layout.preferredWidth: 50
+                Layout.preferredHeight: 50
+                source: picture
+                maskSource: circle
 
-                    Rectangle {
-                        id: circle
-                        width: picture.width
-                        height: picture.height
-                        radius: picture.width / 2
-                        visible: false
-                    }
-
-                    Image {
-                        id: picture
-                        width: 50
-                        height: 55
-                        visible: false
-                    }
+                Rectangle {
+                    id: circle
+                    width: picture.width
+                    height: picture.height
+                    radius: picture.width / 2
+                    visible: false
                 }
 
-                Text {
-                    id: productText
-                    Layout.fillWidth: true
-                    color: "#757575"
-                    font {
-                        family: "Liberation Sans"
-                        pointSize: 13
-                    }
-                }
-
-                Text {
-                    id: price
-                    text: "$ " + productPrice
-                    color: "#757575"
-                    font {
-                        family: "Liberation Sans"
-                        pointSize: 13
-                    }
+                Image {
+                    id: picture
+                    width: 50
+                    height: 55
+                    visible: false
                 }
             }
 
-            Rectangle {
-                Layout.preferredHeight: 1.6
-                Layout.alignment: Qt.AlignBottom
+            Text {
+                id: productText
                 Layout.fillWidth: true
-                color: "#d7d7d7"
+                color: "#757575"
+                font {
+                    family: "Liberation Sans"
+                    pointSize: 13
+                }
+            }
+
+            Text {
+                id: price
+                text: "$ " + productPrice
+                color: "#757575"
+                font {
+                    family: "Liberation Sans"
+                    pointSize: 13
+                }
             }
         }
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
+        Rectangle {
+            Layout.preferredHeight: 1.6
+            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            color: "#d7d7d7"
         }
     }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+    }
+}

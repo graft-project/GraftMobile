@@ -6,7 +6,7 @@ import "../components"
 import "../"
 
 BaseScreen {
-    id: rootItem
+    id: additionItem
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
@@ -91,7 +91,7 @@ BaseScreen {
 
         WideRoundButton {
             text: qsTr("Confirm")
-            onClicked: rootItem.pushScreen()
+            onClicked: additionItem.pushScreen()
         }
     }
 }
