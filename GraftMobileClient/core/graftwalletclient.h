@@ -16,6 +16,7 @@ signals:
     void rejectPayReceived(bool result);
     void payReceived(bool result);
     void payStatusReceived(bool result);
+    void errorReceived();
 
 public slots:
     void readyToPay(const QString &data);

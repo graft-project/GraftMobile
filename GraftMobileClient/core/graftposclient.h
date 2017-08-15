@@ -14,6 +14,7 @@ public:
 signals:
     void saleReceived(bool result);
     void saleStatusReceived(bool approved);
+    void errorReceived();
 
 public slots:
     void sale();

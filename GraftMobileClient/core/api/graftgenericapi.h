@@ -22,6 +22,9 @@ public:
     explicit GraftGenericAPI(const QUrl &url, QObject *parent = nullptr);
     virtual ~GraftGenericAPI();
 
+signals:
+    void error();
+
 protected:
     QJsonObject processReply();
 

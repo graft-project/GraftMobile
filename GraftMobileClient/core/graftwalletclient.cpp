@@ -12,6 +12,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     connect(mApi, &GraftWalletAPI::payReceived, this, &GraftWalletClient::receivePay);
     connect(mApi, &GraftWalletAPI::getPayStatusReceived,
             this, &GraftWalletClient::receivePayStatus);
+    connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
 }
 
 void GraftWalletClient::readyToPay(const QString &data)
@@ -49,9 +50,9 @@ void GraftWalletClient::receiveRejectPay(int result)
 
 void GraftWalletClient::receivePay(int result)
 {
-    const bool isSomeName = (result == 0);
-    emit payReceived(isSomeName);
-    if (isSomeName)
+    const bool isStatusOk = (result == 0);
+    emit payReceived(isStatusOk);
+    if (isStatusOk)
     {
         getPayStatus();
     }

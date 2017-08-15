@@ -10,6 +10,7 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
             this, &GraftPOSClient::receiveSaleStatus);
+    connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
 }
 
 void GraftPOSClient::sale()
@@ -24,9 +25,9 @@ void GraftPOSClient::getSaleStatus()
 
 void GraftPOSClient::receiveSale(int result)
 {
-    const bool isSomeName = (result == 0);
-    emit saleReceived(isSomeName);
-    if (isSomeName)
+    const bool isStatusOk = (result == 0);
+    emit saleReceived(isStatusOk);
+    if (isStatusOk)
     {
         getSaleStatus();
     }

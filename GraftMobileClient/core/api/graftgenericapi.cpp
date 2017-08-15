@@ -23,9 +23,22 @@ GraftGenericAPI::~GraftGenericAPI()
 
 QJsonObject GraftGenericAPI::processReply()
 {
-    QJsonObject object = QJsonDocument::fromJson(mReply->readAll()).object();
-    qDebug() << object.toVariantMap();
-    mReply->deleteLater();
-    mReply = nullptr;
-    return object;
+    if (mReply->error() == QNetworkReply::NoError)
+    {
+        QByteArray rawData = mReply->readAll();
+        mReply->deleteLater();
+        mReply = nullptr;
+        if (!rawData.isEmpty())
+        {
+            QJsonObject object = QJsonDocument::fromJson(rawData).object();
+            qDebug() << object.toVariantMap();
+            if (object.isEmpty())
+            {
+                emit error();
+            }
+            return object;
+        }
+        emit error();
+    }
+    return QJsonObject();
 }
