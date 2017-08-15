@@ -1,17 +1,20 @@
-import QtQuick 2.9
 import QtQml 2.2
+import QtQuick 2.9
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
-import QtQuick.Layouts 1.3
-import QtQuick.Controls.Styles 1.4
 import "../"
+import "../components"
 
-Item {
+BaseScreen {
+    id: root
     property alias totalAmount: totalViewItem.totalAmount
     property alias currencyModel: currencyItem.currencyModel
     property alias balanceInGraft: currencyItem.balanceInGraft
     property alias balanceInUSD: currencyItem.balanceInUSD
     property alias productModel: productList.model
+
+    title: qsTr("Pay")
 
     ListModel {
         id: testProductModel
@@ -97,30 +100,10 @@ Item {
                     Layout.fillWidth: true
                 }
 
-                RoundButton {
+                WideRoundButton {
                     id: confirmButton
-                    highlighted: true
-                    topPadding: 15
-                    bottomPadding: 15
-                    Material.elevation: 1
-                    Material.accent: "#707070"
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignCenter
-                    Layout.leftMargin: 20
-                    Layout.rightMargin: 20
-                    radius: 15
                     text: qsTr("Confirm")
-                    font {
-                        family: "Liberation Sans"
-                        pointSize: 12
-                        capitalization: Font.MixedCase
-                    }
-                    onClicked: {
-                        timer.running = true
-                        busyIndicator.visible = true
-                        busyIndicator.running = true
-                        column.enabled = false
-                    }
+                    onClicked: root.state = "beforePaid"
                 }
             }
 
@@ -148,6 +131,7 @@ Item {
     BusyIndicator {
         id: busyIndicator
         visible: false
+        running: false
         anchors {
             verticalCenterOffset: -60
             centerIn: parent
@@ -156,14 +140,45 @@ Item {
 
     Timer {
         id: timer
-        interval: 2000;
-        running: false;
-        repeat: false;
-        onTriggered: {
-            stack.currentIndex = 1
-            running: false
-            column.enabled = true
-            busyIndicator.visible = false
-        }
+        interval: 2000
+        onTriggered: root.state = "afterPaid"
     }
+
+    states: [
+        State {
+            name: "beforePaid"
+            PropertyChanges {
+                target: timer
+                running: true
+            }
+            PropertyChanges {
+                target: busyIndicator
+                visible: true
+                running: true
+            }
+            PropertyChanges {
+                target: column
+                enabled: false
+            }
+        },
+        State {
+            name: "afterPaid"
+            PropertyChanges {
+                target: stack
+                currentIndex: 1
+            }
+            PropertyChanges {
+                target: timer
+                running: false
+            }
+            PropertyChanges {
+                target: column
+                enabled: true
+            }
+            PropertyChanges {
+                target: busyIndicator
+                visible: false
+            }
+        }
+    ]
 }
