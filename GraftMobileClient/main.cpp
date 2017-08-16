@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QQmlContext>
-#include "PosSources/productmodel.h"
+#include "pos/productmodel.h"
 
 int main(int argc, char *argv[])
 {
