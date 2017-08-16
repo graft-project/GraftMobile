@@ -3,6 +3,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDebug>
+#include <QJsonDocument>
 //    JSON структура !!!
 //    [
 //    {
@@ -47,31 +48,9 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
         object.insert("imagePath", item->imagePath());
         array.append(object);
     }
-
-//    for (int i = 0; i < items.count(); ++i)
-//    {
-//        ProductItem *item = items.at(i);
-//        QJsonObject object;
-//        object.insert("cost", item->cost());
-//        array.append(object);
-//    }
-
-//    for (int i = 0; i < items.count(); ++i)
-//    {
-//        ProductItem *item = items.at(i);
-//        QJsonObject object;
-//        object.insert("currency", item->currency());
-//        array.append(object);
-//    }
-
-//    for (int i = 0; i < items.count(); ++i)
-//    {
-//        ProductItem *item = items.at(i);
-//        QJsonObject object;
-//        object.insert("imagePath", item->imagePath());
-//        array.append(object);
-//    }
+    QJsonDocument doc(array);
     qDebug() << array;
+    return doc.toJson();
 
 
 
