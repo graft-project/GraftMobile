@@ -17,17 +17,18 @@ public:
     };
 
     explicit ProductModel(QObject *parent = 0);
+    ~ProductModel();
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-
-protected:
-    QHash<int, QByteArray> roleNames() const;
 
 public slots:
     void add(const QString &imagePath, const QString &name, double cost,
              const QString &currency = QString());
 
+protected:
+    QHash<int, QByteArray> roleNames() const;
+
 private:
-    QVector<ProductItem> mProducts;
+    QVector<ProductItem*> mProducts;
 };
 #endif // PRODUCTMODEL_H
