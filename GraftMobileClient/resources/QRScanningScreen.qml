@@ -40,7 +40,7 @@ BaseScreen {
         id: captureZone
         color: "transparent"
         Rectangle {
-            width: parent.width / 2
+            width: parent.width * 0.75
             height: width
             anchors.centerIn: parent
         }
@@ -67,11 +67,10 @@ BaseScreen {
         }
 
         decoder {
-            enabledDecoders: QZXing.DecoderFormat_EAN_13 | QZXing.DecoderFormat_QR_CODE
+            enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                console.log(tag + " | " + decoder.foundedFormat() + " | " + decoder.charSet());
-                lastTag = tag;
+                console.log(tag + " | " + " | " + decoder.charSet());
             }
 
             tryHarder: false
