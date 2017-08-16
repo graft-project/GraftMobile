@@ -40,6 +40,7 @@ void GraftWalletClient::getPayStatus()
 
 void GraftWalletClient::receiveReadyToPay(int result, const QString &transaction)
 {
+    Q_UNUSED(transaction);
     emit readyToPayReceived(result == 0);
 }
 
