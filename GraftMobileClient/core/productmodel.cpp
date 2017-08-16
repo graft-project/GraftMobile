@@ -65,3 +65,8 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[CurrencyRole] = "currency";
     return roles;
 }
+
+QVector<ProductItem *> ProductModel::products() const
+{
+    return mProducts;
+}
