@@ -35,7 +35,7 @@ ApplicationWindow {
     }
 
     function openPaymentConfirmationView() {
-        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen})
+        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen, "totalAmount": 100, "currencyModel": ["Graft", "USD"], "balanceInGraft": 1, "balanceInUSD": 200})
     }
 
     function openBalanceScreen() {

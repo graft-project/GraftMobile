@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QZXing.h>
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +8,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    QZXing::registerQMLTypes();
 #ifdef POS_BUILD
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
