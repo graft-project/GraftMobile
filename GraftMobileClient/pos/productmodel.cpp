@@ -18,19 +18,29 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
 
     const ProductItem &productItem = mProducts[index.row()];
 
-    if (role == TitleRole)
-    {
+    switch (role) {
+    case TitleRole:
         return productItem.name();
-    }
-    else if (role == CostRole)
-    {
+    case CostRole:
         return productItem.cost();
+    case ImageRole:
+        return productItem.imagePath();
+    case CurrencyRole:
+        if(productItem.currency() == QLatin1String("USD"))
+        {
+            return "$";
+        }
+        else if (productItem.currency() == QLatin1String("GRAFT"))
+        {
+            return "g";
+        }
+        else
+        {
+            return "$";
+        }
+    default:
+        return QVariant();
     }
-    else if (role == ImageRole)
-    {
-        return productItem.image();
-    }
-    return QVariant();
 }
 
 QHash<int, QByteArray> ProductModel::roleNames() const
@@ -38,13 +48,15 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[TitleRole] = "name";
     roles[CostRole] = "cost";
-    roles[ImageRole] = "image";
+    roles[ImageRole] = "imagePath";
+    roles[CurrencyRole] = "currency";
     return roles;
 }
 
-void ProductModel::add(const QString &name, double cost, const QString &currency)
+void ProductModel::add(const QString &imagePath, const QString &name, double cost,
+                       const QString &currency)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mProducts << (ProductItem("qrc:/examples/bob-haircuts.png", name, cost));
+    mProducts << (ProductItem(imagePath, name, cost, currency));
     endInsertRows();
 }

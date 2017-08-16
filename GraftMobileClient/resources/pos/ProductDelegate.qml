@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 
 Rectangle {
-    property alias productPrice: price.text
+    property real productPrice
     property alias productImage: picture.source
     property alias productName: productText.text
 

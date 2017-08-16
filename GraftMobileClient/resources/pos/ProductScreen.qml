@@ -20,7 +20,7 @@ BaseScreen {
         id: productDelegate
         ProductDelegate {
             width: productList.width
-            productImage: image
+            productImage: imagePath
             productName: name
             productPrice: cost
         }

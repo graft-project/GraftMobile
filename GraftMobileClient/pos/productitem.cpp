@@ -3,15 +3,17 @@
 ProductItem::ProductItem()
 {}
 
-ProductItem::ProductItem(const QString &image, const QString &name, double cost)
-    : mImage(image),
+ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost,
+                         const QString &currency)
+    : mImagePath(imagePath),
       mName(name),
-      mCost(cost)
+      mCost(cost),
+      mCurrency(currency)
 {}
 
-QString ProductItem::image() const
+QString ProductItem::imagePath() const
 {
-    return mImage;
+    return mImagePath;
 }
 
 QString ProductItem::name() const
@@ -22,4 +24,9 @@ QString ProductItem::name() const
 double ProductItem::cost() const
 {
     return mCost;
+}
+
+QString ProductItem::currency() const
+{
+    return mCurrency;
 }
