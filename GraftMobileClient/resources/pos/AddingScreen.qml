@@ -40,7 +40,10 @@ BaseScreen {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
                 Layout.preferredHeight: graftCBox.height
-                validator: DoubleValidator {}
+                validator: DoubleValidator {
+                    decimals: 3
+                    notation: DoubleValidator.StandardNotation
+                }
             }
 
             ColumnLayout {
@@ -92,8 +95,8 @@ BaseScreen {
         WideRoundButton {
             text: qsTr("Confirm")
             onClicked: {
-                additionItem.pushScreen()
                 productModel.add(title.text, parseFloat(price.text), graftCBox.currentText)
+                additionItem.pushScreen()
             }
         }
     }

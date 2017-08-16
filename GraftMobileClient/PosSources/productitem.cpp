@@ -1,22 +1,25 @@
 #include "productitem.h"
 
+ProductItem::ProductItem()
+{}
+
 ProductItem::ProductItem(const QString &image, const QString &name, double cost)
-    : mimage(image),
-      mname(name),
-      mcost(cost)
+    : mImage(image),
+      mName(name),
+      mCost(cost)
 {}
 
 QString ProductItem::image() const
 {
-    return mimage;
+    return mImage;
 }
 
 QString ProductItem::name() const
 {
-    return mname;
+    return mName;
 }
 
 double ProductItem::cost() const
 {
-    return mcost;
+    return mCost;
 }
