@@ -31,7 +31,7 @@ ApplicationWindow {
         var transitionsMap = {}
         transitionsMap["openAddScreen"] = openAddingScreen
         transitionsMap["initialCheckout"] = openPaymentScreen
-        return map
+        return transitionsMap
     }
 
     function stackPop() {
@@ -39,7 +39,8 @@ ApplicationWindow {
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop})
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop,
+                    "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {

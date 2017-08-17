@@ -20,7 +20,7 @@ BaseScreen {
         id: productDelegate
         ProductDelegate {
             width: productList.width
-            productImage: image
+            productImage: imagePath
             productName: name
             productPrice: cost
         }
@@ -58,21 +58,5 @@ BaseScreen {
             source: "qrc:/imgs/plus_icon.png"
         }
         onClicked: mainScreen.pushScreen.openAddScreen()
-    }
-
-    ListModel {
-        id: productModel
-
-        ListElement {
-            name: "Hairout 1"
-            image: "qrc:/examples/bob-haircuts.png"
-            cost: 25
-        }
-
-        ListElement {
-            name: "Hairout 2"
-            image: "qrc:/examples/images.png"
-            cost: 20
-        }
     }
 }

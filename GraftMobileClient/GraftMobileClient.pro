@@ -24,11 +24,27 @@ else {
 TARGET = Graft.Wallet
 }
 
-
 QMAKE_INFO_PLIST += info_wallet.plist
 }
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    pos/productitem.cpp \
+    pos/productmodel.cpp \
+    core/graftposclient.cpp \
+    core/graftwalletclient.cpp \
+    core/api/graftgenericapi.cpp \
+    core/api/graftposapi.cpp \
+    core/api/graftwalletapi.cpp
+
+HEADERS += \
+    pos/productitem.h \
+    pos/productmodel.h \
+    core/config.h \
+    core/graftposclient.h \
+    core/graftwalletclient.h \
+    core/api/graftgenericapi.h \
+    core/api/graftposapi.h \
+    core/api/graftwalletapi.h
 
 RESOURCES += qml.qrc
 
