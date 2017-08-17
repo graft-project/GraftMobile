@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 ColumnLayout {
     property int price: 20
     property alias productName: productText.text
+    property alias lineVisible: bottomLine.visible
 
     spacing: 12
 
@@ -27,6 +28,7 @@ ColumnLayout {
     }
 
     Rectangle {
+        id: bottomLine
         Layout.fillWidth: true
         Layout.preferredHeight: 2
         color: "#d7d7d7"

@@ -2,6 +2,8 @@ QT += qml quick
 
 CONFIG += c++11
 
+include(QZXing.pri)
+
 contains(DEFINES, POS_BUILD) {
 
 android {
