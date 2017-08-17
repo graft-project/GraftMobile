@@ -21,6 +21,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVector<ProductItem *> products() const;
+    Q_INVOKABLE void dump();
 
 public slots:
     void add(const QString &imagePath, const QString &name, double cost,

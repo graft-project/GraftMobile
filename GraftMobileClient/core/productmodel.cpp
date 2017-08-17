@@ -54,6 +54,14 @@ QVector<ProductItem *> ProductModel::products() const
     return mProducts;
 }
 
+void ProductModel::dump()
+{
+    for(ProductItem* b : mProducts)
+    {
+        qDebug() << b->name();
+    }
+}
+
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,
                        const QString &currency)
 {

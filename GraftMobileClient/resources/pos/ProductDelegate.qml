@@ -80,5 +80,9 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+        onClicked:{
+            productName = "titleee"
+            console.log(index)
+        }
     }
 }
