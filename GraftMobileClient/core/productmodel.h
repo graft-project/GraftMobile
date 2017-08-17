@@ -20,7 +20,6 @@ public:
     ~ProductModel();
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-
     QVector<ProductItem *> products() const;
 
 public slots:

@@ -1,4 +1,5 @@
 #include "productmodel.h"
+#include <QDebug>
 
 ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
 {}
@@ -6,12 +7,6 @@ ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
 ProductModel::~ProductModel()
 {
     qDeleteAll(mProducts);
-}
-
-int ProductModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-    return mProducts.count();
 }
 
 QVariant ProductModel::data(const QModelIndex &index, int role) const
@@ -46,6 +41,12 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
     default:
         return QVariant();
     }
+}
+
+int ProductModel::rowCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return mProducts.count();
 }
 
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,
