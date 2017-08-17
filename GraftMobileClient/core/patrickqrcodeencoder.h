@@ -2,13 +2,13 @@
 #define PATRICKQRCODEENCODER_H
 
 #include <QUrl>
+#include <QImage>
 
 class PatrickQRCodeEncoder
 {
 public:
-    PatrickQRCodeEncoder();
-    PatrickQRCodeEncoder(const QString&);
-    void setUrl(const QString&);
+    PatrickQRCodeEncoder(const QString &_url = "https://www.patrick-wied.at/static/qrgen/qrgen.php") : mUrl(_url) {}
+    QImage encode(const QString&) const;
 
 private:
     const QUrl mUrl;
