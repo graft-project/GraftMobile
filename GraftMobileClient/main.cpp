@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QZXing.h>
 #include <QQuickView>
 #include <QQmlContext>
 #include "pos/productmodel.h"
@@ -7,6 +8,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QZXing::registerQMLTypes();
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
