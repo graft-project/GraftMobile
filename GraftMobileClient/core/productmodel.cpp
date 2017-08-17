@@ -49,6 +49,11 @@ int ProductModel::rowCount(const QModelIndex &parent) const
     return mProducts.count();
 }
 
+QVector<ProductItem *> ProductModel::products() const
+{
+    return mProducts;
+}
+
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,
                        const QString &currency)
 {
@@ -67,7 +72,3 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     return roles;
 }
 
-QVector<ProductItem *> ProductModel::products() const
-{
-    return mProducts;
-}
