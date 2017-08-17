@@ -1,5 +1,4 @@
 #include "productmodel.h"
-#include <QDebug>
 
 ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
 {}
@@ -71,4 +70,3 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[CurrencyRole] = "currency";
     return roles;
 }
-
