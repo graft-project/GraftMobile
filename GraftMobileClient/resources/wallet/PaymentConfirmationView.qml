@@ -72,6 +72,7 @@ BaseScreen {
                     width: productList.width
                     productName: name
                     price: cost
+                    lineVisible: index !== (productList.count - 1)
                 }
             }
 

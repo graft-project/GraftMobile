@@ -4,6 +4,12 @@ import QtQuick.Layouts 1.3
 import "../"
 
 ApplicationWindow {
+
+    property int totalAmount: 100
+    property var currencyModel: ["Graft", "USD"]
+    property int balanceInGraft: 1
+    property int balanceInUSD: 200
+
     id: root
     visible: true
     width: 320
@@ -35,7 +41,11 @@ ApplicationWindow {
     }
 
     function openPaymentConfirmationView() {
-        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen})
+        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen,
+                                                   "totalAmount": totalAmount,
+                                                   "currencyModel": currencyModel,
+                                                   "balanceInGraft": balanceInGraft,
+                                                   "balanceInUSD": balanceInUSD})
     }
 
     function openBalanceScreen() {
