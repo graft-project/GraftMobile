@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     core/graftwalletclient.cpp \
     core/api/graftgenericapi.cpp \
     core/api/graftposapi.cpp \
-    core/api/graftwalletapi.cpp
+    core/api/graftwalletapi.cpp \
+    core/patrickqrcodeencoder.cpp
 
 HEADERS += \
     pos/productitem.h \
@@ -42,7 +43,8 @@ HEADERS += \
     core/graftwalletclient.h \
     core/api/graftgenericapi.h \
     core/api/graftposapi.h \
-    core/api/graftwalletapi.h
+    core/api/graftwalletapi.h \
+    core/patrickqrcodeencoder.h
 
 RESOURCES += qml.qrc
 

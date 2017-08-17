@@ -3,11 +3,15 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include "pos/productmodel.h"
+#include "core/patrickqrcodeencoder.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
+
+    PatrickQRCodeEncoder patrik("https://www.patrick-wied.at/static/qrgen/qrgen.php");
+    patrik.setUrl("GRAFT TEST!");
 
     QQmlApplicationEngine engine;
 #ifdef POS_BUILD
