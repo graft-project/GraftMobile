@@ -9,15 +9,9 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
 #ifdef POS_BUILD
     ProductModel productModel;
-    productModel.add("aaaaa", "aaaaa", 2.0);
-
-
-
-    ProductModelSerializator::serialize(&productModel);
     engine.rootContext()->setContextProperty(QStringLiteral("productModel"), &productModel);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif

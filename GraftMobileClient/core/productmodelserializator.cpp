@@ -2,66 +2,49 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QDebug>
 #include <QJsonDocument>
-//    JSON структура !!!
-//    [
-//    {
-//       { "title:", "nameProduct"}
-//        "cost:", 12
-//        "currency", "$"
-//        "image", "qur:/picture.png"
-//    },
-//    {
-//        "title:", "nameProduct"
-//        "cost:", 12
-//        "currency", "$"
-//        "image", "qur:/picture.png"
-//    },
-//    {
-//        "title:", "nameProduct"
-//        "cost:", 12
-//        "currency", "$"
-//        "image", "qur:/picture.png"
-//    },
-//    {
-//        "title:", "nameProduct"
-//        "cost:", 12
-//        "currency", "$"
-//        "image", "qur:/picture.png"
-//    },
-//    ]
+#include <QJsonValue>
+
 ProductModelSerializator::ProductModelSerializator()
 {}
 
 QByteArray ProductModelSerializator::serialize(ProductModel *model)
 {
-    QJsonArray array;
     QVector<ProductItem*> items = model->products();
-    for (int i = 0; i < items.count(); ++i)
+    QJsonArray array;
+
+    for (ProductItem* item : items)
     {
-        ProductItem *item = items.at(i);
         QJsonObject object;
-        object.insert("title", item->name());
-        object.insert("cost", item->cost());
-        object.insert("currency", item->currency());
-        object.insert("imagePath", item->imagePath());
+        object.insert(QStringLiteral("imagePath"), item->imagePath());
+        object.insert(QStringLiteral("title"), item->name());
+        object.insert(QStringLiteral("cost"), item->cost());
+        object.insert(QStringLiteral("currency"), item->currency());
         array.append(object);
     }
     QJsonDocument doc(array);
-    qDebug() << array;
     return doc.toJson();
-
-
-
 }
 
-//QJsonObject ProductModelSerializator::object() const
-//{
+void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel *model)
+{
+    if (model)
+    {
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(array);
+        QJsonArray jsonArray = jsonDoc.array();
 
-//}
+        for(int i = 0; i < jsonArray.count(); ++i)
+        {
+            QJsonObject jsonObject = jsonArray.at(i).toObject();
+            model->add(jsonObject.value(QLatin1String("imagePath")).toString(),
+                       jsonObject.value(QLatin1String("title")).toString(),
+                       jsonObject.value(QLatin1String("cost")).toDouble(),
+                       jsonObject.value(QLatin1String("currency")).toString());
 
-//ProductModel *ProductModelSerializator::deserialize(const QByteArray &array)
-//{
-
-//}
+            for(QString keyItem : jsonObject.keys())
+            {
+                QJsonValue value = jsonObject.value(keyItem);
+            }
+        }
+    }
+}

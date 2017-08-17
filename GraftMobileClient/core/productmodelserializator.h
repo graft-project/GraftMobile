@@ -2,14 +2,14 @@
 #define PRODUCTMODELSERIALIZATOR_H
 
 #include "productmodel.h"
+#include <QJsonArray>
 
 class ProductModelSerializator
 {
 public:
     ProductModelSerializator();
-
     static QByteArray serialize(ProductModel *model);
-//    static ProductModel *deserialize(const QByteArray &array);
+    static void deserialize(const QByteArray &array, ProductModel *model);
 
 //    void QJsonArray::append(const QJsonValue &value);
 
