@@ -61,10 +61,11 @@ BaseScreen {
     QZXingFilter {
         id: zxingFilter
         captureRect: {
-            return videoOutput.mapRectToSource(videoOutput.mapNormalizedRectToItem(Qt.rect(
-                                                                                       0, 0, 1, 1
-                                                                                       )));
+            var rect = Qt.rect(0, 0, 1, 1)
+            var normalizedRect = videoOutput.mapNormalizedRectToItem(rect)
+            return videoOutput.mapRectToSource(normalizedRect)
         }
+
 
         decoder {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
