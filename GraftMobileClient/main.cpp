@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
     QZXing::registerQMLTypes();
+    QQmlApplicationEngine engine;
 #ifdef POS_BUILD
     ProductModel productModel;
     engine.rootContext()->setContextProperty(QStringLiteral("productModel"), &productModel);
