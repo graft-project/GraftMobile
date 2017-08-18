@@ -12,7 +12,6 @@ class PatrickQRCodeEncoder : public QObject
     Q_OBJECT
 public:
     PatrickQRCodeEncoder(QObject *parent = nullptr);
-    ~PatrickQRCodeEncoder();
     QImage encode(const QString &message);
 
 private:

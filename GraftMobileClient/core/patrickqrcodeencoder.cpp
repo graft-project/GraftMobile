@@ -6,16 +6,11 @@
 #include <QUrlQuery>
 #include <QDebug>
 
-
+static const QString url = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
 
 PatrickQRCodeEncoder::PatrickQRCodeEncoder(QObject *parent)
-    : QObject(parent), mUrl("https://www.patrick-wied.at/static/qrgen/qrgen.php"), manager(new QNetworkAccessManager(this))
+    : QObject(parent), mUrl(url), manager(new QNetworkAccessManager(this))
 {
-}
-
-PatrickQRCodeEncoder::~PatrickQRCodeEncoder()
-{
-    delete manager;
 }
 
 QImage PatrickQRCodeEncoder::encode(const QString &message)
