@@ -12,11 +12,11 @@ class PatrickQRCodeEncoder : public QObject
     Q_OBJECT
 public:
     PatrickQRCodeEncoder(QObject *parent = nullptr);
-    QImage encode(const QString &message);
+    QImage encode(const QString &cMessage);
 
 private:
     QUrl mUrl;
-    QNetworkAccessManager *manager;
+    QNetworkAccessManager *mManager;
 };
 
 #endif // PATRICKQRCODEENCODER_H

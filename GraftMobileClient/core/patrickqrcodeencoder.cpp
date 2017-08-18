@@ -6,24 +6,24 @@
 #include <QUrlQuery>
 #include <QDebug>
 
-static const QString url = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
+static const QString scUrl = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
 
 PatrickQRCodeEncoder::PatrickQRCodeEncoder(QObject *parent)
-    : QObject(parent), mUrl(url), manager(new QNetworkAccessManager(this))
+    : QObject(parent), mUrl(scUrl), mManager(new QNetworkAccessManager(this))
 {
 }
 
-QImage PatrickQRCodeEncoder::encode(const QString &message)
+QImage PatrickQRCodeEncoder::encode(const QString &cMessage)
 {
     QUrlQuery query;
     query.addQueryItem("r", QString::number(19));
     query.addQueryItem("a", QString::number(0));
-    query.addQueryItem("content", message);
+    query.addQueryItem("content", cMessage);
     mUrl.setQuery(query);
 
     QNetworkRequest requestToQRCode(mUrl);
 
-    QNetworkReply *reply = manager->get(requestToQRCode);
+    QNetworkReply *reply = mManager->get(requestToQRCode);
 
     while (!reply->isFinished())
     {
