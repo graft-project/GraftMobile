@@ -12,31 +12,6 @@ ProductItem::ProductItem(const QString &imagePath, const QString &name, double c
       mCurrency(currency)
 {}
 
-QString ProductItem::imagePath() const
-{
-    return mImagePath;
-}
-
-QString ProductItem::name() const
-{
-    return mName;
-}
-
-double ProductItem::cost() const
-{
-    return mCost;
-}
-
-bool ProductItem::stance() const
-{
-    return mStance;
-}
-
-QString ProductItem::currency() const
-{
-    return mCurrency;
-}
-
 void ProductItem::setImagePath(const QString &imagePath)
 {
     mImagePath = imagePath;
@@ -62,3 +37,27 @@ void ProductItem::setCurrency(const QString &currency)
     mCurrency = currency;
 }
 
+QString ProductItem::imagePath() const
+{
+    return mImagePath;
+}
+
+QString ProductItem::name() const
+{
+    return mName;
+}
+
+double ProductItem::cost() const
+{
+    return mCost;
+}
+
+bool ProductItem::stance() const
+{
+    return mStance;
+}
+
+QString ProductItem::currency() const
+{
+    return mCurrency;
+}

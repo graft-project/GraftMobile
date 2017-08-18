@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonValue>
+#include <QDebug>
 
 ProductModelSerializator::ProductModelSerializator()
 {}
@@ -19,6 +20,7 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
         object.insert(QStringLiteral("imagePath"), item->imagePath());
         object.insert(QStringLiteral("title"), item->name());
         object.insert(QStringLiteral("cost"), item->cost());
+        object.insert(QStringLiteral("stance"), item->stance());
         object.insert(QStringLiteral("currency"), item->currency());
         array.append(object);
     }
@@ -28,6 +30,7 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
 
 void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel *model)
 {
+    Q_ASSERT(model);
     if (model)
     {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(array);
@@ -41,11 +44,6 @@ void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel
                        jsonObject.value(QLatin1String("cost")).toDouble(),
                        jsonObject.value(QLatin1String("stance")).toBool(),
                        jsonObject.value(QLatin1String("currency")).toString());
-
-            for(QString keyItem : jsonObject.keys())
-            {
-                QJsonValue value = jsonObject.value(keyItem);
-            }
         }
     }
 }

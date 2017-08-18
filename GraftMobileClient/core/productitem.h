@@ -16,13 +16,9 @@ public:
     QString currency() const;
 
     void setImagePath(const QString &imagePath);
-
     void setName(const QString &name);
-
     void setCost(double cost);
-
     void setStance(bool stance);
-
     void setCurrency(const QString &currency);
 
 private:

@@ -39,10 +39,7 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
             return "$";
         }
     case StateRole:
-//        if()
-//        {
-            return productItem->stance();
-//        }
+        return productItem->stance();
     default:
         return QVariant();
     }
@@ -50,32 +47,32 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
 
 bool ProductModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-     if (index.isValid() && value.isValid() && data(index, role) != value)
-     {
-         switch (role)
-         {
-         case TitleRole:
-             mProducts[index.row()]->setName(value.toString());
-             break;
-         case CostRole:
-             mProducts[index.row()]->setCost(value.toDouble());
-             break;
-         case ImageRole:
-             mProducts[index.row()]->setImagePath(value.toString());
-             break;
-         case CurrencyRole:
-             mProducts[index.row()]->setCurrency(value.toString());
-             break;
-         case StateRole:
-             mProducts[index.row()]->setStance(value.toBool());
-             break;
-         default:
-             break;
-         }
-         emit dataChanged(index, index, QVector<int>() << role);
-         return true;
-     }
-     return false;
+    if (index.isValid() && value.isValid() && data(index, role) != value)
+    {
+        switch (role)
+        {
+        case TitleRole:
+            mProducts[index.row()]->setName(value.toString());
+            break;
+        case CostRole:
+            mProducts[index.row()]->setCost(value.toDouble());
+            break;
+        case ImageRole:
+            mProducts[index.row()]->setImagePath(value.toString());
+            break;
+        case CurrencyRole:
+            mProducts[index.row()]->setCurrency(value.toString());
+            break;
+        case StateRole:
+            mProducts[index.row()]->setStance(value.toBool());
+            break;
+        default:
+            break;
+        }
+        emit dataChanged(index, index, QVector<int>() << role);
+        return true;
+    }
+    return false;
 }
 
 int ProductModel::rowCount(const QModelIndex &parent) const
