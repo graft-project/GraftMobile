@@ -9,7 +9,9 @@
 static const QString scUrl = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
 
 PatrickQRCodeEncoder::PatrickQRCodeEncoder(QObject *parent)
-    : QObject(parent), mUrl(scUrl), mManager(new QNetworkAccessManager(this))
+    : QObject(parent),
+    mUrl(scUrl),
+    mManager(new QNetworkAccessManager(this))
 {
 }
 
