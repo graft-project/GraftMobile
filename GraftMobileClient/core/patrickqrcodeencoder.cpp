@@ -50,6 +50,5 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
 
     reply->deleteLater();
 
-
     return rImage;
 }
