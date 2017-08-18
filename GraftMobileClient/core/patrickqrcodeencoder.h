@@ -7,12 +7,12 @@
 
 class QNetworkAccessManager;
 
-class PatrickQRCodeEncoder : public QObject
+class PatrickQRCodeEncoder
 {
-    Q_OBJECT
 public:
-    PatrickQRCodeEncoder(QObject *parent = nullptr);
-    QImage encode(const QString &cMessage);
+    PatrickQRCodeEncoder();
+    ~PatrickQRCodeEncoder();
+    QImage encode(const QString &message);
 
 private:
     QUrl mUrl;

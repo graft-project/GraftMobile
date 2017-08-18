@@ -8,19 +8,23 @@
 
 static const QString scUrl = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
 
-PatrickQRCodeEncoder::PatrickQRCodeEncoder(QObject *parent)
-    : QObject(parent),
+PatrickQRCodeEncoder::PatrickQRCodeEncoder():
     mUrl(scUrl),
-    mManager(new QNetworkAccessManager(this))
+    mManager(new QNetworkAccessManager())
 {
 }
 
-QImage PatrickQRCodeEncoder::encode(const QString &cMessage)
+PatrickQRCodeEncoder::~PatrickQRCodeEncoder()
+{
+    mManager->deleteLater();
+}
+
+QImage PatrickQRCodeEncoder::encode(const QString &message)
 {
     QUrlQuery query;
     query.addQueryItem("r", QString::number(19));
     query.addQueryItem("a", QString::number(0));
-    query.addQueryItem("content", cMessage);
+    query.addQueryItem("content", message);
     mUrl.setQuery(query);
 
     QNetworkRequest requestToQRCode(mUrl);
@@ -45,6 +49,7 @@ QImage PatrickQRCodeEncoder::encode(const QString &cMessage)
     }
 
     reply->deleteLater();
+
 
     return rImage;
 }
