@@ -21,7 +21,7 @@ DEFINES+=WALLET_BUILD
 Clone from upstream while borrowing from an existing local directory:
 
 ```
-$ git clone --referenc git clone https://git.vakoms.com/qt-team/graft-mobile-client.git
+$ git clone --recursive https://git.vakoms.com/qt-team/graft-mobile-client.git
 ```
 
 Also, you can write:
