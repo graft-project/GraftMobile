@@ -1,7 +1,9 @@
 #ifndef PRODUCTMODELSERIALIZATOR_H
 #define PRODUCTMODELSERIALIZATOR_H
 
-#include "productmodel.h"
+#include <QByteArray>
+
+class ProductModel;
 
 class ProductModelSerializator
 {
