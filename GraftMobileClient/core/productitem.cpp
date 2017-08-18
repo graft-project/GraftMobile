@@ -37,3 +37,28 @@ QString ProductItem::currency() const
     return mCurrency;
 }
 
+void ProductItem::setImagePath(const QString &imagePath)
+{
+    mImagePath = imagePath;
+}
+
+void ProductItem::setName(const QString &name)
+{
+    mName = name;
+}
+
+void ProductItem::setCost(double cost)
+{
+    mCost = cost;
+}
+
+void ProductItem::setStance(bool stance)
+{
+    mStance = stance;
+}
+
+void ProductItem::setCurrency(const QString &currency)
+{
+    mCurrency = currency;
+}
+

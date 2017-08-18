@@ -39,8 +39,8 @@ void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel
             model->add(jsonObject.value(QLatin1String("imagePath")).toString(),
                        jsonObject.value(QLatin1String("title")).toString(),
                        jsonObject.value(QLatin1String("cost")).toDouble(),
-                       jsonObject.value(QLatin1String("currency")).toString(),
-                       jsonObject.value(QLatin1String("stance")).toString());
+                       jsonObject.value(QLatin1String("stance")).toBool(),
+                       jsonObject.value(QLatin1String("currency")).toString());
 
             for(QString keyItem : jsonObject.keys())
             {
