@@ -37,7 +37,6 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
     }
 
     QImage rImage;
-
     if (reply->error())
     {
         qDebug() << "\nError in reply: " << reply->errorString() << '\n';
@@ -47,7 +46,6 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
         QByteArray downloadedData = reply->readAll();
         rImage = QImage::fromData(downloadedData);
     }
-
     reply->deleteLater();
 
     return rImage;
