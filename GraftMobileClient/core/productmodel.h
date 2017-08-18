@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QString>
+
 #include "productitem.h"
 
 class ProductModel : public QAbstractListModel

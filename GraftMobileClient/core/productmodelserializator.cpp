@@ -1,12 +1,9 @@
 #include "productmodelserializator.h"
 
+#include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QJsonDocument>
 #include <QJsonValue>
-
-ProductModelSerializator::ProductModelSerializator()
-{}
 
 QByteArray ProductModelSerializator::serialize(ProductModel *model)
 {
@@ -22,6 +19,7 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
         object.insert(QStringLiteral("currency"), item->currency());
         array.append(object);
     }
+
     QJsonDocument doc(array);
     return doc.toJson();
 }
@@ -40,11 +38,6 @@ void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel
                        jsonObject.value(QLatin1String("title")).toString(),
                        jsonObject.value(QLatin1String("cost")).toDouble(),
                        jsonObject.value(QLatin1String("currency")).toString());
-
-            for(QString keyItem : jsonObject.keys())
-            {
-                QJsonValue value = jsonObject.value(keyItem);
-            }
         }
     }
 }
