@@ -4,22 +4,29 @@
 #include <QNetworkReply>
 #include <QByteArray>
 #include <QUrlQuery>
-#include <QImage>
 #include <QDebug>
 
-QImage PatrickQRCodeEncoder::encode(const QString &message) const
-{
-    QUrl link = mUrl;
 
+
+PatrickQRCodeEncoder::PatrickQRCodeEncoder(QObject *parent)
+    : QObject(parent), mUrl("https://www.patrick-wied.at/static/qrgen/qrgen.php"), manager(new QNetworkAccessManager(this))
+{
+}
+
+PatrickQRCodeEncoder::~PatrickQRCodeEncoder()
+{
+    delete manager;
+}
+
+QImage PatrickQRCodeEncoder::encode(const QString &message)
+{
     QUrlQuery query;
     query.addQueryItem("r", QString::number(19));
     query.addQueryItem("a", QString::number(0));
     query.addQueryItem("content", message);
-    link.setQuery(query);
+    mUrl.setQuery(query);
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager;
-
-    QNetworkRequest requestToQRCode(link);
+    QNetworkRequest requestToQRCode(mUrl);
 
     QNetworkReply *reply = manager->get(requestToQRCode);
 
@@ -28,6 +35,8 @@ QImage PatrickQRCodeEncoder::encode(const QString &message) const
         QCoreApplication::processEvents();
     }
 
+    QImage rImage;
+
     if (reply->error())
     {
         qDebug() << "\nError in reply: " << reply->errorString() << '\n';
@@ -35,9 +44,10 @@ QImage PatrickQRCodeEncoder::encode(const QString &message) const
     else
     {
         QByteArray downloadedData = reply->readAll();
-        qDebug() << '\n' << downloadedData << '\n';
-        return QImage::fromData(downloadedData);
+        rImage = QImage::fromData(downloadedData);
     }
 
-    return QImage();
+    reply->deleteLater();
+
+    return rImage;
 }

@@ -1,17 +1,23 @@
 #ifndef PATRICKQRCODEENCODER_H
 #define PATRICKQRCODEENCODER_H
 
-#include <QUrl>
+#include <QObject>
 #include <QImage>
+#include <QUrl>
 
-class PatrickQRCodeEncoder
+class QNetworkAccessManager;
+
+class PatrickQRCodeEncoder : public QObject
 {
+    Q_OBJECT
 public:
-    PatrickQRCodeEncoder(const QString &_url = "https://www.patrick-wied.at/static/qrgen/qrgen.php") : mUrl(_url) {}
-    QImage encode(const QString&) const;
+    PatrickQRCodeEncoder(QObject *parent = nullptr);
+    ~PatrickQRCodeEncoder();
+    QImage encode(const QString &message);
 
 private:
-    const QUrl mUrl;
+    QUrl mUrl;
+    QNetworkAccessManager *manager;
 };
 
 #endif // PATRICKQRCODEENCODER_H
