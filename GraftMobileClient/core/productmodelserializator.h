@@ -10,9 +10,6 @@ public:
     ProductModelSerializator();
     static QByteArray serialize(ProductModel *model);
     static void deserialize(const QByteArray &array, ProductModel *model);
-
-//    void QJsonArray::append(const QJsonValue &value);
-
 };
 
 #endif // PRODUCTMODELSERIALIZATOR_H

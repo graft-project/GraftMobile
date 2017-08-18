@@ -13,7 +13,8 @@ public:
         TitleRole = Qt::UserRole + 1,
         CostRole,
         ImageRole,
-        CurrencyRole
+        CurrencyRole,
+        StateRole
     };
 
     explicit ProductModel(QObject *parent = 0);
@@ -21,11 +22,11 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVector<ProductItem *> products() const;
-    Q_INVOKABLE void dump();
+//    Q_INVOKABLE void dump();
 
 public slots:
-    void add(const QString &imagePath, const QString &name, double cost,
-             const QString &currency = QString());
+    void add(const QString &imagePath, const QString &name, double cost, bool stance,
+             const QString &currency = QString() );
 
 protected:
     QHash<int, QByteArray> roleNames() const;

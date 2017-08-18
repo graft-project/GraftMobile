@@ -38,6 +38,11 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
         {
             return "$";
         }
+    case StateRole:
+//        if()
+//        {
+            return productItem->stance();
+//        }
     default:
         return QVariant();
     }
@@ -54,19 +59,19 @@ QVector<ProductItem *> ProductModel::products() const
     return mProducts;
 }
 
-void ProductModel::dump()
-{
-    for(ProductItem* b : mProducts)
-    {
-        qDebug() << b->name();
-    }
-}
+//void ProductModel::dump()
+//{
+//    for(ProductItem* b : mProducts)
+//    {
+//        qDebug() << b->name();
+//    }
+//}
 
-void ProductModel::add(const QString &imagePath, const QString &name, double cost,
+void ProductModel::add(const QString &imagePath, const QString &name, double cost, bool stance,
                        const QString &currency)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mProducts << (new ProductItem(imagePath, name, cost, currency));
+    mProducts << (new ProductItem(imagePath, name, cost, stance, currency));
     endInsertRows();
 }
 
@@ -77,6 +82,7 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[CostRole] = "cost";
     roles[ImageRole] = "imagePath";
     roles[CurrencyRole] = "currency";
+    roles[StateRole] = "stance";
     return roles;
 }
 
