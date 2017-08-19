@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import com.pos.graft 1.0
 import "../components"
 import "../"
 
@@ -54,12 +55,12 @@ BaseScreen {
                 }
             }
 
-            Image {
-                id: qrCodePicture
-                source: "qrc:/examples/QRCode_images.png"
+            QRCodeView {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: totalCostLayout.height
                 Layout.preferredWidth: totalCostLayout.height
+                // TODO: Please, launch client here.
+                // For example: client: graftClient
             }
         }
 
