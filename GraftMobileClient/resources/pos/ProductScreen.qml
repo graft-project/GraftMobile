@@ -9,6 +9,9 @@ import "../"
 BaseScreen {
     id: mainScreen
 
+    title: qsTr("Pos")
+    cartEnable: true
+
     ListView {
         id: productList
         anchors.fill: parent

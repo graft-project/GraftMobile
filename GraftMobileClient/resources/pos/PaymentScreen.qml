@@ -8,6 +8,7 @@ import "../"
 BaseScreen {
     property int price: 100
     property alias productListModel: productView.model
+    title: qsTr("Cart")
 
     ColumnLayout {
         anchors.fill: parent
