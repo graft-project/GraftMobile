@@ -23,7 +23,7 @@ Clone from upstream while borrowing from an existing local directory:
 $ git clone --recursive https://git.vakoms.com/qt-team/graft-mobile-client.git
 ```
 
-Also, If you run `git clone` non-recursively, you need to run:
+Also, if you run `git clone` non-recursively, you need to run:
 
 ```
 $ git clone --recursive https://git.vakoms.com/qt-team/graft-mobile-client.git
