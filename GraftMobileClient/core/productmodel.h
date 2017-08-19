@@ -4,7 +4,7 @@
 #include <QAbstractListModel>
 #include <QString>
 
-#include "productitem.h"
+class ProductItem;
 
 class ProductModel : public QAbstractListModel
 {

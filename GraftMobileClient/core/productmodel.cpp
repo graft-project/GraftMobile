@@ -1,4 +1,5 @@
 #include "productmodel.h"
+#include "productitem.h"
 
 ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
 {}

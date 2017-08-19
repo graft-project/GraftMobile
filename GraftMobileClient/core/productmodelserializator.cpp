@@ -1,5 +1,6 @@
 #include "productmodelserializator.h"
 #include "productmodel.h"
+#include "productitem.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
