@@ -8,7 +8,6 @@ import "../"
 
 BaseScreen {
     id: mainScreen
-
     title: qsTr("Pos")
     cartEnable: true
 

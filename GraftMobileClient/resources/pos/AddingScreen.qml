@@ -7,8 +7,8 @@ import "../"
 
 BaseScreen {
     id: additionItem
-    property alias currencyModel: graftCBox.model
     title: qsTr("Add")
+    property alias currencyModel: graftCBox.model
 
     ColumnLayout {
         spacing: 3
