@@ -14,7 +14,7 @@ public:
 
     void paint(QPainter *painter) override;
 
-    Q_INVOKABLE void setClient(GraftBaseClient *client);
+    void setClient(GraftBaseClient *client);
     GraftBaseClient *client() const;
 
 signals:
