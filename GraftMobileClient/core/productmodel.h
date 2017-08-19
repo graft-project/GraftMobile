@@ -2,7 +2,6 @@
 #define PRODUCTMODEL_H
 
 #include <QAbstractListModel>
-#include <QString>
 
 class ProductItem;
 
