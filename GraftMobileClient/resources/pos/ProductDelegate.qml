@@ -10,7 +10,6 @@ Rectangle {
     property alias productName: productText.text
 
     height: layout.height
-    color: mouseArea.pressed ? "#f2f2f2" : "transparent"
 
     ColumnLayout {
         id: layout
@@ -80,9 +79,8 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked:{
-            productName = "titleee"
-            console.log(index)
+        onClicked: {
+            elected = false
         }
     }
 }

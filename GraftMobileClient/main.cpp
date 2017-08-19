@@ -3,7 +3,6 @@
 #include <QZXing.h>
 #include <QQuickView>
 #include <QQmlContext>
-#include <core/productmodelserializator.h>
 #include "core/productmodel.h"
 
 int main(int argc, char *argv[])
