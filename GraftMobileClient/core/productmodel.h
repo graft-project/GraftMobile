@@ -3,7 +3,8 @@
 
 #include <QAbstractListModel>
 #include <QString>
-#include "productitem.h"
+
+class ProductItem;
 
 class ProductModel : public QAbstractListModel
 {
@@ -20,6 +21,7 @@ public:
     ~ProductModel();
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVector<ProductItem *> products() const;
 
 public slots:
     void add(const QString &imagePath, const QString &name, double cost,
