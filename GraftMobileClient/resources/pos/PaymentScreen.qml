@@ -6,6 +6,7 @@ import "../components"
 import "../"
 
 BaseScreen {
+    title: qsTr("Cart")
     property int price: 100
     property alias productListModel: productView.model
 

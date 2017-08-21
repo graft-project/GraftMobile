@@ -7,6 +7,8 @@ import "../"
 
 BaseScreen {
     id: additionItem
+    title: qsTr("Add")
+    isMenuState: false
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
