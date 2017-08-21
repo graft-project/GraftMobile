@@ -50,3 +50,4 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
 
     return rImage;
 }
+

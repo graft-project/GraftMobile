@@ -25,6 +25,7 @@ BaseScreen {
             productImage: imagePath
             productName: name
             productPrice: cost
+            selectState: selected
         }
     }
 
