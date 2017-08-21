@@ -8,6 +8,14 @@ BaseScreen {
     id: root
     signal qrCodeDetected()
 
+    Connections {
+        target: client
+
+        onReadyToPayReceived: {
+             console.log("AAAAAAAAAAAAAAAAAA")
+         }
+    }
+
     onVisibleChanged: {
         if (visible) {
             camera.start()

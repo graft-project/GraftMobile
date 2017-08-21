@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
-    GraftWalletClient walletClient;
-    engine.rootContext()->setContextProperty("walletClient", &walletClient);
+    GraftWalletClient client;
+    engine.rootContext()->setContextProperty("client", &client);
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
 #endif
     if (engine.rootObjects().isEmpty())
