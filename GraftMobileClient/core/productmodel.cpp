@@ -86,6 +86,19 @@ QVector<ProductItem *> ProductModel::products() const
     return mProducts;
 }
 
+void ProductModel::changeSelection(int index)
+{
+    ProductItem* lProduct = mProducts.value(index);
+    if (lProduct)
+    {
+        lProduct->changeSelection();
+        QVector<int> changeRole;
+        changeRole.append(SelectedRole);
+        QModelIndex modelIndex = this->index(index);
+        emit dataChanged(modelIndex, modelIndex, changeRole);
+    }
+}
+
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,
                        const QString &currency)
 {

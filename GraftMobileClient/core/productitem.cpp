@@ -61,3 +61,8 @@ QString ProductItem::currency() const
 {
     return mCurrency;
 }
+
+void ProductItem::changeSelection()
+{
+    mSelected = !mSelected;
+}

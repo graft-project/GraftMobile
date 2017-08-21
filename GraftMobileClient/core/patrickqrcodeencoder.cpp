@@ -4,6 +4,7 @@
 #include <QNetworkReply>
 #include <QByteArray>
 #include <QUrlQuery>
+#include <QDebug>
 
 static const QString scUrl = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
 

@@ -21,6 +21,8 @@ public:
     void setSelected(bool selected);
     void setCurrency(const QString &currency);
 
+    void changeSelection();
+
 private:
     QString mImagePath;
     QString mName;
