@@ -52,7 +52,7 @@ double ProductItem::cost() const
     return mCost;
 }
 
-bool ProductItem::selected() const
+bool ProductItem::isSelected() const
 {
     return mSelected;
 }

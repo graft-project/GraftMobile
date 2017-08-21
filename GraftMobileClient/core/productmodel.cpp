@@ -26,7 +26,7 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
     case ImageRole:
         return productItem->imagePath();
     case SelectedRole:
-        return productItem->selected();
+        return productItem->isSelected();
     case CurrencyRole:
         if(productItem->currency() == QLatin1String("USD"))
         {

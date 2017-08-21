@@ -12,7 +12,7 @@ public:
     QString imagePath() const;
     QString name() const;
     double cost() const;
-    bool selected() const;
+    bool isSelected() const;
     QString currency() const;
 
     void setImagePath(const QString &imagePath);
