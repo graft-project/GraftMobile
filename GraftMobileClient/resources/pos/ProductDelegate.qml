@@ -81,7 +81,7 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-            elected = false
+            selected = false
         }
     }
 }

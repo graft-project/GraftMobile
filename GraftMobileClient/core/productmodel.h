@@ -13,7 +13,7 @@ public:
         TitleRole = Qt::UserRole + 1,
         CostRole,
         ImageRole,
-        ElectedRole,
+        SelectedRole,
         CurrencyRole
     };
 
@@ -25,7 +25,7 @@ public:
     QVector<ProductItem *> products() const;
 
 public slots:
-    void add(const QString &imagePath, const QString &name, double cost, bool elected,
+    void add(const QString &imagePath, const QString &name, double cost, bool selected,
              const QString &currency = QString());
 
 protected:

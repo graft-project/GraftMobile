@@ -25,8 +25,8 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
         return productItem->cost();
     case ImageRole:
         return productItem->imagePath();
-    case ElectedRole:
-        return productItem->elected();
+    case SelectedRole:
+        return productItem->selected();
     case CurrencyRole:
         if(productItem->currency() == QLatin1String("USD"))
         {
@@ -60,8 +60,8 @@ bool ProductModel::setData(const QModelIndex &index, const QVariant &value, int 
         case ImageRole:
             mProducts[index.row()]->setImagePath(value.toString());
             break;
-        case ElectedRole:
-            mProducts[index.row()]->setElected(value.toBool());
+        case SelectedRole:
+            mProducts[index.row()]->setSelected(value.toBool());
             break;
         case CurrencyRole:
             mProducts[index.row()]->setCurrency(value.toString());
@@ -86,11 +86,11 @@ QVector<ProductItem *> ProductModel::products() const
     return mProducts;
 }
 
-void ProductModel::add(const QString &imagePath, const QString &name, double cost, bool elected,
+void ProductModel::add(const QString &imagePath, const QString &name, double cost, bool selected,
                        const QString &currency)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mProducts << (new ProductItem(imagePath, name, cost, elected, currency));
+    mProducts << (new ProductItem(imagePath, name, cost, selected, currency));
     endInsertRows();
 }
 
@@ -100,7 +100,7 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[TitleRole] = "name";
     roles[CostRole] = "cost";
     roles[ImageRole] = "imagePath";
-    roles[ElectedRole] = "elected";
+    roles[SelectedRole] = "selected";
     roles[CurrencyRole] = "currency";
     return roles;
 }
