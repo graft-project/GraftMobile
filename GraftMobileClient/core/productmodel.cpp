@@ -1,5 +1,5 @@
 #include "productmodel.h"
-#include <QDebug>
+#include "productitem.h"
 
 ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
 {}
@@ -25,6 +25,8 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
         return productItem->cost();
     case ImageRole:
         return productItem->imagePath();
+    case ElectedRole:
+        return productItem->elected();
     case CurrencyRole:
         if(productItem->currency() == QLatin1String("USD"))
         {
@@ -38,8 +40,6 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
         {
             return "$";
         }
-    case StateRole:
-        return productItem->stance();
     default:
         return QVariant();
     }
@@ -60,11 +60,11 @@ bool ProductModel::setData(const QModelIndex &index, const QVariant &value, int 
         case ImageRole:
             mProducts[index.row()]->setImagePath(value.toString());
             break;
+        case ElectedRole:
+            mProducts[index.row()]->setElected(value.toBool());
+            break;
         case CurrencyRole:
             mProducts[index.row()]->setCurrency(value.toString());
-            break;
-        case StateRole:
-            mProducts[index.row()]->setStance(value.toBool());
             break;
         default:
             break;
@@ -86,19 +86,11 @@ QVector<ProductItem *> ProductModel::products() const
     return mProducts;
 }
 
-//void ProductModel::dump()
-//{
-//    for(ProductItem* b : mProducts)
-//    {
-//        qDebug() << b->name();
-//    }
-//}
-
-void ProductModel::add(const QString &imagePath, const QString &name, double cost, bool stance,
+void ProductModel::add(const QString &imagePath, const QString &name, double cost, bool elected,
                        const QString &currency)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mProducts << (new ProductItem(imagePath, name, cost, stance, currency));
+    mProducts << (new ProductItem(imagePath, name, cost, elected, currency));
     endInsertRows();
 }
 
@@ -108,8 +100,7 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[TitleRole] = "name";
     roles[CostRole] = "cost";
     roles[ImageRole] = "imagePath";
+    roles[ElectedRole] = "elected";
     roles[CurrencyRole] = "currency";
-    roles[StateRole] = "stance";
     return roles;
 }
-

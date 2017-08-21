@@ -3,12 +3,12 @@
 ProductItem::ProductItem()
 {}
 
-ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost, bool stance,
+ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost, bool elected,
                          const QString &currency)
     : mImagePath(imagePath),
       mName(name),
       mCost(cost),
-      mStance(stance),
+      mElected(elected),
       mCurrency(currency)
 {}
 
@@ -27,9 +27,9 @@ void ProductItem::setCost(double cost)
     mCost = cost;
 }
 
-void ProductItem::setStance(bool stance)
+void ProductItem::setElected(bool elected)
 {
-    mStance = stance;
+    mElected = elected;
 }
 
 void ProductItem::setCurrency(const QString &currency)
@@ -52,9 +52,9 @@ double ProductItem::cost() const
     return mCost;
 }
 
-bool ProductItem::stance() const
+bool ProductItem::elected() const
 {
-    return mStance;
+    return mElected;
 }
 
 QString ProductItem::currency() const

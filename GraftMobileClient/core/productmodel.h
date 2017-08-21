@@ -2,9 +2,8 @@
 #define PRODUCTMODEL_H
 
 #include <QAbstractListModel>
-#include <QString>
 
-#include "productitem.h"
+class ProductItem;
 
 class ProductModel : public QAbstractListModel
 {
@@ -14,8 +13,8 @@ public:
         TitleRole = Qt::UserRole + 1,
         CostRole,
         ImageRole,
-        CurrencyRole,
-        StateRole
+        ElectedRole,
+        CurrencyRole
     };
 
     explicit ProductModel(QObject *parent = 0);
@@ -24,10 +23,9 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVector<ProductItem *> products() const;
-//    Q_INVOKABLE void dump();
 
 public slots:
-    void add(const QString &imagePath, const QString &name, double cost, bool stance,
+    void add(const QString &imagePath, const QString &name, double cost, bool elected,
              const QString &currency = QString());
 
 protected:

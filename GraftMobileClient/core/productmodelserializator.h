@@ -1,13 +1,13 @@
 #ifndef PRODUCTMODELSERIALIZATOR_H
 #define PRODUCTMODELSERIALIZATOR_H
 
-#include "productmodel.h"
-#include <QJsonArray>
+#include <QByteArray>
+
+class ProductModel;
 
 class ProductModelSerializator
 {
 public:
-    ProductModelSerializator();
     static QByteArray serialize(ProductModel *model);
     static void deserialize(const QByteArray &array, ProductModel *model);
 };

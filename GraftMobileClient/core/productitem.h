@@ -7,25 +7,25 @@ class ProductItem
 {
 public:
     ProductItem();
-    ProductItem(const QString &imagePath, const QString &name, double cost, bool stance,
+    ProductItem(const QString &imagePath, const QString &name, double cost, bool elected,
                 const QString &currency);
     QString imagePath() const;
     QString name() const;
     double cost() const;
-    bool stance() const;
+    bool elected() const;
     QString currency() const;
 
     void setImagePath(const QString &imagePath);
     void setName(const QString &name);
     void setCost(double cost);
-    void setStance(bool stance);
+    void setElected(bool elected);
     void setCurrency(const QString &currency);
 
 private:
     QString mImagePath;
     QString mName;
     double mCost;
-    bool mStance;
+    bool mElected;
     QString mCurrency;
 };
 

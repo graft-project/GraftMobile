@@ -1,13 +1,12 @@
 #include "productmodelserializator.h"
+#include "productmodel.h"
+#include "productitem.h"
 
+#include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QJsonDocument>
 #include <QJsonValue>
 #include <QDebug>
-
-ProductModelSerializator::ProductModelSerializator()
-{}
 
 QByteArray ProductModelSerializator::serialize(ProductModel *model)
 {
@@ -20,10 +19,11 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
         object.insert(QStringLiteral("imagePath"), item->imagePath());
         object.insert(QStringLiteral("title"), item->name());
         object.insert(QStringLiteral("cost"), item->cost());
-        object.insert(QStringLiteral("stance"), item->stance());
+        object.insert(QStringLiteral("elected"), item->elected());
         object.insert(QStringLiteral("currency"), item->currency());
         array.append(object);
     }
+
     QJsonDocument doc(array);
     return doc.toJson();
 }
@@ -42,7 +42,7 @@ void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel
             model->add(jsonObject.value(QLatin1String("imagePath")).toString(),
                        jsonObject.value(QLatin1String("title")).toString(),
                        jsonObject.value(QLatin1String("cost")).toDouble(),
-                       jsonObject.value(QLatin1String("stance")).toBool(),
+                       jsonObject.value(QLatin1String("elected")).toBool(),
                        jsonObject.value(QLatin1String("currency")).toString());
         }
     }

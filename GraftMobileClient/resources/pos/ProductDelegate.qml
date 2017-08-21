@@ -8,10 +8,8 @@ Rectangle {
     property real productPrice
     property alias productImage: picture.source
     property alias productName: productText.text
-    //    property alias productState:
 
     height: layout.height
-    //    color: mouseArea.pressed ? "#f2f2f2" : "transparent"
 
     ColumnLayout {
         id: layout
@@ -83,7 +81,7 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-            console.log(index)
+            elected = false
         }
     }
 }
