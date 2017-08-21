@@ -2,7 +2,9 @@
 #define GRAFTBASECLIENT_H
 
 #include <QObject>
-#include <QImage>
+
+class BarcodeImageProvider;
+class QQmlEngine;
 
 class GraftBaseClient : public QObject
 {
@@ -11,14 +13,15 @@ public:
     explicit GraftBaseClient(QObject *parent = nullptr);
 
     void setQRCodeImage(const QImage &image);
-    QImage qrCodeImage() const;
+    Q_INVOKABLE QString qrCodeImage() const;
+
+    void registerImageProvider(QQmlEngine *engine);
 
 signals:
     void errorReceived();
-    void updateQRCode();
 
 protected:
-    QImage mQRCodeImage;
+    BarcodeImageProvider *mImageProvider;
 };
 
 #endif // GRAFTBASECLIENT_H

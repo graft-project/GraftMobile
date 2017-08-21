@@ -4,8 +4,7 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include "core/productmodel.h"
-#include "core/qrcodeview.h"
-#include "core/graftbaseclient.h"
+#include "core/graftposclient.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,11 +13,12 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 #ifdef POS_BUILD
-    qmlRegisterType<QRCodeView>("com.pos.graft", 1, 0, "QRCodeView");
-    qmlRegisterType<GraftBaseClient>("com.pos.graft", 1, 0, "GraftBaseClient");
+    GraftPOSClient client;
+    client.registerImageProvider(&engine);
 
     ProductModel productModel;
     engine.rootContext()->setContextProperty(QStringLiteral("productModel"), &productModel);
+    engine.rootContext()->setContextProperty(QStringLiteral("client"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
