@@ -12,7 +12,11 @@ BaseScreen {
         target: client
 
         onReadyToPayReceived: {
-             console.log("AAAAAAAAAAAAAAAAAA")
+            if(result === true)
+            {
+                root.openPaymentConfirmationView()
+            }
+            console.log("AAAAAAAAAAAAAAAAAA")
          }
     }
 
@@ -80,6 +84,7 @@ BaseScreen {
 
             onTagFound: {
                 console.log(tag + " | " + " | " + decoder.charSet());
+                client.readyToPay("%1;%2").arg(tag).arg("dsvsvs")
             }
 
             tryHarder: false

@@ -3,7 +3,7 @@
 
 #include <QStringList>
 
-const QStringList cSeedSupernodes{"192.168.243.157:8080"};
+const QStringList cSeedSupernodes{"52.27.53.241:8080"};
 
 const QString cUrl("http://%1/api");
 
