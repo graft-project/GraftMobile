@@ -1,4 +1,4 @@
-QT += qml quick
+QT += qml quick network
 
 CONFIG += c++11
 
@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     core/api/graftwalletapi.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
-    core/productmodelserializator.cpp
+    core/productmodelserializator.cpp \
+    core/patrickqrcodeencoder.cpp
 
 HEADERS += \
     core/config.h \
@@ -46,7 +47,8 @@ HEADERS += \
     core/api/graftwalletapi.h \
     core/productitem.h \
     core/productmodel.h \
-    core/productmodelserializator.h
+    core/productmodelserializator.h \
+    core/patrickqrcodeencoder.h
 
 RESOURCES += qml.qrc
 
