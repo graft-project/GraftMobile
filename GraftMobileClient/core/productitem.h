@@ -7,7 +7,7 @@ class ProductItem
 {
 public:
     ProductItem();
-    ProductItem(const QString &imagePath, const QString &name, double cost, bool selected,
+    ProductItem(const QString &imagePath, const QString &name, double cost,
                 const QString &currency);
     QString imagePath() const;
     QString name() const;

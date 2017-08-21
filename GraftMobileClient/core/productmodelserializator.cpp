@@ -18,7 +18,6 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
         object.insert(QStringLiteral("imagePath"), item->imagePath());
         object.insert(QStringLiteral("title"), item->name());
         object.insert(QStringLiteral("cost"), item->cost());
-        object.insert(QStringLiteral("selected"), item->selected());
         object.insert(QStringLiteral("currency"), item->currency());
         array.append(object);
     }
@@ -41,7 +40,6 @@ void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel
             model->add(jsonObject.value(QLatin1String("imagePath")).toString(),
                        jsonObject.value(QLatin1String("title")).toString(),
                        jsonObject.value(QLatin1String("cost")).toDouble(),
-                       jsonObject.value(QLatin1String("selected")).toBool(),
                        jsonObject.value(QLatin1String("currency")).toString());
         }
     }

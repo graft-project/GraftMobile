@@ -86,11 +86,11 @@ QVector<ProductItem *> ProductModel::products() const
     return mProducts;
 }
 
-void ProductModel::add(const QString &imagePath, const QString &name, double cost, bool selected,
+void ProductModel::add(const QString &imagePath, const QString &name, double cost,
                        const QString &currency)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mProducts << (new ProductItem(imagePath, name, cost, selected, currency));
+    mProducts << (new ProductItem(imagePath, name, cost, currency));
     endInsertRows();
 }
 

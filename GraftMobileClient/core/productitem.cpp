@@ -3,12 +3,12 @@
 ProductItem::ProductItem()
 {}
 
-ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost, bool selected,
+ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost,
                          const QString &currency)
     : mImagePath(imagePath),
       mName(name),
       mCost(cost),
-      mSelected(selected),
+      mSelected(false),
       mCurrency(currency)
 {}
 

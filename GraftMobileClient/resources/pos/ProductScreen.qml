@@ -25,7 +25,7 @@ BaseScreen {
             productImage: imagePath
             productName: name
             productPrice: cost
-            color: selected ? "transparent" : "#f2f2f2"
+            color: selected ? "#f2f2f2" : "transparent"
         }
     }
 

@@ -25,7 +25,7 @@ public:
     QVector<ProductItem *> products() const;
 
 public slots:
-    void add(const QString &imagePath, const QString &name, double cost, bool selected,
+    void add(const QString &imagePath, const QString &name, double cost,
              const QString &currency = QString());
 
 protected:
