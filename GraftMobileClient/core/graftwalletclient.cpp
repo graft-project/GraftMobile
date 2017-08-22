@@ -3,7 +3,7 @@
 #include "config.h"
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
-    : QObject(parent)
+    : GraftBaseClient(parent)
 {
     mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
     connect(mApi, &GraftWalletAPI::readyToPayReceived,

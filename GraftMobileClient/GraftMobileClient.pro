@@ -36,7 +36,9 @@ SOURCES += main.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
     core/productmodelserializator.cpp \
-    core/patrickqrcodeencoder.cpp
+    core/patrickqrcodeencoder.cpp \
+    core/graftbaseclient.cpp \
+    core/barcodeimageprovider.cpp
 
 HEADERS += \
     core/config.h \
@@ -48,7 +50,9 @@ HEADERS += \
     core/productitem.h \
     core/productmodel.h \
     core/productmodelserializator.h \
-    core/patrickqrcodeencoder.h
+    core/patrickqrcodeencoder.h \
+    core/graftbaseclient.h \
+    core/barcodeimageprovider.h
 
 RESOURCES += qml.qrc
 

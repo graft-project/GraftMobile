@@ -1,11 +1,12 @@
 #include "graftposclient.h"
+#include "patrickqrcodeencoder.h"
 #include "api/graftposapi.h"
 #include "config.h"
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
-    : QObject(parent)
+    : GraftBaseClient(parent)
 {
-
+    mQRCodeEncoder = new PatrickQRCodeEncoder();
     mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
@@ -15,6 +16,7 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
 
 void GraftPOSClient::sale()
 {
+    setQRCodeImage(mQRCodeEncoder->encode(""));
     mApi->sale(mPID, QString());
 }
 
