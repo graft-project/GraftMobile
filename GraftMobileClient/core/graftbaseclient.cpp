@@ -2,9 +2,9 @@
 #include "graftbaseclient.h"
 #include <QQmlEngine>
 
-const QString cBarcodeImageProviderID = "barcodes";
-const QString cQRCodeImageID = "qrcode";
-const QString cProviderScheme = "image://%1/%2";
+static const QString cBarcodeImageProviderID("barcodes");
+static const QString cQRCodeImageID("qrcode");
+static const QString cProviderScheme("image://%1/%2");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)

@@ -58,7 +58,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: totalCostLayout.height
                 Layout.preferredWidth: totalCostLayout.height
-                source: client.qrCodeImage()
+                source: GraftClient.qrCodeImage()
             }
         }
 

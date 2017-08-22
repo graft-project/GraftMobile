@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     ProductModel productModel;
     engine.rootContext()->setContextProperty(QStringLiteral("productModel"), &productModel);
-    engine.rootContext()->setContextProperty(QStringLiteral("client"), &client);
+    engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
