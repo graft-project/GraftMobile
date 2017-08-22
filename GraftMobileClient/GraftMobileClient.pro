@@ -3,13 +3,13 @@ QT += qml quick network
 CONFIG += c++11
 
 include(QZXing.pri)
-include (ios/ios.pri)
 
 contains(DEFINES, POS_BUILD) {
 android {
 }
 ios {
   TARGET = Graft.PointOfSale
+  include (ios/ios.pri)
 }
 }
 
@@ -18,6 +18,7 @@ android {
 }
 ios {
   TARGET = Graft.Wallet
+  include (ios/ios.pri)
 }
 }
 
