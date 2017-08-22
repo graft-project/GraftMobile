@@ -13,9 +13,14 @@ BaseScreen {
 
     ListView {
         id: productList
-        anchors.fill: parent
+        clip: true
         model: ProductModel
         delegate: productDelegate
+        anchors {
+            fill: parent
+            bottom: parent.bottom
+            bottomMargin: 139
+        }
     }
 
     Component {
