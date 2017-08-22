@@ -12,7 +12,7 @@ BaseScreen {
     ListView {
         id: productList
         anchors.fill: parent
-        model: productModel
+        model: ProductModel
         delegate: productDelegate
     }
 

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     client.registerImageProvider(&engine);
 
     ProductModel productModel;
-    engine.rootContext()->setContextProperty(QStringLiteral("productModel"), &productModel);
+    engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), &productModel);
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif

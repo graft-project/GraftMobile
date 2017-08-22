@@ -95,7 +95,7 @@ BaseScreen {
         WideRoundButton {
             text: qsTr("Confirm")
             onClicked: {
-                productModel.add("qrc:/examples/images.png", title.text,
+                ProductModel.add("qrc:/examples/images.png", title.text,
                                  parseFloat(price.text), graftCBox.currentText)
                 additionItem.pushScreen()
             }
