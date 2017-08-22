@@ -4,27 +4,8 @@ CONFIG += c++11
 
 include(QZXing.pri)
 
-contains(DEFINES, POS_BUILD) {
-
 android {
-TARGET = GraftPointOfSale
-}
-else {
-TARGET = Graft.PointOfSale
-}
-
-QMAKE_INFO_PLIST += info_pos.plist
-}
-contains(DEFINES, WALLET_BUILD) {
-
-android {
-TARGET = GraftWallet
-}
-else {
-TARGET = Graft.Wallet
-}
-
-QMAKE_INFO_PLIST += info_wallet.plist
+    include(android/android.pri)
 }
 
 SOURCES += main.cpp \
@@ -73,7 +54,3 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-android {
-    include(android/android.pri)
-}

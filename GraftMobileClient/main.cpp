@@ -4,9 +4,15 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include "core/productmodel.h"
+#include <QDebug>
+
+#ifdef Q_OS_ANDROID
+#include <QtAndroid>
+#endif
 
 int main(int argc, char *argv[])
 {
+    qDebug() << "main.cpp";
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QZXing::registerQMLTypes();
     QGuiApplication app(argc, argv);
@@ -18,9 +24,12 @@ int main(int argc, char *argv[])
 #endif
 #ifdef WALLET_BUILD
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
+
 #endif
     if (engine.rootObjects().isEmpty())
         return -1;
-
+#ifdef Q_OS_ANDROID
+    QtAndroid::hideSplashScreen();
+#endif
     return app.exec();
 }
