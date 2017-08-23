@@ -21,7 +21,7 @@ BaseScreen {
 
         onPayReceived: {
             if (result === true) {
-                root.state = "afterPaid"
+                root.state = "beforePaid"
             }
             else {
                 pushScreen()
@@ -126,7 +126,6 @@ BaseScreen {
                     id: confirmButton
                     text: qsTr("Confirm")
                     onClicked: {
-                        root.state = "beforePaid"
                         client.pay()
                     }
                 }

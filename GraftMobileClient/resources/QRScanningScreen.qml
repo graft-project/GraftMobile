@@ -16,7 +16,10 @@ BaseScreen {
 
         onReadyToPayReceived: {
             if(result === true) {
-                pushScreen()
+                pushScreen.paymentScreen()
+            }
+            else {
+                pushScreen.balanceScreen()
             }
          }
     }

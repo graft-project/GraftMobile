@@ -37,7 +37,10 @@ ApplicationWindow {
     }
 
     function openQRScanningScreen() {
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": openPaymentConfirmationView})
+        var transitionsMap = {}
+        transitionsMap["balanceScreen"] = openBalanceScreen
+        transitionsMap["paymentScreen"] = openPaymentConfirmationView
+        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsMap})
     }
 
     function openPaymentConfirmationView() {
