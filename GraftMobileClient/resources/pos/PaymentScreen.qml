@@ -30,7 +30,7 @@ BaseScreen {
             Layout.topMargin: 20
             Layout.leftMargin: 23
             Layout.rightMargin: 23
-            Layout.bottomMargin: 20
+            Layout.bottomMargin: 15
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
@@ -70,8 +70,8 @@ BaseScreen {
 
             Image {
                 Layout.alignment: Qt.AlignRight
-                Layout.preferredHeight: totalCostLayout.height
-                Layout.preferredWidth: totalCostLayout.height
+                Layout.preferredHeight: totalCostLayout.width
+                Layout.preferredWidth: totalCostLayout.width
                 source: GraftClient.qrCodeImage()
             }
         }
