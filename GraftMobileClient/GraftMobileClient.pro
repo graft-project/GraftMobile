@@ -3,6 +3,7 @@ QT += qml quick network
 CONFIG += c++11
 
 include(QZXing.pri)
+include(android/android.pri)
 
 android {
 include(android/android.pri)
@@ -11,7 +12,6 @@ include(android/android.pri)
 contains(DEFINES, POS_BUILD) {
 
 android {
-include(android/android.pri)
 TARGET = GraftPointOfSale
 }
 else {
@@ -24,7 +24,6 @@ QMAKE_INFO_PLIST += info_pos.plist
 contains(DEFINES, WALLET_BUILD) {
 
 android {
-include(android/android.pri)
 TARGET = GraftWallet
 }
 else {
