@@ -44,13 +44,21 @@ Rectangle {
             color: "white"
         }
 
-        Image {
-            id: cartIcon
-            Layout.maximumWidth: 20
-            Layout.maximumHeight: 20
-            Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: 15
-            source: "qrc:/imgs/cart_icon.png"
+        Item {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Image {
+                id: cartIcon
+                width: 20
+                height: 20
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    topMargin: 20
+                    rightMargin: 15
+                }
+                source: "qrc:/imgs/cart_icon.png"
+            }
         }
     }
 }
