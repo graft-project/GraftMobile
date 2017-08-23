@@ -3,7 +3,6 @@ QT += qml quick network
 CONFIG += c++11
 
 include(QZXing.pri)
-include(android/android.pri)
 
 android {
 include(android/android.pri)
