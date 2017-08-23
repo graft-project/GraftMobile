@@ -138,14 +138,6 @@ BaseScreen {
                 }
             }
 
-//            Timer {
-//                id: delay
-//                interval: 4000
-//                onTriggered: {
-//                    parent.state = "checkState"
-//                }
-//            }
-
             states: [
                 State {
                     name: "twirlState"
