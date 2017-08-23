@@ -7,7 +7,7 @@ import QZXing 2.3
 BaseScreen {
     id: root
 
-    property string capturedTag: ""
+    property string lastTag: ""
 
     signal qrCodeDetected()
 
@@ -87,8 +87,8 @@ BaseScreen {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                if(capturedTag != tag) {
-                    capturedTag = tag
+                if(lastTag != tag) {
+                    lastTag = tag
                     console.log(tag + " | " + " | " + decoder.charSet());
                     client.readyToPay(tag)
                 }
