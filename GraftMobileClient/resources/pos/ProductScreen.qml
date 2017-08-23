@@ -45,7 +45,7 @@ BaseScreen {
             highlighted: true
             Material.elevation: 0
             Material.accent: "#d7d7d7"
-            Layout.preferredHeight: addButton.height*1.4
+            Layout.preferredHeight: addButton.height * 1.4
             Layout.preferredWidth: height
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: 10
