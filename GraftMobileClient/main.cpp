@@ -4,7 +4,6 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include "core/productmodel.h"
-#include <QDebug>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
@@ -12,7 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-    qDebug() << "main.cpp";
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QZXing::registerQMLTypes();
     QGuiApplication app(argc, argv);

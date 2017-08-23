@@ -4,6 +4,10 @@ CONFIG += c++11
 
 include(QZXing.pri)
 
+android {
+include(android/android.pri)
+}
+
 contains(DEFINES, POS_BUILD) {
 
 android {
