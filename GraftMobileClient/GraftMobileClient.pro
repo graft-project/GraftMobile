@@ -4,21 +4,25 @@ CONFIG += c++11
 
 include(QZXing.pri)
 
+ios {
+include (ios/ios.pri)
+}
+
 contains(DEFINES, POS_BUILD) {
 android {
+TARGET = GraftPointOfSale
 }
-ios {
-  TARGET = Graft.PointOfSale
-  include (ios/ios.pri)
+else {
+TARGET = Graft.PointOfSale
 }
 }
 
 contains(DEFINES, WALLET_BUILD) {
 android {
+TARGET = GraftWallet
 }
-ios {
-  TARGET = Graft.Wallet
-  include (ios/ios.pri)
+else {
+TARGET = Graft.Wallet
 }
 }
 
