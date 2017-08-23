@@ -3,7 +3,9 @@
 #include <QZXing.h>
 #include <QQuickView>
 #include <QQmlContext>
+
 #include "core/productmodel.h"
+#include "core/graftwalletclient.h"
 #include "core/graftposclient.h"
 
 #ifdef Q_OS_ANDROID
@@ -26,8 +28,9 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
+    GraftWalletClient client;
+    engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
-
 #endif
     if (engine.rootObjects().isEmpty())
         return -1;

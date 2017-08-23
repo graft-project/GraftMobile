@@ -4,13 +4,13 @@ import QtQuick.Layouts 1.3
 import "../"
 
 ApplicationWindow {
+    id: root
 
     property int totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
     property int balanceInGraft: 1
     property int balanceInUSD: 200
 
-    id: root
     visible: true
     width: 320
     height: 480
@@ -37,7 +37,10 @@ ApplicationWindow {
     }
 
     function openQRScanningScreen() {
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": openPaymentConfirmationView})
+        var transitionsMap = {}
+        transitionsMap["balanceScreen"] = openBalanceScreen
+        transitionsMap["paymentScreen"] = openPaymentConfirmationView
+        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsMap})
     }
 
     function openPaymentConfirmationView() {

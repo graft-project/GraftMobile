@@ -6,7 +6,23 @@ import QZXing 2.3
 
 BaseScreen {
     id: root
+
+    property string lastTag: ""
+
     signal qrCodeDetected()
+
+    Connections {
+        target: GraftClient
+
+        onReadyToPayReceived: {
+            if (result === true) {
+                pushScreen.paymentScreen()
+            }
+            else {
+                pushScreen.balanceScreen()
+            }
+         }
+    }
 
     onVisibleChanged: {
         if (visible) {
@@ -71,19 +87,14 @@ BaseScreen {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                console.log(tag + " | " + " | " + decoder.charSet());
+                if (lastTag != tag) {
+                    lastTag = tag
+                    console.log(tag + " | " + " | " + decoder.charSet());
+                    GraftClient.readyToPay(tag)
+                }
             }
 
             tryHarder: false
-        }
-    }
-
-    Timer {
-        interval: 10000
-        running: true
-        onTriggered: {
-            camera.stop()
-            root.pushScreen()
         }
     }
 }
