@@ -1,11 +1,12 @@
 #ifndef GRAFTPOSCLIENT_H
 #define GRAFTPOSCLIENT_H
 
-#include <QObject>
+#include "graftbaseclient.h"
 
 class GraftPOSAPI;
+class PatrickQRCodeEncoder;
 
-class GraftPOSClient : public QObject
+class GraftPOSClient : public GraftBaseClient
 {
     Q_OBJECT
 public:
@@ -14,7 +15,6 @@ public:
 signals:
     void saleReceived(bool result);
     void saleStatusReceived(bool approved);
-    void errorReceived();
 
 public slots:
     void sale();
@@ -26,6 +26,7 @@ private slots:
 
 private:
     GraftPOSAPI *mApi;
+    PatrickQRCodeEncoder *mQRCodeEncoder;
     QString mPID;
 };
 

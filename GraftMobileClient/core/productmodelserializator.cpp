@@ -28,6 +28,7 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
 
 void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel *model)
 {
+    Q_ASSERT(model);
     if (model)
     {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(array);

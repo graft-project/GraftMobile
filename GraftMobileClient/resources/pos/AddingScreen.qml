@@ -7,6 +7,8 @@ import "../"
 
 BaseScreen {
     id: additionItem
+    title: qsTr("Add")
+    isMenuState: false
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
@@ -95,7 +97,7 @@ BaseScreen {
         WideRoundButton {
             text: qsTr("Confirm")
             onClicked: {
-                productModel.add("qrc:/examples/images.png", title.text,
+                ProductModel.add("qrc:/examples/images.png", title.text,
                                  parseFloat(price.text), graftCBox.currentText)
                 additionItem.pushScreen()
             }

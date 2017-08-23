@@ -8,9 +8,10 @@ Rectangle {
     property real productPrice
     property alias productImage: picture.source
     property alias productName: productText.text
+    property bool selectState: false
+    color: mouseArea.pressed || selectState ? "#f2f2f2" : "transparent"
 
     height: layout.height
-    color: mouseArea.pressed ? "#f2f2f2" : "transparent"
 
     ColumnLayout {
         id: layout
@@ -77,8 +78,12 @@ Rectangle {
         }
     }
 
+
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+        onClicked: {
+            productModel.changeSelection(index)
+        }
     }
 }

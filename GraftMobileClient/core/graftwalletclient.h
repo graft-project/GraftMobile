@@ -1,11 +1,11 @@
 #ifndef GRAFTWALLETCLIENT_H
 #define GRAFTWALLETCLIENT_H
 
-#include <QObject>
+#include "graftbaseclient.h"
 
 class GraftWalletAPI;
 
-class GraftWalletClient : public QObject
+class GraftWalletClient : public GraftBaseClient
 {
     Q_OBJECT
 public:
@@ -16,7 +16,6 @@ signals:
     void rejectPayReceived(bool result);
     void payReceived(bool result);
     void payStatusReceived(bool result);
-    void errorReceived();
 
 public slots:
     void readyToPay(const QString &data);

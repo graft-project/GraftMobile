@@ -17,7 +17,7 @@ BaseScreen {
     title: qsTr("Pay")
 
     Connections {
-        target: client
+        target: GraftClient
 
         onPayReceived: {
             if (result === true) {
@@ -126,7 +126,7 @@ BaseScreen {
                     id: confirmButton
                     text: qsTr("Confirm")
                     onClicked: {
-                        client.pay()
+                        GraftClient.pay()
                     }
                 }
             }

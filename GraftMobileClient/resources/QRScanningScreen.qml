@@ -12,7 +12,7 @@ BaseScreen {
     signal qrCodeDetected()
 
     Connections {
-        target: client
+        target: GraftClient
 
         onReadyToPayReceived: {
             if(result === true) {
@@ -90,7 +90,7 @@ BaseScreen {
                 if(lastTag != tag) {
                     lastTag = tag
                     console.log(tag + " | " + " | " + decoder.charSet());
-                    client.readyToPay(tag)
+                    GraftClient.readyToPay(tag)
                 }
             }
 

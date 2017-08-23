@@ -6,7 +6,7 @@
 #include <QUrlQuery>
 #include <QDebug>
 
-static const QString scUrl = "https://www.patrick-wied.at/static/qrgen/qrgen.php";
+static const QString scUrl("https://www.patrick-wied.at/static/qrgen/qrgen.php");
 
 PatrickQRCodeEncoder::PatrickQRCodeEncoder():
     mUrl(scUrl),
@@ -50,3 +50,4 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
 
     return rImage;
 }
+

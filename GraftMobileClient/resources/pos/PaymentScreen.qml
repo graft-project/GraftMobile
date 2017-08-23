@@ -6,6 +6,7 @@ import "../components"
 import "../"
 
 BaseScreen {
+    title: qsTr("Cart")
     property int price: 100
     property alias productListModel: productView.model
 
@@ -55,11 +56,10 @@ BaseScreen {
             }
 
             Image {
-                id: qrCodePicture
-                source: "qrc:/examples/QRCode_images.png"
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: totalCostLayout.height
                 Layout.preferredWidth: totalCostLayout.height
+                source: GraftClient.qrCodeImage()
             }
         }
 
