@@ -10,6 +10,19 @@ BaseScreen {
     property int price: 100
     property alias productListModel: productView.model
 
+    Connections {
+        target: GraftClient
+
+        onSaleStatusReceived: {
+            if (result === true) {
+                productView.state = "checkState"
+            }
+            else {
+                pushScreen()
+            }
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
 
@@ -125,13 +138,13 @@ BaseScreen {
                 }
             }
 
-            Timer {
-                id: delay
-                interval: 4000
-                onTriggered: {
-                    parent.state = "checkState"
-                }
-            }
+//            Timer {
+//                id: delay
+//                interval: 4000
+//                onTriggered: {
+//                    parent.state = "checkState"
+//                }
+//            }
 
             states: [
                 State {
