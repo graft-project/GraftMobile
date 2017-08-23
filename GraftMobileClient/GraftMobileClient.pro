@@ -4,6 +4,10 @@ CONFIG += c++11
 
 include(QZXing.pri)
 
+android {
+include(android/android.pri)
+}
+
 contains(DEFINES, POS_BUILD) {
 
 android {
@@ -15,6 +19,7 @@ TARGET = Graft.PointOfSale
 
 QMAKE_INFO_PLIST += info_pos.plist
 }
+
 contains(DEFINES, WALLET_BUILD) {
 
 android {

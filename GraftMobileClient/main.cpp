@@ -6,6 +6,10 @@
 #include "core/productmodel.h"
 #include "core/graftposclient.h"
 
+#ifdef Q_OS_ANDROID
+#include <QtAndroid>
+#endif
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -23,9 +27,12 @@ int main(int argc, char *argv[])
 #endif
 #ifdef WALLET_BUILD
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
+
 #endif
     if (engine.rootObjects().isEmpty())
         return -1;
-
+#ifdef Q_OS_ANDROID
+    QtAndroid::hideSplashScreen();
+#endif
     return app.exec();
 }
