@@ -16,6 +16,27 @@ BaseScreen {
 
     title: qsTr("Pay")
 
+    Connections {
+        target: client
+
+        onPayReceived: {
+            if (result === true) {
+                root.state = "afterPaid"
+            }
+            else {
+                pushScreen()
+            }
+        }
+        onPayStatusReceived: {
+            if (result === true) {
+                root.state = "afterPaid"
+            }
+            else {
+                pushScreen()
+            }
+        }
+    }
+
     ListModel {
         id: testProductModel
 
@@ -104,7 +125,10 @@ BaseScreen {
                 WideRoundButton {
                     id: confirmButton
                     text: qsTr("Confirm")
-                    onClicked: root.state = "beforePaid"
+                    onClicked: {
+                        root.state = "beforePaid"
+                        client.pay()
+                    }
                 }
             }
 
@@ -139,19 +163,9 @@ BaseScreen {
         }
     }
 
-    Timer {
-        id: timer
-        interval: 2000
-        onTriggered: root.state = "afterPaid"
-    }
-
     states: [
         State {
             name: "beforePaid"
-            PropertyChanges {
-                target: timer
-                running: true
-            }
             PropertyChanges {
                 target: busyIndicator
                 visible: true
@@ -167,10 +181,6 @@ BaseScreen {
             PropertyChanges {
                 target: stack
                 currentIndex: 1
-            }
-            PropertyChanges {
-                target: timer
-                running: false
             }
             PropertyChanges {
                 target: column

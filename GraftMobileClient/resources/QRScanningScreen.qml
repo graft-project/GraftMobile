@@ -6,17 +6,18 @@ import QZXing 2.3
 
 BaseScreen {
     id: root
+
+    property string capturedTag: ""
+
     signal qrCodeDetected()
 
     Connections {
         target: client
 
         onReadyToPayReceived: {
-            if(result === true)
-            {
-                root.openPaymentConfirmationView()
+            if(result === true) {
+                pushScreen()
             }
-            console.log("AAAAAAAAAAAAAAAAAA")
          }
     }
 
@@ -83,20 +84,14 @@ BaseScreen {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                console.log(tag + " | " + " | " + decoder.charSet());
-                client.readyToPay("%1;%2").arg(tag).arg("dsvsvs")
+                if(capturedTag != tag) {
+                    capturedTag = tag
+                    console.log(tag + " | " + " | " + decoder.charSet());
+                    client.readyToPay(tag)
+                }
             }
 
             tryHarder: false
-        }
-    }
-
-    Timer {
-        interval: 10000
-        running: true
-        onTriggered: {
-            camera.stop()
-            root.pushScreen()
         }
     }
 }
