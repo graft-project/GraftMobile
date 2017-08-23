@@ -15,7 +15,7 @@ BaseScreen {
         target: GraftClient
 
         onReadyToPayReceived: {
-            if(result === true) {
+            if (result === true) {
                 pushScreen.paymentScreen()
             }
             else {
@@ -87,7 +87,7 @@ BaseScreen {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
-                if(lastTag != tag) {
+                if (lastTag != tag) {
                     lastTag = tag
                     console.log(tag + " | " + " | " + decoder.charSet());
                     GraftClient.readyToPay(tag)
