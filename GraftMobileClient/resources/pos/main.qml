@@ -4,14 +4,16 @@ import QtQuick.Layouts 1.3
 import "../"
 
 ApplicationWindow {
-    id: window
     visible: true
     width: 320
     height: 480
     title: qsTr("POS")
 
-    BaseScreen {
-        PosMenu {}
+    Drawer {
+        id: drawer
+        width: 0.75 * parent.width
+        height: parent.height
+        contentItem: PosMenu {}
     }
 
     StackView {
