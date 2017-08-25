@@ -79,7 +79,6 @@ Rectangle {
         }
 
         Text {
-            id: a
             text: qsTr("SETTINGS")
             color: "#ffffff"
             Layout.alignment: Qt.AlignLeft
