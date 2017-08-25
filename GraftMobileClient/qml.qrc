@@ -19,6 +19,7 @@
         <file alias="/PaymentConfirmationView.qml">resources/wallet/PaymentConfirmationView.qml</file>
         <file alias="/BalanceView.qml">resources/wallet/BalanceView.qml</file>
         <file alias="/CurrencySelectionItem.qml">resources/wallet/CurrencySelectionItem.qml</file>
+        <file alias="/GraftMenu.qml">resources/wallet/GraftMenu.qml</file>
     </qresource>
     <qresource prefix="/examples">
         <file alias="/bob-haircuts.png">resources/examples/bob-haircuts.png</file>
