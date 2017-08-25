@@ -4,10 +4,15 @@ import QtQuick.Layouts 1.3
 import "../"
 
 ApplicationWindow {
+    id: window
     visible: true
     width: 320
     height: 480
     title: qsTr("POS")
+
+    BaseScreen {
+        PosMenu {}
+    }
 
     StackView {
         id: stack
@@ -40,7 +45,7 @@ ApplicationWindow {
 
     function openAddingScreen() {
         stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop,
-                    "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+                   "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
