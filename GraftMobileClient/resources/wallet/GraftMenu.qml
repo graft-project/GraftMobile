@@ -57,7 +57,7 @@ Rectangle {
                 Layout.fillWidth: true
                 editable: true
                 contentItem.enabled: false
-                font.pointSize: 9
+                font.pointSize: 14
                 Material.background: "transparent"
                 Material.foreground: "#707070"
             }
