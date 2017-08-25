@@ -20,6 +20,7 @@
         <file alias="/BalanceView.qml">resources/wallet/BalanceView.qml</file>
         <file alias="/CurrencySelectionItem.qml">resources/wallet/CurrencySelectionItem.qml</file>
         <file alias="/GraftMenu.qml">resources/wallet/GraftMenu.qml</file>
+        <file alias="/Wallet.qml">resources/wallet/Wallet.qml</file>
     </qresource>
     <qresource prefix="/examples">
         <file alias="/bob-haircuts.png">resources/examples/bob-haircuts.png</file>

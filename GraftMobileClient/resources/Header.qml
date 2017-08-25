@@ -19,6 +19,14 @@ Rectangle {
         }
     }
 
+    onMenuIconClicked: {
+        if (isMenuState) {
+            drawer.open();
+        } else {
+            pop()
+        }
+    }
+
     RowLayout {
         anchors.fill: parent
         Layout.topMargin: 10

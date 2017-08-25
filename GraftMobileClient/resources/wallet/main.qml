@@ -16,6 +16,15 @@ ApplicationWindow {
     height: 480
     title: qsTr("WALLET")
 
+    Drawer {
+        id: drawer
+        width: 0.75 * parent.width
+        height: parent.height
+        contentItem: GraftMenu {
+                        model: ["Graft", "USD"]
+                    }
+    }
+
     StackView {
         id: stack
         anchors.fill: parent
