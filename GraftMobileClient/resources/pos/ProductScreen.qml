@@ -8,58 +8,52 @@ import "../"
 
 BaseScreen {
     id: mainScreen
-    title: qsTr("Pos")
+    title: qsTr("Point of Sale")
     cartEnable: true
 
-    ListView {
-        id: productList
+    ColumnLayout {
         anchors.fill: parent
-        model: ProductModel
-        delegate: productDelegate
-    }
 
-    Component {
-        id: productDelegate
-        ProductDelegate {
-            width: productList.width
-            productImage: imagePath
-            productName: name
-            productPrice: cost
-            selectState: selected
-        }
-    }
+        ListView {
+            id: productList
+            clip: true
+            model: ProductModel
+            delegate: productDelegate
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
-    WideRoundButton {
-        id: addButton
-        text: qsTr("Checkout")
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: 94
-            right: parent.right
-            rightMargin: 40
-            left: parent.left
-            leftMargin: 40
+            Component {
+                id: productDelegate
+                ProductDelegate {
+                    width: productList.width
+                    productImage: imagePath
+                    productName: name
+                    productPrice: cost
+                    selectState: selected
+                }
+            }
         }
-        onClicked: mainScreen.pushScreen.initialCheckout()
-    }
 
-    RoundButton {
-        padding: 21
-        width: height
-        highlighted: true
-        Material.elevation: 0
-        Material.accent: "#d7d7d7"
-        anchors {
-            top: addButton.bottom
-            topMargin: 20
-            right: parent.right
-            rightMargin: 5
-            bottom: parent.bottom
-            bottomMargin: 5
+        WideRoundButton {
+            id: addButton
+            text: qsTr("Checkout")
+            onClicked: mainScreen.pushScreen.initialCheckout()
         }
-        contentItem: Image {
-            source: "qrc:/imgs/plus_icon.png"
+
+        RoundButton {
+            padding: 20
+            highlighted: true
+            Material.elevation: 0
+            Material.accent: "#d7d7d7"
+            Layout.preferredHeight: addButton.height * 1.4
+            Layout.preferredWidth: height
+            Layout.alignment: Qt.AlignRight
+            Layout.rightMargin: 10
+            Layout.bottomMargin: 10
+            contentItem: Image {
+                source: "qrc:/imgs/plus_icon.png"
+            }
+            onClicked: mainScreen.pushScreen.openAddScreen()
         }
-        onClicked: mainScreen.pushScreen.openAddScreen()
     }
 }

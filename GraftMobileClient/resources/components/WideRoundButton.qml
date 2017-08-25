@@ -5,8 +5,8 @@ import QtQuick.Layouts 1.3
 
 RoundButton {
     radius: 14
-    topPadding: 10
-    bottomPadding: 10
+    topPadding: 13
+    bottomPadding: 13
     highlighted: true
     Material.elevation: 0
     Material.accent: "#757575"
@@ -14,7 +14,7 @@ RoundButton {
     Layout.fillWidth: true
     Layout.leftMargin: 40
     Layout.rightMargin: 40
-    Layout.bottomMargin: 10
+    Layout.bottomMargin: 13
     font {
         family: "Liberation Sans"
         pointSize: 13
