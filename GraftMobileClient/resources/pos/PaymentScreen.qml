@@ -134,7 +134,6 @@ BaseScreen {
                 running: true
                 onTriggered: {
                     parent.state = "twirlState"
-                    delay.start()
                 }
             }
 

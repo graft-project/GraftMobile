@@ -45,11 +45,8 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
     {
         QByteArray downloadedData = reply->readAll();
         rImage = QImage::fromData(downloadedData);
-        qDebug() << rImage.size();
-        rImage = rImage.copy( 40, 40, 220, 220);
+        rImage = rImage.copy( 29, 29, 241, 241);
         rImage.save("cropped_image.jpg");
-
-
     }
     reply->deleteLater();
 

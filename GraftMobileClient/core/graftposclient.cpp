@@ -16,10 +16,8 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
 
 void GraftPOSClient::sale()
 {
-    setQRCodeImage(mQRCodeEncoder->encode("dfnbdgnfgnfnfgnfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"));
-//    mApi->sale(mPID, QString());
-    emit saleReceived(true);
-    //GTA-V: !!!!
+    setQRCodeImage(mQRCodeEncoder->encode(""));
+    mApi->sale(mPID, QString());
 }
 
 void GraftPOSClient::getSaleStatus()
