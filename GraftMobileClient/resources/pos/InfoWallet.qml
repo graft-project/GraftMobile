@@ -51,7 +51,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignCenter
                 font {
                     family: "Liberation Sans"
-                    pointSize: 20
+                    pointSize: 22
                 }
             }
 
