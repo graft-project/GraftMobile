@@ -13,6 +13,7 @@
         <file alias="/AddingScreen.qml">resources/pos/AddingScreen.qml</file>
         <file alias="/ProductScreen.qml">resources/pos/ProductScreen.qml</file>
         <file alias="/ProductDelegate.qml">resources/pos/ProductDelegate.qml</file>
+        <file alias="/InfoWallet.qml">resources/pos/InfoWallet.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="/main.qml">resources/wallet/main.qml</file>
