@@ -21,6 +21,7 @@
         <file alias="/CurrencySelectionItem.qml">resources/wallet/CurrencySelectionItem.qml</file>
         <file alias="/GraftMenu.qml">resources/wallet/GraftMenu.qml</file>
         <file alias="/Wallet.qml">resources/wallet/Wallet.qml</file>
+        <file alias="/AddCardView.qml">resources/wallet/AddCardView.qml</file>
     </qresource>
     <qresource prefix="/examples">
         <file alias="/bob-haircuts.png">resources/examples/bob-haircuts.png</file>
@@ -43,6 +44,7 @@
         <file alias="/plus_icon.png">resources/imgs/plus_icon.png</file>
         <file alias="/g_icon_black.png">resources/imgs/g_icon_black.png</file>
         <file alias="/g_icon_small.png">resources/imgs/g_icon_small.png</file>
+        <file alias="/visa-master-card-american-express-logo.png">resources/imgs/visa-master-card-american-express-logo.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="/WideRoundButton.qml">resources/components/WideRoundButton.qml</file>
