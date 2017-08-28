@@ -7,13 +7,18 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-QByteArray ProductModelSerializator::serialize(ProductModel *model)
+QByteArray ProductModelSerializator::serialize(ProductModel *model, bool selectedOnly)
 {
     QVector<ProductItem*> items = model->products();
     QJsonArray array;
 
     for (ProductItem* item : items)
     {
+        if (selectedOnly && !item->isSelected())
+        {
+            continue;
+        }
+
         QJsonObject object;
         object.insert(QStringLiteral("imagePath"), item->imagePath());
         object.insert(QStringLiteral("title"), item->name());
@@ -29,7 +34,7 @@ QByteArray ProductModelSerializator::serialize(ProductModel *model)
 void ProductModelSerializator::deserialize(const QByteArray &array, ProductModel *model)
 {
     Q_ASSERT(model);
-    if (model)
+    if (model && !array.isEmpty())
     {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(array);
         QJsonArray jsonArray = jsonDoc.array();

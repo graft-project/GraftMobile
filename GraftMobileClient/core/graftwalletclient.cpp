@@ -1,5 +1,7 @@
+#include "productmodelserializator.h"
 #include "graftwalletclient.h"
 #include "api/graftwalletapi.h"
+#include "productmodel.h"
 #include "config.h"
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
@@ -13,14 +15,33 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     connect(mApi, &GraftWalletAPI::getPayStatusReceived,
             this, &GraftWalletClient::receivePayStatus);
     connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
+
+    mPaymentProductModel = new ProductModel(this);
+}
+
+double GraftWalletClient::totalCost() const
+{
+    return mTotalCost;
+}
+
+ProductModel *GraftWalletClient::paymentProductModel() const
+{
+    return mPaymentProductModel;
 }
 
 void GraftWalletClient::readyToPay(const QString &data)
 {
-    QStringList dataList = data.split(';');
-    mPID = dataList.value(0);
-    mPrivateKey = dataList.value(1);
-    mApi->readyToPay(mPID, QString());
+    if (!data.isEmpty())
+    {
+        QStringList dataList = data.split(';');
+        if (dataList.count() == 3)
+        {
+            mPID = dataList.value(0);
+            mPrivateKey = dataList.value(1);
+            mTotalCost = dataList.value(2).toDouble();
+            mApi->readyToPay(mPID, QString());
+        }
+    }
 }
 
 void GraftWalletClient::rejectPay()
@@ -40,7 +61,9 @@ void GraftWalletClient::getPayStatus()
 
 void GraftWalletClient::receiveReadyToPay(int result, const QString &transaction)
 {
-    Q_UNUSED(transaction);
+    mPaymentProductModel->clear();
+    QByteArray data = QByteArray::fromHex(transaction.toLatin1());
+    ProductModelSerializator::deserialize(data, mPaymentProductModel);
     emit readyToPayReceived(result == 0);
 }
 
