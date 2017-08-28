@@ -22,6 +22,7 @@ ApplicationWindow {
         height: parent.height
         contentItem: GraftMenu {
                         model: ["Graft", "USD"]
+                        pushScreen: menuTransitions()
                     }
     }
 
@@ -56,9 +57,22 @@ ApplicationWindow {
         drawer.open()
     }
 
+    function hideMenu() {
+        drawer.close()
+    }
+
     function goBack() {
         stack.pop()
     }
+
+    function menuTransitions() {
+        var transitionsMap = {}
+        transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
+        return transitionsMap
+    }
+
+
 
     function balanceViewTransition() {
         var transitionsMap = clickOnMenu()

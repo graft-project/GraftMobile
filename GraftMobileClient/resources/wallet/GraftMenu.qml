@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.2
 
 Rectangle {
     property alias model: graftCBox.model
+    property var pushScreen
 
     color: "#484848"
 
@@ -47,7 +48,7 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         drawer.close()
-                        openBalanceScreen()
+                        pushScreen.openBalanceScreen()
                     }
                 }
             }

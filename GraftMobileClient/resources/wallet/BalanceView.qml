@@ -63,7 +63,7 @@ BaseScreen {
         WideRoundButton {
             text: qsTr("Pay")
             onPressed: {
-                rootItem.pushScreen()
+                pushScreen.openQRCodeScanner()
             }
         }
     }
