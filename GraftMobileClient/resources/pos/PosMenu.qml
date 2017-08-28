@@ -47,6 +47,7 @@ Rectangle {
         }
 
         RowLayout {
+            spacing: 0
             Layout.preferredWidth: parent.width
 
             Text {
@@ -65,17 +66,28 @@ Rectangle {
                     }
                 }
             }
+            Item {
+                Layout.fillWidth: true
+            }
 
             Text {
-                text: qsTr("%1 g").arg(balanceInGraft)
+                text: qsTr("%1").arg(balanceInGraft)
                 color: "#ffffff"
                 Layout.alignment: Qt.AlignRight
                 font {
                     bold: true
-                    family: "Noto Sans CJK KR Medium"
+                    family: "Liberation Sans"
                     pointSize: 10
                 }
             }
+
+            Image {
+                Layout.alignment: Qt.AlignRight
+                Layout.preferredHeight: 14
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/imgs/g_icon_small.png"
+            }
+
         }
 
         Text {
@@ -85,13 +97,6 @@ Rectangle {
             font {
                 family: "Liberation Sans"
                 pointSize: 10
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    drawer.close()
-                }
             }
         }
     }
