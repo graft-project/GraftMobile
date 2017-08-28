@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
     QZXing::registerQMLTypes();
 
     GraftWalletClient client;
+    engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
+                                             client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
 #endif

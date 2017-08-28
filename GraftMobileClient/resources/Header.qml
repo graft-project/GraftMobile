@@ -23,9 +23,9 @@ Rectangle {
 
     onMenuIconClicked: {
         if (isMenuState) {
-            pushScreen.showMenu();
+            pushScreen.showMenu()
         } else {
-            pushScreen.goBack();
+            pushScreen.goBack()
         }
     }
 

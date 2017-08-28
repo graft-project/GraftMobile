@@ -22,7 +22,7 @@ ApplicationWindow {
         height: parent.height
         contentItem: GraftMenu {
                         model: ["Graft", "USD"]
-                        pushScreen: menuTransitions()
+                        pushScreen: transitionsBetweenScreens()
                     }
     }
 
@@ -43,14 +43,31 @@ ApplicationWindow {
         id: initialScreen
         amountGraft: 2
         amountMoney: 145
-        pushScreen: balanceViewTransition()
+        pushScreen: transitionsBetweenScreens()
     }
 
-    function clickOnMenu() {
+    function transitionsBetweenScreens() {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
+        transitionsMap["hideMenu"] = hideMenu
         transitionsMap["goBack"] = goBack
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
+        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
+        transitionsMap["paymentScreen"] = openPaymentConfirmationView
         return transitionsMap
+    }
+
+    function openQRScanningScreen() {
+        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+    }
+
+    function openPaymentConfirmationView() {
+        stack.push("PaymentConfirmationView.qml", {"pushScreen": transitionsBetweenScreens(),
+                                                   "totalAmount": GraftClient.totalCost(),
+                                                   "currencyModel": currencyModel,
+                                                   "balanceInGraft": balanceInGraft,
+                                                   "balanceInUSD": balanceInUSD,
+                                                   "productModel": PaymentProductModel})
     }
 
     function showMenu() {
@@ -63,34 +80,6 @@ ApplicationWindow {
 
     function goBack() {
         stack.pop()
-    }
-
-    function menuTransitions() {
-        var transitionsMap = {}
-        transitionsMap["hideMenu"] = hideMenu
-        transitionsMap["openBalanceScreen"] = openBalanceScreen
-        return transitionsMap
-    }
-
-    function balanceViewTransition() {
-        var transitionsMap = clickOnMenu()
-        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
-        return transitionsMap
-    }
-
-    function openQRScanningScreen() {
-        var transitionsMap = clickOnMenu()
-        transitionsMap["balanceScreen"] = openBalanceScreen
-        transitionsMap["paymentScreen"] = openPaymentConfirmationView
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsMap})
-    }
-
-    function openPaymentConfirmationView() {
-        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen,
-                                                   "totalAmount": totalAmount,
-                                                   "currencyModel": currencyModel,
-                                                   "balanceInGraft": balanceInGraft,
-                                                   "balanceInUSD": balanceInUSD})
     }
 
     function openBalanceScreen() {
