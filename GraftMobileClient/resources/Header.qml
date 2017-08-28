@@ -5,8 +5,6 @@ Rectangle {
     height: 60
     color: "#707070"
 
-    property var pushScreen
-
     signal menuIconClicked()
 
     property alias headerText: headerText.text
@@ -18,14 +16,6 @@ Rectangle {
             menuIcon.source = "qrc:/imgs/menu_icon.png"
         } else {
             menuIcon.source = "qrc:/imgs/back.png"
-        }
-    }
-
-    onMenuIconClicked: {
-        if (isMenuState) {
-            pushScreen.showMenu();
-        } else {
-            pushScreen.goBack();
         }
     }
 
