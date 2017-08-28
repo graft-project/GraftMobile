@@ -16,7 +16,7 @@ BaseScreen {
 
         onSaleReceived: {
             if (result === true) {
-                mainScreen.pushScreen.initialCheckout()
+                pushScreen.initialCheckout()
             }
         }
     }
@@ -63,7 +63,7 @@ BaseScreen {
             contentItem: Image {
                 source: "qrc:/imgs/plus_icon.png"
             }
-            onClicked: mainScreen.pushScreen.openAddScreen()
+            onClicked: pushScreen.openAddScreen()
         }
     }
 }
