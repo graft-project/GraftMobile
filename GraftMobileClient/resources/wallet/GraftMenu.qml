@@ -47,7 +47,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        drawer.close()
+                        pushScreen.hideMenu()
                         pushScreen.openBalanceScreen()
                     }
                 }
@@ -103,7 +103,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            drawer.close()
+                            pushScreen.hideMenu()
                         }
                     }
                 }
@@ -134,7 +134,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        drawer.close()
+                        pushScreen.hideMenu()
                     }
                 }
             }
@@ -150,7 +150,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        drawer.close()
+                        pushScreen.hideMenu()
                     }
                 }
             }

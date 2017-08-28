@@ -72,8 +72,6 @@ ApplicationWindow {
         return transitionsMap
     }
 
-
-
     function balanceViewTransition() {
         var transitionsMap = clickOnMenu()
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
