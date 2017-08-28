@@ -2,7 +2,6 @@
 #define SELECTEDPRODUCTPROXYMODEL_H
 
 #include <QSortFilterProxyModel>
-#include <QObject>
 
 class SelectedProductProxyModel : public QSortFilterProxyModel
 {
@@ -11,6 +10,7 @@ class SelectedProductProxyModel : public QSortFilterProxyModel
 public:
     SelectedProductProxyModel(QObject *parent = 0);
 
+    QHash<int, QByteArray> roleNames() const;
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 };
 

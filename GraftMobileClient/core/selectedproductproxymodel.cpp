@@ -1,10 +1,33 @@
 #include "selectedproductproxymodel.h"
+#include "productmodel.h"
 
 SelectedProductProxyModel::SelectedProductProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 }
 
+QHash<int, QByteArray> SelectedProductProxyModel::roleNames() const
+{
+    if(sourceModel())
+    {
+        return sourceModel()->roleNames();
+    }
+
+    return QHash<int, QByteArray>();
+}
+
 bool SelectedProductProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    return true;
+    if (sourceModel())
+    {
+        QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+        if (index.isValid())
+        {
+            QVariant valueRole = index.data(ProductModel::SelectedRole);
+            if (valueRole.isValid())
+            {
+                return valueRole.toBool();
+            }
+        }
+    }
+    return false;
 }
