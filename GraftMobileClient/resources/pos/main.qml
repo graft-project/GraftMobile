@@ -23,7 +23,7 @@ ApplicationWindow {
         target: GraftClient
 
         onErrorReceived: {
-            rootScreen()
+            openMainScreen()
         }
     }
 
@@ -55,21 +55,21 @@ ApplicationWindow {
     function menuPush() {
         var transitionsMap = {}
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
-        transitionsMap["backProductScreen"] = rootScreen
+        transitionsMap["backProductScreen"] = openMainScreen
         return transitionsMap
     }
 
-    function rootScreen() {
+    function openMainScreen() {
         stack.pop(mainScreen)
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": rootScreen,
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": openMainScreen,
                        "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": rootScreen,
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": openMainScreen,
                        "price": ProductModel.totalCost()})
     }
 
