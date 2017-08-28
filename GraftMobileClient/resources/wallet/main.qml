@@ -21,9 +21,9 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-                        model: ["Graft", "USD"]
-                        pushScreen: transitionsBetweenScreens()
-                    }
+            model: ["Graft", "USD"]
+            pushScreen: transitionsBetweenScreens()
+        }
     }
 
     StackView {
@@ -63,11 +63,11 @@ ApplicationWindow {
 
     function openPaymentConfirmationView() {
         stack.push("PaymentConfirmationView.qml", {"pushScreen": transitionsBetweenScreens(),
-                                                   "totalAmount": GraftClient.totalCost(),
-                                                   "currencyModel": currencyModel,
-                                                   "balanceInGraft": balanceInGraft,
-                                                   "balanceInUSD": balanceInUSD,
-                                                   "productModel": PaymentProductModel})
+                       "totalAmount": GraftClient.totalCost(),
+                       "currencyModel": currencyModel,
+                       "balanceInGraft": balanceInGraft,
+                       "balanceInUSD": balanceInUSD,
+                       "productModel": PaymentProductModel})
     }
 
     function showMenu() {

@@ -11,6 +11,13 @@ Page {
         id: baseHeader
         headerText: basePage.title
         cartEnable: false
-        pushScreen: basePage.pushScreen
+
+        onMenuIconClicked: {
+            if (isMenuState) {
+                basePage.pushScreen.showMenu()
+            } else {
+                basePage.pushScreen.goBack()
+            }
+        }
     }
 }

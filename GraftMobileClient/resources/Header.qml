@@ -7,7 +7,6 @@ Rectangle {
 
     signal menuIconClicked()
 
-    property var pushScreen
     property alias headerText: headerText.text
     property alias cartEnable: cartIcon.visible
     property bool isMenuState: true
@@ -17,14 +16,6 @@ Rectangle {
             menuIcon.source = "qrc:/imgs/menu_icon.png"
         } else {
             menuIcon.source = "qrc:/imgs/back.png"
-        }
-    }
-
-    onMenuIconClicked: {
-        if (isMenuState) {
-            pushScreen.showMenu()
-        } else {
-            pushScreen.goBack()
         }
     }
 
