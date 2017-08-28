@@ -6,8 +6,8 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout {
     property alias currencyModel: graftCBox.model
-    property int balanceInGraft: 0
-    property int balanceInUSD: 0
+    property real balanceInGraft: 0
+    property real balanceInUSD: 0
 
     spacing: 10
 
@@ -41,7 +41,7 @@ ColumnLayout {
                     family: "Liberation Sans"
                 }
             }
-            
+
             Text {
                 color: "#707070"
                 text: qsTr("%1g / %2USD").arg(balanceInGraft).arg(balanceInUSD)

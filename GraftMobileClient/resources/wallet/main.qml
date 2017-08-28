@@ -6,10 +6,10 @@ import "../"
 ApplicationWindow {
     id: root
 
-    property int totalAmount: 100
+    property real totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
-    property int balanceInGraft: 1
-    property int balanceInUSD: 200
+    property real balanceInGraft: 1
+    property real balanceInUSD: 200
 
     visible: true
     width: 320

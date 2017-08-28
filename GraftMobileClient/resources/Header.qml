@@ -5,10 +5,9 @@ Rectangle {
     height: 60
     color: "#707070"
 
-    property var pushScreen
-
     signal menuIconClicked()
 
+    property var pushScreen
     property alias headerText: headerText.text
     property alias cartEnable: cartIcon.visible
     property bool isMenuState: true
