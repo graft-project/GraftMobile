@@ -14,9 +14,16 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: PosMenu {
-            anchors.fill: parent
             balanceInGraft: "1.15"
             pushScreen: menuPush()
+        }
+    }
+
+    Connections {
+        target: GraftClient
+
+        onErrorReceived: {
+            rootScreen()
         }
     }
 
