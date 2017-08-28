@@ -37,13 +37,19 @@ void GraftPOSAPI::receiveSaleResponse()
 {
     qDebug() << "Sale Response Received:\nTime: " << mTimer.elapsed();
     QJsonObject object = processReply();
-    emit saleResponseReceived(object.value(QLatin1String("Result")).toInt());
+    if (!object.isEmpty())
+    {
+        emit saleResponseReceived(object.value(QLatin1String("Result")).toInt());
+    }
 }
 
 void GraftPOSAPI::receiveSaleStatusResponse()
 {
     qDebug() << "GetSaleStatus Response Received:\nTime: " << mTimer.elapsed();
     QJsonObject object = processReply();
-    emit getSaleStatusResponseReceived(object.value(QLatin1String("Result")).toInt(),
-                                       object.value(QLatin1String("SaleStatus")).toInt());
+    if (!object.isEmpty())
+    {
+        emit getSaleStatusResponseReceived(object.value(QLatin1String("Result")).toInt(),
+                                           object.value(QLatin1String("SaleStatus")).toInt());
+    }
 }
