@@ -13,7 +13,9 @@ ApplicationWindow {
         id: drawer
         width: 0.75 * parent.width
         height: parent.height
-        contentItem: PosMenu {}
+        contentItem: PosMenu {
+            balanceInGraft: "1.15"
+        }
     }
 
     StackView {
@@ -47,7 +49,7 @@ ApplicationWindow {
 
     function openAddingScreen() {
         stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop,
-                   "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {

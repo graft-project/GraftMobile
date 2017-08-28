@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Rectangle {
-    property double balanceInGraft: 1.15
+    property alias balanceInGraft: graftmoney.text
 
     color: "#484848"
     anchors.fill: parent
@@ -68,7 +68,7 @@ Rectangle {
             }
 
             Text {
-                text: qsTr("%1").arg(balanceInGraft)
+                id: graftmoney
                 color: "#ffffff"
                 Layout.alignment: Qt.AlignRight
                 font {
