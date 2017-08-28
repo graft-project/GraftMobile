@@ -25,11 +25,9 @@ int main(int argc, char *argv[])
     GraftPOSClient client;
     client.registerImageProvider(&engine);
 
-    ProductModel productModel;
-    SelectedProductProxyModel selectedProductModel;
-    selectedProductModel.setSourceModel(&productModel);
-    engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"), &selectedProductModel);
-    engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), &productModel);
+    engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
+                                             client.selectedProductModel());
+    engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif

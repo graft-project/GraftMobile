@@ -44,6 +44,7 @@ ApplicationWindow {
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": stackPop})
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": stackPop,
+                       "price": ProductModel.totalCost()})
     }
 }

@@ -3,24 +3,28 @@
 
 QString KeyGenerator::generatePID()
 {
-    return generateUUID();
+    return generateUUID(8);
 }
 
 QString KeyGenerator::generateSpendingKey()
 {
-    return generateUUID();
+    return generateUUID(16);
 }
 
 QString KeyGenerator::generateViewKey()
 {
-    return generateUUID();
+    return generateUUID(16);
 }
 
-QString KeyGenerator::generateUUID()
+QString KeyGenerator::generateUUID(int length)
 {
     QString lKey = QUuid::createUuid().toString();
     lKey.remove('}');
     lKey.remove('{');
     lKey.remove('-');
+    if (length > 0)
+    {
+        return lKey.remove(length, lKey.length() - length);
+    }
     return lKey;
 }

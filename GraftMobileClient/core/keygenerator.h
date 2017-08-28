@@ -12,7 +12,7 @@ public:
 
     static QString generateViewKey();
 
-    static QString generateUUID();
+    static QString generateUUID(int length = 0);
 };
 
 #endif // KEYGENERATOR_H
