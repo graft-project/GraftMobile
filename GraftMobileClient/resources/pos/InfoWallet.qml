@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
 import "../"
 import "../components"
@@ -19,6 +18,9 @@ BaseScreen {
             right: parent.right
             rightMargin: 20
             top: parent.top
+            topMargin: 8
+            bottom: parent.bottom
+            bottomMargin: 1
         }
 
         Image {
@@ -30,7 +32,7 @@ BaseScreen {
         }
 
         ColumnLayout {
-            spacing: 15
+            spacing: 20
             Layout.alignment: Qt.AlignCenter
             Layout.bottomMargin: 20
 
@@ -39,19 +41,29 @@ BaseScreen {
                 color: "#707070"
                 Layout.alignment: Qt.AlignCenter
                 font {
-                    bold: true
                     family: "Liberation Sans"
-                    pointSize: 17
+                    pointSize: 20
                 }
             }
 
-            Text {
-                text: amountGraft + " g"
-                color: "black"
-                Layout.alignment: Qt.AlignCenter
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 22
+            RowLayout {
+                spacing: 0
+                Layout.preferredWidth: parent.width
+
+                Text {
+                    text: amountGraft
+                    color: "black"
+                    Layout.alignment: Qt.AlignCenter
+                    font {
+                        family: "Liberation Sans"
+                        pointSize: 27
+                    }
+                }
+
+                Image {
+                    Layout.preferredHeight: 28
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/imgs/g_icon_black.png"
                 }
             }
 
@@ -61,7 +73,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignCenter
                 font {
                     family: "Liberation Sans"
-                    pointSize: 15
+                    pointSize: 17
                 }
             }
         }
@@ -72,7 +84,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignCenter
             font {
                 family: "Liberation Sans"
-                pointSize: 13
+                pointSize: 15
             }
         }
 
