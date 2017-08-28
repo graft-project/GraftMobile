@@ -1,6 +1,6 @@
 QT += androidextras
 
-if (contains(DEFINES, POS_BUILD)) {
+contains(DEFINES, POS_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/pos
 DISTFILES += \
     $$PWD/pos/AndroidManifest.xml \
@@ -14,7 +14,7 @@ DISTFILES += \
     $$PWD/pos/gradlew.bat
 }
 
-if (contains(DEFINES, WALLET_BUILD)) {
+contains(DEFINES, WALLET_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/wallet
 DISTFILES += \
     $$PWD/wallet/AndroidManifest.xml \

@@ -11,6 +11,16 @@ BaseScreen {
     title: qsTr("Point of Sale")
     cartEnable: true
 
+    Connections {
+        target: GraftClient
+
+        onSaleReceived: {
+            if (result === true) {
+                mainScreen.pushScreen.initialCheckout()
+            }
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
 
@@ -37,7 +47,7 @@ BaseScreen {
         WideRoundButton {
             id: addButton
             text: qsTr("Checkout")
-            onClicked: mainScreen.pushScreen.initialCheckout()
+            onClicked: GraftClient.sale()
         }
 
         RoundButton {
