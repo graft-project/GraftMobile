@@ -4,8 +4,9 @@
 #include <QQmlContext>
 
 #include "core/productmodel.h"
-#include "core/graftwalletclient.h"
 #include "core/graftposclient.h"
+#include "core/graftwalletclient.h"
+#include "core/selectedproductproxymodel.h"
 
 #ifdef WALLET_BUILD
 #include <QZXing.h>
@@ -25,6 +26,9 @@ int main(int argc, char *argv[])
     client.registerImageProvider(&engine);
 
     ProductModel productModel;
+    SelectedProductProxyModel selectedProductModel = new SelectedProductProxyModel;
+    selectedProductModel->setSourceModel(productModel);
+    engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductProxyModel"), selectedProductModel);
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), &productModel);
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
