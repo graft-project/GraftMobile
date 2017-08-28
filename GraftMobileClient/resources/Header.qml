@@ -45,8 +45,8 @@ Rectangle {
         }
 
         Item {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            Layout.preferredHeight: 20
+            Layout.preferredWidth: 20
             Image {
                 id: cartIcon
                 width: 20
@@ -54,7 +54,6 @@ Rectangle {
                 anchors {
                     top: parent.top
                     right: parent.right
-                    topMargin: 20
                     rightMargin: 15
                 }
                 source: "qrc:/imgs/cart_icon.png"
