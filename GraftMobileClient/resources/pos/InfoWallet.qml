@@ -13,14 +13,10 @@ BaseScreen {
     ColumnLayout {
         spacing: 18
         anchors {
-            left: parent.left
+            fill: parent
             leftMargin: 20
-            right: parent.right
             rightMargin: 20
-            top: parent.top
-            topMargin: 8
-            bottom: parent.bottom
-            bottomMargin: 1
+            topMargin: 10
         }
 
         Image {
