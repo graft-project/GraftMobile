@@ -58,6 +58,7 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         drawer.close()
+                        openInfoWalletScreen()
                     }
                 }
             }
@@ -78,7 +79,6 @@ Rectangle {
             }
 
             Image {
-//                Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: 14
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/imgs/g_icon_small.png"

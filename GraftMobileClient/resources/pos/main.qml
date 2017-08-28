@@ -53,4 +53,9 @@ ApplicationWindow {
     function openPaymentScreen() {
         stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": stackPop})
     }
+
+    function openInfoWalletScreen() {
+        stack.push("qrc:/pos/InfoWallet.qml")
+    }
+
 }
