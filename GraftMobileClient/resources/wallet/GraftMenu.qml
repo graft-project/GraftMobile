@@ -8,6 +8,31 @@ BaseScreen {
     property alias model: graftCBox.model
 
     header.visible: false
+
+    ListModel {
+        id: cardModel
+
+        ListElement {
+            cardName: "Graft"
+            cardNumber: "XXX344F355"
+        }
+
+        ListElement {
+            cardName: "Bitcoins"
+            cardNumber: "XXX5Kb8kLf9"
+        }
+
+        ListElement {
+            cardName: "VISA"
+            cardNumber: "XXX3224"
+        }
+
+        ListElement {
+            cardName: "MasterCard"
+            cardNumber: "XXX2345"
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "#484848"
@@ -66,59 +91,40 @@ BaseScreen {
                     Material.foreground: "#707070"
                 }
 
-                ColumnLayout {
-                    Layout.preferredWidth: parent.width
+                ListView {
+                    id: cardList
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: 106
+                    model: cardModel
+                    clip: true
                     spacing: 10
+                    delegate: cardDelegate
 
-                    Wallet {
-                        name: "Graft"
-                        number: "XXX344F355"
-                    }
+                    Component {
+                        id: cardDelegate
 
-                    Wallet {
-                        name: "Bitcoins"
-                        number: "XXX5Kb8kLf9"
-                    }
-
-                    Wallet {
-                        name: "VISA"
-                        number: "XXX3224"
-                    }
-
-                    Wallet {
-                        name: "MasterCard"
-                        number: "XXX2345"
+                        Wallet {
+                            width: cardList.width
+                            name: cardName
+                            number: cardNumber
+                        }
                     }
                 }
 
-                RowLayout {
-                    spacing: 12
-
-                    Text {
-                        Layout.alignment: Qt.AlignLeft
-                        text: qsTr("+")
-                        color: "white"
-                        font {
-                            family: "Liberation Sans"
-                            pointSize: 14
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                drawer.close()
-                                stack.push("qrc:/wallet/AddCardView.qml", {"anchors.fill": "parent"})
-                            }
-                        }
+                Text {
+                    Layout.alignment: Qt.AlignLeft
+                    text: qsTr("+  Add Card")
+                    color: "white"
+                    font {
+                        family: "Liberation Sans"
+                        pointSize: 14
                     }
 
-                    Text {
-                        Layout.alignment: Qt.AlignRight
-                        text: qsTr("Add Card")
-                        color: "white"
-                        font {
-                            family: "Liberation Sans"
-                            pointSize: 13
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            drawer.close()
+                            stack.push("qrc:/wallet/AddCardView.qml", {"anchors.fill": "parent"})
                         }
                     }
                 }

@@ -21,7 +21,7 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-                        model: ["Graft", "USD"]
+                        model: ["WALLET", "POS"]
                     }
     }
 
