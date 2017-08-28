@@ -16,6 +16,16 @@ ApplicationWindow {
     height: 480
     title: qsTr("WALLET")
 
+    Drawer {
+        id: drawer
+        width: 0.75 * parent.width
+        height: parent.height
+        contentItem: GraftMenu {
+                        model: ["Graft", "USD"]
+                        pushScreen: menuTransitions()
+                    }
+    }
+
     StackView {
         id: stack
         anchors.fill: parent
@@ -33,11 +43,43 @@ ApplicationWindow {
         id: initialScreen
         amountGraft: 2
         amountMoney: 145
-        pushScreen: openQRScanningScreen
+        pushScreen: balanceViewTransition()
+    }
+
+    function clickOnMenu() {
+        var transitionsMap = {}
+        transitionsMap["showMenu"] = showMenu
+        transitionsMap["goBack"] = goBack
+        return transitionsMap
+    }
+
+    function showMenu() {
+        drawer.open()
+    }
+
+    function hideMenu() {
+        drawer.close()
+    }
+
+    function goBack() {
+        stack.pop()
+    }
+
+    function menuTransitions() {
+        var transitionsMap = {}
+        transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
+        return transitionsMap
+    }
+
+    function balanceViewTransition() {
+        var transitionsMap = clickOnMenu()
+        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
+        return transitionsMap
     }
 
     function openQRScanningScreen() {
-        var transitionsMap = {}
+        var transitionsMap = clickOnMenu()
         transitionsMap["balanceScreen"] = openBalanceScreen
         transitionsMap["paymentScreen"] = openPaymentConfirmationView
         stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsMap})
