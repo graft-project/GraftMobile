@@ -60,28 +60,40 @@ void GraftWalletAPI::receiveReadyToPayResponse()
 {
     qDebug() << "ReadyToPay Response Received:\nTime: " << mTimer.elapsed();
     QJsonObject object = processReply();
-    emit readyToPayReceived(object.value(QLatin1String("Result")).toInt(),
-                            object.value(QLatin1String("Transaction")).toString());
+    if (!object.isEmpty())
+    {
+        emit readyToPayReceived(object.value(QLatin1String("Result")).toInt(),
+                                object.value(QLatin1String("Transaction")).toString());
+    }
 }
 
 void GraftWalletAPI::receiveRejectPayResponse()
 {
     qDebug() << "RejectPay Response Received:\nTime: " << mTimer.elapsed();
     QJsonObject object = processReply();
-    emit rejectPayReceived(object.value(QLatin1String("Result")).toInt());
+    if (!object.isEmpty())
+    {
+        emit rejectPayReceived(object.value(QLatin1String("Result")).toInt());
+    }
 }
 
 void GraftWalletAPI::receivePayResponse()
 {
     qDebug() << "Pay Response Received:\nTime: " << mTimer.elapsed();
     QJsonObject object = processReply();
-    emit payReceived(object.value(QLatin1String("Result")).toInt());
+    if (!object.isEmpty())
+    {
+        emit payReceived(object.value(QLatin1String("Result")).toInt());
+    }
 }
 
 void GraftWalletAPI::receivePayStatusResponse()
 {
     qDebug() << "GetPayStatus Response Received:\nTime: " << mTimer.elapsed();
     QJsonObject object = processReply();
-    emit getPayStatusReceived(object.value(QLatin1String("Result")).toInt(),
-                              object.value(QLatin1String("PayStatus")).toInt());
+    if (!object.isEmpty())
+    {
+        emit getPayStatusReceived(object.value(QLatin1String("Result")).toInt(),
+                                  object.value(QLatin1String("PayStatus")).toInt());
+    }
 }

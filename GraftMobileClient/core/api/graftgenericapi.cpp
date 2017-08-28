@@ -38,7 +38,7 @@ QJsonObject GraftGenericAPI::processReply()
             }
             return object;
         }
-        emit error();
     }
+    emit error();
     return QJsonObject();
 }
