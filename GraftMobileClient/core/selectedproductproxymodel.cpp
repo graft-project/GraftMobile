@@ -1,21 +1,13 @@
 #include "selectedproductproxymodel.h"
 #include "productmodel.h"
 
-SelectedProductProxyModel::SelectedProductProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
+SelectedProductProxyModel::SelectedProductProxyModel(QObject *parent)
+    : QSortFilterProxyModel(parent)
 {
 }
 
-QHash<int, QByteArray> SelectedProductProxyModel::roleNames() const
-{
-    if(sourceModel())
-    {
-        return sourceModel()->roleNames();
-    }
-
-    return QHash<int, QByteArray>();
-}
-
-bool SelectedProductProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool SelectedProductProxyModel::filterAcceptsRow(int source_row,
+                                                 const QModelIndex &source_parent) const
 {
     if (sourceModel())
     {
@@ -30,4 +22,14 @@ bool SelectedProductProxyModel::filterAcceptsRow(int source_row, const QModelInd
         }
     }
     return false;
+}
+
+QHash<int, QByteArray> SelectedProductProxyModel::roleNames() const
+{
+    if(sourceModel())
+    {
+        return sourceModel()->roleNames();
+    }
+
+    return QSortFilterProxyModel::roleNames();
 }

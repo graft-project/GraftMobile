@@ -6,12 +6,13 @@
 class SelectedProductProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
-
 public:
     SelectedProductProxyModel(QObject *parent = 0);
 
-    QHash<int, QByteArray> roleNames() const;
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+
+protected:
+    QHash<int, QByteArray> roleNames() const;
 };
 
 #endif // SELECTEDPRODUCTPROXYMODEL_H
