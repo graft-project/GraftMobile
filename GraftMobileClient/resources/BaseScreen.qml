@@ -11,5 +11,6 @@ Page {
         id: baseHeader
         headerText: basePage.title
         cartEnable: false
+        pushScreen: basePage.pushScreen
     }
 }

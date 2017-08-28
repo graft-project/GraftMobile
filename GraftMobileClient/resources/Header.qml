@@ -5,6 +5,8 @@ Rectangle {
     height: 60
     color: "#707070"
 
+    property var pushScreen
+
     signal menuIconClicked()
 
     property alias headerText: headerText.text
@@ -21,20 +23,21 @@ Rectangle {
 
     onMenuIconClicked: {
         if (isMenuState) {
-            drawer.open();
+            pushScreen.showMenu();
         } else {
-            pop()
+            pushScreen.goBack();
         }
     }
 
     RowLayout {
         anchors.fill: parent
-        Layout.topMargin: 10
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
 
         Image {
             id: menuIcon
-            Layout.maximumWidth: 20
-            Layout.maximumHeight: 20
+            Layout.preferredWidth: 20
+            Layout.preferredHeight: 20
             Layout.alignment: Qt.AlignLeft
             source: "qrc:/imgs/menu_icon.png"
 
@@ -62,7 +65,6 @@ Rectangle {
                 anchors {
                     top: parent.top
                     right: parent.right
-                    rightMargin: 15
                 }
                 source: "qrc:/imgs/cart_icon.png"
             }

@@ -42,11 +42,32 @@ ApplicationWindow {
         id: initialScreen
         amountGraft: 2
         amountMoney: 145
-        pushScreen: openQRScanningScreen
+        pushScreen: balanceViewTransition()
+    }
+
+    function clickOnMenu() {
+        var transitionsMap = {}
+        transitionsMap["showMenu"] = showMenu
+        transitionsMap["goBack"] = goBack
+        return transitionsMap
+    }
+
+    function showMenu() {
+        drawer.open()
+    }
+
+    function goBack() {
+        stack.pop()
+    }
+
+    function balanceViewTransition() {
+        var transitionsMap = clickOnMenu()
+        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
+        return transitionsMap
     }
 
     function openQRScanningScreen() {
-        var transitionsMap = {}
+        var transitionsMap = clickOnMenu()
         transitionsMap["balanceScreen"] = openBalanceScreen
         transitionsMap["paymentScreen"] = openPaymentConfirmationView
         stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsMap})
