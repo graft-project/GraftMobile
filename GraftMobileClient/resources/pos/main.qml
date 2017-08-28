@@ -48,22 +48,21 @@ ApplicationWindow {
     function menuPush() {
         var transitionsMap = {}
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
-        transitionsMap["backProductScreen"] = stackPop
+        transitionsMap["backProductScreen"] = rootScreen
         return transitionsMap
     }
 
-
-    function stackPop() {
-        stack.pop()
+    function rootScreen() {
+        stack.pop(mainScreen)
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop,
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": rootScreen,
                        "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": stackPop})
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": rootScreen})
     }
 
     function openInfoWalletScreen() {
