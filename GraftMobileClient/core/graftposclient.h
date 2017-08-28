@@ -3,14 +3,20 @@
 
 #include "graftbaseclient.h"
 
-class GraftPOSAPI;
+class SelectedProductProxyModel;
 class PatrickQRCodeEncoder;
+class ProductModel;
+class GraftPOSAPI;
 
 class GraftPOSClient : public GraftBaseClient
 {
     Q_OBJECT
 public:
     explicit GraftPOSClient(QObject *parent = nullptr);
+    ~GraftPOSClient();
+
+    ProductModel *productModel() const;
+    SelectedProductProxyModel *selectedProductModel() const;
 
 signals:
     void saleReceived(bool result);
@@ -28,6 +34,8 @@ private:
     GraftPOSAPI *mApi;
     PatrickQRCodeEncoder *mQRCodeEncoder;
     QString mPID;
+    ProductModel *mProductModel;
+    SelectedProductProxyModel *mSelectedProductModel;
 };
 
 #endif // GRAFTPOSCLIENT_H

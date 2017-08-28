@@ -8,7 +8,7 @@ class ProductModel;
 class ProductModelSerializator
 {
 public:
-    static QByteArray serialize(ProductModel *model);
+    static QByteArray serialize(ProductModel *model, bool selectedOnly = false);
     static void deserialize(const QByteArray &array, ProductModel *model);
 };
 

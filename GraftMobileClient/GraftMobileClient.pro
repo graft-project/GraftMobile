@@ -32,6 +32,7 @@ SOURCES += main.cpp \
     core/patrickqrcodeencoder.cpp \
     core/graftbaseclient.cpp \
     core/barcodeimageprovider.cpp \
+    core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp
 
 HEADERS += \
@@ -47,6 +48,7 @@ HEADERS += \
     core/patrickqrcodeencoder.h \
     core/graftbaseclient.h \
     core/barcodeimageprovider.h \
+    core/keygenerator.h \
     core/selectedproductproxymodel.h
 
 RESOURCES += qml.qrc

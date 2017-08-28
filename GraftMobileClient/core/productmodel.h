@@ -25,6 +25,8 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVector<ProductItem *> products() const;
     Q_INVOKABLE void changeSelection(int index);
+    Q_INVOKABLE double totalCost() const;
+    void clear();
 
 public slots:
     void add(const QString &imagePath, const QString &name, double cost,
