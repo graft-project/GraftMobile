@@ -1,7 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.2
 import "../components"
 import "../"
 
@@ -27,16 +27,16 @@ BaseScreen {
         anchors.fill: parent
 
         RowLayout {
-            Layout.topMargin: 20
+            Layout.topMargin: 15
             Layout.leftMargin: 23
             Layout.rightMargin: 23
-            Layout.bottomMargin: 15
+            Layout.bottomMargin: 10
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
             ColumnLayout {
                 id: totalCostLayout
-                spacing: 11
+                spacing: 20
                 Layout.alignment: Qt.AlignLeft
 
                 Text {
@@ -70,8 +70,8 @@ BaseScreen {
 
             Image {
                 Layout.alignment: Qt.AlignRight
-                Layout.preferredHeight: totalCostLayout.width
-                Layout.preferredWidth: totalCostLayout.width
+                Layout.preferredHeight: 100
+                Layout.preferredWidth: height
                 source: GraftClient.qrCodeImage()
             }
         }
