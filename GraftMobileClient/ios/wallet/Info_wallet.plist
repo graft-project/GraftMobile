@@ -11,11 +11,11 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleExecutable</key>
-    <string>Graft.Wallet</string>
+    <string>GraftWallet</string>
     <key>CFBundleIdentifier</key>
     <string>com.vakoms.qt.graftwallet</string>
     <key>CFBundleDisplayName</key>
-    <string>${PRODUCT_NAME}</string>
+    <string>Graft Wallet</string>
     <key>CFBundleName</key>
     <string>${PRODUCT_NAME}</string>
     <key>CFBundleShortVersionString</key>
