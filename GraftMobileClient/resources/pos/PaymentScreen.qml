@@ -83,39 +83,10 @@ BaseScreen {
             Layout.fillWidth: true
         }
 
-        ListModel {
-            id: productModel
-
-            ListElement {
-                name: "Hairout 1"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 2"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 3"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 4"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 5"
-                cost: 20
-            }
-        }
-
         ListView {
             id: productView
             clip: true
-            model: productModel
+            model: SelectedProductModel
             enabled: !confirmationRect.visible
             Layout.fillWidth: true
             Layout.fillHeight: true
