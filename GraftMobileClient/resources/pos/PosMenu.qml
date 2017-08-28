@@ -26,11 +26,7 @@ Rectangle {
             Image {
                 width: parent.width / 2
                 fillMode: Image.PreserveAspectFit
-                anchors {
-                    centerIn: parent
-                    bottom: parent.bottom
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.centerIn: parent
                 source: "qrc:/imgs/graft_pos_logo_small.png"
             }
         }
@@ -48,7 +44,6 @@ Rectangle {
 
         RowLayout {
             spacing: 0
-            Layout.preferredWidth: parent.width
 
             Text {
                 text: qsTr("WALLET")
@@ -66,6 +61,7 @@ Rectangle {
                     }
                 }
             }
+
             Item {
                 Layout.fillWidth: true
             }
@@ -82,7 +78,7 @@ Rectangle {
             }
 
             Image {
-                Layout.alignment: Qt.AlignRight
+//                Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: 14
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/imgs/g_icon_small.png"
