@@ -52,13 +52,20 @@ Rectangle {
             color: "white"
         }
 
-        Image {
-            id: cartIcon
-            Layout.maximumWidth: 20
-            Layout.maximumHeight: 20
-            Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: 15
-            source: "qrc:/imgs/cart_icon.png"
+        Item {
+            Layout.preferredHeight: 20
+            Layout.preferredWidth: 20
+            Image {
+                id: cartIcon
+                width: 20
+                height: 20
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    rightMargin: 15
+                }
+                source: "qrc:/imgs/cart_icon.png"
+            }
         }
     }
 }

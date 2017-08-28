@@ -2,10 +2,8 @@ QT += qml quick network
 
 CONFIG += c++11
 
-include(QZXing.pri)
-
 ios {
-include (ios/ios.pri)
+include(ios/ios.pri)
 }
 
 android {
@@ -13,21 +11,13 @@ include(android/android.pri)
 }
 
 contains(DEFINES, POS_BUILD) {
-android {
 TARGET = GraftPointOfSale
-}
-else {
-TARGET = Graft.PointOfSale
-}
 }
 
 contains(DEFINES, WALLET_BUILD) {
-android {
+include(QZXing.pri)
+
 TARGET = GraftWallet
-}
-else {
-TARGET = Graft.Wallet
-}
 }
 
 SOURCES += main.cpp \
@@ -41,7 +31,8 @@ SOURCES += main.cpp \
     core/productmodelserializator.cpp \
     core/patrickqrcodeencoder.cpp \
     core/graftbaseclient.cpp \
-    core/barcodeimageprovider.cpp
+    core/barcodeimageprovider.cpp \
+    core/selectedproductproxymodel.cpp
 
 HEADERS += \
     core/config.h \
@@ -55,7 +46,8 @@ HEADERS += \
     core/productmodelserializator.h \
     core/patrickqrcodeencoder.h \
     core/graftbaseclient.h \
-    core/barcodeimageprovider.h
+    core/barcodeimageprovider.h \
+    core/selectedproductproxymodel.h
 
 RESOURCES += qml.qrc
 

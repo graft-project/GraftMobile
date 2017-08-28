@@ -45,6 +45,7 @@ QImage PatrickQRCodeEncoder::encode(const QString &message)
     {
         QByteArray downloadedData = reply->readAll();
         rImage = QImage::fromData(downloadedData);
+        rImage = rImage.copy( 29, 29, 241, 241);
     }
     reply->deleteLater();
 

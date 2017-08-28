@@ -83,7 +83,7 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-            productModel.changeSelection(index)
+            ProductModel.changeSelection(index)
         }
     }
 }
