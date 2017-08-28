@@ -3,6 +3,7 @@ contains(DEFINES, POS_BUILD) {
                               $$PWD/pos/graft_pos_logo.png
     QMAKE_BUNDLE_DATA += app_splash_screen
     QMAKE_INFO_PLIST = $$PWD/pos/Info_pos.plist
+    QMAKE_ASSET_CATALOGS += $$PWD/Images.xcassets
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -10,4 +11,5 @@ contains(DEFINES, WALLET_BUILD) {
                               $$PWD/wallet/graft_wallet_logo.png
     QMAKE_BUNDLE_DATA += app_splash_screen
     QMAKE_INFO_PLIST = $$PWD/wallet/Info_wallet.plist
+    QMAKE_ASSET_CATALOGS += $$PWD/Images.xcassets
 }

@@ -14,9 +14,16 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: PosMenu {
-            anchors.fill: parent
             balanceInGraft: "1.15"
             pushScreen: menuPush()
+        }
+    }
+
+    Connections {
+        target: GraftClient
+
+        onErrorReceived: {
+            openMainScreen()
         }
     }
 
@@ -48,21 +55,21 @@ ApplicationWindow {
     function menuPush() {
         var transitionsMap = {}
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
-        transitionsMap["backProductScreen"] = rootScreen
+        transitionsMap["backProductScreen"] = openMainScreen
         return transitionsMap
     }
 
-    function rootScreen() {
+    function openMainScreen() {
         stack.pop(mainScreen)
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": rootScreen,
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": openMainScreen,
                        "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": rootScreen,
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": openMainScreen,
                        "price": ProductModel.totalCost()})
     }
 
