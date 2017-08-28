@@ -4,9 +4,7 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     property alias balanceInGraft: graftmoney.text
-
     color: "#484848"
-    anchors.fill: parent
 
     ColumnLayout {
         spacing: 20
