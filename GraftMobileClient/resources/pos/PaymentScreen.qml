@@ -7,7 +7,7 @@ import "../"
 
 BaseScreen {
     title: qsTr("Cart")
-    property int price: 100
+    property real price: 100
     property alias productListModel: productView.model
 
     Connections {
