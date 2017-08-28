@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Rectangle {
-    property alias balanceInGraft: graftmoney.text
+    property alias balanceInGraft: graftMoney.text
     color: "#484848"
 
     ColumnLayout {
@@ -66,7 +66,7 @@ Rectangle {
             }
 
             Text {
-                id: graftmoney
+                id: graftMoney
                 color: "#ffffff"
                 Layout.alignment: Qt.AlignRight
                 font {
