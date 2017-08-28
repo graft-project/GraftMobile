@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 
 Rectangle {
     property alias balanceInGraft: graftMoney.text
+    property var pushScreen
     color: "#484848"
 
     ColumnLayout {
@@ -38,6 +39,14 @@ Rectangle {
                 family: "Liberation Sans"
                 pointSize: 10
             }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    drawer.close()
+                    pushScreen.backProductScreen()
+                }
+            }
         }
 
         RowLayout {
@@ -56,7 +65,7 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         drawer.close()
-                        openInfoWalletScreen()
+                        pushScreen.openWalletScreen()
                     }
                 }
             }

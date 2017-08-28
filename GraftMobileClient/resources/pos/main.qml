@@ -16,6 +16,7 @@ ApplicationWindow {
         contentItem: PosMenu {
             anchors.fill: parent
             balanceInGraft: "1.15"
+            pushScreen: menuPush()
         }
     }
 
@@ -43,6 +44,14 @@ ApplicationWindow {
         transitionsMap["initialCheckout"] = openPaymentScreen
         return transitionsMap
     }
+
+    function menuPush() {
+        var transitionsMap = {}
+        transitionsMap["openWalletScreen"] = openInfoWalletScreen
+        transitionsMap["backProductScreen"] = stackPop
+        return transitionsMap
+    }
+
 
     function stackPop() {
         stack.pop()
