@@ -6,7 +6,7 @@ import "../components"
 
 BaseScreen {
     property double amountGraft: 1.2
-    property int amountMoney: 145
+    property real amountMoney: 145
 
     title: qsTr("Wallet")
 
