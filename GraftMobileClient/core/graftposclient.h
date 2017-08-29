@@ -15,6 +15,8 @@ public:
     explicit GraftPOSClient(QObject *parent = nullptr);
     ~GraftPOSClient();
 
+    void save();
+
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;
 

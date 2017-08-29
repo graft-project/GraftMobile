@@ -73,6 +73,7 @@ BaseScreen {
             RoundButton {
                 id: addButton
                 padding: 25
+                Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
                 highlighted: true

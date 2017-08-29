@@ -6,6 +6,13 @@
 #include "keygenerator.h"
 #include "productmodel.h"
 #include "config.h"
+#include <QStandardPaths>
+#include <QFileInfo>
+#include <QFile>
+#include <QDir>
+#include <QDebug>
+
+static const QString scProductModelDataFile("productList.dat");
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
@@ -18,14 +25,44 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
 
     mProductModel = new ProductModel(this);
-    ProductModelSerializator::deserialize(QByteArray(), mProductModel);
+    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                              scProductModelDataFile);
+    if (!dataPath.isEmpty())
+    {
+        QFile lFile(dataPath);
+        if (lFile.open(QFile::ReadOnly))
+        {
+            ProductModelSerializator::deserialize(lFile.readAll(), mProductModel);
+        }
+    }
     mSelectedProductModel = new SelectedProductProxyModel(this);
     mSelectedProductModel->setSourceModel(mProductModel);
 }
 
 GraftPOSClient::~GraftPOSClient()
 {
+    save();
     delete mQRCodeEncoder;
+}
+
+void GraftPOSClient::save()
+{
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    qDebug() << dataPath;
+    if (!dataPath.isEmpty())
+    {
+        if (!QFileInfo(dataPath).exists())
+        {
+            QDir().mkpath(dataPath);
+        }
+        QDir lDir(dataPath);
+        QFile lFile(lDir.filePath(scProductModelDataFile));
+        if (lFile.open(QFile::WriteOnly))
+        {
+            lFile.write(ProductModelSerializator::serialize(mProductModel));
+            lFile.close();
+        }
+    }
 }
 
 ProductModel *GraftPOSClient::productModel() const
