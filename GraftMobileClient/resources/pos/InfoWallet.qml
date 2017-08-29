@@ -5,10 +5,11 @@ import "../"
 import "../components"
 
 BaseScreen {
-    property double amountGraft: 1.2
-    property real amountMoney: 145
-
     title: qsTr("Wallet")
+    cartEnable: false
+
+    property real amountMoney: 145
+    property double amountGraft: 1.2
 
     ColumnLayout {
         spacing: 18

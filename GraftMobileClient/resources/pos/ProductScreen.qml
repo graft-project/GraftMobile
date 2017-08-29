@@ -16,7 +16,7 @@ BaseScreen {
 
         onSaleReceived: {
             if (result === true) {
-                pushScreen.initialCheckout()
+                pushScreen.initializingCheckout()
             }
         }
     }

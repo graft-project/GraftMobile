@@ -3,9 +3,10 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Rectangle {
-    property alias balanceInGraft: graftMoney.text
-    property var pushScreen
     color: "#484848"
+
+    property var pushScreen
+    property alias balanceInGraft: graftMoney.text
 
     ColumnLayout {
         spacing: 20
@@ -43,7 +44,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    drawer.close()
+                    pushScreen.hideMenu()
                     pushScreen.backProductScreen()
                 }
             }
@@ -64,7 +65,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        drawer.close()
+                        pushScreen.hideMenu()
                         pushScreen.openWalletScreen()
                     }
                 }
