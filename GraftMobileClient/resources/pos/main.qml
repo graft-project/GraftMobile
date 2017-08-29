@@ -15,7 +15,7 @@ ApplicationWindow {
         height: parent.height
         contentItem: PosMenu {
             balanceInGraft: "1.15"
-            pushScreen: transitionsInScreens()
+            pushScreen: screenTransitions()
         }
     }
 
@@ -42,48 +42,48 @@ ApplicationWindow {
 
     ProductScreen {
         id: mainScreen
-        pushScreen: transitionsInScreens()
+        pushScreen: screenTransitions()
     }
 
-    function transitionsInScreens() {
+    function screenTransitions() {
         var transitionsMap = {}
-        transitionsMap["showMenu"] = showingMenu
-        transitionsMap["hideMenu"] = hidingMenu
+        transitionsMap["showMenu"] = showMenu
+        transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openAddScreen"] = openAddingScreen
         transitionsMap["initializingCheckout"] = openPaymentScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["backProductScreen"] = openMainScreen
-        transitionsMap["goBack"] = turningBack
+        transitionsMap["goBack"] = turnBack
         return transitionsMap
     }
 
-    function showingMenu() {
+    function showMenu() {
         drawer.open()
     }
 
-    function hidingMenu() {
+    function hideMenu() {
         drawer.close()
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": transitionsInScreens(),
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
                                                  "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": transitionsInScreens(),
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": screenTransitions(),
                                                   "price": ProductModel.totalCost()})
     }
 
     function openInfoWalletScreen() {
-        stack.push("qrc:/pos/InfoWallet.qml", {"pushScreen": transitionsInScreens()})
+        stack.push("qrc:/pos/InfoWallet.qml", {"pushScreen": screenTransitions()})
     }
 
     function openMainScreen() {
         stack.pop(mainScreen)
     }
 
-    function turningBack() {
+    function turnBack() {
         stack.pop()
     }
 }
