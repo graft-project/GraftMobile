@@ -9,6 +9,7 @@ BaseScreen {
     id: additionItem
     title: qsTr("Add")
     isMenuState: false
+
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
@@ -99,7 +100,7 @@ BaseScreen {
             onClicked: {
                 ProductModel.add("qrc:/examples/images.png", title.text,
                                  parseFloat(price.text), graftCBox.currentText)
-                additionItem.pushScreen()
+                additionItem.pushScreen.backProductScreen()
             }
         }
     }
