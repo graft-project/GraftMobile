@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <manifest package="com.splashscreen" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0" android:versionCode="1" android:installLocation="auto">
-    <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="-- %%INSERT_APP_NAME%% --">
-        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:label="-- %%INSERT_APP_NAME%% --" android:launchMode="singleTop">
+    <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Graft Point-of-Sale" android:icon="@drawable/icon">
+        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:label="Graft Point-of-Sale" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
