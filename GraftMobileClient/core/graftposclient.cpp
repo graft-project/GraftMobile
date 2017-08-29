@@ -41,14 +41,12 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
 
 GraftPOSClient::~GraftPOSClient()
 {
-    save();
     delete mQRCodeEncoder;
 }
 
-void GraftPOSClient::save()
+void GraftPOSClient::save() const
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    qDebug() << dataPath;
     if (!dataPath.isEmpty())
     {
         if (!QFileInfo(dataPath).exists())
