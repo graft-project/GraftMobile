@@ -17,12 +17,7 @@ QVector<CardItem *> CardModel::cards() const
 
 QVariant CardModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
-    {
-        return QVariant();
-    }
-
-    if (index.row() < 0 || index.row() >= mCards.count())
+    if (index.row() < 0 || index.row() >= mCards.count() || !index.isValid())
     {
         return QVariant();
     }
