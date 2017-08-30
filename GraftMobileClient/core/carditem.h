@@ -13,6 +13,8 @@ public:
     QString getNumber() const;
     void setNumber(const QString &value);
 
+    QString getHideNumber() const;
+
     unsigned getCV2Code() const;
     void setCV2Code(const unsigned &value);
 

@@ -21,7 +21,8 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-            model: ["WALLET", "POS"]
+            cBoxModel: ["WALLET", "POS"]
+            lViewModel: CardModel
             pushScreen: transitionsBetweenScreens()
         }
     }

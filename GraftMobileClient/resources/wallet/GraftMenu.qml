@@ -5,34 +5,11 @@ import QtQuick.Controls.Material 2.2
 import "../"
 
 BaseScreen {
-    property alias model: graftCBox.model
+    property alias cBoxModel: graftCBox.model
+    property alias lViewModel: cardList.model
     property var pushScreen
 
     header.visible: false
-
-    ListModel {
-        id: cardModel
-
-        ListElement {
-            cardName: "Graft"
-            cardNumber: "XXX344F355"
-        }
-
-        ListElement {
-            cardName: "Bitcoins"
-            cardNumber: "XXX5Kb8kLf9"
-        }
-
-        ListElement {
-            cardName: "VISA"
-            cardNumber: "XXX3224"
-        }
-
-        ListElement {
-            cardName: "MasterCard"
-            cardNumber: "XXX2345"
-        }
-    }
 
     Rectangle {
         anchors.fill: parent
@@ -96,7 +73,7 @@ BaseScreen {
                     id: cardList
                     Layout.fillWidth: true
                     Layout.minimumHeight: 106
-                    model: CardModel//cardModel
+                    model: CardModel
                     clip: true
                     spacing: 10
                     delegate: cardDelegate
@@ -107,7 +84,7 @@ BaseScreen {
                         Wallet {
                             width: cardList.width
                             name: cardName
-                            number: cardNumber
+                            number: cardHideNumber//cardNumber
                         }
                     }
                 }

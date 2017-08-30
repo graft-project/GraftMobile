@@ -45,6 +45,8 @@ QVariant CardModel::data(const QModelIndex &index, int role) const
         }
     case NumberRole:
         return cardItem->getNumber();
+    case HideNumberRole:
+        return cardItem->getHideNumber();
     case CV2CodeRole:
         return cardItem->getCV2Code();
     case MonthRole:
@@ -105,6 +107,7 @@ QHash<int, QByteArray> CardModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[TitleRole] = "cardName";
     roles[NumberRole] = "cardNumber";
+    roles[HideNumberRole] = "cardHideNumber";
     roles[CV2CodeRole] = "cardCV2Code";
     roles[MonthRole] = "cardExpirationMonth";
     roles[YearRole] = "cardExpirationYear";

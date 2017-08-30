@@ -21,6 +21,18 @@ void CardItem::setNumber(const QString &value)
     mNumber = value;
 }
 
+QString CardItem::getHideNumber() const
+{
+    QString hideCardNumber = mNumber;
+    QString hideNumber;
+    for(int i = 0; i < hideCardNumber.size() - 5; ++i)
+    {
+        hideNumber.append(QChar('X'));
+    }
+    hideCardNumber.replace(0, hideCardNumber.size() - 5, hideNumber);
+    return hideCardNumber;
+}
+
 unsigned CardItem::getCV2Code() const
 {
     return mCV2Code;

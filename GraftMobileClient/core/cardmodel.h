@@ -12,6 +12,7 @@ public:
     enum CardRoles {
         TitleRole = Qt::UserRole + 1,
         NumberRole,
+        HideNumberRole,
         CV2CodeRole,
         MonthRole,
         YearRole
