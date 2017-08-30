@@ -25,11 +25,6 @@
         <file alias="/Wallet.qml">resources/wallet/Wallet.qml</file>
         <file alias="/AddCardView.qml">resources/wallet/AddCardView.qml</file>
     </qresource>
-    <qresource prefix="/examples">
-        <file alias="/bob-haircuts.png">resources/examples/bob-haircuts.png</file>
-        <file alias="/images.png">resources/examples/images.png</file>
-        <file alias="/QRCode_images.png">resources/examples/QRCode_images.png</file>
-    </qresource>
     <qresource prefix="/imgs">
         <file alias="/arrow.png">resources/imgs/arrow.png</file>
         <file alias="/arrow_grey.png">resources/imgs/arrow_grey.png</file>
@@ -47,6 +42,7 @@
         <file alias="/g_icon_black.png">resources/imgs/g_icon_black.png</file>
         <file alias="/g_icon_small.png">resources/imgs/g_icon_small.png</file>
         <file alias="/visa-master-card-american-express-logo.png">resources/imgs/visa-master-card-american-express-logo.png</file>
+        <file alias="/icon-placeholder.png">resources/imgs/icon-placeholder.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="/WideRoundButton.qml">resources/components/WideRoundButton.qml</file>
