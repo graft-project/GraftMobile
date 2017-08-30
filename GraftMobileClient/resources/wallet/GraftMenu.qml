@@ -6,6 +6,7 @@ import "../"
 
 BaseScreen {
     property alias model: graftCBox.model
+    property var pushScreen
 
     header.visible: false
 
@@ -75,8 +76,8 @@ BaseScreen {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            drawer.close()
-                            openBalanceScreen()
+                            pushScreen.hideMenu()
+                            pushScreen.openBalanceScreen()
                         }
                     }
                 }
@@ -95,7 +96,7 @@ BaseScreen {
                     id: cardList
                     Layout.fillWidth: true
                     Layout.minimumHeight: 106
-                    model: cardModel
+                    model: CardModel//cardModel
                     clip: true
                     spacing: 10
                     delegate: cardDelegate
@@ -123,8 +124,8 @@ BaseScreen {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            drawer.close()
-                            stack.push("qrc:/wallet/AddCardView.qml", {"anchors.fill": "parent"})
+                            pushScreen.hideMenu()
+                            pushScreen.addCardScreen()
                         }
                     }
                 }
@@ -144,7 +145,7 @@ BaseScreen {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            drawer.close()
+                            pushScreen.hideMenu()
                         }
                     }
                 }
@@ -160,7 +161,7 @@ BaseScreen {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            drawer.close()
+                            pushScreen.hideMenu()
                         }
                     }
                 }

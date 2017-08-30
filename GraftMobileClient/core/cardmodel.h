@@ -10,7 +10,7 @@ class CardModel : public QAbstractListModel
     Q_OBJECT
 public:
     enum CardRoles {
-        TitleRole = Qt::UserRole,
+        TitleRole = Qt::UserRole + 1,
         NumberRole,
         CV2CodeRole,
         MonthRole,

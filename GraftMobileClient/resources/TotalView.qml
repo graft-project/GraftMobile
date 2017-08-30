@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 
 RowLayout {
-    property int totalAmount: 0
+    property real totalAmount: 0
 
     Text {
         text: qsTr("Total: ")

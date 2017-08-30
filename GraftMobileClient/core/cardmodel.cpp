@@ -105,8 +105,8 @@ QHash<int, QByteArray> CardModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[TitleRole] = "cardName";
     roles[NumberRole] = "cardNumber";
-//    roles[CV2CodeRole] = "cardCV2Code";
-//    roles[MonthRole] = "cardExpirationMonth";
-//    roles[YearRole] = "cardExpirationYear";
+    roles[CV2CodeRole] = "cardCV2Code";
+    roles[MonthRole] = "cardExpirationMonth";
+    roles[YearRole] = "cardExpirationYear";
     return roles;
 }

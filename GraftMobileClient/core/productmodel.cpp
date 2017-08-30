@@ -99,6 +99,28 @@ void ProductModel::changeSelection(int index)
     }
 }
 
+double ProductModel::totalCost() const
+{
+    double total = 0;
+    for (int i = 0; i < mProducts.count(); ++i)
+    {
+        ProductItem *item = mProducts.value(i);
+        if (item->isSelected())
+        {
+            total += item->cost();
+        }
+    }
+    return total;
+}
+
+void ProductModel::clear()
+{
+    beginRemoveRows(QModelIndex(), 0, mProducts.count());
+    qDeleteAll(mProducts);
+    mProducts.clear();
+    endRemoveRows();
+}
+
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,
                        const QString &currency)
 {

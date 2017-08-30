@@ -4,12 +4,16 @@
 #include "graftbaseclient.h"
 
 class GraftWalletAPI;
+class ProductModel;
 
 class GraftWalletClient : public GraftBaseClient
 {
     Q_OBJECT
 public:
     explicit GraftWalletClient(QObject *parent = nullptr);
+
+    Q_INVOKABLE double totalCost() const;
+    Q_INVOKABLE ProductModel *paymentProductModel() const;
 
 signals:
     void readyToPayReceived(bool result);
@@ -33,6 +37,9 @@ private:
     GraftWalletAPI *mApi;
     QString mPID;
     QString mPrivateKey;
+
+    double mTotalCost;
+    ProductModel *mPaymentProductModel;
 };
 
 #endif // GRAFTWALLETCLIENT_H

@@ -9,6 +9,24 @@ ApplicationWindow {
     height: 480
     title: qsTr("POS")
 
+    Drawer {
+        id: drawer
+        width: 0.75 * parent.width
+        height: parent.height
+        contentItem: PosMenu {
+            balanceInGraft: "1.15"
+            pushScreen: menuPush()
+        }
+    }
+
+    Connections {
+        target: GraftClient
+
+        onErrorReceived: {
+            openMainScreen()
+        }
+    }
+
     StackView {
         id: stack
         anchors.fill: parent
@@ -34,16 +52,29 @@ ApplicationWindow {
         return transitionsMap
     }
 
-    function stackPop() {
-        stack.pop()
+    function menuPush() {
+        var transitionsMap = {}
+        transitionsMap["openWalletScreen"] = openInfoWalletScreen
+        transitionsMap["backProductScreen"] = openMainScreen
+        return transitionsMap
+    }
+
+    function openMainScreen() {
+        stack.pop(mainScreen)
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": stackPop,
-                    "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": openMainScreen,
+                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": stackPop})
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": openMainScreen,
+                       "price": ProductModel.totalCost()})
     }
+
+    function openInfoWalletScreen() {
+        stack.push("qrc:/pos/InfoWallet.qml")
+    }
+
 }

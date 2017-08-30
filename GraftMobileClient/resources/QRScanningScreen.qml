@@ -89,7 +89,7 @@ BaseScreen {
             onTagFound: {
                 if (lastTag != tag) {
                     lastTag = tag
-                    console.log(tag + " | " + " | " + decoder.charSet());
+                    console.log(tag + " | " + " | " + decoder.charSet())
                     GraftClient.readyToPay(tag)
                 }
             }

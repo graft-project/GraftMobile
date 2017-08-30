@@ -1,6 +1,10 @@
-#include "graftposclient.h"
+#include "selectedproductproxymodel.h"
+#include "productmodelserializator.h"
 #include "patrickqrcodeencoder.h"
 #include "api/graftposapi.h"
+#include "graftposclient.h"
+#include "keygenerator.h"
+#include "productmodel.h"
 #include "config.h"
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
@@ -12,12 +16,45 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
+
+    mProductModel = new ProductModel(this);
+    ProductModelSerializator::deserialize(QByteArray(), mProductModel);
+    mSelectedProductModel = new SelectedProductProxyModel(this);
+    mSelectedProductModel->setSourceModel(mProductModel);
+}
+
+GraftPOSClient::~GraftPOSClient()
+{
+    delete mQRCodeEncoder;
+}
+
+ProductModel *GraftPOSClient::productModel() const
+{
+    return mProductModel;
+}
+
+SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
+{
+    return mSelectedProductModel;
 }
 
 void GraftPOSClient::sale()
 {
-    setQRCodeImage(mQRCodeEncoder->encode(""));
-    mApi->sale(mPID, QString());
+    if (mProductModel->totalCost() > 0)
+    {
+        mPID = KeyGenerator::generatePID();
+        QString address = QString("%1%2").arg(KeyGenerator::generateSpendingKey())
+                .arg(KeyGenerator::generateViewKey());
+        QString qrText = QString("%1;%2;%3").arg(mPID).arg(address)
+                .arg(mProductModel->totalCost());
+        setQRCodeImage(mQRCodeEncoder->encode(qrText));
+        QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
+        mApi->sale(mPID, selectedProducts.toHex());
+    }
+    else
+    {
+        emit saleStatusReceived(false);
+    }
 }
 
 void GraftPOSClient::getSaleStatus()

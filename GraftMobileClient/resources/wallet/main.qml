@@ -6,10 +6,10 @@ import "../"
 ApplicationWindow {
     id: root
 
-    property int totalAmount: 100
+    property real totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
-    property int balanceInGraft: 1
-    property int balanceInUSD: 200
+    property real balanceInGraft: 1
+    property real balanceInUSD: 200
 
     visible: true
     width: 320
@@ -21,8 +21,9 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-                        model: ["WALLET", "POS"]
-                    }
+            model: ["WALLET", "POS"]
+            pushScreen: transitionsBetweenScreens()
+        }
     }
 
     StackView {
@@ -42,22 +43,48 @@ ApplicationWindow {
         id: initialScreen
         amountGraft: 2
         amountMoney: 145
-        pushScreen: openQRScanningScreen
+        pushScreen: transitionsBetweenScreens()
+    }
+
+    function transitionsBetweenScreens() {
+        var transitionsMap = {}
+        transitionsMap["showMenu"] = showMenu
+        transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["goBack"] = goBack
+        transitionsMap["addCardScreen"] = openAddCardScreen
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
+        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
+        transitionsMap["paymentScreen"] = openPaymentConfirmationView
+        return transitionsMap
     }
 
     function openQRScanningScreen() {
-        var transitionsMap = {}
-        transitionsMap["balanceScreen"] = openBalanceScreen
-        transitionsMap["paymentScreen"] = openPaymentConfirmationView
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsMap})
+        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+    }
+
+    function openAddCardScreen() {
+        stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens(), "anchors.fill": "parent"})
     }
 
     function openPaymentConfirmationView() {
-        stack.push("PaymentConfirmationView.qml", {"pushScreen": openBalanceScreen,
-                                                   "totalAmount": totalAmount,
-                                                   "currencyModel": currencyModel,
-                                                   "balanceInGraft": balanceInGraft,
-                                                   "balanceInUSD": balanceInUSD})
+        stack.push("PaymentConfirmationView.qml", {"pushScreen": transitionsBetweenScreens(),
+                       "totalAmount": GraftClient.totalCost(),
+                       "currencyModel": currencyModel,
+                       "balanceInGraft": balanceInGraft,
+                       "balanceInUSD": balanceInUSD,
+                       "productModel": PaymentProductModel})
+    }
+
+    function showMenu() {
+        drawer.open()
+    }
+
+    function hideMenu() {
+        drawer.close()
+    }
+
+    function goBack() {
+        stack.pop()
     }
 
     function openBalanceScreen() {

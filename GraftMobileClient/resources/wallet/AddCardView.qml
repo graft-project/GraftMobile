@@ -14,13 +14,14 @@ BaseScreen {
             top: parent.top
             right: parent.right
             left: parent.left
+            verticalCenter: parent.verticalCenter
             margins: 25
         }
         spacing: 20
 
         Item {
             Layout.fillWidth: true
-            Layout.preferredHeight: 100
+            Layout.preferredHeight: childrenRect.height
 
             Image {
                 id: graftWalletLogo
@@ -51,7 +52,7 @@ BaseScreen {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                Layout.maximumHeight: childrenRect.height
                 spacing: 0
 
                 Text {
@@ -122,16 +123,16 @@ BaseScreen {
                     regExp: /\d{3}/
                 }
             }
-        }
 
-        Item {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 75
-            Image {
-                width: parent.width / 1.5
-                fillMode: Image.PreserveAspectFit
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/imgs/visa-master-card-american-express-logo.png"
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: childrenRect.height
+                Image {
+                    width: parent.width / 1.5
+                    fillMode: Image.PreserveAspectFit
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    source: "qrc:/imgs/visa-master-card-american-express-logo.png"
+                }
             }
         }
 
@@ -140,7 +141,16 @@ BaseScreen {
             Layout.fillWidth: true
             text: qsTr("Confirm")
             onClicked: {
-                Qt.quit()
+                if (((cardNumber.text.length == 0) && (cv2Code.text.length == 0))
+                    || ((cardNumber.text.length <= 15) && (cv2Code.text.length <= 2))
+                    || ((cardNumber.text.length == 0) || (cv2Code.text.length == 0))
+                    || ((cardNumber.text.length <= 15) || (cv2Code.text.length == 2))) {
+
+                } else {
+                    CardModel.add(cardNumber.text, cv2Code.text,
+                                  month.currentText, years.currentText)
+                    pushScreen.goBack()
+                }
             }
         }
     }

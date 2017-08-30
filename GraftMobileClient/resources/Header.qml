@@ -19,22 +19,15 @@ Rectangle {
         }
     }
 
-    onMenuIconClicked: {
-        if (isMenuState) {
-            drawer.open();
-        } else {
-            pop()
-        }
-    }
-
     RowLayout {
         anchors.fill: parent
-        Layout.topMargin: 10
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
 
         Image {
             id: menuIcon
-            Layout.maximumWidth: 20
-            Layout.maximumHeight: 20
+            Layout.preferredWidth: 20
+            Layout.preferredHeight: 20
             Layout.alignment: Qt.AlignLeft
             source: "qrc:/imgs/menu_icon.png"
 
@@ -52,13 +45,19 @@ Rectangle {
             color: "white"
         }
 
-        Image {
-            id: cartIcon
-            Layout.maximumWidth: 20
-            Layout.maximumHeight: 20
-            Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: 15
-            source: "qrc:/imgs/cart_icon.png"
+        Item {
+            Layout.preferredHeight: 20
+            Layout.preferredWidth: 20
+            Image {
+                id: cartIcon
+                width: 20
+                height: 20
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                }
+                source: "qrc:/imgs/cart_icon.png"
+            }
         }
     }
 }

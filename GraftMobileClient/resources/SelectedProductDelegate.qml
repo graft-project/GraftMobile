@@ -2,7 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
-    property int price: 20
+    property real price: 20
     property alias productName: productText.text
     property alias lineVisible: bottomLine.visible
 

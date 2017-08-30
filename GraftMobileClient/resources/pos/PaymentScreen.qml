@@ -1,13 +1,13 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.2
 import "../components"
 import "../"
 
 BaseScreen {
     title: qsTr("Cart")
-    property int price: 100
+    property real price: 100
     property alias productListModel: productView.model
 
     Connections {
@@ -27,16 +27,16 @@ BaseScreen {
         anchors.fill: parent
 
         RowLayout {
-            Layout.topMargin: 20
+            Layout.topMargin: 15
             Layout.leftMargin: 23
             Layout.rightMargin: 23
-            Layout.bottomMargin: 20
+            Layout.bottomMargin: 10
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
             ColumnLayout {
                 id: totalCostLayout
-                spacing: 11
+                spacing: 20
                 Layout.alignment: Qt.AlignLeft
 
                 Text {
@@ -70,8 +70,8 @@ BaseScreen {
 
             Image {
                 Layout.alignment: Qt.AlignRight
-                Layout.preferredHeight: totalCostLayout.height
-                Layout.preferredWidth: totalCostLayout.height
+                Layout.preferredHeight: 100
+                Layout.preferredWidth: height
                 source: GraftClient.qrCodeImage()
             }
         }
@@ -83,39 +83,10 @@ BaseScreen {
             Layout.fillWidth: true
         }
 
-        ListModel {
-            id: productModel
-
-            ListElement {
-                name: "Hairout 1"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 2"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 3"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 4"
-                cost: 20
-            }
-
-            ListElement {
-                name: "Hairout 5"
-                cost: 20
-            }
-        }
-
         ListView {
             id: productView
             clip: true
-            model: productModel
+            model: SelectedProductModel
             enabled: !confirmationRect.visible
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -134,7 +105,6 @@ BaseScreen {
                 running: true
                 onTriggered: {
                     parent.state = "twirlState"
-                    delay.start()
                 }
             }
 

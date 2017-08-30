@@ -37,35 +37,6 @@ BaseScreen {
         }
     }
 
-    ListModel {
-        id: testProductModel
-
-        ListElement {
-            name: "Hairout 1"
-            cost: 20
-        }
-
-        ListElement {
-            name: "Hairout 2"
-            cost: 20
-        }
-
-        ListElement {
-            name: "Hairout 3"
-            cost: 20
-        }
-
-        ListElement {
-            name: "Hairout 4"
-            cost: 20
-        }
-
-        ListElement {
-            name: "Hairout 5"
-            cost: 20
-        }
-    }
-
     ColumnLayout {
         id: column
         anchors {
@@ -87,7 +58,6 @@ BaseScreen {
                 id: productList
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-                model: testProductModel
                 clip: true
                 delegate: SelectedProductDelegate {
                     width: productList.width
