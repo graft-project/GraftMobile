@@ -43,13 +43,8 @@ Rectangle {
             id: headerText
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 15
+            font.pointSize: 15
             color: "white"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: console.log(picture.top)
-            }
         }
 
         Item {
@@ -65,38 +60,41 @@ Rectangle {
                     right: parent.right
                 }
                 source: "qrc:/imgs/cart_icon.png"
-            }
 
-            Rectangle {
-                id: circle
-                width: picture.width
-                height: picture.height
-                radius: picture.width / 2
-                visible: false
-            }
-
-            Rectangle {
-                id: picture
-                anchors {
-                    top: parent.top
-                    right: parent.right
+                Rectangle {
+                    id: circle
+                    width: picture.width
+                    height: picture.height
+                    radius: picture.width / 2
+                    visible: false
                 }
-                width: 10
-                height: 10
-                color: "white"
-                visible: false
 
-                Text {
-                    id: countSelectedProducts
-                    anchors.centerIn: parent
-                    color: "#707070"
+                Rectangle {
+                    id: picture
+                    anchors {
+                        verticalCenter: parent.top
+                        verticalCenterOffset: 2
+                        horizontalCenter: parent.right
+                        horizontalCenterOffset: -2
+                    }
+                    width: 12
+                    height: 12
+                    color: "white"
+                    visible: false
+
+                    Text {
+                        id: countSelectedProducts
+                        anchors.centerIn: parent
+                        color: "#707070"
+                        font.pointSize: 8
+                    }
                 }
-            }
 
-            OpacityMask {
-                anchors.fill: picture
-                source: picture
-                maskSource: circle
+                OpacityMask {
+                    anchors.fill: picture
+                    source: picture
+                    maskSource: circle
+                }
             }
         }
     }
