@@ -16,13 +16,13 @@ public:
     QString getHideNumber() const;
 
     unsigned getCV2Code() const;
-    void setCV2Code(const unsigned &value);
+    void setCV2Code(const unsigned value);
 
     unsigned getExpirationMonth() const;
-    void setExpirationMonth(const unsigned &value);
+    void setExpirationMonth(const unsigned value);
 
     unsigned getExpirationYear() const;
-    void setExpirationYear(const unsigned &value);
+    void setExpirationYear(const unsigned value);
 
     QString getName() const;
     void setName(const QString &value);
