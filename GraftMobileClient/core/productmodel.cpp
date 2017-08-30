@@ -113,6 +113,20 @@ double ProductModel::totalCost() const
     return total;
 }
 
+unsigned int ProductModel::selectedProductCount() const
+{
+    unsigned int count = 0;
+    for (int i = 0; i < mProducts.count(); ++i)
+    {
+        ProductItem *item = mProducts.value(i);
+        if (item->isSelected())
+        {
+            ++count;
+        }
+    }
+    return count;
+}
+
 void ProductModel::clear()
 {
     beginRemoveRows(QModelIndex(), 0, mProducts.count());
