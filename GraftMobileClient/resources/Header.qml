@@ -10,7 +10,7 @@ Rectangle {
 
     property alias headerText: headerText.text
     property alias cartEnable: cartIcon.visible
-    property alias countOfSelectedProducts: countSelectedProducts.text
+    property alias selectedProductCount: textOnCart.text
     property bool isMenuState: true
 
     onIsMenuStateChanged: {
@@ -83,7 +83,7 @@ Rectangle {
                     visible: false
 
                     Text {
-                        id: countSelectedProducts
+                        id: textOnCart
                         anchors.centerIn: parent
                         color: "#707070"
                         font.pointSize: 8
