@@ -99,6 +99,15 @@ BaseScreen {
                         GraftClient.pay()
                     }
                 }
+
+                WideRoundButton {
+                    id: declineButton
+                    text: qsTr("Decline")
+                    onClicked: {
+                        GraftClient.rejectPay()
+                        pushScreen.openBalanceScreen()
+                    }
+                }
             }
 
             ColumnLayout {
@@ -117,6 +126,14 @@ BaseScreen {
                     font.pointSize: 20
                     color: "#707070"
                     text: qsTr("PAID !")
+                }
+
+                WideRoundButton {
+                    id: okButton
+                    text: qsTr("OK")
+                    onClicked: {
+                        pushScreen.openBalanceScreen()
+                    }
                 }
             }
         }
