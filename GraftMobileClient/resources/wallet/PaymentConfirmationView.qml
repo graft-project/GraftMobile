@@ -130,7 +130,7 @@ BaseScreen {
 
                 WideRoundButton {
                     id: okButton
-                    text: qsTr("Ok")
+                    text: qsTr("OK")
                     onClicked: {
                         pushScreen.openBalanceScreen()
                     }
