@@ -23,26 +23,12 @@ QVariant CardModel::data(const QModelIndex &index, int role) const
     }
 
     CardItem *cardItem = mCards[index.row()];
+    QString cardName(QStringLiteral("XXXX"));
 
     switch (role) {
     case TitleRole:
-        if (cardItem->getNumber().at(0) == QChar('5'))
-        {
-            return "VISA";
-        }
-        else if (cardItem->getNumber().at(0) == QChar('4'))
-        {
-            return "MasterCard";
-        }
-        else if (cardItem->getNumber().at(0) == QChar('3') &&
-                 cardItem->getNumber().at(0) == QChar('0'))
-        {
-            return "AE";
-        }
-        else
-        {
-            return "Graft";
-        }
+        cardName.append(cardItem->getNumber().right(4));
+        return cardName;
     case NumberRole:
         return cardItem->getNumber();
     case HideNumberRole:
