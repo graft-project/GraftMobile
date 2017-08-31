@@ -38,7 +38,7 @@ unsigned CardItem::getCV2Code() const
     return mCV2Code;
 }
 
-void CardItem::setCV2Code(const unsigned value)
+void CardItem::setCV2Code(unsigned value)
 {
     mCV2Code = value;
 }
@@ -48,7 +48,7 @@ unsigned CardItem::getExpirationMonth() const
     return mExpirationMonth;
 }
 
-void CardItem::setExpirationMonth(const unsigned value)
+void CardItem::setExpirationMonth(unsigned value)
 {
     mExpirationMonth = value;
 }
@@ -58,7 +58,7 @@ unsigned CardItem::getExpirationYear() const
     return mExpirationYear;
 }
 
-void CardItem::setExpirationYear(const unsigned value)
+void CardItem::setExpirationYear(unsigned value)
 {
     mExpirationYear = value;
 }
