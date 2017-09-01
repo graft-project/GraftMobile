@@ -84,7 +84,7 @@ BaseScreen {
                         Wallet {
                             width: cardList.width
                             name: cardName
-                            number: cardHideNumber//cardNumber
+                            number: cardHideNumber
                         }
                     }
                 }
