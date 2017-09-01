@@ -3,6 +3,7 @@
 #include <QQuickView>
 #include <QQmlContext>
 
+#include "core/cardmodel.h"
 #include "core/productmodel.h"
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
@@ -35,6 +36,8 @@ int main(int argc, char *argv[])
     QZXing::registerQMLTypes();
 
     GraftWalletClient client;
+    CardModel cardModel;
+    engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);

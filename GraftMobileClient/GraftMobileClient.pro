@@ -32,6 +32,8 @@ SOURCES += main.cpp \
     core/patrickqrcodeencoder.cpp \
     core/graftbaseclient.cpp \
     core/barcodeimageprovider.cpp \
+    core/carditem.cpp \
+    core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp
 
@@ -48,6 +50,8 @@ HEADERS += \
     core/patrickqrcodeencoder.h \
     core/graftbaseclient.h \
     core/barcodeimageprovider.h \
+    core/carditem.h \
+    core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h
 

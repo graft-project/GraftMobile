@@ -21,7 +21,7 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-            model: ["Graft", "USD"]
+            lViewModel: CardModel
             pushScreen: transitionsBetweenScreens()
         }
     }
@@ -51,6 +51,7 @@ ApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["goBack"] = goBack
+        transitionsMap["addCardScreen"] = openAddCardScreen
         transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
         transitionsMap["paymentScreen"] = openPaymentConfirmationView
@@ -59,6 +60,10 @@ ApplicationWindow {
 
     function openQRScanningScreen() {
         stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+    }
+
+    function openAddCardScreen() {
+        stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openPaymentConfirmationView() {
