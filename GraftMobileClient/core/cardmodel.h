@@ -27,8 +27,8 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 public slots:
-    void add(const QString &number, const unsigned &cv2Code,
-             const unsigned &expirationMonth, const unsigned &expirationYear);
+    void add(const QString &number, unsigned cv2Code,
+             unsigned expirationMonth, unsigned expirationYear);
 
 protected:
     QHash<int, QByteArray> roleNames() const;

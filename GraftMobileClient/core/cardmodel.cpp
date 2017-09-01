@@ -77,9 +77,9 @@ int CardModel::rowCount(const QModelIndex &parent) const
     Q_UNUSED(parent);
     return mCards.count();
 }
-#include <QDebug>
-void CardModel::add(const QString &number, const unsigned &cv2Code,
-                    const unsigned &expirationMonth, const unsigned &expirationYear)
+
+void CardModel::add(const QString &number, unsigned cv2Code,
+                    unsigned expirationMonth, unsigned expirationYear)
 {
     if ((number.size() == 16 && (cv2Code > 99 && cv2Code < 1000)))
     {
