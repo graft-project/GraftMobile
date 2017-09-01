@@ -96,7 +96,7 @@ void ProductModel::changeSelection(int index)
         changeRole.append(SelectedRole);
         QModelIndex modelIndex = this->index(index);
         emit dataChanged(modelIndex, modelIndex, changeRole);
-        emit selectedProductCountChanged(0);
+        emit selectedProductCountChanged(selectedProductCount());
     }
 }
 

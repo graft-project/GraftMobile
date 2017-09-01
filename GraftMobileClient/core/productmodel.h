@@ -30,7 +30,7 @@ public:
     void clear();
 
 signals:
-    void selectedProductCountChanged(int count);
+    void selectedProductCountChanged(unsigned int count);
 
 public slots:
     void add(const QString &imagePath, const QString &name, double cost,
