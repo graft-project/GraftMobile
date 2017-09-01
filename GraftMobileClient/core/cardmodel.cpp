@@ -28,15 +28,15 @@ QVariant CardModel::data(const QModelIndex &index, int role) const
     case TitleRole:
         return cardItem->name();
     case NumberRole:
-        return cardItem->getNumber();
+        return cardItem->number();
     case HideNumberRole:
-        return cardItem->getHideNumber();
+        return cardItem->hideNumber();
     case CV2CodeRole:
-        return cardItem->getCV2Code();
+        return cardItem->cv2Code();
     case MonthRole:
-        return cardItem->getExpirationMonth();
+        return cardItem->expirationMonth();
     case YearRole:
-        return cardItem->getExpirationYear();
+        return cardItem->expirationYear();
     default:
         return QVariant();
     }
@@ -87,7 +87,6 @@ void CardModel::add(const QString &number, const unsigned &cv2Code,
         mCards.append(new CardItem(number, cv2Code, expirationMonth, expirationYear));
         endInsertRows();
     }
-    else {    qDebug("!!!ERROR!!!");}
 }
 
 QHash<int, QByteArray> CardModel::roleNames() const

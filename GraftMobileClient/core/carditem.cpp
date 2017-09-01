@@ -13,7 +13,7 @@ CardItem::CardItem(const QString &number, const unsigned &cv2Code,
 {
 }
 
-QString CardItem::getNumber() const
+QString CardItem::number() const
 {
     return mNumber;
 }
@@ -23,14 +23,14 @@ void CardItem::setNumber(const QString &value)
     mNumber = value;
 }
 
-QString CardItem::getHideNumber() const
+QString CardItem::hideNumber() const
 {
     QString currentCardHideNumber(hideCardNumber);
-    currentCardHideNumber.append(getNumber().right(4));
+    currentCardHideNumber.append(number().right(4));
     return currentCardHideNumber;
 }
 
-unsigned CardItem::getCV2Code() const
+unsigned CardItem::cv2Code() const
 {
     return mCV2Code;
 }
@@ -40,7 +40,7 @@ void CardItem::setCV2Code(unsigned value)
     mCV2Code = value;
 }
 
-unsigned CardItem::getExpirationMonth() const
+unsigned CardItem::expirationMonth() const
 {
     return mExpirationMonth;
 }
@@ -50,7 +50,7 @@ void CardItem::setExpirationMonth(unsigned value)
     mExpirationMonth = value;
 }
 
-unsigned CardItem::getExpirationYear() const
+unsigned CardItem::expirationYear() const
 {
     return mExpirationYear;
 }

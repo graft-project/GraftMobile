@@ -10,18 +10,18 @@ public:
     CardItem(const QString &number, const unsigned &cv2Code,
              const unsigned &expirationMonth, const unsigned &expirationYear);
 
-    QString getNumber() const;
+    QString number() const;
     void setNumber(const QString &value);
 
-    QString getHideNumber() const;
+    QString hideNumber() const;
 
-    unsigned getCV2Code() const;
+    unsigned cv2Code() const;
     void setCV2Code(unsigned value);
 
-    unsigned getExpirationMonth() const;
+    unsigned expirationMonth() const;
     void setExpirationMonth(unsigned value);
 
-    unsigned getExpirationYear() const;
+    unsigned expirationYear() const;
     void setExpirationYear(unsigned value);
 
     QString name() const;
