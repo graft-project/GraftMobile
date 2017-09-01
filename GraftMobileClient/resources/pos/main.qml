@@ -9,10 +9,6 @@ ApplicationWindow {
     height: 480
     title: qsTr("POS")
 
-    onClosing: {
-        GraftClient.save()
-    }
-
     Drawer {
         id: drawer
         width: 0.75 * parent.width

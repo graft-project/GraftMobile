@@ -100,6 +100,7 @@ BaseScreen {
             onClicked: {
                 ProductModel.add("qrc:/imgs/icon-placeholder.png", title.text,
                                  parseFloat(price.text), graftCBox.currentText)
+                GraftClient.save()
                 additionItem.pushScreen()
             }
         }

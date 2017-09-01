@@ -10,7 +10,6 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>
-#include <QDebug>
 
 static const QString scProductModelDataFile("productList.dat");
 
@@ -44,7 +43,17 @@ GraftPOSClient::~GraftPOSClient()
     delete mQRCodeEncoder;
 }
 
-void GraftPOSClient::save() const
+ProductModel *GraftPOSClient::productModel() const
+{
+    return mProductModel;
+}
+
+SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
+{
+    return mSelectedProductModel;
+}
+
+void GraftPOSClient::save()
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!dataPath.isEmpty())
@@ -61,16 +70,6 @@ void GraftPOSClient::save() const
             lFile.close();
         }
     }
-}
-
-ProductModel *GraftPOSClient::productModel() const
-{
-    return mProductModel;
-}
-
-SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
-{
-    return mSelectedProductModel;
 }
 
 void GraftPOSClient::sale()

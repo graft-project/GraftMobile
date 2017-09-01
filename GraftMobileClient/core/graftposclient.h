@@ -15,8 +15,6 @@ public:
     explicit GraftPOSClient(QObject *parent = nullptr);
     ~GraftPOSClient();
 
-    Q_INVOKABLE void save() const;
-
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;
 
@@ -25,6 +23,7 @@ signals:
     void saleStatusReceived(bool result);
 
 public slots:
+    void save();
     void sale();
     void getSaleStatus();
 
