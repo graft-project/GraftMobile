@@ -17,18 +17,16 @@ QVector<CardItem *> CardModel::cards() const
 
 QVariant CardModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= mCards.count() || !index.isValid())
+    if (!index.isValid() || index.row() < 0 || index.row() >= mCards.count())
     {
         return QVariant();
     }
 
     CardItem *cardItem = mCards[index.row()];
-    QString cardName(QStringLiteral("XXXX"));
 
     switch (role) {
     case TitleRole:
-        cardName.append(cardItem->getNumber().right(4));
-        return cardName;
+        return cardItem->getName();
     case NumberRole:
         return cardItem->getNumber();
     case HideNumberRole:

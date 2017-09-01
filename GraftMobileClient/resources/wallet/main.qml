@@ -21,7 +21,6 @@ ApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-            cBoxModel: ["WALLET", "POS"]
             lViewModel: CardModel
             pushScreen: transitionsBetweenScreens()
         }
@@ -64,7 +63,7 @@ ApplicationWindow {
     }
 
     function openAddCardScreen() {
-        stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens(), "anchors.fill": "parent"})
+        stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openPaymentConfirmationView() {
