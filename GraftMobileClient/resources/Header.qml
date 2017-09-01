@@ -73,12 +73,12 @@ Rectangle {
                     id: picture
                     anchors {
                         verticalCenter: parent.top
-                        verticalCenterOffset: 2
+                        verticalCenterOffset: 0
                         horizontalCenter: parent.right
                         horizontalCenterOffset: -2
                     }
-                    width: 12
-                    height: 12
+                    width: 14
+                    height: 14
                     color: "white"
                     visible: false
 
@@ -87,6 +87,7 @@ Rectangle {
                         anchors.centerIn: parent
                         color: "#707070"
                         font.pointSize: 8
+                        font.bold: true
                     }
                 }
 
