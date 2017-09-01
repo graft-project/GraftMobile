@@ -74,6 +74,7 @@ BaseScreen {
             RoundButton {
                 id: addButton
                 padding: 25
+                Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 80
                 Layout.preferredWidth: 80
                 highlighted: true
@@ -101,6 +102,7 @@ BaseScreen {
                 ProductModel.add("qrc:/imgs/icon-placeholder.png", title.text,
                                  parseFloat(price.text), graftCBox.currentText)
                 additionItem.pushScreen.backProductScreen()
+                GraftClient.save()
             }
         }
     }

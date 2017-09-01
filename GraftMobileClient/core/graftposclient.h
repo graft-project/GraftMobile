@@ -23,6 +23,7 @@ signals:
     void saleStatusReceived(bool result);
 
 public slots:
+    void save();
     void sale();
     void getSaleStatus();
 
