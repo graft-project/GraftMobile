@@ -86,6 +86,7 @@ Rectangle {
                         id: cartText
                         anchors.centerIn: parent
                         color: "#707070"
+                        text: "0"
                         font {
                             pointSize: 8
                             bold: true

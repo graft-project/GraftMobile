@@ -6,6 +6,7 @@ Page {
     property var pushScreen
     property alias cartEnable: baseHeader.cartEnable
     property alias isMenuState: baseHeader.isMenuState
+    property alias selectedProductCount: baseHeader.selectedProductCount
 
     header: Header {
         id: baseHeader

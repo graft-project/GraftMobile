@@ -21,6 +21,14 @@ BaseScreen {
         }
     }
 
+    Connections {
+        target: ProductModel
+
+        onSelectedProductCountChanged: {
+            mainScreen.selectedProductCount = count
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
 
