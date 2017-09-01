@@ -12,7 +12,6 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            verticalCenter: parent.verticalCenter
             margins: 25
         }
         spacing: 20
