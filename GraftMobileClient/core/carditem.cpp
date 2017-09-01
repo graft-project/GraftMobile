@@ -1,15 +1,18 @@
 #include "carditem.h"
 
-static const QString hideCardNumber("XXXX");
+static const QString scHideCardNumber("XXXX");
 
 CardItem::CardItem()
 {
 }
 
-CardItem::CardItem(const QString &number, const unsigned &cv2Code,
-                   const unsigned &expirationMonth, const unsigned &expirationYear)
-    : mName("VISA"), mNumber(number),mCV2Code(cv2Code),
-      mExpirationMonth(expirationMonth), mExpirationYear(expirationYear)
+CardItem::CardItem(const QString &name, const QString &number, unsigned cv2Code,
+                   unsigned expirationMonth, unsigned expirationYear)
+    : mName(name)
+    ,mNumber(number)
+    ,mCV2Code(cv2Code)
+    ,mExpirationMonth(expirationMonth)
+    ,mExpirationYear(expirationYear)
 {
 }
 
@@ -25,7 +28,7 @@ void CardItem::setNumber(const QString &value)
 
 QString CardItem::hideNumber() const
 {
-    QString currentCardHideNumber(hideCardNumber);
+    QString currentCardHideNumber(scHideCardNumber);
     currentCardHideNumber.append(number().right(4));
     return currentCardHideNumber;
 }

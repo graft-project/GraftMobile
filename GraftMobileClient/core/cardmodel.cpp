@@ -78,13 +78,13 @@ int CardModel::rowCount(const QModelIndex &parent) const
     return mCards.count();
 }
 
-void CardModel::add(const QString &number, unsigned cv2Code,
+void CardModel::add(const QString &name, const QString &number, unsigned cv2Code,
                     unsigned expirationMonth, unsigned expirationYear)
 {
     if ((number.size() == 16 && (cv2Code > 99 && cv2Code < 1000)))
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mCards.append(new CardItem(number, cv2Code, expirationMonth, expirationYear));
+        mCards.append(new CardItem(name, number, cv2Code, expirationMonth, expirationYear));
         endInsertRows();
     }
 }

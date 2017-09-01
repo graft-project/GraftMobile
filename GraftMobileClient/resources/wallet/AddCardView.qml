@@ -11,9 +11,7 @@ BaseScreen {
 
     ColumnLayout {
         anchors {
-            top: parent.top
-            right: parent.right
-            left: parent.left
+            fill: parent
             verticalCenter: parent.verticalCenter
             margins: 25
         }
@@ -141,7 +139,7 @@ BaseScreen {
             Layout.fillWidth: true
             text: qsTr("Confirm")
             onClicked: {
-                CardModel.add(cardNumber.text, cv2Code.text, month.currentText, years.currentText)
+                CardModel.add(qsTr("VISA"), cardNumber.text, cv2Code.text, month.currentText, years.currentText)
                 pushScreen.goBack()
             }
         }

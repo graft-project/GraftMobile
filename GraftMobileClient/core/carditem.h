@@ -7,8 +7,8 @@ class CardItem
 {
 public:
     CardItem();
-    CardItem(const QString &number, const unsigned &cv2Code,
-             const unsigned &expirationMonth, const unsigned &expirationYear);
+    CardItem(const QString &name, const QString &number, unsigned cv2Code,
+             unsigned expirationMonth, unsigned expirationYear);
 
     QString number() const;
     void setNumber(const QString &value);

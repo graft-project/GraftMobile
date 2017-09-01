@@ -27,7 +27,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 public slots:
-    void add(const QString &number, unsigned cv2Code,
+    void add(const QString &name, const QString &number, unsigned cv2Code,
              unsigned expirationMonth, unsigned expirationYear);
 
 protected:
