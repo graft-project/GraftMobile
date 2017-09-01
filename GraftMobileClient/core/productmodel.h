@@ -26,7 +26,11 @@ public:
     QVector<ProductItem *> products() const;
     Q_INVOKABLE void changeSelection(int index);
     Q_INVOKABLE double totalCost() const;
+    Q_INVOKABLE unsigned int selectedProductCount() const;
     void clear();
+
+signals:
+    void selectedProductCountChanged(unsigned int count);
 
 public slots:
     void add(const QString &imagePath, const QString &name, double cost,
