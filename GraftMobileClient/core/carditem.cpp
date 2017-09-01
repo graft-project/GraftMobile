@@ -60,7 +60,7 @@ void CardItem::setExpirationYear(unsigned value)
     mExpirationYear = value;
 }
 
-QString CardItem::getName() const
+QString CardItem::name() const
 {
     return mName;
 }

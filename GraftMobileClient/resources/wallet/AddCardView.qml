@@ -141,16 +141,8 @@ BaseScreen {
             Layout.fillWidth: true
             text: qsTr("Confirm")
             onClicked: {
-                if (((cardNumber.text.length == 0) && (cv2Code.text.length == 0))
-                    || ((cardNumber.text.length <= 15) && (cv2Code.text.length <= 2))
-                    || ((cardNumber.text.length == 0) || (cv2Code.text.length == 0))
-                    || ((cardNumber.text.length <= 15) || (cv2Code.text.length == 2))) {
-
-                } else {
-                    CardModel.add(cardNumber.text, cv2Code.text,
-                                  month.currentText, years.currentText)
-                    pushScreen.goBack()
-                }
+                CardModel.add(cardNumber.text, cv2Code.text, month.currentText, years.currentText)
+                pushScreen.goBack()
             }
         }
     }

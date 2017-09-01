@@ -24,7 +24,7 @@ public:
     unsigned getExpirationYear() const;
     void setExpirationYear(unsigned value);
 
-    QString getName() const;
+    QString name() const;
     void setName(const QString &value);
 
 private:

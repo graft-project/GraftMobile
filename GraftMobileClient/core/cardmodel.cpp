@@ -26,7 +26,7 @@ QVariant CardModel::data(const QModelIndex &index, int role) const
 
     switch (role) {
     case TitleRole:
-        return cardItem->getName();
+        return cardItem->name();
     case NumberRole:
         return cardItem->getNumber();
     case HideNumberRole:
@@ -77,13 +77,17 @@ int CardModel::rowCount(const QModelIndex &parent) const
     Q_UNUSED(parent);
     return mCards.count();
 }
-
+#include <QDebug>
 void CardModel::add(const QString &number, const unsigned &cv2Code,
                     const unsigned &expirationMonth, const unsigned &expirationYear)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mCards.append(new CardItem(number, cv2Code, expirationMonth, expirationYear));
-    endInsertRows();
+    if ((number.size() == 16 && (cv2Code > 99 && cv2Code < 1000)))
+    {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        mCards.append(new CardItem(number, cv2Code, expirationMonth, expirationYear));
+        endInsertRows();
+    }
+    else {    qDebug("!!!ERROR!!!");}
 }
 
 QHash<int, QByteArray> CardModel::roleNames() const
