@@ -64,7 +64,7 @@ Rectangle {
                 Rectangle {
                     id: circle
                     width: picture.width
-                    height: picture.height
+                    height: width
                     radius: picture.width / 2
                     visible: false
                 }
@@ -78,7 +78,7 @@ Rectangle {
                         horizontalCenterOffset: -2
                     }
                     width: 14
-                    height: 14
+                    height: width
                     color: "white"
                     visible: false
 
@@ -86,8 +86,10 @@ Rectangle {
                         id: cartText
                         anchors.centerIn: parent
                         color: "#707070"
-                        font.pointSize: 8
-                        font.bold: true
+                        font {
+                            pointSize: 8
+                            bold: true
+                        }
                     }
                 }
 
