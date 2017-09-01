@@ -5,13 +5,13 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 
 Rectangle {
-    property real productPrice
-    property alias productImage: picture.source
-    property alias productName: productText.text
-    property bool selectState: false
+    height: layout.height
     color: mouseArea.pressed || selectState ? "#f2f2f2" : "transparent"
 
-    height: layout.height
+    property real productPrice
+    property bool selectState: false
+    property alias productImage: picture.source
+    property alias productName: productText.text
 
     ColumnLayout {
         id: layout

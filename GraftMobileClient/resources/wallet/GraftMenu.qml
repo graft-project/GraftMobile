@@ -2,98 +2,117 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import "../"
 
-Rectangle {
-    property alias model: graftCBox.model
+BaseScreen {
+    property alias cBoxModel: graftCBox.model
+    property alias lViewModel: cardList.model
     property var pushScreen
 
-    color: "#484848"
+    header.visible: false
 
-    ColumnLayout {
-        spacing: 30
-        anchors {
-            top: parent.top
-            right: parent.right
-            left: parent.left
-            margins: 25
-        }
-
-        Item {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 150
-
-            Image {
-                width: parent.width / 2
-                anchors {
-                    bottom: parent.bottom
-                    horizontalCenter: parent.horizontalCenter
-                }
-                fillMode: Image.PreserveAspectFit
-                source: "qrc:/imgs/graft_wallet_logo_small.png"
-            }
-        }
+    Rectangle {
+        anchors.fill: parent
+        color: "#484848"
 
         ColumnLayout {
-            spacing: 20
+            spacing: 30
+            anchors {
+                top: parent.top
+                right: parent.right
+                left: parent.left
+                margins: 25
+            }
 
-            Text {
-                text: qsTr("HOME")
-                color: "white"
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 14
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 150
+
+                Image {
+                    width: parent.width / 2
+                    anchors {
+                        bottom: parent.bottom
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/imgs/graft_wallet_logo_small.png"
+                }
+            }
+
+            ColumnLayout {
+                spacing: 20
+
+                Text {
+                    text: qsTr("HOME")
+                    color: "white"
+                    font {
+                        family: "Liberation Sans"
+                        pointSize: 14
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            pushScreen.hideMenu()
+                            pushScreen.openBalanceScreen()
+                        }
+                    }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        pushScreen.hideMenu()
-                        pushScreen.openBalanceScreen()
+                ComboBox {
+                    id: graftCBox
+                    Layout.fillWidth: true
+                    editable: true
+                    contentItem.enabled: false
+                    font.pointSize: 14
+                    Material.background: "transparent"
+                    Material.foreground: "#707070"
+                }
+
+                ListView {
+                    id: cardList
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: 106
+                    model: CardModel
+                    clip: true
+                    spacing: 10
+                    delegate: cardDelegate
+
+                    Component {
+                        id: cardDelegate
+
+                        Wallet {
+                            width: cardList.width
+                            name: cardName
+                            number: cardHideNumber
+                        }
+                    }
+                }
+
+                Text {
+                    Layout.alignment: Qt.AlignLeft
+                    text: qsTr("+  Add Card")
+                    color: "white"
+                    font {
+                        family: "Liberation Sans"
+                        pointSize: 14
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            pushScreen.hideMenu()
+                            pushScreen.addCardScreen()
+                        }
                     }
                 }
             }
 
-            ComboBox {
-                id: graftCBox
-                Layout.fillWidth: true
-                editable: true
-                contentItem.enabled: false
-                font.pointSize: 14
-                Material.background: "transparent"
-                Material.foreground: "#707070"
-            }
-
             ColumnLayout {
-                Layout.preferredWidth: parent.width
-                spacing: 10
-
-                Wallet {
-                    name: "Graft"
-                    number: "XXX344F355"
-                }
-
-                Wallet {
-                    name: "Bitcoins"
-                    number: "XXX5Kb8kLf9"
-                }
-
-                Wallet {
-                    name: "VISA"
-                    number: "XXX3224"
-                }
-
-                Wallet {
-                    name: "MasterCard"
-                    number: "XXX2345"
-                }
-            }
-
-            RowLayout {
-                spacing: 12
+                spacing: 20
 
                 Text {
-                    Layout.alignment: Qt.AlignLeft
-                    text: qsTr("+")
+                    text: qsTr("TRANSACTION")
                     color: "white"
                     font {
                         family: "Liberation Sans"
@@ -109,48 +128,18 @@ Rectangle {
                 }
 
                 Text {
-                    Layout.alignment: Qt.AlignRight
-                    text: qsTr("Add Card")
+                    text: qsTr("TRANSFER")
                     color: "white"
                     font {
                         family: "Liberation Sans"
-                        pointSize: 13
+                        pointSize: 14
                     }
-                }
-            }
-        }
 
-        ColumnLayout {
-            spacing: 20
-
-            Text {
-                text: qsTr("TRANSACTION")
-                color: "white"
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 14
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        pushScreen.hideMenu()
-                    }
-                }
-            }
-
-            Text {
-                text: qsTr("TRANSFER")
-                color: "white"
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 14
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        pushScreen.hideMenu()
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            pushScreen.hideMenu()
+                        }
                     }
                 }
             }

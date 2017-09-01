@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 
 Rectangle {
     height: 60
@@ -9,6 +10,7 @@ Rectangle {
 
     property alias headerText: headerText.text
     property alias cartEnable: cartIcon.visible
+    property alias selectedProductCount: cartText.text
     property bool isMenuState: true
 
     onIsMenuStateChanged: {
@@ -41,13 +43,14 @@ Rectangle {
             id: headerText
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 15
+            font.pointSize: 15
             color: "white"
         }
 
         Item {
             Layout.preferredHeight: 20
             Layout.preferredWidth: 20
+
             Image {
                 id: cartIcon
                 width: 20
@@ -57,6 +60,44 @@ Rectangle {
                     right: parent.right
                 }
                 source: "qrc:/imgs/cart_icon.png"
+
+                Rectangle {
+                    id: circle
+                    width: picture.width
+                    height: width
+                    radius: picture.width / 2
+                    visible: false
+                }
+
+                Rectangle {
+                    id: picture
+                    anchors {
+                        verticalCenter: parent.top
+                        verticalCenterOffset: 0
+                        horizontalCenter: parent.right
+                        horizontalCenterOffset: -2
+                    }
+                    width: 14
+                    height: width
+                    color: "white"
+                    visible: false
+
+                    Text {
+                        id: cartText
+                        anchors.centerIn: parent
+                        color: "#707070"
+                        font {
+                            pointSize: 8
+                            bold: true
+                        }
+                    }
+                }
+
+                OpacityMask {
+                    anchors.fill: picture
+                    source: picture
+                    maskSource: circle
+                }
             }
         }
     }

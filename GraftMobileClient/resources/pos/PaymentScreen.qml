@@ -7,6 +7,7 @@ import "../"
 
 BaseScreen {
     title: qsTr("Cart")
+
     property real price: 100
     property alias productListModel: productView.model
 
@@ -18,7 +19,7 @@ BaseScreen {
                 productView.state = "checkState"
             }
             else {
-                pushScreen()
+                pushScreen.backProductScreen()
             }
         }
     }
@@ -179,14 +180,14 @@ BaseScreen {
             id: cancelButton
             text: qsTr("Cancel")
             visible: false
-            onClicked: pushScreen()
+            onClicked: pushScreen.backProductScreen()
         }
 
         WideRoundButton {
             id: okButton
             text: qsTr("OK")
             visible: false
-            onClicked: pushScreen()
+            onClicked: pushScreen.backProductScreen()
         }
     }
 }

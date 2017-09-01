@@ -15,7 +15,7 @@ ApplicationWindow {
         height: parent.height
         contentItem: PosMenu {
             balanceInGraft: "1.15"
-            pushScreen: menuPush()
+            pushScreen: screenTransitions()
         }
     }
 
@@ -42,39 +42,48 @@ ApplicationWindow {
 
     ProductScreen {
         id: mainScreen
-        pushScreen: productPush()
+        pushScreen: screenTransitions()
     }
 
-    function productPush() {
+    function screenTransitions() {
         var transitionsMap = {}
+        transitionsMap["showMenu"] = showMenu
+        transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openAddScreen"] = openAddingScreen
-        transitionsMap["initialCheckout"] = openPaymentScreen
-        return transitionsMap
-    }
-
-    function menuPush() {
-        var transitionsMap = {}
+        transitionsMap["initializingCheckout"] = openPaymentScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["backProductScreen"] = openMainScreen
+        transitionsMap["goBack"] = turnBack
         return transitionsMap
+    }
+
+    function showMenu() {
+        drawer.open()
+    }
+
+    function hideMenu() {
+        drawer.close()
+    }
+
+    function openAddingScreen() {
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
+                                                 "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+    }
+
+    function openPaymentScreen() {
+        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": screenTransitions(),
+                                                  "price": ProductModel.totalCost()})
+    }
+
+    function openInfoWalletScreen() {
+        stack.push("qrc:/pos/InfoWallet.qml", {"pushScreen": screenTransitions()})
     }
 
     function openMainScreen() {
         stack.pop(mainScreen)
     }
 
-    function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": openMainScreen,
-                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+    function turnBack() {
+        stack.pop()
     }
-
-    function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": openMainScreen,
-                       "price": ProductModel.totalCost()})
-    }
-
-    function openInfoWalletScreen() {
-        stack.push("qrc:/pos/InfoWallet.qml")
-    }
-
 }

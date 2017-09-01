@@ -96,6 +96,7 @@ void ProductModel::changeSelection(int index)
         changeRole.append(SelectedRole);
         QModelIndex modelIndex = this->index(index);
         emit dataChanged(modelIndex, modelIndex, changeRole);
+        emit selectedProductCountChanged(selectedProductCount());
     }
 }
 
@@ -111,6 +112,20 @@ double ProductModel::totalCost() const
         }
     }
     return total;
+}
+
+unsigned int ProductModel::selectedProductCount() const
+{
+    unsigned int count = 0;
+    for (int i = 0; i < mProducts.count(); ++i)
+    {
+        ProductItem *item = mProducts.value(i);
+        if (item->isSelected())
+        {
+            ++count;
+        }
+    }
+    return count;
 }
 
 void ProductModel::clear()
