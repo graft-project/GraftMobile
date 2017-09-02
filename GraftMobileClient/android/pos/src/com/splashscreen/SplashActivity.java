@@ -1,4 +1,4 @@
-package com.splashscreen;
+package com.vakoms.qt.graftpos;
 
 import android.content.Intent;
 import android.os.Bundle;
