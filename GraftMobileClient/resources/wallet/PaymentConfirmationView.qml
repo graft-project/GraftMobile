@@ -86,7 +86,7 @@ BaseScreen {
             Layout.maximumHeight: childrenRect.height
 
             ColumnLayout {
-                spacing: 50
+                spacing: 20
                 CurrencySelectionItem {
                     id: currencyItem
                     Layout.fillWidth: true
@@ -95,6 +95,7 @@ BaseScreen {
                 WideRoundButton {
                     id: confirmButton
                     text: qsTr("Confirm")
+                    Layout.bottomMargin: 0
                     onClicked: {
                         GraftClient.pay()
                     }
@@ -111,7 +112,7 @@ BaseScreen {
             }
 
             ColumnLayout {
-                Layout.preferredHeight: parent.height
+//                Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width
 
                 Image {

@@ -19,7 +19,7 @@ BaseScreen {
                 pushScreen.paymentScreen()
             }
             else {
-                pushScreen.balanceScreen()
+                pushScreen.openBalanceScreen()
             }
          }
     }
@@ -90,6 +90,7 @@ BaseScreen {
                 if (lastTag != tag) {
                     lastTag = tag
                     console.log(tag + " | " + " | " + decoder.charSet())
+                    camera.stop()
                     GraftClient.readyToPay(tag)
                 }
             }
