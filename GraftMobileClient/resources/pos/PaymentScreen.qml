@@ -74,6 +74,7 @@ BaseScreen {
                 Layout.preferredHeight: 100
                 Layout.preferredWidth: height
                 source: GraftClient.qrCodeImage()
+                cache: false
             }
         }
 
