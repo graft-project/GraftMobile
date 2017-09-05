@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Rectangle {
-    color: "#484848"
+    color: "#283c4a"
 
     property var pushScreen
     property alias balanceInGraft: graftMoney.text
@@ -33,7 +33,7 @@ Rectangle {
 
         Text {
             text: qsTr("STORE")
-            color: "#ffffff"
+            color: "white"
             Layout.alignment: Qt.AlignLeft
             font {
                 bold: true
@@ -55,7 +55,7 @@ Rectangle {
 
             Text {
                 text: qsTr("WALLET")
-                color: "#ffffff"
+                color: "white"
                 Layout.alignment: Qt.AlignLeft
                 font {
                     family: "Liberation Sans"
@@ -77,7 +77,7 @@ Rectangle {
 
             Text {
                 id: graftMoney
-                color: "#ffffff"
+                color: "white"
                 Layout.alignment: Qt.AlignRight
                 font {
                     bold: true
@@ -96,7 +96,7 @@ Rectangle {
 
         Text {
             text: qsTr("SETTINGS")
-            color: "#ffffff"
+            color: "white"
             Layout.alignment: Qt.AlignLeft
             font {
                 family: "Liberation Sans"

@@ -37,25 +37,39 @@ BaseScreen {
 
             ColumnLayout {
                 id: totalCostLayout
-                spacing: 20
+                spacing: 7
                 Layout.alignment: Qt.AlignLeft
 
-                Text {
-                    text: qsTr("Total: ")
-                    color: "#757575"
-                    font {
-                        family: "Liberation Sans"
-                        pointSize: 12
-                    }
-                }
+                Rectangle {
+                    radius: 7
+                    color: "#fedbb4"
+                    Layout.preferredHeight: 70
+                    Layout.preferredWidth: 115
 
-                Text {
-                    text: qsTr("$ %1").arg(price)
-                    color: "#757575"
-                    font {
-                        bold: true
-                        family: "Liberation Sans"
-                        pointSize: 14
+                    ColumnLayout {
+                        spacing: 10
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Text {
+                            text: qsTr("Total:")
+                            color: "#757575"
+                            font {
+                                bold: true
+                                family: "Liberation Sans"
+                                pointSize: 11
+                            }
+                        }
+
+                        Text {
+                            text: qsTr("$ %1").arg(price)
+                            color: "#757575"
+                            font {
+                                bold: true
+                                family: "Liberation Sans"
+                                pointSize: 13
+                            }
+                        }
                     }
                 }
 
@@ -186,7 +200,7 @@ BaseScreen {
 
         WideRoundButton {
             id: okButton
-            text: qsTr("OK")
+            text: qsTr("Done")
             visible: false
             onClicked: pushScreen.backProductScreen()
         }

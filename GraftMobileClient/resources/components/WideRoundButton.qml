@@ -9,7 +9,7 @@ RoundButton {
     bottomPadding: 13
     highlighted: true
     Material.elevation: 0
-    Material.accent: "#757575"
+    Material.accent: "#425665"
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true
     Layout.leftMargin: 40

@@ -62,7 +62,7 @@ BaseScreen {
             padding: 20
             highlighted: true
             Material.elevation: 0
-            Material.accent: "#d7d7d7"
+            Material.accent: "#4fb67a"
             Layout.preferredHeight: addButton.height * 1.4
             Layout.preferredWidth: height
             Layout.alignment: Qt.AlignRight

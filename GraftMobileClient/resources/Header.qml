@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     height: 60
-    color: "#707070"
+    color: "#425665"
 
     signal menuIconClicked()
 
@@ -79,13 +79,13 @@ Rectangle {
                     }
                     width: 14
                     height: width
-                    color: "white"
+                    color: "#f26c4f"
                     visible: false
 
                     Text {
                         id: cartText
                         anchors.centerIn: parent
-                        color: "#707070"
+                        color: "white"
                         text: "0"
                         font {
                             pointSize: 8

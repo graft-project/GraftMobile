@@ -6,7 +6,7 @@ import QtQuick.Controls.Material 2.2
 
 Rectangle {
     height: layout.height
-    color: mouseArea.pressed || selectState ? "#f2f2f2" : "transparent"
+    color: mouseArea.pressed || selectState ? "#ecf4ef" : "transparent"
 
     property real productPrice
     property bool selectState: false

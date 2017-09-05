@@ -79,7 +79,7 @@ BaseScreen {
                 Layout.preferredWidth: 80
                 highlighted: true
                 Material.elevation: 0
-                Material.accent: "#d7d7d7"
+                Material.accent: "#4fb67a"
                 contentItem: Image {
                     source: "qrc:/imgs/plus_icon.png"
                 }
