@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     height: 60
-    color: "#707070"
+    color: "#425665"
 
     signal menuIconClicked()
 

@@ -13,7 +13,7 @@ BaseScreen {
 
     Rectangle {
         anchors.fill: parent
-        color: "#484848"
+        color: "#283c4a"
 
         ColumnLayout {
             spacing: 30

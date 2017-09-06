@@ -35,24 +35,34 @@ BaseScreen {
             Text {
                 Layout.alignment: Qt.AlignCenter
                 font {
-                    pointSize: 15
+                    pointSize: 16
                     bold: true
                 }
                 color: "#707070"
                 text: qsTr("Balance")
             }
 
-            Text {
+            RowLayout {
+                spacing: 0
                 Layout.alignment: Qt.AlignCenter
-                font.pointSize: 19
-                color: "black"
-                text: amountGraft + "g"
+
+                Text {
+                    font.pointSize: 20
+                    color: "black"
+                    text: amountGraft
+                }
+
+                Image {
+                    Layout.preferredHeight: 25
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/imgs/g_icon_black.png"
+                }
             }
 
             Text {
                 Layout.alignment: Qt.AlignCenter
                 font {
-                    pointSize: 15
+                    pointSize: 16
                     bold: true
                 }
                 color: "#707070"
@@ -61,7 +71,7 @@ BaseScreen {
         }
 
         WideRoundButton {
-            text: qsTr("Pay")
+            text: qsTr("PAY")
             onPressed: {
                 pushScreen.openQRCodeScanner()
             }

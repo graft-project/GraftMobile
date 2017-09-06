@@ -74,8 +74,8 @@ BaseScreen {
             }
 
             TotalView {
-                Layout.topMargin: 7
                 id: totalViewItem
+                Layout.topMargin: 7
                 Layout.preferredWidth: parent.width
             }
         }
@@ -92,49 +92,47 @@ BaseScreen {
                     Layout.fillWidth: true
                 }
 
-                WideRoundButton {
-                    id: confirmButton
-                    text: qsTr("Confirm")
-                    Layout.bottomMargin: 0
-                    onClicked: {
-                        GraftClient.pay()
-                    }
-                }
+                RowLayout {
+                    Layout.fillHeight: true
 
-                WideRoundButton {
-                    id: declineButton
-                    text: qsTr("Decline")
-                    onClicked: {
-                        GraftClient.rejectPay()
-                        pushScreen.openBalanceScreen()
+                    WideRoundButton {
+                        id: confirmButton
+                        text: qsTr("Confirm")
+                        onClicked: {
+                            GraftClient.pay()
+                        }
+                        Layout.leftMargin: 0
+                        Layout.rightMargin: 0
+                    }
+
+                    WideRoundButton {
+                        id: declineButton
+                        text: qsTr("Cancel")
+                        onClicked: {
+                            GraftClient.rejectPay()
+                            pushScreen.openBalanceScreen()
+                        }
+                        Layout.leftMargin: 0
+                        Layout.rightMargin: 0
                     }
                 }
             }
 
             ColumnLayout {
-//                Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width
 
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                     source: "qrc:/imgs/paid_icon.png"
-                    Layout.preferredHeight: 150
-                    Layout.preferredWidth: 150
+                    Layout.preferredHeight: 120
+                    Layout.preferredWidth: 120
                 }
 
                 Text {
                     Layout.alignment: Qt.AlignCenter
-                    font.pointSize: 20
+                    font.pointSize: 19
                     color: "#707070"
                     text: qsTr("PAID !")
-                }
-
-                WideRoundButton {
-                    id: okButton
-                    text: qsTr("OK")
-                    onClicked: {
-                        pushScreen.openBalanceScreen()
-                    }
                 }
             }
         }
