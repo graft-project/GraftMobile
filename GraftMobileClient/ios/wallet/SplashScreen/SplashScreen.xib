@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +19,7 @@
                     <rect key="frame" x="102.5" y="675" width="819" height="16"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" cyan="0.3546537293" magenta="0.15222985880000001" yellow="0.0" black="0.5991139741" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
                 <constraint firstItem="EsN-Xu-tPP" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.8" id="1Ew-z8-a0H"/>
                 <constraint firstItem="EsN-Xu-tPP" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Df1-7S-ioR"/>
