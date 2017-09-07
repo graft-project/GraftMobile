@@ -61,10 +61,15 @@ void GraftWalletClient::getPayStatus()
 
 void GraftWalletClient::receiveReadyToPay(int result, const QString &transaction)
 {
+    const bool isStatusOk = (result == 0);
     mPaymentProductModel->clear();
     QByteArray data = QByteArray::fromHex(transaction.toLatin1());
     ProductModelSerializator::deserialize(data, mPaymentProductModel);
-    emit readyToPayReceived(result == 0);
+    emit readyToPayReceived(isStatusOk);
+    if (isStatusOk)
+    {
+        getPayStatus();
+    }
 }
 
 void GraftWalletClient::receiveRejectPay(int result)
@@ -74,12 +79,7 @@ void GraftWalletClient::receiveRejectPay(int result)
 
 void GraftWalletClient::receivePay(int result)
 {
-    const bool isStatusOk = (result == 0);
-    emit payReceived(isStatusOk);
-    if (isStatusOk)
-    {
-        getPayStatus();
-    }
+    emit payReceived(result == 0);
 }
 
 void GraftWalletClient::receivePayStatus(int result, int payStatus)

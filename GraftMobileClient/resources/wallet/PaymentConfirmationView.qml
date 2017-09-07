@@ -24,7 +24,7 @@ BaseScreen {
                 root.state = "beforePaid"
             }
             else {
-                pushScreen()
+                pushScreen.openBalanceScreen()
             }
         }
         onPayStatusReceived: {
@@ -32,7 +32,7 @@ BaseScreen {
                 root.state = "afterPaid"
             }
             else {
-                pushScreen()
+                pushScreen.openBalanceScreen()
             }
         }
     }
