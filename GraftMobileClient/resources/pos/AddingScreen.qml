@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import "../components"
 import "../"
+import com.graft.design 1.0
 
 BaseScreen {
     id: additionItem
@@ -79,7 +80,7 @@ BaseScreen {
                 Layout.preferredWidth: 80
                 highlighted: true
                 Material.elevation: 0
-                Material.accent: "#4fb67a"
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 contentItem: Image {
                     source: "qrc:/imgs/plus_icon.png"
                 }
@@ -88,7 +89,7 @@ BaseScreen {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("ADD PHOTO")
-                color: "#757575"
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
                     family: "Liberation Sans"
                     pointSize: 10
