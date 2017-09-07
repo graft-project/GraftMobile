@@ -19,7 +19,7 @@
                     <rect key="frame" x="153.5" y="-217" width="717" height="1800"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" cyan="0.3546537293" magenta="0.15222985880000001" yellow="0.0" black="0.5991139741" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <color key="backgroundColor" red="0.25882352941176467" green="0.33725490196078434" blue="0.396078431372549" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="EsN-Xu-tPP" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.7" id="1Ew-z8-a0H"/>
                 <constraint firstItem="EsN-Xu-tPP" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Df1-7S-ioR"/>
