@@ -112,7 +112,6 @@ BaseScreen {
             }
 
             ColumnLayout {
-//                Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width
 
                 Image {
