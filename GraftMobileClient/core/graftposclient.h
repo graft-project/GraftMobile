@@ -20,15 +20,18 @@ public:
 
 signals:
     void saleReceived(bool result);
+    void rejectSaleReceived(bool result);
     void saleStatusReceived(bool result);
 
 public slots:
     void save();
     void sale();
+    void rejectSale();
     void getSaleStatus();
 
 private slots:
     void receiveSale(int result);
+    void receiveRejectSale(int result);
     void receiveSaleStatus(int result, int saleStatus);
 
 private:

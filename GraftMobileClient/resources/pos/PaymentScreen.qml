@@ -181,7 +181,10 @@ BaseScreen {
             id: cancelButton
             text: qsTr("Cancel")
             visible: false
-            onClicked: pushScreen.backProductScreen()
+            onClicked: {
+                GraftClient.rejectPay()
+                pushScreen.backProductScreen()
+            }
         }
 
         WideRoundButton {
