@@ -182,7 +182,7 @@ BaseScreen {
             text: qsTr("Cancel")
             visible: false
             onClicked: {
-                GraftClient.rejectPay()
+                GraftClient.rejectSale()
                 pushScreen.backProductScreen()
             }
         }
