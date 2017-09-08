@@ -27,5 +27,3 @@ void DesignFactory::registrate(QQmlContext *context)
     qmlRegisterType<DesignFactory>("com.graft.design", 1, 0, "DesignFactory");
     context->setContextProperty(QStringLiteral("ColorFactory"), this);
 }
-
-
