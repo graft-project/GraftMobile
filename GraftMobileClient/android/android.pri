@@ -27,3 +27,15 @@ DISTFILES += \
     $$PWD/wallet/gradle/wrapper/gradle-wrapper.properties \
     $$PWD/wallet/gradlew.bat
 }
+
+SSL_PWD = $$PWD/3rdparty/openssl
+
+equals(ANDROID_TARGET_ARCH, armeabi-v7a) {
+    ANDROID_EXTRA_LIBS += $$SSL_PWD/armeabi-v7a/libcrypto.so
+    ANDROID_EXTRA_LIBS += $$SSL_PWD/armeabi-v7a/libssl.so
+}
+
+equals(ANDROID_TARGET_ARCH, x86)  {
+    ANDROID_EXTRA_LIBS += $$SSL_PWD/x86/libcrypto.so
+    ANDROID_EXTRA_LIBS += $$SSL_PWD/x86/libssl.so
+}
