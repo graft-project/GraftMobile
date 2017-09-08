@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     core/carditem.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
-    core/selectedproductproxymodel.cpp
+    core/selectedproductproxymodel.cpp \
+    designfactory.cpp
 
 HEADERS += \
     core/config.h \
@@ -53,7 +54,8 @@ HEADERS += \
     core/carditem.h \
     core/cardmodel.h \
     core/keygenerator.h \
-    core/selectedproductproxymodel.h
+    core/selectedproductproxymodel.h \
+    designfactory.h
 
 RESOURCES += qml.qrc
 
