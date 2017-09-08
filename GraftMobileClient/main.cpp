@@ -8,6 +8,7 @@
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
+#include "designfactory.h"
 
 #ifdef WALLET_BUILD
 #include <QZXing.h>
@@ -22,6 +23,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
+    DesignFactory factory;
+    factory.registrate(engine.rootContext());
 #ifdef POS_BUILD
     GraftPOSClient client;
     client.registerImageProvider(&engine);

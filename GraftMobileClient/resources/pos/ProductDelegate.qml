@@ -3,10 +3,11 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 
 Rectangle {
     height: layout.height
-    color: mouseArea.pressed || selectState ? "#f2f2f2" : "transparent"
+    color: mouseArea.pressed || selectState ? ColorFactory.color(DesignFactory.Highlighting) : "transparent"
 
     property real productPrice
     property bool selectState: false
@@ -52,7 +53,7 @@ Rectangle {
             Text {
                 id: productText
                 Layout.fillWidth: true
-                color: "#757575"
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
                     family: "Liberation Sans"
                     pointSize: 13
@@ -62,7 +63,7 @@ Rectangle {
             Text {
                 id: price
                 text: "$ " + productPrice
-                color: "#757575"
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
                     family: "Liberation Sans"
                     pointSize: 13
@@ -74,10 +75,9 @@ Rectangle {
             Layout.preferredHeight: 1.6
             Layout.alignment: Qt.AlignBottom
             Layout.fillWidth: true
-            color: "#d7d7d7"
+            color: ColorFactory.color(DesignFactory.AllocateLine)
         }
     }
-
 
     MouseArea {
         id: mouseArea

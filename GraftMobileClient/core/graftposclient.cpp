@@ -19,6 +19,8 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     mQRCodeEncoder = new PatrickQRCodeEncoder();
     mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
+    connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
+            this, &GraftPOSClient::receiveRejectSale);
     connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
@@ -91,6 +93,11 @@ void GraftPOSClient::sale()
     }
 }
 
+void GraftPOSClient::rejectSale()
+{
+    mApi->rejectSale(mPID);
+}
+
 void GraftPOSClient::getSaleStatus()
 {
     mApi->getSaleStatus(mPID);
@@ -104,6 +111,11 @@ void GraftPOSClient::receiveSale(int result)
     {
         getSaleStatus();
     }
+}
+
+void GraftPOSClient::receiveRejectSale(int result)
+{
+    emit rejectSaleReceived(result == 0);
 }
 
 void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
