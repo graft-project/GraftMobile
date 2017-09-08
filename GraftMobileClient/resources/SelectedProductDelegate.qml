@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 
 ColumnLayout {
     property real price: 20
@@ -16,14 +17,14 @@ ColumnLayout {
             id: productText
             Layout.alignment: Qt.AlignLeft
             font.pointSize: 12
-            color: "#707070"
+            color: ColorFactory.color(DesignFactory.MainText)
         }
 
         Text {
             text: qsTr("$ %1").arg(price)
             Layout.alignment: Qt.AlignRight
             font.pointSize: 12
-            color: "#707070"
+            color: ColorFactory.color(DesignFactory.MainText)
         }
     }
 
@@ -31,6 +32,6 @@ ColumnLayout {
         id: bottomLine
         Layout.fillWidth: true
         Layout.preferredHeight: 2
-        color: "#d7d7d7"
+        color: ColorFactory.color(DesignFactory.AllocateLine)
     }
 }

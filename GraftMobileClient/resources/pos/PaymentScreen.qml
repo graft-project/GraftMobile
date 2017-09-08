@@ -78,6 +78,7 @@ BaseScreen {
 
                 Text {
                     text: qsTr("Scan with wallet")
+                    Layout.alignment: Qt.AlignHCenter
                     color: ColorFactory.color(DesignFactory.MainText)
                     font {
                         family: "Liberation Sans"

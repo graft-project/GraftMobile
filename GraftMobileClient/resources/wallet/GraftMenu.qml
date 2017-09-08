@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../"
 
 BaseScreen {
@@ -13,7 +14,7 @@ BaseScreen {
 
     Rectangle {
         anchors.fill: parent
-        color: "#484848"
+        color: ColorFactory.color(DesignFactory.Menu)
 
         ColumnLayout {
             spacing: 30
@@ -44,7 +45,7 @@ BaseScreen {
 
                 Text {
                     text: qsTr("HOME")
-                    color: "white"
+                    color: ColorFactory.color(DesignFactory.LightText)
                     font {
                         family: "Liberation Sans"
                         pointSize: 14
@@ -66,7 +67,7 @@ BaseScreen {
                     contentItem.enabled: false
                     font.pointSize: 14
                     Material.background: "transparent"
-                    Material.foreground: "#707070"
+                    Material.foreground: ColorFactory.color(DesignFactory.MainText)
                 }
 
                 ListView {
@@ -92,7 +93,7 @@ BaseScreen {
                 Text {
                     Layout.alignment: Qt.AlignLeft
                     text: qsTr("+  Add Card")
-                    color: "white"
+                    color: ColorFactory.color(DesignFactory.LightText)
                     font {
                         family: "Liberation Sans"
                         pointSize: 14
@@ -113,7 +114,7 @@ BaseScreen {
 
                 Text {
                     text: qsTr("TRANSACTION")
-                    color: "white"
+                    color: ColorFactory.color(DesignFactory.LightText)
                     font {
                         family: "Liberation Sans"
                         pointSize: 14
@@ -129,7 +130,7 @@ BaseScreen {
 
                 Text {
                     text: qsTr("TRANSFER")
-                    color: "white"
+                    color: ColorFactory.color(DesignFactory.LightText)
                     font {
                         family: "Liberation Sans"
                         pointSize: 14

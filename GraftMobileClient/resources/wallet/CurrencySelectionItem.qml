@@ -2,7 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
-
+import com.graft.design 1.0
 
 ColumnLayout {
     property alias currencyModel: graftCBox.model
@@ -18,7 +18,7 @@ ColumnLayout {
             pointSize: 12
             bold: true
         }
-        color: "#707070"
+        color: ColorFactory.color(DesignFactory.MainText)
     }
 
     ColumnLayout {
@@ -29,12 +29,12 @@ ColumnLayout {
             contentItem.enabled: false
             font.pointSize: 11
             Material.background: "transparent"
-            Material.foreground: "#707070"
+            Material.foreground: ColorFactory.color(DesignFactory.MainText)
         }
 
         RowLayout {
             Text {
-                color: "#707070"
+                color: ColorFactory.color(DesignFactory.MainText)
                 text: qsTr("Balance:\t")
                 font {
                     pointSize: 12
@@ -43,7 +43,7 @@ ColumnLayout {
             }
 
             Text {
-                color: "#707070"
+                color: ColorFactory.color(DesignFactory.MainText)
                 text: qsTr("%1g / %2USD").arg(balanceInGraft).arg(balanceInUSD)
                 font {
                     pointSize: 12

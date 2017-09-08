@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 
 RowLayout {
     property string name: walletName.text
@@ -10,7 +11,7 @@ RowLayout {
     Text {
         id: walletName
         Layout.alignment: Qt.AlignLeft
-        color: "white"
+        color: ColorFactory.color(DesignFactory.LightText)
         font {
             family: "Liberation Sans"
             pointSize: 12
@@ -21,7 +22,7 @@ RowLayout {
     Text {
         id: walletNumber
         Layout.alignment: Qt.AlignRight
-        color: "white"
+        color: ColorFactory.color(DesignFactory.LightText)
         font {
             family: "Liberation Sans"
             pointSize: 12

@@ -3,6 +3,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../"
 import "../components"
 
@@ -53,6 +54,7 @@ BaseScreen {
             Layout.rightMargin: 5
             Layout.fillHeight: true
             Layout.fillWidth: true
+            spacing: 0
 
             ListView {
                 id: productList
@@ -70,12 +72,12 @@ BaseScreen {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 2
-                color: "#d7d7d7"
+                color: ColorFactory.color(DesignFactory.AllocateLine)
             }
 
             TotalView {
-                Layout.topMargin: 7
                 id: totalViewItem
+                Layout.topMargin: 7
                 Layout.preferredWidth: parent.width
             }
         }
@@ -87,26 +89,34 @@ BaseScreen {
 
             ColumnLayout {
                 spacing: 20
+
                 CurrencySelectionItem {
                     id: currencyItem
                     Layout.fillWidth: true
                 }
 
-                WideRoundButton {
-                    id: confirmButton
-                    text: qsTr("Confirm")
-                    Layout.bottomMargin: 0
-                    onClicked: {
-                        GraftClient.pay()
-                    }
-                }
+                RowLayout {
+                    Layout.fillHeight: true
 
-                WideRoundButton {
-                    id: declineButton
-                    text: qsTr("Decline")
-                    onClicked: {
-                        GraftClient.rejectPay()
-                        pushScreen.openBalanceScreen()
+                    WideRoundButton {
+                        id: confirmButton
+                        text: qsTr("Confirm")
+                        onClicked: {
+                            GraftClient.pay()
+                        }
+                        Layout.leftMargin: 0
+                        Layout.rightMargin: 0
+                    }
+
+                    WideRoundButton {
+                        id: declineButton
+                        text: qsTr("Cancel")
+                        onClicked: {
+                            GraftClient.rejectPay()
+                            pushScreen.openBalanceScreen()
+                        }
+                        Layout.leftMargin: 0
+                        Layout.rightMargin: 0
                     }
                 }
             }
@@ -117,23 +127,15 @@ BaseScreen {
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                     source: "qrc:/imgs/paid_icon.png"
-                    Layout.preferredHeight: 150
-                    Layout.preferredWidth: 150
+                    Layout.preferredHeight: 120
+                    Layout.preferredWidth: 120
                 }
 
                 Text {
-                    Layout.alignment: Qt.AlignCenter
-                    font.pointSize: 20
-                    color: "#707070"
                     text: qsTr("PAID !")
-                }
-
-                WideRoundButton {
-                    id: okButton
-                    text: qsTr("OK")
-                    onClicked: {
-                        pushScreen.openBalanceScreen()
-                    }
+                    Layout.alignment: Qt.AlignCenter
+                    font.pointSize: 19
+                    color: ColorFactory.color(DesignFactory.MainText)
                 }
             }
         }
