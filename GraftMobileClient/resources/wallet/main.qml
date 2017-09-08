@@ -41,7 +41,7 @@ ApplicationWindow {
 
     BalanceView {
         id: initialScreen
-        amountGraft: 2
+        amountGraft: 1.2
         amountMoney: 145
         pushScreen: transitionsBetweenScreens()
     }
@@ -91,4 +91,3 @@ ApplicationWindow {
         stack.pop(initialScreen)
     }
 }
-

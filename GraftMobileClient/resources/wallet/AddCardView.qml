@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../"
 import "../components"
 
@@ -56,7 +57,7 @@ BaseScreen {
                 Text {
                     Layout.fillWidth: true
                     text: qsTr("Expiration Date:")
-                    color: "#707070"
+                    color: ColorFactory.color(DesignFactory.MainText)
                     font {
                         family: "Liberation Sans"
                         pointSize: 14
@@ -66,13 +67,14 @@ BaseScreen {
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 30
+
                     ComboBox {
                         id: month
                         Layout.fillWidth: true
                         contentItem.enabled: false
                         font.pointSize: 14
                         Material.background: "transparent"
-                        Material.foreground: "#707070"
+                        Material.foreground: ColorFactory.color(DesignFactory.DarkText)
                         model: setMonth()
 
                         function setMonth() {
@@ -96,7 +98,7 @@ BaseScreen {
                         contentItem.enabled: false
                         font.pointSize: 14
                         Material.background: "transparent"
-                        Material.foreground: "#707070"
+                        Material.foreground: ColorFactory.color(DesignFactory.DarkText)
                         model: setYear()
 
                         function setYear() {
@@ -125,6 +127,7 @@ BaseScreen {
             Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: childrenRect.height
+
                 Image {
                     width: parent.width / 1.5
                     fillMode: Image.PreserveAspectFit

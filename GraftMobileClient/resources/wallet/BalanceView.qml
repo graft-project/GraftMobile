@@ -2,19 +2,18 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 import "../"
 import "../components"
 
 BaseScreen {
     id: rootItem
+    title: qsTr("Wallet")
 
     property real amountGraft: 0
     property real amountMoney: 0
 
-    title: qsTr("Wallet")
-
     ColumnLayout {
-
         anchors.fill: parent
         spacing: 30
 
@@ -33,13 +32,12 @@ BaseScreen {
             Layout.alignment: Qt.AlignCenter
 
             Text {
+                text: qsTr("Balance:")
                 Layout.alignment: Qt.AlignCenter
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
-                    pointSize: 16
-                    bold: true
+                    pointSize: 18
                 }
-                color: "#707070"
-                text: qsTr("Balance")
             }
 
             RowLayout {
@@ -47,9 +45,9 @@ BaseScreen {
                 Layout.alignment: Qt.AlignCenter
 
                 Text {
-                    font.pointSize: 20
-                    color: "black"
                     text: amountGraft
+                    color: ColorFactory.color(DesignFactory.DarkText)
+                    font.pointSize: 25
                 }
 
                 Image {
@@ -60,13 +58,12 @@ BaseScreen {
             }
 
             Text {
-                Layout.alignment: Qt.AlignCenter
-                font {
-                    pointSize: 16
-                    bold: true
-                }
-                color: "#707070"
                 text: amountMoney + "USD"
+                Layout.alignment: Qt.AlignCenter
+                color: ColorFactory.color(DesignFactory.MainText)
+                font {
+                    pointSize: 18
+                }
             }
         }
 

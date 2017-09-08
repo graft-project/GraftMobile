@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 
 Rectangle {
     property real totalAmount: 0
@@ -17,7 +18,7 @@ Rectangle {
         Text {
             text: qsTr("Total: ")
             Layout.alignment: Qt.AlignLeft
-            color: "#707070"
+            color: ColorFactory.color(DesignFactory.MainText)
             font {
                 pointSize: 12
                 bold: true
@@ -27,7 +28,7 @@ Rectangle {
         Text {
             text: "$ " + totalAmount
             Layout.alignment: Qt.AlignRight
-            color: "#707070"
+            color: ColorFactory.color(DesignFactory.MainText)
             font {
                 pointSize: 12
                 bold: true

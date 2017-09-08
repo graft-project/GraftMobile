@@ -3,6 +3,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../"
 import "../components"
 
@@ -70,7 +71,7 @@ BaseScreen {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 2
-                color: "#d7d7d7"
+                color: ColorFactory.color(DesignFactory.AllocateLine)
             }
 
             TotalView {
@@ -87,6 +88,7 @@ BaseScreen {
 
             ColumnLayout {
                 spacing: 20
+
                 CurrencySelectionItem {
                     id: currencyItem
                     Layout.fillWidth: true
@@ -129,10 +131,10 @@ BaseScreen {
                 }
 
                 Text {
+                    text: qsTr("PAID !")
                     Layout.alignment: Qt.AlignCenter
                     font.pointSize: 19
-                    color: "#707070"
-                    text: qsTr("PAID !")
+                    color: ColorFactory.color(DesignFactory.MainText)
                 }
             }
         }
