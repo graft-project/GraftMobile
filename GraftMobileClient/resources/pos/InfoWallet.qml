@@ -91,17 +91,15 @@ BaseScreen {
             Layout.alignment: Qt.AlignCenter
 
             WideRoundButton {
-                text: qsTr("paypal")
+                text: qsTr("PAYPAL")
                 Layout.topMargin: 0
                 Layout.bottomMargin: 0
-                font.capitalization: Font.Medium
             }
 
             WideRoundButton {
-                text: qsTr("chase xxx929")
+                text: qsTr("CHASE XXX929")
                 Layout.topMargin: 0
                 Layout.bottomMargin: 0
-                font.capitalization: Font.Medium
             }
         }
     }
