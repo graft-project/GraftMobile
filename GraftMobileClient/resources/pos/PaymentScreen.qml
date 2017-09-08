@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../components"
 import "../"
 
@@ -42,7 +43,7 @@ BaseScreen {
 
                 Rectangle {
                     radius: 7
-                    color: "#fedbb4"
+                    color: ColorFactory.color(DesignFactory.ItemHighlighting)
                     Layout.preferredHeight: 70
                     Layout.preferredWidth: 115
 
@@ -53,7 +54,8 @@ BaseScreen {
 
                         Text {
                             text: qsTr("Total:")
-                            color: "#757575"
+                            Layout.alignment: Qt.AlignHCenter
+                            color: ColorFactory.color(DesignFactory.MainText)
                             font {
                                 bold: true
                                 family: "Liberation Sans"
@@ -63,7 +65,8 @@ BaseScreen {
 
                         Text {
                             text: qsTr("$ %1").arg(price)
-                            color: "#757575"
+                            Layout.alignment: Qt.AlignHCenter
+                            color: ColorFactory.color(DesignFactory.MainText)
                             font {
                                 bold: true
                                 family: "Liberation Sans"
@@ -75,7 +78,7 @@ BaseScreen {
 
                 Text {
                     text: qsTr("Scan with wallet")
-                    color: "#757575"
+                    color: ColorFactory.color(DesignFactory.MainText)
                     font {
                         family: "Liberation Sans"
                         pointSize: 12
@@ -93,7 +96,7 @@ BaseScreen {
         }
 
         Rectangle {
-            color: "#d7d7d7"
+            color: ColorFactory.color(DesignFactory.AllocateLine)
             Layout.preferredHeight: 1.6
             Layout.alignment: Qt.AlignBottom
             Layout.fillWidth: true
@@ -180,7 +183,7 @@ BaseScreen {
 
                     Text {
                         text: qsTr("PAID !")
-                        color: "#757575"
+                        color: ColorFactory.color(DesignFactory.MainText)
                         Layout.alignment: Qt.AlignHCenter
                         font {
                             family: "Liberation Sans"

@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../components"
 import "../"
 
@@ -62,7 +63,7 @@ BaseScreen {
             padding: 20
             highlighted: true
             Material.elevation: 0
-            Material.accent: "#4fb67a"
+            Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
             Layout.preferredHeight: addButton.height * 1.4
             Layout.preferredWidth: height
             Layout.alignment: Qt.AlignRight

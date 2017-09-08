@@ -21,7 +21,8 @@ public:
         MainText,
         DarkText,
         LightText,
-        CartLabel
+        CartLabel,
+        AllocateLine
     };
     Q_ENUMS(ColorTypes)
 

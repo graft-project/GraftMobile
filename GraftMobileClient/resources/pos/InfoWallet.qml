@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 import "../"
 import "../components"
 
@@ -35,7 +36,7 @@ BaseScreen {
 
             Text {
                 text: qsTr("Balance:")
-                color: "#707070"
+                color: ColorFactory.color(DesignFactory.MainText)
                 Layout.alignment: Qt.AlignCenter
                 font {
                     family: "Liberation Sans"
@@ -49,7 +50,7 @@ BaseScreen {
 
                 Text {
                     text: amountGraft
-                    color: "black"
+                    color: ColorFactory.color(DesignFactory.DarkText)
                     Layout.alignment: Qt.AlignCenter
                     font {
                         family: "Liberation Sans"
@@ -66,7 +67,7 @@ BaseScreen {
 
             Text {
                 text: amountMoney + "USD"
-                color: "#707070"
+                color: ColorFactory.color(DesignFactory.MainText)
                 Layout.alignment: Qt.AlignCenter
                 font {
                     family: "Liberation Sans"
@@ -77,7 +78,7 @@ BaseScreen {
 
         Text {
             text: qsTr("TRANSFER:")
-            color: "#707070"
+            color: ColorFactory.color(DesignFactory.MainText)
             Layout.alignment: Qt.AlignCenter
             font {
                 family: "Liberation Sans"
@@ -90,15 +91,17 @@ BaseScreen {
             Layout.alignment: Qt.AlignCenter
 
             WideRoundButton {
-                text: qsTr("PAYPAL")
+                text: qsTr("paypal")
                 Layout.topMargin: 0
                 Layout.bottomMargin: 0
+                font.capitalization: Font.Medium
             }
 
             WideRoundButton {
-                text: qsTr("CHASE XXX929")
+                text: qsTr("chase xxx929")
                 Layout.topMargin: 0
                 Layout.bottomMargin: 0
+                font.capitalization: Font.Medium
             }
         }
     }

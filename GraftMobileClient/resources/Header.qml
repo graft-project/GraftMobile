@@ -45,7 +45,7 @@ Rectangle {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 15
-            color: "white"
+            color: ColorFactory.color(DesignFactory.LightText)
         }
 
         Item {
@@ -80,13 +80,13 @@ Rectangle {
                     }
                     width: 14
                     height: width
-                    color: "#f26c4f"
+                    color: ColorFactory.color(DesignFactory.CartLabel)
                     visible: false
 
                     Text {
                         id: cartText
                         anchors.centerIn: parent
-                        color: "white"
+                        color: ColorFactory.color(DesignFactory.LightText)
                         text: "0"
                         font {
                             pointSize: 8

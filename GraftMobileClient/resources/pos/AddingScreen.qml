@@ -2,9 +2,9 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../components"
 import "../"
-import com.graft.design 1.0
 
 BaseScreen {
     id: additionItem
@@ -29,7 +29,7 @@ BaseScreen {
         TextField {
             id: title
             Layout.fillWidth: true
-            placeholderText: qsTr("Title: ")
+            placeholderText: qsTr("Title:")
         }
 
         RowLayout {
@@ -40,7 +40,7 @@ BaseScreen {
             TextField {
                 id: price
                 bottomPadding: 3
-                placeholderText: qsTr("Price: ")
+                placeholderText: qsTr("Price:")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
                 Layout.preferredHeight: graftCBox.height
@@ -51,7 +51,7 @@ BaseScreen {
             }
 
             ColumnLayout {
-                spacing: -5
+                spacing: -3
                 Layout.fillWidth: true
 
                 ComboBox {
@@ -63,7 +63,7 @@ BaseScreen {
 
                 Rectangle {
                     height: 1
-                    color: "#919191"
+                    color: "#acacac"
                     Layout.fillWidth: true
                 }
             }
