@@ -6,7 +6,7 @@ Rectangle {
     property real totalAmount: 0
 
     radius: 7
-    color: "#fedbb4"
+    color: ColorFactory.color(DesignFactory.ItemHighlighting)
     Layout.preferredHeight: 40
     Layout.preferredWidth: 115
 

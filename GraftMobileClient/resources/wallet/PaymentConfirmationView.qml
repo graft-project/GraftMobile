@@ -54,6 +54,7 @@ BaseScreen {
             Layout.rightMargin: 5
             Layout.fillHeight: true
             Layout.fillWidth: true
+            spacing: 0
 
             ListView {
                 id: productList
