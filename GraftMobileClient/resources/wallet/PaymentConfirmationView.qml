@@ -137,6 +137,12 @@ BaseScreen {
                     font.pointSize: 19
                     color: ColorFactory.color(DesignFactory.MainText)
                 }
+
+                WideRoundButton {
+                    id: okButton
+                    text: qsTr("Done")
+                    onClicked: pushScreen.openBalanceScreen()
+                }
             }
         }
     }
