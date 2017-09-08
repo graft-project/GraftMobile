@@ -2,19 +2,18 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 import "../"
 import "../components"
 
 BaseScreen {
     id: rootItem
+    title: qsTr("Wallet")
 
     property real amountGraft: 0
     property real amountMoney: 0
 
-    title: qsTr("Wallet")
-
     ColumnLayout {
-
         anchors.fill: parent
         spacing: 30
 
@@ -33,35 +32,43 @@ BaseScreen {
             Layout.alignment: Qt.AlignCenter
 
             Text {
+                text: qsTr("Balance:")
                 Layout.alignment: Qt.AlignCenter
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
-                    pointSize: 15
-                    bold: true
+                    pointSize: 18
                 }
-                color: "#707070"
-                text: qsTr("Balance")
+            }
+
+            RowLayout {
+                spacing: 0
+                Layout.alignment: Qt.AlignCenter
+
+                Text {
+                    text: amountGraft
+                    color: ColorFactory.color(DesignFactory.DarkText)
+                    font.pointSize: 25
+                }
+
+                Image {
+                    Layout.preferredHeight: 25
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/imgs/g_icon_black.png"
+                }
             }
 
             Text {
-                Layout.alignment: Qt.AlignCenter
-                font.pointSize: 19
-                color: "black"
-                text: amountGraft + "g"
-            }
-
-            Text {
-                Layout.alignment: Qt.AlignCenter
-                font {
-                    pointSize: 15
-                    bold: true
-                }
-                color: "#707070"
                 text: amountMoney + "USD"
+                Layout.alignment: Qt.AlignCenter
+                color: ColorFactory.color(DesignFactory.MainText)
+                font {
+                    pointSize: 18
+                }
             }
         }
 
         WideRoundButton {
-            text: qsTr("Pay")
+            text: qsTr("PAY")
             onPressed: {
                 pushScreen.openQRCodeScanner()
             }

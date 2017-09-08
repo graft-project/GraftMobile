@@ -1,10 +1,11 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import com.graft.design 1.0
 
 Rectangle {
     height: 60
-    color: "#707070"
+    color: ColorFactory.color(DesignFactory.Foreground)
 
     signal menuIconClicked()
 
@@ -44,7 +45,7 @@ Rectangle {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 15
-            color: "white"
+            color: ColorFactory.color(DesignFactory.LightText)
         }
 
         Item {
@@ -79,13 +80,13 @@ Rectangle {
                     }
                     width: 14
                     height: width
-                    color: "white"
+                    color: ColorFactory.color(DesignFactory.CartLabel)
                     visible: false
 
                     Text {
                         id: cartText
                         anchors.centerIn: parent
-                        color: "#707070"
+                        color: ColorFactory.color(DesignFactory.LightText)
                         text: "0"
                         font {
                             pointSize: 8

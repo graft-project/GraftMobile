@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
 import "../components"
 import "../"
 
@@ -28,7 +29,7 @@ BaseScreen {
         TextField {
             id: title
             Layout.fillWidth: true
-            placeholderText: qsTr("Title: ")
+            placeholderText: qsTr("Title:")
         }
 
         RowLayout {
@@ -39,7 +40,7 @@ BaseScreen {
             TextField {
                 id: price
                 bottomPadding: 3
-                placeholderText: qsTr("Price: ")
+                placeholderText: qsTr("Price:")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
                 Layout.preferredHeight: graftCBox.height
@@ -50,7 +51,7 @@ BaseScreen {
             }
 
             ColumnLayout {
-                spacing: -5
+                spacing: -3
                 Layout.fillWidth: true
 
                 ComboBox {
@@ -62,7 +63,7 @@ BaseScreen {
 
                 Rectangle {
                     height: 1
-                    color: "#919191"
+                    color: "#acacac"
                     Layout.fillWidth: true
                 }
             }
@@ -79,7 +80,7 @@ BaseScreen {
                 Layout.preferredWidth: 80
                 highlighted: true
                 Material.elevation: 0
-                Material.accent: "#d7d7d7"
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 contentItem: Image {
                     source: "qrc:/imgs/plus_icon.png"
                 }
@@ -88,7 +89,7 @@ BaseScreen {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("ADD PHOTO")
-                color: "#757575"
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
                     family: "Liberation Sans"
                     pointSize: 10
