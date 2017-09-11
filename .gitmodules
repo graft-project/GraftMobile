@@ -1,0 +1,3 @@
+[submodule "GraftMobileClient/qzxing"]
+	path = GraftMobileClient/qzxing
+	url = https://github.com/ftylitak/qzxing.git
