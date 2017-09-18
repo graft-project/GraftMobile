@@ -4,7 +4,7 @@ contains(DEFINES, POS_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/pos
 DISTFILES += \
     $$PWD/pos/AndroidManifest.xml \
-    $$PWD/pos/src/com/splashscreen/SplashActivity.java \
+    $$PWD/pos/src/com/vakoms/qt/graftpos/SplashActivity.java \
     $$PWD/pos/gradle/wrapper/gradle-wrapper.jar \
     $$PWD/pos/gradlew \
     $$PWD/pos/res/values/libs.xml \
