@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QQmlContext>
+#include <QQmlFileSelector>
 
 #include "core/cardmodel.h"
 #include "core/productmodel.h"
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
+    QQmlFileSelector selector(&engine);
 #ifdef POS_BUILD
     GraftPOSClient client;
     client.registerImageProvider(&engine);
