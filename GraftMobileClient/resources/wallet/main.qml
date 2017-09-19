@@ -15,6 +15,7 @@ ApplicationWindow {
     width: 320
     height: 480
     title: qsTr("WALLET")
+    visibility: ApplicationWindow.FullScreen
 
     Drawer {
         id: drawer

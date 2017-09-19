@@ -36,5 +36,9 @@
     <string>6.0</string>
     <key>NSCameraUsageDescription</key>
     <string></string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleLightContent</string>
 </dict>
 </plist>

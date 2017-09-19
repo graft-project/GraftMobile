@@ -8,6 +8,7 @@ ApplicationWindow {
     width: 320
     height: 480
     title: qsTr("POS")
+    visibility: ApplicationWindow.FullScreen
 
     Drawer {
         id: drawer
