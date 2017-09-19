@@ -3,19 +3,14 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
 
-ApplicationWindow {
+GraftApplicationWindow {
     id: root
+    title: qsTr("WALLET")
 
     property real totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
     property real balanceInGraft: 1
     property real balanceInUSD: 200
-
-    visible: true
-    width: 320
-    height: 480
-    title: qsTr("WALLET")
-    visibility: ApplicationWindow.FullScreen
 
     Drawer {
         id: drawer

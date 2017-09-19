@@ -3,12 +3,8 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
 
-ApplicationWindow {
-    visible: true
-    width: 320
-    height: 480
+GraftApplicationWindow {
     title: qsTr("POS")
-    visibility: ApplicationWindow.FullScreen
 
     Drawer {
         id: drawer
