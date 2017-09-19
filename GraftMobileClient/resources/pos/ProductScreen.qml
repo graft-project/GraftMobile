@@ -11,6 +11,7 @@ BaseScreen {
     id: mainScreen
     title: qsTr("Point of Sale")
     cartEnable: true
+    qwerty: false
 
     Connections {
         target: GraftClient

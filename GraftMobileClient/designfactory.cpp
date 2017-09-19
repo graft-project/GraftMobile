@@ -13,7 +13,7 @@ DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
     mColors.insert(MainText, QStringLiteral("#616161"));
     mColors.insert(DarkText, QStringLiteral("#383737"));
     mColors.insert(LightText, QStringLiteral("#ffffff"));
-    mColors.insert(CartLabel, QStringLiteral("#f26c4f"));
+    mColors.insert(CartLabel, QStringLiteral("#fe4200"));
     mColors.insert(AllocateLine, QStringLiteral("#cccccc"));
 }
 

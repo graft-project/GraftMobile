@@ -1,11 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
-        <file alias="/TotalView.qml">resources/TotalView.qml</file>
-        <file alias="/Header.qml">resources/Header.qml</file>
-        <file alias="/QRScanningScreen.qml">resources/QRScanningScreen.qml</file>
-        <file alias="/SelectedProductDelegate.qml">resources/SelectedProductDelegate.qml</file>
-        <file alias="/BaseScreen.qml">resources/BaseScreen.qml</file>
+        <file alias="TotalView.qml">resources/TotalView.qml</file>
+        <file alias="QRScanningScreen.qml">resources/QRScanningScreen.qml</file>
+        <file alias="SelectedProductDelegate.qml">resources/SelectedProductDelegate.qml</file>
+        <file alias="BaseScreen.qml">resources/BaseScreen.qml</file>
+        <file alias="BaseHeader.qml">resources/BaseHeader.qml</file>
+        <file alias="+android/Header.qml">resources/+android/Header.qml</file>
+        <file alias="+ios/Header.qml">resources/+ios/Header.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
@@ -28,21 +30,22 @@
     <qresource prefix="/imgs">
         <file alias="/arrow.png">resources/imgs/arrow.png</file>
         <file alias="/arrow_grey.png">resources/imgs/arrow_grey.png</file>
-        <file alias="/back.png">resources/imgs/back.png</file>
         <file alias="/card_icon.png">resources/imgs/card_icon.png</file>
-        <file alias="/cart_icon.png">resources/imgs/cart_icon.png</file>
         <file alias="/graft_logo.png">resources/imgs/graft_logo.png</file>
         <file alias="/graft_pos_logo.png">resources/imgs/graft_pos_logo.png</file>
         <file alias="/graft_pos_logo_small.png">resources/imgs/graft_pos_logo_small.png</file>
         <file alias="/graft_wallet_logo.png">resources/imgs/graft_wallet_logo.png</file>
         <file alias="/graft_wallet_logo_small.png">resources/imgs/graft_wallet_logo_small.png</file>
-        <file alias="/menu_icon.png">resources/imgs/menu_icon.png</file>
         <file alias="/paid_icon.png">resources/imgs/paid_icon.png</file>
         <file alias="/plus_icon.png">resources/imgs/plus_icon.png</file>
         <file alias="/g_icon_black.png">resources/imgs/g_icon_black.png</file>
         <file alias="/g_icon_small.png">resources/imgs/g_icon_small.png</file>
         <file alias="/visa-master-card-american-express-logo.png">resources/imgs/visa-master-card-american-express-logo.png</file>
         <file alias="/icon-placeholder.png">resources/imgs/icon-placeholder.png</file>
+        <file alias="+android/menu_icon.png">resources/imgs/+android/menu_icon.png</file>
+        <file alias="cart_icon.png">resources/imgs/cart_icon.png</file>
+        <file alias="+android/done.png">resources/imgs/+android/done.png</file>
+        <file alias="+android/back.png">resources/imgs/+android/back.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="/WideRoundButton.qml">resources/components/WideRoundButton.qml</file>
