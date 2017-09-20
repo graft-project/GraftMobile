@@ -5,7 +5,8 @@
 
 DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
 {
-    mColors.insert(Foreground, QStringLiteral("#425665"));
+    mColors.insert(ForegroundAndroid, QStringLiteral("#34435b"));
+    mColors.insert(ForegroundIos, QStringLiteral("#394558"));
     mColors.insert(CircleBackground, QStringLiteral("#4fb67a"));
     mColors.insert(Menu, QStringLiteral("#283c4a"));
     mColors.insert(Highlighting, QStringLiteral("#ecf4ef"));

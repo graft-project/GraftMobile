@@ -8,7 +8,7 @@ ApplicationWindow {
     width: 320
     height: 480
     title: qsTr("POS")
-//    visibility: ApplicationWindow.FullScreen /////ТРЕБА СТЕРТИИ !!!!!
+    //    visibility: ApplicationWindow.FullScreen /////ТРЕБА СТЕРТИИ !!!!!
 
     Drawer {
         id: drawer
@@ -41,9 +41,12 @@ ApplicationWindow {
         }
     }
 
-    ProductScreen {
+    Loader {
         id: mainScreen
-        pushScreen: screenTransitions()
+        source: "qrc:/pos/ProductScreen.qml"
+        onLoaded: {
+            item.pushScreen = screenTransitions()
+        }
     }
 
     function screenTransitions() {
@@ -68,12 +71,12 @@ ApplicationWindow {
 
     function openAddingScreen() {
         stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
-                                                 "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
         stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": screenTransitions(),
-                                                  "price": ProductModel.totalCost()})
+                       "price": ProductModel.totalCost()})
     }
 
     function openInfoWalletScreen() {

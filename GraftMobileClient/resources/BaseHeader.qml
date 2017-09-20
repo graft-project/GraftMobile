@@ -4,14 +4,13 @@ import QtGraphicalEffects 1.0
 import com.graft.design 1.0
 
 Rectangle {
-    color: ColorFactory.color(DesignFactory.Foreground)
-
-    signal menuIconClicked()
-    signal menuDoneClicked()
+    signal actionButtonClicked()
+    signal navigationButtonClicked()
 
     property string headerText
-    property bool menuState
-    property bool cartEnable
-    property bool doneEnable
-    property int selectedProductCount
+    property bool navigationButtonState: false
+    property bool actionButtonState: false
+    property bool cartEnable: false
+    property bool actionButton: false
+    property int selectedProductCount: 0
 }
