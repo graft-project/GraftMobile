@@ -35,7 +35,7 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>NSCameraUsageDescription</key>
-    <string></string>
+    <string>Scan QR Codes or other types of barcodes.</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
     <key>UIStatusBarStyle</key>
