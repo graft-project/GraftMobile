@@ -26,7 +26,7 @@ public:
         AllocateLine,
         AndroidStatusBar
     };
-    Q_ENUMS(ColorTypes)
+    Q_ENUM(ColorTypes)
 
     Q_INVOKABLE QString color(ColorTypes type) const;
     void registrate(QQmlContext *context);
