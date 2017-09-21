@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
 import com.graft.design 1.0
 import "../"
 
@@ -27,7 +26,6 @@ BaseHeader {
         }
 
         Item {
-            Layout.preferredHeight: 18
             Layout.preferredWidth: 24
             Layout.alignment: Qt.AlignLeft
 
@@ -46,10 +44,10 @@ BaseHeader {
         }
 
         Text {
-            text: rootItem.headerText
             Layout.fillWidth: true
             Layout.leftMargin: 25
-            horizontalAlignment: Text.AlignLeft
+            Layout.alignment: Qt.AlignLeft
+            text: rootItem.headerText
             font {
                 bold: true
                 pointSize: 17

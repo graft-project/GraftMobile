@@ -12,8 +12,8 @@ Image {
         id: circle
         width: picture.width
         height: width
-        radius: picture.width / 2
         visible: false
+        radius: picture.width / 2
     }
 
     Rectangle {
@@ -26,18 +26,17 @@ Image {
         }
         width: 16
         height: width
-        color: ColorFactory.color(DesignFactory.CartLabel)
         visible: false
+        color: ColorFactory.color(DesignFactory.CartLabel)
 
         Text {
             id: counterText
             anchors.centerIn: parent
-            color: ColorFactory.color(DesignFactory.LightText)
-            text: "0"
             font {
                 pointSize: 10
                 bold: true
             }
+            color: ColorFactory.color(DesignFactory.LightText)
         }
     }
 

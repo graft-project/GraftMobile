@@ -12,14 +12,10 @@ BaseScreen {
     title: qsTr("Point of Sale")
     screenHeader {
         cartEnable: true
-//        navigationButtonState: true
-        actionButtonState: false
-//        navigationText: qsTr("Cancel")
     }
 
     Connections {
         target: GraftClient
-
         onSaleReceived: {
             if (result === true) {
                 pushScreen.initializingCheckout()
@@ -29,7 +25,6 @@ BaseScreen {
 
     Connections {
         target: ProductModel
-
         onSelectedProductCountChanged: {
             mainScreen.screenHeader.selectedProductCount = count
         }

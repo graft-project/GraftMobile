@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
 import com.graft.design 1.0
 import "../"
 
@@ -23,13 +22,13 @@ BaseHeader {
 
         Item {
             Layout.preferredWidth: 30
+            Layout.alignment: Qt.AlignLeft
 
             Text {
                 id: navigationButton
-                text: qsTr("Back")
-                visible: rootItem.navigationButtonState
-                horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
+                visible: rootItem.navigationButtonState
+                text: qsTr("Back")
                 font.pointSize: 12
                 color: ColorFactory.color(DesignFactory.LightText)
 
@@ -47,7 +46,6 @@ BaseHeader {
             Text {
                 text: rootItem.headerText
                 anchors.centerIn: parent
-                horizontalAlignment: Text.AlignHCenter
                 font {
                     bold: true
                     pointSize: 13
@@ -61,20 +59,19 @@ BaseHeader {
             Layout.alignment: Qt.AlignRight
 
             CartItem {
+                width: 25
+                height: 25
                 visible: rootItem.cartEnable
                 productCount: rootItem.selectedProductCount
                 anchors.centerIn: parent
-                height: 25
-                width: 25
             }
 
             Text {
                 id: actionButton
-                text: qsTr("Done")
-                visible: rootItem.actionButtonState
-                horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
-                font.pointSize: 12
+                visible: rootItem.actionButtonState
+                text: qsTr("Done")
+                font.pointSize: 11
                 color: ColorFactory.color(DesignFactory.LightText)
 
                 MouseArea {

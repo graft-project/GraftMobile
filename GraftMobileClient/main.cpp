@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     DesignFactory factory;
     factory.registrate(engine.rootContext());
     QQmlFileSelector selector(&engine);
-    selector.setExtraSelectors(QStringList{"android"});
+    selector.setExtraSelectors(QStringList{"ios"});  //СТЕРТИИИ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #ifdef POS_BUILD
     GraftPOSClient client;
     client.registerImageProvider(&engine);

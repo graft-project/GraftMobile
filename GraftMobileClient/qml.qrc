@@ -44,7 +44,6 @@
         <file alias="/g_icon_black.png">resources/imgs/g_icon_black.png</file>
         <file alias="/g_icon_small.png">resources/imgs/g_icon_small.png</file>
         <file alias="/visa-master-card-american-express-logo.png">resources/imgs/visa-master-card-american-express-logo.png</file>
-        <file alias="/icon-placeholder.png">resources/imgs/icon-placeholder.png</file>
         <file alias="cart_icon.png">resources/imgs/cart_icon.png</file>
         <file alias="back_icon.png">resources/imgs/back_icon.png</file>
         <file alias="done.png">resources/imgs/done.png</file>
