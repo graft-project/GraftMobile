@@ -6,7 +6,7 @@ import "../"
 BaseHeader {
     id: rootItem
     height: 44
-    color: ColorFactory.color(DesignFactory.ForegroundIos)
+    color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
     property alias navigationText: navigationButton.text
     property alias actionText: actionButton.text

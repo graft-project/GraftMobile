@@ -50,7 +50,7 @@
         <file alias="back_icon.png">resources/imgs/back_icon.png</file>
         <file alias="done.png">resources/imgs/done.png</file>
         <file alias="menu_icon.png">resources/imgs/menu_icon.png</file>
-        <file alias="icon_placeholder.png">resources/imgs/icon-placeholder.png</file>
+        <file alias="icon-placeholder.png">resources/imgs/icon-placeholder.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="/WideRoundButton.qml">resources/components/WideRoundButton.qml</file>
