@@ -23,7 +23,8 @@ public:
         DarkText,
         LightText,
         CartLabel,
-        AllocateLine
+        AllocateLine,
+        AndroidStatusBar
     };
     Q_ENUMS(ColorTypes)
 
@@ -31,6 +32,7 @@ public:
     void registrate(QQmlContext *context);
 
 private:
+    void init();
     QMap<int, QString> mColors;
 };
 
