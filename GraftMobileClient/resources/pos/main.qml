@@ -5,7 +5,6 @@ import "../"
 
 GraftApplicationWindow {
     title: qsTr("POS")
-    visibility: ApplicationWindow.FullScreen
 
     Drawer {
         id: drawer
