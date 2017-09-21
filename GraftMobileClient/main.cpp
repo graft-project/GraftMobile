@@ -20,6 +20,10 @@
 
 int main(int argc, char *argv[])
 {
+    // TODO: QTBUG-61153. QML cache doesn't get updated when adding Q_ENUM keys
+    // For more details see https://bugreports.qt.io/browse/QTBUG-61153
+    qputenv("QML_DISABLE_DISK_CACHE", "1");
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
