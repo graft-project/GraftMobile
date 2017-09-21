@@ -10,6 +10,7 @@
         <file alias="ios/Header.qml">resources/ios/Header.qml</file>
         <file alias="CartItem.qml">resources/CartItem.qml</file>
         <file alias="SelectedProductDelegate.qml">resources/SelectedProductDelegate.qml</file>
+        <file alias="GraftApplicationWindow.qml">resources/GraftApplicationWindow.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="/main.qml">resources/pos/main.qml</file>
