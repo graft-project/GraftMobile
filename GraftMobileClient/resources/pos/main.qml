@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
+import "../pos"
 
 GraftApplicationWindow {
     title: qsTr("POS")
@@ -10,8 +11,7 @@ GraftApplicationWindow {
         id: drawer
         width: 0.75 * parent.width
         height: parent.height
-        contentItem: PosMenu {
-            balanceInGraft: "1.15"
+        contentItem: Menu {
             pushScreen: screenTransitions()
         }
     }

@@ -12,7 +12,6 @@
         <file alias="main.qml">pos/main.qml</file>
         <file alias="PaymentScreen.qml">pos/PaymentScreen.qml</file>
         <file alias="AddingScreen.qml">pos/AddingScreen.qml</file>
-        <file alias="PosMenu.qml">pos/PosMenu.qml</file>
         <file alias="InfoWallet.qml">pos/InfoWallet.qml</file>
     </qresource>
     <qresource prefix="/wallet">
@@ -30,9 +29,7 @@
         <file alias="card_icon.png">imgs/card_icon.png</file>
         <file alias="graft_logo.png">imgs/graft_logo.png</file>
         <file alias="graft_pos_logo.png">imgs/graft_pos_logo.png</file>
-        <file alias="graft_pos_logo_small.png">imgs/graft_pos_logo_small.png</file>
         <file alias="graft_wallet_logo.png">imgs/graft_wallet_logo.png</file>
-        <file alias="graft_wallet_logo_small.png">imgs/graft_wallet_logo_small.png</file>
         <file alias="paid_icon.png">imgs/paid_icon.png</file>
         <file alias="plus_icon.png">imgs/plus_icon.png</file>
         <file alias="g_icon_black.png">imgs/g_icon_black.png</file>
@@ -43,6 +40,11 @@
         <file alias="done.png">imgs/done.png</file>
         <file alias="menu_icon.png">imgs/menu_icon.png</file>
         <file alias="icon-placeholder.png">imgs/icon-placeholder.png</file>
+        <file alias="graft_pos_logo_small.png">imgs/graft_pos_logo_small.png</file>
+        <file alias="graft_wallet_logo_small.png">imgs/graft_wallet_logo_small.png</file>
+        <file alias="store.png">imgs/store.png</file>
+        <file alias="g-min.png">imgs/g-min.png</file>
+        <file alias="waller.png">imgs/wallet.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="WideRoundButton.qml">components/WideRoundButton.qml</file>
