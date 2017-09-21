@@ -6,14 +6,6 @@
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
 #include <QColor>
-static QAndroidJniObject getAndroidWindow()
-{
-    QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow",
-                                                                             "()Landroid/view/Window;");
-    window.callMethod<void>("addFlags", "(I)V", 0x80000000);
-    window.callMethod<void>("clearFlags", "(I)V", 0x04000000);
-    return window;
-}
 #endif
 
 DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
@@ -50,7 +42,10 @@ void DesignFactory::init()
     if (QtAndroid::androidSdkVersion() >= 21)
     {
         QtAndroid::runOnAndroidThread([=]() {
-            QAndroidJniObject window = getAndroidWindow();
+            QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod(
+                        "getWindow","()Landroid/view/Window;");
+            window.callMethod<void>("addFlags", "(I)V", 0x80000000);
+            window.callMethod<void>("clearFlags", "(I)V", 0x04000000);
             window.callMethod<void>("setStatusBarColor", "(I)V",
                                     QColor(color(AndroidStatusBar)).rgba());
         });
