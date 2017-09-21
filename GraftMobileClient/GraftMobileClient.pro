@@ -57,7 +57,7 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h
 
-RESOURCES += qml.qrc
+include(resources/resources.pri)
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
