@@ -10,7 +10,7 @@ RoundButton {
     bottomPadding: 13
     highlighted: true
     Material.elevation: 0
-    Material.accent: ColorFactory.color(DesignFactory.ForegroundAndroid)
+    Material.accent: ColorFactory.color(DesignFactory.Foreground)
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true
     Layout.leftMargin: 40

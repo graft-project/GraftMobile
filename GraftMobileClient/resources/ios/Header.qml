@@ -6,17 +6,10 @@ import "../"
 BaseHeader {
     id: rootItem
     height: 64
-    color: ColorFactory.color(DesignFactory.ForegroundIos)
+    color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
     property alias navigationText: navigationButton.text
     property alias actionText: actionButton.text
-
-//    Rectangle {
-//        anchors.top: parent.top
-//        width: parent.width
-//        height: 20
-//        color: "red"
-//    }
 
     RowLayout {
         height: parent.height

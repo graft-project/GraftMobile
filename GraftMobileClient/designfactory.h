@@ -13,8 +13,8 @@ public:
     explicit DesignFactory(QObject *parent = nullptr);
 
     enum ColorTypes {
-        ForegroundAndroid = 0,
-        ForegroundIos,
+        Foreground,
+        IosNavigationBar,
         CircleBackground,
         Menu,
         Highlighting,

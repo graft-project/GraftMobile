@@ -6,7 +6,7 @@ import "../"
 BaseHeader {
     id: rootItem
     height: 60
-    color: ColorFactory.color(DesignFactory.ForegroundAndroid)
+    color: ColorFactory.color(DesignFactory.Foreground)
 
     onNavigationButtonStateChanged: {
         if (navigationButtonState) {
