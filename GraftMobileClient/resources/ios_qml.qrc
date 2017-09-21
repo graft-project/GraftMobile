@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/components">
+        <file alias="BaseScreen.qml">ios/BaseScreen.qml</file>
+        <file alias="Header.qml">ios/Header.qml</file>
+    </qresource>
+    <qresource prefix="/pos">
+        <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>
+        <file alias="ProductDelegate.qml">ios/pos/ProductDelegate.qml</file>
+    </qresource>
+</RCC>

@@ -4,15 +4,14 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
-import "../../components"
-import "../../android"
+import "../components"
+import "../"
 
 BaseScreen {
     id: mainScreen
     title: qsTr("Point of Sale")
     screenHeader {
         cartEnable: true
-        navigationButtonState: true
     }
 
     Connections {

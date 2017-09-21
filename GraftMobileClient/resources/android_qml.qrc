@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/components">
+        <file alias="BaseScreen.qml">android/BaseScreen.qml</file>
+        <file alias="Header.qml">android/Header.qml</file>
+    </qresource>
+    <qresource prefix="/pos">
+        <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>
+        <file alias="ProductDelegate.qml">android/pos/ProductDelegate.qml</file>
+    </qresource>
+</RCC>
