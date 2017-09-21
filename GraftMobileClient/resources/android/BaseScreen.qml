@@ -4,21 +4,23 @@ import QtQuick.Controls 2.2
 Page {
     id: basePage
     property var pushScreen
-    property alias cartEnable: baseHeader.cartEnable
-    property alias isMenuState: baseHeader.isMenuState
-    property alias selectedProductCount: baseHeader.selectedProductCount
+    property var action
+    property alias screenHeader: appHeader
 
     header: Header {
-        id: baseHeader
+        id: appHeader
         headerText: basePage.title
-        cartEnable: false
 
-        onMenuIconClicked: {
-            if (isMenuState) {
+        onNavigationButtonClicked: {
+            if(navigationButtonState) {
                 basePage.pushScreen.showMenu()
             } else {
                 basePage.pushScreen.goBack()
             }
+        }
+
+        onActionButtonClicked: {
+            action()
         }
     }
 }

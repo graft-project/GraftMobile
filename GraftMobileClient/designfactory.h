@@ -14,6 +14,7 @@ public:
 
     enum ColorTypes {
         Foreground,
+        IosNavigationBar,
         CircleBackground,
         Menu,
         Highlighting,

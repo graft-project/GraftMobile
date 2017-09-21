@@ -4,17 +4,19 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
-import "../components"
-import "../"
+import "../../components"
+import "../../android"
 
 BaseScreen {
     id: mainScreen
     title: qsTr("Point of Sale")
-    cartEnable: true
+    screenHeader {
+        cartEnable: true
+        navigationButtonState: true
+    }
 
     Connections {
         target: GraftClient
-
         onSaleReceived: {
             if (result === true) {
                 pushScreen.initializingCheckout()
@@ -24,9 +26,8 @@ BaseScreen {
 
     Connections {
         target: ProductModel
-
         onSelectedProductCountChanged: {
-            mainScreen.selectedProductCount = count
+            mainScreen.screenHeader.selectedProductCount = count
         }
     }
 

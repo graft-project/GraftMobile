@@ -37,9 +37,12 @@ GraftApplicationWindow {
         }
     }
 
-    ProductScreen {
+    Loader {
         id: mainScreen
-        pushScreen: screenTransitions()
+        source: "qrc:/pos/ProductScreen.qml"
+        onLoaded: {
+            item.pushScreen = screenTransitions()
+        }
     }
 
     function screenTransitions() {
@@ -64,12 +67,12 @@ GraftApplicationWindow {
 
     function openAddingScreen() {
         stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
-                                                 "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
         stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": screenTransitions(),
-                                                  "price": ProductModel.totalCost()})
+                       "price": ProductModel.totalCost()})
     }
 
     function openInfoWalletScreen() {
