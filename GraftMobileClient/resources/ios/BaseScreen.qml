@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 Page {
     id: basePage
     property var pushScreen
+    property var action
     property alias screenHeader: appHeader
 
     header: Header {
@@ -12,6 +13,10 @@ Page {
 
         onNavigationButtonClicked: {
             basePage.pushScreen.goBack()
+        }
+
+        onActionButtonClicked: {
+            action()
         }
     }
 }
