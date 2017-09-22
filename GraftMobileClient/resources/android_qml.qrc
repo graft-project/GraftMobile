@@ -3,8 +3,8 @@
         <file alias="BaseScreen.qml">android/BaseScreen.qml</file>
         <file alias="Header.qml">android/Header.qml</file>
         <file alias="BaseMenu.qml">android/BaseMenu.qml</file>
-        <file alias="MenuItem.qml">android/MenuItem.qml</file>
         <file alias="MenuWalletItem.qml">android/MenuWalletItem.qml</file>
+        <file alias="MenuLabelItem.qml">android/MenuLabelItem.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>

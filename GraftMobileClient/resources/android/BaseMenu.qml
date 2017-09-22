@@ -7,7 +7,6 @@ Rectangle {
     property var pushScreen
     property alias logo: logoImage.source
     default property alias contents: placeholder.data
-    //    property alias balanceInGraft: graftMoney.text
 
     Rectangle {
         id: foreground
@@ -27,7 +26,6 @@ Rectangle {
                 bottom: parent.bottom
                 bottomMargin: 20
             }
-
         }
     }
 

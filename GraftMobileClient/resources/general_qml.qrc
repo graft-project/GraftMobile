@@ -45,6 +45,8 @@
         <file alias="store.png">imgs/store.png</file>
         <file alias="g-min.png">imgs/g-min.png</file>
         <file alias="waller.png">imgs/wallet.png</file>
+        <file alias="info.png">imgs/info.png</file>
+        <file alias="settings.png">imgs/settings.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="WideRoundButton.qml">components/WideRoundButton.qml</file>

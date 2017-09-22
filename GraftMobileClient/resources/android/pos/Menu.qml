@@ -9,24 +9,56 @@ BaseMenu {
     logo: "qrc:/imgs/graft_pos_logo_small.png"
 
     ColumnLayout {
-        spacing: 10
+        spacing: 18
         anchors {
             left: parent.left
             right: parent.right
         }
 
-        MenuItem {
+        MenuLabelItem {
             Layout.fillWidth: true
             icon: "qrc:/imgs/store.png"
             name: qsTr("Store")
             onItemClicked: {
-                console.log("AAA")
+                console.log("In Store")
             }
         }
 
         MenuWalletItem {
             Layout.fillWidth: true
             balanceInGraft: "1.14"
+        }
+
+        Rectangle {
+            id: line
+            Layout.fillWidth: true
+            Layout.preferredHeight: 1.5
+            Layout.topMargin: 33
+            Layout.alignment: Qt.AlignBottom
+            color: ColorFactory.color(DesignFactory.AllocateLine)
+        }
+
+        MenuLabelItem {
+            id: settingLabale
+            Layout.fillWidth: true
+            anchors.top: line.bottom
+            anchors.topMargin: 3
+            icon: "qrc:/imgs/settings.png"
+            name: qsTr("Settings")
+            onItemClicked: {
+                console.log("In Settings")
+            }
+        }
+
+        MenuLabelItem {
+            Layout.fillWidth: true
+            anchors.top: settingLabale.bottom
+            anchors.topMargin: 18
+            icon: "qrc:/imgs/info.png"
+            name: qsTr("About")
+            onItemClicked: {
+                console.log("In About")
+            }
         }
     }
 }

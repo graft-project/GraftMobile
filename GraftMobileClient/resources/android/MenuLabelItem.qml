@@ -1,13 +1,11 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
 import com.graft.design 1.0
 
 Item {
     id: rootItem
 
     signal itemClicked()
-
     property alias icon: iconItem.source
     property alias name: textItem.text
     default property alias contentItem: rootItem.data
@@ -23,13 +21,13 @@ Item {
 
     RowLayout {
         id: layout
+        spacing: 24
         anchors {
             left: parent.left
-            right: parent.right
-            leftMargin: 10
-            rightMargin: 10
+            top: parent.top
+            topMargin: 10
+            leftMargin: 20
         }
-        spacing: 10
 
         Image {
             id: iconItem
@@ -46,7 +44,7 @@ Item {
             font {
                 bold: true
                 family: "Liberation Sans"
-                pointSize: 10
+                pointSize: 15
             }
         }
     }

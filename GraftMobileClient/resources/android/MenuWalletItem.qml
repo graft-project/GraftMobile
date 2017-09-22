@@ -7,53 +7,32 @@ Item {
     id: rootItem
 
     signal itemClicked()
-
-//    property alias name: textItem.text
     default property alias contentItem: rootItem.data
     property alias balanceInGraft: graftMoney.text
-
 
     MouseArea {
         anchors.fill: parent
         onClicked: {
             itemClicked()
+            console.log("in Wallet")
         }
     }
 
+    MenuLabelItem {
+        Layout.fillWidth: true
+        Layout.alignment: Qt.AlignHCenter
+        name: qsTr("Wallet")
+        icon: "qrc:/imgs/waller.png"
+    }
+
     RowLayout {
+        spacing: 3
         anchors {
-            left: parent.left
             right: parent.right
-            leftMargin: 5
-            rightMargin: 5
+            rightMargin: 10
+            top: parent.top
+            topMargin: 10
         }
-        spacing: 0
-
-        MenuItem {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignHCenter
-            text: qsTr("Wallet")
-//            source: "qrc:/imgs/waller.png"
-        }
-
-//        Image {
-//            Layout.preferredHeight: 25
-//            Layout.preferredWidth: 25
-//            Layout.alignment: Qt.AlignLeft
-//            source: "qrc:/imgs/waller.png"
-//        }
-
-//        Text {
-//            id: textItem
-//            color: ColorFactory.color(DesignFactory.MainText)
-//            Layout.fillWidth: true
-//            Layout.alignment: Qt.AlignLeft
-//            font {
-//                bold: true
-//                family: "Liberation Sans"
-//                pointSize: 10
-//            }
-//        }
 
         Text {
             id: graftMoney
@@ -62,21 +41,16 @@ Item {
             font {
                 bold: true
                 family: "Liberation Sans"
-                pointSize: 10
+                pointSize: 15
             }
         }
 
         Image {
-            Layout.preferredHeight: 15
-            Layout.preferredWidth: 15
+            Layout.preferredHeight: 25
+            Layout.preferredWidth: 25
             Layout.alignment: Qt.AlignRight
-//            fillMode: Image.PreserveAspectFit
+            fillMode: Image.PreserveAspectFit
             source: "qrc:/imgs/g-min.png"
-
-//            Rectangle {
-//                anchors.fill: parent
-//                color: "red"
-//            }
         }
     }
 }
