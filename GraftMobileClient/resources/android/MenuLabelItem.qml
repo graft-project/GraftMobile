@@ -1,51 +1,14 @@
 import QtQuick 2.9
-import QtQuick.Layouts 1.3
-import com.graft.design 1.0
+import QtQuick.Controls 2.2
 
-Item {
-    id: rootItem
+MenuItem {
+    property alias icon: setMenuLabel.icon
+    property alias name: setMenuLabel.name
 
-    signal itemClicked()
-    property alias icon: iconItem.source
-    property alias name: textItem.text
-    default property alias contentItem: rootItem.data
-
-    height: layout.height
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            itemClicked()
-        }
-    }
-
-    RowLayout {
-        id: layout
-        spacing: 24
-        anchors {
-            left: parent.left
-            top: parent.top
-            topMargin: 10
-            leftMargin: 20
-        }
-
-        Image {
-            id: iconItem
-            Layout.preferredHeight: 25
-            Layout.preferredWidth: 25
-            Layout.alignment: Qt.AlignLeft
-        }
-
-        Text {
-            id: textItem
-            color: ColorFactory.color(DesignFactory.MainText)
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignLeft
-            font {
-                bold: true
-                family: "Liberation Sans"
-                pointSize: 15
-            }
-        }
+    padding: 0
+    topPadding: 0
+    bottomPadding: 0
+    contentItem: MenuLabel {
+        id: setMenuLabel
     }
 }

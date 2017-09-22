@@ -1,6 +1,4 @@
 import QtQuick 2.9
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
 import com.graft.design 1.0
 
 Rectangle {

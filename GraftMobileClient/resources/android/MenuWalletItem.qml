@@ -3,54 +3,49 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.graft.design 1.0
 
-Item {
-    id: rootItem
-
-    signal itemClicked()
-    default property alias contentItem: rootItem.data
+MenuItem {
     property alias balanceInGraft: graftMoney.text
+    property alias icon: setMenuLabel.icon
+    property alias name: setMenuLabel.name
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            itemClicked()
-            console.log("in Wallet")
-        }
-    }
+    padding: 0
+    topPadding: 0
+    bottomPadding: 0
+    contentItem: Item {
+        height: 55
 
-    MenuLabelItem {
-        Layout.fillWidth: true
-        Layout.alignment: Qt.AlignHCenter
-        name: qsTr("Wallet")
-        icon: "qrc:/imgs/waller.png"
-    }
-
-    RowLayout {
-        spacing: 3
-        anchors {
-            right: parent.right
-            rightMargin: 10
-            top: parent.top
-            topMargin: 10
-        }
-
-        Text {
-            id: graftMoney
-            color: ColorFactory.color(DesignFactory.MainText)
-            Layout.alignment: Qt.AlignRight
-            font {
-                bold: true
-                family: "Liberation Sans"
-                pointSize: 15
+        RowLayout {
+            anchors {
+                fill: parent
+                rightMargin: 10
+                verticalCenter: parent.verticalCenter
             }
-        }
 
-        Image {
-            Layout.preferredHeight: 25
-            Layout.preferredWidth: 25
-            Layout.alignment: Qt.AlignRight
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/imgs/g-min.png"
+            MenuLabel {
+                id: setMenuLabel
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
+                name: qsTr("Wallet")
+                icon: "qrc:/imgs/waller.png"
+            }
+
+            Text {
+                id: graftMoney
+                color: ColorFactory.color(DesignFactory.MainText)
+                Layout.alignment: Qt.AlignRight
+                font {
+                    bold: true
+                    family: "Liberation Sans"
+                    pointSize: 15
+                }
+            }
+
+            Image {
+                Layout.preferredHeight: 23
+                Layout.preferredWidth: 23
+                Layout.alignment: Qt.AlignRight
+                source: "qrc:/imgs/g-min.png"
+            }
         }
     }
 }

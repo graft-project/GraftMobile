@@ -5,6 +5,7 @@
         <file alias="BaseMenu.qml">android/BaseMenu.qml</file>
         <file alias="MenuWalletItem.qml">android/MenuWalletItem.qml</file>
         <file alias="MenuLabelItem.qml">android/MenuLabelItem.qml</file>
+        <file alias="MenuLabel.qml">android/MenuLabel.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>
