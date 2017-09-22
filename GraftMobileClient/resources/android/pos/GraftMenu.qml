@@ -4,6 +4,8 @@ import com.graft.design 1.0
 import "../components"
 
 BaseMenu {
+    property alias balanceInGraft: walletItem.balanceInGraft
+
     logo: "qrc:/imgs/graft_pos_logo_small.png"
 
     ColumnLayout {
@@ -17,11 +19,20 @@ BaseMenu {
             Layout.fillWidth: true
             icon: "qrc:/imgs/store.png"
             name: qsTr("Store")
+            onClicked: {
+                pushScreen.hideMenu()
+                pushScreen.backProductScreen()
+            }
         }
 
         MenuWalletItem {
+            id: walletItem
             Layout.fillWidth: true
             balanceInGraft: "1.14"
+            onClicked: {
+                pushScreen.hideMenu()
+                pushScreen.openWalletScreen()
+            }
         }
 
         Rectangle {
@@ -38,12 +49,20 @@ BaseMenu {
             Layout.fillWidth: true
             icon: "qrc:/imgs/settings.png"
             name: qsTr("Settings")
+            onClicked: {
+                pushScreen.hideMenu()
+                pushScreen.openSettingsScreen()
+            }
         }
 
         MenuLabelItem {
             Layout.fillWidth: true
             icon: "qrc:/imgs/info.png"
             name: qsTr("About")
+            onClicked: {
+                pushScreen.hideMenu()
+                pushScreen.openAboutScreen()
+            }
         }
     }
 }

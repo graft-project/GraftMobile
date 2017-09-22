@@ -11,7 +11,7 @@ GraftApplicationWindow {
         id: drawer
         width: 0.75 * parent.width
         height: parent.height
-        contentItem: Menu {
+        contentItem: GraftMenu {
             pushScreen: screenTransitions()
         }
     }

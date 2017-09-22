@@ -10,6 +10,6 @@
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>
         <file alias="ProductDelegate.qml">android/pos/ProductDelegate.qml</file>
-        <file alias="Menu.qml">android/pos/Menu.qml</file>
+        <file alias="GraftMenu.qml">android/pos/GraftMenu.qml</file>
     </qresource>
 </RCC>

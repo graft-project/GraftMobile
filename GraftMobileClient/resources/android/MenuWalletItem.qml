@@ -5,8 +5,8 @@ import com.graft.design 1.0
 
 MenuItem {
     property alias balanceInGraft: graftMoney.text
-    property alias icon: setMenuLabel.icon
-    property alias name: setMenuLabel.name
+    property alias icon: menuLabel.icon
+    property alias name: menuLabel.name
 
     padding: 0
     topPadding: 0
@@ -22,7 +22,7 @@ MenuItem {
             }
 
             MenuLabel {
-                id: setMenuLabel
+                id: menuLabel
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignCenter
                 name: qsTr("Wallet")
