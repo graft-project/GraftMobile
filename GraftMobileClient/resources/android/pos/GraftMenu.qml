@@ -21,14 +21,13 @@ BaseMenu {
             name: qsTr("Store")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.backProductScreen()
+                pushScreen.openProductScreen()
             }
         }
 
         MenuWalletItem {
             id: walletItem
             Layout.fillWidth: true
-            balanceInGraft: "1.14"
             onClicked: {
                 pushScreen.hideMenu()
                 pushScreen.openWalletScreen()

@@ -12,6 +12,7 @@ GraftApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
+            balanceInGraft: "1.14"
             pushScreen: screenTransitions()
         }
     }
@@ -52,7 +53,7 @@ GraftApplicationWindow {
         transitionsMap["openAddScreen"] = openAddingScreen
         transitionsMap["initializingCheckout"] = openPaymentScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
-        transitionsMap["backProductScreen"] = openMainScreen
+        transitionsMap["openProductScreen"] = openMainScreen
         transitionsMap["goBack"] = turnBack
         return transitionsMap
     }
