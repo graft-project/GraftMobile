@@ -1,26 +1,26 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import com.graft.design 1.0
 import "../components"
 
 BaseMenu {
     property alias balanceInGraft: walletItem.balanceInGraft
 
-    logo: "qrc:/imgs/graft_pos_logo_small.png"
+    logo: "qrc:/imgs/graft_wallet_logo_small.png"
 
     ColumnLayout {
         spacing: 0
         anchors {
-            fill: parent
+            left: parent.left
+            right: parent.right
         }
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/store.png"
-            name: qsTr("Store")
+            icon: "qrc:/imgs/home.png"
+            name: qsTr("Home")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openProductScreen()
+                pushScreen.openBalanceScreen()
             }
         }
 
@@ -33,33 +33,23 @@ BaseMenu {
             }
         }
 
-        Rectangle {
-            id: line
-            Layout.fillWidth: true
-            Layout.topMargin: 10
-            Layout.bottomMargin: 10
-            Layout.preferredHeight: 1.5
-            Layout.alignment: Qt.AlignBottom
-            color: ColorFactory.color(DesignFactory.AllocateLine)
-        }
-
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/settings.png"
-            name: qsTr("Settings")
+            icon: "qrc:/imgs/transaction.png"
+            name: qsTr("Transaction")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openSettingsScreen()
+                pushScreen.openTransactionScreen()
             }
         }
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/info.png"
-            name: qsTr("About")
+            icon: "qrc:/imgs/transfer.png"
+            name: qsTr("Transfer")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openAboutScreen()
+                pushScreen.openTransferScreen()
             }
         }
     }

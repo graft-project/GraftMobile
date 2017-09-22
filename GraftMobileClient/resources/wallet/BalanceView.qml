@@ -9,6 +9,9 @@ import "../components"
 BaseScreen {
     id: rootItem
     title: qsTr("Wallet")
+    screenHeader {
+        navigationButtonState: true
+    }
 
     property real amountGraft: 0
     property real amountMoney: 0

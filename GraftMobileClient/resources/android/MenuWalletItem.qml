@@ -12,7 +12,6 @@ MenuItem {
     topPadding: 0
     bottomPadding: 0
     contentItem: Item {
-        height: 55
 
         RowLayout {
             anchors {

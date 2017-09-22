@@ -12,4 +12,7 @@
         <file alias="ProductDelegate.qml">android/pos/ProductDelegate.qml</file>
         <file alias="GraftMenu.qml">android/pos/GraftMenu.qml</file>
     </qresource>
+    <qresource prefix="/wallet">
+        <file alias="GraftMenu.qml">android/wallet/GraftMenu.qml</file>
+    </qresource>
 </RCC>

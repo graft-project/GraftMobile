@@ -2,9 +2,9 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
+import "../wallet"
 
 GraftApplicationWindow {
-    id: root
     title: qsTr("WALLET")
 
     property real totalAmount: 100
@@ -17,7 +17,7 @@ GraftApplicationWindow {
         width: 0.75 * parent.width
         height: parent.height
         contentItem: GraftMenu {
-            lViewModel: CardModel
+            balanceInGraft: "1.14"
             pushScreen: transitionsBetweenScreens()
         }
     }
