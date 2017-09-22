@@ -16,7 +16,6 @@ public:
         Foreground,
         IosNavigationBar,
         CircleBackground,
-        Menu,
         Highlighting,
         ItemHighlighting,
         MainText,
