@@ -6,7 +6,6 @@ Rectangle {
     property alias icon: iconItem.source
     property alias name: textItem.text
 
-    height: 55
     color: "transparent"
 
     RowLayout {

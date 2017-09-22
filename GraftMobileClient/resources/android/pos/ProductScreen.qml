@@ -9,7 +9,7 @@ import "../"
 
 BaseScreen {
     id: mainScreen
-    title: qsTr("Point of Sale")
+    title: qsTr("Store")
     screenHeader {
         cartEnable: true
         navigationButtonState: true

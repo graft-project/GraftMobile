@@ -19,7 +19,6 @@
         <file alias="PaymentConfirmationView.qml">wallet/PaymentConfirmationView.qml</file>
         <file alias="BalanceView.qml">wallet/BalanceView.qml</file>
         <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
-        <file alias="GraftMenu.qml">wallet/GraftMenu.qml</file>
         <file alias="Wallet.qml">wallet/Wallet.qml</file>
         <file alias="AddCardView.qml">wallet/AddCardView.qml</file>
     </qresource>
@@ -47,6 +46,9 @@
         <file alias="waller.png">imgs/wallet.png</file>
         <file alias="info.png">imgs/info.png</file>
         <file alias="settings.png">imgs/settings.png</file>
+        <file alias="home.png">imgs/home.png</file>
+        <file alias="transaction.png">imgs/transaction.png</file>
+        <file alias="transfer.png">imgs/transfer.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="WideRoundButton.qml">components/WideRoundButton.qml</file>
