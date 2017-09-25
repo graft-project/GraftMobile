@@ -21,7 +21,7 @@ Rectangle {
     Image {
         id: toolButtonIcon
         width: 33
-        height: toolButtonIcon.width
+        height: width
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
