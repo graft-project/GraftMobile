@@ -7,15 +7,15 @@ import "../pos"
 GraftApplicationWindow {
     title: qsTr("POS")
 
-//    Drawer {
-//        id: drawer
-//        width: 0.75 * parent.width
-//        height: parent.height
-//        contentItem: GraftMenu {
-//            balanceInGraft: "1.14"
-//            pushScreen: screenTransitions()
-//        }
-//    }
+    Drawer {
+        id: drawer
+        width: 0.75 * parent.width
+        height: parent.height
+        contentItem: GraftMenu {
+            balanceInGraft: "1.14"
+            pushScreen: screenTransitions()
+        }
+    }
 
     footer: GraftToolBar {
         pushScreen: screenTransitions()
