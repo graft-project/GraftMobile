@@ -9,8 +9,8 @@ Rectangle {
     property alias source: toolButtonIcon.source
     property alias text: toolButtonText.text
 
-    width: 50
-    height: 40
+    width: 58
+    height: 46
     radius: 6
     color: mouseArea.pressed ? "#25FFFFFF" : "transparent"
 
@@ -22,24 +22,20 @@ Rectangle {
 
     Image {
         id: toolButtonIcon
-        width: 25
-        height: 25
+        width: 33
+        height: 33
         source: toolBarItem.source
-        anchors {
-            top: parent.top
-            topMargin: 2
-            horizontalCenter: toolBarItem.horizontalCenter
-        }
+        anchors.horizontalCenter: toolBarItem.horizontalCenter
     }
 
     Text {
         id: toolButtonText
         text: toolBarItem.text
         color: ColorFactory.color(DesignFactory.LightText)
+        font.pointSize: 10
         anchors {
+            top: toolButtonIcon.bottom
             bottom: parent.bottom
-            bottomMargin: 13
-            verticalCenter: toolButtonIcon.bottom
             horizontalCenter: toolButtonIcon.horizontalCenter
         }
     }
