@@ -24,7 +24,6 @@ Rectangle {
         id: toolButtonIcon
         width: 25
         height: 25
-        source: toolBarItem.source
         anchors {
             top: parent.top
             topMargin: 2
@@ -34,7 +33,6 @@ Rectangle {
 
     Text {
         id: toolButtonText
-        text: toolBarItem.text
         color: ColorFactory.color(DesignFactory.LightText)
         anchors {
             bottom: parent.bottom
