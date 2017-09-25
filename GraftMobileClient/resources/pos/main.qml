@@ -19,14 +19,17 @@ GraftApplicationWindow {
         }
     }
 
-    Component.onCompleted: {
-        if (Qt.platform.os !== "ios") {
-            drawerLoader.source = "qrc:/pos/GraftMenu.qml"
-        }
+    footer: Loader {
+        id: footerLoader
+        onLoaded: footerLoader.item.pushScreen = screenTransitions()
     }
 
-    footer: GraftToolBar {
-        pushScreen: screenTransitions()
+    Component.onCompleted: {
+        if (Qt.platform.os === "ios") {
+            footerLoader.source = "qrc:/pos/GraftToolBar.qml"
+        } else {
+            drawerLoader.source = "qrc:/pos/GraftMenu.qml"
+        }
     }
 
     Connections {

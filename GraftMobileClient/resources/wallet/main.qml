@@ -24,14 +24,17 @@ GraftApplicationWindow {
         }
     }
 
-    Component.onCompleted: {
-        if (Qt.platform.os !== "ios") {
-            drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
-        }
+    footer: Loader {
+        id: footerLoader
+        onLoaded: footerLoader.item.pushScreen = screenTransitions()
     }
 
-    footer: GraftToolBar {
-        pushScreen: transitionsBetweenScreens()
+    Component.onCompleted: {
+        if (Qt.platform.os === "ios") {
+            footerLoader.source = "qrc:/wallet/GraftToolBar.qml"
+        } else {
+            drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
+        }
     }
 
     StackView {

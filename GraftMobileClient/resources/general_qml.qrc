@@ -56,7 +56,4 @@
         <file alias="transactionIos.png">imgs/transactionIos.png</file>
         <file alias="transferIos.png">imgs/transferIos.png</file>
     </qresource>
-    <qresource prefix="/components">
-        <file alias="WideRoundButton.qml">components/WideRoundButton.qml</file>
-    </qresource>
 </RCC>

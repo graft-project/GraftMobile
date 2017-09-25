@@ -99,7 +99,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             text: qsTr("Confirm")
             onClicked: {
                 ProductModel.add("qrc:/imgs/icon-placeholder.png", title.text,
