@@ -9,7 +9,9 @@ import "../"
 BaseScreen {
     id: additionItem
     title: qsTr("Add")
-    isMenuState: false
+    screenHeader {
+        navigationButtonState: false
+    }
 
     property alias currencyModel: graftCBox.model
 
@@ -26,10 +28,10 @@ BaseScreen {
             rightMargin: 20
         }
 
-        TextField {
-            id: title
+        LinearEditItem {
             Layout.fillWidth: true
-            placeholderText: qsTr("Title:")
+            title: qsTr("Item title:")
+            maximumLength: 50
         }
 
         RowLayout {
