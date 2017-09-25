@@ -32,8 +32,7 @@ GraftApplicationWindow {
     Component.onCompleted: {
         if (Qt.platform.os == "ios") {
             footerLoader.source = "qrc:/wallet/GraftToolBar.qml"
-        }
-        else {
+        } else {
             drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
         }
     }
