@@ -1,7 +1,8 @@
 import QtQuick 2.9
+import QtQuick.Controls 2.2
 import com.graft.design 1.0
 
-Rectangle {
+Drawer {
     property var pushScreen
     property alias logo: logoImage.source
     default property alias contents: placeholder.data
