@@ -13,7 +13,6 @@ RoundButton {
     Layout.fillWidth: true
     Layout.leftMargin: 10
     Layout.rightMargin: 10
-    Layout.bottomMargin: 10
     font {
         pointSize: 14
         bold: true
