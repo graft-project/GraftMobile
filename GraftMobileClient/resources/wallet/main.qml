@@ -12,14 +12,18 @@ GraftApplicationWindow {
     property real balanceInGraft: 1
     property real balanceInUSD: 200
 
-    Drawer {
-        id: drawer
-        width: 0.75 * parent.width
-        height: parent.height
-        contentItem: GraftMenu {
-            balanceInGraft: "1.14"
-            pushScreen: transitionsBetweenScreens()
-        }
+//    Drawer {
+//        id: drawer
+//        width: 0.75 * parent.width
+//        height: parent.height
+//        contentItem: GraftMenu {
+//            balanceInGraft: "1.14"
+//            pushScreen: transitionsBetweenScreens()
+//        }
+//    }
+
+    footer: GraftToolBar {
+        pushScreen: transitionsBetweenScreens()
     }
 
     StackView {
