@@ -16,14 +16,14 @@ Rectangle {
 
     MouseArea {
         id: mouseArea
-        anchors.fill: toolBarItem
+        anchors.fill: parent
         onClicked: toolBarItem.clicked()
     }
 
     Image {
         id: toolButtonIcon
         width: 33
-        height: 33
+        height: toolButtonIcon.width
         anchors.horizontalCenter: toolBarItem.horizontalCenter
     }
 

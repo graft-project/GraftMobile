@@ -38,7 +38,7 @@ Rectangle {
         }
 
         ToolBarButton {
-            text:  qsTr("About")
+            text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
             onClicked: {
                 pushScreen.openAboutScreen()
