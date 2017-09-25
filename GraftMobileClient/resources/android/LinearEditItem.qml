@@ -11,7 +11,7 @@ ColumnLayout {
     Text {
         id: titleItem
         Layout.fillWidth: true
-        color: "#C5C5C5"
+        color: "#BBBBBB"
         font.pointSize: 12
     }
 
