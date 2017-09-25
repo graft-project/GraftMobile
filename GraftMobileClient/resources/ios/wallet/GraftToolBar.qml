@@ -6,7 +6,7 @@ import "../components"
 Rectangle {
     property var pushScreen
 
-    height: 44
+    height: 49
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
     RowLayout {
