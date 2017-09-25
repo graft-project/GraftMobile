@@ -30,6 +30,10 @@ GraftApplicationWindow {
         }
     }
 
+    footer: GraftToolBar {
+        pushScreen: transitionsBetweenScreens()
+    }
+
     StackView {
         id: stack
         anchors.fill: parent

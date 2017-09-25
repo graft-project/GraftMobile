@@ -25,6 +25,10 @@ GraftApplicationWindow {
         }
     }
 
+    footer: GraftToolBar {
+        pushScreen: screenTransitions()
+    }
+
     Connections {
         target: GraftClient
 

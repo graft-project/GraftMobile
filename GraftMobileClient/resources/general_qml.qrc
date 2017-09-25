@@ -49,6 +49,12 @@
         <file alias="home.png">imgs/home.png</file>
         <file alias="transaction.png">imgs/transaction.png</file>
         <file alias="transfer.png">imgs/transfer.png</file>
+        <file alias="storeIos.png">imgs/storeIos.png</file>
+        <file alias="walletIos.png">imgs/walletIos.png</file>
+        <file alias="configIos.png">imgs/configIos.png</file>
+        <file alias="infoIos.png">imgs/infoIos.png</file>
+        <file alias="transactionIos.png">imgs/transactionIos.png</file>
+        <file alias="transferIos.png">imgs/transferIos.png</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="WideRoundButton.qml">components/WideRoundButton.qml</file>
