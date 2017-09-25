@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import "../components"
+import "../"
 
 BaseMenu {
     property alias balanceInGraft: walletItem.balanceInGraft
@@ -10,6 +11,7 @@ BaseMenu {
     ColumnLayout {
         spacing: 0
         anchors {
+            top: parent.top
             left: parent.left
             right: parent.right
         }
