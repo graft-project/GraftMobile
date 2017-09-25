@@ -30,7 +30,7 @@ BaseScreen {
 
         LinearEditItem {
             Layout.fillWidth: true
-            title: qsTr("Title:")
+            title: qsTr("Item title:")
             maximumLength: 50
         }
 

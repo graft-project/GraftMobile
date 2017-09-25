@@ -8,21 +8,32 @@ ColumnLayout {
     property alias maximumLength: editItem.maximumLength
     spacing: 0
 
-    Text {
-        id: titleItem
-        Layout.fillWidth: true
-        color: "#8e8e93"
-    }
-
     TextField {
         id: editItem
         Layout.fillWidth: true
+        Layout.bottomMargin: -4
         color: "#404040"
+        leftPadding: titleItem.width
+
+        Text {
+            id: titleItem
+            anchors {
+                top: parent.top
+                left: parent.left
+                bottom: parent.bottom
+                topMargin: 8
+            }
+            font.pointSize: parent.font.pointSize
+            rightPadding: 5
+            color: "#8e8e93"
+        }
     }
 
     Text {
         id: textCount
+        Layout.topMargin: 0
         Layout.alignment: Qt.AlignRight
+        font.pointSize: editItem.font.pointSize
         text: qsTr("%1/%2").arg(editItem.length).arg(editItem.maximumLength)
         color: "#8e8e93"
     }
