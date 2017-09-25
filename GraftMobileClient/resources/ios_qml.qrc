@@ -3,6 +3,7 @@
         <file alias="BaseScreen.qml">ios/BaseScreen.qml</file>
         <file alias="Header.qml">ios/Header.qml</file>
         <file alias="ToolBarButton.qml">ios/ToolBarButton.qml</file>
+        <file alias="LinearEditItem.qml">ios/LinearEditItem.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>

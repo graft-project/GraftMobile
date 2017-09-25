@@ -2,18 +2,26 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
-import "../pos"
 
 GraftApplicationWindow {
+    id: root
     title: qsTr("POS")
+    property var drawer
 
-    Drawer {
-        id: drawer
-        width: 0.75 * parent.width
-        height: parent.height
-        contentItem: GraftMenu {
-            balanceInGraft: "1.14"
-            pushScreen: screenTransitions()
+    Loader {
+        id: drawerLoader
+        onLoaded: {
+            drawer = drawerLoader.item
+            drawerLoader.item.width = 0.75 * root.width
+            drawerLoader.item.height = root.height
+            drawerLoader.item.pushScreen = screenTransitions()
+            drawerLoader.item.balanceInGraft = "1.14"
+        }
+    }
+
+    Component.onCompleted: {
+        if (Qt.platform.os !== "ios") {
+            drawerLoader.source = "qrc:/pos/GraftMenu.qml"
         }
     }
 

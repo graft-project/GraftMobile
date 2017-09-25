@@ -2,23 +2,31 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
-import "../wallet"
 
 GraftApplicationWindow {
+    id: root
     title: qsTr("WALLET")
 
     property real totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
     property real balanceInGraft: 1
-    property real balanceInUSD: 200
+    property real balanceInUSD: 200   
+    property var drawer
 
-    Drawer {
-        id: drawer
-        width: 0.75 * parent.width
-        height: parent.height
-        contentItem: GraftMenu {
-            balanceInGraft: "1.14"
-            pushScreen: transitionsBetweenScreens()
+    Loader {
+        id: drawerLoader
+        onLoaded: {
+            drawer = drawerLoader.item
+            drawerLoader.item.width = 0.75 * root.width
+            drawerLoader.item.height = root.height
+            drawerLoader.item.pushScreen = transitionsBetweenScreens()
+            drawerLoader.item.balanceInGraft = "1.14"
+        }
+    }
+
+    Component.onCompleted: {
+        if (Qt.platform.os !== "ios") {
+            drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
         }
     }
 

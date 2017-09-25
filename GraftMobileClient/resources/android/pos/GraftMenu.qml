@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 import "../components"
+import "../"
 
 BaseMenu {
     property alias balanceInGraft: walletItem.balanceInGraft
@@ -11,7 +12,9 @@ BaseMenu {
     ColumnLayout {
         spacing: 0
         anchors {
-            fill: parent
+            left: parent.left
+            right: parent.right
+            top: parent.top
         }
 
         MenuLabelItem {
