@@ -11,9 +11,10 @@ ColumnLayout {
     TextField {
         id: editItem
         Layout.fillWidth: true
-        Layout.bottomMargin: -4
+        Layout.bottomMargin: -12
         color: "#404040"
         leftPadding: titleItem.width
+        bottomPadding: 30
 
         Text {
             id: titleItem
@@ -33,7 +34,7 @@ ColumnLayout {
         id: textCount
         Layout.topMargin: 0
         Layout.alignment: Qt.AlignRight
-        font.pointSize: editItem.font.pointSize
+        font.pointSize: 12
         text: qsTr("%1/%2").arg(editItem.length).arg(editItem.maximumLength)
         color: "#8e8e93"
     }
