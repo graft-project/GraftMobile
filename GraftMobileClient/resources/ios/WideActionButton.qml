@@ -15,7 +15,7 @@ RoundButton {
     Layout.rightMargin: 10
     Layout.bottomMargin: 10
     font {
-        pointSize: 11
+        pointSize: 14
         bold: true
         capitalization: Font.MixedCase
     }
