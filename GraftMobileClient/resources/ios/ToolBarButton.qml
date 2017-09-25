@@ -3,8 +3,6 @@ import com.graft.design 1.0
 import "../"
 
 Rectangle {
-    id: toolBarItem
-
     signal clicked()
     property alias source: toolButtonIcon.source
     property alias text: toolButtonText.text
@@ -17,14 +15,14 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: toolBarItem.clicked()
+        onClicked: parent.clicked()
     }
 
     Image {
         id: toolButtonIcon
         width: 33
         height: toolButtonIcon.width
-        anchors.horizontalCenter: toolBarItem.horizontalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Text {
