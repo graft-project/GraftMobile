@@ -54,7 +54,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             id: addButton
             text: qsTr("Checkout")
             onClicked: GraftClient.sale()

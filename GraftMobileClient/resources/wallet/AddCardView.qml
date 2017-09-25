@@ -137,7 +137,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             id: confirmButton
             Layout.fillWidth: true
             text: qsTr("Confirm")

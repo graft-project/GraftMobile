@@ -2,6 +2,7 @@
     <qresource prefix="/components">
         <file alias="BaseScreen.qml">ios/BaseScreen.qml</file>
         <file alias="Header.qml">ios/Header.qml</file>
+        <file alias="WideActionButton.qml">ios/WideActionButton.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>

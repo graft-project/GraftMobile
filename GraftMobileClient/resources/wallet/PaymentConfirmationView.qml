@@ -98,7 +98,7 @@ BaseScreen {
                 RowLayout {
                     Layout.fillHeight: true
 
-                    WideRoundButton {
+                    WideActionButton {
                         id: confirmButton
                         text: qsTr("Confirm")
                         onClicked: {
@@ -108,7 +108,7 @@ BaseScreen {
                         Layout.rightMargin: 0
                     }
 
-                    WideRoundButton {
+                    WideActionButton {
                         id: declineButton
                         text: qsTr("Cancel")
                         onClicked: {
@@ -138,7 +138,7 @@ BaseScreen {
                     color: ColorFactory.color(DesignFactory.MainText)
                 }
 
-                WideRoundButton {
+                WideActionButton {
                     id: okButton
                     text: qsTr("Done")
                     onClicked: pushScreen.openBalanceScreen()

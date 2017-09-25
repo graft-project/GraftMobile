@@ -70,7 +70,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             text: qsTr("PAY")
             onPressed: {
                 pushScreen.openQRCodeScanner()
