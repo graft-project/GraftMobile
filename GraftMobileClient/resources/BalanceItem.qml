@@ -7,16 +7,11 @@ Rectangle {
     property alias amountGraftCost: amountGraftText.text
 
     height: 70
-    anchors {
-        left: parent.left
-        right: parent.right
-        leftMargin: 12
-        rightMargin: 12
-        top: parent.top
-    }
 
     RowLayout {
         anchors {
+            leftMargin: 12
+            rightMargin: 12
             left: parent.left
             right: parent.right
             verticalCenter: parent.verticalCenter
