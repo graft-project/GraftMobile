@@ -5,8 +5,8 @@
         <file alias="QRScanningScreen.qml">QRScanningScreen.qml</file>
         <file alias="BaseHeader.qml">BaseHeader.qml</file>
         <file alias="CartItem.qml">CartItem.qml</file>
-        <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
         <file alias="GraftApplicationWindow.qml">GraftApplicationWindow.qml</file>
+        <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

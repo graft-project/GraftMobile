@@ -15,13 +15,21 @@ DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
     mColors.insert(CircleBackground, QStringLiteral("#4fb67a"));
     mColors.insert(Highlighting, QStringLiteral("#ecf4ef"));
     mColors.insert(ItemHighlighting, QStringLiteral("#fedbb4"));
-    mColors.insert(MainText, QStringLiteral("#424242"));
-    mColors.insert(DarkText, QStringLiteral("#383737"));
     mColors.insert(LightText, QStringLiteral("#ffffff"));
     mColors.insert(CartLabel, QStringLiteral("#fe4200"));
-    mColors.insert(AllocateLine, QStringLiteral("#cccccc"));
+    mColors.insert(AllocateLine, QStringLiteral("#e6e6e8"));
     mColors.insert(AndroidStatusBar, QStringLiteral("#233146"));
     init();
+
+    #ifdef Q_OS_IOS
+        mColors.insert(MainText, QStringLiteral("#000000"));
+        mColors.insert(ItemText, QStringLiteral("#797979"));
+    #endif
+
+    #ifdef Q_OS_ANDROID
+        mColors.insert(MainText, QStringLiteral("#404040"));
+        mColors.insert(ItemText, QStringLiteral("#9e9e9e"));
+    #endif
 }
 
 QString DesignFactory::color(DesignFactory::ColorTypes type) const

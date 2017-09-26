@@ -18,12 +18,12 @@ public:
         CircleBackground,
         Highlighting,
         ItemHighlighting,
-        MainText,
-        DarkText,
         LightText,
         CartLabel,
         AllocateLine,
-        AndroidStatusBar
+        AndroidStatusBar,
+        MainText,
+        ItemText
     };
     Q_ENUM(ColorTypes)
 

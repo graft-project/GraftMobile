@@ -29,6 +29,7 @@ BaseScreen {
         }
 
         LinearEditItem {
+            id: title
             Layout.fillWidth: true
             title: qsTr("Item title:")
             maximumLength: 50
@@ -110,9 +111,9 @@ BaseScreen {
         WideActionButton {
             text: qsTr("Confirm")
             onClicked: {
-                ProductModel.add("qrc:/imgs/icon-placeholder.png", title.text,
+                ProductModel.add("", title.text,
                                  parseFloat(price.text), graftCBox.currentText)
-                additionItem.pushScreen.backProductScreen()
+                additionItem.pushScreen.openProductScreen()
                 GraftClient.save()
             }
         }
