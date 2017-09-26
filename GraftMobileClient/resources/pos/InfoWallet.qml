@@ -90,13 +90,13 @@ BaseScreen {
             spacing: 0
             Layout.alignment: Qt.AlignCenter
 
-            WideRoundButton {
+            WideActionButton {
                 text: qsTr("PAYPAL")
                 Layout.topMargin: 0
                 Layout.bottomMargin: 0
             }
 
-            WideRoundButton {
+            WideActionButton {
                 text: qsTr("CHASE XXX929")
                 Layout.topMargin: 0
                 Layout.bottomMargin: 0

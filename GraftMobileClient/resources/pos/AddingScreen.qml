@@ -34,6 +34,14 @@ BaseScreen {
             maximumLength: 50
         }
 
+        LinearEditItem {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            title: qsTr("Item description:")
+            wrapMode: TextInput.WordWrap
+            maximumLength: 150
+        }
+
         RowLayout {
             id: list
             spacing: 10
@@ -99,7 +107,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             text: qsTr("Confirm")
             onClicked: {
                 ProductModel.add("qrc:/imgs/icon-placeholder.png", title.text,

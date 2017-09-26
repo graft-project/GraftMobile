@@ -195,7 +195,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             id: cancelButton
             text: qsTr("Cancel")
             visible: false
@@ -205,7 +205,7 @@ BaseScreen {
             }
         }
 
-        WideRoundButton {
+        WideActionButton {
             id: okButton
             text: qsTr("Done")
             visible: false

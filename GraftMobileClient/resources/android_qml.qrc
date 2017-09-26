@@ -6,6 +6,7 @@
         <file alias="MenuWalletItem.qml">android/MenuWalletItem.qml</file>
         <file alias="MenuLabelItem.qml">android/MenuLabelItem.qml</file>
         <file alias="MenuLabel.qml">android/MenuLabel.qml</file>
+        <file alias="WideActionButton.qml">android/WideActionButton.qml</file>
         <file alias="LinearEditItem.qml">android/LinearEditItem.qml</file>
     </qresource>
     <qresource prefix="/pos">
