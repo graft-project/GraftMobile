@@ -74,13 +74,13 @@ Rectangle {
             Text {
                 id: productText
                 Layout.fillWidth: true
-                font.pointSize: 15
+                font.pointSize: 16
             }
 
             Text {
                 id: price
                 text: "$" + productPrice
-                font.pointSize: 12
+                font.pointSize: 14
             }
         }
     }
