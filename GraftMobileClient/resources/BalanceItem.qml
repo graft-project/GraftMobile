@@ -15,48 +15,50 @@ Rectangle {
         top: parent.top
     }
 
-    Text {
-        text: qsTr("Balance:")
-        color: "#233146"
-        font.pointSize: 20
-        anchors {
-            left: parent.left
-            verticalCenter: parent.verticalCenter
-        }
-    }
-
     RowLayout {
         anchors {
+            left: parent.left
             right: parent.right
             verticalCenter: parent.verticalCenter
         }
 
-        ColumnLayout {
-            spacing: 0
+        Text {
+            text: qsTr("Balance:")
+            color: "#233146"
+            font.pointSize: 20
+            Layout.alignment: Qt.AlignLeft
+        }
+
+        RowLayout {
             Layout.alignment: Qt.AlignRight
 
-            Text {
-                id: amountGraftText
-                color: "#404040"
-                font {
-                    bold: true
-                    pointSize: 21
+            ColumnLayout {
+                spacing: 0
+                Layout.alignment: Qt.AlignRight
+
+                Text {
+                    id: amountGraftText
+                    color: "#404040"
+                    font {
+                        bold: true
+                        pointSize: 21
+                    }
+                }
+
+                Text {
+                    id: amountMoneyText
+                    text: amountMoney + " USD"
+                    color: "#b39036"
+                    font.pointSize: 12
                 }
             }
 
-            Text {
-                id: amountMoneyText
-                text: amountMoney + " USD"
-                color: "#b39036"
-                font.pointSize: 12
+            Image {
+                Layout.preferredHeight: 30
+                Layout.preferredWidth: 34
+                Layout.alignment: Qt.AlignRight
+                source: "qrc:/imgs/g-max.png"
             }
-        }
-
-        Image {
-            Layout.preferredHeight: 30
-            Layout.preferredWidth: 34
-            Layout.alignment: Qt.AlignRight
-            source: "qrc:/imgs/g-max.png"
         }
     }
 }
