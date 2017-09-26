@@ -6,15 +6,32 @@ ColumnLayout {
     property alias title: titleItem.text
     property alias text: editItem.text
     property alias maximumLength: editItem.maximumLength
+    property alias wrapMode: editItem.wrapMode
+    property bool inlineTitle: false
     spacing: 0
 
     TextField {
         id: editItem
         Layout.fillWidth: true
         Layout.bottomMargin: -12
+        verticalAlignment: Qt.AlignTop
         color: "#404040"
         leftPadding: titleItem.width
         bottomPadding: 30
+
+        onWrapModeChanged: {
+            if (wrapMode === TextField.NoWrap) {
+                Layout.fillHeight = false
+                leftPadding = titleItem.width
+                topPadding = 0
+            } else {
+                Layout.fillHeight = true
+                if (!inlineTitle) {
+                    leftPadding = 0
+                    topPadding = 30
+                }
+            }
+        }
 
         Text {
             id: titleItem
