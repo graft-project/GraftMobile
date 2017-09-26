@@ -36,6 +36,7 @@ BaseScreen {
 
         ListView {
             id: productList
+            spacing: 0
             clip: true
             model: ProductModel
             delegate: productDelegate

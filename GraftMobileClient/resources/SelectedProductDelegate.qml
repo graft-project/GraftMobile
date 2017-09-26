@@ -1,37 +1,99 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 import com.graft.design 1.0
 
-ColumnLayout {
-    property real price: 20
+Rectangle {
+    property real productPrice
+    property alias productPriceTextColor: price.color
     property alias productName: productText.text
-    property alias lineVisible: bottomLine.visible
+    property alias productNameTextColor: productText.color
+    property alias productNameTextBold: productText.font.bold
+    property alias lineTopVisible: topLine.visible
+    property alias lineBottomVisible: bottomLine.visible
+    property alias productImage: picture.source
 
-    spacing: 12
+    height: layout.height + 2 * 10
 
-    RowLayout {
-        Layout.preferredWidth: parent.width
-        Layout.topMargin: 12
+    Rectangle {
+        id: topLine
+        height: 1
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            leftMargin: 12
+            rightMargin: 12
+        }
+        color: ColorFactory.color(DesignFactory.AllocateLine)
+    }
 
-        Text {
-            id: productText
-            Layout.alignment: Qt.AlignLeft
-            font.pointSize: 12
-            color: ColorFactory.color(DesignFactory.MainText)
+    ColumnLayout {
+        id: layout
+        spacing: 0
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            right: parent.right
         }
 
-        Text {
-            text: qsTr("$ %1").arg(price)
-            Layout.alignment: Qt.AlignRight
-            font.pointSize: 12
-            color: ColorFactory.color(DesignFactory.MainText)
+        RowLayout {
+            spacing: 16
+            Layout.rightMargin: 12
+            Layout.leftMargin: 12
+
+            OpacityMask {
+                id: opacityMask
+                Layout.preferredWidth: 50
+                Layout.preferredHeight: 50
+                source: picture
+                maskSource: circle
+
+                Rectangle {
+                    id: circle
+                    width: picture.width
+                    height: picture.height
+                    radius: picture.width / 2
+                    visible: false
+                }
+
+                Image {
+                    id: picture
+                    width: 50
+                    height: 50
+                    visible: false
+                }
+            }
+
+            ColumnLayout {
+                spacing: 3
+                Layout.alignment: Qt.AlignHCenter
+
+                Text {
+                    id: productText
+                    Layout.fillWidth: true
+                    font.pointSize: 15
+                }
+
+                Text {
+                    id: price
+                    text: "$" + productPrice
+                    font.pointSize: 12
+                }
+            }
         }
     }
 
     Rectangle {
         id: bottomLine
-        Layout.fillWidth: true
-        Layout.preferredHeight: 2
+        height: 1
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            leftMargin: 12
+            rightMargin: 12
+        }
         color: ColorFactory.color(DesignFactory.AllocateLine)
     }
 }
