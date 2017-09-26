@@ -7,6 +7,7 @@ ColumnLayout {
     property alias text: editItem.text
     property alias maximumLength: editItem.maximumLength
     property alias wrapMode: editItem.wrapMode
+    property alias inputMethodHints: editItem.inputMethodHints
     spacing: 0
 
     Text {
