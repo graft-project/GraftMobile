@@ -7,6 +7,7 @@
         <file alias="CartItem.qml">CartItem.qml</file>
         <file alias="GraftApplicationWindow.qml">GraftApplicationWindow.qml</file>
         <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
+        <file alias="BalanceItem.qml">BalanceItem.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -55,5 +56,6 @@
         <file alias="infoIos.png">imgs/infoIos.png</file>
         <file alias="transactionIos.png">imgs/transactionIos.png</file>
         <file alias="transferIos.png">imgs/transferIos.png</file>
+        <file alias="g-max.png">imgs/g-max.png</file>
     </qresource>
 </RCC>
