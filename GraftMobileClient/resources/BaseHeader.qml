@@ -1,7 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-import com.graft.design 1.0
 
 Rectangle {
     signal actionButtonClicked()
