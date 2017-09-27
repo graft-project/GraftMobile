@@ -23,6 +23,7 @@ public:
         AllocateLine,
         AndroidStatusBar,
         MainText,
+        ProductText,
         ItemText
     };
     Q_ENUM(ColorTypes)
