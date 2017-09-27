@@ -45,12 +45,25 @@ BaseScreen {
 
             Component {
                 id: productDelegate
-                ProductDelegate {
+//                ProductDelegate {
+//                    width: productList.width
+//                    productImage: imagePath
+//                    productName: name
+//                    productPrice: cost
+//                    selectState: selected
+//                }
+
+                SelectedProductDelegate {
                     width: productList.width
-                    productImage: imagePath
-                    productName: name
                     productPrice: cost
-                    selectState: selected
+                    productImage: imagePath
+//                    lineBottomVisible: false
+//                    lineTopVisible: false
+                    productText {
+                        text: name
+                        color: ColorFactory.color(DesignFactory.MainText)
+                    }
+                    productPriceTextColor: ColorFactory.color(DesignFactory.AndroidItemText)
                 }
             }
         }

@@ -59,5 +59,7 @@
         <file alias="add_ios.png">imgs/add_ios.png</file>
         <file alias="add.png">imgs/add.png</file>
         <file alias="g-max.png">imgs/g-max.png</file>
+        <file alias="delete.png">imgs/delete.png</file>
+        <file alias="edit.png">imgs/edit.png</file>
     </qresource>
 </RCC>
