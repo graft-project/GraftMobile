@@ -57,7 +57,7 @@ Item {
                     id: graftCBox
                     Layout.fillWidth: true
                     Material.background: "#00707070"
-                    Material.foreground: "#00000000"
+                    Material.foreground: "#404040"
                     leftPadding: dropdownTitle.width -8
                     Layout.topMargin: -8
                     Layout.bottomMargin: -2
