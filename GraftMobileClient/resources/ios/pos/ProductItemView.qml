@@ -9,9 +9,11 @@ BaseProductItemView {
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
-        spacing: 0
+        spacing: 5
         anchors {
-            fill: parent
+            left: parent.left
+            right: parent.right
+            top: parent.top
         }
 
         LinearEditItem {
@@ -24,21 +26,20 @@ BaseProductItemView {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredHeight: 180
             title: qsTr("Item description:")
             wrapMode: TextInput.WordWrap
             maximumLength: 150
         }
 
         RowLayout {
-            id: list
             spacing: 10
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
             LinearEditItem {
                 id: price
                 title: qsTr("Price:")
-                Layout.fillWidth: true
+//                Layout.fillWidth: true
                 Layout.preferredHeight: graftCBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
@@ -51,13 +52,14 @@ BaseProductItemView {
             ColumnLayout {
                 spacing: 0
                 Layout.fillWidth: true
+                Layout.preferredWidth: 130
 
                 ComboBox {
                     id: graftCBox
                     Layout.fillWidth: true
                     Material.background: "#00707070"
                     Material.foreground: "#99757577"
-                    leftPadding: dropdownTitle.width
+                    leftPadding: dropdownTitle.width -8
                     Layout.topMargin: -8
                     Layout.bottomMargin: -2
 
@@ -82,21 +84,37 @@ BaseProductItemView {
             }
         }
 
+        Image {
+            id: previewImage
+            Layout.alignment: Qt.AlignCenter
+            Layout.preferredHeight: 100
+            fillMode: Image.PreserveAspectFit
+            visible: false
+        }
+
         Button {
             Layout.alignment: Qt.AlignCenter
             flat: true
             contentItem: RowLayout {
+                spacing: 10
+
                 Image {
+                    id: addImage
                     Layout.preferredHeight: 30
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:/imgs/plus_icon.png"
+                    Layout.preferredWidth: 30
+                    Layout.alignment: Qt.AlignLeft
+                    source: "qrc:/imgs/add_ios.png"
                 }
 
                 Text {
                     id: buttonText
+                    Layout.alignment: Qt.AlignRight
                     text: qsTr("Add photo")
+                    color: "#007AFF"
                 }
             }
+
+            onClicked: previewImage.visible = !previewImage.visible
         }
     }
 }

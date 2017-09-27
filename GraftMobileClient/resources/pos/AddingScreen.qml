@@ -19,7 +19,7 @@ BaseScreen {
         spacing: 3
         anchors {
             fill: parent
-            topMargin: 55
+            topMargin: 10
             bottomMargin: 20
             leftMargin: 20
             rightMargin: 20
@@ -29,34 +29,6 @@ BaseScreen {
             id: productItem
             Layout.fillWidth: true
             Layout.fillHeight: true
-        }
-
-        ColumnLayout {
-            Layout.alignment: Qt.AlignCenter
-
-            RoundButton {
-                id: addButton
-                padding: 25
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 80
-                Layout.preferredWidth: 80
-                highlighted: true
-                Material.elevation: 0
-                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                contentItem: Image {
-                    source: "qrc:/imgs/plus_icon.png"
-                }
-            }
-
-            Text {
-                Layout.alignment: Qt.AlignHCenter
-                text: qsTr("ADD PHOTO")
-                color: ColorFactory.color(DesignFactory.MainText)
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 10
-                }
-            }
         }
 
         WideActionButton {

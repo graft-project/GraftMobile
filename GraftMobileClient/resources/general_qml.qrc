@@ -56,5 +56,7 @@
         <file alias="infoIos.png">imgs/infoIos.png</file>
         <file alias="transactionIos.png">imgs/transactionIos.png</file>
         <file alias="transferIos.png">imgs/transferIos.png</file>
+        <file alias="add_ios.png">imgs/add_ios.png</file>
+        <file alias="add.png">imgs/add.png</file>
     </qresource>
 </RCC>
