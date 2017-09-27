@@ -10,6 +10,7 @@
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>
         <file alias="ProductDelegate.qml">ios/pos/ProductDelegate.qml</file>
         <file alias="GraftToolBar.qml">ios/pos/GraftToolBar.qml</file>
+        <file alias="ProductItemView.qml">ios/pos/ProductItemView.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="GraftToolBar.qml">ios/wallet/GraftToolBar.qml</file>
