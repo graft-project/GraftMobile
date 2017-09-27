@@ -50,6 +50,7 @@ Rectangle {
 
             Image {
                 Layout.preferredHeight: 30
+                Layout.preferredWidth: 30
                 fillMode: Image.PreserveAspectFit
                 Layout.alignment: Qt.AlignRight
                 source: "qrc:/imgs/g-max.png"
