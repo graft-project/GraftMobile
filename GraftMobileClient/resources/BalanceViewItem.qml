@@ -3,10 +3,11 @@ import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 
 Rectangle {
-    property real amountMoneyCost: amountMoneyText
+    property real amountMoneyCost
     property alias amountGraftCost: amountGraftText.text
 
     height: 70
+    color: "transparent"
 
     RowLayout {
         anchors {
@@ -41,8 +42,7 @@ Rectangle {
                 }
 
                 Text {
-                    id: amountMoneyText
-                    text: amountMoney + " USD"
+                    text: amountMoneyCost + " USD"
                     color: "#b39036"
                     font.pointSize: 12
                 }
@@ -50,6 +50,7 @@ Rectangle {
 
             Image {
                 Layout.preferredHeight: 30
+                Layout.preferredWidth: 36
                 fillMode: Image.PreserveAspectFit
                 Layout.alignment: Qt.AlignRight
                 source: "qrc:/imgs/g-max.png"
