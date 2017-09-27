@@ -3,9 +3,9 @@ import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 
 Item {
-    property alias name: walletName
+    property alias nameItem: walletName
     property alias cardIcon: cardPicture.source
-    property string number: walletNumber.text
+    property alias number: walletNumber.text
 
     RowLayout {
         anchors {
@@ -16,7 +16,6 @@ Item {
 
         Text {
             id: walletName
-            text: name
             font.pointSize: 14
             Layout.alignment: Qt.AlignLeft
             color: ColorFactory.color(DesignFactory.MainText)
@@ -35,7 +34,6 @@ Item {
 
             Text {
                 id: walletNumber
-                text: number
                 font.pointSize: 14
                 Layout.alignment: Qt.AlignRight
                 color: ColorFactory.color(DesignFactory.MainText)
