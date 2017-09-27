@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 
 Rectangle {
-    property real amountMoneyCost
+    property real amountMoneyCost: 0
     property alias amountGraftCost: amountGraftText.text
 
     height: 70
