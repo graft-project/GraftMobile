@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 
 RoundButton {
-    radius: 3
+    radius: 2
     highlighted: true
     Material.elevation: 1
     Material.accent: ColorFactory.color(DesignFactory.Foreground)
