@@ -39,7 +39,7 @@ BaseProductItemView {
             LinearEditItem {
                 id: price
                 title: qsTr("Price:")
-//                Layout.fillWidth: true
+                Layout.fillWidth: true
                 Layout.preferredHeight: graftCBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false

@@ -8,6 +8,8 @@ ColumnLayout {
     property alias maximumLength: editItem.maximumLength
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
+    property alias validator: editItem.validator
+    property alias showLengthIndicator: textCount.visible
     spacing: 0
 
     Text {
