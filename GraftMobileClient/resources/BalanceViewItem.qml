@@ -34,7 +34,7 @@ Rectangle {
 
                 Text {
                     id: amountGraftText
-                    color: "#404040"
+                    color: ColorFactory.color(DesignFactory.MainText)
                     font {
                         bold: true
                         pointSize: 21

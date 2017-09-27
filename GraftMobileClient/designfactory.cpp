@@ -19,15 +19,15 @@ DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
     mColors.insert(CartLabel, QStringLiteral("#fe4200"));
     mColors.insert(AllocateLine, QStringLiteral("#e6e6e8"));
     mColors.insert(AndroidStatusBar, QStringLiteral("#233146"));
+    mColors.insert(MainText, QStringLiteral("#404040"));
+    mColors.insert(ProductText, QStringLiteral("#000000"));
     init();
 
     #ifdef Q_OS_IOS
-        mColors.insert(MainText, QStringLiteral("#000000"));
         mColors.insert(ItemText, QStringLiteral("#797979"));
     #endif
 
     #ifdef Q_OS_ANDROID
-        mColors.insert(MainText, QStringLiteral("#404040"));
         mColors.insert(ItemText, QStringLiteral("#9e9e9e"));
     #endif
 }
