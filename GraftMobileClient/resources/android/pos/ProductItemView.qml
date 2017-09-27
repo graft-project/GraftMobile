@@ -5,10 +5,11 @@ import QtQuick.Layouts 1.3
 import "../components"
 import "../"
 
-BaseProductItemView {
+Item {
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
+        id: mainLayout
         spacing: 5
         anchors {
             left: parent.left
@@ -19,26 +20,25 @@ BaseProductItemView {
         LinearEditItem {
             id: title
             Layout.fillWidth: true
-            title: qsTr("Item title:")
+            title: qsTr("Item title")
             maximumLength: 50
         }
 
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.preferredHeight: 180
-            title: qsTr("Item description:")
+            Layout.preferredHeight: 120
+            title: qsTr("Item description")
             wrapMode: TextInput.WordWrap
-            maximumLength: 150
+            maximumLength: 120
         }
 
         RowLayout {
             spacing: 10
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
             LinearEditItem {
                 id: price
-                title: qsTr("Price:")
+                title: qsTr("Price")
                 Layout.fillWidth: true
                 Layout.preferredHeight: graftCBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -50,30 +50,25 @@ BaseProductItemView {
             }
 
             ColumnLayout {
-                spacing: 0
-                Layout.fillWidth: true
-                Layout.preferredWidth: 130
+                spacing: 4
+                Layout.preferredWidth: 50
+
+                Text {
+                    id: dropdownTitle
+                    Layout.fillWidth: true
+                    color: "#BBBBBB"
+                    font.pointSize: 12
+                    text: qsTr("Currency")
+                }
 
                 ComboBox {
                     id: graftCBox
                     Layout.fillWidth: true
                     Material.background: "#00707070"
-                    Material.foreground: "#99757577"
-                    leftPadding: dropdownTitle.width -8
-                    Layout.topMargin: -8
-                    Layout.bottomMargin: -2
-
-                    Text {
-                        id: dropdownTitle
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            topMargin: 13
-                        }
-                        font.pointSize: parent.font.pointSize
-                        color: "#8e8e93"
-                        text: qsTr("Currency:")
-                    }
+                    Material.foreground: "#585858"
+                    leftPadding: -12
+                    Layout.topMargin: -12
+                    Layout.bottomMargin: -10
                 }
 
                 Rectangle {
@@ -94,23 +89,30 @@ BaseProductItemView {
 
         Button {
             Layout.alignment: Qt.AlignCenter
-            flat: true
-            contentItem: RowLayout {
-                spacing: 10
+            Layout.fillWidth: true
+            Material.elevation: 0
+            Material.background: "#EAF6EF"
+            padding: 35
+            contentItem: Item {
+                RowLayout {
+                    spacing: 10
+                    anchors.centerIn: parent
 
-                Image {
-                    id: addImage
-                    Layout.preferredHeight: 30
-                    Layout.preferredWidth: 30
-                    Layout.alignment: Qt.AlignLeft
-                    source: "qrc:/imgs/add_ios.png"
-                }
+                    Image {
+                        id: addImage
+                        Layout.preferredHeight: 40
+                        Layout.preferredWidth: 40
+                        Layout.alignment: Qt.AlignLeft
+                        source: "qrc:/imgs/add.png"
+                    }
 
-                Text {
-                    id: buttonText
-                    Layout.alignment: Qt.AlignRight
-                    text: qsTr("Add photo")
-                    color: "#007AFF"
+                    Text {
+                        id: buttonText
+                        Layout.alignment: Qt.AlignRight
+                        font.pointSize: 14
+                        text: previewImage.visible ? qsTr("Change Photo") : qsTr("Add Photo")
+                        color: "#3A3E3C"
+                    }
                 }
             }
 

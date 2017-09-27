@@ -7,7 +7,7 @@ import com.graft.design 1.0
 RoundButton {
     radius: 3
     highlighted: true
-    Material.elevation: 0
+    Material.elevation: 1
     Material.accent: ColorFactory.color(DesignFactory.Foreground)
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true

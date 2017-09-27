@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 import "../components"
 import "../"
 
-BaseProductItemView {
+Item {
     property alias currencyModel: graftCBox.model
 
     ColumnLayout {
@@ -34,7 +34,6 @@ BaseProductItemView {
 
         RowLayout {
             spacing: 10
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
             LinearEditItem {
                 id: price
@@ -58,7 +57,7 @@ BaseProductItemView {
                     id: graftCBox
                     Layout.fillWidth: true
                     Material.background: "#00707070"
-                    Material.foreground: "#99757577"
+                    Material.foreground: "#00000000"
                     leftPadding: dropdownTitle.width -8
                     Layout.topMargin: -8
                     Layout.bottomMargin: -2
