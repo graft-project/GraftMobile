@@ -4,7 +4,7 @@ import com.graft.design 1.0
 
 Item {
     property alias name: walletName
-    property alias cardIcon: pictureCard.source
+    property alias cardIcon: cardPicture.source
     property string number: walletNumber.text
 
     RowLayout {
@@ -26,7 +26,7 @@ Item {
             Layout.alignment: Qt.AlignRight
 
             Image {
-                id: pictureCard
+                id: cardPicture
                 Layout.alignment: Qt.AlignRight
                 Layout.preferredHeight: 32
                 Layout.preferredWidth: 32
