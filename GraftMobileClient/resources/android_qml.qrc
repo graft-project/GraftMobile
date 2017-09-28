@@ -11,9 +11,9 @@
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>
-        <file alias="ProductDelegate.qml">android/pos/ProductDelegate.qml</file>
         <file alias="GraftMenu.qml">android/pos/GraftMenu.qml</file>
         <file alias="ProductItemView.qml">android/pos/ProductItemView.qml</file>
+        <file alias="ProductDelegate.qml">android/pos/ProductDelegate.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="GraftMenu.qml">android/wallet/GraftMenu.qml</file>

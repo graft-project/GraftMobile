@@ -1,89 +1,122 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import "../"
 
-Rectangle {
-    height: layout.height
-    color: mouseArea.pressed || selectState ? ColorFactory.color(DesignFactory.Highlighting) : "transparent"
+SwipeDelegate {
+    id: root
 
-    property real productPrice
+    property alias setSelectedProductDelegate: selectedProductDelegate
     property bool selectState: false
-    property alias productImage: picture.source
-    property alias productName: productText.text
 
-    ColumnLayout {
-        id: layout
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
+    padding: 0
+    topPadding: 0
+    bottomPadding: 0
+    focusPolicy: Qt.ClickFocus
+    onActiveFocusChanged: if(!focus || root.swipe.complete) swipe.close()
 
-        RowLayout {
-            spacing: 16
-            Layout.topMargin: 6
-            Layout.rightMargin: 12
-            Layout.leftMargin: 12
+    SelectedProductDelegate {
+        id: selectedProductDelegate
 
-            OpacityMask {
-                id: opacityMask
-                Layout.preferredWidth: 50
-                Layout.preferredHeight: 50
-                source: picture
-                maskSource: circle
+        // TODO: QTBUG-50992. QQC2: Object destroyed during incubation.
+        // For more details see https://bugreports.qt.io/browse/QTBUG-50992
+        x: contentItem.x
+        y: contentItem.y
+        z: contentItem.z
+        width: contentItem.width
+        height: contentItem.height
+        color: selectState ? ColorFactory.color(DesignFactory.Highlighting) : "transparent"
 
-                Rectangle {
-                    id: circle
-                    width: picture.width
-                    height: picture.height
-                    radius: picture.width / 2
-                    visible: false
-                }
-
-                Image {
-                    id: picture
-                    width: 50
-                    height: 55
-                    visible: false
-                }
+        CheckBox {
+            id: checkBox
+            anchors {
+                verticalCenter: parent.verticalCenter
+                right: parent.right
             }
-
-            Text {
-                id: productText
-                Layout.fillWidth: true
-                color: ColorFactory.color(DesignFactory.MainText)
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 13
-                }
-            }
-
-            Text {
-                id: price
-                text: "$ " + productPrice
-                color: ColorFactory.color(DesignFactory.MainText)
-                font {
-                    family: "Liberation Sans"
-                    pointSize: 13
-                }
-            }
-        }
-
-        Rectangle {
-            Layout.preferredHeight: 1.6
-            Layout.alignment: Qt.AlignBottom
-            Layout.fillWidth: true
-            color: ColorFactory.color(DesignFactory.AllocateLine)
+            Material.elevation: 0
+            Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
+//            visible: /*!swipe.complete*/
+            checked: selectState
         }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        onClicked: {
-            ProductModel.changeSelection(index)
+    states: [
+        State {
+            name: "visibleChackBox"
+            when: swipe.close()
+            PropertyChanges {
+                target: checkBox
+                visible: true
+            }
+        }
+//        State {
+//            name: "invisibleChackBox"
+//            when: swipe.open(SwipeDelegate.Right)
+//            PropertyChanges {
+//                target: checkBox
+//                visible: false
+//            }
+//        }
+    ]
+
+//    state: swipe.complete ? "invisibleChackBox" : "visibleChackBox"
+    state: "visibleChackBox"
+
+    onClicked: {
+        ProductModel.changeSelection(index)
+        swipe.close()
+    }
+
+    swipe.right: Component {
+        RowLayout {
+            width: 90
+            spacing: 0
+            enabled: root.swipe.complete
+            height: parent.height
+            anchors.right: parent.right
+
+            Rectangle {
+                Layout.preferredHeight: parent.height
+                Layout.preferredWidth: parent.width / 2
+                color: ColorFactory.color(DesignFactory.AllocateLine)
+
+                Image {
+                    anchors.centerIn: parent
+                    height: parent.height / 3
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/imgs/edit.png"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("PAINT!!!")
+                    }
+                }
+            }
+
+            Rectangle {
+                Layout.preferredHeight: parent.height
+                Layout.preferredWidth: parent.width / 2
+                color: ColorFactory.color(DesignFactory.CartLabel)
+
+                Image {
+                    anchors.centerIn: parent
+                    height: parent.height / 3
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/imgs/delete.png"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("DELETE!!!")
+                    }
+                }
+            }
         }
     }
 }
