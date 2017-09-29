@@ -18,6 +18,8 @@ BaseBalanceScreen {
 
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.leftMargin: 8
+            Layout.rightMargin: 8
 
             model: CardModel
             clip: true
@@ -36,6 +38,8 @@ BaseBalanceScreen {
 
             AddCardButton {
                 Layout.alignment: Qt.AlignLeft
+                Layout.leftMargin: 20
+
                 imageSource: "qrc:/imgs/add_ios.png"
                 textItem.color: "#067DFF"
                 textItem.text: "Add Card"
