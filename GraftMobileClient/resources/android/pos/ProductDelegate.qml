@@ -9,14 +9,26 @@ import "../"
 SwipeDelegate {
     id: root
 
-    property alias setSelectedProductDelegate: selectedProductDelegate
     property bool selectState: false
+    property alias productPriceTextColor: selectedProductDelegate.productPriceTextColor
+    property alias productText: selectedProductDelegate.productText
+    property alias lineTopVisible: selectedProductDelegate.lineTopVisible
+    property alias lineBottomVisible: selectedProductDelegate.lineBottomVisible
+    property alias productImage: selectedProductDelegate.productImage
+    property alias productPrice: selectedProductDelegate.productPrice
 
     padding: 0
     topPadding: 0
     bottomPadding: 0
     focusPolicy: Qt.ClickFocus
-    onActiveFocusChanged: if(!focus || root.swipe.complete) swipe.close()
+    onActiveFocusChanged: {
+        if (!focus || root.swipe.complete) {
+            swipe.close()
+        }
+    }
+
+    swipe.onPositionChanged: checkBox.visible = false
+    swipe.onClosed: checkBox.visible = true
 
     SelectedProductDelegate {
         id: selectedProductDelegate
@@ -38,32 +50,10 @@ SwipeDelegate {
             }
             Material.elevation: 0
             Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-//            visible: /*!swipe.complete*/
+            visible: true
             checked: selectState
         }
     }
-
-    states: [
-        State {
-            name: "visibleChackBox"
-            when: swipe.close()
-            PropertyChanges {
-                target: checkBox
-                visible: true
-            }
-        }
-//        State {
-//            name: "invisibleChackBox"
-//            when: swipe.open(SwipeDelegate.Right)
-//            PropertyChanges {
-//                target: checkBox
-//                visible: false
-//            }
-//        }
-    ]
-
-//    state: swipe.complete ? "invisibleChackBox" : "visibleChackBox"
-    state: "visibleChackBox"
 
     onClicked: {
         ProductModel.changeSelection(index)

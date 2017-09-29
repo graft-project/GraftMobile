@@ -49,19 +49,16 @@ BaseScreen {
                     width: productList.width
                     height: 70
 
-                    setSelectedProductDelegate {
-                        productPrice: cost
-                        productImage: imagePath
-                        lineBottomVisible: false
-                        lineTopVisible: false
-                        productText {
-                            text: name
-                            color: ColorFactory.color(DesignFactory.MainText)
-                        }
-                        productPriceTextColor: ColorFactory.color(DesignFactory.AndroidItemText)
+                    productPrice: cost
+                    productImage: imagePath
+                    lineBottomVisible: false
+                    lineTopVisible: false
+                    productText {
+                        text: name
+                        color: ColorFactory.color(DesignFactory.MainText)
                     }
+                    productPriceTextColor: ColorFactory.color(DesignFactory.AndroidItemText)
                     selectState: selected
-
                 }
             }
         }
