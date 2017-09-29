@@ -6,9 +6,19 @@ Rectangle {
     property real productPrice
     property alias productPriceTextColor: price.color
     property alias productText: productText
-    property alias lineTopVisible: topLine.visible
-    property alias lineBottomVisible: bottomLine.visible
+    property alias topLineVisible: topLine.visible
+    property alias bottomLineVisible: bottomLine.visible
     property alias productImage: picture.source
+    property bool hideTopLineMargin: false
+    property bool hideBottomLineMargin: false
+
+    onHideTopLineMarginChanged: {
+        topLine.anchors.rightMargin = hideTopLineMargin ? 0 : 12
+    }
+
+    onHideBottomLineMarginChanged: {
+        bottomLine.anchors.rightMargin = hideBottomLineMargin ? 0 :12
+    }
 
     height: parent.width / 6 + 20
 
@@ -38,8 +48,8 @@ Rectangle {
             maskSource: circle
             Layout.leftMargin: 12
             Layout.rightMargin: 12
-            Layout.preferredWidth: 50
-            Layout.preferredHeight: 50
+            Layout.preferredWidth: 46
+            Layout.preferredHeight: 46
             source: picture.status === Image.Ready ? picture : greyPicture
 
             Rectangle {
@@ -52,8 +62,8 @@ Rectangle {
 
             Image {
                 id: picture
-                width: 50
-                height: 50
+                width: 46
+                height: 46
                 visible: false
             }
 

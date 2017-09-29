@@ -47,10 +47,10 @@ BaseScreen {
                 id: productDelegate
                 ProductSwipeDelegate {
                     width: productList.width
-                    height: 70
+                    height: 60
                     selectState: selected
-                    lineBottomVisible: false
-                    lineTopVisible: false
+                    bottomLineVisible: false
+                    topLineVisible: false
                     productImage: imagePath
                     productPrice: cost
                     productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)

@@ -11,10 +11,11 @@ SwipeDelegate {
     signal editItemClicked()
 
     property bool selectState: false
+    property bool visibleCheckBox: true
     property alias productPriceTextColor: selectedProductDelegate.productPriceTextColor
     property alias productText: selectedProductDelegate.productText
-    property alias lineTopVisible: selectedProductDelegate.lineTopVisible
-    property alias lineBottomVisible: selectedProductDelegate.lineBottomVisible
+    property alias topLineVisible: selectedProductDelegate.topLineVisible
+    property alias bottomLineVisible: selectedProductDelegate.bottomLineVisible
     property alias productImage: selectedProductDelegate.productImage
     property alias productPrice: selectedProductDelegate.productPrice
 
@@ -23,9 +24,13 @@ SwipeDelegate {
     bottomPadding: 0
     focusPolicy: Qt.ClickFocus
     onActiveFocusChanged: {
-        if (!focus || root.swipe.complete) {
+        if (!activeFocus || root.swipe.complete) {
             swipe.close()
         }
+    }
+
+    onPressed: {
+        forceActiveFocus()
     }
 
     onClicked: {
@@ -47,7 +52,7 @@ SwipeDelegate {
 
         CheckBox {
             id: checkBox
-            visible: true
+            visible: visibleCheckBox
             enabled: false
             checked: selectState
             anchors {
@@ -57,8 +62,16 @@ SwipeDelegate {
         }
     }
 
-    swipe.onPositionChanged: checkBox.visible = false
-    swipe.onClosed: checkBox.visible = true
+    swipe.onPositionChanged: {
+        selectedProductDelegate.hideTopLineMargin = true
+        selectedProductDelegate.hideBottomLineMargin = true
+        checkBox.visible = false
+    }
+    swipe.onClosed: {
+        selectedProductDelegate.hideTopLineMargin = false
+        selectedProductDelegate.hideBottomLineMargin = false
+        checkBox.visible = visibleCheckBox
+    }
     swipe.right: RowLayout {
         width: 90
         spacing: 0
