@@ -9,6 +9,7 @@
         <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
         <file alias="BalanceViewItem.qml">BalanceViewItem.qml</file>
         <file alias="AccountDelegate.qml">AccountDelegate.qml</file>
+        <file alias="ProductSwipeDelegate.qml">ProductSwipeDelegate.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -58,6 +59,8 @@
         <file alias="add_ios.png">imgs/add_ios.png</file>
         <file alias="add.png">imgs/add.png</file>
         <file alias="g-max.png">imgs/g-max.png</file>
+        <file alias="delete.png">imgs/delete.png</file>
+        <file alias="edit.png">imgs/edit.png</file>
         <file alias="MasterCard_Logo.png">imgs/MasterCard_Logo.png</file>
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
     </qresource>

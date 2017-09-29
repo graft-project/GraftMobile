@@ -45,12 +45,19 @@ BaseScreen {
 
             Component {
                 id: productDelegate
-                ProductDelegate {
+                ProductSwipeDelegate {
                     width: productList.width
-                    productImage: imagePath
-                    productName: name
-                    productPrice: cost
+                    height: 60
                     selectState: selected
+                    bottomLineVisible: false
+                    topLineVisible: false
+                    productImage: imagePath
+                    productPrice: cost
+                    productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                    productText {
+                        text: name
+                        color: ColorFactory.color(DesignFactory.MainText)
+                    }
                 }
             }
         }
