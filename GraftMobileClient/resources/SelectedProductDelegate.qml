@@ -1,7 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-import com.graft.design 1.0
 
 Rectangle {
     property real productPrice
@@ -23,7 +22,7 @@ Rectangle {
             leftMargin: 12
             rightMargin: 12
         }
-        color: ColorFactory.color(DesignFactory.AllocateLine)
+        color: "#e6e6e8"
     }
 
     RowLayout {
@@ -63,7 +62,7 @@ Rectangle {
                 width: picture.width
                 height: picture.height
                 visible: false
-                color: ColorFactory.color(DesignFactory.AllocateLine)
+                color: "#d1d3d4"
             }
         }
 
@@ -95,6 +94,6 @@ Rectangle {
             leftMargin: 12
             rightMargin: 12
         }
-        color: ColorFactory.color(DesignFactory.AllocateLine)
+        color: "#e6e6e8"
     }
 }

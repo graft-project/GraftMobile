@@ -43,12 +43,19 @@ BaseScreen {
 
             Component {
                 id: productDelegate
-                ProductDelegate {
+                ProductSwipeDelegate {
                     width: productList.width
-                    productImage: imagePath
-                    productName: name
-                    productPrice: cost
+                    height: 70
                     selectState: selected
+                    lineBottomVisible: index === (productList.count - 1)
+                    productImage: imagePath
+                    productPrice: cost
+                    productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                    productText {
+                        text: name
+                        font.bold: true
+                        color: ColorFactory.color(DesignFactory.MainText)
+                    }
                 }
             }
         }

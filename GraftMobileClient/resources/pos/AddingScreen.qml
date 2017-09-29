@@ -34,9 +34,8 @@ BaseScreen {
         WideActionButton {
             text: qsTr("Confirm")
             onClicked: {
-//                ProductModel.add("", title.text,
-//                                 parseFloat(price.text), graftCBox.currentText)
-                ProductModel.add("", "qwer", 23, "USD")
+                ProductModel.add("", title.text,
+                                 parseFloat(price.text), graftCBox.currentText)
                 additionItem.pushScreen.openProductScreen()
                 GraftClient.save()
             }
