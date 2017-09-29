@@ -123,18 +123,6 @@ BaseScreen {
                     regExp: /\d{3}/
                 }
             }
-
-            Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: childrenRect.height
-
-                Image {
-                    width: parent.width / 1.5
-                    fillMode: Image.PreserveAspectFit
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    source: "qrc:/imgs/visa-master-card-american-express-logo.png"
-                }
-            }
         }
 
         WideActionButton {

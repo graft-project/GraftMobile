@@ -8,6 +8,7 @@
         <file alias="GraftApplicationWindow.qml">GraftApplicationWindow.qml</file>
         <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
         <file alias="BalanceViewItem.qml">BalanceViewItem.qml</file>
+        <file alias="AccountDelegate.qml">AccountDelegate.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -20,7 +21,6 @@
         <file alias="PaymentConfirmationView.qml">wallet/PaymentConfirmationView.qml</file>
         <file alias="BalanceView.qml">wallet/BalanceView.qml</file>
         <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
-        <file alias="Wallet.qml">wallet/Wallet.qml</file>
         <file alias="AddCardView.qml">wallet/AddCardView.qml</file>
     </qresource>
     <qresource prefix="/imgs">
@@ -34,7 +34,6 @@
         <file alias="plus_icon.png">imgs/plus_icon.png</file>
         <file alias="g_icon_black.png">imgs/g_icon_black.png</file>
         <file alias="g_icon_small.png">imgs/g_icon_small.png</file>
-        <file alias="visa-master-card-american-express-logo.png">imgs/visa-master-card-american-express-logo.png</file>
         <file alias="cart_icon.png">imgs/cart_icon.png</file>
         <file alias="back_icon.png">imgs/back_icon.png</file>
         <file alias="done.png">imgs/done.png</file>
@@ -61,5 +60,7 @@
         <file alias="g-max.png">imgs/g-max.png</file>
         <file alias="delete.png">imgs/delete.png</file>
         <file alias="edit.png">imgs/edit.png</file>
+        <file alias="MasterCard_Logo.png">imgs/MasterCard_Logo.png</file>
+        <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
     </qresource>
 </RCC>

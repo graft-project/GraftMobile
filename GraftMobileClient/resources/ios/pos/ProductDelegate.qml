@@ -53,7 +53,7 @@ Rectangle {
             Text {
                 id: productText
                 Layout.fillWidth: true
-                color: ColorFactory.color(DesignFactory.MainText)
+                color: ColorFactory.color(DesignFactory.ProductText)
                 font {
                     family: "Liberation Sans"
                     pointSize: 13
@@ -63,7 +63,7 @@ Rectangle {
             Text {
                 id: price
                 text: "$ " + productPrice
-                color: ColorFactory.color(DesignFactory.MainText)
+                color: ColorFactory.color(DesignFactory.ItemText)
                 font {
                     family: "Liberation Sans"
                     pointSize: 13
