@@ -23,12 +23,14 @@ SwipeDelegate {
     topPadding: 0
     bottomPadding: 0
     focusPolicy: Qt.ClickFocus
-    onPressed: forceActiveFocus()
+
     onActiveFocusChanged: {
         if (!activeFocus || root.swipe.complete) {
             swipe.close()
         }
     }
+
+    onPressed: forceActiveFocus()
 
     onClicked: {
         ProductModel.changeSelection(index)
