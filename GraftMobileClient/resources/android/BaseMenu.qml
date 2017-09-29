@@ -7,6 +7,9 @@ Drawer {
     property alias logo: logoImage.source
     default property alias contents: placeholder.data
 
+    height: parent.height
+    width: 0.75 * parent.width
+
     Rectangle {
         id: foreground
         height: parent.height / 4
