@@ -23,14 +23,11 @@ SwipeDelegate {
     topPadding: 0
     bottomPadding: 0
     focusPolicy: Qt.ClickFocus
+    onPressed: forceActiveFocus()
     onActiveFocusChanged: {
         if (!activeFocus || root.swipe.complete) {
             swipe.close()
         }
-    }
-
-    onPressed: {
-        forceActiveFocus()
     }
 
     onClicked: {
@@ -48,6 +45,7 @@ SwipeDelegate {
         z: contentItem.z
         width: contentItem.width
         height: contentItem.height
+
         color: selectState ? ColorFactory.color(DesignFactory.Highlighting) : "transparent"
 
         CheckBox {
@@ -67,11 +65,13 @@ SwipeDelegate {
         selectedProductDelegate.hideBottomLineMargin = true
         checkBox.visible = false
     }
+
     swipe.onClosed: {
         selectedProductDelegate.hideTopLineMargin = false
         selectedProductDelegate.hideBottomLineMargin = false
         checkBox.visible = visibleCheckBox
     }
+
     swipe.right: RowLayout {
         width: 90
         spacing: 0
@@ -93,9 +93,7 @@ SwipeDelegate {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    editItemClicked()
-                }
+                onClicked: editItemClicked()
             }
         }
 
@@ -113,9 +111,7 @@ SwipeDelegate {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    removeItemClicked()
-                }
+                onClicked: removeItemClicked()
             }
         }
     }
