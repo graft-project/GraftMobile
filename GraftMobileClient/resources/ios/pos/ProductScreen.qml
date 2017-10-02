@@ -8,7 +8,7 @@ import "../"
 
 BaseScreen {
     id: mainScreen
-    title: qsTr("Point of Sale")
+    title: qsTr("Store")
     screenHeader {
         cartEnable: true
     }
@@ -31,40 +31,36 @@ BaseScreen {
 
     Rectangle {
         anchors.fill: parent
-        color: "#e9e9e9"
+        color: "#ffffff"
 
         ColumnLayout {
             spacing: 0
             anchors.fill: parent
 
-            Rectangle {
+            ListView {
+                id: productList
+                spacing: 0
+                clip: true
+                model: ProductModel
+                delegate: productDelegate
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                color: "#ffffff"
 
-                ListView {
-                    id: productList
-                    spacing: 0
-                    clip: true
-                    model: ProductModel
-                    delegate: productDelegate
-                    anchors.fill: parent
-
-                    Component {
-                        id: productDelegate
-                        ProductSwipeDelegate {
-                            width: productList.width
-                            height: 60
-                            selectState: selected
-                            bottomLineVisible: false
-                            topLineVisible: false
-                            productImage: imagePath
-                            productPrice: cost
-                            productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
-                            productText {
-                                text: name
-                                color: ColorFactory.color(DesignFactory.MainText)
-                            }
+                Component {
+                    id: productDelegate
+                    ProductSwipeDelegate {
+                        width: productList.width
+                        height: 60
+                        selectState: selected
+                        bottomLineVisible: index === (productList.count - 1)
+                        visibleCheckBox: false
+                        productImage: imagePath
+                        productPrice: cost
+                        productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                        productText {
+                            text: name
+                            font.bold: true
+                            color: ColorFactory.color(DesignFactory.MainText)
                         }
                     }
                 }
