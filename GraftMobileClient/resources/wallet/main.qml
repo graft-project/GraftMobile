@@ -18,8 +18,6 @@ GraftApplicationWindow {
         id: drawerLoader
         onLoaded: {
             drawer = drawerLoader.item
-            drawerLoader.item.width = 0.75 * root.width
-            drawerLoader.item.height = root.height
             drawerLoader.item.pushScreen = transitionsBetweenScreens()
             drawerLoader.item.balanceInGraft = "1.14"
         }
