@@ -44,6 +44,7 @@ BaseBalanceScreen {
                     color: "#067DFF"
                     text: "Add Card"
                 }
+                imageVisible: true
                 onClicked: pushScreen.addCardScreen()
             }
 
