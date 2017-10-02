@@ -48,7 +48,7 @@ SwipeDelegate {
         width: contentItem.width
         height: contentItem.height
 
-        color: selectState ? ColorFactory.color(DesignFactory.Highlighting) : "transparent"
+        color: selectState ? ColorFactory.color(DesignFactory.Highlighting) : "#ffffff"
 
         CheckBox {
             id: checkBox
