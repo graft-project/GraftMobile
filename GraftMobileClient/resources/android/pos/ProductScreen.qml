@@ -80,6 +80,7 @@ BaseScreen {
             }
 
             RoundButton {
+                padding: 25
                 highlighted: true
                 Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 Layout.preferredHeight: addButton.height * 1.4
@@ -87,9 +88,8 @@ BaseScreen {
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 10
                 Layout.bottomMargin: 10
-                text: {
-                    font.pointSize = 30
-                    qsTr("+")
+                contentItem: Image {
+                    source:  "qrc:/imgs/plus_icon.png"
                 }
                 onClicked: pushScreen.openAddScreen()
             }
