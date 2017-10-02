@@ -3,6 +3,7 @@ import QtMultimedia 5.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QZXing 2.3
+import "components"
 
 BaseScreen {
     id: root

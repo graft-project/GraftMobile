@@ -16,5 +16,6 @@
     </qresource>
     <qresource prefix="/wallet">
         <file alias="GraftMenu.qml">android/wallet/GraftMenu.qml</file>
+        <file alias="BalanceScreen.qml">android/wallet/BalanceScreen.qml</file>
     </qresource>
 </RCC>

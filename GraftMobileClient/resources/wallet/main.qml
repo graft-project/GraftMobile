@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
+import "../components"
 
 GraftApplicationWindow {
     id: root
@@ -10,7 +11,7 @@ GraftApplicationWindow {
     property real totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
     property real balanceInGraft: 1
-    property real balanceInUSD: 200   
+    property real balanceInUSD: 200
     property var drawer
 
     Loader {
@@ -48,7 +49,7 @@ GraftApplicationWindow {
         }
     }
 
-    BalanceView {
+    BalanceScreen {
         id: initialScreen
         amountGraft: 1.14
         amountMoney: 145
