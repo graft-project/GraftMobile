@@ -4,7 +4,7 @@ import QtQuick.Controls 2.2
 
 Button {
     property alias imageSource: image.source
-    property bool imageVisible: true
+    property alias imageVisible: image.visible
     property alias textItem: text
 
     flat: true
@@ -19,7 +19,6 @@ Button {
             Layout.preferredHeight: 25
             Layout.preferredWidth: 25
             Layout.alignment: Image.AlignLeft
-            visible: imageVisible
         }
 
         Text {
