@@ -12,7 +12,7 @@ BaseScreen {
     property real amountGraft: 0
     property real amountMoney: 0
     property alias splitterVisible: splitter.visible
-    default property alias placeholder: placeholder.data
+    default property alias content: placeholder.data
 
     title: qsTr("Wallet")
     screenHeader {
@@ -20,7 +20,6 @@ BaseScreen {
     }
 
     ColumnLayout {
-        id: layit
         anchors.fill: parent
         spacing: 20
 
@@ -28,12 +27,10 @@ BaseScreen {
             Layout.fillWidth: true
             Layout.preferredHeight: 200
             Layout.alignment: Qt.AlignTop
-
             color: "#EDEEF0"
 
             Image {
                 id: graftWalletLogo
-
                 anchors.centerIn: parent
                 height: parent.height / 2
                 width: parent.width / 2
@@ -75,7 +72,6 @@ BaseScreen {
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 50
                 Layout.alignment: Image.AlignRight
-
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/imgs/g-max.png"
             }
@@ -83,16 +79,13 @@ BaseScreen {
 
         Rectangle {
             id: splitter
-
             Layout.fillWidth: true
             Layout.preferredHeight: 2
-
             color: "#EDEEF0"
         }
 
         Item {
             id: placeholder
-
             Layout.fillWidth: true
             Layout.fillHeight: true
         }

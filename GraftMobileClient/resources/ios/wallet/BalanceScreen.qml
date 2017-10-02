@@ -8,18 +8,15 @@ BaseBalanceScreen {
     splitterVisible: false
 
     ColumnLayout {
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         spacing: 0
 
         ListView {
             id: accountListView
-
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.leftMargin: 8
             Layout.rightMargin: 8
-
             model: CardModel
             clip: true
             spacing: 15
@@ -32,26 +29,21 @@ BaseBalanceScreen {
             }
         }
 
-        ColumnLayout {
-            Layout.fillWidth: true
-
-            AddCardButton {
-                Layout.alignment: Qt.AlignLeft
-                Layout.leftMargin: 20
-
-                imageSource: "qrc:/imgs/add_ios.png"
-                textItem {
-                    color: "#067DFF"
-                    text: "Add Card"
-                }
-                imageVisible: true
-                onClicked: pushScreen.addCardScreen()
+        AddCardButton {
+            Layout.alignment: Qt.AlignLeft
+            Layout.leftMargin: 20
+            imageSource: "qrc:/imgs/add_ios.png"
+            textItem {
+                color: "#067DFF"
+                text: "Add Card"
             }
+            imageVisible: true
+            onClicked: pushScreen.addCardScreen()
+        }
 
-            WideActionButton {
-                text: qsTr("PAY")
-                onPressed: pushScreen.openQRCodeScanner()
-            }
+        WideActionButton {
+            text: qsTr("PAY")
+            onPressed: pushScreen.openQRCodeScanner()
         }
     }
 }
