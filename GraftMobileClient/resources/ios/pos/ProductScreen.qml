@@ -1,7 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
 import "../components"
@@ -30,57 +29,69 @@ BaseScreen {
         }
     }
 
-    ColumnLayout {
+    Rectangle {
         anchors.fill: parent
+        color: "#e9e9e9"
 
-        ListView {
-            id: productList
-            clip: true
-            model: ProductModel
-            delegate: productDelegate
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        ColumnLayout {
+            spacing: 0
+            anchors.fill: parent
 
-            Component {
-                id: productDelegate
-                ProductSwipeDelegate {
-                    width: productList.width
-                    height: 60
-                    selectState: selected
-                    bottomLineVisible: index === (productList.count - 1)
-                    visibleCheckBox: false
-                    productImage: imagePath
-                    productPrice: cost
-                    productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
-                    productText {
-                        text: name
-                        font.bold: true
-                        color: ColorFactory.color(DesignFactory.MainText)
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                color: "#ffffff"
+
+                ListView {
+                    id: productList
+                    spacing: 0
+                    clip: true
+                    model: ProductModel
+                    delegate: productDelegate
+                    anchors.fill: parent
+
+                    Component {
+                        id: productDelegate
+                        ProductSwipeDelegate {
+                            width: productList.width
+                            height: 60
+                            selectState: selected
+                            bottomLineVisible: false
+                            topLineVisible: false
+                            productImage: imagePath
+                            productPrice: cost
+                            productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                            productText {
+                                text: name
+                                color: ColorFactory.color(DesignFactory.MainText)
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        WideActionButton {
-            id: addButton
-            text: qsTr("Checkout")
-            onClicked: GraftClient.sale()
-        }
-
-        RoundButton {
-            padding: 20
-            highlighted: true
-            Material.elevation: 0
-            Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-            Layout.preferredHeight: addButton.height * 1.4
-            Layout.preferredWidth: height
-            Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: 10
-            Layout.bottomMargin: 10
-            contentItem: Image {
-                source: "qrc:/imgs/plus_icon.png"
+            WideActionButton {
+                id: addButton
+                text: qsTr("Checkout")
+                Layout.bottomMargin: 90
+                Layout.topMargin: 10
+                onClicked: GraftClient.sale()
             }
-            onClicked: pushScreen.openAddScreen()
+
+            RoundButton {
+                highlighted: true
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
+                Layout.preferredHeight: addButton.height * 1.4
+                Layout.preferredWidth: height
+                Layout.alignment: Qt.AlignRight
+                Layout.rightMargin: 10
+                Layout.bottomMargin: 10
+                text: {
+                    font.pointSize = 30
+                    qsTr("+")
+                }
+                onClicked: pushScreen.openAddScreen()
+            }
         }
     }
 }
