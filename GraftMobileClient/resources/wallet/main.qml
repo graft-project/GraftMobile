@@ -1,10 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-
 import "../"
 import "../components"
-//import "wallet/"
 
 GraftApplicationWindow {
     id: root

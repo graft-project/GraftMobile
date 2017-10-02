@@ -9,7 +9,6 @@ import "../components"
 BaseScreen {
     id: root
     title: qsTr("Add Card")
-//    isMenuState: false
 
     ColumnLayout {
         anchors {

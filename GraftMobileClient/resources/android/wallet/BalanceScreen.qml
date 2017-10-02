@@ -7,8 +7,7 @@ import "../components"
 BaseBalanceScreen {
     splitterVisible: true
 
-
-    addContent: ColumnLayout {
+    ColumnLayout {
         width: parent.width
         height: parent.height
         spacing: 0
@@ -20,7 +19,6 @@ BaseBalanceScreen {
             Layout.fillHeight: true
             Layout.leftMargin: 8
             Layout.rightMargin: 8
-
 
             model: CardModel
             clip: true
@@ -48,9 +46,7 @@ BaseBalanceScreen {
 
             WideActionButton {
                 text: qsTr("PAY")
-                onPressed: {
-                    pushScreen.openQRCodeScanner()
-                }
+                onPressed: pushScreen.openQRCodeScanner()
             }
         }
     }

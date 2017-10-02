@@ -3,7 +3,6 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
-
 import "../"
 import "../components"
 
@@ -12,8 +11,8 @@ BaseScreen {
 
     property real amountGraft: 0
     property real amountMoney: 0
-    property bool splitterVisible: false
-    default property alias addContent: placeholder.children
+    property alias splitterVisible: splitter.visible
+    default property alias placeholder: placeholder.data
 
     title: qsTr("Wallet")
     screenHeader {
@@ -84,11 +83,11 @@ BaseScreen {
 
         Rectangle {
             id: splitter
+
             Layout.fillWidth: true
             Layout.preferredHeight: 2
 
             color: "#EDEEF0"
-            visible: splitterVisible
         }
 
         Item {

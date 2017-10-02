@@ -7,8 +7,7 @@ import "../components"
 BaseBalanceScreen {
     splitterVisible: false
 
-
-    addContent: ColumnLayout {
+    ColumnLayout {
         width: parent.width
         height: parent.height
         spacing: 0
@@ -41,16 +40,16 @@ BaseBalanceScreen {
                 Layout.leftMargin: 20
 
                 imageSource: "qrc:/imgs/add_ios.png"
-                textItem.color: "#067DFF"
-                textItem.text: "Add Card"
+                textItem {
+                    color: "#067DFF"
+                    text: "Add Card"
+                }
                 onClicked: pushScreen.addCardScreen()
             }
 
             WideActionButton {
                 text: qsTr("PAY")
-                onPressed: {
-                    pushScreen.openQRCodeScanner()
-                }
+                onPressed: pushScreen.openQRCodeScanner()
             }
         }
     }
