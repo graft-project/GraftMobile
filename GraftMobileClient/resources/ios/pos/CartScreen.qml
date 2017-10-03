@@ -19,23 +19,23 @@ BaseCardScreen {
     }
 
     ColumnLayout {
-        spacing: 0
         anchors.fill: parent
+        spacing: 0
 
         Pane {
-            height: 120
-            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
             anchors {
                 right: parent.right
                 left: parent.left
                 top: parent.top
             }
+            height: 120
+            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
 
             Label {
+                anchors.centerIn: parent
                 text: qsTr("Total checkout: ") + price + "$"
                 font.pointSize: 18
                 color: "#ffffff"
-                anchors.centerIn: parent
             }
         }
 
@@ -50,11 +50,11 @@ BaseCardScreen {
 
         Text {
             text: qsTr("SCAN WITH WALLET")
-            Layout.alignment: Qt.AlignCenter
             font {
                 bold: true
                 pointSize: 16
             }
+            Layout.alignment: Qt.AlignCenter
         }
 
         ListView {

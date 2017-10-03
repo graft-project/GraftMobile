@@ -18,24 +18,24 @@ BaseCardScreen {
         color: "#e9e9e9"
 
         ColumnLayout {
-            spacing: 0
             anchors.fill: parent
+            spacing: 0
 
             Pane {
-                height: 120
                 anchors {
                     right: parent.right
                     left: parent.left
                     top: parent.top
                 }
-                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+                height: 130
                 Material.elevation: 8
+                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
 
                 Label {
+                    anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("Total checkout: ") + price + "$"
                     font.pointSize: 18
                     color: "#ffffff"
-                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
 
@@ -50,11 +50,12 @@ BaseCardScreen {
 
             Text {
                 text: qsTr("SCAN WITH WALLET")
-                Layout.alignment: Qt.AlignCenter
                 font {
                     bold: true
                     pointSize: 16
                 }
+                color: ColorFactory.color(DesignFactory.Foreground)
+                Layout.alignment: Qt.AlignCenter
             }
 
             Rectangle {
@@ -68,16 +69,18 @@ BaseCardScreen {
                     clip: true
                     model: SelectedProductModel
                     delegate: productDelegate
-                    anchors.fill: parent
-                    anchors.topMargin: 8
+                    anchors {
+                        fill: parent
+                        topMargin: 8
+                    }
 
                     Component {
                         id: productDelegate
                         SelectedProductDelegate {
                             width: productList.width
                             height: 60
-                            bottomLineVisible: false
                             topLineVisible: false
+                            bottomLineVisible: false
                             productImage: imagePath
                             productPrice: cost
                             productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
