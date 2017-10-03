@@ -60,13 +60,15 @@ BaseScreen {
             width: parent.width * 0.75
             height: width
             anchors.centerIn: parent
+            color: "green"
+            opacity: 0.7
         }
     }
 
     Rectangle {
         anchors.fill: parent
         color: "black"
-        opacity: 0.7
+        opacity: 0.5
     }
 
     OpacityMask {
