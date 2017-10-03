@@ -64,7 +64,7 @@ GraftApplicationWindow {
         transitionsMap["addCardScreen"] = openAddCardScreen
         transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
-        transitionsMap["paymentScreen"] = openPaymentConfirmationView
+        transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         return transitionsMap
     }
 
@@ -76,8 +76,8 @@ GraftApplicationWindow {
         stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
-    function openPaymentConfirmationView() {
-        stack.push("PaymentConfirmationView.qml", {"pushScreen": transitionsBetweenScreens(),
+    function openPaymentConfirmationScreen() {
+        stack.push("PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
                        "totalAmount": GraftClient.totalCost(),
                        "currencyModel": currencyModel,
                        "balanceInGraft": balanceInGraft,
