@@ -43,36 +43,39 @@ BaseCardScreen {
                 cache: false
                 source: GraftClient.qrCodeImage()
                 Layout.alignment: Qt.AlignCenter
-                Layout.preferredHeight: 180
+                Layout.preferredHeight: 160
                 Layout.preferredWidth: height
+                Layout.topMargin: 10
             }
 
             Text {
                 text: qsTr("SCAN WITH WALLET")
-                font.pointSize: 16
                 Layout.alignment: Qt.AlignCenter
+                font {
+                    bold: true
+                    pointSize: 16
+                }
             }
 
             Rectangle {
                 color: "#ffffff"
                 Layout.fillWidth: true
-                Layout.preferredHeight: 185
+                Layout.preferredHeight: 230
 
                 ListView {
                     id: productList
-                    spacing: 0
+                    spacing: 15
                     clip: true
                     model: SelectedProductModel
                     delegate: productDelegate
                     anchors.fill: parent
+                    anchors.topMargin: 8
 
                     Component {
                         id: productDelegate
-                        ProductSwipeDelegate {
+                        SelectedProductDelegate {
                             width: productList.width
                             height: 60
-                            visibleCheckBox: false
-                            swipe.enabled: false
                             bottomLineVisible: false
                             topLineVisible: false
                             productImage: imagePath
@@ -90,7 +93,7 @@ BaseCardScreen {
             WideActionButton {
                 id: addButton
                 text: qsTr("Cancel")
-                Material.accent: "#7e726d"
+                Material.accent: ColorFactory.color(DesignFactory.LightButton)
                 Layout.bottomMargin: 5
                 onClicked: cardScreen.rejectSale()
             }

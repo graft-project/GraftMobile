@@ -21,6 +21,7 @@ DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
     mColors.insert(AndroidStatusBar, QStringLiteral("#233146"));
     mColors.insert(MainText, QStringLiteral("#404040"));
     mColors.insert(ProductText, QStringLiteral("#000000"));
+    mColors.insert(LightButton, QStringLiteral("#7e726d"));
     init();
 
     #ifdef Q_OS_IOS

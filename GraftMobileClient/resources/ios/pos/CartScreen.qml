@@ -24,13 +24,12 @@ BaseCardScreen {
 
         Pane {
             height: 120
+            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
             anchors {
                 right: parent.right
                 left: parent.left
                 top: parent.top
             }
-            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-            Material.elevation: 8
 
             Label {
                 text: qsTr("Total checkout: ") + price + "$"
@@ -46,13 +45,16 @@ BaseCardScreen {
             Layout.alignment: Qt.AlignCenter
             Layout.preferredHeight: 180
             Layout.preferredWidth: height
+            Layout.topMargin: 25
         }
 
         Text {
             text: qsTr("SCAN WITH WALLET")
-            font.pointSize: 16
             Layout.alignment: Qt.AlignCenter
-
+            font {
+                bold: true
+                pointSize: 16
+            }
         }
 
         ListView {
@@ -62,23 +64,22 @@ BaseCardScreen {
             model: SelectedProductModel
             delegate: productDelegate
             Layout.fillWidth: true
-            Layout.topMargin: 40
             Layout.preferredHeight: 185
+            Layout.topMargin: 25
 
             Component {
                 id: productDelegate
-                ProductSwipeDelegate {
+                SelectedProductDelegate {
                     width: productList.width
                     height: 60
-                    visibleCheckBox: false
-                    swipe.enabled: false
                     bottomLineVisible: index === (productList.count - 1)
                     productImage: imagePath
                     productPrice: cost
                     productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
                     productText {
+                        font.bold: true
                         text: name
-                        color: ColorFactory.color(DesignFactory.MainText)
+                        color: ColorFactory.color(DesignFactory.ProductText)
                     }
                 }
             }
@@ -87,7 +88,7 @@ BaseCardScreen {
         WideActionButton {
             id: addButton
             text: qsTr("Cancel")
-            Material.accent: "#7e726d"
+            Material.accent: ColorFactory.color(DesignFactory.LightButton)
             Layout.bottomMargin: 5
             onClicked: cardScreen.rejectSale()
         }
