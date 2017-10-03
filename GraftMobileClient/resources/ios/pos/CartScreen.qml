@@ -69,6 +69,7 @@ BaseCardScreen {
 
             Component {
                 id: productDelegate
+
                 SelectedProductDelegate {
                     width: productList.width
                     height: 60
