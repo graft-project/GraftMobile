@@ -6,30 +6,63 @@ import com.graft.design 1.0
 import "../components"
 import "../"
 
-BaseScreen {
-    id: mainScreen
+BaseCardScreen {
+    id: cardScreen
+
+    property real price: 0
+
     title: qsTr("Cart")
-//    screenHeader {
-//    }
 
     Rectangle {
         anchors.fill: parent
-        color: "red"//"#e9e9e9"
+        color: "#e9e9e9"
 
         ColumnLayout {
             spacing: 0
             anchors.fill: parent
 
+            Pane {
+                height: 120
+                anchors {
+                    right: parent.right
+                    left: parent.left
+                    top: parent.top
+                }
+                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+                Material.elevation: 8
+
+                Label {
+                    text: qsTr("Total checkout: ") + price + "$"
+                    font.pointSize: 18
+                    color: "#ffffff"
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Image {
+                cache: false
+                source: GraftClient.qrCodeImage()
+                Layout.alignment: Qt.AlignCenter
+                Layout.preferredHeight: 180
+                Layout.preferredWidth: height
+            }
+
+            Text {
+                text: qsTr("SCAN WITH WALLET")
+                font.pointSize: 16
+                Layout.alignment: Qt.AlignCenter
+            }
+
             Rectangle {
+                color: "#ffffff"
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                color: "blue"//"#ffffff"
+                Layout.preferredHeight: 185
 
                 ListView {
                     id: productList
                     spacing: 0
                     clip: true
-                    model: ProductModel
+                    model: SelectedProductModel
                     delegate: productDelegate
                     anchors.fill: parent
 
@@ -38,7 +71,8 @@ BaseScreen {
                         ProductSwipeDelegate {
                             width: productList.width
                             height: 60
-                            selectState: selected
+                            visibleCheckBox: false
+                            swipe.enabled: false
                             bottomLineVisible: false
                             topLineVisible: false
                             productImage: imagePath
@@ -55,25 +89,10 @@ BaseScreen {
 
             WideActionButton {
                 id: addButton
-                text: qsTr("Checkout")
-                Layout.bottomMargin: 90
-                Layout.topMargin: 10
-                onClicked: GraftClient.sale()
-            }
-
-            RoundButton {
-                padding: 25
-                highlighted: true
-                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                Layout.preferredHeight: addButton.height * 1.4
-                Layout.preferredWidth: height
-                Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 10
-                Layout.bottomMargin: 10
-                contentItem: Image {
-                    source:  "qrc:/imgs/plus_icon.png"
-                }
-                onClicked: pushScreen.openAddScreen()
+                text: qsTr("Cancel")
+                Material.accent: "#7e726d"
+                Layout.bottomMargin: 5
+                onClicked: cardScreen.rejectSale()
             }
         }
     }

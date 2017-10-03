@@ -80,13 +80,12 @@ GraftApplicationWindow {
     }
 
     function openAddingScreen() {
-//        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
-//                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
-        stack.push("qrc:/pos/CartScreen.qml", {"pushScreen": screenTransitions()})
+        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
+                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": screenTransitions(),
+        stack.push("qrc:/pos/CartScreen.qml", {"pushScreen": screenTransitions(),
                        "price": ProductModel.totalCost()})
     }
 
