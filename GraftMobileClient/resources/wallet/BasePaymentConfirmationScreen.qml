@@ -10,7 +10,7 @@ BaseScreen {
 
     title: qsTr("Pay")
     screenHeader {
-        navigationButtonState: true
+        navigationButtonState: Qt.platform.os === "android" ? true : false
     }
 
     Connections {

@@ -9,10 +9,9 @@ BaseScreen {
     id: root
 
     property int elevation: 0
-//    property alias backgroundColor: backgroundRect.color
 
     screenHeader {
-        navigationButtonState: true
+        navigationButtonState: Qt.platform.os === "android" ? true : false
         actionButton: true
     }
     action: pushScreen.openBalanceScreen
