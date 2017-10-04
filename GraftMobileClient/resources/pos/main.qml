@@ -80,7 +80,8 @@ GraftApplicationWindow {
     }
 
     function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
+//        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
+        stack.push("qrc:/pos/SettingScreen.qml", {"pushScreen": screenTransitions(),
                        "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
