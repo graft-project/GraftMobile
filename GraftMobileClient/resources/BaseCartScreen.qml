@@ -2,6 +2,8 @@ import QtQuick 2.0
 import "components"
 
 BaseScreen {
+    property real price: 0
+    title: qsTr("Cart")
 
     Connections {
         target: GraftClient

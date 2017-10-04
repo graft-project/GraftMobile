@@ -6,12 +6,8 @@ import com.graft.design 1.0
 import "../components"
 import "../"
 
-BaseCardScreen {
+BaseCartScreen {
     id: cardScreen
-
-    property real price: 0
-
-    title: qsTr("Cart")
     screenHeader {
         navigationButtonState: true
         actionButtonState: true
