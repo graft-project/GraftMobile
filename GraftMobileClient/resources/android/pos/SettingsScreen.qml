@@ -5,20 +5,20 @@ import "../components"
 import "../"
 
 BaseScreen {
-    id: mainScreen
     title: qsTr("Settings")
     screenHeader {
-        actionButtonState: true
-        actionText: qsTr("Save")
+        navigationButtonState: true
+        actionButton: true
     }
 
     ColumnLayout {
+        spacing: 0
         anchors.fill: parent
 
         LinearEditItem {
-            title: qsTr("Company:")
+            title: qsTr("Company Name")
             maximumLength: 50
-            Layout.topMargin: 5
+            Layout.topMargin: 10
             Layout.leftMargin: 10
             Layout.rightMargin: 10
         }
@@ -28,8 +28,7 @@ BaseScreen {
         }
 
         WideActionButton {
-            id: addButton
-            text: qsTr("Done")
+            text: qsTr("Save changes")
             Layout.bottomMargin: 10
             onClicked: pushScreen.doneSaving()
         }

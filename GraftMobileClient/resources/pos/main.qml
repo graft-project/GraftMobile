@@ -67,7 +67,7 @@ GraftApplicationWindow {
         transitionsMap["initializingCheckout"] = openPaymentScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openProductScreen"] = openMainScreen
-        transitionsMap["openSettingsScreen"] = openSettingScreen
+        transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["goBack"] = turnBack
         return transitionsMap
     }
@@ -98,7 +98,7 @@ GraftApplicationWindow {
         stack.pop(mainScreen)
     }
 
-    function openSettingScreen() {
+    function openSettingsScreen() {
         stack.push("qrc:/pos/SettingScreen.qml", {"pushScreen": screenTransitions()})
     }
 
