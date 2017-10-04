@@ -51,7 +51,7 @@ GraftApplicationWindow {
 
     BalanceScreen {
         id: initialScreen
-        amountGraft: 1.14
+        amountGraft: "1.14"
         amountMoney: 145
         pushScreen: transitionsBetweenScreens()
     }

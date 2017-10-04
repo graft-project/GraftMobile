@@ -65,5 +65,6 @@
         <file alias="MasterCard_Logo.png">imgs/MasterCard_Logo.png</file>
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
+        <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
     </qresource>
 </RCC>

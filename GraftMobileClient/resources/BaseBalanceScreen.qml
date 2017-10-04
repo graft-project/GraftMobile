@@ -6,9 +6,10 @@ import com.graft.design 1.0
 import "components"
 
 BaseScreen {
-    id: root
-
+    property alias amountMoney: balanceItem.amountMoneyCost
+    property alias amountGraft: balanceItem.amountGraftCost
     property alias splitterVisible: splitter.visible
+    property alias graftWalletLogo: graftWalletLogo.source
     default property alias content: placeholder.data
 
     title: qsTr("Wallet")
@@ -41,6 +42,7 @@ BaseScreen {
             }
 
             BalanceViewItem {
+                id: balanceItem
                 Layout.fillWidth: true
                 amountMoneyCost: 145
                 amountGraftCost: "1.14"
