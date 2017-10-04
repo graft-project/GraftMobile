@@ -7,7 +7,7 @@ import "../components"
 import "../"
 
 BaseCartScreen {
-    id: cardScreen
+    id: cartScreen
 
     Rectangle {
         anchors.fill: parent
@@ -91,11 +91,10 @@ BaseCartScreen {
             }
 
             WideActionButton {
-                id: addButton
                 text: qsTr("Cancel")
                 Material.accent: ColorFactory.color(DesignFactory.LightButton)
                 Layout.bottomMargin: 5
-                onClicked: cardScreen.rejectSale()
+                onClicked: cartScreen.rejectSale()
             }
         }
     }
