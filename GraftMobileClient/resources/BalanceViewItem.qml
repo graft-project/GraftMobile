@@ -7,7 +7,8 @@ Rectangle {
     property alias amountGraftCost: amountGraftText.text
 
     height: 70
-    color: "transparent"
+    color: "#ffffff"
+//    color: "transparent"
 
     RowLayout {
         anchors {

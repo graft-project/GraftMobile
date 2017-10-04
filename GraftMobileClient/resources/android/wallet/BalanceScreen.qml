@@ -16,6 +16,7 @@ BaseBalanceScreen {
             Layout.fillHeight: true
             Layout.leftMargin: 8
             Layout.rightMargin: 8
+            Layout.topMargin: 5
             model: CardModel
             clip: true
             spacing: 15
@@ -37,8 +38,9 @@ BaseBalanceScreen {
         }
 
         WideActionButton {
-            text: qsTr("PAY")
-            onPressed: pushScreen.openQRCodeScanner()
+            text: qsTr("Pay")
+            Layout.bottomMargin: 15
+            onClicked: pushScreen.openQRCodeScanner()
         }
     }
 }

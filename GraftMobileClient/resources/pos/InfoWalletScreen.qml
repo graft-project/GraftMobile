@@ -6,7 +6,7 @@ import "../components"
 BaseBalanceScreen {
     splitterVisible: false
     screenHeader {
-        navigationButtonState: true
+        navigationButtonState: Qt.platform.os === "ios" ? false : true
     }
 
     ColumnLayout {
@@ -16,7 +16,6 @@ BaseBalanceScreen {
         Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            color: "red"
         }
 
         WideActionButton {
@@ -26,6 +25,7 @@ BaseBalanceScreen {
 
         WideActionButton {
             text: qsTr("Chase XXX929")
+            Layout.bottomMargin: 15
             onClicked: {}
         }
     }
