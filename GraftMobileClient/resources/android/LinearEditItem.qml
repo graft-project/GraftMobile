@@ -24,6 +24,7 @@ ColumnLayout {
         Layout.fillWidth: true
         verticalAlignment: Qt.AlignTop
         color: "#404040"
+        inputMethodHints: Qt.ImhNoPredictiveText
         onWrapModeChanged: {
             if (wrapMode === TextField.NoWrap) {
                 Layout.fillHeight = false

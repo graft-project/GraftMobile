@@ -11,6 +11,7 @@
         <file alias="AccountDelegate.qml">AccountDelegate.qml</file>
         <file alias="AddCardButton.qml">AddCardButton.qml</file>
         <file alias="ProductSwipeDelegate.qml">ProductSwipeDelegate.qml</file>
+        <file alias="BaseSettingsScreen.qml">BaseSettingsScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

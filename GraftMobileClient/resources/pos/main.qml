@@ -99,7 +99,7 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
-        stack.push("qrc:/pos/SettingScreen.qml", {"pushScreen": screenTransitions()})
+        stack.push("qrc:/pos/SettingsScreen.qml", {"pushScreen": screenTransitions()})
     }
 
     function turnBack() {
