@@ -14,5 +14,6 @@
     <qresource prefix="/wallet">
         <file alias="GraftToolBar.qml">ios/wallet/GraftToolBar.qml</file>
         <file alias="BalanceScreen.qml">ios/wallet/BalanceScreen.qml</file>
+        <file alias="PaymentConfirmationScreen.qml">ios/wallet/PaymentConfirmationScreen.qml</file>
     </qresource>
 </RCC>

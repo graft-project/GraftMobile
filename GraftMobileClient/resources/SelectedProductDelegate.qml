@@ -9,6 +9,7 @@ Rectangle {
     property alias topLineVisible: topLine.visible
     property alias bottomLineVisible: bottomLine.visible
     property alias productImage: picture.source
+    property alias visibleProductImage: opacityMask.visible
     property bool hideTopLineMargin: false
     property bool hideBottomLineMargin: false
 
@@ -17,7 +18,7 @@ Rectangle {
     }
 
     onHideBottomLineMarginChanged: {
-        bottomLine.anchors.rightMargin = hideBottomLineMargin ? 0 :12
+        bottomLine.anchors.rightMargin = hideBottomLineMargin ? 0 : 12
     }
 
     height: parent.width / 6 + 20
@@ -29,8 +30,6 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            leftMargin: 12
-            rightMargin: 12
         }
         color: "#e6e6e8"
     }
@@ -46,8 +45,6 @@ Rectangle {
         OpacityMask {
             id: opacityMask
             maskSource: circle
-            Layout.leftMargin: 12
-            Layout.rightMargin: 12
             Layout.preferredWidth: 46
             Layout.preferredHeight: 46
             source: picture.status === Image.Ready ? picture : greyPicture
@@ -101,8 +98,6 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            leftMargin: 12
-            rightMargin: 12
         }
         color: "#e6e6e8"
     }

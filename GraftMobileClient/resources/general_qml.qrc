@@ -21,7 +21,7 @@
     </qresource>
     <qresource prefix="/wallet">
         <file alias="main.qml">wallet/main.qml</file>
-        <file alias="PaymentConfirmationView.qml">wallet/PaymentConfirmationView.qml</file>
+        <file alias="BasePaymentConfirmationScreen.qml">wallet/BasePaymentConfirmationScreen.qml</file>
         <file alias="BaseBalanceScreen.qml">wallet/BaseBalanceScreen.qml</file>
         <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
         <file alias="AddCardView.qml">wallet/AddCardView.qml</file>

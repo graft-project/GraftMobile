@@ -17,7 +17,7 @@ BaseScreen {
 
         onReadyToPayReceived: {
             if (result === true) {
-                pushScreen.paymentScreen()
+                pushScreen.openPaymentConfirmationScreen()
             }
             else {
                 pushScreen.openBalanceScreen()
@@ -32,6 +32,9 @@ BaseScreen {
     }
 
     title: qsTr("Pay")
+    screenHeader {
+        navigationButtonState: true
+    }
 
     Camera {
         id: camera
