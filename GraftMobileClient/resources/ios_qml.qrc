@@ -5,11 +5,14 @@
         <file alias="WideActionButton.qml">ios/WideActionButton.qml</file>
         <file alias="ToolBarButton.qml">ios/ToolBarButton.qml</file>
         <file alias="LinearEditItem.qml">ios/LinearEditItem.qml</file>
+        <file alias="PaymentScreen.qml">ios/PaymentScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>
         <file alias="GraftToolBar.qml">ios/pos/GraftToolBar.qml</file>
         <file alias="ProductItemView.qml">ios/pos/ProductItemView.qml</file>
+        <file alias="SettingsScreen.qml">ios/pos/SettingsScreen.qml</file>
+        <file alias="CartScreen.qml">ios/pos/CartScreen.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="GraftToolBar.qml">ios/wallet/GraftToolBar.qml</file>

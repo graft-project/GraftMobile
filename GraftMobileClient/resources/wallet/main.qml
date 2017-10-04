@@ -86,7 +86,8 @@ GraftApplicationWindow {
                        "productModel": PaymentProductModel})
     }
     function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+        stack.push("qrc:/components/PaymentScreen.qml", {"pushScreen": transitionsBetweenScreens(),
+                       "title": qsTr("Pay")})
     }
 
     function showMenu() {

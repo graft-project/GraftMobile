@@ -9,16 +9,13 @@ import "../components"
 BasePaymentConfirmationScreen {
     id: root
 
-    property real totalAmount: 0
-    property alias productModel: productList.model
-
     Pane {
         id: totalPriceLabel
         height: 50
         anchors {
-            right: parent.right
-            left: parent.left
             top: parent.top
+            left: parent.left
+            right: parent.right
         }
         Material.background: ColorFactory.color(DesignFactory.CircleBackground)
         Material.elevation: 4
@@ -27,10 +24,9 @@ BasePaymentConfirmationScreen {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: 12
             }
             color: "#ffffff"
-            text: qsTr("Total Checkout: ") + totalAmount + '$'
+            text: qsTr("Total Checkout: %1$").arg(totalAmount)
         }
     }
 
@@ -39,24 +35,20 @@ BasePaymentConfirmationScreen {
             top: totalPriceLabel.bottom
             topMargin: 10
             bottom: parent.bottom
+            left: parent.left
+            right: parent.right
         }
-        width: parent.width
 
         ListView {
             id: productList
             Layout.fillHeight: true
             Layout.fillWidth: true
             clip: true
+            model: productModel
             delegate: SelectedProductDelegate {
                 height: 50
-                parent: productList
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: 12
-                    rightMargin: 12
-                }
-                visibleProductImage: false
+                width: productList.width
+                productImageVisible: false
                 productText.text: name
                 productPrice: cost
                 productPriceTextColor: "#797979"
@@ -70,7 +62,6 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             Button {
-                Layout.preferredWidth: parent.width / 2.5
                 flat: true
                 text: qsTr("CANCEL")
                 onClicked: cancelPay()

@@ -5,6 +5,9 @@ import "../components"
 BaseScreen {
     id: root
 
+    property real totalAmount: 0
+    property var productModel
+
     title: qsTr("Pay")
     screenHeader {
         navigationButtonState: true
@@ -14,13 +17,13 @@ BaseScreen {
         target: GraftClient
 
         onPayReceived: {
-            if (result != true) {
+            if (result !== true) {
                 pushScreen.openBalanceScreen()
             }
         }
 
         onPayStatusReceived: {
-            if (result != true) {
+            if (result !== true) {
                 pushScreen.openBalanceScreen()
             }
         }

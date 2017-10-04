@@ -24,7 +24,8 @@ public:
         AndroidStatusBar,
         MainText,
         ProductText,
-        ItemText
+        ItemText,
+        LightButton
     };
     Q_ENUM(ColorTypes)
 

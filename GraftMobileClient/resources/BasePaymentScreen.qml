@@ -8,13 +8,13 @@ import "components"
 BaseScreen {
     id: root
 
-//    property alias elevationCompleteLabel: completeLabel.elevation
-    title: qsTr("Pay")
+    property int elevation: 0
+
     screenHeader {
         navigationButtonState: true
         actionButton: true
-        action: pushScreen.openBalanceScreen()
     }
+    action: pushScreen.openBalanceScreen
 
     Pane {
         id: completeLabel
@@ -25,7 +25,7 @@ BaseScreen {
             top: parent.top
         }
         Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-        Material.elevation: 4
+        Material.elevation: elevation
 
         Text {
             anchors {
@@ -34,31 +34,31 @@ BaseScreen {
                 leftMargin: 12
             }
             color: "#ffffff"
-            text: qsTr("Total Checkout: ") + totalAmount + '$'
+            text: qsTr("Paid complete!")
         }
     }
 
     ColumnLayout {
-        width: parent.width
         anchors {
             top: completeLabel.bottom
             topMargin: 10
+            left: parent.left
+            right: parent.right
             bottom: parent.bottom
         }
         spacing: 10
 
         Image {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            Layout.preferredHeight: parent.width / 1.75
-            Layout.preferredWidth: parent.width / 1.75
+            Layout.preferredHeight: 200
+            Layout.preferredWidth: height
             fillMode: Image.PreserveAspectFit
-
             source: "qrc:/imgs/paid_icon.png"
         }
 
         WideActionButton {
             text: qsTr("DONE")
-            onClicked: confirmPay()
+            onClicked: pushScreen.openBalanceScreen()
         }
     }
 }

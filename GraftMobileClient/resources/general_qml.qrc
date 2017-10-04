@@ -11,11 +11,12 @@
         <file alias="AccountDelegate.qml">AccountDelegate.qml</file>
         <file alias="AddCardButton.qml">AddCardButton.qml</file>
         <file alias="ProductSwipeDelegate.qml">ProductSwipeDelegate.qml</file>
-        <file alias="PaymentScreen.qml">PaymentScreen.qml</file>
+        <file alias="BasePaymentScreen.qml">BasePaymentScreen.qml</file>
+        <file alias="BaseSettingsScreen.qml">BaseSettingsScreen.qml</file>
+        <file alias="BaseCartScreen.qml">BaseCartScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
-        <file alias="PaymentScreen.qml">pos/PaymentScreen.qml</file>
         <file alias="AddingScreen.qml">pos/AddingScreen.qml</file>
         <file alias="InfoWallet.qml">pos/InfoWallet.qml</file>
     </qresource>
