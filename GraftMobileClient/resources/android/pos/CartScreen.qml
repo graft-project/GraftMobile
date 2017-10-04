@@ -29,7 +29,7 @@ BaseCartScreen {
 
                 Label {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("Total checkout: ") + price + "$"
+                    text: qsTr("Total checkout: %1$").arg(price)
                     font.pointSize: 18
                     color: "#ffffff"
                 }

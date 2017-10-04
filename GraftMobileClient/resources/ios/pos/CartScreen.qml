@@ -7,7 +7,7 @@ import "../components"
 import "../"
 
 BaseCartScreen {
-    id: cardScreen
+    id: cartScreen
     screenHeader {
         navigationButtonState: true
         actionButtonState: true
@@ -29,7 +29,7 @@ BaseCartScreen {
 
             Label {
                 anchors.centerIn: parent
-                text: qsTr("Total checkout: ") + price + "$"
+                text: qsTr("Total checkout: %1$").arg(price)
                 font.pointSize: 18
                 color: "#ffffff"
             }
@@ -83,11 +83,10 @@ BaseCartScreen {
         }
 
         WideActionButton {
-            id: addButton
             text: qsTr("Cancel")
             Material.accent: ColorFactory.color(DesignFactory.LightButton)
             Layout.bottomMargin: 5
-            onClicked: cardScreen.rejectSale()
+            onClicked: cartScreen.rejectSale()
         }
     }
 }
