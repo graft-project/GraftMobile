@@ -18,7 +18,6 @@ BaseScreen {
         LinearEditItem {
             title: qsTr("Company:")
             maximumLength: 50
-            Layout.fillWidth: true
             Layout.topMargin: 5
             Layout.leftMargin: 10
             Layout.rightMargin: 10

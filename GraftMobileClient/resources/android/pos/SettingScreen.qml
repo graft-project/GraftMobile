@@ -18,22 +18,20 @@ BaseScreen {
 
         LinearEditItem {
             title: qsTr("Company Name")
-//            wrapMode: TextInput.WordWrap
             maximumLength: 50
-//            Layout.fillWidth: true
-//            Layout.topMargin: 5
-//            Layout.leftMargin: 10
-//            Layout.rightMargin: 10
+            Layout.topMargin: 10
+            Layout.leftMargin: 10
+            Layout.rightMargin: 10
         }
 
-//        Rectangle {
-//            Layout.fillHeight: true
-//        }
+        Rectangle {
+            Layout.fillHeight: true
+        }
 
         WideActionButton {
             id: addButton
             text: qsTr("Save changes")
-//            Layout.bottomMargin: 10
+            Layout.bottomMargin: 10
             onClicked: pushScreen.doneSaving()
         }
     }
