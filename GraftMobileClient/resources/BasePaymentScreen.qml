@@ -9,6 +9,7 @@ BaseScreen {
     id: root
 
     property int elevation: 0
+//    property alias backgroundColor: backgroundRect.color
 
     screenHeader {
         navigationButtonState: true
@@ -48,17 +49,30 @@ BaseScreen {
         }
         spacing: 10
 
-        Image {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            Layout.preferredHeight: 200
-            Layout.preferredWidth: height
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/imgs/paid_icon.png"
-        }
+        Rectangle {
+            id: backgroundRect
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
 
-        WideActionButton {
-            text: qsTr("DONE")
-            onClicked: pushScreen.openBalanceScreen()
+            Image {
+                anchors.centerIn: parent
+                height: 200
+                width: height
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/imgs/paid_icon.png"
+            }
+
+            WideActionButton {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    bottomMargin: 5
+                }
+                text: qsTr("DONE")
+                onClicked: pushScreen.openBalanceScreen()
+            }
         }
     }
 }

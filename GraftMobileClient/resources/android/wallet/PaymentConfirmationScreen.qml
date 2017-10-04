@@ -62,6 +62,7 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             Button {
+                Layout.preferredWidth: productList.width / 2.75
                 flat: true
                 text: qsTr("CANCEL")
                 onClicked: cancelPay()
