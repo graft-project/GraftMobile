@@ -5,6 +5,9 @@ import "../components"
 
 BaseBalanceScreen {
     splitterVisible: false
+    screenHeader {
+        navigationButtonState: Qt.platform.os === "ios" ? false : true
+    }
 
     ColumnLayout {
         anchors.fill: parent
