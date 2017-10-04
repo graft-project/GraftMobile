@@ -11,6 +11,7 @@
         <file alias="GraftToolBar.qml">ios/pos/GraftToolBar.qml</file>
         <file alias="ProductItemView.qml">ios/pos/ProductItemView.qml</file>
         <file alias="SettingsScreen.qml">ios/pos/SettingsScreen.qml</file>
+        <file alias="CartScreen.qml">ios/pos/CartScreen.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="GraftToolBar.qml">ios/wallet/GraftToolBar.qml</file>

@@ -14,6 +14,7 @@
         <file alias="GraftMenu.qml">android/pos/GraftMenu.qml</file>
         <file alias="ProductItemView.qml">android/pos/ProductItemView.qml</file>
         <file alias="SettingsScreen.qml">android/pos/SettingsScreen.qml</file>
+        <file alias="CartScreen.qml">android/pos/CartScreen.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="GraftMenu.qml">android/wallet/GraftMenu.qml</file>
