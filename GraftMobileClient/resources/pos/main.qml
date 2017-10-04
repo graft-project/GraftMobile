@@ -85,7 +85,7 @@ GraftApplicationWindow {
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/pos/PaymentScreen.qml", {"pushScreen": screenTransitions(),
+        stack.push("qrc:/pos/CartScreen.qml", {"pushScreen": screenTransitions(),
                        "price": ProductModel.totalCost()})
     }
 
