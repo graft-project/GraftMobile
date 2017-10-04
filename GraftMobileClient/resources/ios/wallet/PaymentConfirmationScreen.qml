@@ -9,20 +9,17 @@ import "../components"
 BasePaymentConfirmationScreen {
     id: root
 
-    property real totalAmount: 0
-    property alias productModel: productList.model
-
     Rectangle {
         id: totalPriceLabel
-        anchors.top: parent.top
-        width: parent.width
         height: 50
+        width: parent.width
+        anchors.top: parent.top
         color: ColorFactory.color(DesignFactory.CircleBackground)
 
         Text {
             anchors.centerIn: parent
             color: "#ffffff"
-            text: qsTr("Total Checkout: ") + totalAmount + '$'
+            text: "%1%2%3".arg(qsTr("Total Checkout: ")).arg(totalAmount).arg('$')
         }
     }
 
@@ -30,23 +27,19 @@ BasePaymentConfirmationScreen {
         anchors {
             top: totalPriceLabel.bottom
             bottom: parent.bottom
+            left: parent.left
+            right: parent.right
         }
-        width: parent.width
 
         ListView {
             id: productList
             Layout.fillHeight: true
             Layout.fillWidth: true
             clip: true
+            model: productModel
             delegate: SelectedProductDelegate {
                 height: 50
-                parent: productList
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: 12
-                    rightMargin: 12
-                }
+                width: productList.width
                 visibleProductImage: false
                 productText.text: name
                 productPrice: cost

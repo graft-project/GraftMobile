@@ -30,6 +30,8 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
+            leftMargin: 12
+            rightMargin: 12
         }
         color: "#e6e6e8"
     }
@@ -39,6 +41,8 @@ Rectangle {
         anchors {
             left: parent.left
             right: parent.right
+            leftMargin: 12
+            rightMargin: 12
             verticalCenter: parent.verticalCenter
         }
 
@@ -98,6 +102,8 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
+            leftMargin: 12
+            rightMargin: 12
         }
         color: "#e6e6e8"
     }
