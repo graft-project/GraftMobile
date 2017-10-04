@@ -28,7 +28,7 @@ BaseScreen {
 
     function confirmPay() {
         GraftClient.pay()
-        //TODO: go to the PaymentScreen(POS and Wallet)
+        pushScreen.openPaymentScreen()
     }
 
     function cancelPay() {
