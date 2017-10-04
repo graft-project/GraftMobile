@@ -1,4 +1,4 @@
-package com.vakoms.qt.graftwallet;
+package org.graft.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
