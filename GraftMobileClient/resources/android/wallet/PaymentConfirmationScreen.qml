@@ -23,7 +23,7 @@ BasePaymentConfirmationScreen {
                 left: parent.left
             }
             color: "#ffffff"
-            text: qsTr("Total Checkout: ") + totalAmount + '$'
+            text: "%1%2$".arg(qsTr("Total Checkout: ")).arg(totalAmount)
         }
     }
 

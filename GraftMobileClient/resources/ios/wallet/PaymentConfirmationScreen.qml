@@ -19,7 +19,7 @@ BasePaymentConfirmationScreen {
         Text {
             anchors.centerIn: parent
             color: "#ffffff"
-            text: "%1%2%3".arg(qsTr("Total Checkout: ")).arg(totalAmount).arg('$')
+            text: "%1%2$".arg(qsTr("Total Checkout: ")).arg(totalAmount)
         }
     }
 
