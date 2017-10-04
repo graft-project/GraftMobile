@@ -6,6 +6,9 @@ BaseScreen {
     id: root
 
     title: qsTr("Pay")
+    screenHeader {
+        navigationButtonState: true
+    }
 
     Connections {
         target: GraftClient

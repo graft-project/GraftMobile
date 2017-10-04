@@ -32,6 +32,9 @@ BaseScreen {
     }
 
     title: qsTr("Pay")
+    screenHeader {
+        navigationButtonState: true
+    }
 
     Camera {
         id: camera
