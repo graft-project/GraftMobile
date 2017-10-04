@@ -13,6 +13,7 @@ BasePaymentConfirmationScreen {
     property alias productModel: productList.model
 
     Rectangle {
+        id: totalPriceLabel
         anchors.top: parent.top
         width: parent.width
         height: 50
