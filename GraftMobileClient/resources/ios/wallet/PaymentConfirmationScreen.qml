@@ -12,14 +12,17 @@ BasePaymentConfirmationScreen {
     Rectangle {
         id: totalPriceLabel
         height: 50
-        width: parent.width
-        anchors.top: parent.top
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
         color: ColorFactory.color(DesignFactory.CircleBackground)
 
         Text {
             anchors.centerIn: parent
             color: "#ffffff"
-            text: "%1%2$".arg(qsTr("Total Checkout: ")).arg(totalAmount)
+            text: qsTr("Total Checkout: %1$").arg(totalAmount)
         }
     }
 
@@ -40,7 +43,7 @@ BasePaymentConfirmationScreen {
             delegate: SelectedProductDelegate {
                 height: 50
                 width: productList.width
-                visibleProductImage: false
+                productImageVisible: false
                 productText.text: name
                 productPrice: cost
                 productPriceTextColor: "#797979"
@@ -55,7 +58,6 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             WideActionButton {
-                Layout.preferredWidth: parent.width / 2.5
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
                 onClicked: cancelPay()

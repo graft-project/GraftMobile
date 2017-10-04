@@ -9,7 +9,7 @@ Rectangle {
     property alias topLineVisible: topLine.visible
     property alias bottomLineVisible: bottomLine.visible
     property alias productImage: picture.source
-    property alias visibleProductImage: opacityMask.visible
+    property alias productImageVisible: opacityMask.visible
     property bool hideTopLineMargin: false
     property bool hideBottomLineMargin: false
 
