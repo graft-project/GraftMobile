@@ -91,7 +91,7 @@ GraftApplicationWindow {
     }
 
     function openInfoWalletScreen() {
-        stack.push("qrc:/pos/InfoWallet.qml", {"pushScreen": screenTransitions()})
+        stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions()})
     }
 
     function openMainScreen() {
