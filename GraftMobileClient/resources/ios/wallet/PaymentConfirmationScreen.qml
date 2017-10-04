@@ -52,7 +52,7 @@ BasePaymentConfirmationScreen {
                 productPrice: cost
                 productPriceTextColor: "#797979"
                 topLineVisible: true
-                bottomLineVisible: productList.currentIndex > 0 || productList.currentIndex < (productList.count - 2) ? false : true
+                bottomLineVisible: (index >= 0 && index < (productList.count - 1)) ? false : true
             }
         }
 
