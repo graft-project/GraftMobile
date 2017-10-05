@@ -10,7 +10,7 @@ BaseCartScreen {
     id: cartScreen
     screenHeader {
         navigationButtonState: true
-        actionButtonState: true
+        actionButton: true
         actionText: qsTr("Clear")
     }
 
