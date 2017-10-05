@@ -60,7 +60,7 @@ BaseScreen {
                 bottomMargin: 5
             }
             text: qsTr("DONE")
-            onClicked: pushScreen
+            onClicked: pushScreen()
         }
     }
 }
