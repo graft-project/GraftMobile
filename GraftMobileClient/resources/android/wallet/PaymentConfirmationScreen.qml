@@ -9,40 +9,49 @@ import "../components"
 BasePaymentConfirmationScreen {
     id: root
 
-    Pane {
-        id: totalPriceLabel
-        height: 50
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-        Material.elevation: 4
+    Rectangle {
+        anchors.fill: parent
+        color: "#FFFFFF"
 
-        Text {
+        Pane {
+            id: totalPriceLabel
+
+            height: 50
             anchors {
-                verticalCenter: parent.verticalCenter
+                right: parent.right
                 left: parent.left
+                top: parent.top
             }
-            color: "#ffffff"
-            text: qsTr("Total Checkout: %1$").arg(totalAmount)
-        }
-    }
+            Material.elevation: 5
+            padding: 0
 
-    ColumnLayout {
-        anchors {
-            top: totalPriceLabel.bottom
-            topMargin: 10
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
+            contentItem: Rectangle {
+                color: ColorFactory.color(DesignFactory.CircleBackground)
+
+                Text {
+                    id: completeLabelText
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: 12
+                    }
+                    horizontalAlignment: Text.AlignLeft
+                    color: "#FFFFFF"
+                    text: qsTr("Total Checkout: %1$").arg(totalAmount)
+                }
+            }
         }
 
         ListView {
             id: productList
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            anchors {
+                top: totalPriceLabel.bottom
+                topMargin: 10
+                bottom: bottomButtons.top
+                left: parent.left
+                right: parent.right
+            }
             clip: true
             model: productModel
             delegate: SelectedProductDelegate {
@@ -58,11 +67,17 @@ BasePaymentConfirmationScreen {
         }
 
         RowLayout {
-            Layout.fillWidth: true
+            id: bottomButtons
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                bottomMargin: 10
+            }
             spacing: 0
 
             Button {
-                Layout.preferredWidth: parent.width / 2.5
+                Layout.preferredWidth: productList.width / 2.75
                 flat: true
                 text: qsTr("CANCEL")
                 onClicked: cancelPay()

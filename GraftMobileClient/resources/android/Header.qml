@@ -64,7 +64,7 @@ BaseHeader {
         }
 
         Image {
-            visible: rootItem.actionButton
+            visible: rootItem.actionButtonState
             Layout.preferredHeight: 15
             Layout.preferredWidth: 23
             Layout.alignment: Qt.AlignRight

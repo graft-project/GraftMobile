@@ -9,6 +9,6 @@ BaseSettingsScreen {
 
     screenHeader {
         navigationButtonState: true
-        actionButton: true
+        actionButtonState: true
     }
 }
