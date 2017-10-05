@@ -9,23 +9,28 @@ import "../"
 BaseScreen {
     id: additionItem
     title: qsTr("Add item")
-    screenHeader {
-//        android
-//        navigationButtonState: false
-//        actionButton: true
+    action: additionItem.confirmProductParameters
+    Component.onCompleted: init()
 
-//        ios
-//        navigationButtonState: true
-//        navigationText: qsTr("Cancel")
-//        actionButtonState: true
-//        actionText: qsTr("Done")
+    screenHeader {
+        navigationButtonState: Qt.platform.os === "ios"
+        actionButtonState: true
     }
 
     property alias currencyModel: productItem.currencyModel
 
+    function init() {
+        if (Qt.platform.os === "ios") {
+            navigationText: qsTr("Cancel")
+            actionText: qsTr("Done")
+        }
+    }
+
     function confirmProductParameters() {
-    ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
-                     productItem.currencyModel, productItem.descriptionText)
+        ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
+                         productItem.currencyModel, productItem.descriptionText)
+        additionItem.pushScreen.openProductScreen()
+        GraftClient.save()
     }
 
     ColumnLayout {
@@ -49,8 +54,6 @@ BaseScreen {
             text: qsTr("Confirm")
             onClicked: {
                 confirmProductParameters()
-                additionItem.pushScreen.openProductScreen()
-                GraftClient.save()
             }
         }
     }
