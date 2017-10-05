@@ -10,34 +10,36 @@ BasePaymentConfirmationScreen {
     id: root
 
     Rectangle {
-        id: totalPriceLabel
-        height: 50
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        color: ColorFactory.color(DesignFactory.CircleBackground)
+        anchors.fill: parent
+        color: "#FFFFFF"
 
-        Text {
-            anchors.centerIn: parent
-            color: "#ffffff"
-            text: qsTr("Total Checkout: %1$").arg(totalAmount)
-        }
-    }
+        Pane {
+            id: totalPriceLabel
+            height: 50
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
+            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+            Material.elevation: 0
 
-    ColumnLayout {
-        anchors {
-            top: totalPriceLabel.bottom
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
+            Text {
+                anchors.centerIn: parent
+                color: "#FFFFFF"
+                text: qsTr("Total Checkout: %1$").arg(totalAmount)
+            }
         }
 
         ListView {
             id: productList
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            anchors {
+                top: totalPriceLabel.bottom
+                topMargin: 10
+                bottom: bottomButtons.top
+                left: parent.left
+                right: parent.right
+            }
             clip: true
             model: productModel
             delegate: SelectedProductDelegate {
@@ -53,8 +55,13 @@ BasePaymentConfirmationScreen {
         }
 
         ColumnLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            id: bottomButtons
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                bottomMargin: 10
+            }
             spacing: 0
 
             WideActionButton {

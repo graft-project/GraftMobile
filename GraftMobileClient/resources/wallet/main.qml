@@ -65,6 +65,7 @@ GraftApplicationWindow {
         transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
+        transitionsMap["openPaymentScreen"] = openPaymentScreen
         return transitionsMap
     }
 
@@ -77,12 +78,17 @@ GraftApplicationWindow {
     }
 
     function openPaymentConfirmationScreen() {
-        stack.push("PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
+        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
                        "totalAmount": GraftClient.totalCost(),
                        "currencyModel": currencyModel,
                        "balanceInGraft": balanceInGraft,
                        "balanceInUSD": balanceInUSD,
                        "productModel": PaymentProductModel})
+    }
+
+    function openPaymentScreen() {
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
+                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!")})
     }
 
     function showMenu() {

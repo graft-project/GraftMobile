@@ -10,7 +10,7 @@ BaseScreen {
 
         onSaleStatusReceived: {
             if (result === true) {
-                pushScreen.openCompleteScreen()
+                pushScreen.openPaymentScreen()
             } else {
                 pushScreen.openProductScreen()
             }
