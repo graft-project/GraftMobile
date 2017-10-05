@@ -10,6 +10,8 @@ ColumnLayout {
     property alias inputMethodHints: editItem.inputMethodHints
     property alias validator: editItem.validator
     property alias showLengthIndicator: textCount.visible
+    property alias inputMask: editItem.inputMask
+    property alias placeholderText: editItem.placeholderText
     spacing: 0
 
     Text {
