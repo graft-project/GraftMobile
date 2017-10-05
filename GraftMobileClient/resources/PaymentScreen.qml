@@ -38,8 +38,9 @@ BaseScreen {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
-                    leftMargin: 12
+                    leftMargin: Qt.platform.os === "android" ? 12 : 0
                 }
+                horizontalAlignment: Qt.platform.os === "android" ? Text.AlignLeft : Text.AlignHCenter
                 color: "#FFFFFF"
             }
         }

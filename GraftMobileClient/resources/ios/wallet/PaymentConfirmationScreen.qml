@@ -19,12 +19,11 @@ BasePaymentConfirmationScreen {
             width: parent.width
             anchors.top: parent.top
             Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-            Material.elevation: 5
+            Material.elevation: 0
 
             Text {
                 anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
+                    centerIn: parent
                 }
                 color: "#FFFFFF"
                 text: qsTr("Total Checkout: %1$").arg(totalAmount)
@@ -49,7 +48,7 @@ BasePaymentConfirmationScreen {
                 productText.text: name
                 productPrice: cost
                 productPriceTextColor: "#797979"
-                topLineVisible: false
+                topLineVisible: true
                 bottomLineVisible: (index >= 0 && index < (productList.count - 1)) ? false : true
             }
         }
