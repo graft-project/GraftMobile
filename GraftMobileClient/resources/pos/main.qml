@@ -91,7 +91,8 @@ GraftApplicationWindow {
     }
 
     function openInfoWalletScreen() {
-        stack.push("qrc:/pos/InfoWallet.qml", {"pushScreen": screenTransitions()})
+        stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions(),
+                   "amountMoney": 145, "amountGraft": 1.14})
     }
 
     function openMainScreen() {

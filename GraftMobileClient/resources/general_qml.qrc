@@ -14,16 +14,16 @@
         <file alias="PaymentScreen.qml">PaymentScreen.qml</file>
         <file alias="BaseSettingsScreen.qml">BaseSettingsScreen.qml</file>
         <file alias="BaseCartScreen.qml">BaseCartScreen.qml</file>
+        <file alias="BaseBalanceScreen.qml">BaseBalanceScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
         <file alias="AddingScreen.qml">pos/AddingScreen.qml</file>
-        <file alias="InfoWallet.qml">pos/InfoWallet.qml</file>
+        <file alias="InfoWalletScreen.qml">pos/InfoWalletScreen.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="main.qml">wallet/main.qml</file>
         <file alias="BasePaymentConfirmationScreen.qml">wallet/BasePaymentConfirmationScreen.qml</file>
-        <file alias="BaseBalanceScreen.qml">wallet/BaseBalanceScreen.qml</file>
         <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
         <file alias="AddCardView.qml">wallet/AddCardView.qml</file>
     </qresource>
@@ -66,5 +66,6 @@
         <file alias="MasterCard_Logo.png">imgs/MasterCard_Logo.png</file>
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
+        <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
     </qresource>
 </RCC>
