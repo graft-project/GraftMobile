@@ -16,8 +16,11 @@ BasePaymentConfirmationScreen {
         Pane {
             id: totalPriceLabel
             height: 50
-            width: parent.width
-            anchors.top: parent.top
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
             Material.background: ColorFactory.color(DesignFactory.CircleBackground)
             Material.elevation: 0
 
@@ -53,8 +56,9 @@ BasePaymentConfirmationScreen {
 
         ColumnLayout {
             id: bottomButtons
-            width: parent.width
             anchors {
+                left: parent.left
+                right: parent.right
                 bottom: parent.bottom
                 bottomMargin: 10
             }
