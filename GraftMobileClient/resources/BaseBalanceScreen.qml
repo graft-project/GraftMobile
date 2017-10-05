@@ -41,8 +41,6 @@ BaseScreen {
             BalanceViewItem {
                 id: balanceItem
                 Layout.fillWidth: true
-                amountMoneyCost: 145
-                amountGraftCost: "1.14"
             }
 
             Rectangle {

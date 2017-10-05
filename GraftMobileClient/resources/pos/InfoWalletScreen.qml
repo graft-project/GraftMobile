@@ -7,7 +7,7 @@ BaseBalanceScreen {
     splitterVisible: false
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
     screenHeader {
-        navigationButtonState: Qt.platform.os === "ios" ? false : true
+        navigationButtonState: Qt.platform.os === "android"
     }
 
     ColumnLayout {
@@ -24,8 +24,8 @@ BaseBalanceScreen {
         }
 
         WideActionButton {
-            text: qsTr("Chase XXX929")
             Layout.bottomMargin: 15
+            text: qsTr("Chase XXX929")
         }
     }
 }

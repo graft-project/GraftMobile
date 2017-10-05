@@ -4,11 +4,10 @@ import com.graft.design 1.0
 
 Rectangle {
     property real amountMoneyCost: 0
-    property alias amountGraftCost: amountGraftText.text
+    property real amountGraftCost: 0
 
     height: 70
     color: "#ffffff"
-//    color: "transparent"
 
     RowLayout {
         anchors {
@@ -34,7 +33,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignRight
 
                 Text {
-                    id: amountGraftText
+                    text: amountGraftCost
                     color: ColorFactory.color(DesignFactory.MainText)
                     font {
                         bold: true
