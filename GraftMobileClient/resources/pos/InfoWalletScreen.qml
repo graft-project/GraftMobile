@@ -21,13 +21,11 @@ BaseBalanceScreen {
 
         WideActionButton {
             text: qsTr("Transfer to Paypal")
-            onClicked: {}
         }
 
         WideActionButton {
             text: qsTr("Chase XXX929")
             Layout.bottomMargin: 15
-            onClicked: {}
         }
     }
 }

@@ -38,7 +38,7 @@ BaseBalanceScreen {
         }
 
         WideActionButton {
-            text: qsTr("Pay")
+            text: qsTr("PAY")
             Layout.bottomMargin: 15
             onClicked: pushScreen.openQRCodeScanner()
         }
