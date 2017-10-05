@@ -10,34 +10,36 @@ BasePaymentConfirmationScreen {
     id: root
 
     Rectangle {
-        id: totalPriceLabel
-        height: 50
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        color: ColorFactory.color(DesignFactory.CircleBackground)
+        anchors.fill: parent
+        color: "#FFFFFF"
 
-        Text {
-            anchors.centerIn: parent
-            color: "#ffffff"
-            text: qsTr("Total Checkout: %1$").arg(totalAmount)
-        }
-    }
+        Pane {
+            id: totalPriceLabel
+            height: 50
+            width: parent.width
+            anchors.top: parent.top
+            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+            Material.elevation: 5
 
-    ColumnLayout {
-        anchors {
-            top: totalPriceLabel.bottom
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
+            Text {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                }
+                color: "#FFFFFF"
+                text: qsTr("Total Checkout: %1$").arg(totalAmount)
+            }
         }
 
         ListView {
             id: productList
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            anchors {
+                top: totalPriceLabel.bottom
+                topMargin: 10
+                bottom: bottomButtons.top
+                left: parent.left
+                right: parent.right
+            }
             clip: true
             model: productModel
             delegate: SelectedProductDelegate {
@@ -47,14 +49,18 @@ BasePaymentConfirmationScreen {
                 productText.text: name
                 productPrice: cost
                 productPriceTextColor: "#797979"
-                topLineVisible: true
+                topLineVisible: false
                 bottomLineVisible: (index >= 0 && index < (productList.count - 1)) ? false : true
             }
         }
 
         ColumnLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            id: bottomButtons
+            width: parent.width
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 10
+            }
             spacing: 0
 
             WideActionButton {

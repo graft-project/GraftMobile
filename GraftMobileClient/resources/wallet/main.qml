@@ -85,9 +85,10 @@ GraftApplicationWindow {
                        "balanceInUSD": balanceInUSD,
                        "productModel": PaymentProductModel})
     }
+
     function openPaymentScreen() {
-        stack.push("qrc:/components/PaymentScreen.qml", {"pushScreen": transitionsBetweenScreens(),
-                       "title": qsTr("Pay")})
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": transitionsBetweenScreens(),
+                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!")})
     }
 
     function showMenu() {

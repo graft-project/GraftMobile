@@ -9,40 +9,37 @@ import "../components"
 BasePaymentConfirmationScreen {
     id: root
 
-    Pane {
-        id: totalPriceLabel
-        height: 50
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-        Material.elevation: 4
+    Rectangle {
+        anchors.fill: parent
+        color: "#FFFFFF"
 
-        Text {
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
+        Pane {
+            id: totalPriceLabel
+            height: 50
+            width: parent.width
+            anchors.top: parent.top
+            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+            Material.elevation: 5
+
+            Text {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                }
+                color: "#FFFFFF"
+                text: qsTr("Total Checkout: %1$").arg(totalAmount)
             }
-            color: "#ffffff"
-            text: qsTr("Total Checkout: %1$").arg(totalAmount)
-        }
-    }
-
-    ColumnLayout {
-        anchors {
-            top: totalPriceLabel.bottom
-            topMargin: 10
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
         }
 
         ListView {
             id: productList
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            anchors {
+                top: totalPriceLabel.bottom
+                topMargin: 10
+                bottom: bottomButtons.top
+                left: parent.left
+                right: parent.right
+            }
             clip: true
             model: productModel
             delegate: SelectedProductDelegate {
@@ -58,7 +55,12 @@ BasePaymentConfirmationScreen {
         }
 
         RowLayout {
-            Layout.fillWidth: true
+            id: bottomButtons
+            width: parent.width
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 10
+            }
             spacing: 0
 
             Button {
