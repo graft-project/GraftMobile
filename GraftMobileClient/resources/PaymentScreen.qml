@@ -17,8 +17,7 @@ BaseScreen {
     action: pushScreen
 
     Rectangle {
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
 
         Pane {
