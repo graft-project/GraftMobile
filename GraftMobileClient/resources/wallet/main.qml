@@ -87,7 +87,7 @@ GraftApplicationWindow {
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": transitionsBetweenScreens(),
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
                        "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!")})
     }
 

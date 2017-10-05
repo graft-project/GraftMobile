@@ -64,11 +64,11 @@ GraftApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openAddScreen"] = openAddingScreen
-        transitionsMap["initializingCheckout"] = openPaymentScreen
+        transitionsMap["initializingCheckout"] = openCartScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openProductScreen"] = openMainScreen
         transitionsMap["openSettingsScreen"] = openSettingsScreen
-        transitionsMap["openCompletePaymentScreen"] = openCompletePaymentScreen
+        transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["goBack"] = turnBack
         return transitionsMap
     }
@@ -86,13 +86,13 @@ GraftApplicationWindow {
                        "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
     }
 
-    function openPaymentScreen() {
+    function openCartScreen() {
         stack.push("qrc:/pos/CartScreen.qml", {"pushScreen": screenTransitions(),
                        "price": ProductModel.totalCost()})
     }
 
-    function openCompletePaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": screenTransitions(),
+    function openPaymentScreen() {
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
                        "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!")})
     }
 

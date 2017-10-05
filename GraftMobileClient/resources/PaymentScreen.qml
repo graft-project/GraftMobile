@@ -12,9 +12,9 @@ BaseScreen {
 
     screenHeader {
         navigationButtonState: Qt.platform.os === "android"
-        actionButton: true
+        actionButtonState: true
     }
-    action: pushScreen.openBalanceScreen
+    action: pushScreen
 
     Rectangle {
         height: parent.height
@@ -38,13 +38,7 @@ BaseScreen {
 
                 Text {
                     id: completeLabelText
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                        leftMargin: Qt.platform.os === "android" ? 12 : 0
-                    }
-                    horizontalAlignment: Qt.platform.os === "android" ? Text.AlignLeft : Text.AlignHCenter
+                    anchors.centerIn: parent
                     color: "#FFFFFF"
                 }
             }
@@ -66,7 +60,7 @@ BaseScreen {
                 bottomMargin: 5
             }
             text: qsTr("DONE")
-            onClicked: pushScreen.openBalanceScreen()
+            onClicked: pushScreen
         }
     }
 }

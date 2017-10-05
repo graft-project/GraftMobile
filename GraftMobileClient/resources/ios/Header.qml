@@ -71,7 +71,7 @@ BaseHeader {
             Text {
                 id: actionButton
                 anchors.centerIn: parent
-                visible: rootItem.actionButton
+                visible: rootItem.actionButtonState
                 text: qsTr("Done")
                 font.pointSize: 17
                 color: ColorFactory.color(DesignFactory.LightText)

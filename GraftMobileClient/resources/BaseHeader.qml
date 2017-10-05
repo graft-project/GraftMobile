@@ -8,7 +8,7 @@ Rectangle {
 
     property string headerText
     property bool navigationButtonState: false
-    property bool actionButton: false
+    property bool actionButtonState: false
     property bool cartEnable: false
     property int selectedProductCount: 0
 }
