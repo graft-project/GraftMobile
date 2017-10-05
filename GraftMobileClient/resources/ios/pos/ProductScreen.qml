@@ -62,6 +62,11 @@ BaseScreen {
                             font.bold: true
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
+
+                        onRemoveItemClicked: {
+                            ProductModel.removeProduct(index)
+                            GraftClient.save()
+                        }
                     }
                 }
             }
@@ -86,7 +91,7 @@ BaseScreen {
                 contentItem: Image {
                     source:  "qrc:/imgs/plus_icon.png"
                 }
-                onClicked: pushScreen.openAddScreen()
+                onClicked: pushScreen.openEditingItemScreen()
             }
         }
     }

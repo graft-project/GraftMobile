@@ -17,7 +17,7 @@
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
-        <file alias="AddingScreen.qml">pos/AddingScreen.qml</file>
+        <file alias="EditingItemScreen.qml">pos/EditingItemScreen.qml</file>
         <file alias="InfoWalletScreen.qml">pos/InfoWalletScreen.qml</file>
     </qresource>
     <qresource prefix="/wallet">

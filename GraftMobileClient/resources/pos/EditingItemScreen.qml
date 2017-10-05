@@ -8,34 +8,47 @@ import "../"
 
 BaseScreen {
     id: additionItem
-    title: qsTr("Add")
+    title: qsTr("Add item")
     screenHeader {
-        navigationButtonState: false
+//        android
+//        navigationButtonState: false
+//        actionButton: true
+
+//        ios
+//        navigationButtonState: true
+//        navigationText: qsTr("Cancel")
+//        actionButtonState: true
+//        actionText: qsTr("Done")
     }
 
     property alias currencyModel: productItem.currencyModel
 
+    function confirmProductParameters() {
+    ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
+                     productItem.currencyModel, productItem.descriptionText)
+    }
+
     ColumnLayout {
-        spacing: 3
+        spacing: 0
         anchors {
             fill: parent
             topMargin: 10
             bottomMargin: 20
-            leftMargin: 20
-            rightMargin: 20
         }
 
         ProductItemView {
             id: productItem
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
 
         WideActionButton {
+            id: multiTaskingButton
             text: qsTr("Confirm")
             onClicked: {
-                ProductModel.add("", title.text,
-                                 parseFloat(price.text), graftCBox.currentText)
+                confirmProductParameters()
                 additionItem.pushScreen.openProductScreen()
                 GraftClient.save()
             }

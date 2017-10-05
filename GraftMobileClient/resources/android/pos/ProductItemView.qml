@@ -7,6 +7,10 @@ import "../"
 
 Item {
     property alias currencyModel: graftCBox.model
+    property alias titleText: title.text
+    property alias descriptionText: description.text
+    property alias price: price.text
+    property alias previewImage: previewImage.source
 
     ColumnLayout {
         id: mainLayout
