@@ -5,6 +5,7 @@
 
 #include "core/cardmodel.h"
 #include "core/productmodel.h"
+#include "core/currencymodel.h"
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
@@ -30,12 +31,16 @@ int main(int argc, char *argv[])
     DesignFactory factory;
     factory.registrate(engine.rootContext());
 #ifdef POS_BUILD
+    qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
+
     GraftPOSClient client;
+    CurrencyModel model;
     client.registerImageProvider(&engine);
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
+    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif

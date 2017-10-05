@@ -81,9 +81,9 @@ GraftApplicationWindow {
         drawer.close()
     }
 
-    function openEditingItemScreen() {
+    function openEditingItemScreen(index) {
         stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": screenTransitions(),
-                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")], "index": index})
     }
 
     function openCartScreen() {

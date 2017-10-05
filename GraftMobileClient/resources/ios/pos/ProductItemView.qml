@@ -11,6 +11,11 @@ Item {
     property alias descriptionText: description.text
     property alias price: price.text
     property alias previewImage: previewImage.source
+    property alias buttonText: buttonText.text
+
+    function changeCurrency(currency) {
+        console.log(currency)
+    }
 
     ColumnLayout {
         spacing: 5

@@ -11,6 +11,17 @@ Item {
     property alias descriptionText: description.text
     property alias price: price.text
     property alias previewImage: previewImage.source
+    property alias buttonText: buttonText.text
+    property alias currencyText: graftCBox.currentText
+
+    function changeCurrency(currency) {
+        graftCBox.currentIndex = graftCBox.find(currency)
+        console.log(currency)
+        console.log("!!!")
+        console.log(graftCBox.find(currency))
+        console.log(graftCBox.textAt(-1))
+        console.log(graftCBox.model)
+    }
 
     ColumnLayout {
         id: mainLayout

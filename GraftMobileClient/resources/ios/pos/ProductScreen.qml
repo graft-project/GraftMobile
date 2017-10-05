@@ -67,6 +67,10 @@ BaseScreen {
                             ProductModel.removeProduct(index)
                             GraftClient.save()
                         }
+
+                        onEditItemClicked: {
+                            pushScreen.openEditingItemScreen(index)
+                        }
                     }
                 }
             }
@@ -91,7 +95,7 @@ BaseScreen {
                 contentItem: Image {
                     source:  "qrc:/imgs/plus_icon.png"
                 }
-                onClicked: pushScreen.openEditingItemScreen()
+                onClicked: pushScreen.openEditingItemScreen(-1)
             }
         }
     }

@@ -28,18 +28,7 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
     case SelectedRole:
         return productItem->isSelected();
     case CurrencyRole:
-        if(productItem->currency() == QLatin1String("USD"))
-        {
-            return "$";
-        }
-        else if (productItem->currency() == QLatin1String("GRAFT"))
-        {
-            return "g";
-        }
-        else
-        {
-            return "$";
-        }
+        return productItem->currency();
     case DescriptionRole:
         return productItem->description();
     default:

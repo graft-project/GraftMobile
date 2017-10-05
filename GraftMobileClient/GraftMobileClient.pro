@@ -36,7 +36,9 @@ SOURCES += main.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp
+    designfactory.cpp \
+    core/currencymodel.cpp \
+    core/currenccyitem.cpp
 
 HEADERS += \
     core/config.h \
@@ -55,7 +57,9 @@ HEADERS += \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h
+    designfactory.h \
+    core/currencymodel.h \
+    core/currenccyitem.h
 
 include(resources/resources.pri)
 
