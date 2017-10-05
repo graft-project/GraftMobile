@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import "../wallet"
 import "../"
 import "../components"
 
@@ -17,6 +16,7 @@ BaseBalanceScreen {
             Layout.fillHeight: true
             Layout.leftMargin: 8
             Layout.rightMargin: 8
+            Layout.topMargin: 5
             model: CardModel
             clip: true
             spacing: 15
@@ -39,7 +39,8 @@ BaseBalanceScreen {
 
         WideActionButton {
             text: qsTr("PAY")
-            onPressed: pushScreen.openQRCodeScanner()
+            Layout.bottomMargin: 15
+            onClicked: pushScreen.openQRCodeScanner()
         }
     }
 }

@@ -25,7 +25,7 @@ GraftApplicationWindow {
 
     footer: Loader {
         id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = screenTransitions()
+        onLoaded: footerLoader.item.pushScreen = transitionsBetweenScreens()
     }
 
     Component.onCompleted: {

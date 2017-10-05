@@ -1,11 +1,13 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import "../wallet"
 import "../"
 import "../components"
 
 BaseBalanceScreen {
     splitterVisible: false
+    screenHeader {
+        navigationButtonState: false
+    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -43,6 +45,7 @@ BaseBalanceScreen {
 
         WideActionButton {
             text: qsTr("PAY")
+            Layout.bottomMargin: 15
             onPressed: pushScreen.openQRCodeScanner()
         }
     }
