@@ -22,9 +22,7 @@ BasePaymentConfirmationScreen {
             Material.elevation: 0
 
             Text {
-                anchors {
-                    centerIn: parent
-                }
+                anchors.centerIn: parent
                 color: "#FFFFFF"
                 text: qsTr("Total Checkout: %1$").arg(totalAmount)
             }

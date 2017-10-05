@@ -30,18 +30,23 @@ BaseScreen {
                 left: parent.left
                 top: parent.top
             }
-            background: Rectangle {color: ColorFactory.color(DesignFactory.CircleBackground)}
-            Material.elevation: Qt.platform.os === "android" ? 10 : 0
+            Material.elevation: Qt.platform.os === "android" ? 6 : 0
+            padding: 0
 
-            Text {
-                id: completeLabelText
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    leftMargin: Qt.platform.os === "android" ? 12 : 0
+            contentItem: Rectangle {
+                color: ColorFactory.color(DesignFactory.CircleBackground)
+
+                Text {
+                    id: completeLabelText
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: Qt.platform.os === "android" ? 12 : 0
+                    }
+                    horizontalAlignment: Qt.platform.os === "android" ? Text.AlignLeft : Text.AlignHCenter
+                    color: "#FFFFFF"
                 }
-                horizontalAlignment: Qt.platform.os === "android" ? Text.AlignLeft : Text.AlignHCenter
-                color: "#FFFFFF"
             }
         }
 
