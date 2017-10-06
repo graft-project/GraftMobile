@@ -38,7 +38,8 @@ Button {
             }
 
             Text {
-                Layout.alignment: Text.AlignLeft
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignLeft
                 text: qsTr("Add new product")
             }
         }
