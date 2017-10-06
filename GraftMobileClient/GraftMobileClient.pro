@@ -38,7 +38,7 @@ SOURCES += main.cpp \
     core/selectedproductproxymodel.cpp \
     designfactory.cpp \
     core/currencymodel.cpp \
-    core/currenccyitem.cpp
+    core/currencyitem.cpp
 
 HEADERS += \
     core/config.h \
@@ -59,7 +59,7 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currenccyitem.h
+    core/currencyitem.h
 
 include(resources/resources.pri)
 

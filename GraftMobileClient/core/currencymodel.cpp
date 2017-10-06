@@ -1,10 +1,16 @@
 #include "currencymodel.h"
-#include "currenccyitem.h"
+#include "currencyitem.h"
 
 CurrencyModel::CurrencyModel(QObject *parent) : QAbstractListModel(parent)
 {}
 
-int CurrencyModel::rowCount(const QModelIndex & parent) const {
+CurrencyModel::~CurrencyModel()
+{
+    qDeleteAll(mCurrency);
+}
+
+int CurrencyModel::rowCount(const QModelIndex &parent) const
+{
     Q_UNUSED(parent);
     return mCurrency.count();
 }
@@ -62,9 +68,9 @@ int CurrencyModel::indexOf(const QString &code) const
 
 QString CurrencyModel::codeOf(const QString &name) const
 {
-    for(int i=0; i < mCurrency.size(); ++i)
+    for (int i = 0; i < mCurrency.size(); ++i)
     {
-        if(mCurrency.at(i)->name() == name)
+        if (mCurrency.at(i)->name() == name)
         {
             return mCurrency.at(i)->code();
         }
