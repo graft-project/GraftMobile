@@ -23,10 +23,7 @@ Button {
 
         RowLayout {
             anchors {
-                top: topLine.bottom
-                bottom: bottomLine.top
-                left: parent.left
-                right: parent.right
+                fill: parent
                 leftMargin: 16
             }
             spacing: 10
