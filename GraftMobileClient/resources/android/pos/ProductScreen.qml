@@ -71,6 +71,12 @@ BaseScreen {
                 }
             }
 
+            AddNewProductButton {
+                Layout.preferredHeight: 60
+                Layout.fillWidth: true
+                onClicked: console.log("AAAA")
+            }
+
             WideActionButton {
                 id: addButton
                 text: qsTr("Checkout")

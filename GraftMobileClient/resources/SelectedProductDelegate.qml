@@ -37,7 +37,7 @@ Rectangle {
     }
 
     RowLayout {
-        spacing: 0
+        spacing: 10
         anchors {
             left: parent.left
             right: parent.right
