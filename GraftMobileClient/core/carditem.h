@@ -8,7 +8,7 @@ class CardItem
 public:
     CardItem();
     CardItem(const QString &name, const QString &number, unsigned cv2Code,
-             unsigned expirationMonth, unsigned expirationYear);
+             const QString &expirationDate);
 
     QString number() const;
     void setNumber(const QString &value);
@@ -18,11 +18,8 @@ public:
     unsigned cv2Code() const;
     void setCV2Code(unsigned value);
 
-    unsigned expirationMonth() const;
-    void setExpirationMonth(unsigned value);
-
-    unsigned expirationYear() const;
-    void setExpirationYear(unsigned value);
+    QString expirationDate() const;
+    void setExpirationDate(const QString &value);
 
     QString name() const;
     void setName(const QString &value);
@@ -31,8 +28,7 @@ private:
     QString mName;
     QString mNumber;
     unsigned mCV2Code;
-    unsigned mExpirationMonth;
-    unsigned mExpirationYear;
+    QString mExpirationDate;
 };
 
 #endif // CARDITEM_H

@@ -33,7 +33,7 @@ BaseScreen {
 
     title: qsTr("Pay")
     screenHeader {
-        navigationButtonState: false
+        navigationButtonState: Qt.platform.os !== "android"
     }
 
     Camera {

@@ -19,12 +19,8 @@ BaseCartScreen {
         spacing: 0
 
         Pane {
-            anchors {
-                right: parent.right
-                left: parent.left
-                top: parent.top
-            }
-            height: 120
+            Layout.fillWidth: true
+            Layout.preferredHeight: 50
             Material.background: ColorFactory.color(DesignFactory.CircleBackground)
 
             Label {
@@ -60,7 +56,7 @@ BaseCartScreen {
             model: SelectedProductModel
             delegate: productDelegate
             Layout.fillWidth: true
-            Layout.preferredHeight: 185
+            Layout.fillHeight: true
             Layout.topMargin: 25
 
             Component {

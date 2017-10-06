@@ -9,17 +9,21 @@ import "../components"
 BaseScreen {
     id: root
     title: qsTr("Add Card")
+    screenHeader {
+        navigationButtonState: Qt.platform.os !== "android"
+        actionButtonState: true
+    }
+    action: done
 
     ColumnLayout {
-        anchors {
-            fill: parent
-            margins: 25
-        }
-        spacing: 20
+        anchors.fill: parent
+        spacing: 0
 
         Item {
             Layout.fillWidth: true
             Layout.preferredHeight: childrenRect.height
+            Layout.topMargin: parent.width / 12
+            Layout.bottomMargin: parent.width / 12
 
             Image {
                 id: graftWalletLogo
@@ -33,105 +37,79 @@ BaseScreen {
             }
         }
 
-        ColumnLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            spacing: 20
+        LinearEditItem {
+            id: title
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            title: Qt.platform.os === "android" ? qsTr("Card Title") : qsTr("Card Title:")
+            maximumLength: 50
+        }
 
-            TextField {
-                id: cardNumber
-                Layout.fillWidth: true
-                placeholderText: qsTr("Card Number:")
+        LinearEditItem {
+            id: number
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            title: Qt.platform.os === "android" ? qsTr("Card Number") : qsTr("Card Number:")
+            inputMethodHints: Qt.ImhDigitsOnly
+            validator: RegExpValidator {
+                regExp: /(5\d{15}|4\d{15}|30\d{14})/
+            }
+            maximumLength: 16
+        }
+
+        RowLayout {
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            spacing: Qt.platform.os === "android" ? parent.width / 2 : 30
+
+            LinearEditItem {
+                id: expired
+                Layout.alignment: Qt.AlignTop
+                title: Qt.platform.os === "android" ? qsTr("Expiration Date") : qsTr("Expired:")
+                inputMask: "99/99;_"
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
-                    regExp: /(5\d{15}|4\d{15}|30\d{14})/
+                    regExp: /\d{4}/
                 }
+                showLengthIndicator: false
             }
 
-            ColumnLayout {
-                Layout.fillWidth: true
-                Layout.maximumHeight: childrenRect.height
-                spacing: 0
-
-                Text {
-                    Layout.fillWidth: true
-                    text: qsTr("Expiration Date:")
-                    color: ColorFactory.color(DesignFactory.MainText)
-                    font {
-                        family: "Liberation Sans"
-                        pointSize: 14
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 30
-
-                    ComboBox {
-                        id: month
-                        Layout.fillWidth: true
-                        contentItem.enabled: false
-                        font.pointSize: 14
-                        Material.background: "transparent"
-                        Material.foreground: ColorFactory.color(DesignFactory.DarkText)
-                        model: setMonth()
-
-                        function setMonth() {
-                            var lMonth = new Array
-                            for (var i = 0; i < 12; i++) {
-                                if (i < 9) {
-                                    var zero = "0"
-                                    zero += (i + 1)
-                                    lMonth[i] = zero
-                                } else {
-                                    lMonth[i] = (i + 1)
-                                }
-                            }
-                            return lMonth
-                        }
-                    }
-
-                    ComboBox {
-                        id: years
-                        Layout.fillWidth: true
-                        contentItem.enabled: false
-                        font.pointSize: 14
-                        Material.background: "transparent"
-                        Material.foreground: ColorFactory.color(DesignFactory.DarkText)
-                        model: setYear()
-
-                        function setYear() {
-                            var currentYear = new Date
-                            currentYear = (currentYear.getFullYear() - 5)
-                            var lYear = new Array
-                            for (var i = 0; i <= 10; i++) {
-                                lYear[i] = currentYear++
-                            }
-                            return lYear
-                        }
-                    }
-                }
-            }
-
-            TextField {
+            LinearEditItem {
                 id: cv2Code
-                Layout.fillWidth: true
-                placeholderText: qsTr("CV2 Code:")
+                title: Qt.platform.os === "android" ? qsTr("CVC/CVV2") : qsTr("CVC/CVV2:")
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
                     regExp: /\d{3}/
                 }
+                showLengthIndicator: Qt.platform.os !== "android"
+                maximumLength: 3
             }
         }
 
-        WideActionButton {
-            id: confirmButton
+        ColumnLayout {
             Layout.fillWidth: true
-            text: qsTr("Confirm")
-            onClicked: {
-                CardModel.add(qsTr("VISA"), cardNumber.text, cv2Code.text, month.currentText, years.currentText)
-                pushScreen.goBack()
+            Layout.alignment: Qt.AlignBottom
+            Layout.bottomMargin: 15
+            spacing: 0
+
+            WideActionButton {
+                id: scanCardButton
+                text: qsTr("Scan Card")
+                onClicked: {
+                    scanCardButton.text = qsTr("WILL BE SOON")
+                }
+            }
+
+            WideActionButton {
+                id: confirmButton
+                text: qsTr("Confirm")
+                onClicked: done()
             }
         }
+    }
+
+    function done() {
+        CardModel.add(title.text, number.text, cv2Code.text, expired.text)
+        pushScreen.goBack()
     }
 }
