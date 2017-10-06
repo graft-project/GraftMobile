@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import QtQuick.Dialogs 1.1
 import "../components"
 import "../"
 
@@ -51,6 +52,8 @@ BaseScreen {
                     delegate: productDelegate
                     anchors.fill: parent
 
+
+
                     Component {
                         id: productDelegate
                         ProductSwipeDelegate {
@@ -67,9 +70,20 @@ BaseScreen {
                                 color: ColorFactory.color(DesignFactory.MainText)
                             }
 
+                            MessageDialog {
+                                id: messageDialog
+                                title: "Deleted product"
+                                icon: StandardIcon.Warning
+                                text: "Are you sure that you want to remove this particular product?"
+                                standardButtons: StandardButton.Yes | StandardButton.No
+                                onYes: {
+                                    ProductModel.removeProduct(index)
+                                    GraftClient.save()
+                                }
+                            }
+
                             onRemoveItemClicked: {
-                                ProductModel.removeProduct(index)
-                                GraftClient.save()
+                                messageDialog.open()
                             }
 
                             onEditItemClicked: {
