@@ -19,4 +19,4 @@ private:
     QString mCode;
 };
 
-#endif // CURRENCCYITEM_H
+#endif // CURRENCYITEM_H
