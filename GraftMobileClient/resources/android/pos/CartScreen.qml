@@ -18,20 +18,26 @@ BaseCartScreen {
             spacing: 0
 
             Pane {
-                anchors {
-                    right: parent.right
-                    left: parent.left
-                    top: parent.top
-                }
-                height: 130
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
                 Material.elevation: 8
-                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+                padding: 0
 
-                Label {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("Total checkout: %1$").arg(price)
-                    font.pointSize: 18
-                    color: "#ffffff"
+                contentItem: Rectangle {
+                    color: ColorFactory.color(DesignFactory.CircleBackground)
+
+                    Text {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 12
+                        }
+                        horizontalAlignment: Text.AlignLeft
+                        color: "#FFFFFF"
+                        font.pointSize: 18
+                        text: qsTr("Total checkout: %1$").arg(price)
+                    }
                 }
             }
 
@@ -57,7 +63,7 @@ BaseCartScreen {
             Rectangle {
                 color: "#ffffff"
                 Layout.fillWidth: true
-                Layout.preferredHeight: 230
+                Layout.fillHeight: true
 
                 ListView {
                     id: productList
