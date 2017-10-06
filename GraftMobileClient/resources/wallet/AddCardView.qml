@@ -67,7 +67,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 title: Qt.platform.os === "android" ? qsTr("Expiration Date") : qsTr("Expired:")
                 inputMask: "99/99;_"
-                inputMethodHints: Qt.ImhDate
+                inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
                     regExp: /\d{4}/
                 }
