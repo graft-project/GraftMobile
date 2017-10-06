@@ -54,5 +54,15 @@ BaseMenu {
                 pushScreen.openTransferScreen()
             }
         }
+
+        MenuLabelItem {
+            Layout.fillWidth: true
+            icon: "qrc:/imgs/info.png"
+            name: qsTr("About")
+            onClicked: {
+                pushScreen.hideMenu()
+                Qt.openUrlExternally("https://www.graft.network/")
+            }
+        }
     }
 }
