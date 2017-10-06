@@ -41,7 +41,7 @@ BaseScreen {
             id: title
             Layout.leftMargin: 15
             Layout.rightMargin: 15
-            title: qsTr("Card Title")
+            title: Qt.platform.os === "android" ? qsTr("Card Title") : qsTr("Card Title:")
             maximumLength: 50
         }
 
@@ -49,7 +49,7 @@ BaseScreen {
             id: number
             Layout.leftMargin: 15
             Layout.rightMargin: 15
-            title: qsTr("Card Number")
+            title: Qt.platform.os === "android" ? qsTr("Card Number") : qsTr("Card Number:")
             inputMethodHints: Qt.ImhDigitsOnly
             validator: RegExpValidator {
                 regExp: /(5\d{15}|4\d{15}|30\d{14})/
@@ -60,12 +60,12 @@ BaseScreen {
         RowLayout {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
-            spacing: parent.width / 2
+            spacing: Qt.platform.os === "android" ? parent.width / 2 : 30
 
             LinearEditItem {
                 id: expired
                 Layout.alignment: Qt.AlignTop
-                title: qsTr("Expiration Date")
+                title: Qt.platform.os === "android" ? qsTr("Expiration Date") : qsTr("Expired:")
                 inputMask: "00/00;0"
                 inputMethodHints: Qt.ImhDate
                 validator: RegExpValidator {
@@ -77,11 +77,12 @@ BaseScreen {
 
             LinearEditItem {
                 id: cv2Code
-                title: qsTr("CVC/CVV2")
+                title: Qt.platform.os === "android" ? qsTr("CVC/CVV2") : qsTr("CVC/CVV2:")
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
                     regExp: /\d{3}/
                 }
+                showLengthIndicator: Qt.platform.os === "android"
                 maximumLength: 3
             }
         }
@@ -94,7 +95,7 @@ BaseScreen {
 
             WideActionButton {
                 id: scanCardButton
-                text: qsTr("SCAN CARD")
+                text: Qt.platform.os === "android" ? qsTr("SCAN CARD") : qsTr("Scan Card")
                 onClicked: {
                     scanCardButton.text = qsTr("WILL BE SOON")
                 }
@@ -102,7 +103,7 @@ BaseScreen {
 
             WideActionButton {
                 id: confirmButton
-                text: qsTr("CONFIRM")
+                text: Qt.platform.os === "android" ? qsTr("CONFIRM") : qsTr("Confirm")
                 onClicked: done()
             }
         }
