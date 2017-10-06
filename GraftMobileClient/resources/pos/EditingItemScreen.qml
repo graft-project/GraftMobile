@@ -7,10 +7,9 @@ import "../components"
 import "../"
 
 BaseScreen {
-    id: additionItem
+    id: editingItem
     title: qsTr("Add item")
-    action: additionItem.confirmProductParameters
-    Component.onCompleted: init()
+    action: editingItem.confirmProductParameters
 
     screenHeader {
         navigationButtonState: Qt.platform.os === "ios"
@@ -20,7 +19,7 @@ BaseScreen {
     property alias currencyModel: productItem.currencyModel
     property int index: -1
 
-    function init() {
+    Component.onCompleted: {
         if (Qt.platform.os === "ios") {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
@@ -30,7 +29,7 @@ BaseScreen {
     function confirmProductParameters() {
         var currencyCode = currencyModel.codeOf(productItem.currencyText)
 
-        if(index >= 0) {
+        if (index >= 0) {
             ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
             ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
             ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
@@ -40,7 +39,7 @@ BaseScreen {
             ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
                              currencyCode, productItem.descriptionText)
         }
-        additionItem.pushScreen.openProductScreen()
+        editingItem.pushScreen.openProductScreen()
         GraftClient.save()
     }
 
@@ -72,9 +71,7 @@ BaseScreen {
         WideActionButton {
             id: multiTaskingButton
             text: qsTr("Confirm")
-            onClicked: {
-                confirmProductParameters()
-            }
+            onClicked: confirmProductParameters()
         }
     }
 }

@@ -1,4 +1,4 @@
-#include "currenccyitem.h"
+#include "currencyitem.h"
 
 CurrencyItem::CurrencyItem(const QString &name, const QString &code)
     : mName(name), mCode(code)

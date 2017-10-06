@@ -1,5 +1,5 @@
-#ifndef CURRENCCYITEM_H
-#define CURRENCCYITEM_H
+#ifndef CURRENCYITEM_H
+#define CURRENCYITEM_H
 
 #include <QString>
 
