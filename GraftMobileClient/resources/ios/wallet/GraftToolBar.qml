@@ -40,9 +40,7 @@ Rectangle {
         ToolBarButton {
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
-            onClicked: {
-                pushScreen.openAboutScreen()
-            }
+            onClicked: Qt.openUrlExternally("https://www.graft.network/")
         }
     }
 }

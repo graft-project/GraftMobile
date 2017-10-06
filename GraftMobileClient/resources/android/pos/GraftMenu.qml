@@ -62,7 +62,7 @@ BaseMenu {
             name: qsTr("About")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openAboutScreen()
+                Qt.openUrlExternally("https://www.graft.network/")
             }
         }
     }
