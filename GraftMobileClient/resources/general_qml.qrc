@@ -29,8 +29,6 @@
     <qresource prefix="/imgs">
         <file alias="card_icon.png">imgs/card_icon.png</file>
         <file alias="paid_icon.png">imgs/paid_icon.png</file>
-        <file alias="g_icon_black.png">imgs/g_icon_black.png</file>
-        <file alias="g_icon_small.png">imgs/g_icon_small.png</file>
         <file alias="cart_icon.png">imgs/cart_icon.png</file>
         <file alias="back_icon.png">imgs/back_icon.png</file>
         <file alias="done.png">imgs/done.png</file>
