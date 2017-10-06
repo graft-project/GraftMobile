@@ -16,5 +16,6 @@ RoundButton {
     font {
         pointSize: 14
         bold: true
+        capitalization: Font.AllUppercase
     }
 }

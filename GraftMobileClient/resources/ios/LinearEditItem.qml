@@ -38,6 +38,7 @@ ColumnLayout {
             }
         }
 
+        //TODO: Delete when migrate on Qt 5.9.2
         onCursorPositionChanged: if(inputMask !== "" && cursorPosition === 3) cursorPosition = 4
 
         Text {

@@ -71,7 +71,6 @@ BaseScreen {
                 validator: RegExpValidator {
                     regExp: /\d{4}/
                 }
-                maximumLength: 6
                 showLengthIndicator: false
             }
 
@@ -95,7 +94,7 @@ BaseScreen {
 
             WideActionButton {
                 id: scanCardButton
-                text: Qt.platform.os === "android" ? qsTr("SCAN CARD") : qsTr("Scan Card")
+                text: qsTr("Scan Card")
                 onClicked: {
                     scanCardButton.text = qsTr("WILL BE SOON")
                 }
@@ -103,7 +102,7 @@ BaseScreen {
 
             WideActionButton {
                 id: confirmButton
-                text: Qt.platform.os === "android" ? qsTr("CONFIRM") : qsTr("Confirm")
+                text: qsTr("Confirm")
                 onClicked: done()
             }
         }
