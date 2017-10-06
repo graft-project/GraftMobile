@@ -11,6 +11,8 @@ ColumnLayout {
     property alias validator: editItem.validator
     property bool inlineTitle: false
     property alias showLengthIndicator: textCount.visible
+    property alias inputMask: editItem.inputMask
+
     spacing: 0
 
     TextField {
@@ -35,6 +37,8 @@ ColumnLayout {
                 }
             }
         }
+
+        onCursorPositionChanged: if(inputMask !== "" && cursorPosition === 3) cursorPosition = 4
 
         Text {
             id: titleItem

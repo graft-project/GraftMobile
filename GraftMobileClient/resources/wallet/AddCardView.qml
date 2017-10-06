@@ -66,7 +66,7 @@ BaseScreen {
                 id: expired
                 Layout.alignment: Qt.AlignTop
                 title: Qt.platform.os === "android" ? qsTr("Expiration Date") : qsTr("Expired:")
-                inputMask: "00/00;0"
+                inputMask: "99/99;_"
                 inputMethodHints: Qt.ImhDate
                 validator: RegExpValidator {
                     regExp: /\d{4}/
@@ -82,7 +82,7 @@ BaseScreen {
                 validator: RegExpValidator {
                     regExp: /\d{3}/
                 }
-                showLengthIndicator: Qt.platform.os === "android"
+                showLengthIndicator: Qt.platform.os !== "android"
                 maximumLength: 3
             }
         }
