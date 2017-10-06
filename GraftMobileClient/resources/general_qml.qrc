@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
-        <file alias="TotalView.qml">TotalView.qml</file>
         <file alias="QRScanningScreen.qml">QRScanningScreen.qml</file>
         <file alias="BaseHeader.qml">BaseHeader.qml</file>
         <file alias="CartItem.qml">CartItem.qml</file>
@@ -25,16 +24,11 @@
         <file alias="main.qml">wallet/main.qml</file>
         <file alias="BasePaymentConfirmationScreen.qml">wallet/BasePaymentConfirmationScreen.qml</file>
         <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
-        <file alias="AddCardView.qml">wallet/AddCardView.qml</file>
+        <file alias="AddCardScreen.qml">wallet/AddCardScreen.qml</file>
     </qresource>
     <qresource prefix="/imgs">
-        <file alias="arrow.png">imgs/arrow.png</file>
-        <file alias="arrow_grey.png">imgs/arrow_grey.png</file>
         <file alias="card_icon.png">imgs/card_icon.png</file>
-        <file alias="graft_logo.png">imgs/graft_logo.png</file>
-        <file alias="graft_pos_logo.png">imgs/graft_pos_logo.png</file>
         <file alias="paid_icon.png">imgs/paid_icon.png</file>
-        <file alias="plus_icon.png">imgs/plus_icon.png</file>
         <file alias="g_icon_black.png">imgs/g_icon_black.png</file>
         <file alias="g_icon_small.png">imgs/g_icon_small.png</file>
         <file alias="cart_icon.png">imgs/cart_icon.png</file>
