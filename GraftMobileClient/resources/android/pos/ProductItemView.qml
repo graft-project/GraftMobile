@@ -13,7 +13,6 @@ Item {
     property alias descriptionText: description.text
     property alias price: price.text
     property alias previewImage: previewImage.source
-    property alias buttonText: buttonText.text
 
     ColumnLayout {
         id: mainLayout
