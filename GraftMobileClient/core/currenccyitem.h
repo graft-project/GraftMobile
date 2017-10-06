@@ -12,7 +12,7 @@ public:
     QString code() const;
 
     void setName(const QString &name);
-    void setCode(const QString code);
+    void setCode(const QString &code);
 
 private:
     QString mName;

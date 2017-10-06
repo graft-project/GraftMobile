@@ -55,7 +55,6 @@ BaseScreen {
     }
 
     ColumnLayout {
-        spacing: 0
         anchors {
             fill: parent
             topMargin: 10
@@ -64,10 +63,10 @@ BaseScreen {
 
         ProductItemView {
             id: productItem
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
         }
 
         WideActionButton {

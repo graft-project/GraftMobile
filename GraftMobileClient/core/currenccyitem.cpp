@@ -19,7 +19,7 @@ void CurrencyItem::setName(const QString &name)
     mName = name;
 }
 
-void CurrencyItem::setCode(const QString code)
+void CurrencyItem::setCode(const QString &code)
 {
     mCode = code;
 }
