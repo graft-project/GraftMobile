@@ -28,16 +28,17 @@ BaseScreen {
     }
 
     function confirmProductParameters() {
+        var currencyCode = currencyModel.codeOf(productItem.currencyText)
+
         if(index >= 0) {
             ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
             ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
             ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
-            ProductModel.setProductData(index, productItem.currencyText, ProductModelEnum.CurrencyRole)
-//            ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
-            ProductModel.setProductData(index, productItem.currencyModel, CurrencyModel)
+            ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
+            ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
         } else {
             ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
-                             productItem.currencyText, productItem.descriptionText)
+                             currencyCode, productItem.descriptionText)
         }
         additionItem.pushScreen.openProductScreen()
         GraftClient.save()
@@ -50,7 +51,7 @@ BaseScreen {
         productItem.previewImage = ProductModel.productData(index, ProductModelEnum.ImageRole)
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
-        productItem.changeCurrency(ProductModel.productData(index, ProductModelEnum.CurrencyRole))
+        productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index, ProductModelEnum.CurrencyRole))
     }
 
     ColumnLayout {

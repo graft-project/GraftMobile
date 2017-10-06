@@ -6,14 +6,17 @@
 class CurrencyItem
 {
 public:
-    CurrencyItem(const QString &name, const int &code);
+    CurrencyItem(const QString &name, const QString &code);
 
     QString name() const;
-    int code() const;
+    QString code() const;
+
+    void setName(const QString &name);
+    void setCode(const QString code);
 
 private:
     QString mName;
-    int mCode;
+    QString mCode;
 };
 
 #endif // CURRENCCYITEM_H

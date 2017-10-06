@@ -6,22 +6,14 @@ import "../components"
 import "../"
 
 Item {
+    readonly property alias currencyText: graftCBox.currentText
     property alias currencyModel: graftCBox.model
+    property alias currencyIndex: graftCBox.currentIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
     property alias previewImage: previewImage.source
     property alias buttonText: buttonText.text
-    property alias currencyText: graftCBox.currentText
-
-    function changeCurrency(currency) {
-        graftCBox.currentIndex = graftCBox.find(currency)
-        console.log(currency)
-        console.log("!!!")
-        console.log(graftCBox.find(currency))
-        console.log(graftCBox.textAt(-1))
-        console.log(graftCBox.model)
-    }
 
     ColumnLayout {
         id: mainLayout
@@ -84,6 +76,7 @@ Item {
                     leftPadding: -12
                     Layout.topMargin: -12
                     Layout.bottomMargin: -10
+                    textRole: "name"
                 }
 
                 Rectangle {

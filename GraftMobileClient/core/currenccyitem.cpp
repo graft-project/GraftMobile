@@ -1,6 +1,6 @@
 #include "currenccyitem.h"
 
-CurrencyItem::CurrencyItem(const QString &name, const int &code)
+CurrencyItem::CurrencyItem(const QString &name, const QString &code)
     : mName(name), mCode(code)
 {}
 
@@ -9,7 +9,17 @@ QString CurrencyItem::name() const
     return mName;
 }
 
-int CurrencyItem::code() const
+QString CurrencyItem::code() const
 {
     return mCode;
+}
+
+void CurrencyItem::setName(const QString &name)
+{
+    mName = name;
+}
+
+void CurrencyItem::setCode(const QString code)
+{
+    mCode = code;
 }

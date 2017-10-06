@@ -34,8 +34,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
     GraftPOSClient client;
-    CurrencyModel model;
     client.registerImageProvider(&engine);
+
+    CurrencyModel model;
+    model.add("USD", "USD");
+    model.add("GRAFT", "GRAFT");
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
