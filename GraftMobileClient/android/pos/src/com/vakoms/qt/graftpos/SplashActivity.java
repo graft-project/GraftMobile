@@ -16,47 +16,48 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//			getWindow().getDecorView().setSystemUiVisibility(
-//			        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//					        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//							getWindow().setStatusBarColor(Color.TRANSPARENT);
-//			}
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            getWindow().getDecorView().setSystemUiVisibility(
+//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//                            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            }
 
-        setContentView(R.drawable.picture);
+    setContentView(R.drawable.image);
 
-        new BackgroundTask().execute();
-        }
-
+    new BackgroundTask().execute();
+    }
 
     private class BackgroundTask extends AsyncTask {
-        Intent intent;
+    Intent intent;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-
             intent = new Intent(SplashActivity.this, org.qtproject.qt5.android.bindings.QtActivity.class);
-            }
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-
-            try {
-                Thread.sleep(SPLASH_TIME);
-                } catch (InterruptedException e) {
-                e.printStackTrace();
-                }
-
-            return null;
-            }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-
-            startActivity(intent);
-            finish();
-            }
         }
+
+        @Override
+        protected Object doInBackground(Object[] params)
+        {
+            try
+            {
+                Thread.sleep(SPLASH_TIME);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+-
+        @Override
+        protected void onPostExecute(Object o)
+        {
+        super.onPostExecute(o);
+        startActivity(intent);
+        finish();
+        }
+    }
 }
