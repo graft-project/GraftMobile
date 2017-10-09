@@ -6,7 +6,13 @@ import "../components"
 import "../"
 
 Item {
+    readonly property alias currencyText: graftCBox.currentText
     property alias currencyModel: graftCBox.model
+    property alias currencyIndex: graftCBox.currentIndex
+    property alias titleText: title.text
+    property alias descriptionText: description.text
+    property alias price: price.text
+    property alias previewImage: previewImage.source
 
     ColumnLayout {
         id: mainLayout
@@ -69,6 +75,7 @@ Item {
                     leftPadding: -12
                     Layout.topMargin: -12
                     Layout.bottomMargin: -10
+                    textRole: "name"
                 }
 
                 Rectangle {

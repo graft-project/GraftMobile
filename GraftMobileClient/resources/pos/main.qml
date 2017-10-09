@@ -63,7 +63,7 @@ GraftApplicationWindow {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
-        transitionsMap["openAddScreen"] = openAddingScreen
+        transitionsMap["openEditingItemScreen"] = openEditingItemScreen
         transitionsMap["initializingCheckout"] = openCartScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openProductScreen"] = openMainScreen
@@ -81,9 +81,9 @@ GraftApplicationWindow {
         drawer.close()
     }
 
-    function openAddingScreen() {
-        stack.push("qrc:/pos/AddingScreen.qml", {"pushScreen": screenTransitions(),
-                       "currencyModel": [qsTr("USD"), qsTr("GRAFT")]})
+    function openEditingItemScreen(index) {
+        stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": screenTransitions(),
+                       "currencyModel": CurrencyModel, "index": index})
     }
 
     function openCartScreen() {

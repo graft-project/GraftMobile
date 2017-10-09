@@ -28,18 +28,9 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
     case SelectedRole:
         return productItem->isSelected();
     case CurrencyRole:
-        if(productItem->currency() == QLatin1String("USD"))
-        {
-            return "$";
-        }
-        else if (productItem->currency() == QLatin1String("GRAFT"))
-        {
-            return "g";
-        }
-        else
-        {
-            return "$";
-        }
+        return productItem->currency();
+    case DescriptionRole:
+        return productItem->description();
     default:
         return QVariant();
     }
@@ -65,6 +56,9 @@ bool ProductModel::setData(const QModelIndex &index, const QVariant &value, int 
             break;
         case CurrencyRole:
             mProducts[index.row()]->setCurrency(value.toString());
+            break;
+        case DescriptionRole:
+            mProducts[index.row()]->setDescription(value.toString());
             break;
         default:
             break;
@@ -128,6 +122,25 @@ unsigned int ProductModel::selectedProductCount() const
     return count;
 }
 
+QVariant ProductModel::productData(int index, int role) const
+{
+    QModelIndex modelIndex = this->index(index);
+    return data(modelIndex, role);
+}
+
+bool ProductModel::setProductData(int index, const QVariant &value, int role)
+{
+    QModelIndex modelIndex = this->index(index);
+    return setData(modelIndex, value, role);
+}
+
+void ProductModel::removeProduct(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    delete mProducts.takeAt(index);
+    endRemoveRows();
+}
+
 void ProductModel::clear()
 {
     beginRemoveRows(QModelIndex(), 0, mProducts.count());
@@ -137,10 +150,10 @@ void ProductModel::clear()
 }
 
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,
-                       const QString &currency)
+                       const QString &currency, const QString &description)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mProducts << (new ProductItem(imagePath, name, cost, currency));
+    mProducts << (new ProductItem(imagePath, name, cost, currency, description));
     endInsertRows();
 }
 
@@ -152,5 +165,6 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[ImageRole] = "imagePath";
     roles[SelectedRole] = "selected";
     roles[CurrencyRole] = "currency";
+    roles[DescriptionRole] = "description";
     return roles;
 }

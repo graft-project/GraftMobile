@@ -6,7 +6,13 @@ import "../components"
 import "../"
 
 Item {
+    readonly property alias currencyText: graftCBox.currentText
     property alias currencyModel: graftCBox.model
+    property alias currencyIndex: graftCBox.currentIndex
+    property alias titleText: title.text
+    property alias descriptionText: description.text
+    property alias price: price.text
+    property alias previewImage: previewImage.source
 
     ColumnLayout {
         spacing: 5
@@ -61,6 +67,7 @@ Item {
                     leftPadding: dropdownTitle.width -8
                     Layout.topMargin: -8
                     Layout.bottomMargin: -2
+                    textRole: "name"
 
                     Text {
                         id: dropdownTitle
