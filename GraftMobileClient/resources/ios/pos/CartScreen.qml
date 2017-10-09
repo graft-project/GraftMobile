@@ -9,11 +9,11 @@ import "../"
 BaseCartScreen {
     id: cartScreen
 
+    action: cartScreen.rejectSale
     screenHeader {
         actionButtonState: true
         actionText: qsTr("Clear")
     }
-    action: cartScreen.rejectSale
 
     ColumnLayout {
         anchors.fill: parent
