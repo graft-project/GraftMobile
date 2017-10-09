@@ -2,8 +2,8 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
-import com.graft.design 1.0
 import QtQuick.Dialogs 1.1
+import com.graft.design 1.0
 import "../components"
 import "../"
 
@@ -52,8 +52,6 @@ BaseScreen {
                     delegate: productDelegate
                     anchors.fill: parent
 
-
-
                     Component {
                         id: productDelegate
                         ProductSwipeDelegate {
@@ -72,9 +70,9 @@ BaseScreen {
 
                             MessageDialog {
                                 id: messageDialog
-                                title: "Deleted product"
+                                title: qsTr("Delete item")
                                 icon: StandardIcon.Warning
-                                text: "Are you sure that you want to remove this particular product?"
+                                text: qsTr("Are you sure that you want to remove this particular item?")
                                 standardButtons: StandardButton.Yes | StandardButton.No
                                 onYes: {
                                     ProductModel.removeProduct(index)
@@ -82,13 +80,8 @@ BaseScreen {
                                 }
                             }
 
-                            onRemoveItemClicked: {
-                                messageDialog.open()
-                            }
-
-                            onEditItemClicked: {
-                                pushScreen.openEditingItemScreen(index)
-                            }
+                            onRemoveItemClicked: messageDialog.open()
+                            onEditItemClicked: pushScreen.openEditingItemScreen(index)
                         }
                     }
                 }

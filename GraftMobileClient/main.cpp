@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
     client.registerImageProvider(&engine);
 
     CurrencyModel model;
-    model.add("USD", "USD");
-    model.add("GRAFT", "GRAFT");
+    model.add(QStringLiteral("USD"), QStringLiteral("USD"));
+    model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());

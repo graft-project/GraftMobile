@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import QtQuick.Dialogs 1.1
 import com.graft.design 1.0
 import "../components"
 import "../"
@@ -63,14 +64,21 @@ BaseScreen {
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
 
-                        onRemoveItemClicked: {
-                            ProductModel.removeProduct(index)
-                            GraftClient.save()
+                        MessageDialog {
+                            id: messageDialog
+                            title: qsTr("Delete item")
+                            icon: StandardIcon.Warning
+                            text: qsTr("Are you sure that you want to remove this particular item?")
+                            standardButtons: StandardButton.Yes | StandardButton.No
+                            onYes: {
+                                ProductModel.removeProduct(index)
+                                GraftClient.save()
+                            }
                         }
 
-                        onEditItemClicked: {
-                            pushScreen.openEditingItemScreen(index)
-                        }
+                        onRemoveItemClicked: messageDialog.open()
+                        onEditItemClicked: pushScreen.openEditingItemScreen(index)
+
                     }
                 }
             }
