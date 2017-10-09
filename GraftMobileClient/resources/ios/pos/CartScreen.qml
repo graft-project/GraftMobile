@@ -8,11 +8,12 @@ import "../"
 
 BaseCartScreen {
     id: cartScreen
+
     screenHeader {
-        navigationButtonState: true
         actionButtonState: true
         actionText: qsTr("Clear")
     }
+    action: cartScreen.rejectSale
 
     ColumnLayout {
         anchors.fill: parent

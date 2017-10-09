@@ -3,7 +3,9 @@ import "components"
 
 BaseScreen {
     property real price: 0
+    
     title: qsTr("Cart")
+    navigationButtonState: Qt.platform.os === "android"
 
     Connections {
         target: GraftClient
