@@ -17,7 +17,7 @@ Rectangle {
             text: qsTr("Wallet")
             source: "qrc:/imgs/walletIos.png"
             onClicked: {
-                pushScreen.openProductScreen()
+                pushScreen.openBalanceScreen()
             }
         }
 
@@ -25,7 +25,7 @@ Rectangle {
             text: qsTr("Transaction")
             source: "qrc:/imgs/transactionIos.png"
             onClicked: {
-                pushScreen.openWalletScreen()
+                pushScreen.openTransactionScreen()
             }
         }
 
@@ -33,7 +33,7 @@ Rectangle {
             text: qsTr("Transfer")
             source: "qrc:/imgs/transferIos.png"
             onClicked: {
-                pushScreen.openSettingsScreen()
+                pushScreen.openTransferScreen()
             }
         }
 

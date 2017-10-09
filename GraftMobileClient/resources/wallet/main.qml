@@ -74,7 +74,7 @@ GraftApplicationWindow {
     }
 
     function openAddCardScreen() {
-        stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens()})
+        stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openPaymentConfirmationScreen() {
