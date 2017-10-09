@@ -8,6 +8,8 @@ BaseScreen {
 
     property alias companyEditTitle: linearEditItem.title
     property alias saveButtonText: saveButton.text
+    
+    action: saveChanges
 
     function saveChanges() {
         pushScreen.openProductScreen()
