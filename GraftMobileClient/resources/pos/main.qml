@@ -51,12 +51,9 @@ GraftApplicationWindow {
         }
     }
 
-    Loader {
+    ProductScreen {
         id: mainScreen
-        source: "qrc:/pos/ProductScreen.qml"
-        onLoaded: {
-            item.pushScreen = screenTransitions()
-        }
+        pushScreen: screenTransitions()
     }
 
     function screenTransitions() {

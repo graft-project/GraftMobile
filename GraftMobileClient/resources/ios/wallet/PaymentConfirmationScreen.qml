@@ -35,7 +35,6 @@ BasePaymentConfirmationScreen {
             id: productList
             anchors {
                 top: totalPriceLabel.bottom
-                topMargin: 10
                 bottom: bottomButtons.top
                 left: parent.left
                 right: parent.right

@@ -1,9 +1,13 @@
-import QtQuick 2.0
+import QtQuick 2.9
 import "components"
 
 BaseScreen {
     property real price: 0
+    
     title: qsTr("Cart")
+    screenHeader {
+        navigationButtonState: Qt.platform.os === "android"
+    }
 
     Connections {
         target: GraftClient

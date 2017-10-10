@@ -8,8 +8,9 @@ import "../"
 
 BaseCartScreen {
     id: cartScreen
+
+    action: cartScreen.rejectSale
     screenHeader {
-        navigationButtonState: true
         actionButtonState: true
         actionText: qsTr("Clear")
     }
