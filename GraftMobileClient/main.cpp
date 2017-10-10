@@ -1,10 +1,11 @@
-#include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQuickView>
+#include <QGuiApplication>
 #include <QQmlContext>
+#include <QQuickView>
 
 #include "core/cardmodel.h"
 #include "core/productmodel.h"
+#include "core/currencymodel.h"
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
@@ -20,18 +21,29 @@
 
 int main(int argc, char *argv[])
 {
+    // TODO: QTBUG-61153. QML cache doesn't get updated when adding Q_ENUM keys
+    // For more details see https://bugreports.qt.io/browse/QTBUG-61153
+    qputenv("QML_DISABLE_DISK_CACHE", "1");
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
 #ifdef POS_BUILD
+    qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
+
     GraftPOSClient client;
     client.registerImageProvider(&engine);
+
+    CurrencyModel model;
+    model.add(QStringLiteral("USD"), QStringLiteral("USD"));
+    model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
+    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif

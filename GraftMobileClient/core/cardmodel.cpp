@@ -33,10 +33,8 @@ QVariant CardModel::data(const QModelIndex &index, int role) const
         return cardItem->hideNumber();
     case CV2CodeRole:
         return cardItem->cv2Code();
-    case MonthRole:
-        return cardItem->expirationMonth();
-    case YearRole:
-        return cardItem->expirationYear();
+    case DateRole:
+        return cardItem->expirationDate();
     default:
         return QVariant();
     }
@@ -57,11 +55,8 @@ bool CardModel::setData(const QModelIndex &index, const QVariant &value, int rol
         case CV2CodeRole:
             mCards[index.row()]->setCV2Code(value.toUInt());
             break;
-        case MonthRole:
-            mCards[index.row()]->setExpirationMonth(value.toUInt());
-            break;
-        case YearRole:
-            mCards[index.row()]->setExpirationYear(value.toUInt());
+        case DateRole:
+            mCards[index.row()]->setExpirationDate(value.toString());
             break;
         default:
             break;
@@ -79,12 +74,12 @@ int CardModel::rowCount(const QModelIndex &parent) const
 }
 
 void CardModel::add(const QString &name, const QString &number, unsigned cv2Code,
-                    unsigned expirationMonth, unsigned expirationYear)
+                    const QString &expirationDate)
 {
     if ((number.size() == 16 && (cv2Code > 99 && cv2Code < 1000)))
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mCards.append(new CardItem(name, number, cv2Code, expirationMonth, expirationYear));
+        mCards.append(new CardItem(name, number, cv2Code, expirationDate));
         endInsertRows();
     }
 }
@@ -96,7 +91,6 @@ QHash<int, QByteArray> CardModel::roleNames() const
     roles[NumberRole] = "cardNumber";
     roles[HideNumberRole] = "cardHideNumber";
     roles[CV2CodeRole] = "cardCV2Code";
-    roles[MonthRole] = "cardExpirationMonth";
-    roles[YearRole] = "cardExpirationYear";
+    roles[DateRole] = "cardExpirationDate";
     return roles;
 }

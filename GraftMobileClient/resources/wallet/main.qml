@@ -2,27 +2,37 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "../"
+import "../components"
 
-ApplicationWindow {
+GraftApplicationWindow {
     id: root
+    title: qsTr("WALLET")
 
     property real totalAmount: 100
     property var currencyModel: ["Graft", "USD"]
     property real balanceInGraft: 1
     property real balanceInUSD: 200
+    property var drawer
 
-    visible: true
-    width: 320
-    height: 480
-    title: qsTr("WALLET")
+    Loader {
+        id: drawerLoader
+        onLoaded: {
+            drawer = drawerLoader.item
+            drawerLoader.item.pushScreen = transitionsBetweenScreens()
+            drawerLoader.item.balanceInGraft = "1.14"
+        }
+    }
 
-    Drawer {
-        id: drawer
-        width: 0.75 * parent.width
-        height: parent.height
-        contentItem: GraftMenu {
-            lViewModel: CardModel
-            pushScreen: transitionsBetweenScreens()
+    footer: Loader {
+        id: footerLoader
+        onLoaded: footerLoader.item.pushScreen = transitionsBetweenScreens()
+    }
+
+    Component.onCompleted: {
+        if (Qt.platform.os === "ios") {
+            footerLoader.source = "qrc:/wallet/GraftToolBar.qml"
+        } else {
+            drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
         }
     }
 
@@ -39,9 +49,9 @@ ApplicationWindow {
         }
     }
 
-    BalanceView {
+    BalanceScreen {
         id: initialScreen
-        amountGraft: 1.2
+        amountGraft: 1.14
         amountMoney: 145
         pushScreen: transitionsBetweenScreens()
     }
@@ -54,7 +64,8 @@ ApplicationWindow {
         transitionsMap["addCardScreen"] = openAddCardScreen
         transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
-        transitionsMap["paymentScreen"] = openPaymentConfirmationView
+        transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
+        transitionsMap["openPaymentScreen"] = openPaymentScreen
         return transitionsMap
     }
 
@@ -63,16 +74,21 @@ ApplicationWindow {
     }
 
     function openAddCardScreen() {
-        stack.push("qrc:/wallet/AddCardView.qml", {"pushScreen": transitionsBetweenScreens()})
+        stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
-    function openPaymentConfirmationView() {
-        stack.push("PaymentConfirmationView.qml", {"pushScreen": transitionsBetweenScreens(),
+    function openPaymentConfirmationScreen() {
+        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
                        "totalAmount": GraftClient.totalCost(),
                        "currencyModel": currencyModel,
                        "balanceInGraft": balanceInGraft,
                        "balanceInUSD": balanceInUSD,
                        "productModel": PaymentProductModel})
+    }
+
+    function openPaymentScreen() {
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
+                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!")})
     }
 
     function showMenu() {
