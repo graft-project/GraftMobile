@@ -15,6 +15,21 @@ If you want to build a WALLET project, you must open in `Build Settings`, open `
 DEFINES+=WALLET_BUILD
 ```
 
+**TESTING**
+
+For testing purposes on the desktop computer, you can use `RES_IOS` define to switch sources of the user interface. If you 
+aren't use `RES_IOS` define, Android user interface is used by default. For example:
+
+```
+DEFINES+="WALLET_BUILD RES_IOS"
+```
+
+or
+
+```
+DEFINES+="POS_BUILD RES_IOS"
+```
+
 ## Cloning ##
 
 Clone from upstream while borrowing from an existing local directory:

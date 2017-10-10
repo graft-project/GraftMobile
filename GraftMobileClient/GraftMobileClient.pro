@@ -36,7 +36,9 @@ SOURCES += main.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp
+    designfactory.cpp \
+    core/currencymodel.cpp \
+    core/currencyitem.cpp
 
 HEADERS += \
     core/config.h \
@@ -55,9 +57,11 @@ HEADERS += \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h
+    designfactory.h \
+    core/currencymodel.h \
+    core/currencyitem.h
 
-RESOURCES += qml.qrc
+include(resources/resources.pri)
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
