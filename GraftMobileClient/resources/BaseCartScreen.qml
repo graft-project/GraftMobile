@@ -23,6 +23,6 @@ BaseScreen {
 
     function rejectSale() {
         GraftClient.rejectSale()
-        pushScreen.openProductScreen()
+        pushScreen.clearChecked()
     }
 }

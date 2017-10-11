@@ -67,6 +67,7 @@ GraftApplicationWindow {
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["goBack"] = turnBack
+        transitionsMap["clearChecked"] = clearCheckedOnMainScreen
         return transitionsMap
     }
 
@@ -89,7 +90,7 @@ GraftApplicationWindow {
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearCheckedOnMainScreen,
                        "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!")})
     }
 
@@ -108,5 +109,10 @@ GraftApplicationWindow {
 
     function turnBack() {
         stack.pop()
+    }
+
+    function clearCheckedOnMainScreen() {
+        ProductModel.clearSelections()
+        stack.pop(mainScreen)
     }
 }
