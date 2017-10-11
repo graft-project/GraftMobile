@@ -67,7 +67,7 @@ GraftApplicationWindow {
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["goBack"] = turnBack
-        transitionsMap["clearChecked"] = clearCheckedOnMainScreen
+        transitionsMap["clearChecked"] = clearChecked
         return transitionsMap
     }
 
@@ -111,7 +111,7 @@ GraftApplicationWindow {
         stack.pop()
     }
 
-    function clearCheckedOnMainScreen() {
+    function clearChecked() {
         ProductModel.clearSelections()
         stack.pop(mainScreen)
     }
