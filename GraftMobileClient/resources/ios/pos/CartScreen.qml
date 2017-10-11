@@ -15,75 +15,90 @@ BaseCartScreen {
         actionText: qsTr("Clear")
     }
 
-    ColumnLayout {
+    onScreenClosed: {
+        busyIndicator.running = false
+    }
+
+    Rectangle {
         anchors.fill: parent
-        spacing: 0
+        color: "#ffffff"
 
-        Pane {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 50
-            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-
-            Label {
-                anchors.centerIn: parent
-                text: qsTr("Total checkout: %1$").arg(price)
-                font.pointSize: 18
-                color: "#ffffff"
-            }
-        }
-
-        Image {
-            cache: false
-            source: GraftClient.qrCodeImage()
-            Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 180
-            Layout.preferredWidth: height
-            Layout.topMargin: 25
-        }
-
-        Text {
-            text: qsTr("SCAN WITH WALLET")
-            font {
-                bold: true
-                pointSize: 16
-            }
-            Layout.alignment: Qt.AlignCenter
-        }
-
-        ListView {
-            id: productList
+        ColumnLayout {
+            anchors.fill: parent
             spacing: 0
-            clip: true
-            model: SelectedProductModel
-            delegate: productDelegate
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.topMargin: 25
 
-            Component {
-                id: productDelegate
+            Pane {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
 
-                SelectedProductDelegate {
-                    width: productList.width
-                    height: 60
-                    bottomLineVisible: index === (productList.count - 1)
-                    productImage: imagePath
-                    productPrice: cost
-                    productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
-                    productText {
-                        font.bold: true
-                        text: name
-                        color: ColorFactory.color(DesignFactory.ProductText)
-                    }
+                Label {
+                    anchors.centerIn: parent
+                    text: qsTr("Total checkout: %1$").arg(price)
+                    font.pointSize: 18
+                    color: "#ffffff"
                 }
             }
-        }
 
-        WideActionButton {
-            text: qsTr("Cancel")
-            Material.accent: ColorFactory.color(DesignFactory.LightButton)
-            Layout.bottomMargin: 5
-            onClicked: cartScreen.rejectSale()
+            Image {
+                cache: false
+                source: GraftClient.qrCodeImage()
+                Layout.alignment: Qt.AlignCenter
+                Layout.preferredHeight: 180
+                Layout.preferredWidth: height
+                Layout.topMargin: 25
+            }
+
+            Text {
+                text: qsTr("SCAN WITH WALLET")
+                font {
+                    bold: true
+                    pointSize: 16
+                }
+                Layout.alignment: Qt.AlignCenter
+            }
+
+            ListView {
+                id: productList
+                spacing: 0
+                clip: true
+                model: SelectedProductModel
+                delegate: productDelegate
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.topMargin: 25
+
+                Component {
+                    id: productDelegate
+
+                    SelectedProductDelegate {
+                        width: productList.width
+                        height: 60
+                        bottomLineVisible: index === (productList.count - 1)
+                        productImage: imagePath
+                        productPrice: cost
+                        productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                        productText {
+                            font.bold: true
+                            text: name
+                            color: ColorFactory.color(DesignFactory.ProductText)
+                        }
+                    }
+                }
+
+                BusyIndicator {
+                    id: busyIndicator
+                    anchors.centerIn: parent
+                    running: true
+                }
+            }
+
+            WideActionButton {
+                text: qsTr("Cancel")
+                Material.accent: ColorFactory.color(DesignFactory.LightButton)
+                Layout.bottomMargin: 5
+                onClicked: cartScreen.rejectSale()
+            }
         }
     }
 }

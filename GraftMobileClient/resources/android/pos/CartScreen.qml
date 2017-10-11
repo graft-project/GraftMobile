@@ -9,13 +9,17 @@ import "../"
 BaseCartScreen {
     id: cartScreen
 
+    onScreenClosed: {
+        busyIndicator.running = false
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "#e9e9e9"
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: 0
+            spacing: 11
 
             Pane {
                 Layout.fillWidth: true
@@ -67,21 +71,18 @@ BaseCartScreen {
 
                 ListView {
                     id: productList
-                    spacing: 15
+                    spacing: 0
                     clip: true
                     model: SelectedProductModel
                     delegate: productDelegate
-                    anchors {
-                        fill: parent
-                        topMargin: 8
-                    }
+                    anchors.fill: parent
 
                     Component {
                         id: productDelegate
 
                         SelectedProductDelegate {
                             width: productList.width
-                            height: 60
+                            height: 70
                             topLineVisible: false
                             bottomLineVisible: false
                             productImage: imagePath
@@ -94,12 +95,18 @@ BaseCartScreen {
                         }
                     }
                 }
+
+                BusyIndicator {
+                    id: busyIndicator
+                    anchors.centerIn: parent
+                    running: true
+                }
             }
 
             WideActionButton {
                 text: qsTr("Cancel")
                 Material.accent: ColorFactory.color(DesignFactory.LightButton)
-                Layout.bottomMargin: 5
+                Layout.bottomMargin: 15
                 onClicked: cartScreen.rejectSale()
             }
         }
