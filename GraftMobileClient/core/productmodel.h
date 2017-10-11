@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE QVariant productData(int index, int role) const;
     Q_INVOKABLE bool setProductData(int index, const QVariant &value, int role);
     Q_INVOKABLE void removeProduct(int index);
+    Q_INVOKABLE void clearSelections();
     void clear();
 
 signals:

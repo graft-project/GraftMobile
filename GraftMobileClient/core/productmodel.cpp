@@ -141,6 +141,19 @@ void ProductModel::removeProduct(int index)
     endRemoveRows();
 }
 
+void ProductModel::clearSelections()
+{
+    for (int i = 0; i < mProducts.count(); ++i)
+    {
+        ProductItem *item = mProducts.value(i);
+        if (item->isSelected())
+        {
+            item->setSelected(false);
+        }
+    }
+    emit dataChanged(modelIndex, modelIndex, changeRole);
+}
+
 void ProductModel::clear()
 {
     beginRemoveRows(QModelIndex(), 0, mProducts.count());
