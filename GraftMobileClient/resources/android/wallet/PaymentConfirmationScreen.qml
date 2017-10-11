@@ -99,7 +99,6 @@ BasePaymentConfirmationScreen {
         visible: false
         running: false
         anchors {
-            verticalCenterOffset: -60
             centerIn: parent
         }
     }
@@ -116,7 +115,6 @@ BasePaymentConfirmationScreen {
                 target: background
                 enabled: false
             }
-
         }
     ]
 }
