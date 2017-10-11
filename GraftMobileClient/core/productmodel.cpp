@@ -149,9 +149,12 @@ void ProductModel::clearSelections()
         if (item->isSelected())
         {
             item->setSelected(false);
+            QVector<int> changeRole;
+            changeRole.append(SelectedRole);
+            QModelIndex modelIndex = this->index(i);
+            emit dataChanged(modelIndex, modelIndex, changeRole);
         }
     }
-    emit dataChanged(modelIndex, modelIndex, changeRole);
 }
 
 void ProductModel::clear()

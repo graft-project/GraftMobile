@@ -59,7 +59,10 @@ BaseScreen {
                 bottomMargin: 5
             }
             text: qsTr("DONE")
-            onClicked: pushScreen()
+            onClicked: {
+                ProductModel.clearSelections()
+                pushScreen()
+            }
         }
     }
 }
