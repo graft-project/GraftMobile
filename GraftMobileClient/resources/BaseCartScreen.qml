@@ -11,18 +11,18 @@ BaseScreen {
         navigationButtonState: Qt.platform.os === "android"
     }
 
-
     Connections {
         target: GraftClient
 
         onSaleStatusReceived: {
             screenClosed()
+
             if (result === true) {
                 pushScreen.openPaymentScreen()
             } else {
                 pushScreen.openProductScreen()
             }
-        }  
+        }
     }
 
     function rejectSale() {
