@@ -98,8 +98,8 @@ BaseCartScreen {
 
                 BusyIndicator {
                     id: busyIndicator
-                    running: true
                     anchors.centerIn: parent
+                    running: true
                 }
             }
 

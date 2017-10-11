@@ -15,6 +15,10 @@ BaseCartScreen {
         actionText: qsTr("Clear")
     }
 
+    onScreenClosed: {
+        busyIndicator.running = false
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -76,6 +80,12 @@ BaseCartScreen {
                         color: ColorFactory.color(DesignFactory.ProductText)
                     }
                 }
+            }
+
+            BusyIndicator {
+                id: busyIndicator
+                anchors.centerIn: parent
+                running: true
             }
         }
 
