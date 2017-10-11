@@ -82,7 +82,7 @@ BaseCartScreen {
 
                         SelectedProductDelegate {
                             width: productList.width
-                            height: 69
+                            height: 70
                             topLineVisible: false
                             bottomLineVisible: false
                             productImage: imagePath
