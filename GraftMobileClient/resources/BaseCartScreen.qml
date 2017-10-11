@@ -16,7 +16,7 @@ BaseScreen {
             if (result === true) {
                 pushScreen.openPaymentScreen()
             } else {
-                pushScreen.openProductScreen()
+                pushScreen.clearChecked()
             }
         }
     }
