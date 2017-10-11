@@ -90,7 +90,7 @@ GraftApplicationWindow {
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearCheckedOnMainScreen,
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
                        "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!")})
     }
 
