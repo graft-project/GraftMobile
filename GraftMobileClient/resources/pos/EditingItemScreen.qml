@@ -30,7 +30,7 @@ BaseScreen {
 
     function confirmProductParameters() {
         var currencyCode = currencyModel.codeOf(productItem.currencyText)
-        if (productItem.titleText !== "" && productItem.price !== "" && productItem.descriptionText !== "") {
+        if (productItem.titleText !== "" && productItem.price !== "") {
             if (index >= 0) {
                 ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
                 ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
