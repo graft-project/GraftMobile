@@ -155,6 +155,7 @@ void ProductModel::clearSelections()
             emit dataChanged(modelIndex, modelIndex, changeRole);
         }
     }
+    emit selectedProductCountChanged(0);
 }
 
 void ProductModel::clear()
