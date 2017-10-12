@@ -62,7 +62,7 @@ BaseScreen {
         id: messageDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the item title, description, price.")
+        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the item title, price.")
         visible: false
     }
 
