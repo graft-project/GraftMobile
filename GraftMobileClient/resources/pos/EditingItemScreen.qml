@@ -18,7 +18,6 @@ BaseScreen {
     }
 
     property alias currencyModel: productItem.currencyModel
-    property alias messageDialog: messageDialog.visible
     property int index: -1
 
     Component.onCompleted: {
@@ -44,7 +43,7 @@ BaseScreen {
             editingItem.pushScreen.openProductScreen()
             GraftClient.save()
         } else {
-            var attentionMessage = editingItem.messageDialog = true
+            messageDialog.open()
         }
     }
 
@@ -63,7 +62,6 @@ BaseScreen {
         title: qsTr("Attention")
         icon: StandardIcon.Warning
         text: qsTr("Don't leave blank fields as it isn't correct! You must enter the item title and price.")
-        visible: false
     }
 
     ColumnLayout {
