@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import org.graft.models 1.0
 import "../components"
@@ -28,19 +29,22 @@ BaseScreen {
 
     function confirmProductParameters() {
         var currencyCode = currencyModel.codeOf(productItem.currencyText)
-
-        if (index >= 0) {
-            ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
-            ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
-            ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
-            ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
-            ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
+        if (productItem.titleText !== "" && productItem.price !== "") {
+            if (index >= 0) {
+                ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
+                ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
+                ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
+                ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
+                ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
+            } else {
+                ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
+                                 currencyCode, productItem.descriptionText)
+            }
+            editingItem.pushScreen.openProductScreen()
+            GraftClient.save()
         } else {
-            ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
-                             currencyCode, productItem.descriptionText)
+            messageDialog.open()
         }
-        editingItem.pushScreen.openProductScreen()
-        GraftClient.save()
     }
 
     onIndexChanged: {
@@ -51,6 +55,13 @@ BaseScreen {
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
         productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index, ProductModelEnum.CurrencyRole))
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the item title and price.")
     }
 
     ColumnLayout {
