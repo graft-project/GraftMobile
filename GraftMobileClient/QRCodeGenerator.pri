@@ -1,3 +1,5 @@
+QT += svg
+
 INCLUDEPATH += $$PWD/qrcodegenerator/cpp/
 
 HEADERS += \
