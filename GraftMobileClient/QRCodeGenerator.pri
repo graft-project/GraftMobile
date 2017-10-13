@@ -1,6 +1,5 @@
-#Author: Nayuki
-#Name of repository: QR-Code-generator
-#Link to original repository: https://github.com/nayuki/QR-Code-generator.git
+#Author: Nayuki/QR-Code-generator
+#Link to original repository: https://github.com/nayuki/QR-Code-generator
 
 QT += svg
 

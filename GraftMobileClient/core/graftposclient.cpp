@@ -1,6 +1,6 @@
 #include "selectedproductproxymodel.h"
 #include "productmodelserializator.h"
-#include "QRCodeGenerator.h"
+#include "qrcodegenerator.h"
 #include "api/graftposapi.h"
 #include "graftposclient.h"
 #include "keygenerator.h"
