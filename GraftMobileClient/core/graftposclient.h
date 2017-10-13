@@ -2,6 +2,7 @@
 #define GRAFTPOSCLIENT_H
 
 #include "graftbaseclient.h"
+#include <QSettings>
 
 class SelectedProductProxyModel;
 class PatrickQRCodeEncoder;
@@ -17,6 +18,10 @@ public:
 
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;
+
+    Q_INVOKABLE void setSettings(const QString &key, const QVariant &value);
+    Q_INVOKABLE QVariant settings(const QString &key) const;
+    Q_INVOKABLE void saveSettings() const;
 
 signals:
     void saleReceived(bool result);
@@ -35,11 +40,15 @@ private slots:
     void receiveSaleStatus(int result, int saleStatus);
 
 private:
+    void initProductModels();
+    void initSettings();
+
     GraftPOSAPI *mApi;
     PatrickQRCodeEncoder *mQRCodeEncoder;
     QString mPID;
     ProductModel *mProductModel;
     SelectedProductProxyModel *mSelectedProductModel;
+    QSettings *mSettings;
 };
 
 #endif // GRAFTPOSCLIENT_H
