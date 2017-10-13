@@ -11,6 +11,8 @@ include(android/android.pri)
 }
 
 contains(DEFINES, POS_BUILD) {
+include(QRCodeGenerator.pri)
+
 TARGET = GraftPointOfSale
 }
 
@@ -29,7 +31,6 @@ SOURCES += main.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
     core/productmodelserializator.cpp \
-    core/patrickqrcodeencoder.cpp \
     core/graftbaseclient.cpp \
     core/barcodeimageprovider.cpp \
     core/carditem.cpp \
@@ -38,7 +39,8 @@ SOURCES += main.cpp \
     core/selectedproductproxymodel.cpp \
     designfactory.cpp \
     core/currencymodel.cpp \
-    core/currencyitem.cpp
+    core/currencyitem.cpp \
+    core/qrcodegenerator.cpp
 
 HEADERS += \
     core/config.h \
@@ -50,7 +52,6 @@ HEADERS += \
     core/productitem.h \
     core/productmodel.h \
     core/productmodelserializator.h \
-    core/patrickqrcodeencoder.h \
     core/graftbaseclient.h \
     core/barcodeimageprovider.h \
     core/carditem.h \
@@ -59,7 +60,8 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currencyitem.h
+    core/currencyitem.h \
+    core/qrcodegenerator.h
 
 include(resources/resources.pri)
 

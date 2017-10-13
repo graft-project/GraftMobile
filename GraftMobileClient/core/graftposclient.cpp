@@ -1,6 +1,6 @@
 #include "selectedproductproxymodel.h"
 #include "productmodelserializator.h"
-#include "patrickqrcodeencoder.h"
+#include "qrcodegenerator.h"
 #include "api/graftposapi.h"
 #include "graftposclient.h"
 #include "keygenerator.h"
@@ -16,7 +16,7 @@ static const QString scProductModelDataFile("productList.dat");
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mQRCodeEncoder = new PatrickQRCodeEncoder();
+    mQRCodeEncoder = new QRCodeGenerator();
     mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,

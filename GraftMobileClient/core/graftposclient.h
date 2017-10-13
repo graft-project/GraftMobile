@@ -4,7 +4,7 @@
 #include "graftbaseclient.h"
 
 class SelectedProductProxyModel;
-class PatrickQRCodeEncoder;
+class QRCodeGenerator;
 class ProductModel;
 class GraftPOSAPI;
 
@@ -36,7 +36,7 @@ private slots:
 
 private:
     GraftPOSAPI *mApi;
-    PatrickQRCodeEncoder *mQRCodeEncoder;
+    QRCodeGenerator *mQRCodeEncoder;
     QString mPID;
     ProductModel *mProductModel;
     SelectedProductProxyModel *mSelectedProductModel;
