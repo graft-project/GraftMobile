@@ -55,4 +55,5 @@ Button {
             color: "#E6E6E8"
         }
     }
+    onClicked: pushScreen.openEditingItemScreen(-1)
 }
