@@ -7,6 +7,7 @@
 #include "productmodel.h"
 #include "config.h"
 #include <QStandardPaths>
+#include <QSettings>
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>

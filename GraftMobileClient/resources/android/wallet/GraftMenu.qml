@@ -16,16 +16,6 @@ BaseMenu {
             right: parent.right
         }
 
-        MenuLabelItem {
-            Layout.fillWidth: true
-            icon: "qrc:/imgs/home.png"
-            name: qsTr("Home")
-            onClicked: {
-                pushScreen.hideMenu()
-                pushScreen.openBalanceScreen()
-            }
-        }
-
         MenuWalletItem {
             id: walletItem
             Layout.fillWidth: true

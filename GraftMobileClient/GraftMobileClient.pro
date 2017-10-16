@@ -14,20 +14,34 @@ contains(DEFINES, POS_BUILD) {
 include(QRCodeGenerator.pri)
 
 TARGET = GraftPointOfSale
+
+SOURCES += \
+    core/api/graftposapi.cpp \
+    core/graftposclient.cpp \
+    core/qrcodegenerator.cpp
+
+HEADERS += \
+    core/api/graftposapi.h \
+    core/graftposclient.h \
+    core/qrcodegenerator.h
 }
 
 contains(DEFINES, WALLET_BUILD) {
 include(QZXing.pri)
 
 TARGET = GraftWallet
+
+SOURCES += \
+    core/api/graftwalletapi.cpp \
+    core/graftwalletclient.cpp
+
+HEADERS += \
+    core/api/graftwalletapi.h \
+    core/graftwalletclient.h
 }
 
 SOURCES += main.cpp \
-    core/graftposclient.cpp \
-    core/graftwalletclient.cpp \
     core/api/graftgenericapi.cpp \
-    core/api/graftposapi.cpp \
-    core/api/graftwalletapi.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
     core/productmodelserializator.cpp \
@@ -39,18 +53,13 @@ SOURCES += main.cpp \
     core/selectedproductproxymodel.cpp \
     designfactory.cpp \
     core/currencymodel.cpp \
-    core/currencyitem.cpp \
-    core/qrcodegenerator.cpp
+    core/currencyitem.cpp
 
 HEADERS += \
     core/config.h \
-    core/graftposclient.h \
-    core/graftwalletclient.h \
     core/api/graftgenericapi.h \
-    core/api/graftposapi.h \
-    core/api/graftwalletapi.h \
-    core/productitem.h \
     core/productmodel.h \
+    core/productitem.h \
     core/productmodelserializator.h \
     core/graftbaseclient.h \
     core/barcodeimageprovider.h \
@@ -60,8 +69,7 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currencyitem.h \
-    core/qrcodegenerator.h
+    core/currencyitem.h
 
 include(resources/resources.pri)
 

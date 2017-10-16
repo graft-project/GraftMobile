@@ -12,7 +12,7 @@ BaseScreen {
     action: saveChanges
 
     function saveChanges() {
-        GraftClient.setSetting("companyName", linearEditItem.text)
+        GraftClient.setSettings("companyName", linearEditItem.text)
         GraftClient.saveSettings()
         pushScreen.openProductScreen()
     }
@@ -26,7 +26,7 @@ BaseScreen {
             Layout.topMargin: 10
             Layout.leftMargin: 10
             Layout.rightMargin: 10
-            text: GraftClient.setting("companyName") ? GraftClient.setting("companyName") : ""
+            text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
         }
 
         Rectangle {
