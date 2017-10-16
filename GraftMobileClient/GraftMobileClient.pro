@@ -17,11 +17,13 @@ TARGET = GraftPointOfSale
 
 SOURCES += \
     core/api/graftposapi.cpp \
-    core/graftposclient.cpp
+    core/graftposclient.cpp \
+    core/qrcodegenerator.cpp
 
 HEADERS += \
     core/api/graftposapi.h \
-    core/graftposclient.h
+    core/graftposclient.h \
+    core/qrcodegenerator.h
 }
 
 contains(DEFINES, WALLET_BUILD) {
