@@ -95,7 +95,7 @@ BaseScreen {
             WideActionButton {
                 id: addButton
                 text: qsTr("Checkout")
-                Layout.bottomMargin: 90
+                Layout.bottomMargin: 10
                 Layout.topMargin: 10
                 onClicked: GraftClient.sale()
             }
