@@ -112,7 +112,6 @@ BaseScreen {
                 contentItem: Image {
                     source:  "qrc:/imgs/plus_icon.png"
                 }
-                onClicked: pushScreen.openEditingItemScreen(-1)
             }
         }
     }
