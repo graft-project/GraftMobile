@@ -119,7 +119,10 @@ Item {
                 }
             }
 
-            onClicked: previewImage.visible = !previewImage.visible
+            onClicked: {
+                ImagePicker.openCamera()
+                previewImage.visible = !previewImage.visible
+            }
         }
     }
 }

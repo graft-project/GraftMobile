@@ -6,6 +6,10 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        <!-- Image Picker -->
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
         <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
         </activity>
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:label="Graft Point-of-Sale" android:screenOrientation="portrait" android:launchMode="singleTop">
@@ -61,7 +65,6 @@
             <meta-data android:name="android.app.extract_android_style" android:value="full"/>
             <!-- extract android style -->
     </activity>
-
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 
     </application>

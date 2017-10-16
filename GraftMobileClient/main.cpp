@@ -9,6 +9,7 @@
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
+#include "imagePicker/imagepicker.h"
 #include "designfactory.h"
 
 #ifdef WALLET_BUILD
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
     factory.registrate(engine.rootContext());
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
+    qmlRegisterType<ImagePicker>("org.graft.models", 1, 0, "DialogTypeEnum");
 
     GraftPOSClient client;
     client.registerImageProvider(&engine);
@@ -39,6 +41,9 @@ int main(int argc, char *argv[])
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
+
+    ImagePicker picker;
+    engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
