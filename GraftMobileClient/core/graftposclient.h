@@ -2,12 +2,13 @@
 #define GRAFTPOSCLIENT_H
 
 #include "graftbaseclient.h"
-#include <QSettings>
+#include <QVariant>
 
 class SelectedProductProxyModel;
 class QRCodeGenerator;
 class ProductModel;
 class GraftPOSAPI;
+class QSettings;
 
 class GraftPOSClient : public GraftBaseClient
 {
