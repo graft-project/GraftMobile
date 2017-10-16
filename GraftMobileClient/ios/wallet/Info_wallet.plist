@@ -13,15 +13,15 @@
     <key>CFBundleExecutable</key>
     <string>GraftWallet</string>
     <key>CFBundleIdentifier</key>
-    <string>com.vakoms.qt.graftwallet</string>
+    <string>org.graft.wallet</string>
     <key>CFBundleDisplayName</key>
     <string>Graft Wallet</string>
     <key>CFBundleName</key>
     <string>${PRODUCT_NAME}</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
+    <string>1.1</string>
     <key>CFBundleVersion</key>
-    <string>1.0</string>
+    <string>1.1.1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UILaunchStoryboardName</key>
@@ -35,6 +35,12 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>NSCameraUsageDescription</key>
-    <string></string>
+    <string>Scan QR Codes or other types of barcodes.</string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleLightContent</string>
+    <key>UIRequiresFullScreen</key>
+    <true/>
 </dict>
 </plist>

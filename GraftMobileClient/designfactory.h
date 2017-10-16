@@ -14,22 +14,26 @@ public:
 
     enum ColorTypes {
         Foreground,
+        IosNavigationBar,
         CircleBackground,
-        Menu,
         Highlighting,
         ItemHighlighting,
-        MainText,
-        DarkText,
         LightText,
         CartLabel,
-        AllocateLine
+        AllocateLine,
+        AndroidStatusBar,
+        MainText,
+        ProductText,
+        ItemText,
+        LightButton
     };
-    Q_ENUMS(ColorTypes)
+    Q_ENUM(ColorTypes)
 
     Q_INVOKABLE QString color(ColorTypes type) const;
     void registrate(QQmlContext *context);
 
 private:
+    void init();
     QMap<int, QString> mColors;
 };
 

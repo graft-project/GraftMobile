@@ -11,53 +11,67 @@ include(android/android.pri)
 }
 
 contains(DEFINES, POS_BUILD) {
+include(QRCodeGenerator.pri)
+
 TARGET = GraftPointOfSale
+
+SOURCES += \
+    core/api/graftposapi.cpp \
+    core/graftposclient.cpp \
+    core/qrcodegenerator.cpp
+
+HEADERS += \
+    core/api/graftposapi.h \
+    core/graftposclient.h \
+    core/qrcodegenerator.h
 }
 
 contains(DEFINES, WALLET_BUILD) {
 include(QZXing.pri)
 
 TARGET = GraftWallet
+
+SOURCES += \
+    core/api/graftwalletapi.cpp \
+    core/graftwalletclient.cpp
+
+HEADERS += \
+    core/api/graftwalletapi.h \
+    core/graftwalletclient.h
 }
 
 SOURCES += main.cpp \
-    core/graftposclient.cpp \
-    core/graftwalletclient.cpp \
     core/api/graftgenericapi.cpp \
-    core/api/graftposapi.cpp \
-    core/api/graftwalletapi.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
     core/productmodelserializator.cpp \
-    core/patrickqrcodeencoder.cpp \
     core/graftbaseclient.cpp \
     core/barcodeimageprovider.cpp \
     core/carditem.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp
+    designfactory.cpp \
+    core/currencymodel.cpp \
+    core/currencyitem.cpp
 
 HEADERS += \
     core/config.h \
-    core/graftposclient.h \
-    core/graftwalletclient.h \
     core/api/graftgenericapi.h \
-    core/api/graftposapi.h \
-    core/api/graftwalletapi.h \
-    core/productitem.h \
     core/productmodel.h \
+    core/productitem.h \
     core/productmodelserializator.h \
-    core/patrickqrcodeencoder.h \
     core/graftbaseclient.h \
     core/barcodeimageprovider.h \
     core/carditem.h \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h
+    designfactory.h \
+    core/currencymodel.h \
+    core/currencyitem.h
 
-RESOURCES += qml.qrc
+include(resources/resources.pri)
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

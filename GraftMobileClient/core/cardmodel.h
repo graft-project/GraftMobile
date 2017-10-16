@@ -14,8 +14,7 @@ public:
         NumberRole,
         HideNumberRole,
         CV2CodeRole,
-        MonthRole,
-        YearRole
+        DateRole
     };
 
     explicit CardModel(QObject *parent = 0);
@@ -28,7 +27,7 @@ public:
 
 public slots:
     void add(const QString &name, const QString &number, unsigned cv2Code,
-             unsigned expirationMonth, unsigned expirationYear);
+             const QString &expirationDate);
 
 protected:
     QHash<int, QByteArray> roleNames() const;

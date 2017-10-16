@@ -1,22 +1,24 @@
 #include "selectedproductproxymodel.h"
 #include "productmodelserializator.h"
-#include "patrickqrcodeencoder.h"
+#include "qrcodegenerator.h"
 #include "api/graftposapi.h"
 #include "graftposclient.h"
 #include "keygenerator.h"
 #include "productmodel.h"
 #include "config.h"
 #include <QStandardPaths>
+#include <QSettings>
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>
 
 static const QString scProductModelDataFile("productList.dat");
+static const QString scSettingDataFile("Settings.dat");
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mQRCodeEncoder = new PatrickQRCodeEncoder();
+    mQRCodeEncoder = new QRCodeGenerator();
     mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
@@ -24,20 +26,8 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
-
-    mProductModel = new ProductModel(this);
-    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                              scProductModelDataFile);
-    if (!dataPath.isEmpty())
-    {
-        QFile lFile(dataPath);
-        if (lFile.open(QFile::ReadOnly))
-        {
-            ProductModelSerializator::deserialize(lFile.readAll(), mProductModel);
-        }
-    }
-    mSelectedProductModel = new SelectedProductProxyModel(this);
-    mSelectedProductModel->setSourceModel(mProductModel);
+    initProductModels();
+    initSettings();
 }
 
 GraftPOSClient::~GraftPOSClient()
@@ -53,6 +43,21 @@ ProductModel *GraftPOSClient::productModel() const
 SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
 {
     return mSelectedProductModel;
+}
+
+void GraftPOSClient::setSettings(const QString &key, const QVariant &value)
+{
+    mSettings->setValue(key,value);
+}
+
+QVariant GraftPOSClient::settings(const QString &key) const
+{
+    return mSettings->value(key);
+}
+
+void GraftPOSClient::saveSettings() const
+{
+    mSettings->sync();
 }
 
 void GraftPOSClient::save()
@@ -139,4 +144,28 @@ void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
     {
         emit saleStatusReceived(false);
     }
+}
+
+void GraftPOSClient::initProductModels()
+{
+    mProductModel = new ProductModel(this);
+    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                              scProductModelDataFile);
+    if (!dataPath.isEmpty())
+    {
+        QFile lFile(dataPath);
+        if (lFile.open(QFile::ReadOnly))
+        {
+            ProductModelSerializator::deserialize(lFile.readAll(), mProductModel);
+        }
+    }
+    mSelectedProductModel = new SelectedProductProxyModel(this);
+    mSelectedProductModel->setSourceModel(mProductModel);
+}
+
+void GraftPOSClient::initSettings()
+{
+    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                              scSettingDataFile);
+    mSettings = new QSettings(dataPath, QSettings::IniFormat, this);
 }

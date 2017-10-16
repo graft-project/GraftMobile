@@ -7,12 +7,11 @@ CardItem::CardItem()
 }
 
 CardItem::CardItem(const QString &name, const QString &number, unsigned cv2Code,
-                   unsigned expirationMonth, unsigned expirationYear)
+                   const QString &expirationDate)
     : mName(name)
     ,mNumber(number)
     ,mCV2Code(cv2Code)
-    ,mExpirationMonth(expirationMonth)
-    ,mExpirationYear(expirationYear)
+    ,mExpirationDate(expirationDate)
 {
 }
 
@@ -43,24 +42,14 @@ void CardItem::setCV2Code(unsigned value)
     mCV2Code = value;
 }
 
-unsigned CardItem::expirationMonth() const
+QString CardItem::expirationDate() const
 {
-    return mExpirationMonth;
+    return mExpirationDate;
 }
 
-void CardItem::setExpirationMonth(unsigned value)
+void CardItem::setExpirationDate(const QString &value)
 {
-    mExpirationMonth = value;
-}
-
-unsigned CardItem::expirationYear() const
-{
-    return mExpirationYear;
-}
-
-void CardItem::setExpirationYear(unsigned value)
-{
-    mExpirationYear = value;
+    mExpirationDate = value;
 }
 
 QString CardItem::name() const

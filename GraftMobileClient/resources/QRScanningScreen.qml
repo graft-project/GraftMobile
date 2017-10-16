@@ -3,6 +3,7 @@ import QtMultimedia 5.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QZXing 2.3
+import "components"
 
 BaseScreen {
     id: root
@@ -16,7 +17,7 @@ BaseScreen {
 
         onReadyToPayReceived: {
             if (result === true) {
-                pushScreen.paymentScreen()
+                pushScreen.openPaymentConfirmationScreen()
             }
             else {
                 pushScreen.openBalanceScreen()
@@ -31,6 +32,9 @@ BaseScreen {
     }
 
     title: qsTr("Pay")
+    screenHeader {
+        navigationButtonState: Qt.platform.os !== "android"
+    }
 
     Camera {
         id: camera
@@ -59,13 +63,15 @@ BaseScreen {
             width: parent.width * 0.75
             height: width
             anchors.centerIn: parent
+            color: "green"
+            opacity: 0.7
         }
     }
 
     Rectangle {
         anchors.fill: parent
         color: "black"
-        opacity: 0.7
+        opacity: 0.5
     }
 
     OpacityMask {
