@@ -2,6 +2,9 @@
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQuickView>
+#include <QStandardPaths>
+#include <QFileInfo>
+#include <QDir>
 
 #include "core/cardmodel.h"
 #include "core/productmodel.h"
@@ -33,7 +36,6 @@ int main(int argc, char *argv[])
     factory.registrate(engine.rootContext());
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
-    qmlRegisterType<ImagePicker>("org.graft.models", 1, 0, "DialogTypeEnum");
 
     GraftPOSClient client;
     client.registerImageProvider(&engine);
@@ -42,7 +44,12 @@ int main(int argc, char *argv[])
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
 
-    ImagePicker picker;
+    QString imagePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/ImageProduct/");
+    if(!QFileInfo(imagePath).exists())
+    {
+        QDir().mkpath(imagePath);
+    }
+    ImagePicker picker(imagePath);
     engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),

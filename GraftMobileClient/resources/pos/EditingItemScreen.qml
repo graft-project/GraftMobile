@@ -32,12 +32,12 @@ BaseScreen {
         if (productItem.titleText !== "" && productItem.price !== "") {
             if (index >= 0) {
                 ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
-                ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
+                ProductModel.setProductData(index, productItem.productImage, ProductModelEnum.ImageRole)
                 ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
                 ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
                 ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
             } else {
-                ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
+                ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
                                  currencyCode, productItem.descriptionText)
             }
             editingItem.pushScreen.openProductScreen()
@@ -51,7 +51,7 @@ BaseScreen {
         title = qsTr("Edit item")
         multiTaskingButton.text = qsTr("Save")
         productItem.titleText = ProductModel.productData(index, ProductModelEnum.TitleRole)
-        productItem.previewImage = ProductModel.productData(index, ProductModelEnum.ImageRole)
+        productItem.productImage = ProductModel.productData(index, ProductModelEnum.ImageRole)
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
         productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index, ProductModelEnum.CurrencyRole))

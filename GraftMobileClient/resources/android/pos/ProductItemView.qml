@@ -6,13 +6,97 @@ import "../components"
 import "../"
 
 Item {
+    id: a
     readonly property alias currencyText: graftCBox.currentText
     property alias currencyModel: graftCBox.model
     property alias currencyIndex: graftCBox.currentIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
-    property alias previewImage: previewImage.source
+    property alias productImage: previewImage.source
+
+    Connections {
+        target: ImagePicker
+        onImageSelected: {
+            previewImage.source = path
+        }
+    }
+
+    Popup {
+        id: popUp
+        width: 320
+        height: 200
+        padding: 0
+        leftPadding: 0
+        rightPadding: 0
+        topMargin: a.height / 2
+        leftMargin: a.width / 2
+        rightMargin: a.width / 2
+        modal: true
+        focus: true
+        contentItem: ColumnLayout {
+            anchors.fill: parent
+            spacing: 0
+
+//            Button {
+//                Layout.fillWidth: true
+//                Layout.fillHeight: true
+//                Material.elevation: 0
+//                contentItem: RowLayout {
+//                        spacing: 0
+//                        anchors.fill: parent
+//                        anchors.leftMargin: 10
+//                        anchors.rightMargin: 40
+
+//                        Image {
+//                            Layout.preferredHeight: 50
+//                            Layout.preferredWidth: 50
+//                            Layout.alignment: Qt.AlignLeft
+//                            source: "qrc:/test/gallery.png"
+//                        }
+
+//                        Text {
+//                            Layout.alignment: Qt.AlignLeft
+//                            font.pointSize: 20
+//                            text: qsTr("Open gallary")
+//                            color: "#3A3E3C"
+//                        }
+//                }
+//                onClicked: ImagePicker.openGallary()
+//            }
+
+//            Button {
+//                Layout.fillWidth: true
+//                Layout.fillHeight: true
+//                Material.elevation: 0
+//                contentItem: Item {
+//                    anchors.fill: parent
+
+//                    RowLayout {
+//                        spacing: 0
+//                        anchors.fill: parent
+//                        anchors.leftMargin: 10
+//                        anchors.rightMargin: 40
+
+//                        Image {
+//                            Layout.preferredHeight: 50
+//                            Layout.preferredWidth: 50
+//                            Layout.alignment: Qt.AlignLeft
+//                            source: "qrc:/test/camera.png"
+//                        }
+
+//                        Text {
+//                            Layout.alignment: Qt.AlignLeft
+//                            font.pointSize: 20
+//                            text: qsTr("Open camera")
+//                            color: "#3A3E3C"
+//                        }
+//                    }
+//                }
+//                onClicked: ImagePicker.openCamera()
+//            }
+        }
+    }
 
     ColumnLayout {
         id: mainLayout
@@ -50,7 +134,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                      regExp: /\d+[.]\d{10}/
+                    regExp: /\d+[.]\d{10}/
                 }
             }
 
@@ -88,9 +172,11 @@ Item {
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 100
+            Layout.topMargin: 5
+            Layout.preferredHeight: 150
+            Layout.preferredWidth: 150
             fillMode: Image.PreserveAspectFit
-            visible: false
+            visible: previewImage.status === Image.Ready
         }
 
         Button {
@@ -123,8 +209,8 @@ Item {
             }
 
             onClicked: {
-                ImagePicker.openCamera()
-                previewImage.visible = !previewImage.visible
+                popUp.open()
+                //                previewImage.visible = !previewImage.visible
             }
         }
     }

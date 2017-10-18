@@ -63,19 +63,16 @@ void GraftPOSClient::saveSettings() const
 void GraftPOSClient::save()
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!dataPath.isEmpty())
+    if (!QFileInfo(dataPath).exists())
     {
-        if (!QFileInfo(dataPath).exists())
-        {
-            QDir().mkpath(dataPath);
-        }
-        QDir lDir(dataPath);
-        QFile lFile(lDir.filePath(scProductModelDataFile));
-        if (lFile.open(QFile::WriteOnly))
-        {
-            lFile.write(ProductModelSerializator::serialize(mProductModel));
-            lFile.close();
-        }
+        QDir().mkpath(dataPath);
+    }
+    QDir lDir(dataPath);
+    QFile lFile(lDir.filePath(scProductModelDataFile));
+    if (lFile.open(QFile::WriteOnly))
+    {
+        lFile.write(ProductModelSerializator::serialize(mProductModel));
+        lFile.close();
     }
 }
 
