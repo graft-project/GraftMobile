@@ -9,7 +9,7 @@ Popup {
     modal: true
     focus: true
     width: parent.width / 1.2
-    height: popUp.width - 110
+    height: botton.height * 2.5
     topMargin: parent.height / 2
     leftMargin: parent.width / 2 - (popUp.width - 30) / 2
     contentItem: ColumnLayout {
@@ -18,7 +18,6 @@ Popup {
 
         Button {
             Layout.fillWidth: true
-            Layout.fillHeight: true
             Material.elevation: 0
             contentItem: RowLayout {
                 anchors {
@@ -49,9 +48,9 @@ Popup {
 
         Button {
             Layout.fillWidth: true
-            Layout.fillHeight: true
             Material.elevation: 0
             contentItem: RowLayout {
+                id: botton
                 anchors {
                     fill: parent
                     leftMargin: 15

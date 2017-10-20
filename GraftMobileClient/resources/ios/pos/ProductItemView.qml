@@ -103,9 +103,8 @@ Item {
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 5
-            Layout.preferredHeight: 150
-            Layout.preferredWidth: 150
+            Layout.preferredHeight: 100
+            Layout.preferredWidth: 100
             fillMode: Image.PreserveAspectFit
             visible: previewImage.status === Image.Ready
         }
