@@ -1,9 +1,6 @@
 [submodule "GraftMobileClient/qzxing"]
         path = GraftMobileClient/qzxing
         url = https://github.com/ftylitak/qzxing.git
-[submodule "GraftMobileClient/imagePicker"]
-        path = GraftMobileClient/imagePicker
-        url = https://git.vakoms.com/qt-team/ImagePicker.git
 [submodule "GraftMobileClient/qrcodegenerator"]
         path = GraftMobileClient/qrcodegenerator
         url = https://github.com/nayuki/QR-Code-generator.git
