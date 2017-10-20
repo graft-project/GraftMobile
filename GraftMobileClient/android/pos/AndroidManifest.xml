@@ -8,9 +8,9 @@
             </intent-filter>
         <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
         </activity>
-        <!-- Image Picker -->
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" android:label="Graft Point-of-Sale">
-            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
+
+        <!-- Image Picker-->
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
