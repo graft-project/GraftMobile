@@ -1,4 +1,5 @@
 #include "productitem.h"
+#include <QDir>
 
 ProductItem::ProductItem()
 {}
@@ -45,6 +46,12 @@ QString ProductItem::description() const
 
 void ProductItem::setImagePath(const QString &imagePath)
 {
+    if (mImagePath != imagePath)
+    {
+        QDir directory(mImagePath);
+        QFile image(directory.dirName());
+        image.remove();
+    }
     mImagePath = imagePath;
 }
 
