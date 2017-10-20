@@ -14,6 +14,17 @@ Item {
     property alias price: price.text
     property alias productImage: previewImage.source
 
+    Connections {
+        target: ImagePicker
+        onImageSelected: {
+            previewImage.source = path
+        }
+    }
+
+    SelectImageDialog {
+        id: popUp
+    }
+
     ColumnLayout {
         spacing: 5
         anchors {
@@ -49,7 +60,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                      regExp: /\d+[.]\d{10}/
+                    regExp: /\d+[.]\d{10}/
                 }
             }
 
@@ -92,9 +103,11 @@ Item {
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 100
+            Layout.topMargin: 5
+            Layout.preferredHeight: 150
+            Layout.preferredWidth: 150
             fillMode: Image.PreserveAspectFit
-            visible: false
+            visible: previewImage.status === Image.Ready
         }
 
         Button {
@@ -118,11 +131,7 @@ Item {
                     color: "#007AFF"
                 }
             }
-
-            onClicked: {
-                ImagePicker.openCamera()
-                previewImage.visible = !previewImage.visible
-            }
+            onClicked: popUp.open()
         }
     }
 }

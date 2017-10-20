@@ -14,6 +14,7 @@
         <file alias="BaseSettingsScreen.qml">BaseSettingsScreen.qml</file>
         <file alias="BaseCartScreen.qml">BaseCartScreen.qml</file>
         <file alias="BaseBalanceScreen.qml">BaseBalanceScreen.qml</file>
+        <file alias="SelectImageDialog.qml">SelectImageDialog.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

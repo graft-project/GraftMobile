@@ -6,7 +6,6 @@ import "../components"
 import "../"
 
 Item {
-    id: a
     readonly property alias currencyText: graftCBox.currentText
     property alias currencyModel: graftCBox.model
     property alias currencyIndex: graftCBox.currentIndex
@@ -22,80 +21,8 @@ Item {
         }
     }
 
-    Popup {
+    SelectImageDialog {
         id: popUp
-        width: 320
-        height: 200
-        padding: 0
-        leftPadding: 0
-        rightPadding: 0
-        topMargin: a.height / 2
-        leftMargin: a.width / 2
-        rightMargin: a.width / 2
-        modal: true
-        focus: true
-        contentItem: ColumnLayout {
-            anchors.fill: parent
-            spacing: 0
-
-//            Button {
-//                Layout.fillWidth: true
-//                Layout.fillHeight: true
-//                Material.elevation: 0
-//                contentItem: RowLayout {
-//                        spacing: 0
-//                        anchors.fill: parent
-//                        anchors.leftMargin: 10
-//                        anchors.rightMargin: 40
-
-//                        Image {
-//                            Layout.preferredHeight: 50
-//                            Layout.preferredWidth: 50
-//                            Layout.alignment: Qt.AlignLeft
-//                            source: "qrc:/test/gallery.png"
-//                        }
-
-//                        Text {
-//                            Layout.alignment: Qt.AlignLeft
-//                            font.pointSize: 20
-//                            text: qsTr("Open gallary")
-//                            color: "#3A3E3C"
-//                        }
-//                }
-//                onClicked: ImagePicker.openGallary()
-//            }
-
-//            Button {
-//                Layout.fillWidth: true
-//                Layout.fillHeight: true
-//                Material.elevation: 0
-//                contentItem: Item {
-//                    anchors.fill: parent
-
-//                    RowLayout {
-//                        spacing: 0
-//                        anchors.fill: parent
-//                        anchors.leftMargin: 10
-//                        anchors.rightMargin: 40
-
-//                        Image {
-//                            Layout.preferredHeight: 50
-//                            Layout.preferredWidth: 50
-//                            Layout.alignment: Qt.AlignLeft
-//                            source: "qrc:/test/camera.png"
-//                        }
-
-//                        Text {
-//                            Layout.alignment: Qt.AlignLeft
-//                            font.pointSize: 20
-//                            text: qsTr("Open camera")
-//                            color: "#3A3E3C"
-//                        }
-//                    }
-//                }
-//                onClicked: ImagePicker.openCamera()
-//            }
-        }
     }
 
     ColumnLayout {
@@ -184,7 +111,7 @@ Item {
             Layout.fillWidth: true
             Material.elevation: 0
             Material.background: "#EAF6EF"
-            padding: 35
+            padding: 32
             contentItem: Item {
                 RowLayout {
                     spacing: 10
@@ -207,11 +134,7 @@ Item {
                     }
                 }
             }
-
-            onClicked: {
-                popUp.open()
-                //                previewImage.visible = !previewImage.visible
-            }
+            onClicked: popUp.open()
         }
     }
 }
