@@ -10,7 +10,7 @@ Popup {
     focus: true
     width: parent.width / 1.2
     height: botton.height * 2.5
-    topMargin: parent.height / 2
+    topMargin: parent.height / 2.3
     leftMargin: parent.width / 2 - (popUp.width - 30) / 2
     contentItem: ColumnLayout {
         spacing: 0
@@ -23,7 +23,7 @@ Popup {
                 anchors {
                     fill: parent
                     leftMargin: 15
-                    rightMargin: 40
+                    rightMargin: 50
                 }
 
                 Image {
@@ -54,7 +54,7 @@ Popup {
                 anchors {
                     fill: parent
                     leftMargin: 15
-                    rightMargin: 40
+                    rightMargin: 50
                 }
 
                 Image {
