@@ -106,6 +106,7 @@ Item {
             Layout.preferredHeight: 100
             Layout.preferredWidth: 100
             fillMode: Image.PreserveAspectFit
+            source: ""
             visible: previewImage.status === Image.Ready
         }
 
