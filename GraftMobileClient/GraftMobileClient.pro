@@ -12,7 +12,7 @@ include(android/android.pri)
 
 contains(DEFINES, POS_BUILD) {
 include(QRCodeGenerator.pri)
-include(imagePicker/ImagePicker.pri)
+include(imagepicker/ImagePickerLibrary.pri)
 
 TARGET = GraftPointOfSale
 
