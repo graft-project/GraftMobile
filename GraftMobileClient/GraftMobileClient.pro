@@ -70,7 +70,8 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currencyitem.h
+    core/currencyitem.h \
+    core/define.h
 
 include(resources/resources.pri)
 

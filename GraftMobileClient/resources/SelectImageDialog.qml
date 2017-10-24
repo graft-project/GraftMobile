@@ -6,38 +6,50 @@ import QtQuick.Layouts 1.3
 Popup {
     id: popUp
     padding: 0
+    topPadding: 0
+    bottomPadding: 0
     modal: true
     focus: true
     width: parent.width / 1.2
-    height: botton.height * 2.5
-    topMargin: parent.height / 2.3
+    height: contentHeight
+    topMargin: parent.height / 2
     leftMargin: parent.width / 2 - (popUp.width - 30) / 2
-    contentItem: ColumnLayout {
+
+    ColumnLayout {
         spacing: 0
         anchors.fill: parent
 
         Button {
+            id: openGallary
             Layout.fillWidth: true
+            Layout.preferredHeight: 70
             Material.elevation: 0
-            contentItem: RowLayout {
+            padding: 0
+            topPadding: 0
+            bottomPadding: 0
+            contentItem: Item {
                 anchors {
                     fill: parent
                     leftMargin: 15
-                    rightMargin: 50
                 }
 
-                Image {
-                    Layout.preferredHeight: 50
-                    Layout.preferredWidth: 50
-                    Layout.alignment: Qt.AlignLeft
-                    source: "qrc:/test/gallery.png"
-                }
+                RowLayout {
+                    spacing: 20
+                    anchors.verticalCenter: parent.verticalCenter
 
-                Text {
-                    Layout.alignment: Qt.AlignLeft
-                    font.pointSize: 20
-                    text: qsTr("Open gallary")
-                    color: "#3A3E3C"
+                    Image {
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        Layout.alignment: Qt.AlignLeft
+                        source: "qrc:/test/gallery.png"
+                    }
+
+                    Text {
+                        Layout.alignment: Qt.AlignLeft
+                        font.pointSize: 20
+                        text: qsTr("Open gallary")
+                        color: "#3A3E3C"
+                    }
                 }
             }
             onClicked: {
@@ -48,27 +60,34 @@ Popup {
 
         Button {
             Layout.fillWidth: true
+            Layout.preferredHeight: 70
             Material.elevation: 0
-            contentItem: RowLayout {
-                id: botton
+            padding: 0
+            topPadding: 0
+            bottomPadding: 0
+            contentItem: Item {
                 anchors {
                     fill: parent
                     leftMargin: 15
-                    rightMargin: 50
                 }
 
-                Image {
-                    Layout.preferredHeight: 50
-                    Layout.preferredWidth: 50
-                    Layout.alignment: Qt.AlignLeft
-                    source: "qrc:/test/camera.png"
-                }
+                RowLayout {
+                    spacing: 20
+                    anchors.verticalCenter: parent.verticalCenter
 
-                Text {
-                    Layout.alignment: Qt.AlignLeft
-                    font.pointSize: 20
-                    text: qsTr("Open camera")
-                    color: "#3A3E3C"
+                    Image {
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        Layout.alignment: Qt.AlignLeft
+                        source: "qrc:/test/camera.png"
+                    }
+
+                    Text {
+                        Layout.alignment: Qt.AlignLeft
+                        font.pointSize: 20
+                        text: qsTr("Open camera")
+                        color: "#3A3E3C"
+                    }
                 }
             }
             onClicked: {

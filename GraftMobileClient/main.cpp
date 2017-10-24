@@ -2,7 +2,6 @@
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQuickView>
-#include <QStandardPaths>
 #include <QFileInfo>
 #include <QDir>
 
@@ -14,6 +13,7 @@
 #include "core/selectedproductproxymodel.h"
 #include "imagePicker/imagepicker.h"
 #include "designfactory.h"
+#include "define.h"
 
 #ifdef WALLET_BUILD
 #include <QZXing.h>
@@ -44,12 +44,11 @@ int main(int argc, char *argv[])
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
 
-    QString imagePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/ImageProduct/");
-    if(!QFileInfo(imagePath).exists())
+    if(!QFileInfo(imageDataLocation).exists())
     {
-        QDir().mkpath(imagePath);
+        QDir().mkpath(imageDataLocation);
     }
-    ImagePicker picker(imagePath);
+    ImagePicker picker(imageDataLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
