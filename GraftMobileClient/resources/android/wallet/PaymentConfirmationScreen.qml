@@ -10,6 +10,7 @@ BasePaymentConfirmationScreen {
     id: root
 
     Rectangle {
+        id: background
         anchors.fill: parent
         color: "#FFFFFF"
 
@@ -85,8 +86,35 @@ BasePaymentConfirmationScreen {
 
             WideActionButton {
                 text: qsTr("CONFIRM")
-                onClicked: confirmPay()
+                onClicked: {
+                    root.state = "beforePaid"
+                    confirmPay()
+                }
             }
         }
     }
+
+    BusyIndicator {
+        id: busyIndicator
+        visible: false
+        running: false
+        anchors {
+            centerIn: parent
+        }
+    }
+
+    states: [
+        State {
+            name: "beforePaid"
+            PropertyChanges {
+                target: busyIndicator
+                visible: true
+                running: true
+            }
+            PropertyChanges {
+                target: background
+                enabled: false
+            }
+        }
+    ]
 }

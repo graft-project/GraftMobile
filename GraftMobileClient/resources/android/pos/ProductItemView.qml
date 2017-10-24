@@ -49,9 +49,8 @@ Item {
                 Layout.preferredHeight: graftCBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
-                validator: DoubleValidator {
-                    decimals: 3
-                    notation: DoubleValidator.StandardNotation
+                validator: RegExpValidator {
+                      regExp: /\d+[.]\d{10}/
                 }
             }
 

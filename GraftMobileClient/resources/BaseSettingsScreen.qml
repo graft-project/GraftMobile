@@ -32,7 +32,7 @@ BaseScreen {
 
         WideActionButton {
             id: saveButton
-            Layout.bottomMargin: 10
+            Layout.bottomMargin: 15
             onClicked: saveChanges()
         }
     }
