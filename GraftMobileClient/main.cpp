@@ -11,7 +11,7 @@
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
-#include "core/define.h"
+#include "core/defines.h"
 #include "imagepicker.h"
 #include "designfactory.h"
 
@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
 
+    QString imageDataLocation = callImageDataPath();
     if(!QFileInfo(imageDataLocation).exists())
     {
         QDir().mkpath(imageDataLocation);

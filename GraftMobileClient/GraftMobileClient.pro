@@ -71,7 +71,7 @@ HEADERS += \
     designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
-    core/define.h
+    core/defines.h
 
 include(resources/resources.pri)
 
