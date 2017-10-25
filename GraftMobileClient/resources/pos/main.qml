@@ -1,6 +1,7 @@
-import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
+import QtQuick 2.9
 import "../"
 
 GraftApplicationWindow {
@@ -34,8 +35,17 @@ GraftApplicationWindow {
         target: GraftClient
 
         onErrorReceived: {
-            openMainScreen()
+            messageDialog.open()
         }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Sale failed!")
+        icon: StandardIcon.Warning
+        text: qsTr("Sale request failed.\nPlease try again.")
+        standardButtons: MessageDialog.Ok
+        onAccepted: clearChecked()
     }
 
     StackView {
