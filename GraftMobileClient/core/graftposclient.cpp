@@ -94,7 +94,7 @@ void GraftPOSClient::sale()
     }
     else
     {
-        emit saleStatusReceived(false);
+        emit saleReceived(false);
     }
 }
 
