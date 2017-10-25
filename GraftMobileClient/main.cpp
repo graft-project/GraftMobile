@@ -11,9 +11,9 @@
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
-#include "imagePicker/imagepicker.h"
+#include "core/define.h"
+#include "imagepicker.h"
 #include "designfactory.h"
-#include "define.h"
 
 #ifdef WALLET_BUILD
 #include <QZXing.h>

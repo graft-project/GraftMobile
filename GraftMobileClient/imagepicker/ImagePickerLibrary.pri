@@ -1,7 +1,6 @@
-INCLUDEPATH += $$PWD/
+INCLUDEPATH += $$PWD/include
 
 android {
-
 equals(ANDROID_TARGET_ARCH, armeabi-v7a) {
     LIBS += -L$$PWD/android/armv7/ -lImagePickerLibrary
     CONFIG(debug, debug|release) {
@@ -24,5 +23,10 @@ equals(ANDROID_TARGET_ARCH, x86) {
 }
 
 ios {
-LIBS += -L$$PWD/imagepicker/ios/ -lImagePickerLibrary
+    CONFIG(debug, debug|release) {
+        LIBS += $$PWD/ios/debug/libImagePickerLibrary.a
+    }
+    CONFIG(release, debug|release) {
+        LIBS += $$PWD/ios/release/libImagePickerLibrary.a
+    }
 }
