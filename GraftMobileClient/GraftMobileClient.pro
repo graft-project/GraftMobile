@@ -12,6 +12,7 @@ include(android/android.pri)
 
 contains(DEFINES, POS_BUILD) {
 include(QRCodeGenerator.pri)
+include(imagepicker/ImagePickerLibrary.pri)
 
 TARGET = GraftPointOfSale
 
@@ -69,7 +70,8 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currencyitem.h
+    core/currencyitem.h \
+    core/defines.h
 
 include(resources/resources.pri)
 

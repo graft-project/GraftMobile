@@ -2,6 +2,8 @@
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQuickView>
+#include <QFileInfo>
+#include <QDir>
 
 #include "core/cardmodel.h"
 #include "core/productmodel.h"
@@ -9,7 +11,12 @@
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
 #include "core/selectedproductproxymodel.h"
+#include "core/defines.h"
 #include "designfactory.h"
+
+#ifdef POS_BUILD
+#include "imagepicker.h"
+#endif
 
 #ifdef WALLET_BUILD
 #include <QZXing.h>
@@ -39,6 +46,14 @@ int main(int argc, char *argv[])
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
+
+    QString imageDataLocation = callImageDataPath();
+    if(!QFileInfo(imageDataLocation).exists())
+    {
+        QDir().mkpath(imageDataLocation);
+    }
+    ImagePicker picker(imageDataLocation);
+    engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());

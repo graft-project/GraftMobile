@@ -14,6 +14,8 @@
         <file alias="BaseSettingsScreen.qml">BaseSettingsScreen.qml</file>
         <file alias="BaseCartScreen.qml">BaseCartScreen.qml</file>
         <file alias="BaseBalanceScreen.qml">BaseBalanceScreen.qml</file>
+        <file alias="SelectImageDialog.qml">SelectImageDialog.qml</file>
+        <file alias="SelectImageButton.qml">SelectImageButton.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -61,5 +63,9 @@
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
         <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
+    </qresource>
+    <qresource prefix="/test">
+        <file alias="gallery.png">imgs/test/127-128.png</file>
+        <file alias="camera.png">imgs/test/camera-128.png</file>
     </qresource>
 </RCC>

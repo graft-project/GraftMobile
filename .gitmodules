@@ -1,6 +1,6 @@
 [submodule "GraftMobileClient/qzxing"]
-	path = GraftMobileClient/qzxing
-	url = https://github.com/ftylitak/qzxing.git
+        path = GraftMobileClient/qzxing
+        url = https://github.com/ftylitak/qzxing.git
 [submodule "GraftMobileClient/qrcodegenerator"]
-	path = GraftMobileClient/qrcodegenerator
-	url = https://github.com/nayuki/QR-Code-generator.git
+        path = GraftMobileClient/qrcodegenerator
+        url = https://github.com/nayuki/QR-Code-generator.git

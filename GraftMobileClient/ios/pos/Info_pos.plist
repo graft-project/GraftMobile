@@ -32,6 +32,10 @@
     <array>
         <string>UIInterfaceOrientationPortrait</string>
     </array>
+    <key>NSCameraUsageDescription</key>
+    <string>POS needs access to camera in order to provide all features of app.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>POS requires accessing your photo library to show the image.</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
     <key>UIStatusBarStyle</key>

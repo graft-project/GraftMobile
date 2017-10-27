@@ -1,4 +1,10 @@
 #include "productitem.h"
+#include "defines.h"
+
+#include <QUrl>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 
 ProductItem::ProductItem()
 {}
@@ -11,11 +17,19 @@ ProductItem::ProductItem(const QString &imagePath, const QString &name, double c
       mSelected(false),
       mCurrency(currency),
       mDescription(description)
-{}
+{
+    setImagePath(imagePath);
+}
 
 QString ProductItem::imagePath() const
 {
-    return mImagePath;
+    QString imageDataLocation = callImageDataPath();
+    if (!mImagePath.isEmpty())
+    {
+        QDir lDir(imageDataLocation);
+        return QUrl::fromLocalFile(lDir.filePath(mImagePath)).toString();
+    }
+    return QString();
 }
 
 QString ProductItem::name() const
@@ -45,7 +59,17 @@ QString ProductItem::description() const
 
 void ProductItem::setImagePath(const QString &imagePath)
 {
-    mImagePath = imagePath;
+    QString imageDataLocation = callImageDataPath();
+    QFileInfo newImagePath(imagePath);
+    if (mImagePath != newImagePath.fileName())
+    {
+        if (!mImagePath.isEmpty())
+        {
+            QDir lDir(imageDataLocation);
+            QFile::remove(lDir.filePath(mImagePath));
+        }
+        mImagePath = newImagePath.fileName();
+    }
 }
 
 void ProductItem::setName(const QString &name)
