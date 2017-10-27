@@ -25,7 +25,9 @@ QString ProductItem::imagePath() const
     QString imageDataLocation = callImageDataPath();
     if (!mImagePath.isEmpty())
     {
-        return QUrl::fromLocalFile(imageDataLocation + mImagePath).toString();
+        QDir lDir(imageDataLocation);
+        QFile lFile(lDir.filePath(mImagePath));
+        return QUrl::fromLocalFile(lFile).toString();
     }
     return QString();
 }
@@ -63,7 +65,9 @@ void ProductItem::setImagePath(const QString &imagePath)
     {
         if (!mImagePath.isEmpty())
         {
-            QFile::remove(imageDataLocation + mImagePath);
+            QDir lDir(imageDataLocation);
+            QFile lFile(lDir.filePath(mImagePath));
+            QFile::remove(lFile);
         }
         mImagePath = newImagePath.fileName();
     }
