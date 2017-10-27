@@ -2,6 +2,7 @@
 #include "defines.h"
 
 #include <QUrl>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 
@@ -26,8 +27,7 @@ QString ProductItem::imagePath() const
     if (!mImagePath.isEmpty())
     {
         QDir lDir(imageDataLocation);
-        QFile lFile(lDir.filePath(mImagePath));
-        return QUrl::fromLocalFile(lFile).toString();
+        return QUrl::fromLocalFile(lDir.filePath(mImagePath)).toString();
     }
     return QString();
 }
@@ -66,8 +66,7 @@ void ProductItem::setImagePath(const QString &imagePath)
         if (!mImagePath.isEmpty())
         {
             QDir lDir(imageDataLocation);
-            QFile lFile(lDir.filePath(mImagePath));
-            QFile::remove(lFile);
+            QFile::remove(lDir.filePath(mImagePath));
         }
         mImagePath = newImagePath.fileName();
     }
