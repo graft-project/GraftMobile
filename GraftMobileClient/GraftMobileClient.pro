@@ -24,7 +24,8 @@ SOURCES += \
 HEADERS += \
     core/api/graftposapi.h \
     core/graftposclient.h \
-    core/qrcodegenerator.h
+    core/qrcodegenerator.h \
+    core/defines.h
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -70,8 +71,7 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currencyitem.h \
-    core/defines.h
+    core/currencyitem.h
 
 include(resources/resources.pri)
 
