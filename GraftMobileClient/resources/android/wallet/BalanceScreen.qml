@@ -29,12 +29,11 @@ BaseBalanceScreen {
             }
         }
 
-        AddCardButton {
-            Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: 20
-            textItem.text: qsTr("+  Add Card")
-            imageVisible: false
-            onClicked: pushScreen.addCardScreen()
+        AddNewButton {
+            buttonTitle: qsTr("Add new account")
+            Layout.preferredHeight: 60
+            Layout.fillWidth: true
+            onClicked: pushScreen.openAddAccountScreen()
         }
 
         WideActionButton {

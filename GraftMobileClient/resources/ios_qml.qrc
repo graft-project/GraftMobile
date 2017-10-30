@@ -5,6 +5,7 @@
         <file alias="WideActionButton.qml">ios/WideActionButton.qml</file>
         <file alias="ToolBarButton.qml">ios/ToolBarButton.qml</file>
         <file alias="LinearEditItem.qml">ios/LinearEditItem.qml</file>
+        <file alias="CurrencyComboBox.qml">ios/CurrencyComboBox.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>
@@ -17,6 +18,5 @@
         <file alias="GraftToolBar.qml">ios/wallet/GraftToolBar.qml</file>
         <file alias="BalanceScreen.qml">ios/wallet/BalanceScreen.qml</file>
         <file alias="PaymentConfirmationScreen.qml">ios/wallet/PaymentConfirmationScreen.qml</file>
-        <file alias="AddAccount.qml">ios/wallet/AddAccount.qml</file>
     </qresource>
 </RCC>

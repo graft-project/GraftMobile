@@ -64,40 +64,47 @@ Item {
                 }
             }
 
-            ColumnLayout {
-                spacing: 0
+            CurrencyComboBox {
+                id: graftCBox
                 Layout.fillWidth: true
                 Layout.preferredWidth: 130
-
-                ComboBox {
-                    id: graftCBox
-                    Layout.fillWidth: true
-                    Material.background: "#00707070"
-                    Material.foreground: "#404040"
-                    leftPadding: dropdownTitle.width -8
-                    Layout.topMargin: -8
-                    Layout.bottomMargin: -2
-                    textRole: "name"
-
-                    Text {
-                        id: dropdownTitle
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            topMargin: 13
-                        }
-                        font.pointSize: parent.font.pointSize
-                        color: "#8e8e93"
-                        text: qsTr("Currency:")
-                    }
-                }
-
-                Rectangle {
-                    height: 1
-                    color: "#acacac"
-                    Layout.fillWidth: true
-                }
+                dropdownTitle: qsTr("Currency:")
             }
+
+//            ColumnLayout {
+//                spacing: 0
+//                Layout.fillWidth: true
+//                Layout.preferredWidth: 130
+
+//                ComboBox {
+//                    id: graftCBox
+//                    Layout.fillWidth: true
+//                    Material.background: "#00707070"
+//                    Material.foreground: "#404040"
+//                    leftPadding: dropdownTitle.width -8
+//                    Layout.topMargin: -8
+//                    Layout.bottomMargin: -2
+//                    textRole: "name"
+
+//                    Text {
+//                        id: dropdownTitle
+//                        anchors {
+//                            top: parent.top
+//                            left: parent.left
+//                            topMargin: 13
+//                        }
+//                        font.pointSize: parent.font.pointSize
+//                        color: "#8e8e93"
+//                        text: qsTr("Currency:")
+//                    }
+//                }
+
+//                Rectangle {
+//                    height: 1
+//                    color: "#acacac"
+//                    Layout.fillWidth: true
+//                }
+//            }
         }
 
         Image {

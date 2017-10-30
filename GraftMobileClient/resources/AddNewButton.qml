@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 
 Button {
     property alias buttonTitle: buttonTitle.text
+    property alias bottomLine: bottomLine.visible
 
     padding: 0
     contentItem: Rectangle {

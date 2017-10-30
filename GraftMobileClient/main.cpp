@@ -66,6 +66,12 @@ int main(int argc, char *argv[])
     QZXing::registerQMLTypes();
 
     GraftWalletClient client;
+
+    CurrencyModel coinModel;
+    coinModel.add(QStringLiteral("BitCoin"), QStringLiteral("BitCoin"));
+    coinModel.add(QStringLiteral("ZCash"), QStringLiteral("ZCash"));
+    engine.rootContext()->setContextProperty(QStringLiteral("CoinModel"), &coinModel);
+
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
