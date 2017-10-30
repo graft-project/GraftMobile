@@ -61,12 +61,25 @@ GraftApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["goBack"] = goBack
-        transitionsMap["addCardScreen"] = openAddCardScreen
-        transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
+        transitionsMap["addCardScreen"] = openAddCardScreen
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
+        transitionsMap["openAddAccountScreen"] = openAddAccountScreen
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
         return transitionsMap
+    }
+
+    function showMenu() {
+        drawer.open()
+    }
+
+    function hideMenu() {
+        drawer.close()
+    }
+
+    function goBack() {
+        stack.pop()
     }
 
     function openQRScanningScreen() {
@@ -91,16 +104,8 @@ GraftApplicationWindow {
                        "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!")})
     }
 
-    function showMenu() {
-        drawer.open()
-    }
-
-    function hideMenu() {
-        drawer.close()
-    }
-
-    function goBack() {
-        stack.pop()
+    function openAddAccountScreen() {
+        stack.push("qrc:/wallet/AddAccount.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openBalanceScreen() {

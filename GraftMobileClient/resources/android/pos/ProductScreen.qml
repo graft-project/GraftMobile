@@ -78,9 +78,11 @@ BaseScreen {
                 }
             }
 
-            AddNewProductButton {
+            AddNewButton {
+                buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
+                onClicked: pushScreen.openEditingItemScreen(-1)
             }
 
             WideActionButton {

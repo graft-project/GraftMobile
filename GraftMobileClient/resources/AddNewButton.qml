@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Button {
+    property alias buttonTitle: buttonTitle.text
+
     padding: 0
     contentItem: Rectangle {
         color: "#FFFFFF"
@@ -35,9 +37,9 @@ Button {
             }
 
             Text {
+                id: buttonTitle
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignLeft
-                text: qsTr("Add new product")
             }
         }
 
@@ -55,5 +57,4 @@ Button {
             color: "#E6E6E8"
         }
     }
-    onClicked: pushScreen.openEditingItemScreen(-1)
 }
