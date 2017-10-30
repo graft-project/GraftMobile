@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 Button {
     property alias buttonTitle: buttonTitle.text
     property alias bottomLine: bottomLine.visible
+    property alias topLine: topLine.visible
 
     padding: 0
     contentItem: Rectangle {

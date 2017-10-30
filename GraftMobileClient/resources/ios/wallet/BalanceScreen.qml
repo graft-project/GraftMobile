@@ -4,6 +4,7 @@ import "../"
 import "../components"
 
 BaseBalanceScreen {
+    id: a
     splitterVisible: false
     screenHeader {
         navigationButtonState: false
@@ -16,7 +17,7 @@ BaseBalanceScreen {
         ListView {
             id: accountListView
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredHeight: a.height / 5
             Layout.leftMargin: 8
             Layout.rightMargin: 8
             model: CardModel
@@ -36,7 +37,12 @@ BaseBalanceScreen {
             Layout.preferredHeight: 60
             Layout.fillWidth: true
             bottomLine: false
+            topLine: false
             onClicked: pushScreen.openAddAccountScreen()
+        }
+
+        Rectangle {
+            Layout.fillHeight: true
         }
 
         WideActionButton {
