@@ -8,6 +8,7 @@
         <file alias="MenuLabel.qml">android/MenuLabel.qml</file>
         <file alias="WideActionButton.qml">android/WideActionButton.qml</file>
         <file alias="LinearEditItem.qml">android/LinearEditItem.qml</file>
+        <file alias="ComboBoxModel.qml">android/ComboBoxModel.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>
