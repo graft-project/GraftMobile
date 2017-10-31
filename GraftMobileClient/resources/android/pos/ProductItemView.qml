@@ -57,7 +57,7 @@ Item {
                 id: price
                 title: qsTr("Price")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftCBox.height
+                Layout.preferredHeight: graftComboBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
