@@ -39,10 +39,6 @@ BaseScreen {
             maximumLength: 50
         }
 
-//        ComboBoxModel {
-//            id: model
-//        }
-
         CurrencyComboBox {
             id: model
         }

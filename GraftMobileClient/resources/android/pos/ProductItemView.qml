@@ -6,9 +6,9 @@ import "../components"
 import "../"
 
 Item {
-//    readonly property alias currencyText: graftCBox.currentText
-    property alias currencyModel: graftCBox.currencyModel
-    property alias currencyIndex: graftCBox.currencyIndex
+    property alias currencyText: graftComboBox.currentText
+    property alias currencyModel: graftComboBox.currencyModel
+    property alias currencyIndex: graftComboBox.currencyIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
@@ -65,40 +65,11 @@ Item {
                 }
             }
 
-            ComboBoxModel {
-                id: graftCBox
+            CurrencyComboBox {
+                id: graftComboBox
                 Layout.preferredWidth: 50
                 dropdownTitle: qsTr("Currency")
             }
-
-//            ColumnLayout {
-//                spacing: 4
-
-//                Text {
-//                    id: dropdownTitle
-//                    Layout.fillWidth: true
-//                    color: "#BBBBBB"
-//                    font.pointSize: 12
-//                    text: qsTr("Currency")
-//                }
-
-//                ComboBox {
-//                    id: graftCBox
-//                    Layout.fillWidth: true
-//                    Material.background: "#00707070"
-//                    Material.foreground: "#585858"
-//                    leftPadding: -12
-//                    Layout.topMargin: -12
-//                    Layout.bottomMargin: -10
-//                    textRole: "name"
-//                }
-
-//                Rectangle {
-//                    height: 1
-//                    color: "#acacac"
-//                    Layout.fillWidth: true
-//                }
-//            }
         }
 
         Image {

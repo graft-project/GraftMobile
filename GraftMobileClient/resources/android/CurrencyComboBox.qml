@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 
 ColumnLayout {
+    readonly property alias currentText: graftCBox.currentText
     property alias currencyModel: graftCBox.model
     property alias currencyIndex: graftCBox.currentIndex
     property alias dropdownTitle: dropdownTitle.text
@@ -12,20 +13,20 @@ ColumnLayout {
 
     Text {
         id: dropdownTitle
-        Layout.fillWidth: true
         color: "#BBBBBB"
         font.pointSize: 12
+        Layout.fillWidth: true
     }
 
     ComboBox {
         id: graftCBox
-        Layout.fillWidth: true
         Material.background: "#00707070"
         Material.foreground: "#585858"
-        leftPadding: -12
-        Layout.topMargin: -12
-        Layout.bottomMargin: -10
         textRole: "name"
+        leftPadding: -12
+        Layout.fillWidth: true
+        Layout.bottomMargin: -10
+        Layout.topMargin: -12
     }
 
     Rectangle {
