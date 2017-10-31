@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
+    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
 
     QString imageDataLocation = callImageDataPath();
     if(!QFileInfo(imageDataLocation).exists())
@@ -58,7 +59,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
-    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
     GraftWalletClient client;
 
     CurrencyModel coinModel;
-    coinModel.add(QStringLiteral("BitCoin"), QStringLiteral("BitCoin"));
-    coinModel.add(QStringLiteral("ZCash"), QStringLiteral("ZCash"));
+    coinModel.add(QStringLiteral("Bitcoin"), QStringLiteral("Bitcoin"));
+    coinModel.add(QStringLiteral("Zcash"), QStringLiteral("Zcash"));
     engine.rootContext()->setContextProperty(QStringLiteral("CoinModel"), &coinModel);
 
     CardModel cardModel;

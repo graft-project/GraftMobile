@@ -28,7 +28,7 @@
         <file alias="BasePaymentConfirmationScreen.qml">wallet/BasePaymentConfirmationScreen.qml</file>
         <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
         <file alias="AddCardScreen.qml">wallet/AddCardScreen.qml</file>
-        <file alias="AddAccount.qml">wallet/AddAccount.qml</file>
+        <file alias="AddAccountScreen.qml">wallet/AddAccountScreen.qml</file>
     </qresource>
     <qresource prefix="/imgs">
         <file alias="card_icon.png">imgs/card_icon.png</file>

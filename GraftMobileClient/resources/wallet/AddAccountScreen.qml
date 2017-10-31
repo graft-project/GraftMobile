@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.2
 import "../components"
 
 BaseScreen {
-    property alias coinModel: model.currencyModel
+    property alias coinModel: graftComboBox.currencyModel
 
     title: qsTr("Add new account")
 
@@ -14,12 +14,12 @@ BaseScreen {
             screenHeader.actionButtonState = true
             screenHeader.actionText = qsTr("Save")
             linearTitle.title = qsTr("Account name:")
-            model.dropdownTitle = qsTr("Type:")
+            graftComboBox.dropdownTitle = qsTr("Type:")
             linearEditItem.title = qsTr("Wallet number:")
         } else {
             screenHeader.actionButtonState = true
             linearTitle.title = qsTr("Account name")
-            model.dropdownTitle = qsTr("Type")
+            graftComboBox.dropdownTitle = qsTr("Type")
             linearEditItem.title = qsTr("Wallet number")
         }
     }
@@ -40,7 +40,7 @@ BaseScreen {
         }
 
         CurrencyComboBox {
-            id: model
+            id: graftComboBox
         }
 
         LinearEditItem {

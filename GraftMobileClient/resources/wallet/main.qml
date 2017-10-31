@@ -105,7 +105,7 @@ GraftApplicationWindow {
     }
 
     function openAddAccountScreen() {
-        stack.push("qrc:/wallet/AddAccount.qml", {"pushScreen": transitionsBetweenScreens(),
+        stack.push("qrc:/wallet/AddAccountScreen.qml", {"pushScreen": transitionsBetweenScreens(),
                    "coinModel": CoinModel})
     }
 

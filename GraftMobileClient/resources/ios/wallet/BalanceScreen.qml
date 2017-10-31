@@ -4,7 +4,7 @@ import "../"
 import "../components"
 
 BaseBalanceScreen {
-    id: a
+    id: balanceScreen
     splitterVisible: false
     screenHeader {
         navigationButtonState: false
@@ -17,7 +17,7 @@ BaseBalanceScreen {
         ListView {
             id: accountListView
             Layout.fillWidth: true
-            Layout.preferredHeight: a.height / 5
+            Layout.preferredHeight: balanceScreen.height / 5
             Layout.leftMargin: 8
             Layout.rightMargin: 8
             model: CardModel
