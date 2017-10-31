@@ -2,62 +2,53 @@
 #include "accountitem.h"
 
 AccountModel::AccountModel(QObject *parent) : QAbstractListModel(parent)
-{
-
-}
+{}
 
 AccountModel::~AccountModel()
 {
     qDeleteAll(mAccounts);
 }
 
-QVector<CardItem *> CardModel::cards() const
+QVector<AccountItem *> AccountModel::cards() const
 {
-    return mCards;
+    return mAccounts;
 }
 
-QVariant CardModel::data(const QModelIndex &index, int role) const
+QVariant AccountModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= mCards.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= mAccounts.count())
     {
         return QVariant();
     }
 
-    CardItem *cardItem = mCards[index.row()];
+    AccountItem *accountItem = mAccounts[index.row()];
 
     switch (role) {
     case TitleRole:
-        return cardItem->name();
+        return accountItem->name();
+    case CurrencyRole:
+        return accountItem->currency();
     case NumberRole:
-        return cardItem->number();
-    case HideNumberRole:
-        return cardItem->hideNumber();
-    case CV2CodeRole:
-        return cardItem->cv2Code();
-    case DateRole:
-        return cardItem->expirationDate();
+        return accountItem->number();
     default:
         return QVariant();
     }
 }
 
-bool CardModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool AccountModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && value.isValid() && data(index, role) != value)
     {
         switch (role)
         {
         case TitleRole:
-            mCards[index.row()]->setName(value.toString());
+            mAccounts[index.row()]->setName(value.toString());
+            break;
+        case CurrencyRole:
+            mAccounts[index.row()]->setCV2Code(value.toString());
             break;
         case NumberRole:
-            mCards[index.row()]->setNumber(value.toString());
-            break;
-        case CV2CodeRole:
-            mCards[index.row()]->setCV2Code(value.toUInt());
-            break;
-        case DateRole:
-            mCards[index.row()]->setExpirationDate(value.toString());
+            mAccounts[index.row()]->setNumber(value.toUInt());
             break;
         default:
             break;
@@ -68,30 +59,24 @@ bool CardModel::setData(const QModelIndex &index, const QVariant &value, int rol
     return false;
 }
 
-int CardModel::rowCount(const QModelIndex &parent) const
+int AccountModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return mCards.count();
+    return mAccounts.count();
 }
 
-void CardModel::add(const QString &name, const QString &number, unsigned cv2Code,
-                    const QString &expirationDate)
+void AccountModel::add(const QString &name, const QString &currency, unsigned &number)
 {
-    if ((number.size() == 16 && (cv2Code > 99 && cv2Code < 1000)))
-    {
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mCards.append(new CardItem(name, number, cv2Code, expirationDate));
-        endInsertRows();
-    }
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    mAccounts << (new AccountItem(name, currency, number));
+    endInsertRows();
 }
 
-QHash<int, QByteArray> CardModel::roleNames() const
+QHash<int, QByteArray> AccountModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[TitleRole] = "cardName";
-    roles[NumberRole] = "cardNumber";
-    roles[HideNumberRole] = "cardHideNumber";
-    roles[CV2CodeRole] = "cardCV2Code";
-    roles[DateRole] = "cardExpirationDate";
+    roles[TitleRole] = "accountName";
+    roles[CurrencyRole] = "type";
+    roles[NumberRole] = "accountNumber";
     return roles;
 }

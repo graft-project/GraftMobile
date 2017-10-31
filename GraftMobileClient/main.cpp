@@ -6,6 +6,7 @@
 #include <QDir>
 
 #include "core/cardmodel.h"
+#include "core/accountmodel.h"
 #include "core/productmodel.h"
 #include "core/currencymodel.h"
 #include "core/graftposclient.h"
@@ -71,6 +72,9 @@ int main(int argc, char *argv[])
     coinModel.add(QStringLiteral("Bitcoin"), QStringLiteral("Bitcoin"));
     coinModel.add(QStringLiteral("Zcash"), QStringLiteral("Zcash"));
     engine.rootContext()->setContextProperty(QStringLiteral("CoinModel"), &coinModel);
+
+    AccountModel accountModel;
+    engine.rootContext()->setContextProperty(QStringLiteral("AccountModel"), &accountModel);
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
