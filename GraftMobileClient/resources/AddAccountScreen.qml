@@ -2,25 +2,32 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
-import "../components"
+import "components"
 
 BaseScreen {
     property alias coinModel: graftComboBox.currencyModel
 
     title: qsTr("Add new account")
+    action: saveAccount
+
+    function saveAccount() {
+        CardModel.add(title.text, number.text, cv2Code.text, expired.text)
+        pushScreen.goBack()
+    }
 
     Component.onCompleted: {
         if(Qt.platform.os === "ios") {
             screenHeader.actionButtonState = true
+            screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
-            linearTitle.title = qsTr("Account name:")
+            linearAccountTitle.title = qsTr("Account name:")
             graftComboBox.dropdownTitle = qsTr("Type:")
-            linearEditItem.title = qsTr("Wallet number:")
+            linearWalletTitle.title = qsTr("Wallet number:")
         } else {
             screenHeader.actionButtonState = true
-            linearTitle.title = qsTr("Account name")
+            linearAccountTitle.title = qsTr("Account name")
             graftComboBox.dropdownTitle = qsTr("Type")
-            linearEditItem.title = qsTr("Wallet number")
+            linearWalletTitle.title = qsTr("Wallet number")
         }
     }
 
@@ -34,7 +41,7 @@ BaseScreen {
         }
 
         LinearEditItem {
-            id: linearTitle
+            id: linearAccountTitle
             Layout.fillWidth: true
             maximumLength: 50
         }
@@ -44,14 +51,11 @@ BaseScreen {
         }
 
         LinearEditItem {
-            id: linearEditItem
+            id: linearWalletTitle
             Layout.fillWidth: true
-            Layout.topMargin: 5
+            Layout.topMargin: 10
             inputMethodHints: Qt.ImhFormattedNumbersOnly
             showLengthIndicator: false
-            validator: RegExpValidator {
-                regExp: /\d{25}/
-            }
         }
 
         Rectangle {
@@ -60,6 +64,7 @@ BaseScreen {
 
         WideActionButton {
             text: qsTr("Scan QR Code")
+            Layout.topMargin: 5
             Layout.leftMargin: 0
             Layout.rightMargin: 0
             onClicked: {}
@@ -70,7 +75,7 @@ BaseScreen {
             Layout.leftMargin: 0
             Layout.rightMargin: 0
             Layout.bottomMargin: 15
-            onClicked: {}
+            onClicked: saveAccount()
         }
     }
 }
