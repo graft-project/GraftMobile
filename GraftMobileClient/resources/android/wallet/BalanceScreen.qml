@@ -5,7 +5,8 @@ import "../components"
 
 BaseBalanceScreen {
     id: balanceScreen
-    splitterVisible: true
+
+    property real balance: 0
 
     ColumnLayout {
         anchors.fill: parent
@@ -14,19 +15,16 @@ BaseBalanceScreen {
         ListView {
             id: accountListView
             Layout.fillWidth: true
-            Layout.preferredHeight: balanceScreen.height / 5
-            Layout.leftMargin: 8
-            Layout.rightMargin: 8
-            Layout.topMargin: 5
-            model: CardModel
+            Layout.fillHeight: true
+            model: AccountModel
             clip: true
-            spacing: 15
-            delegate: AccountDelegate {
+            spacing: 0
+            delegate: CoinAccountDelegate {
                 width: accountListView.width
-                height: 30
-                nameItem.text: cardName
-                cardIcon: "qrc:/imgs/MasterCard_Logo.png"
-                number: cardHideNumber
+                height: accountListView.width / 5 - 10
+                accountName: type
+                productImage: imagePath
+                accountBalance: balance
             }
         }
 
@@ -35,10 +33,6 @@ BaseBalanceScreen {
             Layout.preferredHeight: 60
             Layout.fillWidth: true
             onClicked: pushScreen.openAddAccountScreen()
-        }
-
-        Rectangle {
-            Layout.fillHeight: true
         }
 
         WideActionButton {

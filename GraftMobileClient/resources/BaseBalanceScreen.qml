@@ -5,7 +5,6 @@ import "components"
 BaseScreen {
     property alias amountMoney: balanceItem.amountMoneyCost
     property alias amountGraft: balanceItem.amountGraftCost
-    property alias splitterVisible: splitter.visible
     property alias graftWalletLogo: graftWalletLogo.source
     default property alias content: placeholder.data
 
@@ -41,13 +40,6 @@ BaseScreen {
             BalanceViewItem {
                 id: balanceItem
                 Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: splitter
-                Layout.fillWidth: true
-                Layout.preferredHeight: 2
-                color: "#EDEEF0"
             }
 
             Item {
