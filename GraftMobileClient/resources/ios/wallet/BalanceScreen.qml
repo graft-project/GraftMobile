@@ -5,7 +5,6 @@ import "../components"
 
 BaseBalanceScreen {
     id: balanceScreen
-    splitterVisible: false
     screenHeader {
         navigationButtonState: false
     }
@@ -24,11 +23,11 @@ BaseBalanceScreen {
             clip: true
             spacing: 15
             delegate: AccountDelegate {
-                width: accountListView.width
-                height: 30
-                nameItem.text: cardName
-                cardIcon: "qrc:/imgs/MasterCard_Logo.png"
-                number: cardHideNumber
+//                width: accountListView.width
+//                height: 30
+//                nameItem.text: cardName
+//                cardIcon: "qrc:/imgs/MasterCard_Logo.png"
+//                number: cardHideNumber
             }
         }
 

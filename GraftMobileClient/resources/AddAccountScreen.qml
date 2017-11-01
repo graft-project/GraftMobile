@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Material 2.2
 import "components"
 
@@ -8,11 +9,22 @@ BaseScreen {
     property alias coinModel: graftComboBox.currencyModel
 
     title: qsTr("Add new account")
-    action: saveAccount
+    action: addAccount
 
-    function saveAccount() {
-        CardModel.add(title.text, number.text, cv2Code.text, expired.text)
-        pushScreen.goBack()
+    function addAccount() {
+        if(AccountModel.existWalletNumbers(linearWalletTitle.text)) {
+            AccountModel.add("", linearAccountTitle.text, graftComboBox.currentText, linearWalletTitle.text)
+            pushScreen.goBack()
+        } else {
+            messageDialog.open()
+        }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("You must enter your account information only once.")
     }
 
     Component.onCompleted: {
@@ -20,6 +32,7 @@ BaseScreen {
             screenHeader.actionButtonState = true
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
+            //            screenHeader.actionText = qsTr("Back")
             linearAccountTitle.title = qsTr("Account name:")
             graftComboBox.dropdownTitle = qsTr("Type:")
             linearWalletTitle.title = qsTr("Wallet number:")
@@ -56,6 +69,9 @@ BaseScreen {
             Layout.topMargin: 10
             inputMethodHints: Qt.ImhFormattedNumbersOnly
             showLengthIndicator: false
+            validator: RegExpValidator {
+                regExp: /\d+/
+            }
         }
 
         Rectangle {
@@ -75,7 +91,7 @@ BaseScreen {
             Layout.leftMargin: 0
             Layout.rightMargin: 0
             Layout.bottomMargin: 15
-            onClicked: saveAccount()
+            onClicked: addAccount()
         }
     }
 }

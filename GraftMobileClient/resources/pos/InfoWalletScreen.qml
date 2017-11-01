@@ -4,7 +4,6 @@ import "../"
 import "../components"
 
 BaseBalanceScreen {
-    splitterVisible: false
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
     screenHeader {
         navigationButtonState: Qt.platform.os === "android"

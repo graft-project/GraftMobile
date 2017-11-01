@@ -3,11 +3,17 @@
 AccountItem::AccountItem()
 {}
 
-AccountItem::AccountItem(const QString &name, const QString &currency, unsigned &number)
-    : mName(name),
+AccountItem::AccountItem(const QString &imagePath, const QString &name, const QString &currency, const QString &number)
+    : mImagePath(imagePath),
+      mName(name),
       mCurrency(currency),
       mNumber(number)
 {}
+
+QString AccountItem::imagePath() const
+{
+    return mImagePath;
+}
 
 QString AccountItem::name() const
 {
@@ -19,9 +25,14 @@ QString AccountItem::currency() const
     return mCurrency;
 }
 
-unsigned AccountItem::number() const
+QString AccountItem::number() const
 {
     return mNumber;
+}
+
+void AccountItem::setImagePath(const QString &imagePath)
+{
+    mImagePath = imagePath;
 }
 
 void AccountItem::setName(const QString &name)
@@ -34,7 +45,7 @@ void AccountItem::setCurrency(const QString &currency)
     mCurrency = currency;
 }
 
-void AccountItem::setNumber(const unsigned &number)
+void AccountItem::setNumber(const QString &number)
 {
     mNumber = number;
 }
