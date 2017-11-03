@@ -20,6 +20,24 @@ BaseScreen {
         anchors.fill: parent
         color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
 
+        Rectangle {
+            anchors {
+                top: parent.top
+                bottom: completeLabel.top
+                left: parent.left
+                right: parent.right
+            }
+            color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
+
+            Image {
+                anchors.centerIn: parent
+                height: 200
+                width: height
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/imgs/paid_icon.png"
+            }
+        }
+
         Pane {
             id: completeLabel
 
@@ -27,7 +45,8 @@ BaseScreen {
             anchors {
                 right: parent.right
                 left: parent.left
-                top: parent.top
+                bottom: doneButton.top
+                bottomMargin: Qt.platform.os === "android" ? 15 : doneButton.height + 15
             }
             Material.elevation: Qt.platform.os === "android" ? 6 : 0
             padding: 0
@@ -43,20 +62,13 @@ BaseScreen {
             }
         }
 
-        Image {
-            anchors.centerIn: parent
-            height: 200
-            width: height
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/imgs/paid_icon.png"
-        }
-
         WideActionButton {
+            id: doneButton
             anchors {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: 5
+                bottomMargin: 15
             }
             text: qsTr("DONE")
             onClicked: pushScreen()
