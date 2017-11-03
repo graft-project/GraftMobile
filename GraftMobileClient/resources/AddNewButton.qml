@@ -18,8 +18,8 @@ Button {
                 top: parent.top
                 left: parent.left
                 right: parent.right
-                leftMargin: 16
-                rightMargin: 16
+                leftMargin: 15
+                rightMargin: 15
             }
             visible: Qt.platform.os === "ios"
             color: "#E6E6E8"
@@ -52,8 +52,8 @@ Button {
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
-                leftMargin: 12
-                rightMargin: 12
+                leftMargin: 15
+                rightMargin: 15
             }
             visible: Qt.platform.os === "ios"
             color: "#E6E6E8"

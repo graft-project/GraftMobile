@@ -28,14 +28,14 @@ BaseScreen {
         id: dataRepeatMessage
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("You must enter your account information only once.")
+        text: qsTr("You re entered the data in Wallet number field - it's wrong! Check the entered data.")
     }
 
     MessageDialog {
         id: dataEmptyMessage
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("You must enter the account title and wallet number.")
+        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
     }
 
     Component.onCompleted: {
@@ -43,7 +43,6 @@ BaseScreen {
             screenHeader.actionButtonState = true
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
-//            screenHeader.navigationText = qsTr("Back")
             linearAccountTitle.title = qsTr("Account name:")
             graftComboBox.dropdownTitle = qsTr("Type:")
             linearWalletTitle.title = qsTr("Wallet number:")
@@ -78,6 +77,7 @@ BaseScreen {
             id: linearWalletTitle
             Layout.fillWidth: true
             Layout.topMargin: 10
+            inputMethodHints: Qt.ImhDigitsOnly && Qt.ImhLowercaseOnly
             showLengthIndicator: false
             validator: RegExpValidator {
                 regExp: /[\da-zA-Z]+/

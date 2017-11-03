@@ -6,8 +6,23 @@ Rectangle {
     property real accountBalance
     property alias accountTitle: accountName.text
     property alias productImage: picture.source
+    property alias topLineVisible: topLine.visible
+    property alias bottomLineVisible: bottomLine.visible
 
     height: parent.width / 5 - 10
+
+    Rectangle {
+        id: topLine
+        height: 1
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            leftMargin: 15
+            rightMargin: 15
+        }
+        color: "#e6e6e8"
+    }
 
     RowLayout {
         spacing: 10
@@ -62,6 +77,7 @@ Rectangle {
     }
 
     Rectangle {
+        id: bottomLine
         height: 1
         anchors {
             bottom: parent.bottom
