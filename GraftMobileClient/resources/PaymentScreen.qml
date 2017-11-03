@@ -20,14 +20,13 @@ BaseScreen {
         anchors.fill: parent
         color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
 
-        Rectangle {
+        Item {
             anchors {
                 top: parent.top
                 bottom: completeLabel.top
                 left: parent.left
                 right: parent.right
             }
-            color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
 
             Image {
                 anchors.centerIn: parent
