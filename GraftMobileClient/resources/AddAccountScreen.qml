@@ -77,7 +77,6 @@ BaseScreen {
             id: linearWalletTitle
             Layout.fillWidth: true
             Layout.topMargin: 10
-            inputMethodHints: Qt.ImhDigitsOnly && Qt.ImhLowercaseOnly
             showLengthIndicator: false
             validator: RegExpValidator {
                 regExp: /[\da-zA-Z]+/

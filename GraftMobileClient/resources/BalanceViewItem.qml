@@ -19,8 +19,8 @@ Rectangle {
         }
 
         Image {
-            Layout.preferredHeight: 40
-            Layout.preferredWidth: 46
+            Layout.preferredHeight: 42
+            Layout.preferredWidth: 48
             fillMode: Image.PreserveAspectFit
             Layout.alignment: Qt.AlignLeft
             source: "qrc:/imgs/g-max.png"
