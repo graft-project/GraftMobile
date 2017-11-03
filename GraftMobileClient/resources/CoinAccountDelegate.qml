@@ -80,9 +80,9 @@ Rectangle {
         id: bottomLine
         height: 1
         anchors {
-            bottom: parent.bottom
             left: parent.left
             right: parent.right
+            bottom: parent.bottom
             leftMargin: 15
             rightMargin: 15
         }

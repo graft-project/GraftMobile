@@ -21,8 +21,8 @@ Rectangle {
         Image {
             Layout.preferredHeight: 42
             Layout.preferredWidth: 48
-            fillMode: Image.PreserveAspectFit
             Layout.alignment: Qt.AlignLeft
+            fillMode: Image.PreserveAspectFit
             source: "qrc:/imgs/g-max.png"
         }
 
@@ -42,7 +42,7 @@ Rectangle {
             Layout.alignment: Qt.AlignRight
 
             Text {
-                id:a
+                id:graftCost
                 text: amountGraftCost
                 color: "#404040"
                 font.pointSize: 20
@@ -52,7 +52,7 @@ Rectangle {
                 text: "$" + amountMoneyCost
                 color: "#b39036"
                 font.pointSize: 12
-                anchors.right: a.right
+                anchors.right: graftCost.right
             }
         }
     }
@@ -60,9 +60,9 @@ Rectangle {
     Rectangle {
         height: 1
         anchors {
-            bottom: parent.bottom
             left: parent.left
             right: parent.right
+            bottom: parent.bottom
             leftMargin: 15
             rightMargin: 15
         }

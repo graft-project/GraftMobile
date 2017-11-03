@@ -8,9 +8,7 @@ BaseBalanceScreen {
 
     property real balance: 0
 
-    screenHeader {
-        navigationButtonState: false
-    }
+    screenHeader.navigationButtonState: false
 
     ColumnLayout {
         anchors.fill: parent
@@ -27,19 +25,19 @@ BaseBalanceScreen {
                 bottomLineVisible: index === (accountListView.count - 1)
                 width: accountListView.width
                 height: accountListView.width / 5 - 10
-                accountTitle: accountName
                 productImage: imagePath
+                accountTitle: accountName
                 accountBalance: balance
             }
         }
 
         AddNewButton {
             buttonTitle: qsTr("Add new account")
+            Layout.fillWidth: true
             Layout.preferredHeight: 60
             Layout.leftMargin: 4
             Layout.rightMargin: 4
             Layout.bottomMargin: 15
-            Layout.fillWidth: true
             onClicked: pushScreen.openAddAccountScreen()
         }
 
