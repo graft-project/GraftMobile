@@ -65,12 +65,18 @@ int main(int argc, char *argv[])
 #endif
 #ifdef WALLET_BUILD
     QZXing::registerQMLTypes();
-
     GraftWalletClient client;
 
     CurrencyModel coinModel;
-    coinModel.add(QStringLiteral("Bitcoin"), QStringLiteral("Bitcoin"));
-    coinModel.add(QStringLiteral("Zcash"), QStringLiteral("Zcash"));
+    coinModel.add(QStringLiteral("BITCONNECT COIN"), QStringLiteral("qrc:/imgs/coins/bcc.png"));
+    coinModel.add(QStringLiteral("BITCOIN"), QStringLiteral("qrc:/imgs/coins/bitcoin.png"));
+    coinModel.add(QStringLiteral("DASH"), QStringLiteral("qrc:/imgs/coins/dash.png"));
+    coinModel.add(QStringLiteral("ETHER"), QStringLiteral("qrc:/imgs/coins/ether.png"));
+    coinModel.add(QStringLiteral("LITECOIN"), QStringLiteral("qrc:/imgs/coins/litecoin.png"));
+    coinModel.add(QStringLiteral("MONERO"), QStringLiteral("qrc:/imgs/coins/monero.png"));
+    coinModel.add(QStringLiteral("NEW ECONOMY MOVEMENT"), QStringLiteral("qrc:/imgs/coins/nem.png"));
+    coinModel.add(QStringLiteral("NEO"), QStringLiteral("qrc:/imgs/coins/neo.png"));
+    coinModel.add(QStringLiteral("RIPPLE"), QStringLiteral("qrc:/imgs/coins/ripple.png"));
     engine.rootContext()->setContextProperty(QStringLiteral("CoinModel"), &coinModel);
 
     AccountModel accountModel;
@@ -78,6 +84,7 @@ int main(int argc, char *argv[])
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
+
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);

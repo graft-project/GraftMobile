@@ -65,6 +65,15 @@
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
         <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
+        <file alias="coins/bcc.png">imgs/coins/bcc.png</file>
+        <file alias="coins/bitcoin.png">imgs/coins/bitcoin.png</file>
+        <file alias="coins/dash.png">imgs/coins/dash.png</file>
+        <file alias="coins/ether.png">imgs/coins/ether.png</file>
+        <file alias="coins/litecoin.png">imgs/coins/litecoin.png</file>
+        <file alias="coins/monero.png">imgs/coins/monero.png</file>
+        <file alias="coins/nem.png">imgs/coins/nem.png</file>
+        <file alias="coins/neo.png">imgs/coins/neo.png</file>
+        <file alias="coins/ripple.png">imgs/coins/ripple.png</file>
     </qresource>
     <qresource prefix="/test">
         <file alias="gallery.png">imgs/test/127-128.png</file>
