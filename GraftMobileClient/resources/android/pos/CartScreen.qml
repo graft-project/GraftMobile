@@ -103,6 +103,11 @@ BaseCartScreen {
                 }
             }
 
+            QuickExchangeView {
+                Layout.preferredHeight: 50
+                Layout.fillWidth: true
+            }
+
             WideActionButton {
                 text: qsTr("Cancel")
                 Material.accent: ColorFactory.color(DesignFactory.LightButton)
