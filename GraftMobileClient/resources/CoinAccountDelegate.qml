@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     property real accountBalance
-    property alias accountName: accountName.text
+    property alias accountTitle: accountName.text
     property alias productImage: picture.source
 
     height: parent.width / 5 - 10
@@ -24,7 +24,7 @@ Rectangle {
             maskSource: circle
             Layout.preferredWidth: 46
             Layout.preferredHeight: 46
-            source: picture.status === Image.Ready ? picture : greyPicture
+            source: picture
 
             Rectangle {
                 id: circle
@@ -39,14 +39,6 @@ Rectangle {
                 width: 46
                 height: 46
                 visible: false
-            }
-
-            Rectangle {
-                id: greyPicture
-                width: picture.width
-                height: picture.height
-                visible: false
-                color: "#d1d3d4"
             }
         }
 

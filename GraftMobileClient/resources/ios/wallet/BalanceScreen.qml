@@ -5,6 +5,9 @@ import "../components"
 
 BaseBalanceScreen {
     id: balanceScreen
+
+    property real balance: 0
+
     screenHeader {
         navigationButtonState: false
     }
@@ -16,18 +19,16 @@ BaseBalanceScreen {
         ListView {
             id: accountListView
             Layout.fillWidth: true
-            Layout.preferredHeight: balanceScreen.height / 5
-            Layout.leftMargin: 8
-            Layout.rightMargin: 8
-            model: CardModel
+            Layout.fillHeight: true
+            model: AccountModel
             clip: true
-            spacing: 15
-            delegate: AccountDelegate {
-//                width: accountListView.width
-//                height: 30
-//                nameItem.text: cardName
-//                cardIcon: "qrc:/imgs/MasterCard_Logo.png"
-//                number: cardHideNumber
+            spacing: 0
+            delegate: CoinAccountDelegate {
+                width: accountListView.width
+                height: accountListView.width / 5 - 10
+                accountTitle: accountName
+                productImage: imagePath
+                accountBalance: balance
             }
         }
 
@@ -38,10 +39,6 @@ BaseBalanceScreen {
             bottomLine: false
             topLine: false
             onClicked: pushScreen.openAddAccountScreen()
-        }
-
-        Rectangle {
-            Layout.fillHeight: true
         }
 
         WideActionButton {

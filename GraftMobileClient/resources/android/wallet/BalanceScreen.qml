@@ -22,7 +22,7 @@ BaseBalanceScreen {
             delegate: CoinAccountDelegate {
                 width: accountListView.width
                 height: accountListView.width / 5 - 10
-                accountName: type
+                accountTitle: accountName
                 productImage: imagePath
                 accountBalance: balance
             }

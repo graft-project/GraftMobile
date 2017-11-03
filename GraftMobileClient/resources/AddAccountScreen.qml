@@ -12,19 +12,30 @@ BaseScreen {
     action: addAccount
 
     function addAccount() {
-        if(AccountModel.existWalletNumbers(linearWalletTitle.text)) {
-            AccountModel.add("", linearAccountTitle.text, graftComboBox.currentText, linearWalletTitle.text)
-            pushScreen.goBack()
+        if(linearAccountTitle.text !== "" && linearWalletTitle.text !== "") {
+            if(AccountModel.existWalletNumbers(linearWalletTitle.text)) {
+                AccountModel.add(CoinModel.codeOf(graftComboBox.currentText), linearAccountTitle.text, graftComboBox.currentText, linearWalletTitle.text)
+                pushScreen.goBack()
+            } else {
+                dataRepeatMessage.open()
+            }
         } else {
-            messageDialog.open()
+            dataEmptyMessage.open()
         }
     }
 
     MessageDialog {
-        id: messageDialog
+        id: dataRepeatMessage
         title: qsTr("Attention")
         icon: StandardIcon.Warning
         text: qsTr("You must enter your account information only once.")
+    }
+
+    MessageDialog {
+        id: dataEmptyMessage
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("You must enter the account title and wallet number.")
     }
 
     Component.onCompleted: {
@@ -32,7 +43,7 @@ BaseScreen {
             screenHeader.actionButtonState = true
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
-            //            screenHeader.actionText = qsTr("Back")
+//            screenHeader.navigationText = qsTr("Back")
             linearAccountTitle.title = qsTr("Account name:")
             graftComboBox.dropdownTitle = qsTr("Type:")
             linearWalletTitle.title = qsTr("Wallet number:")
@@ -67,10 +78,9 @@ BaseScreen {
             id: linearWalletTitle
             Layout.fillWidth: true
             Layout.topMargin: 10
-            inputMethodHints: Qt.ImhFormattedNumbersOnly
             showLengthIndicator: false
             validator: RegExpValidator {
-                regExp: /\d+/
+                regExp: /[\da-zA-Z]+/
             }
         }
 
