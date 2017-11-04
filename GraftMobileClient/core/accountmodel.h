@@ -13,7 +13,8 @@ public:
         ImagePathRole = Qt::UserRole + 1,
         TitleRole ,
         CurrencyRole,
-        NumberRole
+        NumberRole,
+        BalanceRole
     };
     explicit AccountModel(QObject *parent = nullptr);
     ~AccountModel();
@@ -23,10 +24,11 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
-    Q_INVOKABLE bool existWalletNumbers(const QString &number);
+    Q_INVOKABLE bool isWalletNumberExists(const QString &number) const;
 
 public slots:
-    void add(const QString &imagePath, const QString &name, const QString &currency, const QString &number);
+    bool add(const QString &imagePath, const QString &name, const QString &currency,
+             const QString &number, double balance);
 
 protected:
     QHash<int, QByteArray> roleNames() const;

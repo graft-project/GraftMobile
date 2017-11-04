@@ -22,7 +22,7 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     }
 
     AccountItem *accountItem = mAccounts[index.row()];
-
+    Q_ASSERT(accountItem);
     switch (role) {
     case ImagePathRole:
         return accountItem->imagePath();
@@ -32,6 +32,8 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
         return accountItem->currency();
     case NumberRole:
         return accountItem->number();
+    case BalanceRole:
+        return accountItem->balance();
     default:
         return QVariant();
     }
@@ -55,6 +57,9 @@ bool AccountModel::setData(const QModelIndex &index, const QVariant &value, int 
         case NumberRole:
             mAccounts[index.row()]->setNumber(value.toString());
             break;
+        case BalanceRole:
+            mAccounts[index.row()]->setBalance(value.toDouble());
+            break;
         default:
             break;
         }
@@ -70,9 +75,9 @@ int AccountModel::rowCount(const QModelIndex &parent) const
     return mAccounts.count();
 }
 
-bool AccountModel::existWalletNumbers(const QString &number)
+bool AccountModel::isWalletNumberExists(const QString &number) const
 {
-    QList<QString> walletNumbers;
+    QStringList walletNumbers;
     for(int i = 0; i < mAccounts.size(); ++i)
     {
         walletNumbers.append(mAccounts.at(i)->number());
@@ -85,15 +90,17 @@ bool AccountModel::existWalletNumbers(const QString &number)
     return false;
 }
 
-void AccountModel::add(const QString &imagePath, const QString &name, const QString &currency,
-                       const QString &number)
+bool AccountModel::add(const QString &imagePath, const QString &name, const QString &currency,
+                       const QString &number, double balance)
 {
-    if (existWalletNumbers(number))
+    if (isWalletNumberExists(number))
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mAccounts << (new AccountItem(imagePath, name, currency, number));
+        mAccounts << (new AccountItem(imagePath, name, currency, number, balance));
         endInsertRows();
+        return true;
     }
+    return false;
 }
 
 QHash<int, QByteArray> AccountModel::roleNames() const
@@ -103,5 +110,6 @@ QHash<int, QByteArray> AccountModel::roleNames() const
     roles[TitleRole] = "accountName";
     roles[CurrencyRole] = "type";
     roles[NumberRole] = "accountNumber";
+    roles[BalanceRole] = "balance";
     return roles;
 }

@@ -3,11 +3,13 @@
 AccountItem::AccountItem()
 {}
 
-AccountItem::AccountItem(const QString &imagePath, const QString &name, const QString &currency, const QString &number)
+AccountItem::AccountItem(const QString &imagePath, const QString &name, const QString &currency,
+                         const QString &number, double balance)
     : mImagePath(imagePath),
       mName(name),
       mCurrency(currency),
-      mNumber(number)
+      mNumber(number),
+      mBalance(balance)
 {}
 
 QString AccountItem::imagePath() const
@@ -30,6 +32,11 @@ QString AccountItem::number() const
     return mNumber;
 }
 
+double AccountItem::balance() const
+{
+    return mBalance;
+}
+
 void AccountItem::setImagePath(const QString &imagePath)
 {
     mImagePath = imagePath;
@@ -48,4 +55,9 @@ void AccountItem::setCurrency(const QString &currency)
 void AccountItem::setNumber(const QString &number)
 {
     mNumber = number;
+}
+
+void AccountItem::setBalance(double balance)
+{
+    mBalance = balance;
 }
