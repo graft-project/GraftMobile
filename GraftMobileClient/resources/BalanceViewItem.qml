@@ -2,6 +2,8 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 
 Rectangle {
+    id: balance
+
     property real amountMoneyCost: 0
     property real amountGraftCost: 0
 
@@ -11,8 +13,7 @@ Rectangle {
     RowLayout {
         spacing: 10
         anchors {
-            left: parent.left
-            right: parent.right
+            fill: parent
             leftMargin: 15
             rightMargin: 15
             verticalCenter: parent.verticalCenter
@@ -33,12 +34,9 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft
         }
 
-        Rectangle {
-            Layout.fillWidth: true
-        }
-
         ColumnLayout {
             spacing: 0
+            Layout.leftMargin: balance.width / 4
             Layout.alignment: Qt.AlignRight
 
             Text {

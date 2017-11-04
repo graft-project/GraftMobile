@@ -5,22 +5,24 @@ import QtQuick.Dialogs 1.2
 import "components"
 
 BaseScreen {
-    property alias coinModel: graftComboBox.currencyModel
+    id: accountScreen
+    property alias coinModel: coinsComboBox.currencyModel
 
     title: qsTr("Add new account")
     screenHeader.actionButtonState: true
     action: addAccount
 
     function addAccount() {
-        if (linearAccountTitle.text !== "" && linearWalletTitle.text !== "") {
-            if (AccountModel.existWalletNumbers(linearWalletTitle.text)) {
-                AccountModel.add(CoinModel.codeOf(graftComboBox.currentText), linearAccountTitle.text, graftComboBox.currentText, linearWalletTitle.text)
+        if (accountName.text !== "" && walletNumberText.text !== "") {
+            if(AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text, coinsComboBox.currentText, walletNumberText.text, 14.5)) {
                 pushScreen.goBack()
             } else {
-                dataRepeatMessage.open()
+                wrongData.text = qsTr("The wallet number already exists! Please, enter another wallet number.")
+                wrongData.open()
             }
         } else {
-            dataEmptyMessage.open()
+            wrongData.text = qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
+            wrongData.open()
         }
     }
 
@@ -28,51 +30,45 @@ BaseScreen {
         if (Qt.platform.os === "ios") {
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
-            linearAccountTitle.title = qsTr("Account name:")
-            graftComboBox.dropdownTitle = qsTr("Type:")
-            linearWalletTitle.title = qsTr("Wallet number:")
+            accountName.title = qsTr("Account name:")
+            coinsComboBox.dropdownTitle = qsTr("Type:")
+            walletNumberText.title = qsTr("Wallet number:")
         } else {
-            linearAccountTitle.title = qsTr("Account name")
-            graftComboBox.dropdownTitle = qsTr("Type")
-            linearWalletTitle.title = qsTr("Wallet number")
+            accountName.title = qsTr("Account name")
+            coinsComboBox.dropdownTitle = qsTr("Type")
+            walletNumberText.title = qsTr("Wallet number")
         }
     }
 
     MessageDialog {
-        id: dataRepeatMessage
+        id: wrongData
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("You re entered the data in Wallet number field - it's wrong! Check the entered data.")
-    }
-
-    MessageDialog {
-        id: dataEmptyMessage
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
     }
 
     ColumnLayout {
         spacing: 0
         anchors {
             fill: parent
+            topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            topMargin: 15
+            bottomMargin: 15
         }
 
         LinearEditItem {
-            id: linearAccountTitle
+            id: accountName
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
             maximumLength: 50
         }
 
         CurrencyComboBox {
-            id: graftComboBox
+            id: coinsComboBox
         }
 
         LinearEditItem {
-            id: linearWalletTitle
+            id: walletNumberText
             Layout.fillWidth: true
             Layout.topMargin: 10
             showLengthIndicator: false
@@ -81,23 +77,25 @@ BaseScreen {
             }
         }
 
-        Rectangle {
-            Layout.fillHeight: true
-        }
 
-        WideActionButton {
-            text: qsTr("Scan QR Code")
-            Layout.topMargin: 5
-            Layout.leftMargin: 0
-            Layout.rightMargin: 0
-        }
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom
+            Layout.topMargin: accountScreen.height / 3
+            spacing: 0
 
-        WideActionButton {
-            text: qsTr("Add")
-            Layout.leftMargin: 0
-            Layout.rightMargin: 0
-            Layout.bottomMargin: 15
-            onClicked: addAccount()
+            WideActionButton {
+                text: qsTr("Scan QR Code")
+                Layout.leftMargin: 0
+                Layout.rightMargin: 0
+            }
+
+            WideActionButton {
+                text: qsTr("Add")
+                Layout.leftMargin: 0
+                Layout.rightMargin: 0
+                onClicked: addAccount()
+            }
         }
     }
 }
