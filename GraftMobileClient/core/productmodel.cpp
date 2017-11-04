@@ -17,7 +17,7 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
     }
 
     ProductItem *productItem = mProducts[index.row()];
-
+    Q_ASSERT(productItem);
     switch (role) {
     case TitleRole:
         return productItem->name();
