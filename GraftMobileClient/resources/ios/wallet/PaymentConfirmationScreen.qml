@@ -60,7 +60,9 @@ BasePaymentConfirmationScreen {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: 10
+                leftMargin: 15
+                rightMargin: 15
+                bottomMargin: 15
             }
             spacing: 0
 
