@@ -4,6 +4,7 @@ import "../"
 import "../components"
 
 BaseBalanceScreen {
+    id: infoWallet
     splitterVisible: false
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
     screenHeader {
@@ -11,20 +12,23 @@ BaseBalanceScreen {
     }
 
     ColumnLayout {
-        anchors.fill: parent
-        spacing: 0
 
-        Rectangle {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+        spacing: 0
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: 15
         }
 
         WideActionButton {
+            Layout.topMargin: infoWallet.height / 2 - 100
+            Layout.alignment: Qt.AlignBottom
             text: qsTr("Transfer to Paypal")
         }
 
         WideActionButton {
-            Layout.bottomMargin: 15
+            Layout.alignment: Qt.AlignBottom
             text: qsTr("Chase XXX929")
         }
     }

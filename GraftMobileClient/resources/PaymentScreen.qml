@@ -56,7 +56,9 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: 5
+                leftMargin: 15
+                rightMargin:15
+                bottomMargin: 15
             }
             text: qsTr("DONE")
             onClicked: pushScreen()
