@@ -6,8 +6,6 @@ import "../components"
 BaseBalanceScreen {
     id: balanceScreen
 
-    property real balance: 0
-
     ColumnLayout {
         anchors.fill: parent
         spacing: 0

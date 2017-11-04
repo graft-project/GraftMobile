@@ -5,9 +5,6 @@ import "../components"
 
 BaseBalanceScreen {
     id: balanceScreen
-
-    property real balance: 0
-
     screenHeader.navigationButtonState: false
 
     ColumnLayout {
