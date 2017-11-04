@@ -22,6 +22,7 @@ QVariant CurrencyModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     CurrencyItem *currency = mCurrency[index.row()];
+    Q_ASSERT(currency);
     switch (role)
     {
     case TitleRole:
