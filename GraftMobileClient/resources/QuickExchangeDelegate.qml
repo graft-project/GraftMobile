@@ -9,7 +9,6 @@ RowLayout {
     Image {
         id: icon
         cache: false
-//        Layout.alignment: Qt.AlignCenter
         Layout.preferredHeight: parent.height
         Layout.preferredWidth: height
     }

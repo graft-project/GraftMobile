@@ -57,8 +57,8 @@ Pane {
             model: listModel
 
             delegate: QuickExchangeDelegate {
+                id: quickExchangeDelegate
                 height: pathView.height / 2
-                width: pathView.width
                 iconPath: "qrc:/imgs/configIos.png"
                 price: name
             }
@@ -67,8 +67,12 @@ Pane {
             snapMode: PathView.NoSnap
             clip: true
             path: Path {
-                startX: -50; startY: root.height / 2
-                PathLine { x: pathView.width + 50; y: root.height / 2; }
+                startX: -50
+                startY: root.height / 2
+                PathLine {
+                    x: pathView.width + 50
+                    y: root.height / 2
+                }
             }
         }
     }
