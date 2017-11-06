@@ -6,7 +6,7 @@
 class QuickExchangeItem
 {
 public:
-    QuickExchangeItem(QString iconPath, QString name, QString price, QString code, bool isBold = false);
+    explicit QuickExchangeItem(QString iconPath, QString name, QString price, QString code, bool primary = false);
 
     QString iconPath() const;
     void setIconPath(const QString &iconPath);
@@ -20,15 +20,15 @@ public:
     QString code() const;
     void setCode(const QString &code);
 
-    bool isBold() const;
-    void setIsBold(bool isBold);
+    bool primary() const;
+    void setPrimary(bool primary);
 
 private:
     QString mIconPath;
     QString mName;
     QString mPrice;
     QString mCode;
-    bool mIsBold;
+    bool mPrimary;
 };
 
 #endif // QUICKEXCHANGEITEM_H

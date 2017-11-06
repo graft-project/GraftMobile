@@ -12,55 +12,19 @@ Pane {
     contentItem: Rectangle {
         color: ColorFactory.color(DesignFactory.CircleBackground)
 
-        ListModel {
-            id: listModel
-
-            ListElement {
-                col: "red"
-                name: "Dollars"
-            }
-
-            ListElement {
-                col: "black"
-                name: "Bitcoin"
-            }
-
-            ListElement {
-                col: "blue"
-                name: "DoggyCoin"
-            }
-
-            ListElement {
-                col: "yellow"
-                name: "AAAACoin"
-            }
-
-            ListElement {
-                col: "white"
-                name: "BBBBCoin"
-            }
-            ListElement {
-                col: "white"
-                name: "GGGGCoin"
-            }
-            ListElement {
-                col: "white"
-                name: "FFFFCoin"
-            }
-        }
-
         PathView {
             id: pathView
             height: parent.height
             width: parent.width
             pathItemCount: 4
-            model: listModel
+            model: QuickExchangeModel
 
             delegate: QuickExchangeDelegate {
                 id: quickExchangeDelegate
                 height: pathView.height / 2
-                iconPath: "qrc:/imgs/configIos.png"
-                price: name
+                icon: iconPath
+                text: price
+                isBold: primary
             }
 
             highlightRangeMode: PathView.StrictlyEnforceRange

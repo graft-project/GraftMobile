@@ -30,7 +30,8 @@ BaseCartScreen {
             Pane {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
+                Material.background: ColorFactory.color(
+                                         DesignFactory.CircleBackground)
 
                 Label {
                     anchors.centerIn: parent
@@ -77,7 +78,8 @@ BaseCartScreen {
                         bottomLineVisible: index === (productList.count - 1)
                         productImage: imagePath
                         productPrice: cost
-                        productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                        productPriceTextColor: ColorFactory.color(
+                                                   DesignFactory.ItemText)
                         productText {
                             font.bold: true
                             text: name
@@ -91,6 +93,11 @@ BaseCartScreen {
                     anchors.centerIn: parent
                     running: true
                 }
+            }
+
+            QuickExchangeView {
+                Layout.preferredHeight: 50
+                Layout.fillWidth: true
             }
 
             WideActionButton {

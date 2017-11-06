@@ -3,11 +3,12 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 RowLayout {
-    property alias iconPath: icon.source
-    property alias price: label.text
+    property alias icon: image.source
+    property alias text: label.text
+    property alias isBold: label.font.bold
 
     Image {
-        id: icon
+        id: image
         cache: false
         Layout.preferredHeight: parent.height
         Layout.preferredWidth: height
@@ -15,6 +16,6 @@ RowLayout {
 
     Label {
         id: label
-        color: "white"
+        color: "#ffffff"
     }
 }

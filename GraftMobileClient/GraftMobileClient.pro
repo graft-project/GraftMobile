@@ -56,7 +56,8 @@ SOURCES += main.cpp \
     designfactory.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
-    core/quickexchangeitem.cpp
+    core/quickexchangeitem.cpp \
+    core/quickexchangemodel.cpp
 
 HEADERS += \
     core/config.h \
@@ -73,7 +74,8 @@ HEADERS += \
     designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
-    core/quickexchangeitem.h
+    core/quickexchangeitem.h \
+    core/quickexchangemodel.h
 
 include(resources/resources.pri)
 

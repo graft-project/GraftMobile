@@ -1,8 +1,8 @@
 #include "quickexchangeitem.h"
 
 QuickExchangeItem::QuickExchangeItem(QString iconPath, QString name,
-                                     QString price, QString code, bool isBold)
-    : mIconPath(iconPath), mName(name), mPrice(price), mCode(code), mIsBold(isBold)
+                                     QString price, QString code, bool primary)
+    : mIconPath(iconPath), mName(name), mPrice(price), mCode(code), mPrimary(primary)
 {
 }
 
@@ -46,12 +46,12 @@ void QuickExchangeItem::setCode(const QString &code)
     mCode = code;
 }
 
-bool QuickExchangeItem::isBold() const
+bool QuickExchangeItem::primary() const
 {
-    return mIsBold;
+    return mPrimary;
 }
 
-void QuickExchangeItem::setIsBold(bool isBold)
+void QuickExchangeItem::setPrimary(bool primary)
 {
-    mIsBold = isBold;
+    mPrimary = primary;
 }
