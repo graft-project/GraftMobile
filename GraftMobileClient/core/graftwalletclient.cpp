@@ -7,7 +7,8 @@
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
+    mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.value(
+                                                qrand() % cSeedSupernodes.count()))), this);
     connect(mApi, &GraftWalletAPI::readyToPayReceived,
             this, &GraftWalletClient::receiveReadyToPay);
     connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);

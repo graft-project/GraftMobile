@@ -17,7 +17,8 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
     mQRCodeEncoder = new PatrickQRCodeEncoder();
-    mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.first())), this);
+    mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.value(qrand() % cSeedSupernodes.count()))),
+                           this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
             this, &GraftPOSClient::receiveRejectSale);
