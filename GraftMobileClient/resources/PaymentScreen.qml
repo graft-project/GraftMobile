@@ -9,6 +9,7 @@ BaseScreen {
     id: root
 
     property alias textLabel: completeLabelText.text
+    property bool isSpacing: false
 
     screenHeader {
         navigationButtonState: Qt.platform.os === "android"
@@ -45,7 +46,7 @@ BaseScreen {
                 right: parent.right
                 left: parent.left
                 bottom: doneButton.top
-                bottomMargin: Qt.platform.os === "android" ? 15 : doneButton.height + 15
+                bottomMargin: addBottomMargin()
             }
             Material.elevation: Qt.platform.os === "android" ? 6 : 0
             padding: 0
@@ -73,6 +74,15 @@ BaseScreen {
             }
             text: qsTr("DONE")
             onClicked: pushScreen()
+        }
+    }
+
+    function addBottomMargin() {
+        var addBottomMargin = 0;
+        if (isSpacing === true) {
+            return addBottomMargin = Qt.platform.os === "android" ? 15 : doneButton.height + 15
+        } else {
+            return addBottomMargin = 15
         }
     }
 }
