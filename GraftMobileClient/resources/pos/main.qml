@@ -101,7 +101,7 @@ GraftApplicationWindow {
 
     function openPaymentScreen() {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
-                       "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!")})
+                       "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!"), "isSpacing": false})
     }
 
     function openInfoWalletScreen() {
