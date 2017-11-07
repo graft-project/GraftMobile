@@ -98,6 +98,7 @@ BaseCartScreen {
             QuickExchangeView {
                 Layout.preferredHeight: 50
                 Layout.fillWidth: true
+                Layout.bottomMargin: 15
             }
 
             WideActionButton {

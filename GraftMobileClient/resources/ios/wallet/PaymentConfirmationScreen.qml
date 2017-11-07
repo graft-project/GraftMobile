@@ -17,7 +17,7 @@ BasePaymentConfirmationScreen {
         ListView {
             id: productList
             anchors {
-                top: parent.bottom
+                top: parent.top
                 bottom: quickExchangeView.top
                 left: parent.left
                 right: parent.right
