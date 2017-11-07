@@ -67,6 +67,8 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
+                leftMargin: 15
+                rightMargin:15
                 bottomMargin: 15
             }
             text: qsTr("DONE")

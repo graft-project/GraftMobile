@@ -7,15 +7,17 @@ BaseBalanceScreen {
     splitterVisible: true
 
     ColumnLayout {
-        anchors.fill: parent
         spacing: 0
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+        }
 
         ListView {
             id: accountListView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.leftMargin: 8
-            Layout.rightMargin: 8
             Layout.topMargin: 5
             model: CardModel
             clip: true
@@ -31,7 +33,6 @@ BaseBalanceScreen {
 
         AddCardButton {
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: 20
             textItem.text: qsTr("+  Add Card")
             imageVisible: false
             onClicked: pushScreen.addCardScreen()

@@ -20,7 +20,7 @@ Popup {
         anchors.fill: parent
 
         SelectImageButton {
-            selectIcon: "qrc:/test/gallery.png"
+            selectIcon: "qrc:/imgs/gallery.png"
             selectText: qsTr("Open gallary")
             onClicked: {
                 ImagePicker.openGallary()
@@ -29,7 +29,7 @@ Popup {
         }
 
         SelectImageButton {
-            selectIcon: "qrc:/test/camera.png"
+            selectIcon: "qrc:/imgs/photo.png"
             selectText: qsTr("Open camera")
             onClicked: {
                 ImagePicker.openCamera()

@@ -68,15 +68,15 @@ BaseScreen {
         anchors {
             fill: parent
             topMargin: 10
-            bottomMargin: 20
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: 15
         }
 
         ProductItemView {
             id: productItem
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
         }
 
         WideActionButton {

@@ -4,11 +4,10 @@ import QtQuick.Controls 2.2
 import "components"
 
 BaseScreen {
-    title: qsTr("Settings")
-
     property alias companyEditTitle: linearEditItem.title
     property alias saveButtonText: saveButton.text
     
+    title: qsTr("Settings")
     action: saveChanges
 
     function saveChanges() {
@@ -18,23 +17,26 @@ BaseScreen {
     }
 
     ColumnLayout {
-        anchors.fill: parent
+        spacing: 0
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+        }
 
         LinearEditItem {
             id: linearEditItem
             maximumLength: 50
             Layout.topMargin: 10
-            Layout.leftMargin: 10
-            Layout.rightMargin: 10
+            Layout.leftMargin: 5
+            Layout.rightMargin: 5
+            Layout.alignment: Qt.AlignTop
             text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
-        }
-
-        Rectangle {
-            Layout.fillHeight: true
         }
 
         WideActionButton {
             id: saveButton
+            Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             onClicked: saveChanges()
         }
