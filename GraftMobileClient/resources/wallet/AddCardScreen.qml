@@ -16,8 +16,12 @@ BaseScreen {
     action: done
 
     ColumnLayout {
-        anchors.fill: parent
         spacing: 0
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+        }
 
         Item {
             Layout.fillWidth: true
@@ -39,16 +43,12 @@ BaseScreen {
 
         LinearEditItem {
             id: title
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
             title: Qt.platform.os === "android" ? qsTr("Card Title") : qsTr("Card Title:")
             maximumLength: 50
         }
 
         LinearEditItem {
             id: number
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
             title: Qt.platform.os === "android" ? qsTr("Card Number") : qsTr("Card Number:")
             inputMethodHints: Qt.ImhDigitsOnly
             validator: RegExpValidator {
@@ -58,8 +58,6 @@ BaseScreen {
         }
 
         RowLayout {
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
             spacing: Qt.platform.os === "android" ? parent.width / 2 : 30
 
             LinearEditItem {

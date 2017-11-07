@@ -74,9 +74,7 @@
         <file alias="coins/nem.png">imgs/coins/nem.png</file>
         <file alias="coins/neo.png">imgs/coins/neo.png</file>
         <file alias="coins/ripple.png">imgs/coins/ripple.png</file>
-    </qresource>
-    <qresource prefix="/test">
-        <file alias="gallery.png">imgs/test/127-128.png</file>
-        <file alias="camera.png">imgs/test/camera-128.png</file>
+        <file alias="gallery.png">imgs/gallery.png</file>
+        <file alias="photo.png">imgs/photo.png</file>
     </qresource>
 </RCC>

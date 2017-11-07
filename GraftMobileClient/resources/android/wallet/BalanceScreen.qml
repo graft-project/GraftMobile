@@ -7,8 +7,12 @@ BaseBalanceScreen {
     id: balanceScreen
 
     ColumnLayout {
-        anchors.fill: parent
         spacing: 0
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+        }
 
         ListView {
             id: accountListView

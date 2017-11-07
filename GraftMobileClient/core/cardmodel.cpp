@@ -23,7 +23,7 @@ QVariant CardModel::data(const QModelIndex &index, int role) const
     }
 
     CardItem *cardItem = mCards[index.row()];
-
+    Q_ASSERT(cardItem);
     switch (role) {
     case TitleRole:
         return cardItem->name();
