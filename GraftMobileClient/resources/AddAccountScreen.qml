@@ -14,15 +14,15 @@ BaseScreen {
 
     function addAccount() {
         if (accountName.text !== "" && walletNumberText.text !== "") {
-            if(AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text, coinsComboBox.currentText, walletNumberText.text, 14.5)) {
+            if (AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text, coinsComboBox.currentText, walletNumberText.text)) {
                 pushScreen.goBack()
             } else {
-                wrongData.text = qsTr("The wallet number already exists! Please, enter another wallet number.")
-                wrongData.open()
+                inputAttentionDialog.text = qsTr("The wallet number already exists! Please, enter another wallet number.")
+                inputAttentionDialog.open()
             }
         } else {
-            wrongData.text = qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
-            wrongData.open()
+            inputAttentionDialog.text = qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
+            inputAttentionDialog.open()
         }
     }
 
@@ -41,7 +41,7 @@ BaseScreen {
     }
 
     MessageDialog {
-        id: wrongData
+        id: inputAttentionDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
     }
@@ -50,10 +50,7 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            topMargin: 15
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: 15
+            margins: 15
         }
 
         LinearEditItem {
@@ -77,7 +74,6 @@ BaseScreen {
             }
         }
 
-
         ColumnLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
@@ -86,14 +82,10 @@ BaseScreen {
 
             WideActionButton {
                 text: qsTr("Scan QR Code")
-                Layout.leftMargin: 0
-                Layout.rightMargin: 0
             }
 
             WideActionButton {
                 text: qsTr("Add")
-                Layout.leftMargin: 0
-                Layout.rightMargin: 0
                 onClicked: addAccount()
             }
         }
