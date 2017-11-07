@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
+    QuickExchangeModel quickExchange;
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
@@ -47,8 +48,6 @@ int main(int argc, char *argv[])
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
-
-    QuickExchangeModel quickExchange;
 
     QString imageDataLocation = callImageDataPath();
     if(!QFileInfo(imageDataLocation).exists())
@@ -71,6 +70,7 @@ int main(int argc, char *argv[])
 
     GraftWalletClient client;
     CardModel cardModel;
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), &quickExchange);
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());

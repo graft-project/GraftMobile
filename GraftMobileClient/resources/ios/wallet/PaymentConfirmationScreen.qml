@@ -14,29 +14,11 @@ BasePaymentConfirmationScreen {
         anchors.fill: parent
         color: "#FFFFFF"
 
-        Pane {
-            id: totalPriceLabel
-            height: 50
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-            }
-            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-            Material.elevation: 0
-
-            Text {
-                anchors.centerIn: parent
-                color: "#FFFFFF"
-                text: qsTr("Total Checkout: %1$").arg(totalAmount)
-            }
-        }
-
         ListView {
             id: productList
             anchors {
-                top: totalPriceLabel.bottom
-                bottom: bottomButtons.top
+                top: parent.bottom
+                bottom: quickExchangeView.top
                 left: parent.left
                 right: parent.right
             }
@@ -55,8 +37,14 @@ BasePaymentConfirmationScreen {
         }
 
         QuickExchangeView {
+            id: quickExchangeView
             height: 50
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: bottomButtons.top
+                bottomMargin: 15
+            }
         }
 
         ColumnLayout {

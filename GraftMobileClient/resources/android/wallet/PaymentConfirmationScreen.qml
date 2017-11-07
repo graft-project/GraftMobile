@@ -72,7 +72,12 @@ BasePaymentConfirmationScreen {
         QuickExchangeView {
             id: quickExchangeView
             height: 50
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: bottomButtons.top
+                bottomMargin: 15
+            }
         }
 
         RowLayout {
