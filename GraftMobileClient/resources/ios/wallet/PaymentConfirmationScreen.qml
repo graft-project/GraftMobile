@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
-import "../"
 import "../components"
+import "../"
 
 BasePaymentConfirmationScreen {
     id: root
@@ -52,6 +52,11 @@ BasePaymentConfirmationScreen {
                 topLineVisible: true
                 bottomLineVisible: (index >= 0 && index < (productList.count - 1)) ? false : true
             }
+        }
+
+        QuickExchangeView {
+            height: 50
+            width: parent.width
         }
 
         ColumnLayout {

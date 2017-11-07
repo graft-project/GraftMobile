@@ -77,7 +77,8 @@ int QuickExchangeModel::rowCount(const QModelIndex &parent) const
     return mQuickExchangeItems.count();
 }
 
-void QuickExchangeModel::add(QString iconPath, QString name, QString price, QString code, bool primary)
+void QuickExchangeModel::add(const QString &iconPath, const QString &name, const QString &price,
+                             const QString &code, bool primary)
 {
     if (!iconPath.isEmpty() || !name.isEmpty() || !price.isEmpty() || !code.isEmpty())
     {

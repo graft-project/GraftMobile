@@ -26,7 +26,8 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 public slots:
-    void add(QString iconPath, QString name, QString price, QString code, bool primary = false);
+    void add(const QString &iconPath, const QString &name, const QString &price,
+             const QString &code, bool primary = false);
     void clear();
 
 protected:

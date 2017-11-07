@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
-import "../"
 import "../components"
+import "../"
 
 BasePaymentConfirmationScreen {
     id: root
@@ -14,6 +14,7 @@ BasePaymentConfirmationScreen {
         anchors.fill: parent
         color: "#FFFFFF"
 
+        /*
         Pane {
             id: totalPriceLabel
 
@@ -43,13 +44,14 @@ BasePaymentConfirmationScreen {
                 }
             }
         }
+        */
 
         ListView {
             id: productList
             anchors {
-                top: totalPriceLabel.bottom
+                top: parent.top
                 topMargin: 10
-                bottom: bottomButtons.top
+                bottom: quickExchangeView.top
                 left: parent.left
                 right: parent.right
             }
@@ -65,6 +67,12 @@ BasePaymentConfirmationScreen {
                 topLineVisible: false
                 bottomLineVisible: false
             }
+        }
+
+        QuickExchangeView {
+            id: quickExchangeView
+            height: 50
+            width: parent.width
         }
 
         RowLayout {
