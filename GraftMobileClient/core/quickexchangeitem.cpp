@@ -1,7 +1,7 @@
 #include "quickexchangeitem.h"
 
-QuickExchangeItem::QuickExchangeItem(QString iconPath, QString name,
-                                     QString price, QString code, bool primary)
+QuickExchangeItem::QuickExchangeItem(const &QString iconPath, const &QString name,
+                                     const &QString price, const &QString code, bool primary)
     : mIconPath(iconPath), mName(name), mPrice(price), mCode(code), mPrimary(primary)
 {
 }
