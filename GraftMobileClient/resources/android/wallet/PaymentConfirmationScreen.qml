@@ -77,15 +77,18 @@ BasePaymentConfirmationScreen {
 
         RowLayout {
             id: bottomButtons
+            spacing: 0
             anchors {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: 10
+                leftMargin: 15
+                rightMargin: 15
+                bottomMargin: 15
             }
-            spacing: 0
 
             Button {
+                Layout.alignment: Qt.AlignLeft
                 Layout.preferredWidth: productList.width / 2.75
                 flat: true
                 text: qsTr("CANCEL")
@@ -94,6 +97,7 @@ BasePaymentConfirmationScreen {
 
             WideActionButton {
                 text: qsTr("CONFIRM")
+                Layout.alignment: Qt.AlignRight
                 onClicked: {
                     root.state = "beforePaid"
                     confirmPay()

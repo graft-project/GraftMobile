@@ -118,6 +118,8 @@ BaseCartScreen {
             WideActionButton {
                 text: qsTr("Cancel")
                 Material.accent: ColorFactory.color(DesignFactory.LightButton)
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
                 Layout.bottomMargin: 15
                 onClicked: cartScreen.rejectSale()
             }
