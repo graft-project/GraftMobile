@@ -12,7 +12,10 @@ include(android/android.pri)
 
 contains(DEFINES, POS_BUILD) {
 include(QRCodeGenerator.pri)
+
+ios|android {
 include(imagepicker/ImagePickerLibrary.pri)
+}
 
 TARGET = GraftPointOfSale
 
@@ -57,7 +60,9 @@ SOURCES += main.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
     core/accountitem.cpp \
-    core/accountmodel.cpp
+    core/accountmodel.cpp \
+    core/quickexchangeitem.cpp \
+    core/quickexchangemodel.cpp
 
 HEADERS += \
     core/config.h \
@@ -75,7 +80,9 @@ HEADERS += \
     core/currencymodel.h \
     core/currencyitem.h \
     core/accountitem.h \
-    core/accountmodel.h
+    core/accountmodel.h \
+    core/quickexchangeitem.h \
+    core/quickexchangemodel.h
 
 include(resources/resources.pri)
 

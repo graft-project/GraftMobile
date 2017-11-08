@@ -11,12 +11,15 @@
 #include "core/currencymodel.h"
 #include "core/graftposclient.h"
 #include "core/graftwalletclient.h"
+#include "core/quickexchangemodel.h"
 #include "core/selectedproductproxymodel.h"
 #include "core/defines.h"
 #include "designfactory.h"
 
 #ifdef POS_BUILD
+#ifdef Q_OS_ANDROID || Q_OS_IOS
 #include "imagepicker.h"
+#endif
 #endif
 
 #ifdef WALLET_BUILD
@@ -54,12 +57,18 @@ int main(int argc, char *argv[])
     {
         QDir().mkpath(imageDataLocation);
     }
+
+#ifdef Q_OS_ANDROID || Q_OS_IOS
     ImagePicker picker(imageDataLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
+#endif
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
+    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
+                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
@@ -83,6 +92,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("AccountModel"), &accountModel);
 
     CardModel cardModel;
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
 
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),

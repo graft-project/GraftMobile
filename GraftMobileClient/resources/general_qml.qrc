@@ -19,6 +19,8 @@
         <file alias="AddNewButton.qml">AddNewButton.qml</file>
         <file alias="AddAccountScreen.qml">AddAccountScreen.qml</file>
         <file alias="CoinAccountDelegate.qml">CoinAccountDelegate.qml</file>
+        <file alias="QuickExchangeView.qml">QuickExchangeView.qml</file>
+        <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -76,5 +78,15 @@
         <file alias="coins/ripple.png">imgs/coins/ripple.png</file>
         <file alias="gallery.png">imgs/gallery.png</file>
         <file alias="photo.png">imgs/photo.png</file>
+        <file alias="bcc-w.png">imgs/bcc-w.png</file>
+        <file alias="btc-w.png">imgs/btc-w.png</file>
+        <file alias="bth-w.png">imgs/bth-w.png</file>
+        <file alias="dash-w.png">imgs/dash-w.png</file>
+        <file alias="eth-w.png">imgs/eth-w.png</file>
+        <file alias="ltc-w.png">imgs/ltc-w.png</file>
+        <file alias="monero-w.png">imgs/monero-w.png</file>
+        <file alias="nem-w.png">imgs/nem-w.png</file>
+        <file alias="neo-w.png">imgs/neo-w.png</file>
+        <file alias="ripple-w.png">imgs/ripple-w.png</file>
     </qresource>
 </RCC>

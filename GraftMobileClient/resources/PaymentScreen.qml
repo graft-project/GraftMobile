@@ -9,6 +9,7 @@ BaseScreen {
     id: root
 
     property alias textLabel: completeLabelText.text
+    property bool isSpacing: false
 
     screenHeader {
         navigationButtonState: Qt.platform.os === "android"
@@ -20,6 +21,23 @@ BaseScreen {
         anchors.fill: parent
         color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
 
+        Item {
+            anchors {
+                top: parent.top
+                bottom: completeLabel.top
+                left: parent.left
+                right: parent.right
+            }
+
+            Image {
+                anchors.centerIn: parent
+                height: 200
+                width: height
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/imgs/paid_icon.png"
+            }
+        }
+
         Pane {
             id: completeLabel
 
@@ -27,7 +45,8 @@ BaseScreen {
             anchors {
                 right: parent.right
                 left: parent.left
-                top: parent.top
+                bottom: doneButton.top
+                bottomMargin: addBottomMargin()
             }
             Material.elevation: Qt.platform.os === "android" ? 6 : 0
             padding: 0
@@ -43,15 +62,8 @@ BaseScreen {
             }
         }
 
-        Image {
-            anchors.centerIn: parent
-            height: 200
-            width: height
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/imgs/paid_icon.png"
-        }
-
         WideActionButton {
+            id: doneButton
             anchors {
                 left: parent.left
                 right: parent.right
@@ -62,6 +74,15 @@ BaseScreen {
             }
             text: qsTr("DONE")
             onClicked: pushScreen()
+        }
+    }
+
+    function addBottomMargin() {
+        var addBottomMargin = 0;
+        if (isSpacing === true) {
+            return addBottomMargin = Qt.platform.os === "android" ? 15 : doneButton.height + 15
+        } else {
+            return addBottomMargin = 15
         }
     }
 }

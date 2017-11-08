@@ -4,6 +4,7 @@
 #include <QObject>
 
 class BarcodeImageProvider;
+class QuickExchangeModel;
 class QQmlEngine;
 
 class GraftBaseClient : public QObject
@@ -17,11 +18,14 @@ public:
 
     void registerImageProvider(QQmlEngine *engine);
 
+    QuickExchangeModel *quickExchangeModel() const;
+
 signals:
     void errorReceived();
 
 protected:
     BarcodeImageProvider *mImageProvider;
+    QuickExchangeModel *mQuickExchangeModel;
 };
 
 #endif // GRAFTBASECLIENT_H
