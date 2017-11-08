@@ -12,11 +12,14 @@ QuickExchangeModel::~QuickExchangeModel()
 
 QVariant QuickExchangeModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= mQuickExchangeItems.count())
+    if (!index.isValid() || index.row() < 0 || index.row() >= mQuickExchangeItems.count())
     {
         return QVariant();
     }
+
     QuickExchangeItem *quickExchangeItem = mQuickExchangeItems[index.row()];
+    Q_ASSERT(quickExchangeItem);
+
     switch (role)
     {
     case IconPathRole:
