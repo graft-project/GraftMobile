@@ -11,31 +11,20 @@ Rectangle {
 
     height: parent.width / 5 - 10
 
-    Item {
-        anchors {
-            fill: parent
-            leftMargin: 15
-            rightMargin: 15
-        }
+    ColumnLayout {
+        spacing: 0
+        anchors.fill: parent
 
         Rectangle {
             id: topLine
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-            }
-            height: 1
+            Layout.fillWidth: true
+            Layout.preferredHeight: 1
             color: "#e6e6e8"
         }
 
         RowLayout {
             spacing: 14
-            anchors {
-                left: parent.left
-                right: parent.right
-                verticalCenter: parent.verticalCenter
-            }
+            Layout.alignment: Qt.AlignHCenter
 
             OpacityMask {
                 id: opacityMask
@@ -62,7 +51,6 @@ Rectangle {
 
             RowLayout {
                 spacing: 0
-                Layout.alignment: Qt.AlignHCenter
 
                 Text {
                     id: accountName
@@ -81,13 +69,9 @@ Rectangle {
 
         Rectangle {
             id: bottomLine
-            anchors {
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-            height: 1
             color: "#e6e6e8"
+            Layout.fillWidth: true
+            Layout.preferredHeight: 1
         }
     }
 }

@@ -35,8 +35,6 @@ BaseBalanceScreen {
             buttonTitle: qsTr("Add new account")
             Layout.fillWidth: true
             Layout.preferredHeight: 60
-            Layout.leftMargin: 4
-            Layout.rightMargin: 4
             Layout.bottomMargin: 15
             topLine: true
             bottomLine: true

@@ -15,4 +15,3 @@ RESOURCES += $$PWD/ios_qml.qrc
 RESOURCES += $$PWD/android_qml.qrc
 }
 }
-

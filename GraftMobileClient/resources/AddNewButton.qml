@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 
 Button {
     property alias buttonTitle: buttonTitle.text
@@ -8,7 +9,12 @@ Button {
     property alias topLine: topLine.visible
 
     padding: 0
+    Material.elevation: 0
     contentItem: Rectangle {
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
         color: "#FFFFFF"
 
         Rectangle {
@@ -18,8 +24,6 @@ Button {
                 top: parent.top
                 left: parent.left
                 right: parent.right
-                leftMargin: 15
-                rightMargin: 15
             }
             visible: Qt.platform.os === "ios"
             color: "#E6E6E8"
@@ -52,8 +56,6 @@ Button {
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
-                leftMargin: 15
-                rightMargin: 15
             }
             visible: Qt.platform.os === "ios"
             color: "#E6E6E8"
