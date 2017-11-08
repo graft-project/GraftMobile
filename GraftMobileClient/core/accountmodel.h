@@ -2,7 +2,6 @@
 #define ACCOUNTMODEL_H
 
 #include <QAbstractListModel>
-#include <algorithm>
 
 class AccountItem;
 

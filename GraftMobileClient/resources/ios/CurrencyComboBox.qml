@@ -15,7 +15,7 @@ ColumnLayout {
         id: graftCBox
         Material.background: "#00707070"
         Material.foreground: "#404040"
-        leftPadding: dropdownTitle.width -8
+        leftPadding: dropdownTitle.width - 8
         Layout.fillWidth: true
         Layout.topMargin: -8
         Layout.bottomMargin: -2

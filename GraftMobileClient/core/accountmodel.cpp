@@ -1,5 +1,6 @@
 #include "accountmodel.h"
 #include "accountitem.h"
+#include <algorithm>
 
 AccountModel::AccountModel(QObject *parent) : QAbstractListModel(parent)
 {}
@@ -78,11 +79,10 @@ int AccountModel::rowCount(const QModelIndex &parent) const
 
 bool AccountModel::isWalletNumberExists(const QString &number) const
 {
-    bool result = std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account){
+    std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account){
         Q_ASSERT(account);
         return account->number() == number;
-});
-    return result;
+    });
 }
 
 bool AccountModel::add(const QString &imagePath, const QString &name, const QString &currency,
