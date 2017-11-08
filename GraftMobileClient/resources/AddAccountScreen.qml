@@ -63,32 +63,33 @@ BaseScreen {
 
         CurrencyComboBox {
             id: coinsComboBox
+            Layout.alignment: Qt.AlignTop
         }
 
         LinearEditItem {
             id: walletNumberText
             Layout.fillWidth: true
             Layout.topMargin: 10
+            Layout.alignment: Qt.AlignTop
             showLengthIndicator: false
             validator: RegExpValidator {
                 regExp: /[\da-zA-Z]+/
             }
         }
 
-        ColumnLayout {
-            Layout.fillWidth: true
+        Item {
+            Layout.fillHeight: true
+        }
+
+        WideActionButton {
+            text: qsTr("Scan QR Code")
             Layout.alignment: Qt.AlignBottom
-            Layout.topMargin: accountScreen.height / 3
-            spacing: 0
+        }
 
-            WideActionButton {
-                text: qsTr("Scan QR Code")
-            }
-
-            WideActionButton {
-                text: qsTr("Add")
-                onClicked: addAccount()
-            }
+        WideActionButton {
+            text: qsTr("Add")
+            Layout.alignment: Qt.AlignBottom
+            onClicked: addAccount()
         }
     }
 }

@@ -9,7 +9,7 @@ ColumnLayout {
     property alias currencyIndex: graftCBox.currentIndex
     property alias dropdownTitle: dropdownTitle.text
 
-    spacing: 0
+    spacing: 4
 
     ComboBox {
         id: graftCBox
