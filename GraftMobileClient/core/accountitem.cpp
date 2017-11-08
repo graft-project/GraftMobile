@@ -1,8 +1,5 @@
 #include "accountitem.h"
 
-AccountItem::AccountItem()
-{}
-
 AccountItem::AccountItem(const QString &imagePath, const QString &name, const QString &currency,
                          const QString &number)
     : mImagePath(imagePath)

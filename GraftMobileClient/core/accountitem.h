@@ -6,7 +6,6 @@
 class AccountItem
 {
 public:
-    AccountItem();
     AccountItem(const QString &imagePath, const QString &name, const QString &currency,
                 const QString &number);
     QString imagePath() const;
