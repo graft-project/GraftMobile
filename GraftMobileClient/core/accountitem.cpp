@@ -5,11 +5,11 @@ AccountItem::AccountItem()
 
 AccountItem::AccountItem(const QString &imagePath, const QString &name, const QString &currency,
                          const QString &number)
-    : mImagePath(imagePath),
-      mName(name),
-      mCurrency(currency),
-      mNumber(number),
-      mBalance()
+    : mImagePath(imagePath)
+    ,mName(name)
+    ,mCurrency(currency)
+    ,mNumber(number)
+    ,mBalance()
 {}
 
 QString AccountItem::imagePath() const
