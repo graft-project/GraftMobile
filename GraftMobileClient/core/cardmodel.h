@@ -21,16 +21,16 @@ public:
     ~CardModel();
 
     QVector<CardItem *> cards() const;
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role);
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 public slots:
     void add(const QString &name, const QString &number, unsigned cv2Code,
              const QString &expirationDate);
 
 protected:
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 
 private:
     QVector<CardItem *> mCards;

@@ -17,13 +17,14 @@ public:
         NumberRole,
         BalanceRole
     };
+
     explicit AccountModel(QObject *parent = nullptr);
     ~AccountModel();
 
     QVector<AccountItem *> accounts() const;
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role);
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     Q_INVOKABLE bool isWalletNumberExists(const QString &number) const;
 
@@ -32,7 +33,7 @@ public slots:
              const QString &number);
 
 protected:
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 
 private:
     QVector<AccountItem *> mAccounts;

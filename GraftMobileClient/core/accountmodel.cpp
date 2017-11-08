@@ -37,6 +37,7 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     default:
         return QVariant();
     }
+
 }
 
 bool AccountModel::setData(const QModelIndex &index, const QVariant &value, int role)
