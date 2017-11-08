@@ -26,6 +26,8 @@ QVariant QuickExchangeModel::data(const QModelIndex &index, int role) const
         return quickExchangeItem->iconPath();
     case NameRole:
         return quickExchangeItem->name();
+    case CodeRole:
+        return quickExchangeItem->code();
     case PriceRole:
         if (quickExchangeItem->price().toDouble() < 0.0001)
         {
@@ -35,8 +37,6 @@ QVariant QuickExchangeModel::data(const QModelIndex &index, int role) const
         {
             return quickExchangeItem->price().number(quickExchangeItem->price().toDouble(), 'f', 4);
         }
-    case CodeRole:
-        return quickExchangeItem->code();
     case PrimaryRole:
         return quickExchangeItem->primary();
     default:
@@ -56,11 +56,11 @@ bool QuickExchangeModel::setData(const QModelIndex &index, const QVariant &value
         case NameRole:
             mQuickExchangeItems[index.row()]->setName(value.toString());
             break;
-        case PriceRole:
-            mQuickExchangeItems[index.row()]->setPrice(value.toString());
-            break;
         case CodeRole:
             mQuickExchangeItems[index.row()]->setCode(value.toString());
+            break;
+        case PriceRole:
+            mQuickExchangeItems[index.row()]->setPrice(value.toString());
             break;
         case PrimaryRole:
             mQuickExchangeItems[index.row()]->setPrimary(value.toBool());
@@ -80,13 +80,35 @@ int QuickExchangeModel::rowCount(const QModelIndex &parent) const
     return mQuickExchangeItems.count();
 }
 
-void QuickExchangeModel::add(const QString &iconPath, const QString &name, const QString &price,
-                             const QString &code, bool primary)
+QStringList QuickExchangeModel::codeList() const
+{
+    QStringList rCodeList;
+    for (const QuickExchangeItem *i : mQuickExchangeItems)
+    {
+        rCodeList.append(i->code());
+    }
+    return rCodeList;
+}
+
+void QuickExchangeModel::updatePrice(const QString &code, const QString &price)
+{
+    for (int i = 0; i < mQuickExchangeItems.size(); ++i)
+    {
+        if (mQuickExchangeItems.at(i)->code() == code)
+        {
+            mQuickExchangeItems.at(i)->setPrice(price);
+            emit dataChanged(index(i), index(i));
+        }
+    }
+}
+
+void QuickExchangeModel::add(const QString &iconPath, const QString &name,
+                             const QString &code, const QString &price, bool primary)
 {
     if (!iconPath.isEmpty() || !name.isEmpty() || !price.isEmpty() || !code.isEmpty())
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mQuickExchangeItems << new QuickExchangeItem(iconPath, name, price, code, primary);
+        mQuickExchangeItems << new QuickExchangeItem(iconPath, name, code, price, primary);
         endInsertRows();
     }
 }
@@ -104,8 +126,8 @@ QHash<int, QByteArray> QuickExchangeModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[IconPathRole] = "iconPath";
     roles[NameRole] = "name";
-    roles[PriceRole] = "price";
     roles[CodeRole] = "code";
+    roles[PriceRole] = "price";
     roles[PrimaryRole] = "primary";
     return roles;
 }

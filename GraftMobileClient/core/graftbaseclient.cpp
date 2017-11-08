@@ -1,4 +1,5 @@
 #include "barcodeimageprovider.h"
+#include "quickexchangemodel.h"
 #include "graftbaseclient.h"
 #include <QQmlEngine>
 
@@ -9,6 +10,7 @@ static const QString cProviderScheme("image://%1/%2");
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
+    ,mQuickExchangeModel(nullptr)
 {
 }
 
@@ -31,5 +33,22 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
     {
         mImageProvider = new BarcodeImageProvider();
         engine->addImageProvider(cBarcodeImageProviderID, mImageProvider);
+    }
+}
+
+QuickExchangeModel *GraftBaseClient::quickExchangeModel()
+{
+    if (!mQuickExchangeModel)
+    {
+        mQuickExchangeModel = new QuickExchangeModel();
+    }
+    return mQuickExchangeModel;
+}
+
+void GraftBaseClient::setQuickExchangeModel(QuickExchangeModel *quickExchangeModel)
+{
+    if (quickExchangeModel)
+    {
+        mQuickExchangeModel = quickExchangeModel;
     }
 }

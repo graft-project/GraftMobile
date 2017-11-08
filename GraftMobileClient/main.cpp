@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
-    QuickExchangeModel quickExchange;
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
@@ -61,7 +60,8 @@ int main(int argc, char *argv[])
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
     engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), &quickExchange);
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
+                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
     GraftWalletClient client;
     CardModel cardModel;
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), &quickExchange);
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());

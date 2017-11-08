@@ -11,11 +11,12 @@ RowLayout {
         id: image
         cache: false
         Layout.preferredHeight: parent.height
-        Layout.preferredWidth: height
+        Layout.preferredWidth: height / 1.5
     }
 
     Label {
         id: label
         color: "#ffffff"
+        font.pointSize: 18
     }
 }

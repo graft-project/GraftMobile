@@ -14,38 +14,6 @@ BasePaymentConfirmationScreen {
         anchors.fill: parent
         color: "#FFFFFF"
 
-        /*
-        Pane {
-            id: totalPriceLabel
-
-            height: 50
-            anchors {
-                right: parent.right
-                left: parent.left
-                top: parent.top
-            }
-            Material.elevation: 5
-            padding: 0
-
-            contentItem: Rectangle {
-                color: ColorFactory.color(DesignFactory.CircleBackground)
-
-                Text {
-                    id: completeLabelText
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                        leftMargin: 12
-                    }
-                    horizontalAlignment: Text.AlignLeft
-                    color: "#FFFFFF"
-                    text: qsTr("Total Checkout: %1$").arg(totalAmount)
-                }
-            }
-        }
-        */
-
         ListView {
             id: productList
             anchors {

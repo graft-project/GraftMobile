@@ -1,8 +1,8 @@
 #include "quickexchangeitem.h"
 
 QuickExchangeItem::QuickExchangeItem(const QString &iconPath, const QString &name,
-                                     const QString &price, const QString &code, bool primary)
-    : mIconPath(iconPath), mName(name), mPrice(price), mCode(code), mPrimary(primary)
+                                     const QString &code, const QString &price, bool primary)
+    : mIconPath(iconPath), mName(name), mCode(code), mPrice(price), mPrimary(primary)
 {
 }
 
@@ -26,16 +26,6 @@ void QuickExchangeItem::setName(const QString &name)
     mName = name;
 }
 
-QString QuickExchangeItem::price() const
-{
-    return mPrice;
-}
-
-void QuickExchangeItem::setPrice(const QString &price)
-{
-    mPrice = price;
-}
-
 QString QuickExchangeItem::code() const
 {
     return mCode;
@@ -44,6 +34,16 @@ QString QuickExchangeItem::code() const
 void QuickExchangeItem::setCode(const QString &code)
 {
     mCode = code;
+}
+
+QString QuickExchangeItem::price() const
+{
+    return mPrice;
+}
+
+void QuickExchangeItem::setPrice(const QString &price)
+{
+    mPrice = price;
 }
 
 bool QuickExchangeItem::primary() const

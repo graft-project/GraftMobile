@@ -6,8 +6,8 @@
 class QuickExchangeItem
 {
 public:
-    explicit QuickExchangeItem(const QString &iconPath, const QString &name, const QString &price,
-                               const QString &code, bool primary = false);
+    explicit QuickExchangeItem(const QString &iconPath, const QString &name, const QString &code,
+                               const QString &price = "0", bool primary = false);
 
     QString iconPath() const;
     void setIconPath(const QString &iconPath);
@@ -15,11 +15,11 @@ public:
     QString name() const;
     void setName(const QString &name);
 
-    QString price() const;
-    void setPrice(const QString &price);
-
     QString code() const;
     void setCode(const QString &code);
+
+    QString price() const;
+    void setPrice(const QString &price);
 
     bool primary() const;
     void setPrimary(bool primary);
