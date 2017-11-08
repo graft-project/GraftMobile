@@ -2,6 +2,7 @@
 #define ACCOUNTMODEL_H
 
 #include <QAbstractListModel>
+#include <algorithm>
 
 class AccountItem;
 
@@ -28,7 +29,7 @@ public:
 
 public slots:
     bool add(const QString &imagePath, const QString &name, const QString &currency,
-             const QString &number, double balance);
+             const QString &number);
 
 protected:
     QHash<int, QByteArray> roleNames() const;

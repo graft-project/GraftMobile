@@ -77,26 +77,20 @@ int AccountModel::rowCount(const QModelIndex &parent) const
 
 bool AccountModel::isWalletNumberExists(const QString &number) const
 {
-    QStringList walletNumbers;
-    for(int i = 0; i < mAccounts.size(); ++i)
-    {
-        walletNumbers.append(mAccounts.at(i)->number());
-    }
-
-    if(!walletNumbers.contains(number))
-    {
-        return true;
-    }
-    return false;
+    bool result = std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account){
+        Q_ASSERT(account);
+        return account->number() == number;
+});
+    return result;
 }
 
 bool AccountModel::add(const QString &imagePath, const QString &name, const QString &currency,
-                       const QString &number, double balance)
+                       const QString &number)
 {
-    if (isWalletNumberExists(number))
+    if (!isWalletNumberExists(number))
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mAccounts << (new AccountItem(imagePath, name, currency, number, balance));
+        mAccounts << (new AccountItem(imagePath, name, currency, number));
         endInsertRows();
         return true;
     }
