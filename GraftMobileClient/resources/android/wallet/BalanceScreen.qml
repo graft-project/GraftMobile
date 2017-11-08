@@ -8,11 +8,7 @@ BaseBalanceScreen {
 
     ColumnLayout {
         spacing: 0
-        anchors {
-            fill: parent
-            leftMargin: 15
-            rightMargin: 15
-        }
+        anchors.fill: parent
 
         ListView {
             id: accountListView
@@ -24,7 +20,6 @@ BaseBalanceScreen {
             delegate: CoinAccountDelegate {
                 bottomLineVisible: index === (accountListView.count - 1)
                 width: accountListView.width
-                height: accountListView.width / 5 - 10
                 productImage: imagePath
                 accountTitle: accountName
                 accountBalance: balance
@@ -44,6 +39,8 @@ BaseBalanceScreen {
         WideActionButton {
             text: qsTr("PAY")
             Layout.bottomMargin: 15
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
             onClicked: pushScreen.openQRCodeScanner()
         }
     }

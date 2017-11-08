@@ -14,15 +14,16 @@ BaseScreen {
 
     function addAccount() {
         if (accountName.text !== "" && walletNumberText.text !== "") {
-            if (AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text, coinsComboBox.currentText, walletNumberText.text)) {
+            if (AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text,
+                                 coinsComboBox.currentText, walletNumberText.text)) {
                 pushScreen.goBack()
             } else {
-                inputAttentionDialog.text = qsTr("The wallet number already exists! Please, enter another wallet number.")
-                inputAttentionDialog.open()
+                attentionDialog.text = qsTr("The wallet number already exists! Please, enter another wallet number.")
+                attentionDialog.open()
             }
         } else {
-            inputAttentionDialog.text = qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
-            inputAttentionDialog.open()
+            attentionDialog.text = qsTr("Don't leave blank fields as it isn't correct! You must enter the account name, type and wallet number.")
+            attentionDialog.open()
         }
     }
 
@@ -41,7 +42,7 @@ BaseScreen {
     }
 
     MessageDialog {
-        id: inputAttentionDialog
+        id: attentionDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
     }

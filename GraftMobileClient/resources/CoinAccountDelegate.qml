@@ -9,11 +9,15 @@ Rectangle {
     property alias topLineVisible: topLine.visible
     property alias bottomLineVisible: bottomLine.visible
 
-    height: parent.width / 5 - 10
+    height: 60
 
     ColumnLayout {
         spacing: 0
-        anchors.fill: parent
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+        }
 
         Rectangle {
             id: topLine
@@ -23,7 +27,7 @@ Rectangle {
         }
 
         RowLayout {
-            spacing: 14
+            spacing: 0
             Layout.alignment: Qt.AlignHCenter
 
             OpacityMask {
@@ -31,6 +35,7 @@ Rectangle {
                 maskSource: circle
                 Layout.preferredWidth: 46
                 Layout.preferredHeight: 46
+                Layout.alignment: Qt.AlignLeft
                 source: picture
 
                 Rectangle {
@@ -47,23 +52,24 @@ Rectangle {
                     height: 46
                     visible: false
                 }
+
             }
 
-            RowLayout {
-                spacing: 0
+            Text {
+                id: accountName
+                color: "#000000"
+                Layout.fillWidth: true
+                Layout.leftMargin: 15
+                Layout.alignment: Qt.AlignLeft
+                font.pointSize: 20
+            }
 
-                Text {
-                    id: accountName
-                    color: "#000000"
-                    Layout.fillWidth: true
-                    font.pointSize: 20
-                }
-
-                Text {
-                    text: accountBalance
-                    color: "#404040"
-                    font.pointSize: 20
-                }
+            Text {
+                text: accountBalance
+                color: "#404040"
+                font.pointSize: 20
+                Layout.rightMargin: 8
+                Layout.alignment: Qt.AlignRight
             }
         }
 

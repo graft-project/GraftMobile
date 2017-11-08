@@ -11,7 +11,7 @@ Rectangle {
     color: "#ffffff"
 
     RowLayout {
-        spacing: 10
+        spacing: 0
         anchors {
             fill: parent
             leftMargin: 15
@@ -31,26 +31,29 @@ Rectangle {
             text: qsTr("Main Balance:")
             color: "#233146"
             font.pointSize: 20
+            Layout.leftMargin: 14
             Layout.alignment: Qt.AlignLeft
+            Layout.fillWidth: true
         }
 
         ColumnLayout {
             spacing: 0
-            Layout.leftMargin: balance.width / 4
             Layout.alignment: Qt.AlignRight
+            Layout.rightMargin: 8
 
             Text {
                 id:graftCost
                 text: amountGraftCost
                 color: "#404040"
                 font.pointSize: 20
+                Layout.alignment: Qt.AlignRight
             }
 
             Text {
                 text: "$" + amountMoneyCost
                 color: "#b39036"
                 font.pointSize: 12
-                anchors.right: graftCost.right
+                Layout.alignment: Qt.AlignRight
             }
         }
     }

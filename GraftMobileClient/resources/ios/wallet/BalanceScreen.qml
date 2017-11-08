@@ -25,7 +25,6 @@ BaseBalanceScreen {
             delegate: CoinAccountDelegate {
                 bottomLineVisible: index === (accountListView.count - 1)
                 width: accountListView.width
-                height: accountListView.width / 5 - 10
                 productImage: imagePath
                 accountTitle: accountName
                 accountBalance: balance
