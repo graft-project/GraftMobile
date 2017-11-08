@@ -21,30 +21,6 @@ BaseCartScreen {
             anchors.fill: parent
             spacing: 11
 
-            Pane {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                Material.elevation: 8
-                padding: 0
-
-                contentItem: Rectangle {
-                    color: ColorFactory.color(DesignFactory.CircleBackground)
-
-                    Text {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: 12
-                        }
-                        horizontalAlignment: Text.AlignLeft
-                        color: "#FFFFFF"
-                        font.pointSize: 18
-                        text: qsTr("Total checkout: %1$").arg(price)
-                    }
-                }
-            }
-
             Image {
                 cache: false
                 source: GraftClient.qrCodeImage()
@@ -112,7 +88,7 @@ BaseCartScreen {
                 QuickExchangeView {
                     Layout.preferredHeight: 50
                     Layout.fillWidth: true
-                    Layout.bottomMargin: 15
+                    Layout.bottomMargin: 4
                 }
             }
 

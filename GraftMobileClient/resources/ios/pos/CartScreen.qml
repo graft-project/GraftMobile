@@ -27,20 +27,6 @@ BaseCartScreen {
             anchors.fill: parent
             spacing: 0
 
-            Pane {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                Material.background: ColorFactory.color(
-                                         DesignFactory.CircleBackground)
-
-                Label {
-                    anchors.centerIn: parent
-                    text: qsTr("Total checkout: %1$").arg(price)
-                    font.pointSize: 18
-                    color: "#ffffff"
-                }
-            }
-
             Image {
                 cache: false
                 source: GraftClient.qrCodeImage()
