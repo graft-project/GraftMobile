@@ -79,7 +79,7 @@ int AccountModel::rowCount(const QModelIndex &parent) const
 
 bool AccountModel::isWalletNumberExists(const QString &number) const
 {
-    std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account){
+    return std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account){
         Q_ASSERT(account);
         return account->number() == number;
     });

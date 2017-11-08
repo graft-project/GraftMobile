@@ -14,11 +14,11 @@ Rectangle {
     property bool hideBottomLineMargin: false
 
     onHideTopLineMarginChanged: {
-        topLine.anchors.rightMargin = hideTopLineMargin ? 0 : 12
+        topLine.anchors.rightMargin = hideTopLineMargin ? 0 : 15
     }
 
     onHideBottomLineMarginChanged: {
-        bottomLine.anchors.rightMargin = hideBottomLineMargin ? 0 : 12
+        bottomLine.anchors.rightMargin = hideBottomLineMargin ? 0 : 15
     }
 
     height: parent.width / 6 + 20
@@ -30,8 +30,8 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            leftMargin: 12
-            rightMargin: 12
+            leftMargin: 15
+            rightMargin: 15
         }
         color: "#e6e6e8"
     }
@@ -41,8 +41,8 @@ Rectangle {
         anchors {
             left: parent.left
             right: parent.right
-            leftMargin: 12
-            rightMargin: 12
+            leftMargin: 15
+            rightMargin: 15
             verticalCenter: parent.verticalCenter
         }
 
@@ -79,6 +79,7 @@ Rectangle {
 
         ColumnLayout {
             spacing: 3
+            Layout.leftMargin: 5
             Layout.alignment: Qt.AlignHCenter
 
             Text {
@@ -102,8 +103,8 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            leftMargin: 12
-            rightMargin: 12
+            leftMargin: 15
+            rightMargin: 15
         }
         color: "#e6e6e8"
     }
