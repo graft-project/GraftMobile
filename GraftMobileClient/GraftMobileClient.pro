@@ -58,7 +58,9 @@ SOURCES += main.cpp \
     core/selectedproductproxymodel.cpp \
     designfactory.cpp \
     core/currencymodel.cpp \
-    core/currencyitem.cpp
+    core/currencyitem.cpp \
+    core/quickexchangeitem.cpp \
+    core/quickexchangemodel.cpp
 
 HEADERS += \
     core/config.h \
@@ -74,7 +76,9 @@ HEADERS += \
     core/selectedproductproxymodel.h \
     designfactory.h \
     core/currencymodel.h \
-    core/currencyitem.h
+    core/currencyitem.h \
+    core/quickexchangeitem.h \
+    core/quickexchangemodel.h
 
 include(resources/resources.pri)
 

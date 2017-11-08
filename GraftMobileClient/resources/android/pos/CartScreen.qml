@@ -21,30 +21,6 @@ BaseCartScreen {
             anchors.fill: parent
             spacing: 11
 
-            Pane {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                Material.elevation: 8
-                padding: 0
-
-                contentItem: Rectangle {
-                    color: ColorFactory.color(DesignFactory.CircleBackground)
-
-                    Text {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: 12
-                        }
-                        horizontalAlignment: Text.AlignLeft
-                        color: "#FFFFFF"
-                        font.pointSize: 18
-                        text: qsTr("Total checkout: %1$").arg(price)
-                    }
-                }
-            }
-
             Image {
                 cache: false
                 source: GraftClient.qrCodeImage()
@@ -64,42 +40,55 @@ BaseCartScreen {
                 Layout.alignment: Qt.AlignCenter
             }
 
-            Rectangle {
-                color: "#ffffff"
+            ColumnLayout {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                spacing: 0
 
-                ListView {
-                    id: productList
-                    spacing: 0
-                    clip: true
-                    model: SelectedProductModel
-                    delegate: productDelegate
-                    anchors.fill: parent
+                Rectangle {
+                    color: "#ffffff"
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
 
-                    Component {
-                        id: productDelegate
+                    ListView {
+                        id: productList
+                        spacing: 0
+                        clip: true
+                        model: SelectedProductModel
+                        delegate: productDelegate
+                        anchors.fill: parent
 
-                        SelectedProductDelegate {
-                            width: productList.width
-                            height: 70
-                            topLineVisible: false
-                            bottomLineVisible: false
-                            productImage: imagePath
-                            productPrice: cost
-                            productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
-                            productText {
-                                text: name
-                                color: ColorFactory.color(DesignFactory.MainText)
+                        Component {
+                            id: productDelegate
+
+                            SelectedProductDelegate {
+                                width: productList.width
+                                height: 70
+                                topLineVisible: false
+                                bottomLineVisible: false
+                                productImage: imagePath
+                                productPrice: cost
+                                productPriceTextColor: ColorFactory.color(
+                                                           DesignFactory.ItemText)
+                                productText {
+                                    text: name
+                                    color: ColorFactory.color(
+                                               DesignFactory.MainText)
+                                }
                             }
                         }
                     }
+
+                    BusyIndicator {
+                        id: busyIndicator
+                        anchors.centerIn: parent
+                        running: true
+                    }
                 }
 
-                BusyIndicator {
-                    id: busyIndicator
-                    anchors.centerIn: parent
-                    running: true
+                QuickExchangeView {
+                    Layout.preferredHeight: 50
+                    Layout.fillWidth: true
+                    Layout.bottomMargin: 4
                 }
             }
 
