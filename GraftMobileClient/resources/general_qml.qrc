@@ -16,8 +16,8 @@
         <file alias="BaseBalanceScreen.qml">BaseBalanceScreen.qml</file>
         <file alias="SelectImageDialog.qml">SelectImageDialog.qml</file>
         <file alias="SelectImageButton.qml">SelectImageButton.qml</file>
-        <file>QuickExchangeView.qml</file>
-        <file>QuickExchangeDelegate.qml</file>
+        <file alias="QuickExchangeView.qml">QuickExchangeView.qml</file>
+        <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
