@@ -30,7 +30,7 @@ public:
 
 public slots:
     void add(const QString &iconPath, const QString &name, const QString &code,
-             const QString &price, bool primary = false);
+             const QString &price = QString(), bool primary = false);
     void clear();
 
 protected:
