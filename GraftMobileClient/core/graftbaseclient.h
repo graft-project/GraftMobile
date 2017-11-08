@@ -18,8 +18,7 @@ public:
 
     void registerImageProvider(QQmlEngine *engine);
 
-    QuickExchangeModel *quickExchangeModel();
-    void setQuickExchangeModel(QuickExchangeModel *quickExchangeModel);
+    QuickExchangeModel *quickExchangeModel() const;
 
 signals:
     void errorReceived();

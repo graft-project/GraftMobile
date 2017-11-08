@@ -29,13 +29,14 @@ QVariant QuickExchangeModel::data(const QModelIndex &index, int role) const
     case CodeRole:
         return quickExchangeItem->code();
     case PriceRole:
-        if (quickExchangeItem->price().toDouble() < 0.0001)
+        double price = quickExchangeItem->price().toDouble();
+        if (price < 0.0001)
         {
             return QStringLiteral("N/A");
         }
         else
         {
-            return quickExchangeItem->price().number(quickExchangeItem->price().toDouble(), 'f', 4);
+            return QString::number(price, 'f', 4);
         }
     case PrimaryRole:
         return quickExchangeItem->primary();

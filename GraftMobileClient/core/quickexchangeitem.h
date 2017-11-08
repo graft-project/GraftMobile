@@ -7,7 +7,7 @@ class QuickExchangeItem
 {
 public:
     explicit QuickExchangeItem(const QString &iconPath, const QString &name, const QString &code,
-                               const QString &price = "0", bool primary = false);
+                               const QString &price = QString(), bool primary = false);
 
     QString iconPath() const;
     void setIconPath(const QString &iconPath);

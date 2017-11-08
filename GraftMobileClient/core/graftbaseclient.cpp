@@ -10,7 +10,7 @@ static const QString cProviderScheme("image://%1/%2");
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
-    ,mQuickExchangeModel(nullptr)
+    ,mQuickExchangeModel(new QuickExchangeModel(this))
 {
 }
 
@@ -36,19 +36,7 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
     }
 }
 
-QuickExchangeModel *GraftBaseClient::quickExchangeModel()
+QuickExchangeModel *GraftBaseClient::quickExchangeModel() const
 {
-    if (!mQuickExchangeModel)
-    {
-        mQuickExchangeModel = new QuickExchangeModel();
-    }
     return mQuickExchangeModel;
-}
-
-void GraftBaseClient::setQuickExchangeModel(QuickExchangeModel *quickExchangeModel)
-{
-    if (quickExchangeModel)
-    {
-        mQuickExchangeModel = quickExchangeModel;
-    }
 }
