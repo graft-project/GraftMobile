@@ -21,6 +21,7 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     {
         return QVariant();
     }
+
     AccountItem *accountItem = mAccounts[index.row()];
     Q_ASSERT(accountItem);
     switch (role) {
