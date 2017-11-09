@@ -21,7 +21,6 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     {
         return QVariant();
     }
-
     AccountItem *accountItem = mAccounts[index.row()];
     Q_ASSERT(accountItem);
     switch (role) {
@@ -34,7 +33,16 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     case NumberRole:
         return accountItem->number();
     case BalanceRole:
-        return accountItem->balance();
+    {
+        if(accountItem->balance() < 0)
+        {
+            return QStringLiteral("N/A");
+        }
+        else
+        {
+            return QString::number(accountItem->balance(), 'f', 4);
+        }
+    }
     default:
         return QVariant();
     }

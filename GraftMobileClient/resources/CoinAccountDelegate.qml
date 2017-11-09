@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 Rectangle {
-    property real accountBalance
+    property alias accountBalance: accountBalance.text
     property alias accountTitle: accountName.text
     property alias productImage: picture.source
     property alias topLineVisible: topLine.visible
@@ -64,7 +64,7 @@ Rectangle {
             }
 
             Text {
-                text: accountBalance
+                id: accountBalance
                 color: "#404040"
                 font.pointSize: 20
                 Layout.rightMargin: 8
