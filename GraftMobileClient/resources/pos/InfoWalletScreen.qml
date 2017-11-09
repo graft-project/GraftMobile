@@ -5,14 +5,12 @@ import "../components"
 
 BaseBalanceScreen {
     id: infoWallet
-    splitterVisible: false
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
     screenHeader {
         navigationButtonState: Qt.platform.os === "android"
     }
 
     ColumnLayout {
-
         spacing: 0
         anchors {
             fill: parent
@@ -21,8 +19,11 @@ BaseBalanceScreen {
             bottomMargin: 15
         }
 
+        Item {
+            Layout.fillHeight: true
+        }
+
         WideActionButton {
-            Layout.topMargin: infoWallet.height / 2 - 100
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Transfer to Paypal")
         }

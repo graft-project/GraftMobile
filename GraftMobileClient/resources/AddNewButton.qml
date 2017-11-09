@@ -3,8 +3,16 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 
 Button {
+    property alias buttonTitle: buttonTitle.text
+    property alias bottomLine: bottomLine.visible
+    property alias topLine: topLine.visible
+
     padding: 0
     contentItem: Rectangle {
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
         color: "#FFFFFF"
 
         Rectangle {
@@ -14,8 +22,8 @@ Button {
                 top: parent.top
                 left: parent.left
                 right: parent.right
-                leftMargin: 16
-                rightMargin: 16
+                leftMargin: 15
+                rightMargin: 15
             }
             visible: Qt.platform.os === "ios"
             color: "#E6E6E8"
@@ -24,20 +32,22 @@ Button {
         RowLayout {
             anchors {
                 fill: parent
-                leftMargin: 16
+                leftMargin: 15
             }
-            spacing: 10
+            spacing: 0
 
             Image {
                 Layout.preferredHeight: 46
                 Layout.preferredWidth: 46
                 source: "qrc:/imgs/add.png"
+                horizontalAlignment: Image.AlignLeft
             }
 
             Text {
+                id: buttonTitle
                 Layout.fillWidth: true
+                Layout.leftMargin: 15
                 horizontalAlignment: Text.AlignLeft
-                text: qsTr("Add new product")
             }
         }
 
@@ -48,12 +58,11 @@ Button {
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
-                leftMargin: 12
-                rightMargin: 12
+                leftMargin: 15
+                rightMargin: 15
             }
             visible: Qt.platform.os === "ios"
             color: "#E6E6E8"
         }
     }
-    onClicked: pushScreen.openEditingItemScreen(-1)
 }

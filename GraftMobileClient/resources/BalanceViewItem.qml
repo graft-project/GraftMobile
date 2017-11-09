@@ -1,8 +1,9 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import com.graft.design 1.0
 
 Rectangle {
+    id: balance
+
     property real amountMoneyCost: 0
     property real amountGraftCost: 0
 
@@ -10,51 +11,61 @@ Rectangle {
     color: "#ffffff"
 
     RowLayout {
+        spacing: 0
         anchors {
-            leftMargin: 12
-            rightMargin: 12
-            left: parent.left
-            right: parent.right
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
             verticalCenter: parent.verticalCenter
         }
 
+        Image {
+            Layout.preferredHeight: 42
+            Layout.preferredWidth: 48
+            Layout.alignment: Qt.AlignLeft
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/imgs/g-max.png"
+        }
+
         Text {
-            text: qsTr("Balance:")
+            text: qsTr("Main Balance:")
             color: "#233146"
             font.pointSize: 20
+            Layout.fillWidth: true
+            Layout.leftMargin: 14
             Layout.alignment: Qt.AlignLeft
         }
 
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
+        ColumnLayout {
+            spacing: 0
+            Layout.rightMargin: 8
 
-            ColumnLayout {
-                spacing: 0
+            Text {
+                id:graftCost
+                text: amountGraftCost
+                color: "#404040"
+                font.pointSize: 20
                 Layout.alignment: Qt.AlignRight
-
-                Text {
-                    text: amountGraftCost
-                    color: ColorFactory.color(DesignFactory.MainText)
-                    font {
-                        bold: true
-                        pointSize: 21
-                    }
-                }
-
-                Text {
-                    text: amountMoneyCost + " USD"
-                    color: "#b39036"
-                    font.pointSize: 12
-                }
             }
 
-            Image {
-                Layout.preferredHeight: 30
-                Layout.preferredWidth: 36
-                fillMode: Image.PreserveAspectFit
+            Text {
+                text: "$" + amountMoneyCost
+                color: "#b39036"
+                font.pointSize: 12
                 Layout.alignment: Qt.AlignRight
-                source: "qrc:/imgs/g-max.png"
             }
         }
+    }
+
+    Rectangle {
+        height: 1
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            leftMargin: 15
+            rightMargin: 15
+        }
+        color: "#e6e6e8"
     }
 }

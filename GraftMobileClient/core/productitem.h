@@ -6,7 +6,6 @@
 class ProductItem
 {
 public:
-    ProductItem();
     ProductItem(const QString &imagePath, const QString &name, double cost,
                 const QString &currency, const QString &description);
     QString imagePath() const;

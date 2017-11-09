@@ -7,7 +7,7 @@
         <file alias="GraftApplicationWindow.qml">GraftApplicationWindow.qml</file>
         <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
         <file alias="BalanceViewItem.qml">BalanceViewItem.qml</file>
-        <file alias="AccountDelegate.qml">AccountDelegate.qml</file>
+        <file alias="CardAccountDelegate.qml">CardAccountDelegate.qml</file>
         <file alias="AddCardButton.qml">AddCardButton.qml</file>
         <file alias="ProductSwipeDelegate.qml">ProductSwipeDelegate.qml</file>
         <file alias="PaymentScreen.qml">PaymentScreen.qml</file>
@@ -16,6 +16,9 @@
         <file alias="BaseBalanceScreen.qml">BaseBalanceScreen.qml</file>
         <file alias="SelectImageDialog.qml">SelectImageDialog.qml</file>
         <file alias="SelectImageButton.qml">SelectImageButton.qml</file>
+        <file alias="AddNewButton.qml">AddNewButton.qml</file>
+        <file alias="AddAccountScreen.qml">AddAccountScreen.qml</file>
+        <file alias="CoinAccountDelegate.qml">CoinAccountDelegate.qml</file>
         <file alias="QuickExchangeView.qml">QuickExchangeView.qml</file>
         <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
     </qresource>
@@ -23,7 +26,6 @@
         <file alias="main.qml">pos/main.qml</file>
         <file alias="EditingItemScreen.qml">pos/EditingItemScreen.qml</file>
         <file alias="InfoWalletScreen.qml">pos/InfoWalletScreen.qml</file>
-        <file alias="AddNewProductButton.qml">pos/AddNewProductButton.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="main.qml">wallet/main.qml</file>
@@ -65,6 +67,15 @@
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
         <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
+        <file alias="coins/bcc.png">imgs/coins/bcc.png</file>
+        <file alias="coins/bitcoin.png">imgs/coins/bitcoin.png</file>
+        <file alias="coins/dash.png">imgs/coins/dash.png</file>
+        <file alias="coins/ether.png">imgs/coins/ether.png</file>
+        <file alias="coins/litecoin.png">imgs/coins/litecoin.png</file>
+        <file alias="coins/monero.png">imgs/coins/monero.png</file>
+        <file alias="coins/nem.png">imgs/coins/nem.png</file>
+        <file alias="coins/neo.png">imgs/coins/neo.png</file>
+        <file alias="coins/ripple.png">imgs/coins/ripple.png</file>
         <file alias="gallery.png">imgs/gallery.png</file>
         <file alias="photo.png">imgs/photo.png</file>
         <file alias="bcc-w.png">imgs/bcc-w.png</file>

@@ -59,6 +59,8 @@ SOURCES += main.cpp \
     designfactory.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
+    core/accountitem.cpp \
+    core/accountmodel.cpp \
     core/quickexchangeitem.cpp \
     core/quickexchangemodel.cpp
 
@@ -77,6 +79,8 @@ HEADERS += \
     designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
+    core/accountitem.h \
+    core/accountmodel.h \
     core/quickexchangeitem.h \
     core/quickexchangemodel.h
 

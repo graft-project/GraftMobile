@@ -4,50 +4,43 @@ import "../"
 import "../components"
 
 BaseBalanceScreen {
-    splitterVisible: false
-    screenHeader {
-        navigationButtonState: false
-    }
+    id: balanceScreen
+    screenHeader.navigationButtonState: false
 
     ColumnLayout {
         spacing: 0
-        anchors {
-            fill: parent
-            leftMargin: 15
-            rightMargin: 15
-        }
+        anchors.fill: parent
 
         ListView {
             id: accountListView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            model: CardModel
+            model: AccountModel
             clip: true
-            spacing: 15
-            delegate: AccountDelegate {
+            spacing: 0
+            delegate: CoinAccountDelegate {
+                bottomLineVisible: index === (accountListView.count - 1)
                 width: accountListView.width
-                height: 30
-                nameItem.text: cardName
-                cardIcon: "qrc:/imgs/MasterCard_Logo.png"
-                number: cardHideNumber
+                productImage: imagePath
+                accountTitle: accountName
+                accountBalance: balance
             }
         }
 
-        AddCardButton {
-            Layout.alignment: Qt.AlignLeft
-            imageSource: "qrc:/imgs/add_ios.png"
-            textItem {
-                color: "#067DFF"
-                text: "Add Card"
-            }
-            imageVisible: true
-            onClicked: pushScreen.addCardScreen()
+        AddNewButton {
+            buttonTitle: qsTr("Add new account")
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            Layout.bottomMargin: 15
+            onClicked: pushScreen.openAddAccountScreen()
         }
 
         WideActionButton {
             text: qsTr("PAY")
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
             Layout.bottomMargin: 15
-            onPressed: pushScreen.openQRCodeScanner()
+            onClicked: pushScreen.openQRCodeScanner()
         }
     }
 }

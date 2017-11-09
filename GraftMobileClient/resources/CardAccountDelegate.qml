@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 
 Item {
-    property alias nameItem: walletName
+    property alias nameItem: walletName.text
     property alias cardIcon: cardPicture.source
     property alias number: walletNumber.text
 

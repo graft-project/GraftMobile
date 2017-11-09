@@ -19,12 +19,12 @@ public:
     };
     Q_ENUM(ProductRoles)
 
-    explicit ProductModel(QObject *parent = 0);
+    explicit ProductModel(QObject *parent = nullptr);
     ~ProductModel();
 
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role);
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVector<ProductItem *> products() const;
     Q_INVOKABLE void changeSelection(int index);
     Q_INVOKABLE double totalCost() const;
@@ -43,7 +43,7 @@ public slots:
              const QString &currency, const QString &description = QString());
 
 protected:
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 
 private:
     QVector<ProductItem*> mProducts;

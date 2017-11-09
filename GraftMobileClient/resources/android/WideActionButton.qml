@@ -16,4 +16,8 @@ RoundButton {
         bold: true
         capitalization: Font.AllUppercase
     }
+    background {
+        x: 0
+        width: background.parent.width
+    }
 }

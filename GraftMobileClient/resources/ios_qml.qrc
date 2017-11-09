@@ -5,6 +5,7 @@
         <file alias="WideActionButton.qml">ios/WideActionButton.qml</file>
         <file alias="ToolBarButton.qml">ios/ToolBarButton.qml</file>
         <file alias="LinearEditItem.qml">ios/LinearEditItem.qml</file>
+        <file alias="CurrencyComboBox.qml">ios/CurrencyComboBox.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>

@@ -6,6 +6,7 @@
 #include <QDir>
 
 #include "core/cardmodel.h"
+#include "core/accountmodel.h"
 #include "core/productmodel.h"
 #include "core/currencymodel.h"
 #include "core/graftposclient.h"
@@ -16,7 +17,7 @@
 #include "designfactory.h"
 
 #ifdef POS_BUILD
-#ifdef Q_OS_ANDROID || Q_OS_IOS
+#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 #include "imagepicker.h"
 #endif
 #endif
@@ -49,6 +50,7 @@ int main(int argc, char *argv[])
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
+    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
 
     QString imageDataLocation = callImageDataPath();
     if(!QFileInfo(imageDataLocation).exists())
@@ -56,7 +58,7 @@ int main(int argc, char *argv[])
         QDir().mkpath(imageDataLocation);
     }
 
-#ifdef Q_OS_ANDROID || Q_OS_IOS
+#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
     ImagePicker picker(imageDataLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 #endif
@@ -72,11 +74,28 @@ int main(int argc, char *argv[])
 #endif
 #ifdef WALLET_BUILD
     QZXing::registerQMLTypes();
-
     GraftWalletClient client;
+
+    CurrencyModel coinModel;
+    coinModel.add(QStringLiteral("BITCONNECT COIN"), QStringLiteral("qrc:/imgs/coins/bcc.png"));
+    coinModel.add(QStringLiteral("BITCOIN"), QStringLiteral("qrc:/imgs/coins/bitcoin.png"));
+    coinModel.add(QStringLiteral("DASH"), QStringLiteral("qrc:/imgs/coins/dash.png"));
+    coinModel.add(QStringLiteral("ETHER"), QStringLiteral("qrc:/imgs/coins/ether.png"));
+    coinModel.add(QStringLiteral("LITECOIN"), QStringLiteral("qrc:/imgs/coins/litecoin.png"));
+    coinModel.add(QStringLiteral("MONERO"), QStringLiteral("qrc:/imgs/coins/monero.png"));
+    coinModel.add(QStringLiteral("NEW ECONOMY MOVEMENT"), QStringLiteral("qrc:/imgs/coins/nem.png"));
+    coinModel.add(QStringLiteral("NEO"), QStringLiteral("qrc:/imgs/coins/neo.png"));
+    coinModel.add(QStringLiteral("RIPPLE"), QStringLiteral("qrc:/imgs/coins/ripple.png"));
+    engine.rootContext()->setContextProperty(QStringLiteral("CoinModel"), &coinModel);
+
+    AccountModel accountModel;
+    engine.rootContext()->setContextProperty(QStringLiteral("AccountModel"), &accountModel);
+
     CardModel cardModel;
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), client.quickExchangeModel());
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
+                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
+
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);

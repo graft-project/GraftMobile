@@ -6,9 +6,9 @@ import "../components"
 import "../"
 
 Item {
-    readonly property alias currencyText: graftCBox.currentText
-    property alias currencyModel: graftCBox.model
-    property alias currencyIndex: graftCBox.currentIndex
+    property alias currencyText: graftComboBox.currentText
+    property alias currencyModel: graftComboBox.currencyModel
+    property alias currencyIndex: graftComboBox.currencyIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
@@ -29,9 +29,9 @@ Item {
         id: mainLayout
         spacing: 5
         anchors {
+            top: parent.top
             left: parent.left
             right: parent.right
-            top: parent.top
         }
 
         LinearEditItem {
@@ -57,7 +57,7 @@ Item {
                 id: price
                 title: qsTr("Price")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftCBox.height
+                Layout.preferredHeight: graftComboBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
@@ -65,34 +65,10 @@ Item {
                 }
             }
 
-            ColumnLayout {
-                spacing: 4
+            CurrencyComboBox {
+                id: graftComboBox
                 Layout.preferredWidth: 50
-
-                Text {
-                    id: dropdownTitle
-                    Layout.fillWidth: true
-                    color: "#BBBBBB"
-                    font.pointSize: 12
-                    text: qsTr("Currency")
-                }
-
-                ComboBox {
-                    id: graftCBox
-                    Layout.fillWidth: true
-                    Material.background: "#00707070"
-                    Material.foreground: "#585858"
-                    leftPadding: -12
-                    Layout.topMargin: -12
-                    Layout.bottomMargin: -10
-                    textRole: "name"
-                }
-
-                Rectangle {
-                    height: 1
-                    color: "#acacac"
-                    Layout.fillWidth: true
-                }
+                dropdownTitle: qsTr("Currency")
             }
         }
 

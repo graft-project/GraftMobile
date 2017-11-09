@@ -6,9 +6,9 @@ import "../components"
 import "../"
 
 Item {
-    readonly property alias currencyText: graftCBox.currentText
-    property alias currencyModel: graftCBox.model
-    property alias currencyIndex: graftCBox.currentIndex
+    property alias currencyText: graftComboBox.currentText
+    property alias currencyModel: graftComboBox.currencyModel
+    property alias currencyIndex: graftComboBox.currencyIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
@@ -28,9 +28,9 @@ Item {
     ColumnLayout {
         spacing: 5
         anchors {
+            top: parent.top
             left: parent.left
             right: parent.right
-            top: parent.top
         }
 
         LinearEditItem {
@@ -56,7 +56,7 @@ Item {
                 id: price
                 title: qsTr("Price:")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftCBox.height
+                Layout.preferredHeight: graftComboBox.height
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
@@ -64,39 +64,11 @@ Item {
                 }
             }
 
-            ColumnLayout {
-                spacing: 0
+            CurrencyComboBox {
+                id: graftComboBox
                 Layout.fillWidth: true
                 Layout.preferredWidth: 130
-
-                ComboBox {
-                    id: graftCBox
-                    Layout.fillWidth: true
-                    Material.background: "#00707070"
-                    Material.foreground: "#404040"
-                    leftPadding: dropdownTitle.width -8
-                    Layout.topMargin: -8
-                    Layout.bottomMargin: -2
-                    textRole: "name"
-
-                    Text {
-                        id: dropdownTitle
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            topMargin: 13
-                        }
-                        font.pointSize: parent.font.pointSize
-                        color: "#8e8e93"
-                        text: qsTr("Currency:")
-                    }
-                }
-
-                Rectangle {
-                    height: 1
-                    color: "#acacac"
-                    Layout.fillWidth: true
-                }
+                dropdownTitle: qsTr("Currency:")
             }
         }
 

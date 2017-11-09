@@ -78,14 +78,15 @@ BaseScreen {
 
                         onRemoveItemClicked: messageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
-
                     }
                 }
             }
 
-            AddNewProductButton {
+            AddNewButton {
+                buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
+                onClicked: pushScreen.openEditingItemScreen(-1)
             }
 
             WideActionButton {

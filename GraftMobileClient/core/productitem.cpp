@@ -6,9 +6,6 @@
 #include <QFile>
 #include <QFileInfo>
 
-ProductItem::ProductItem()
-{}
-
 ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost,
                          const QString &currency, const QString &description)
     : mImagePath(imagePath),

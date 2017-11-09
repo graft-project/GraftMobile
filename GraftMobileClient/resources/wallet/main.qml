@@ -61,34 +61,13 @@ GraftApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["goBack"] = goBack
-        transitionsMap["addCardScreen"] = openAddCardScreen
-        transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openQRCodeScanner"] = openQRScanningScreen
+        transitionsMap["addCardScreen"] = openAddCardScreen
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
+        transitionsMap["openAddAccountScreen"] = openAddAccountScreen
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
         return transitionsMap
-    }
-
-    function openQRScanningScreen() {
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
-    }
-
-    function openAddCardScreen() {
-        stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": transitionsBetweenScreens()})
-    }
-
-    function openPaymentConfirmationScreen() {
-        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
-                       "totalAmount": GraftClient.totalCost(),
-                       "currencyModel": currencyModel,
-                       "balanceInGraft": balanceInGraft,
-                       "balanceInUSD": balanceInUSD,
-                       "productModel": PaymentProductModel})
-    }
-
-    function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
-                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!"), "isSpacing": true})
     }
 
     function showMenu() {
@@ -101,6 +80,34 @@ GraftApplicationWindow {
 
     function goBack() {
         stack.pop()
+    }
+
+    function openQRScanningScreen() {
+        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+    }
+
+    function openAddCardScreen() {
+        stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+    }
+
+    function openPaymentConfirmationScreen() {
+        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
+                       "pushScreen": transitionsBetweenScreens(),
+                       "totalAmount": GraftClient.totalCost(),
+                       "currencyModel": currencyModel,
+                       "balanceInGraft": balanceInGraft,
+                       "balanceInUSD": balanceInUSD,
+                       "productModel": PaymentProductModel})
+    }
+
+    function openPaymentScreen() {
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
+                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!"), "isSpacing": true})
+    }
+
+    function openAddAccountScreen() {
+        stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": transitionsBetweenScreens(),
+                   "coinModel": CoinModel})
     }
 
     function openBalanceScreen() {

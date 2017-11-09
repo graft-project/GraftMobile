@@ -2,10 +2,6 @@
 
 static const QString scHideCardNumber("XXXX");
 
-CardItem::CardItem()
-{
-}
-
 CardItem::CardItem(const QString &name, const QString &number, unsigned cv2Code,
                    const QString &expirationDate)
     : mName(name)
