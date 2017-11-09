@@ -41,7 +41,7 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
         }
         else
         {
-            return QString::number(accountItem->balance(), 'f', 4);
+            return QString::number(accountItem->balance(), 'f', 1);
         }
     }
     default:
