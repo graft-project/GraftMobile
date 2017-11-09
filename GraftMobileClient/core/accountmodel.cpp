@@ -38,7 +38,6 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     default:
         return QVariant();
     }
-
 }
 
 bool AccountModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -79,7 +78,8 @@ int AccountModel::rowCount(const QModelIndex &parent) const
 
 bool AccountModel::isWalletNumberExists(const QString &number) const
 {
-    return std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account){
+    return std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&number](AccountItem *account)
+    {
         Q_ASSERT(account);
         return account->number() == number;
     });

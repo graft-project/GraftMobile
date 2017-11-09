@@ -16,6 +16,7 @@ public:
         CV2CodeRole,
         DateRole
     };
+    Q_ENUM(CardRoles)
 
     explicit CardModel(QObject *parent = 0);
     ~CardModel();

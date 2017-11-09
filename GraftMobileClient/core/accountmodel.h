@@ -16,8 +16,9 @@ public:
         NumberRole,
         BalanceRole
     };
+    Q_ENUM(AccountRoles)
 
-    explicit AccountModel(QObject *parent = nullptr);
+    explicit AccountModel(QObject *parent = 0);
     ~AccountModel();
 
     QVector<AccountItem *> accounts() const;

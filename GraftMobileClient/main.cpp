@@ -92,7 +92,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("AccountModel"), &accountModel);
 
     CardModel cardModel;
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"), client.quickExchangeModel());
+    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
+                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
 
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),

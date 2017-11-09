@@ -91,7 +91,8 @@ GraftApplicationWindow {
     }
 
     function openPaymentConfirmationScreen() {
-        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
+        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
+                       "pushScreen": transitionsBetweenScreens(),
                        "totalAmount": GraftClient.totalCost(),
                        "currencyModel": currencyModel,
                        "balanceInGraft": balanceInGraft,

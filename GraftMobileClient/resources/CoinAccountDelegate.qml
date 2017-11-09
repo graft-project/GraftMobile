@@ -42,8 +42,8 @@ Rectangle {
                     id: circle
                     width: picture.width
                     height: picture.height
-                    radius: picture.width / 2
                     visible: false
+                    radius: picture.width / 2
                 }
 
                 Image {
@@ -52,16 +52,15 @@ Rectangle {
                     height: 46
                     visible: false
                 }
-
             }
 
             Text {
                 id: accountName
                 color: "#000000"
+                font.pointSize: 20
                 Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.alignment: Qt.AlignLeft
-                font.pointSize: 20
             }
 
             Text {

@@ -31,14 +31,13 @@ Rectangle {
             text: qsTr("Main Balance:")
             color: "#233146"
             font.pointSize: 20
+            Layout.fillWidth: true
             Layout.leftMargin: 14
             Layout.alignment: Qt.AlignLeft
-            Layout.fillWidth: true
         }
 
         ColumnLayout {
             spacing: 0
-            Layout.alignment: Qt.AlignRight
             Layout.rightMargin: 8
 
             Text {

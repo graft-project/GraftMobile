@@ -78,7 +78,6 @@ BaseScreen {
 
                         onRemoveItemClicked: messageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
-
                     }
                 }
             }

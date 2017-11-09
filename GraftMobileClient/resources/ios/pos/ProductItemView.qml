@@ -28,9 +28,9 @@ Item {
     ColumnLayout {
         spacing: 5
         anchors {
+            top: parent.top
             left: parent.left
             right: parent.right
-            top: parent.top
         }
 
         LinearEditItem {

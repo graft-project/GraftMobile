@@ -25,8 +25,8 @@ ColumnLayout {
         textRole: "name"
         leftPadding: -12
         Layout.fillWidth: true
-        Layout.bottomMargin: -10
         Layout.topMargin: -12
+        Layout.bottomMargin: -10
     }
 
     Rectangle {
