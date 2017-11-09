@@ -18,7 +18,7 @@ public:
     };
     Q_ENUM(CardRoles)
 
-    explicit CardModel(QObject *parent = 0);
+    explicit CardModel(QObject *parent = nullptr);
     ~CardModel();
 
     QVector<CardItem *> cards() const;

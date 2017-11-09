@@ -18,13 +18,13 @@ BaseScreen {
                                  coinsComboBox.currentText, walletNumberText.text)) {
                 pushScreen.goBack()
             } else {
-                attentionDialog.text = qsTr("The wallet number already exists! Please,
-                                            enter another wallet number.")
+                attentionDialog.text = qsTr("The wallet number already exists! Please, "+
+                                            "enter another wallet number.")
                 attentionDialog.open()
             }
         } else {
-            attentionDialog.text = qsTr("Don't leave blank fields as it isn't correct!
-                                        You must enter the account name, type and wallet number.")
+            attentionDialog.text = qsTr("Don't leave blank fields as it isn't correct! "+
+                                        "You must enter the account name, type and wallet number.")
             attentionDialog.open()
         }
     }

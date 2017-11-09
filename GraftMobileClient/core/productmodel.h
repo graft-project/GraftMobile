@@ -19,7 +19,7 @@ public:
     };
     Q_ENUM(ProductRoles)
 
-    explicit ProductModel(QObject *parent = 0);
+    explicit ProductModel(QObject *parent = nullptr);
     ~ProductModel();
 
     QVariant data(const QModelIndex &index, int role) const override;

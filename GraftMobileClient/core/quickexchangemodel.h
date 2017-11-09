@@ -18,7 +18,7 @@ public:
     };
     Q_ENUM(QuickExchangeRole)
 
-    explicit QuickExchangeModel(QObject *parent = 0);
+    explicit QuickExchangeModel(QObject *parent = nullptr);
     ~QuickExchangeModel();
 
     QVariant data(const QModelIndex &index, int role) const override;

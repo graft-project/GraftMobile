@@ -17,7 +17,7 @@
 #include "designfactory.h"
 
 #ifdef POS_BUILD
-#ifdef Q_OS_ANDROID || Q_OS_IOS
+#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 #include "imagepicker.h"
 #endif
 #endif
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
         QDir().mkpath(imageDataLocation);
     }
 
-#ifdef Q_OS_ANDROID || Q_OS_IOS
+#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
     ImagePicker picker(imageDataLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 #endif

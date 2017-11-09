@@ -15,7 +15,7 @@ public:
     };
     Q_ENUM(CurrencyRoles)
 
-    explicit CurrencyModel(QObject *parent = 0);
+    explicit CurrencyModel(QObject *parent = nullptr);
     ~CurrencyModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
