@@ -96,7 +96,6 @@ BaseScreen {
                 Layout.topMargin: 10
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                Layout.bottomMargin: 15
                 onClicked: GraftClient.sale()
             }
 
