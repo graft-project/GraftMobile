@@ -61,6 +61,13 @@ GraftApplicationWindow {
         }
     }
 
+    ListModel {
+        id: modelHZ
+        ListElement { name: "First"; value: 123 }
+        ListElement { name: "Second"; value: 456 }
+        ListElement { name: "Third"; value: 789 }
+    }
+
     ProductScreen {
         id: mainScreen
         pushScreen: screenTransitions()
@@ -71,6 +78,7 @@ GraftApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openEditingItemScreen"] = openEditingItemScreen
+        transitionsMap["openQuickDealScreen"] = openQuickDealScreen
         transitionsMap["initializingCheckout"] = openCartScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openProductScreen"] = openMainScreen
@@ -92,6 +100,11 @@ GraftApplicationWindow {
     function openEditingItemScreen(index) {
         stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": screenTransitions(),
                        "currencyModel": CurrencyModel, "index": index})
+    }
+
+    function openQuickDealScreen() {
+        stack.push("qrc:/pos/QuickDialScreen.qml", {"pushScreen": screenTransitions(),
+                   "textLabel": qsTr("Quick Dial"), "currencyModel": modelHZ})
     }
 
     function openCartScreen() {
