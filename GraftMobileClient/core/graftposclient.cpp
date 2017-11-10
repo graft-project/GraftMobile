@@ -15,8 +15,8 @@
 static const QString scProductModelDataFile("productList.dat");
 static const QString scSettingDataFile("Settings.dat");
 
-GraftPOSClient::GraftPOSClient(QObject *parent)
-    : GraftBaseClient(parent)
+GraftPOSClient::GraftPOSClient(QQmlEngine *engine, QObject *parent)
+    : GraftBaseClient(engine, parent)
 {
     mQRCodeEncoder = new QRCodeGenerator();
     mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.value(qrand() % cSeedSupernodes.count()))),
