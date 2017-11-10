@@ -12,23 +12,32 @@ BaseBalanceScreen {
 
     ColumnLayout {
         spacing: 0
-        anchors {
-            fill: parent
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: 15
+        anchors.fill: parent
+
+        CoinListView {
         }
 
-        Item {
-            Layout.fillHeight: true
+        AddNewButton {
+            buttonTitle: qsTr("Add new account")
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            Layout.bottomMargin: 15
+            topLine: true
+            bottomLine: true
+            onClicked: pushScreen.openAddAccountScreen()
         }
 
         WideActionButton {
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Transfer to Paypal")
         }
 
         WideActionButton {
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Chase XXX929")
         }
