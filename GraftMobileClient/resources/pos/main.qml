@@ -61,13 +61,6 @@ GraftApplicationWindow {
         }
     }
 
-    ListModel {
-        id: modelHZ
-        ListElement { name: "First"; value: 123 }
-        ListElement { name: "Second"; value: 456 }
-        ListElement { name: "Third"; value: 789 }
-    }
-
     ProductScreen {
         id: mainScreen
         pushScreen: screenTransitions()
@@ -104,7 +97,7 @@ GraftApplicationWindow {
 
     function openQuickDealScreen() {
         stack.push("qrc:/pos/QuickDialScreen.qml", {"pushScreen": screenTransitions(),
-                   "textLabel": qsTr("Quick Dial"), "currencyModel": modelHZ})
+                   "textLabel": qsTr("Quick Dial")})
     }
 
     function openCartScreen() {
