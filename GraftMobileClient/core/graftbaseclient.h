@@ -13,27 +13,27 @@ class GraftBaseClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit GraftBaseClient(QQmlEngine *engine, QObject *parent = nullptr);
+    explicit GraftBaseClient(QObject *parent = nullptr);
 
     void setQRCodeImage(const QImage &image);
+    void registeringTypes(QQmlEngine *engine);
+
     Q_INVOKABLE QString qrCodeImage() const;
-
-    QuickExchangeModel *quickExchangeModel() const;
-
-    void registerImageProvider(QQmlEngine *engine);
 
 signals:
     void errorReceived();
 
-private:
-    void initAccountModel (QQmlEngine *engine);
-    void initCurrencyModel(QQmlEngine *engine);
-
 protected:
     BarcodeImageProvider *mImageProvider;
-    QuickExchangeModel *mQuickExchangeModel;
     AccountModel *mAccountModel;
     CurrencyModel *mCurrencyModel;
+    QuickExchangeModel *mQuickExchangeModel;
+
+private:
+    void initAccountModel(QQmlEngine *engine);
+    void initCurrencyModel(QQmlEngine *engine);
+    void initQuickExchangeModel(QQmlEngine *engine);
+    void registerImageProvider(QQmlEngine *engine);
 };
 
 #endif // GRAFTBASECLIENT_H

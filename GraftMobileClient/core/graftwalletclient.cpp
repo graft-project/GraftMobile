@@ -4,8 +4,8 @@
 #include "productmodel.h"
 #include "config.h"
 
-GraftWalletClient::GraftWalletClient(QQmlEngine *engine, QObject *parent)
-    : GraftBaseClient(engine, parent)
+GraftWalletClient::GraftWalletClient(QObject *parent)
+    : GraftBaseClient(parent)
 {
     mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.value(
                                                 qrand() % cSeedSupernodes.count()))), this);

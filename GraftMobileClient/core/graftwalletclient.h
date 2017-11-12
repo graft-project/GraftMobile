@@ -10,7 +10,7 @@ class GraftWalletClient : public GraftBaseClient
 {
     Q_OBJECT
 public:
-    explicit GraftWalletClient(QQmlEngine *engine, QObject *parent = nullptr);
+    explicit GraftWalletClient(QObject *parent = nullptr);
 
     Q_INVOKABLE double totalCost() const;
     Q_INVOKABLE ProductModel *paymentProductModel() const;

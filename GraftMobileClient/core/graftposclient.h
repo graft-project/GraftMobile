@@ -14,7 +14,7 @@ class GraftPOSClient : public GraftBaseClient
 {
     Q_OBJECT
 public:
-    explicit GraftPOSClient(QQmlEngine *engine, QObject *parent = nullptr);
+    explicit GraftPOSClient(QObject *parent = nullptr);
     ~GraftPOSClient();
 
     ProductModel *productModel() const;

@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
-    GraftPOSClient client(&engine);
-    client.registerImageProvider(&engine);
+    GraftPOSClient client;
+    client.registeringTypes(&engine);
 
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
@@ -66,20 +66,17 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
-                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
     QZXing::registerQMLTypes();
-    GraftWalletClient client(&engine);
+    GraftWalletClient client;
+    client.registeringTypes(&engine);
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
 
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
-                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
