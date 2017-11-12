@@ -11,6 +11,8 @@ BaseBalanceScreen {
         anchors.fill: parent
 
         CoinListView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
 
         AddNewButton {

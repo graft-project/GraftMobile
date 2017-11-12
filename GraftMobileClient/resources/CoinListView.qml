@@ -3,8 +3,6 @@ import QtQuick.Layouts 1.3
 
 ListView {
     id: accountListView
-    Layout.fillWidth: true
-    Layout.fillHeight: true
     model: AccountModel
     clip: true
     spacing: 0
