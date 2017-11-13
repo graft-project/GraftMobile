@@ -21,6 +21,7 @@
         <file alias="CoinAccountDelegate.qml">CoinAccountDelegate.qml</file>
         <file alias="QuickExchangeView.qml">QuickExchangeView.qml</file>
         <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
+        <file alias="CoinListView.qml">CoinListView.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

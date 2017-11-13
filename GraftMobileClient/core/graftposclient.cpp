@@ -44,6 +44,12 @@ SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
     return mSelectedProductModel;
 }
 
+void GraftPOSClient::registerTypes(QQmlEngine *engine)
+{
+    GraftBaseClient::registerTypes(engine);
+    registerImageProvider(engine);
+}
+
 void GraftPOSClient::save()
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);

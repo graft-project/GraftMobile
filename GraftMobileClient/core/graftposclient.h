@@ -19,6 +19,8 @@ public:
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;
 
+    void registerTypes(QQmlEngine *engine) override;
+
 signals:
     void saleReceived(bool result);
     void rejectSaleReceived(bool result);

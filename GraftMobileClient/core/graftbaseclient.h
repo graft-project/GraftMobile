@@ -6,6 +6,8 @@
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
+class AccountModel;
+class CurrencyModel;
 class QQmlEngine;
 class QSettings;
 
@@ -15,12 +17,14 @@ class GraftBaseClient : public QObject
 public:
     explicit GraftBaseClient(QObject *parent = nullptr);
 
-    void setQRCodeImage(const QImage &image);
-    Q_INVOKABLE QString qrCodeImage() const;
-
-    void registerImageProvider(QQmlEngine *engine);
-
+    AccountModel *accountModel() const;
+    CurrencyModel *currencyModel() const;
     QuickExchangeModel *quickExchangeModel() const;
+
+    void setQRCodeImage(const QImage &image);
+    virtual void registerTypes(QQmlEngine *engine);
+
+    Q_INVOKABLE QString qrCodeImage() const;
 
     void initSettings();
     Q_INVOKABLE void saveSettings() const;
@@ -32,8 +36,17 @@ signals:
 
 protected:
     BarcodeImageProvider *mImageProvider;
+    AccountModel *mAccountModel;
+    CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;
     QSettings *mClientSettings;
+
+    void registerImageProvider(QQmlEngine *engine);
+
+private:
+    void initAccountModel(QQmlEngine *engine);
+    void initCurrencyModel(QQmlEngine *engine);
+    void initQuickExchangeModel(QQmlEngine *engine);
 };
 
 #endif // GRAFTBASECLIENT_H
