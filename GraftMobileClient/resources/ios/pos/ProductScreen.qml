@@ -15,15 +15,6 @@ BaseScreen {
     }
 
     Connections {
-        target: GraftClient
-        onSaleReceived: {
-            if (result === true) {
-                pushScreen.initializingCheckout()
-            }
-        }
-    }
-
-    Connections {
         target: ProductModel
         onSelectedProductCountChanged: {
             mainScreen.screenHeader.selectedProductCount = count
