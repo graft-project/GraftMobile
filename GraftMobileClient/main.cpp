@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
     GraftPOSClient client;
-    client.registeringTypes(&engine);
+    client.registerTypes(&engine);
 
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 #ifdef WALLET_BUILD
     QZXing::registerQMLTypes();
     GraftWalletClient client;
-    client.registeringTypes(&engine);
+    client.registerTypes(&engine);
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
