@@ -24,6 +24,8 @@ public:
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void saveSettings() const;
 
+    void registerTypes(QQmlEngine *engine) override;
+
 signals:
     void saleReceived(bool result);
     void rejectSaleReceived(bool result);
