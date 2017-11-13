@@ -20,12 +20,14 @@ BaseScreen {
             if (result === true) {
                 pushScreen.openPaymentScreen()
             } else {
+                ProductModel.removeSelectedProducts()
                 pushScreen.clearChecked()
             }
         }
     }
 
     function rejectSale() {
+        ProductModel.removeSelectedProducts()
         GraftClient.rejectSale()
         pushScreen.clearChecked()
     }

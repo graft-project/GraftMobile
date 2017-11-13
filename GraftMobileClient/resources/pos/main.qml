@@ -97,7 +97,7 @@ GraftApplicationWindow {
 
     function openQuickDealScreen() {
         stack.push("qrc:/pos/QuickDialScreen.qml", {"pushScreen": screenTransitions(),
-                   "textLabel": qsTr("Quick Dial")})
+                   "textLabel": qsTr("Quick Dial"), "currencyModel": CurrencyModel})
     }
 
     function openCartScreen() {

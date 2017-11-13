@@ -185,3 +185,31 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[DescriptionRole] = "description";
     return roles;
 }
+
+bool ProductModel::quickDealMode() const
+{
+    return mQuickDealMode;
+}
+
+void ProductModel::setQuickDealMode(bool quickDealMode)
+{
+    mQuickDealMode = quickDealMode;
+}
+
+int ProductModel::totalProductsCount() const
+{
+    return rowCount();
+}
+
+void ProductModel::removeSelectedProducts()
+{
+    for (int i = 0; i < mProducts.count(); ++i)
+    {
+        if (mProducts.at(i)->isSelected())
+        {
+            beginRemoveRows(QModelIndex(), i, i);
+            delete mProducts.takeAt(i);
+            endRemoveRows();
+        }
+    }
+}

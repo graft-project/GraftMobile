@@ -13,7 +13,7 @@ BaseScreen {
         navigationButtonState: Qt.platform.os !== "android"
         actionButtonState: true
     }
-    action: pushScreen.initializingCheckout
+    action: checkout
 
     ColumnLayout {
         anchors {
@@ -59,7 +59,17 @@ BaseScreen {
             id: confirmButton
             Layout.alignment: Qt.AlignBottom
             text: Qt.platform.os === "android" ? qsTr("CONFIRM") : qsTr("Checkout")
-            onClicked: pushScreen.initializingCheckout()
+            onClicked: checkout()
         }
+    }
+
+    function checkout() {
+        ProductModel.setQuickDealMode(true)
+        ProductModel.clearSelections()
+        ProductModel.add("", title.text, price.text,
+                         currencyModel.codeOf(currencyCBox.currencyText), "")
+        ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
+        GraftClient.sale()
+        pushScreen.initializingCheckout()
     }
 }
