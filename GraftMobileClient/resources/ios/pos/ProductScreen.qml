@@ -96,7 +96,13 @@ BaseScreen {
                 Layout.topMargin: 10
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                onClicked: GraftClient.sale()
+                onClicked: {
+                    if (ProductModel.totalCost() > 0) {
+                        ProductModel.setQuickDealMode(false)
+                        GraftClient.sale()
+                        pushScreen.initializingCheckout()
+                    }
+                }
             }
 
             WideActionButton {
