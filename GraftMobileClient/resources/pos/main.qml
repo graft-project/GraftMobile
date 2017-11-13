@@ -77,6 +77,7 @@ GraftApplicationWindow {
         transitionsMap["openProductScreen"] = openMainScreen
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
+        transitionsMap["openAddAccountScreen"] = openAddAccountScreen
         transitionsMap["goBack"] = turnBack
         transitionsMap["clearChecked"] = clearChecked
         return transitionsMap
@@ -107,7 +108,8 @@ GraftApplicationWindow {
 
     function openPaymentScreen() {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
-                       "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!"), "isSpacing": false})
+                       "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!"),
+                       "isSpacing": false})
     }
 
     function openInfoWalletScreen() {
@@ -121,6 +123,11 @@ GraftApplicationWindow {
 
     function openSettingsScreen() {
         stack.push("qrc:/pos/SettingsScreen.qml", {"pushScreen": screenTransitions()})
+    }
+
+    function openAddAccountScreen() {
+        stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": screenTransitions(),
+                   "coinModel": CoinModel})
     }
 
     function turnBack() {

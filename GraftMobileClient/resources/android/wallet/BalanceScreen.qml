@@ -10,20 +10,9 @@ BaseBalanceScreen {
         spacing: 0
         anchors.fill: parent
 
-        ListView {
-            id: accountListView
+        CoinListView {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            model: AccountModel
-            clip: true
-            spacing: 0
-            delegate: CoinAccountDelegate {
-                bottomLineVisible: index === (accountListView.count - 1)
-                width: accountListView.width
-                productImage: imagePath
-                accountTitle: accountName
-                accountBalance: balance
-            }
         }
 
         AddNewButton {

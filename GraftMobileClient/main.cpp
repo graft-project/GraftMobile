@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
     GraftPOSClient client;
-    client.registerImageProvider(&engine);
+    client.registerTypes(&engine);
 
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
@@ -66,34 +66,15 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
                                              client.selectedProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("ProductModel"), client.productModel());
-    engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
-                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
     QZXing::registerQMLTypes();
     GraftWalletClient client;
-
-    CurrencyModel coinModel;
-    coinModel.add(QStringLiteral("BITCONNECT COIN"), QStringLiteral("qrc:/imgs/coins/bcc.png"));
-    coinModel.add(QStringLiteral("BITCOIN"), QStringLiteral("qrc:/imgs/coins/bitcoin.png"));
-    coinModel.add(QStringLiteral("DASH"), QStringLiteral("qrc:/imgs/coins/dash.png"));
-    coinModel.add(QStringLiteral("ETHER"), QStringLiteral("qrc:/imgs/coins/ether.png"));
-    coinModel.add(QStringLiteral("LITECOIN"), QStringLiteral("qrc:/imgs/coins/litecoin.png"));
-    coinModel.add(QStringLiteral("MONERO"), QStringLiteral("qrc:/imgs/coins/monero.png"));
-    coinModel.add(QStringLiteral("NEW ECONOMY MOVEMENT"), QStringLiteral("qrc:/imgs/coins/nem.png"));
-    coinModel.add(QStringLiteral("NEO"), QStringLiteral("qrc:/imgs/coins/neo.png"));
-    coinModel.add(QStringLiteral("RIPPLE"), QStringLiteral("qrc:/imgs/coins/ripple.png"));
-    engine.rootContext()->setContextProperty(QStringLiteral("CoinModel"), &coinModel);
-
-    AccountModel accountModel;
-    engine.rootContext()->setContextProperty(QStringLiteral("AccountModel"), &accountModel);
+    client.registerTypes(&engine);
 
     CardModel cardModel;
-    engine.rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
-                                             client.quickExchangeModel());
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
 
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
