@@ -1,7 +1,7 @@
 #include "productmodel.h"
 #include "productitem.h"
 
-ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
+ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent), mQuickDealMode(false)
 {}
 
 ProductModel::~ProductModel()
@@ -143,16 +143,23 @@ void ProductModel::removeProduct(int index)
 
 void ProductModel::clearSelections()
 {
-    for (int i = 0; i < mProducts.count(); ++i)
+    if (quickDealMode())
     {
-        ProductItem *item = mProducts.value(i);
-        if (item->isSelected())
+        removeSelectedProducts();
+    }
+    else
+    {
+        for (int i = 0; i < mProducts.count(); ++i)
         {
-            item->setSelected(false);
-            QVector<int> changeRole;
-            changeRole.append(SelectedRole);
-            QModelIndex modelIndex = this->index(i);
-            emit dataChanged(modelIndex, modelIndex, changeRole);
+            ProductItem *item = mProducts.value(i);
+            if (item->isSelected())
+            {
+                item->setSelected(false);
+                QVector<int> changeRole;
+                changeRole.append(SelectedRole);
+                QModelIndex modelIndex = this->index(i);
+                emit dataChanged(modelIndex, modelIndex, changeRole);
+            }
         }
     }
     emit selectedProductCountChanged(0);
@@ -193,6 +200,7 @@ bool ProductModel::quickDealMode() const
 
 void ProductModel::setQuickDealMode(bool quickDealMode)
 {
+    clearSelections();
     mQuickDealMode = quickDealMode;
 }
 
@@ -214,6 +222,6 @@ void ProductModel::removeSelectedProducts()
                 endRemoveRows();
             }
         }
+        setQuickDealMode(false);
     }
-    setQuickDealMode(false);
 }

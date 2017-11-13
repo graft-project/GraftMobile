@@ -65,7 +65,6 @@ BaseScreen {
 
     function checkout() {
         ProductModel.setQuickDealMode(true)
-        ProductModel.clearSelections()
         ProductModel.add("", title.text, price.text,
                          currencyModel.codeOf(currencyCBox.currencyText), "")
         ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
