@@ -20,18 +20,14 @@ BaseScreen {
             if (result === true) {
                 pushScreen.openPaymentScreen()
             } else {
-                if (ProductModel.quickDealMode()) {
-                    ProductModel.removeSelectedProducts()
-                }
+                ProductModel.removeSelectedProducts()
                 pushScreen.clearChecked()
             }
         }
     }
 
     function rejectSale() {
-        if (ProductModel.quickDealMode()) {
-            ProductModel.removeSelectedProducts()
-        }
+        ProductModel.removeSelectedProducts()
         GraftClient.rejectSale()
         pushScreen.clearChecked()
     }

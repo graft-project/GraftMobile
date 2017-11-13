@@ -203,13 +203,17 @@ int ProductModel::totalProductsCount() const
 
 void ProductModel::removeSelectedProducts()
 {
-    for (int i = 0; i < mProducts.count(); ++i)
+    if (quickDealMode())
     {
-        if (mProducts.at(i)->isSelected())
+        for (int i = 0; i < mProducts.count(); ++i)
         {
-            beginRemoveRows(QModelIndex(), i, i);
-            delete mProducts.takeAt(i);
-            endRemoveRows();
+            if (mProducts.at(i)->isSelected())
+            {
+                beginRemoveRows(QModelIndex(), i, i);
+                delete mProducts.takeAt(i);
+                endRemoveRows();
+            }
         }
     }
+    setQuickDealMode(false);
 }

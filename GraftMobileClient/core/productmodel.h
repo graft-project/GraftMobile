@@ -34,7 +34,7 @@ public:
     Q_INVOKABLE void removeProduct(int index);
     Q_INVOKABLE void clearSelections();
     void clear();
-    Q_INVOKABLE bool quickDealMode() const;
+    bool quickDealMode() const;
     Q_INVOKABLE void setQuickDealMode(bool quickDealMode);
     Q_INVOKABLE int totalProductsCount() const;
     Q_INVOKABLE void removeSelectedProducts();
