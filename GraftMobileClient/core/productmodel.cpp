@@ -1,7 +1,9 @@
 #include "productmodel.h"
 #include "productitem.h"
 
-ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent), mQuickDealMode(false)
+ProductModel::ProductModel(QObject *parent)
+    : QAbstractListModel(parent)
+    ,mQuickDealMode(false)
 {}
 
 ProductModel::~ProductModel()
@@ -222,6 +224,6 @@ void ProductModel::removeSelectedProducts()
                 endRemoveRows();
             }
         }
-        setQuickDealMode(false);
+        mQuickDealMode = false;
     }
 }

@@ -58,7 +58,7 @@ BaseScreen {
         WideActionButton {
             id: confirmButton
             Layout.alignment: Qt.AlignBottom
-            text: Qt.platform.os === "android" ? qsTr("CONFIRM") : qsTr("Checkout")
+            text: Qt.platform.os === "android" ? qsTr("CHECKOUT") : qsTr("Checkout")
             onClicked: checkout()
         }
     }
