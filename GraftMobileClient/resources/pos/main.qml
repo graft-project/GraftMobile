@@ -71,6 +71,7 @@ GraftApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openEditingItemScreen"] = openEditingItemScreen
+        transitionsMap["openQuickDealScreen"] = openQuickDealScreen
         transitionsMap["initializingCheckout"] = openCartScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openProductScreen"] = openMainScreen
@@ -93,6 +94,11 @@ GraftApplicationWindow {
     function openEditingItemScreen(index) {
         stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": screenTransitions(),
                        "currencyModel": CurrencyModel, "index": index})
+    }
+
+    function openQuickDealScreen() {
+        stack.push("qrc:/pos/QuickDialScreen.qml", {"pushScreen": screenTransitions(),
+                   "textLabel": qsTr("Quick Dial"), "currencyModel": CurrencyModel})
     }
 
     function openCartScreen() {
