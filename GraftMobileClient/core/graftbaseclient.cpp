@@ -9,14 +9,13 @@
 #include <QQmlEngine>
 #include <QSettings>
 #include <QFileInfo>
-#include <QString>
 #include <QDir>
 
 
 static const QString cBarcodeImageProviderID("barcodes");
 static const QString cQRCodeImageID("qrcode");
 static const QString cProviderScheme("image://%1/%2");
-static const QString scSettingDataFile("Settings.ini");
+static const QString scSettingsDataFile("Settings.ini");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
@@ -133,5 +132,5 @@ void GraftBaseClient::initSettings()
         QDir().mkpath(dataPath);
     }
     QDir lDir(dataPath);
-    mClientSettings = new QSettings(lDir.filePath(scSettingDataFile), QSettings::IniFormat, this);
+    mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
 }

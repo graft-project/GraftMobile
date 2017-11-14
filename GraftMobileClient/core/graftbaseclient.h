@@ -26,7 +26,6 @@ public:
 
     Q_INVOKABLE QString qrCodeImage() const;
 
-    void initSettings();
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value);
@@ -44,6 +43,7 @@ protected:
     void registerImageProvider(QQmlEngine *engine);
 
 private:
+    void initSettings();
     void initAccountModel(QQmlEngine *engine);
     void initCurrencyModel(QQmlEngine *engine);
     void initQuickExchangeModel(QQmlEngine *engine);
