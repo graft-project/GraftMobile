@@ -13,7 +13,6 @@
 #include <QDir>
 
 static const QString scProductModelDataFile("productList.dat");
-static const QString scSettingDataFile("Settings.dat");
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
@@ -28,7 +27,6 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
     initProductModels();
-    initSettings();
 }
 
 GraftPOSClient::~GraftPOSClient()
@@ -44,21 +42,6 @@ ProductModel *GraftPOSClient::productModel() const
 SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
 {
     return mSelectedProductModel;
-}
-
-void GraftPOSClient::setSettings(const QString &key, const QVariant &value)
-{
-    mSettings->setValue(key,value);
-}
-
-QVariant GraftPOSClient::settings(const QString &key) const
-{
-    return mSettings->value(key);
-}
-
-void GraftPOSClient::saveSettings() const
-{
-    mSettings->sync();
 }
 
 void GraftPOSClient::registerTypes(QQmlEngine *engine)
@@ -165,11 +148,4 @@ void GraftPOSClient::initProductModels()
     }
     mSelectedProductModel = new SelectedProductProxyModel(this);
     mSelectedProductModel->setSourceModel(mProductModel);
-}
-
-void GraftPOSClient::initSettings()
-{
-    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                              scSettingDataFile);
-    mSettings = new QSettings(dataPath, QSettings::IniFormat, this);
 }
