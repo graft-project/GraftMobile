@@ -29,6 +29,8 @@ public:
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value);
+    Q_INVOKABLE bool useOwnServiceAddress() const;
+    virtual bool resetUrl(const QString &ip, const QString &port);
 
 signals:
     void errorReceived();
@@ -41,6 +43,7 @@ protected:
     QSettings *mClientSettings;
 
     void registerImageProvider(QQmlEngine *engine);
+    QUrl getServiceUrl() const;
 
 private:
     void initSettings();

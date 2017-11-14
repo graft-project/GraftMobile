@@ -21,6 +21,11 @@ GraftGenericAPI::~GraftGenericAPI()
     }
 }
 
+void GraftGenericAPI::setUrl(const QUrl &url)
+{
+    mRequest.setUrl(url);
+}
+
 QJsonObject GraftGenericAPI::processReply()
 {
     QJsonObject object;

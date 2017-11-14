@@ -21,6 +21,7 @@ public:
 
     explicit GraftGenericAPI(const QUrl &url, QObject *parent = nullptr);
     virtual ~GraftGenericAPI();
+    void setUrl(const QUrl &url);
 
 signals:
     void error();
