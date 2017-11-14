@@ -1,25 +1,24 @@
 #include "accountmodelserializator.h"
 #include "accountmodel.h"
 #include "accountitem.h"
-#include "currencymodel.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonValue>
 
-QByteArray AccountModelSerializator::serialize(AccountModel *model, CurrencyModel *mCurrencyModel)
+QByteArray AccountModelSerializator::serialize(AccountModel *model)
 {
-    QVector<AccountModel*> userData = model->accounts();
+    QVector<AccountItem*> accountData = model->accounts();
     QJsonArray array;
 
-    for (AccountItem* data : userData)
+    for (AccountItem* data : accountData)
     {
         QJsonObject object;
-        object.insert(QStringLiteral("imagePath"), data->imagePath();
-        object.insert(QStringLiteral("name"), data->name();
-        object.insert(QStringLiteral("currency"), mCurrencyModel->add(QStringLiteral("RIPPLE"), QStringLiteral("qrc:/imgs/coins/ripple.png"));
-        object.insert(QStringLiteral("number"), data->number();
+        object.insert(QStringLiteral("imagePath"), data->imagePath());
+        object.insert(QStringLiteral("name"), data->name());
+        object.insert(QStringLiteral("currency"), data->currency());
+        object.insert(QStringLiteral("number"), data->number());
         array.append(object);
     }
 

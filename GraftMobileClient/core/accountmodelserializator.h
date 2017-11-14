@@ -4,12 +4,11 @@
 #include <QByteArray>
 
 class AccountModel;
-class CurrencyModel;
 
 class AccountModelSerializator
 {
 public:
-    static QByteArray serialize(AccountModel *model, CurrencyModel *mCurrencyModel);
+    static QByteArray serialize(AccountModel *model);
     static void deserialize(const QByteArray &array, AccountModel *model);
 };
 
