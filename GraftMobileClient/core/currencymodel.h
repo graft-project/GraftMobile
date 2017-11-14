@@ -11,7 +11,8 @@ class CurrencyModel : public QAbstractListModel
 public:
     enum CurrencyRoles {
         TitleRole = Qt::UserRole + 1,
-        CodeRole
+        CodeRole,
+        ImageRole
     };
     Q_ENUM(CurrencyRoles)
 
@@ -24,9 +25,10 @@ public:
 
     Q_INVOKABLE int indexOf(const QString &code) const;
     Q_INVOKABLE QString codeOf(const QString &name) const;
+    Q_INVOKABLE QString coinImageOf(const QString &name) const;
 
 public slots:
-    void add(const QString &name, const QString &code);
+    void add(const QString &name, const QString &code, const QString &image);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
