@@ -27,6 +27,9 @@ public:
 signals:
     void errorReceived();
 
+public slots:
+    void saveAccount();
+
 protected:
     BarcodeImageProvider *mImageProvider;
     AccountModel *mAccountModel;
@@ -34,6 +37,7 @@ protected:
     QuickExchangeModel *mQuickExchangeModel;
 
     void registerImageProvider(QQmlEngine *engine);
+    void saveModels(QString fileName, QByteArray data);
 
 private:
     void initAccountModel(QQmlEngine *engine);

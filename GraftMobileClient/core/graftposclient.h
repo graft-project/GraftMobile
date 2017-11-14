@@ -32,7 +32,7 @@ signals:
     void saleStatusReceived(bool result);
 
 public slots:
-    void save();
+    void saveProduct();
     void sale();
     void rejectSale();
     void getSaleStatus();

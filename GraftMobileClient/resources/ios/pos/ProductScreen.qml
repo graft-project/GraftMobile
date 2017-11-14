@@ -72,7 +72,7 @@ BaseScreen {
                             standardButtons: StandardButton.Yes | StandardButton.No
                             onYes: {
                                 ProductModel.removeProduct(index)
-                                GraftClient.save()
+                                GraftClient.saveProduct()
                             }
                         }
 

@@ -14,8 +14,8 @@ BaseScreen {
 
     function addAccount() {
         if (accountName.text !== "" && walletNumberText.text !== "") {
-            if (AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text,
-                                 coinsComboBox.currentText, walletNumberText.text)) {
+            if (AccountModel.add(CoinModel.coinImageOf(coinsComboBox.currentText), accountName.text,
+                                 CoinModel.codeOf(coinsComboBox.currentText), walletNumberText.text)) {
                 pushScreen.goBack()
             } else {
                 attentionDialog.text = qsTr("The wallet number already exists! Please, "+
@@ -91,7 +91,10 @@ BaseScreen {
         WideActionButton {
             text: qsTr("Add")
             Layout.alignment: Qt.AlignBottom
-            onClicked: addAccount()
+            onClicked: {
+                addAccount()
+                GraftClient.saveAccount()
+            }
         }
     }
 }

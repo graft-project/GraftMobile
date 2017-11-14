@@ -10,7 +10,6 @@
 #include <QStandardPaths>
 #include <QSettings>
 #include <QFileInfo>
-#include <QDir>
 
 static const QString scProductModelDataFile("productList.dat");
 static const QString scSettingDataFile("Settings.dat");
@@ -48,7 +47,7 @@ SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
 
 void GraftPOSClient::setSettings(const QString &key, const QVariant &value)
 {
-    mSettings->setValue(key,value);
+    mSettings->setValue(key, value);
 }
 
 QVariant GraftPOSClient::settings(const QString &key) const
@@ -67,20 +66,9 @@ void GraftPOSClient::registerTypes(QQmlEngine *engine)
     registerImageProvider(engine);
 }
 
-void GraftPOSClient::save()
+void GraftPOSClient::saveProduct()
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!QFileInfo(dataPath).exists())
-    {
-        QDir().mkpath(dataPath);
-    }
-    QDir lDir(dataPath);
-    QFile lFile(lDir.filePath(scProductModelDataFile));
-    if (lFile.open(QFile::WriteOnly))
-    {
-        lFile.write(ProductModelSerializator::serialize(mProductModel));
-        lFile.close();
-    }
+    saveModels(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
 }
 
 void GraftPOSClient::sale()
