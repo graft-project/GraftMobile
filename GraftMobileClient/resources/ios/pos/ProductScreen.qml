@@ -15,15 +15,6 @@ BaseScreen {
     }
 
     Connections {
-        target: GraftClient
-        onSaleReceived: {
-            if (result === true) {
-                pushScreen.initializingCheckout()
-            }
-        }
-    }
-
-    Connections {
         target: ProductModel
         onSelectedProductCountChanged: {
             mainScreen.screenHeader.selectedProductCount = count
@@ -92,25 +83,28 @@ BaseScreen {
             WideActionButton {
                 id: addButton
                 text: qsTr("Checkout")
+                Layout.alignment: Qt.AlignBottom
+                Layout.topMargin: 10
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
+                onClicked: {
+                    if (ProductModel.totalCost() > 0) {
+                        GraftClient.sale()
+                        pushScreen.initializingCheckout()
+                    }
+                }
+            }
+
+            WideActionButton {
+                id: quickDealButton
+                text: qsTr("Quick Deal")
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
+                Layout.alignment: Qt.AlignBottom
                 Layout.topMargin: 10
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
-                onClicked: GraftClient.sale()
-            }
-
-            RoundButton {
-                padding: 25
-                highlighted: true
-                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                Layout.preferredHeight: addButton.height * 1.4
-                Layout.preferredWidth: height
-                Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 10
-                Layout.bottomMargin: 10
-                contentItem: Image {
-                    source:  "qrc:/imgs/plus_icon.png"
-                }
+                onClicked: pushScreen.openQuickDealScreen()
             }
         }
     }

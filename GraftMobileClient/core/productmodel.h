@@ -34,6 +34,10 @@ public:
     Q_INVOKABLE void removeProduct(int index);
     Q_INVOKABLE void clearSelections();
     void clear();
+    bool quickDealMode() const;
+    Q_INVOKABLE void setQuickDealMode(bool quickDealMode);
+    Q_INVOKABLE int totalProductsCount() const;
+    Q_INVOKABLE void removeSelectedProducts();
 
 signals:
     void selectedProductCountChanged(unsigned int count);
@@ -47,5 +51,6 @@ protected:
 
 private:
     QVector<ProductItem*> mProducts;
+    bool mQuickDealMode;
 };
 #endif // PRODUCTMODEL_H

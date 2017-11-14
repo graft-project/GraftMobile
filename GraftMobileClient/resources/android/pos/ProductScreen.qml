@@ -88,10 +88,10 @@ BaseScreen {
             WideActionButton {
                 id: addButton
                 text: qsTr("Checkout")
+                Layout.alignment: Qt.AlignBottom
                 Layout.topMargin: 10
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                Layout.bottomMargin: 15
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
                         GraftClient.sale()
@@ -100,18 +100,16 @@ BaseScreen {
                 }
             }
 
-            RoundButton {
-                padding: 25
-                highlighted: true
+            WideActionButton {
+                id: quickDealButton
+                text: qsTr("QUICK DEAL")
                 Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                Layout.preferredHeight: addButton.height * 1.4
-                Layout.preferredWidth: height
-                Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 10
-                Layout.bottomMargin: 10
-                contentItem: Image {
-                    source:  "qrc:/imgs/plus_icon.png"
-                }
+                Layout.alignment: Qt.AlignBottom
+                Layout.topMargin: 10
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
+                Layout.bottomMargin: 15
+                onClicked: pushScreen.openQuickDealScreen()
             }
         }
     }

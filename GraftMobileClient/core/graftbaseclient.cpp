@@ -9,19 +9,25 @@
 #include <QFileInfo>
 #include <QQmlContext>
 #include <QStandardPaths>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QSettings>
 
 static const QString cBarcodeImageProviderID("barcodes");
 static const QString cQRCodeImageID("qrcode");
 static const QString cProviderScheme("image://%1/%2");
 static const QString scAccountModelDataFile("accountList.dat");
+static const QString scSettingsDataFile("Settings.ini");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
+    ,mClientSettings(nullptr)
     ,mAccountModel(nullptr)
     ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
 {
+        initSettings();
 }
 
 AccountModel *GraftBaseClient::accountModel() const
@@ -144,4 +150,30 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
     }
+}
+
+void GraftBaseClient::setSettings(const QString &key, const QVariant &value)
+{
+    mClientSettings->setValue(key, value);
+}
+
+QVariant GraftBaseClient::settings(const QString &key) const
+{
+    return mClientSettings->value(key);
+}
+
+void GraftBaseClient::saveSettings() const
+{
+    mClientSettings->sync();
+}
+
+void GraftBaseClient::initSettings()
+{
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!QFileInfo(dataPath).exists())
+    {
+        QDir().mkpath(dataPath);
+    }
+    QDir lDir(dataPath);
+    mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
 }

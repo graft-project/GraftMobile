@@ -2,12 +2,14 @@
 #define GRAFTBASECLIENT_H
 
 #include <QObject>
+#include <QVariant>
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
 class AccountModel;
 class CurrencyModel;
 class QQmlEngine;
+class QSettings;
 
 class GraftBaseClient : public QObject
 {
@@ -24,6 +26,10 @@ public:
 
     Q_INVOKABLE QString qrCodeImage() const;
 
+    Q_INVOKABLE void saveSettings() const;
+    Q_INVOKABLE QVariant settings(const QString &key) const;
+    Q_INVOKABLE void setSettings(const QString &key, const QVariant &value);
+
 signals:
     void errorReceived();
 
@@ -35,11 +41,13 @@ protected:
     AccountModel *mAccountModel;
     CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;
+    QSettings *mClientSettings;
 
     void registerImageProvider(QQmlEngine *engine);
     void saveModels(QString fileName, QByteArray data);
 
 private:
+    void initSettings();
     void initAccountModel(QQmlEngine *engine);
     void initCurrencyModel(QQmlEngine *engine);
     void initQuickExchangeModel(QQmlEngine *engine);
