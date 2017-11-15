@@ -1,11 +1,13 @@
+#include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "quickexchangemodel.h"
-#include "accountmodel.h"
-#include "currencymodel.h"
 #include "graftbaseclient.h"
-#include "accountmodelserializator.h"
+#include "currencymodel.h"
+#include "accountmodel.h"
+#include "config.h"
 
 #include <QStandardPaths>
+#include <QHostAddress>
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QSettings>
@@ -109,6 +111,22 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
     return QByteArray();
 }
 
+QUrl GraftBaseClient::getServiceUrl() const
+{
+    QString finalUrl;
+    if (useOwnServiceAddress())
+    {
+        QString ip(settings("ip").toString());
+        QString port(settings("port").toString());
+        finalUrl = QString("%1:%2").arg(ip).arg(port);
+    }
+    else
+    {
+        finalUrl = cSeedSupernodes.value(qrand() % cSeedSupernodes.count());
+    }
+    return QUrl(cUrl.arg(finalUrl));
+}
+
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
 {
     if(!mAccountModel)
@@ -159,6 +177,28 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
 void GraftBaseClient::setSettings(const QString &key, const QVariant &value)
 {
     mClientSettings->setValue(key, value);
+}
+
+bool GraftBaseClient::useOwnServiceAddress() const
+{
+    return mClientSettings->value(QStringLiteral("useOwnServiceAddress")).toBool();
+}
+
+bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
+{
+    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !ip.isEmpty());
+    if (lIsResetUrl)
+    {
+        setSettings(QStringLiteral("ip"), ip);
+        setSettings(QStringLiteral("port"), port);
+    }
+    return lIsResetUrl;
+}
+
+bool GraftBaseClient::isValidIp(const QString &ip) const
+{
+    QHostAddress validateIp;
+    return validateIp.setAddress(ip);
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

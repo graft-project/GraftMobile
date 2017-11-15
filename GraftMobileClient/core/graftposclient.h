@@ -20,6 +20,7 @@ public:
     SelectedProductProxyModel *selectedProductModel() const;
 
     void registerTypes(QQmlEngine *engine) override;
+    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
 signals:
     void saleReceived(bool result);

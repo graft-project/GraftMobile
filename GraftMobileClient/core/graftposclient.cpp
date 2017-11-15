@@ -17,8 +17,7 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
     mQRCodeEncoder = new QRCodeGenerator();
-    mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.value(qrand() % cSeedSupernodes.count()))),
-                           this);
+    mApi = new GraftPOSAPI(getServiceUrl(), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
             this, &GraftPOSClient::receiveRejectSale);
@@ -47,6 +46,14 @@ void GraftPOSClient::registerTypes(QQmlEngine *engine)
 {
     GraftBaseClient::registerTypes(engine);
     registerImageProvider(engine);
+}
+
+bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
+{
+    if (GraftBaseClient::resetUrl(ip, port))
+    {
+        mApi->setUrl(QUrl(cUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+    }
 }
 
 void GraftPOSClient::saveProducts() const

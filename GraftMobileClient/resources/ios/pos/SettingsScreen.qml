@@ -4,7 +4,9 @@ import QtQuick.Controls 2.2
 import "../"
 
 BaseSettingsScreen {
-    companyEditTitle: qsTr("Company:")
+    companyTitle: qsTr("Company:")
+    ipTitle: qsTr("IP:")
+    portTitle: qsTr("Port:")
     saveButtonText: qsTr("Done")
 
     screenHeader {

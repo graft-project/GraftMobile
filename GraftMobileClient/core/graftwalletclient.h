@@ -14,6 +14,7 @@ public:
 
     Q_INVOKABLE double totalCost() const;
     Q_INVOKABLE ProductModel *paymentProductModel() const;
+    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
 signals:
     void readyToPayReceived(bool result);
