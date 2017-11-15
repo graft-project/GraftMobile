@@ -49,9 +49,9 @@ void GraftPOSClient::registerTypes(QQmlEngine *engine)
     registerImageProvider(engine);
 }
 
-void GraftPOSClient::saveProduct()
+void GraftPOSClient::saveProducts() const
 {
-    saveModels(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
+    saveModel(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
 }
 
 void GraftPOSClient::sale()
@@ -124,16 +124,7 @@ void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
 void GraftPOSClient::initProductModels()
 {
     mProductModel = new ProductModel(this);
-    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                              scProductModelDataFile);
-    if (!dataPath.isEmpty())
-    {
-        QFile lFile(dataPath);
-        if (lFile.open(QFile::ReadOnly))
-        {
-            ProductModelSerializator::deserialize(lFile.readAll(), mProductModel);
-        }
-    }
+    ProductModelSerializator::deserialize(loadModel(scProductModelDataFile), mProductModel);
     mSelectedProductModel = new SelectedProductProxyModel(this);
     mSelectedProductModel->setSourceModel(mProductModel);
 }

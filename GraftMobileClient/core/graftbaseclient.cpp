@@ -5,13 +5,12 @@
 #include "graftbaseclient.h"
 #include "accountmodelserializator.h"
 
-#include <QDir>
-#include <QFileInfo>
-#include <QQmlContext>
 #include <QStandardPaths>
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QSettings>
+#include <QFileInfo>
+#include <QDir>
 
 static const QString cBarcodeImageProviderID("barcodes");
 static const QString cQRCodeImageID("qrcode");
@@ -65,9 +64,9 @@ QString GraftBaseClient::qrCodeImage() const
     return cProviderScheme.arg(cBarcodeImageProviderID).arg(cQRCodeImageID);
 }
 
-void GraftBaseClient::saveAccount()
+void GraftBaseClient::saveAccounts() const
 {
-    saveModels(scAccountModelDataFile, AccountModelSerializator::serialize(mAccountModel));
+    saveModel(scAccountModelDataFile, AccountModelSerializator::serialize(mAccountModel));
 }
 
 void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
@@ -79,7 +78,7 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
     }
 }
 
-void GraftBaseClient::saveModels(QString fileName, QByteArray data)
+void GraftBaseClient::saveModel(const QString &fileName, const QByteArray &data) const
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!QFileInfo(dataPath).exists())
@@ -95,23 +94,28 @@ void GraftBaseClient::saveModels(QString fileName, QByteArray data)
     }
 }
 
+QByteArray GraftBaseClient::loadModel(const QString &fileName) const
+{
+    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                              fileName);
+    if (!dataPath.isEmpty())
+    {
+        QFile lFile(dataPath);
+        if (lFile.open(QFile::ReadOnly))
+        {
+            return lFile.readAll();
+        }
+    }
+    return QByteArray();
+}
+
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
 {
     if(!mAccountModel)
     {
         mAccountModel = new AccountModel(this);
         engine->rootContext()->setContextProperty(QStringLiteral("AccountModel"), mAccountModel);
-
-        QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                                  scAccountModelDataFile);
-        if (!dataPath.isEmpty())
-        {
-            QFile lFile(dataPath);
-            if (lFile.open(QFile::ReadOnly))
-            {
-                AccountModelSerializator::deserialize(lFile.readAll(), mAccountModel);
-            }
-        }
+        AccountModelSerializator::deserialize(loadModel(scAccountModelDataFile), mAccountModel);
     }
 }
 
