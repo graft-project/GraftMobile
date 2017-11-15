@@ -2,6 +2,7 @@
 #include "api/graftwalletapi.h"
 #include "graftwalletclient.h"
 #include "productmodel.h"
+#include "config.h"
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
@@ -28,7 +29,7 @@ ProductModel *GraftWalletClient::paymentProductModel() const
     return mPaymentProductModel;
 }
 
-bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
+bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
 {
     if (GraftBaseClient::resetUrl(ip, port))
     {
