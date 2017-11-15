@@ -3,8 +3,8 @@
 #include "accountitem.h"
 
 #include <QJsonDocument>
-#include <QJsonArray>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QJsonValue>
 
 QByteArray AccountModelSerializator::serialize(AccountModel *model)
@@ -34,7 +34,7 @@ void AccountModelSerializator::deserialize(const QByteArray &array, AccountModel
         QJsonDocument jsonDoc = QJsonDocument::fromJson(array);
         QJsonArray jsonArray = jsonDoc.array();
 
-        for(int i = 0; i < jsonArray.count(); ++i)
+        for (int i = 0; i < jsonArray.count(); ++i)
         {
             QJsonObject jsonObject = jsonArray.at(i).toObject();
             model->add(jsonObject.value(QLatin1String("imagePath")).toString(),
