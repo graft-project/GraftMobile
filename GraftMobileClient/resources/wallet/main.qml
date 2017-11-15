@@ -66,7 +66,8 @@ GraftApplicationWindow {
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
-        transitionsMap["openBalanceScreen"] = openBalanceScreen
+        transitionsMap["openSettingsScreen"] = openSettingsScreen
+        transitionsMap["openMainScreen"] = openMainScreen
         return transitionsMap
     }
 
@@ -101,7 +102,7 @@ GraftApplicationWindow {
     }
 
     function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
                        "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!"), "isSpacing": true})
     }
 
@@ -110,7 +111,11 @@ GraftApplicationWindow {
                    "coinModel": CoinModel})
     }
 
-    function openBalanceScreen() {
+    function openSettingsScreen() {
+        stack.push("qrc:/wallet/SettingsScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+    }
+
+    function openMainScreen() {
         stack.pop(initialScreen)
     }
 }

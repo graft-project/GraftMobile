@@ -74,7 +74,7 @@ GraftApplicationWindow {
         transitionsMap["openQuickDealScreen"] = openQuickDealScreen
         transitionsMap["initializingCheckout"] = openCartScreen
         transitionsMap["openWalletScreen"] = openInfoWalletScreen
-        transitionsMap["openProductScreen"] = openMainScreen
+        transitionsMap["openMainScreen"] = openMainScreen
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen

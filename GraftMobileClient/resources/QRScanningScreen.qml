@@ -20,7 +20,7 @@ BaseScreen {
                 pushScreen.openPaymentConfirmationScreen()
             }
             else {
-                pushScreen.openBalanceScreen()
+                pushScreen.openMainScreen()
             }
          }
     }

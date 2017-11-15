@@ -14,13 +14,16 @@ BaseScreen {
     property alias ipTitle: ipTextField.title
     property alias portTitle: portTextField.title
     property alias saveButtonText: saveButton.text
+    property bool visibleCompanyName: true
 
     function saveChanges() {
-        GraftClient.setSettings("companyName", companyNameTextField.text)
+        if (visibleCompanyName) {
+            GraftClient.setSettings("companyName", companyNameTextField.text)
+        }
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         GraftClient.resetUrl(ipTextField.text, portTextField.text)
         GraftClient.saveSettings()
-        pushScreen.openProductScreen()
+        pushScreen.openMainScreen()
     }
 
     ColumnLayout {
@@ -38,6 +41,7 @@ BaseScreen {
             Layout.leftMargin: 5
             Layout.rightMargin: 5
             Layout.alignment: Qt.AlignTop
+            visibleItem: visibleCompanyName
             text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
         }
 

@@ -21,5 +21,6 @@
         <file alias="GraftMenu.qml">android/wallet/GraftMenu.qml</file>
         <file alias="BalanceScreen.qml">android/wallet/BalanceScreen.qml</file>
         <file alias="PaymentConfirmationScreen.qml">android/wallet/PaymentConfirmationScreen.qml</file>
+        <file alias="SettingsScreen.qml">android/wallet/SettingsScreen.qml</file>
     </qresource>
 </RCC>
