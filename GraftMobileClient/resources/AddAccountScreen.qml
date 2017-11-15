@@ -92,9 +92,7 @@ BaseScreen {
         WideActionButton {
             text: qsTr("Add")
             Layout.alignment: Qt.AlignBottom
-            onClicked: {
-                addAccount()
-            }
+            onClicked: addAccount()
         }
     }
 }
