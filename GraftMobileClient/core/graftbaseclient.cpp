@@ -81,13 +81,13 @@ QUrl GraftBaseClient::getServiceUrl() const
     {
         QString ip(settings("ip").toString());
         QString port(settings("port").toString());
-        finalUrl = cUrl.arg(QString("%1:%2").arg(ip).arg(port));
+        finalUrl = QString("%1:%2").arg(ip).arg(port);
     }
     else
     {
-        finalUrl = cUrl.arg(cSeedSupernodes.value(qrand() % cSeedSupernodes.count()));
+        finalUrl = cSeedSupernodes.value(qrand() % cSeedSupernodes.count());
     }
-    return QUrl(finalUrl);
+    return QUrl(cUrl.arg(finalUrl));
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
@@ -139,14 +139,19 @@ bool GraftBaseClient::useOwnServiceAddress() const
 
 bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
 {
-    QHostAddress validateIp;
-    bool lIsResetUrl = (useOwnServiceAddress() && validateIp.setAddress(ip) && !ip.isEmpty());
+    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !ip.isEmpty());
     if (lIsResetUrl)
     {
         setSettings(QStringLiteral("ip"), ip);
         setSettings(QStringLiteral("port"), port);
     }
     return lIsResetUrl;
+}
+
+bool GraftBaseClient::isValidIp(const QString &ip) const
+{
+    QHostAddress validateIp;
+    return validateIp.setAddress(ip);
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

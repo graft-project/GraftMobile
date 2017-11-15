@@ -31,6 +31,7 @@ public:
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value);
     Q_INVOKABLE bool useOwnServiceAddress() const;
     virtual bool resetUrl(const QString &ip, const QString &port);
+    bool isValidIp(const QString &ip) const;
 
 signals:
     void errorReceived();
