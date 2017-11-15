@@ -11,10 +11,8 @@ ColumnLayout {
     property alias validator: editItem.validator
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
-    property bool visibleItem: true
 
     spacing: 0
-    visible: visibleItem
 
     Text {
         id: titleItem
