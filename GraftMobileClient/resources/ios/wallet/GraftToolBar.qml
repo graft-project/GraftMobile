@@ -16,25 +16,25 @@ Rectangle {
         ToolBarButton  {
             text: qsTr("Wallet")
             source: "qrc:/imgs/walletIos.png"
-            onClicked: {
-                pushScreen.openBalanceScreen()
-            }
+            onClicked: pushScreen.openMainScreen()
         }
 
         ToolBarButton {
             text: qsTr("Transaction")
             source: "qrc:/imgs/transactionIos.png"
-            onClicked: {
-                pushScreen.openTransactionScreen()
-            }
+            onClicked: pushScreen.openTransactionScreen()
         }
 
         ToolBarButton {
             text: qsTr("Transfer")
             source: "qrc:/imgs/transferIos.png"
-            onClicked: {
-                pushScreen.openTransferScreen()
-            }
+            onClicked: pushScreen.openTransferScreen()
+        }
+
+        ToolBarButton {
+            text: qsTr("Settings")
+            source: "qrc:/imgs/configIos.png"
+            onClicked: pushScreen.openSettingsScreen()
         }
 
         ToolBarButton {

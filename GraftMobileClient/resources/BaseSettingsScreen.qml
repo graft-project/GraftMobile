@@ -14,13 +14,16 @@ BaseScreen {
     property alias ipTitle: ipTextField.title
     property alias portTitle: portTextField.title
     property alias saveButtonText: saveButton.text
+    property alias displayCompanyName: companyNameTextField.visible
 
     function saveChanges() {
-        GraftClient.setSettings("companyName", companyNameTextField.text)
+        if (companyNameTextField.visible) {
+            GraftClient.setSettings("companyName", companyNameTextField.text)
+        }
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         GraftClient.resetUrl(ipTextField.text, portTextField.text)
         GraftClient.saveSettings()
-        pushScreen.openProductScreen()
+        pushScreen.openMainScreen()
     }
 
     ColumnLayout {
