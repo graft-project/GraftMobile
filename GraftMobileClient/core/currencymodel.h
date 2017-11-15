@@ -25,10 +25,10 @@ public:
 
     Q_INVOKABLE int indexOf(const QString &code) const;
     Q_INVOKABLE QString codeOf(const QString &name) const;
-    Q_INVOKABLE QString coinImageOf(const QString &name) const;
+    Q_INVOKABLE QString imageOf(const QString &name) const;
 
 public slots:
-    void add(const QString &name, const QString &code, const QString &image);
+    void add(const QString &name, const QString &code, const QString &image = QString());
 
 protected:
     QHash<int, QByteArray> roleNames() const override;

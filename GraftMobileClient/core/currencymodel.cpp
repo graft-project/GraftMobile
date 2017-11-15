@@ -83,7 +83,7 @@ QString CurrencyModel::codeOf(const QString &name) const
     return QString();
 }
 
-QString CurrencyModel::coinImageOf(const QString &name) const
+QString CurrencyModel::imageOf(const QString &name) const
 {
     for( int i = 0; i < mCurrency.size(); ++i)
     {
