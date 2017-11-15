@@ -1,14 +1,13 @@
 #include "productmodelserializator.h"
-#include "graftwalletclient.h"
 #include "api/graftwalletapi.h"
+#include "graftwalletclient.h"
 #include "productmodel.h"
 #include "config.h"
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.value(
-                                                qrand() % cSeedSupernodes.count()))), this);
+    mApi = new GraftWalletAPI(getServiceUrl(), this);
     connect(mApi, &GraftWalletAPI::readyToPayReceived,
             this, &GraftWalletClient::receiveReadyToPay);
     connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
@@ -28,6 +27,14 @@ double GraftWalletClient::totalCost() const
 ProductModel *GraftWalletClient::paymentProductModel() const
 {
     return mPaymentProductModel;
+}
+
+bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
+{
+    if (GraftBaseClient::resetUrl(ip, port))
+    {
+        mApi->setUrl(QUrl(cUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+    }
 }
 
 void GraftWalletClient::readyToPay(const QString &data)
