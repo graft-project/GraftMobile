@@ -41,7 +41,7 @@ BaseScreen {
                                  currencyCode, productItem.descriptionText)
             }
             editingItem.pushScreen.openProductScreen()
-            GraftClient.save()
+            GraftClient.saveProducts()
         } else {
             messageDialog.open()
         }

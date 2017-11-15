@@ -28,7 +28,7 @@ signals:
     void saleStatusReceived(bool result);
 
 public slots:
-    void save();
+    void saveProducts() const;
     void sale();
     void rejectSale();
     void getSaleStatus();

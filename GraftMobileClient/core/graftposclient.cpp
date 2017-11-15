@@ -10,7 +10,6 @@
 #include <QStandardPaths>
 #include <QSettings>
 #include <QFileInfo>
-#include <QDir>
 
 static const QString scProductModelDataFile("productList.dat");
 
@@ -54,23 +53,14 @@ bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
     if (GraftBaseClient::resetUrl(ip, port))
     {
         mApi->setUrl(QUrl(cUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+        return true;
     }
+    return false;
 }
 
-void GraftPOSClient::save()
+void GraftPOSClient::saveProducts() const
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!QFileInfo(dataPath).exists())
-    {
-        QDir().mkpath(dataPath);
-    }
-    QDir lDir(dataPath);
-    QFile lFile(lDir.filePath(scProductModelDataFile));
-    if (lFile.open(QFile::WriteOnly))
-    {
-        lFile.write(ProductModelSerializator::serialize(mProductModel));
-        lFile.close();
-    }
+    saveModel(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
 }
 
 void GraftPOSClient::sale()
@@ -143,16 +133,7 @@ void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
 void GraftPOSClient::initProductModels()
 {
     mProductModel = new ProductModel(this);
-    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                              scProductModelDataFile);
-    if (!dataPath.isEmpty())
-    {
-        QFile lFile(dataPath);
-        if (lFile.open(QFile::ReadOnly))
-        {
-            ProductModelSerializator::deserialize(lFile.readAll(), mProductModel);
-        }
-    }
+    ProductModelSerializator::deserialize(loadModel(scProductModelDataFile), mProductModel);
     mSelectedProductModel = new SelectedProductProxyModel(this);
     mSelectedProductModel->setSourceModel(mProductModel);
 }

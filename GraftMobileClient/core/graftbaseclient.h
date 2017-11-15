@@ -6,8 +6,8 @@
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
-class AccountModel;
 class CurrencyModel;
+class AccountModel;
 class QQmlEngine;
 class QSettings;
 
@@ -36,6 +36,9 @@ public:
 signals:
     void errorReceived();
 
+public slots:
+    void saveAccounts() const;
+
 protected:
     BarcodeImageProvider *mImageProvider;
     AccountModel *mAccountModel;
@@ -44,6 +47,8 @@ protected:
     QSettings *mClientSettings;
 
     void registerImageProvider(QQmlEngine *engine);
+    void saveModel(const QString &fileName,const QByteArray &data) const;
+    QByteArray loadModel(const QString &fileName) const;
     QUrl getServiceUrl() const;
 
 private:

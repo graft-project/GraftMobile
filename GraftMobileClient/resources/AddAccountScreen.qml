@@ -14,8 +14,9 @@ BaseScreen {
 
     function addAccount() {
         if (accountName.text !== "" && walletNumberText.text !== "") {
-            if (AccountModel.add(CoinModel.codeOf(coinsComboBox.currentText), accountName.text,
-                                 coinsComboBox.currentText, walletNumberText.text)) {
+            if (AccountModel.add(CoinModel.imageOf(coinsComboBox.currentText), accountName.text,
+                                 CoinModel.codeOf(coinsComboBox.currentText), walletNumberText.text)) {
+                GraftClient.saveAccounts()
                 pushScreen.goBack()
             } else {
                 attentionDialog.text = qsTr("The wallet number already exists! Please, "+
