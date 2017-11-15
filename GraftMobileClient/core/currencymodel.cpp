@@ -85,7 +85,7 @@ QString CurrencyModel::codeOf(const QString &name) const
 
 QString CurrencyModel::imageOf(const QString &name) const
 {
-    for ( int i = 0; i < mCurrency.size(); ++i)
+    for (int i = 0; i < mCurrency.size(); ++i)
     {
         if (mCurrency.at(i)->name() == name)
         {
