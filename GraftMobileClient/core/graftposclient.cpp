@@ -53,7 +53,9 @@ bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
     if (GraftBaseClient::resetUrl(ip, port))
     {
         mApi->setUrl(QUrl(cUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+        return true;
     }
+    return false;
 }
 
 void GraftPOSClient::saveProducts() const
