@@ -7,7 +7,7 @@ BaseSettingsScreen {
     ipTitle: qsTr("IP:")
     portTitle: qsTr("Port:")
     saveButtonText: qsTr("Done")
-    visibleCompanyName: false
+    displayCompanyName: false
 
     screenHeader {
         actionButtonState: true

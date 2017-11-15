@@ -32,6 +32,12 @@ Rectangle {
         }
 
         ToolBarButton {
+            text: qsTr("Settings")
+            source: "qrc:/imgs/configIos.png"
+            onClicked: pushScreen.openSettingsScreen()
+        }
+
+        ToolBarButton {
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
             onClicked: Qt.openUrlExternally("https://www.graft.network/")

@@ -14,10 +14,10 @@ BaseScreen {
     property alias ipTitle: ipTextField.title
     property alias portTitle: portTextField.title
     property alias saveButtonText: saveButton.text
-    property bool visibleCompanyName: true
+    property bool displayCompanyName: true
 
     function saveChanges() {
-        if (visibleCompanyName) {
+        if (displayCompanyName) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
@@ -41,7 +41,7 @@ BaseScreen {
             Layout.leftMargin: 5
             Layout.rightMargin: 5
             Layout.alignment: Qt.AlignTop
-            visibleItem: visibleCompanyName
+            visibleItem: displayCompanyName
             text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
         }
 

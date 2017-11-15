@@ -32,13 +32,5 @@ BaseBalanceScreen {
             Layout.bottomMargin: 15
             onClicked: pushScreen.openQRCodeScanner()
         }
-
-        WideActionButton {
-            text: qsTr("SETTINGS")
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
-            Layout.bottomMargin: 15
-            onClicked: pushScreen.openSettingsScreen()
-        }
     }
 }

@@ -47,6 +47,16 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
+            icon: "qrc:/imgs/settings.png"
+            name: qsTr("Settings")
+            onClicked: {
+                pushScreen.hideMenu()
+                pushScreen.openSettingsScreen()
+            }
+        }
+
+        MenuLabelItem {
+            Layout.fillWidth: true
             icon: "qrc:/imgs/info.png"
             name: qsTr("About")
             onClicked: {
