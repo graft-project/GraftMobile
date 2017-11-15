@@ -9,38 +9,56 @@ Rectangle {
     height: 49
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
-    RowLayout {
-        spacing: 35
-        anchors.centerIn: parent
+    ListModel {
+        id: listModel
 
-        ToolBarButton  {
-            text: qsTr("Wallet")
-            source: "qrc:/imgs/walletIos.png"
-            onClicked: pushScreen.openMainScreen()
+        ListElement {
+            label: qsTr("Wallet")
+            image: "qrc:/imgs/walletIos.png"
+            openScreen: "openMainScreen"
         }
 
-        ToolBarButton {
-            text: qsTr("Transaction")
-            source: "qrc:/imgs/transactionIos.png"
-            onClicked: pushScreen.openTransactionScreen()
+        ListElement {
+            label: qsTr("Transaction")
+            image: "qrc:/imgs/transactionIos.png"
+            openScreen: "openTransactionScreen"
         }
 
-        ToolBarButton {
-            text: qsTr("Transfer")
-            source: "qrc:/imgs/transferIos.png"
-            onClicked: pushScreen.openTransferScreen()
+        ListElement {
+            label: qsTr("Transfer")
+            image: "qrc:/imgs/transferIos.png"
+            openScreen: "openTransferScreen"
         }
 
-        ToolBarButton {
-            text: qsTr("Settings")
-            source: "qrc:/imgs/configIos.png"
-            onClicked: pushScreen.openSettingsScreen()
+        ListElement {
+            label: qsTr("Settings")
+            image: "qrc:/imgs/configIos.png"
+            openScreen: "openSettingsScreen"
         }
 
-        ToolBarButton {
-            text: qsTr("About")
-            source: "qrc:/imgs/infoIos.png"
-            onClicked: Qt.openUrlExternally("https://www.graft.network/")
+        ListElement {
+            label: qsTr("About")
+            image: "qrc:/imgs/infoIos.png"
+            openScreen: "openAbout"
+        }
+    }
+
+    ListView {
+        id: listView
+        anchors.fill: parent
+        model: listModel
+        spacing: 8
+        orientation: ListView.Horizontal
+        clip: true
+        interactive: false
+        delegate: ToolBarButton {
+            text: label
+            source: image
+            itemColor: ListView.isCurrentItem ? "#25FFFFFF" : "transparent"
+            onClicked: {
+                listView.currentIndex = index
+                pushScreen[openScreen]()
+            }
         }
     }
 }
