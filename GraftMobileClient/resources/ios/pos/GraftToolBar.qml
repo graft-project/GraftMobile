@@ -17,7 +17,7 @@ Rectangle {
             text: qsTr("Store")
             source: "qrc:/imgs/storeIos.png"
             onClicked: {
-                pushScreen.openProductScreen()
+                pushScreen.openMainScreen()
             }
         }
 
