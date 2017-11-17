@@ -95,6 +95,11 @@ QString CurrencyModel::imageOf(const QString &name) const
     return QString();
 }
 
+QVector<CurrencyItem *> CurrencyModel::currencies() const
+{
+    return mCurrency;
+}
+
 void CurrencyModel::add(const QString &name, const QString &code, const QString &image)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());

@@ -3,6 +3,7 @@
 #include "quickexchangemodel.h"
 #include "graftbaseclient.h"
 #include "currencymodel.h"
+#include "currencyitem.h"
 #include "accountmodel.h"
 #include "config.h"
 
@@ -28,7 +29,7 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
 {
-        initSettings();
+    initSettings();
 }
 
 AccountModel *GraftBaseClient::accountModel() const
@@ -143,23 +144,23 @@ void GraftBaseClient::initCurrencyModel(QQmlEngine *engine)
     {
         mCurrencyModel = new CurrencyModel(this);
         mCurrencyModel->add(QStringLiteral("BITCONNECT COIN"),
-                            QStringLiteral("BCC"), QStringLiteral("qrc:/imgs/coins/bcc.png"));
+                            QStringLiteral("BCC"), QStringLiteral("qrc:/coins/bcc.png"));
         mCurrencyModel->add(QStringLiteral("BITCOIN"),
-                            QStringLiteral("BTC"), QStringLiteral("qrc:/imgs/coins/bitcoin.png"));
+                            QStringLiteral("BTC"), QStringLiteral("qrc:/coins/btc.png"));
         mCurrencyModel->add(QStringLiteral("DASH"),
-                            QStringLiteral("DASH"), QStringLiteral("qrc:/imgs/coins/dash.png"));
+                            QStringLiteral("DASH"), QStringLiteral("qrc:/coins/dash.png"));
         mCurrencyModel->add(QStringLiteral("ETHER"),
-                            QStringLiteral("ETH"), QStringLiteral("qrc:/imgs/coins/ether.png"));
+                            QStringLiteral("ETH"), QStringLiteral("qrc:/coins/eth.png"));
         mCurrencyModel->add(QStringLiteral("LITECOIN"),
-                            QStringLiteral("LTC"), QStringLiteral("qrc:/imgs/coins/litecoin.png"));
+                            QStringLiteral("LTC"), QStringLiteral("qrc:/coins/ltc.png"));
         mCurrencyModel->add(QStringLiteral("MONERO"),
-                            QStringLiteral("XMR"), QStringLiteral("qrc:/imgs/coins/monero.png"));
+                            QStringLiteral("XMR"), QStringLiteral("qrc:/coins/xmr.png"));
         mCurrencyModel->add(QStringLiteral("NEW ECONOMY MOVEMENT"),
-                            QStringLiteral("NEM"), QStringLiteral("qrc:/imgs/coins/nem.png"));
+                            QStringLiteral("NEM"), QStringLiteral("qrc:/coins/nem.png"));
         mCurrencyModel->add(QStringLiteral("NEO"),
-                            QStringLiteral("NEO"), QStringLiteral("qrc:/imgs/coins/neo.png"));
+                            QStringLiteral("NEO"), QStringLiteral("qrc:/coins/neo.png"));
         mCurrencyModel->add(QStringLiteral("RIPPLE"),
-                            QStringLiteral("XRP"), QStringLiteral("qrc:/imgs/coins/ripple.png"));
+                            QStringLiteral("XRP"), QStringLiteral("qrc:/coins/xrp.png"));
         engine->rootContext()->setContextProperty(QStringLiteral("CoinModel"), mCurrencyModel);
     }
 }
@@ -169,6 +170,12 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
     if(!mQuickExchangeModel)
     {
         mQuickExchangeModel = new QuickExchangeModel(this);
+        mQuickExchangeModel->add(QStringLiteral("US Dollar"), QStringLiteral("USD"),
+                                 QString(), true);
+        for (CurrencyItem *item : mCurrencyModel->currencies())
+        {
+            mQuickExchangeModel->add(item->name(), item->code());
+        }
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
     }
@@ -199,6 +206,11 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
 {
     QHostAddress validateIp;
     return validateIp.setAddress(ip);
+}
+
+void GraftBaseClient::updateQuickExchange(double cost)
+{
+
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

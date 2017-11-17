@@ -73,6 +73,7 @@ void GraftPOSClient::sale()
         QString qrText = QString("%1;%2;%3").arg(mPID).arg(address)
                 .arg(mProductModel->totalCost());
         setQRCodeImage(mQRCodeEncoder->encode(qrText));
+        updateQuickExchange(mProductModel->totalCost());
         QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
         mApi->sale(mPID, selectedProducts.toHex());
     }

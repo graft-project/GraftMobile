@@ -16,7 +16,7 @@ Pane {
             id: pathView
             anchors.fill: parent
             pathItemCount: 4
-            offset: 4
+            offset: 2
             model: QuickExchangeModel
 
             delegate: QuickExchangeDelegate {

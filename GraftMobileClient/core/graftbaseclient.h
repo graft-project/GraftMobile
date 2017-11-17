@@ -33,6 +33,8 @@ public:
     virtual bool resetUrl(const QString &ip, const QString &port);
     bool isValidIp(const QString &ip) const;
 
+    void updateQuickExchange(double cost);
+
 signals:
     void errorReceived();
 
