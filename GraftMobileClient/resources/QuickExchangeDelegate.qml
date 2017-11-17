@@ -10,8 +10,9 @@ RowLayout {
     Image {
         id: image
         cache: false
-        Layout.preferredHeight: parent.height
-        Layout.preferredWidth: height / 1.5
+        Layout.maximumHeight: parent.height
+        Layout.maximumWidth: height
+        fillMode: Image.PreserveAspectFit
     }
 
     Label {
