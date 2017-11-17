@@ -66,8 +66,8 @@ BaseScreen {
     }
 
     function checkout() {
-        ProductModel.setQuickDealMode(true)
         if (price.text !== "") {
+            ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
                              currencyModel.codeOf(currencyCBox.currencyText), "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
