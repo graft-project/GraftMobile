@@ -69,26 +69,31 @@
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
         <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
-        <file alias="coins/bcc.png">imgs/coins/bcc.png</file>
-        <file alias="coins/bitcoin.png">imgs/coins/bitcoin.png</file>
-        <file alias="coins/dash.png">imgs/coins/dash.png</file>
-        <file alias="coins/ether.png">imgs/coins/ether.png</file>
-        <file alias="coins/litecoin.png">imgs/coins/litecoin.png</file>
-        <file alias="coins/monero.png">imgs/coins/monero.png</file>
-        <file alias="coins/nem.png">imgs/coins/nem.png</file>
-        <file alias="coins/neo.png">imgs/coins/neo.png</file>
-        <file alias="coins/ripple.png">imgs/coins/ripple.png</file>
         <file alias="gallery.png">imgs/gallery.png</file>
         <file alias="photo.png">imgs/photo.png</file>
-        <file alias="bcc-w.png">imgs/bcc-w.png</file>
-        <file alias="btc-w.png">imgs/btc-w.png</file>
-        <file alias="bth-w.png">imgs/bth-w.png</file>
-        <file alias="dash-w.png">imgs/dash-w.png</file>
-        <file alias="eth-w.png">imgs/eth-w.png</file>
-        <file alias="ltc-w.png">imgs/ltc-w.png</file>
-        <file alias="monero-w.png">imgs/monero-w.png</file>
-        <file alias="nem-w.png">imgs/nem-w.png</file>
-        <file alias="neo-w.png">imgs/neo-w.png</file>
-        <file alias="ripple-w.png">imgs/ripple-w.png</file>
+    </qresource>
+    <qresource prefix="/coins">
+        <file alias="bcc.png">imgs/coins/bcc.png</file>
+        <file alias="btc.png">imgs/coins/btc.png</file>
+        <file alias="dash.png">imgs/coins/dash.png</file>
+        <file alias="eth.png">imgs/coins/eth.png</file>
+        <file alias="ltc.png">imgs/coins/ltc.png</file>
+        <file alias="nem.png">imgs/coins/nem.png</file>
+        <file alias="neo.png">imgs/coins/neo.png</file>
+        <file alias="xmr.png">imgs/coins/xmr.png</file>
+        <file alias="xrp.png">imgs/coins/xrp.png</file>
+        <file alias="bth.png">imgs/coins/bth.png</file>
+    </qresource>
+    <qresource prefix="/exchange">
+        <file alias="bcc.png">imgs/coins/exchange/bcc.png</file>
+        <file alias="btc.png">imgs/coins/exchange/btc.png</file>
+        <file alias="bth.png">imgs/coins/exchange/bth.png</file>
+        <file alias="dash.png">imgs/coins/exchange/dash.png</file>
+        <file alias="eth.png">imgs/coins/exchange/eth.png</file>
+        <file alias="ltc.png">imgs/coins/exchange/ltc.png</file>
+        <file alias="nem.png">imgs/coins/exchange/nem.png</file>
+        <file alias="neo.png">imgs/coins/exchange/neo.png</file>
+        <file alias="xmr.png">imgs/coins/exchange/xmr.png</file>
+        <file alias="xrp.png">imgs/coins/exchange/xrp.png</file>
     </qresource>
 </RCC>
