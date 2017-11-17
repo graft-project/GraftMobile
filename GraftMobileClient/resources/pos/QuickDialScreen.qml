@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import "../components"
 
@@ -9,6 +10,7 @@ BaseScreen {
 
     property alias currencyModel: currencyCBox.currencyModel
 
+    title: qsTr("Quick Deal")
     screenHeader {
         navigationButtonState: Qt.platform.os !== "android"
         actionButtonState: true
@@ -65,10 +67,22 @@ BaseScreen {
 
     function checkout() {
         ProductModel.setQuickDealMode(true)
-        ProductModel.add("", title.text, price.text,
-                         currencyModel.codeOf(currencyCBox.currencyText), "")
-        ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
-        GraftClient.sale()
-        pushScreen.initializingCheckout()
+        if (price.text !== "") {
+            ProductModel.add("", title.text, price.text,
+                             currencyModel.codeOf(currencyCBox.currencyText), "")
+            ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
+            GraftClient.sale()
+            pushScreen.initializingCheckout()
+        } else {
+            messageDialog.open()
+        }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Attention")
+        text: qsTr("Don't leave blank field as it isn't correct! "+
+                   "You must enter the price product.")
+        icon: StandardIcon.Warning
     }
 }
