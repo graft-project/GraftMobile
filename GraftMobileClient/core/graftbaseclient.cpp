@@ -143,24 +143,24 @@ void GraftBaseClient::initCurrencyModel(QQmlEngine *engine)
     if(!mCurrencyModel)
     {
         mCurrencyModel = new CurrencyModel(this);
-        mCurrencyModel->add(QStringLiteral("BITCONNECT COIN"),
-                            QStringLiteral("BCC"), QStringLiteral("qrc:/coins/bcc.png"));
         mCurrencyModel->add(QStringLiteral("BITCOIN"),
                             QStringLiteral("BTC"), QStringLiteral("qrc:/coins/btc.png"));
+        mCurrencyModel->add(QStringLiteral("BITCONNECT COIN"),
+                            QStringLiteral("BCC"), QStringLiteral("qrc:/coins/bcc.png"));
         mCurrencyModel->add(QStringLiteral("DASH"),
                             QStringLiteral("DASH"), QStringLiteral("qrc:/coins/dash.png"));
         mCurrencyModel->add(QStringLiteral("ETHER"),
                             QStringLiteral("ETH"), QStringLiteral("qrc:/coins/eth.png"));
         mCurrencyModel->add(QStringLiteral("LITECOIN"),
                             QStringLiteral("LTC"), QStringLiteral("qrc:/coins/ltc.png"));
-        mCurrencyModel->add(QStringLiteral("MONERO"),
-                            QStringLiteral("XMR"), QStringLiteral("qrc:/coins/xmr.png"));
         mCurrencyModel->add(QStringLiteral("NEW ECONOMY MOVEMENT"),
                             QStringLiteral("NEM"), QStringLiteral("qrc:/coins/nem.png"));
         mCurrencyModel->add(QStringLiteral("NEO"),
                             QStringLiteral("NEO"), QStringLiteral("qrc:/coins/neo.png"));
         mCurrencyModel->add(QStringLiteral("RIPPLE"),
                             QStringLiteral("XRP"), QStringLiteral("qrc:/coins/xrp.png"));
+        mCurrencyModel->add(QStringLiteral("MONERO"),
+                            QStringLiteral("XMR"), QStringLiteral("qrc:/coins/xmr.png"));
         engine->rootContext()->setContextProperty(QStringLiteral("CoinModel"), mCurrencyModel);
     }
 }
@@ -210,7 +210,16 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
 
 void GraftBaseClient::updateQuickExchange(double cost)
 {
-
+    QStringList codes = mQuickExchangeModel->codeList();
+    for (int i = 0; i < codes.count(); ++i)
+    {
+        double course = 1.0;
+        if (codes.value(i) != QLatin1String("USD"))
+        {
+            course = (double)qrand() / RAND_MAX;
+        }
+        mQuickExchangeModel->updatePrice(codes.value(i), QString::number(course * cost));
+    }
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const
