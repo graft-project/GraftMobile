@@ -49,8 +49,8 @@ BaseScreen {
 
             Label {
                 text: qsTr("Service")
-                font.pointSize: Qt.platform.os === "ios" ? 14 : switchLabel.font.pointSize
-                color: "#BBBBBB"
+                font.pointSize: Qt.platform.os === "ios" ? 16 : switchLabel.font.pointSize
+                color: "#8e8e93"
             }
 
             RowLayout {
