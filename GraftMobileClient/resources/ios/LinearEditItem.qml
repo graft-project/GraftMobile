@@ -34,6 +34,7 @@ ColumnLayout {
                 if (!inlineTitle) {
                     leftPadding = 0
                     topPadding = 30
+                    Layout.maximumHeight = 200
                 }
             }
         }

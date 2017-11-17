@@ -12,7 +12,7 @@ ColumnLayout {
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
 
-    spacing: 0
+    spacing: 8
 
     Text {
         id: titleItem
@@ -32,6 +32,7 @@ ColumnLayout {
                 Layout.fillHeight = false
             } else {
                 Layout.fillHeight = true
+                Layout.maximumHeight = 200
             }
         }
     }
