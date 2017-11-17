@@ -28,11 +28,7 @@ Item {
     ColumnLayout {
         id: mainLayout
         spacing: 5
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+        anchors.fill: parent
 
         LinearEditItem {
             id: title
@@ -45,6 +41,7 @@ Item {
             id: description
             Layout.fillWidth: true
             Layout.preferredHeight: 120
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item description")
             wrapMode: TextInput.WordWrap
             maximumLength: 120
@@ -58,6 +55,7 @@ Item {
                 title: qsTr("Price")
                 Layout.fillWidth: true
                 Layout.preferredHeight: graftComboBox.height
+                Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
@@ -68,6 +66,8 @@ Item {
             CurrencyComboBox {
                 id: graftComboBox
                 Layout.preferredWidth: 50
+                Layout.preferredHeight: 40
+                Layout.alignment: Qt.AlignTop
                 dropdownTitle: qsTr("Currency")
             }
         }
@@ -76,8 +76,9 @@ Item {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
             Layout.topMargin: 5
-            Layout.preferredHeight: 150
-            Layout.preferredWidth: 150
+            Layout.fillHeight: true
+            Layout.preferredWidth: height
+            Layout.maximumHeight: 200
             fillMode: Image.PreserveAspectFit
             source: ""
             visible: previewImage.status === Image.Ready
@@ -112,6 +113,11 @@ Item {
                 }
             }
             onClicked: popUp.open()
+        }
+
+        Item {
+            Layout.fillHeight: true
+            Layout.preferredWidth: height
         }
     }
 }

@@ -26,7 +26,7 @@ ColumnLayout {
         leftPadding: -12
         Layout.fillWidth: true
         Layout.topMargin: -12
-        Layout.bottomMargin: -10
+        Layout.bottomMargin: -2
     }
 
     Rectangle {
