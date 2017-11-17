@@ -23,7 +23,7 @@ BaseMenu {
             name: qsTr("Store")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openProductScreen()
+                pushScreen.openMainScreen()
             }
         }
 
