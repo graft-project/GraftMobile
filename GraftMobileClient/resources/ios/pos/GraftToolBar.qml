@@ -6,41 +6,63 @@ import "../components"
 Rectangle {
     property var pushScreen
 
+    signal seclectedButtonChanged(string buttonName)
+
     height: 49
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
+
+    Component.onCompleted: seclectedButtonChanged("Store")
+
+    onSeclectedButtonChanged: {
+        crearSelection()
+        switch (buttonName) {
+        case "Store": storeButton.buttonColor = "#25FFFFFF"; break;
+        case "Wallet": walletButton.buttonColor = "#25FFFFFF"; break;
+        case "Settings": settingsButton.buttonColor = "#25FFFFFF"; break;
+        case "About": aboutButton.buttonColor = "#25FFFFFF"; break;
+        }
+    }
 
     RowLayout {
         spacing: 35
         anchors.centerIn: parent
 
         ToolBarButton  {
+            id: storeButton
             text: qsTr("Store")
             source: "qrc:/imgs/storeIos.png"
-            onClicked: {
-                pushScreen.openMainScreen()
-            }
+            onClicked: pushScreen.openMainScreen()
         }
 
         ToolBarButton {
+            id: walletButton
             text: qsTr("Wallet")
             source: "qrc:/imgs/walletIos.png"
-            onClicked: {
-                pushScreen.openWalletScreen()
-            }
+            onClicked: pushScreen.openWalletScreen()
         }
 
         ToolBarButton {
+            id: settingsButton
             text: qsTr("Settings")
             source: "qrc:/imgs/configIos.png"
-            onClicked: {
-                pushScreen.openSettingsScreen()
-            }
+            onClicked: pushScreen.openSettingsScreen()
         }
 
         ToolBarButton {
+            id: aboutButton
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
-            onClicked: Qt.openUrlExternally("https://www.graft.network/")
+            onClicked: {
+                seclectedButtonChanged("About")
+                Qt.openUrlExternally("https://www.graft.network/")
+            }
         }
+    }
+
+    function crearSelection(){
+        storeButton.buttonColor = "transparent"
+        walletButton.buttonColor = "transparent"
+        settingsButton.buttonColor = "transparent"
+        aboutButton.buttonColor = "transparent"
     }
 }

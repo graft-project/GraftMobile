@@ -9,10 +9,12 @@ Rectangle {
     property alias source: toolButtonIcon.source
     property alias text: toolButtonText.text
     property alias itemColor: toolBarButton.color
+    property alias buttonColor: toolBarButton.color
 
     width: 58
     height: 46
     radius: 6
+    color: "transparent"
 
     MouseArea {
         id: mouseArea
