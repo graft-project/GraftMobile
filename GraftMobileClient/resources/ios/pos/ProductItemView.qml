@@ -52,7 +52,7 @@ Item {
                 id: price
                 title: qsTr("Price:")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftComboBox.height
+                Layout.preferredHeight: 40
                 Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
