@@ -51,7 +51,6 @@ ColumnLayout {
             rightPadding: 5
             color: "#8e8e93"
         }
-
     }
 
     Text {
