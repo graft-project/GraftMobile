@@ -19,12 +19,11 @@ Rectangle {
         case "Store": storeButton.buttonColor = "#25FFFFFF"; break;
         case "Wallet": walletButton.buttonColor = "#25FFFFFF"; break;
         case "Settings": settingsButton.buttonColor = "#25FFFFFF"; break;
-        case "About": aboutButton.buttonColor = "#25FFFFFF"; break;
         }
     }
 
     RowLayout {
-        spacing: 35
+        spacing: 40
         anchors.centerIn: parent
 
         ToolBarButton  {
@@ -49,13 +48,9 @@ Rectangle {
         }
 
         ToolBarButton {
-            id: aboutButton
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
-            onClicked: {
-                seclectedButtonChanged("About")
-                Qt.openUrlExternally("https://www.graft.network/")
-            }
+            onClicked: Qt.openUrlExternally("https://www.graft.network/")
         }
     }
 
@@ -63,6 +58,5 @@ Rectangle {
         storeButton.buttonColor = "transparent"
         walletButton.buttonColor = "transparent"
         settingsButton.buttonColor = "transparent"
-        aboutButton.buttonColor = "transparent"
     }
 }
