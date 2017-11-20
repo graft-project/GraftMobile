@@ -8,7 +8,6 @@ Rectangle {
     signal clicked()
     property alias source: toolButtonIcon.source
     property alias text: toolButtonText.text
-    property alias itemColor: toolBarButton.color
     property alias buttonColor: toolBarButton.color
 
     width: 58
