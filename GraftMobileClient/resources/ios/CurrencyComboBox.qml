@@ -18,7 +18,7 @@ ColumnLayout {
         textRole: "name"
         leftPadding: dropdownTitle.width - 8
         Layout.fillWidth: true
-        Layout.topMargin: -8
+        Layout.topMargin: -6
         Layout.bottomMargin: -4
 
         Text {
@@ -26,25 +26,17 @@ ColumnLayout {
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 13
+                topMargin: 14
             }
             font.pointSize: parent.font.pointSize
             color: "#8e8e93"
-            Rectangle {
-                anchors.fill: parent
-                color: "#60ff0000"
-            }
-        }
-        Rectangle {
-            anchors.fill: parent
-            color: "#60fff000"
         }
     }
 
     Rectangle {
         height: 1
         color: "#acacac"
-        Layout.topMargin: 6
+        Layout.topMargin: 4
         Layout.fillWidth: true
     }
 }
