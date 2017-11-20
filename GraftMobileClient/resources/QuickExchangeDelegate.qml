@@ -5,7 +5,7 @@ import QtQuick.Controls 2.2
 RowLayout {
     property alias icon: image.source
     property alias text: label.text
-    property alias isBold: label.font.bold
+    property bool isBold: false
 
     Image {
         id: image
@@ -18,6 +18,9 @@ RowLayout {
     Label {
         id: label
         color: "#ffffff"
-        font.pointSize: 18
+        font {
+            pointSize: isBold ? 20 : 18
+            bold: isBold
+        }
     }
 }
