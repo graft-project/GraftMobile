@@ -26,6 +26,7 @@ BaseHeader {
         }
 
         Item {
+            Layout.fillHeight: true
             Layout.preferredWidth: 24
             Layout.alignment: Qt.AlignLeft
 
@@ -35,11 +36,11 @@ BaseHeader {
                 height: 18
                 anchors.centerIn: parent
                 source: "qrc:/imgs/back_icon.png"
+            }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: navigationButtonClicked()
-                }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: navigationButtonClicked()
             }
         }
 
@@ -63,12 +64,18 @@ BaseHeader {
             productCount: rootItem.selectedProductCount
         }
 
-        Image {
-            visible: rootItem.actionButtonState
-            Layout.preferredHeight: 15
-            Layout.preferredWidth: 23
+        Item {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 24
             Layout.alignment: Qt.AlignRight
-            source: "qrc:/imgs/done.png"
+            visible: rootItem.actionButtonState
+
+            Image {
+                height: 15
+                width: 23
+                anchors.centerIn: parent
+                source: "qrc:/imgs/done.png"
+            }
 
             MouseArea {
                 anchors.fill: parent
