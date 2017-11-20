@@ -113,15 +113,18 @@ GraftApplicationWindow {
     }
 
     function openInfoWalletScreen() {
+        footerLoader.item.seclectedButtonChanged("Wallet")
         stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions(),
                    "amountMoney": 145, "amountGraft": 1.14})
     }
 
     function openMainScreen() {
+        footerLoader.item.seclectedButtonChanged("Store")
         stack.pop(mainScreen)
     }
 
     function openSettingsScreen() {
+        footerLoader.item.seclectedButtonChanged("Settings")
         stack.push("qrc:/pos/SettingsScreen.qml", {"pushScreen": screenTransitions()})
     }
 
@@ -135,6 +138,7 @@ GraftApplicationWindow {
     }
 
     function clearChecked() {
+        footerLoader.item.seclectedButtonChanged("Store")
         ProductModel.clearSelections()
         stack.pop(mainScreen)
     }

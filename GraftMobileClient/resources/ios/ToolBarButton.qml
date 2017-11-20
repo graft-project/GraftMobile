@@ -3,14 +3,17 @@ import com.graft.design 1.0
 import "../"
 
 Rectangle {
+    id: toolBarButton
+
     signal clicked()
     property alias source: toolButtonIcon.source
     property alias text: toolButtonText.text
+    property alias buttonColor: toolBarButton.color
 
     width: 58
     height: 46
     radius: 6
-    color: mouseArea.pressed ? "#25FFFFFF" : "transparent"
+    color: "transparent"
 
     MouseArea {
         id: mouseArea

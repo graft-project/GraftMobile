@@ -112,10 +112,12 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
+        footerLoader.item.seclectedButtonChanged("Settings")
         stack.push("qrc:/wallet/SettingsScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openMainScreen() {
+        footerLoader.item.seclectedButtonChanged("Wallet")
         stack.pop(initialScreen)
     }
 }

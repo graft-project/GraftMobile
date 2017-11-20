@@ -6,6 +6,7 @@
         <file alias="ToolBarButton.qml">ios/ToolBarButton.qml</file>
         <file alias="LinearEditItem.qml">ios/LinearEditItem.qml</file>
         <file alias="CurrencyComboBox.qml">ios/CurrencyComboBox.qml</file>
+        <file alias="BaseGraftToolBar.qml">ios/pos/BaseGraftToolBar.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">ios/pos/ProductScreen.qml</file>
