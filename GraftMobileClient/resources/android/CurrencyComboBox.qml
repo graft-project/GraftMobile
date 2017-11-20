@@ -25,6 +25,7 @@ ColumnLayout {
         textRole: "name"
         Layout.fillWidth: true
         Layout.preferredHeight: 34
+        leftPadding: -12
     }
 
     Rectangle {
