@@ -50,6 +50,14 @@ ColumnLayout {
             font.pointSize: parent.font.pointSize
             rightPadding: 5
             color: "#8e8e93"
+            Rectangle {
+                anchors.fill: parent
+                color: "#60fff000"
+            }
+        }
+        Rectangle {
+            anchors.fill: parent
+            color: "#60ff0000"
         }
     }
 
@@ -60,5 +68,9 @@ ColumnLayout {
         font.pointSize: 12
         text: qsTr("%1/%2").arg(editItem.length).arg(editItem.maximumLength)
         color: "#8e8e93"
+        Rectangle {
+            anchors.fill: parent
+            color: "#600bebff"
+        }
     }
 }
