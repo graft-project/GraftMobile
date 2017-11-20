@@ -222,6 +222,7 @@ void ProductModel::removeSelectedProducts()
                 beginRemoveRows(QModelIndex(), i, i);
                 delete mProducts.takeAt(i);
                 endRemoveRows();
+                i--;
             }
         }
         mQuickDealMode = false;
