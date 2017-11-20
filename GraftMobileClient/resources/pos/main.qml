@@ -113,7 +113,7 @@ GraftApplicationWindow {
     }
 
     function openInfoWalletScreen() {
-        footerLoader.item.seclectedButtonChanged("Wallet")
+        selectButton("Wallet")
         stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions(),
                    "amountMoney": 145, "amountGraft": 1.14})
     }
@@ -124,7 +124,7 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
-        footerLoader.item.seclectedButtonChanged("Settings")
+        selectButton("Settings")
         stack.push("qrc:/pos/SettingsScreen.qml", {"pushScreen": screenTransitions()})
     }
 
@@ -138,8 +138,19 @@ GraftApplicationWindow {
     }
 
     function clearChecked() {
-        footerLoader.item.seclectedButtonChanged("Store")
+        selectButton("Store")
         ProductModel.clearSelections()
         stack.pop(mainScreen)
+    }
+
+    function selectButton(name)
+    {
+        if (Qt.platform.os === "ios") {
+            switch (name) {
+                case "Store": footerLoader.item.seclectedButtonChanged(name); break;
+                case "Wallet": footerLoader.item.seclectedButtonChanged(name); break;
+                case "Settings": footerLoader.item.seclectedButtonChanged(name); break;
+            }
+        }
     }
 }

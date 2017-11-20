@@ -112,12 +112,24 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
-        footerLoader.item.seclectedButtonChanged("Settings")
+        selectButton("Settings")
         stack.push("qrc:/wallet/SettingsScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openMainScreen() {
-        footerLoader.item.seclectedButtonChanged("Wallet")
+        selectButton("Wallet")
         stack.pop(initialScreen)
+    }
+
+    function selectButton(name)
+    {
+        if (Qt.platform.os === "ios") {
+            switch (name) {
+                case "Wallet": footerLoader.item.seclectedButtonChanged(name); break;
+                case "Transaction": footerLoader.item.seclectedButtonChanged(name); break;
+                case "Transfer": footerLoader.item.seclectedButtonChanged(name); break;
+                case "Settings": footerLoader.item.seclectedButtonChanged(name); break;
+            }
+        }
     }
 }
