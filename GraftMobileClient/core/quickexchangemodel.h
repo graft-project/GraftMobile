@@ -28,9 +28,11 @@ public:
     QStringList codeList() const;
     void updatePrice(const QString &code, const QString &price);
 
+    QString imagePath(const QString &code) const;
+
 public slots:
-    void add(const QString &iconPath, const QString &name, const QString &code,
-             const QString &price = QString(), bool primary = false);
+    void add(const QString &name, const QString &code, const QString &price = QString(),
+             bool primary = false);
     void clear();
 
 protected:

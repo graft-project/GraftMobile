@@ -17,11 +17,11 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.1</string>
+    <string>1.3</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>1.1.2</string>
+    <string>1.3.0</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NOTE</key>
@@ -33,9 +33,9 @@
         <string>UIInterfaceOrientationPortrait</string>
     </array>
     <key>NSCameraUsageDescription</key>
-    <string>POS needs access to camera in order to provide all features of app.</string>
+    <string>Make photos for item preview and scan QR Codes.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>POS requires accessing your photo library to show the image.</string>
+    <string>Select photos from the photo library for item preview.</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
     <key>UIStatusBarStyle</key>

@@ -5,18 +5,22 @@ import QtQuick.Controls 2.2
 RowLayout {
     property alias icon: image.source
     property alias text: label.text
-    property alias isBold: label.font.bold
+    property bool isBold: false
 
     Image {
         id: image
         cache: false
-        Layout.preferredHeight: parent.height
-        Layout.preferredWidth: height / 1.5
+        Layout.maximumHeight: parent.height
+        Layout.maximumWidth: height
+        fillMode: Image.PreserveAspectFit
     }
 
     Label {
         id: label
         color: "#ffffff"
-        font.pointSize: 18
+        font {
+            pointSize: isBold ? 20 : 18
+            bold: isBold
+        }
     }
 }

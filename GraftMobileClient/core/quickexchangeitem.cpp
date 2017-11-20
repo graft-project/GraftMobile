@@ -1,19 +1,9 @@
 #include "quickexchangeitem.h"
 
-QuickExchangeItem::QuickExchangeItem(const QString &iconPath, const QString &name,
-                                     const QString &code, const QString &price, bool primary)
-    : mIconPath(iconPath), mName(name), mCode(code), mPrice(price), mPrimary(primary)
+QuickExchangeItem::QuickExchangeItem(const QString &name, const QString &code,
+                                     const QString &price, bool primary)
+    : mName(name), mCode(code), mPrice(price), mPrimary(primary)
 {
-}
-
-QString QuickExchangeItem::iconPath() const
-{
-    return mIconPath;
-}
-
-void QuickExchangeItem::setIconPath(const QString &iconPath)
-{
-    mIconPath = iconPath;
 }
 
 QString QuickExchangeItem::name() const

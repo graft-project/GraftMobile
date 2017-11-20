@@ -38,20 +38,26 @@ BaseScreen {
             id: companyNameTextField
             maximumLength: 50
             Layout.topMargin: 10
-            Layout.leftMargin: 5
-            Layout.rightMargin: 5
             Layout.alignment: Qt.AlignTop
             text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
         }
 
         ColumnLayout {
+            Layout.topMargin: 10
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
+            spacing: 2
+
+            Label {
+                text: qsTr("Service")
+                font.pointSize: Qt.platform.os === "ios" ? 16 : switchLabel.font.pointSize
+                color: "#8e8e93"
+            }
 
             RowLayout {
                 spacing: 0
 
                 Label {
+                    id: switchLabel
                     Layout.fillWidth: true
                     Layout.alignment: Label.AlignLeft | Label.AlignVCenter
                     text: qsTr("Use own service address")
@@ -83,6 +89,7 @@ BaseScreen {
                 LinearEditItem {
                     id: portTextField
                     Layout.preferredWidth: root.width / 4
+                    inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
@@ -90,6 +97,10 @@ BaseScreen {
                     }
                 }
             }
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
 
         WideActionButton {

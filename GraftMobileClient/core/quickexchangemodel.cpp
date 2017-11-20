@@ -23,7 +23,7 @@ QVariant QuickExchangeModel::data(const QModelIndex &index, int role) const
     switch (role)
     {
     case IconPathRole:
-        return quickExchangeItem->iconPath();
+        return imagePath(quickExchangeItem->code());
     case NameRole:
         return quickExchangeItem->name();
     case CodeRole:
@@ -54,7 +54,6 @@ bool QuickExchangeModel::setData(const QModelIndex &index, const QVariant &value
         switch (role)
         {
         case IconPathRole:
-            mQuickExchangeItems[index.row()]->setIconPath(value.toString());
             break;
         case NameRole:
             mQuickExchangeItems[index.row()]->setName(value.toString());
@@ -105,13 +104,19 @@ void QuickExchangeModel::updatePrice(const QString &code, const QString &price)
     }
 }
 
-void QuickExchangeModel::add(const QString &iconPath, const QString &name,
-                             const QString &code, const QString &price, bool primary)
+QString QuickExchangeModel::imagePath(const QString &code) const
 {
-    if (!iconPath.isEmpty() || !name.isEmpty() || !price.isEmpty() || !code.isEmpty())
+    static QString path("qrc:/exchange/%1.png");
+    return path.arg(code.toLower());
+}
+
+void QuickExchangeModel::add(const QString &name, const QString &code, const QString &price,
+                             bool primary)
+{
+    if (!name.isEmpty() || !price.isEmpty() || !code.isEmpty())
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mQuickExchangeItems << new QuickExchangeItem(iconPath, name, code, price, primary);
+        mQuickExchangeItems << new QuickExchangeItem(name, code, price, primary);
         endInsertRows();
     }
 }
