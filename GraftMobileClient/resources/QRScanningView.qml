@@ -3,37 +3,16 @@ import QtMultimedia 5.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QZXing 2.3
-import "components"
 
-BaseScreen {
-    id: root
-
+Item {
     property string lastTag: ""
 
-    signal qrCodeDetected()
-
-    Connections {
-        target: GraftClient
-
-        onReadyToPayReceived: {
-            if (result === true) {
-                pushScreen.openPaymentConfirmationScreen()
-            }
-            else {
-                pushScreen.openMainScreen()
-            }
-         }
-    }
+    signal qrCodeDetected(string message)
 
     onVisibleChanged: {
         if (visible) {
             camera.start()
         }
-    }
-
-    title: qsTr("Pay")
-    screenHeader {
-        navigationButtonState: Qt.platform.os !== "android"
     }
 
     Camera {
@@ -97,7 +76,7 @@ BaseScreen {
                     lastTag = tag
                     console.log(tag + " | " + " | " + decoder.charSet())
                     camera.stop()
-                    GraftClient.readyToPay(tag)
+                    qrCodeDetected(tag)
                 }
             }
 
