@@ -95,5 +95,6 @@
         <file alias="neo.png">imgs/coins/exchange/neo.png</file>
         <file alias="xmr.png">imgs/coins/exchange/xmr.png</file>
         <file alias="xrp.png">imgs/coins/exchange/xrp.png</file>
+        <file alias="usd.png">imgs/coins/exchange/usd.png</file>
     </qresource>
 </RCC>
