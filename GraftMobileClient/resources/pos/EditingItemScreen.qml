@@ -77,12 +77,21 @@ BaseScreen {
             id: productItem
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Rectangle {
+                anchors.fill: parent
+                color: "#60ff0000"
+            }
         }
 
         WideActionButton {
             id: multiTaskingButton
             text: qsTr("Confirm")
+            Layout.topMargin: 10
             onClicked: confirmProductParameters()
+            Rectangle {
+                anchors.fill: parent
+                color: "#60fff000"
+            }
         }
     }
 }
