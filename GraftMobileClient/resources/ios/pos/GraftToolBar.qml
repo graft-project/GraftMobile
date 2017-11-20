@@ -1,24 +1,14 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import com.graft.design 1.0
 import "../components"
 
-Rectangle {
-    property var pushScreen
-
-    signal seclectedButtonChanged(string buttonName)
-
-    height: 49
-    color: ColorFactory.color(DesignFactory.IosNavigationBar)
-
-    Component.onCompleted: seclectedButtonChanged("Store")
-
+BaseGraftToolBar {
     onSeclectedButtonChanged: {
-        crearSelection()
+        clearSelection()
         switch (buttonName) {
-        case "Store": storeButton.buttonColor = "#25FFFFFF"; break;
-        case "Wallet": walletButton.buttonColor = "#25FFFFFF"; break;
-        case "Settings": settingsButton.buttonColor = "#25FFFFFF"; break;
+            case "Store": storeButton.buttonColor = clickedColor; break;
+            case "Wallet": walletButton.buttonColor = clickedColor; break;
+            case "Settings": settingsButton.buttonColor = clickedColor; break;
         }
     }
 
@@ -30,6 +20,7 @@ Rectangle {
             id: storeButton
             text: qsTr("Store")
             source: "qrc:/imgs/storeIos.png"
+            buttonColor: clickedColor
             onClicked: pushScreen.openMainScreen()
         }
 
@@ -54,7 +45,7 @@ Rectangle {
         }
     }
 
-    function crearSelection(){
+    function clearSelection(){
         storeButton.buttonColor = "transparent"
         walletButton.buttonColor = "transparent"
         settingsButton.buttonColor = "transparent"
