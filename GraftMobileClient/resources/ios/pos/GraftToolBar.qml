@@ -6,9 +6,9 @@ BaseGraftToolBar {
     onSeclectedButtonChanged: {
         clearSelection()
         switch (buttonName) {
-            case "Store": storeButton.buttonColor = clickedColor; break;
-            case "Wallet": walletButton.buttonColor = clickedColor; break;
-            case "Settings": settingsButton.buttonColor = clickedColor; break;
+            case "Store": storeButton.buttonColor = highlight; break;
+            case "Wallet": walletButton.buttonColor = highlight; break;
+            case "Settings": settingsButton.buttonColor = highlight; break;
         }
     }
 
@@ -20,7 +20,7 @@ BaseGraftToolBar {
             id: storeButton
             text: qsTr("Store")
             source: "qrc:/imgs/storeIos.png"
-            buttonColor: clickedColor
+            buttonColor: highlight
             onClicked: pushScreen.openMainScreen()
         }
 
@@ -46,8 +46,9 @@ BaseGraftToolBar {
     }
 
     function clearSelection() {
-        storeButton.buttonColor = "transparent"
-        walletButton.buttonColor = "transparent"
-        settingsButton.buttonColor = "transparent"
+        var dafaultColor = "transparent"
+        storeButton.buttonColor = dafaultColor
+        walletButton.buttonColor = dafaultColor
+        settingsButton.buttonColor = dafaultColor
     }
 }

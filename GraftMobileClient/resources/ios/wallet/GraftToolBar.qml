@@ -6,10 +6,10 @@ BaseGraftToolBar {
     onSeclectedButtonChanged: {
         clearSelection()
         switch (buttonName) {
-            case "Wallet": walletButton.buttonColor = clickedColor; break;
-            case "Transaction": transactionButton.buttonColor = clickedColor; break;
-            case "Transfer": transferButton.buttonColor = clickedColor; break;
-            case "Settings": settingsButton.buttonColor = clickedColor; break;
+            case "Wallet": walletButton.buttonColor = highlight; break;
+            case "Transaction": transactionButton.buttonColor = highlight; break;
+            case "Transfer": transferButton.buttonColor = highlight; break;
+            case "Settings": settingsButton.buttonColor = highlight; break;
         }
     }
 
@@ -21,7 +21,7 @@ BaseGraftToolBar {
             id: walletButton
             text: qsTr("Wallet")
             source: "qrc:/imgs/walletIos.png"
-            buttonColor: clickedColor
+            buttonColor: highlight
             onClicked: pushScreen.openMainScreen()
         }
 
@@ -55,9 +55,10 @@ BaseGraftToolBar {
     }
 
     function clearSelection() {
-        walletButton.buttonColor = "transparent"
-        transactionButton.buttonColor = "transparent"
-        transferButton.buttonColor = "transparent"
-        settingsButton.buttonColor = "transparent"
+        var dafaultColor = "transparent"
+        walletButton.buttonColor = dafaultColor
+        transactionButton.buttonColor = dafaultColor
+        transferButton.buttonColor = dafaultColor
+        settingsButton.buttonColor = dafaultColor
     }
 }

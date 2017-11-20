@@ -3,7 +3,7 @@ import com.graft.design 1.0
 
 Rectangle {
     property var pushScreen
-    property string clickedColor: "#25FFFFFF"
+    property string highlight: "#25FFFFFF"
 
     signal seclectedButtonChanged(string buttonName)
 
