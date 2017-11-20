@@ -119,7 +119,7 @@ GraftApplicationWindow {
     }
 
     function openMainScreen() {
-        footerLoader.item.seclectedButtonChanged("Store")
+        selectButton("Store")
         stack.pop(mainScreen)
     }
 
