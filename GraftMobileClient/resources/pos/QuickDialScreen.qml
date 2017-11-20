@@ -81,8 +81,7 @@ BaseScreen {
     MessageDialog {
         id: messageDialog
         title: qsTr("Attention")
-        text: qsTr("Don't leave blank field as it isn't correct! "+
-                   "You must enter the price product.")
+        text: qsTr("The price cannot be zero. Please, enter the price.")
         icon: StandardIcon.Warning
     }
 }
