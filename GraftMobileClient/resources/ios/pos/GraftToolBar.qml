@@ -45,7 +45,7 @@ BaseGraftToolBar {
         }
     }
 
-    function clearSelection(){
+    function clearSelection() {
         storeButton.buttonColor = "transparent"
         walletButton.buttonColor = "transparent"
         settingsButton.buttonColor = "transparent"
