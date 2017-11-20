@@ -49,6 +49,7 @@ void GraftWalletClient::readyToPay(const QString &data)
             mPID = dataList.value(0);
             mPrivateKey = dataList.value(1);
             mTotalCost = dataList.value(2).toDouble();
+            updateQuickExchange(mTotalCost);
             mApi->readyToPay(mPID, QString());
         }
     }
