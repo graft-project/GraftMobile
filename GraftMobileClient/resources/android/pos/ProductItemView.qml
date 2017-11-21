@@ -78,7 +78,7 @@ Item {
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 12 ///--------------------------------????
+            Layout.topMargin: 12
             Layout.fillHeight: true
             Layout.preferredHeight: 100
             Layout.preferredWidth: height
