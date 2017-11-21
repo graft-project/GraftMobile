@@ -112,10 +112,19 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
+        selectButton("Settings")
         stack.push("qrc:/wallet/SettingsScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openMainScreen() {
+        selectButton("Wallet")
         stack.pop(initialScreen)
+    }
+
+    function selectButton(name)
+    {
+        if (Qt.platform.os === "ios") {
+            footerLoader.item.seclectedButtonChanged(name)
+        }
     }
 }

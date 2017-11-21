@@ -12,7 +12,7 @@ ColumnLayout {
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
 
-    spacing: 8
+    spacing: 0
 
     Text {
         id: titleItem

@@ -9,7 +9,7 @@ ColumnLayout {
     property alias currencyIndex: graftCBox.currentIndex
     property alias dropdownTitle: dropdownTitle.text
 
-    spacing: 4
+    spacing: 0
 
     Text {
         id: dropdownTitle
@@ -23,10 +23,9 @@ ColumnLayout {
         Material.background: "#00707070"
         Material.foreground: "#585858"
         textRole: "name"
-        leftPadding: -12
         Layout.fillWidth: true
-        Layout.topMargin: -12
-        Layout.bottomMargin: -2
+        Layout.preferredHeight: 34
+        leftPadding: -12
     }
 
     Rectangle {
