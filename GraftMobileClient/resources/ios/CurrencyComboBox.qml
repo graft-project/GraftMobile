@@ -9,7 +9,7 @@ ColumnLayout {
     property alias currencyIndex: graftCBox.currentIndex
     property alias dropdownTitle: dropdownTitle.text
 
-    spacing: 4
+    spacing: 0
 
     ComboBox {
         id: graftCBox
@@ -18,15 +18,15 @@ ColumnLayout {
         textRole: "name"
         leftPadding: dropdownTitle.width - 8
         Layout.fillWidth: true
-        Layout.topMargin: -8
-        Layout.bottomMargin: -2
+        Layout.topMargin: -6
+        Layout.bottomMargin: -4
 
         Text {
             id: dropdownTitle
             anchors {
                 top: parent.top
                 left: parent.left
-                topMargin: 13
+                topMargin: 14
             }
             font.pointSize: parent.font.pointSize
             color: "#8e8e93"
@@ -36,6 +36,7 @@ ColumnLayout {
     Rectangle {
         height: 1
         color: "#acacac"
+        Layout.topMargin: 4
         Layout.fillWidth: true
     }
 }

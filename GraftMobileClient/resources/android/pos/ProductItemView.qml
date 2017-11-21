@@ -54,7 +54,7 @@ Item {
                 id: price
                 title: qsTr("Price")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftComboBox.height
+                Layout.preferredHeight: 40
                 Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
@@ -75,7 +75,7 @@ Item {
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 5
+            Layout.topMargin: 12
             Layout.fillHeight: true
             Layout.preferredWidth: height
             Layout.maximumHeight: 200
