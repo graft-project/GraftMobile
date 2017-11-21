@@ -12,10 +12,10 @@ GraftPOSAPI::GraftPOSAPI(const QUrl &url, QObject *parent)
 
 void GraftPOSAPI::sale(const QString &pid, const QString &transaction)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("Sale"));
-    data.insert(QStringLiteral("PID"), pid);
-    data.insert(QStringLiteral("Transaction"), transaction);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    params.insert(QStringLiteral("data"), transaction);
+    QJsonObject data = buildMessage(QStringLiteral("Sale"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
@@ -24,9 +24,9 @@ void GraftPOSAPI::sale(const QString &pid, const QString &transaction)
 
 void GraftPOSAPI::rejectSale(const QString &pid)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("RejectSale"));
-    data.insert(QStringLiteral("PID"), pid);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    QJsonObject data = buildMessage(QStringLiteral("RejectSale"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
@@ -35,9 +35,9 @@ void GraftPOSAPI::rejectSale(const QString &pid)
 
 void GraftPOSAPI::getSaleStatus(const QString &pid)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("GetSaleStatus"));
-    data.insert(QStringLiteral("PID"), pid);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    QJsonObject data = buildMessage(QStringLiteral("GetSaleStatus"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
@@ -50,7 +50,7 @@ void GraftPOSAPI::receiveSaleResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit saleResponseReceived(object.value(QLatin1String("Result")).toInt());
+        emit saleResponseReceived(object.value(QLatin1String("result")).toInt());
     }
 }
 
@@ -60,7 +60,7 @@ void GraftPOSAPI::receiveRejectSaleResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit rejectSaleResponseReceived(object.value(QLatin1String("Result")).toInt());
+        emit rejectSaleResponseReceived(object.value(QLatin1String("result")).toInt());
     }
 }
 
@@ -70,7 +70,7 @@ void GraftPOSAPI::receiveSaleStatusResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit getSaleStatusResponseReceived(object.value(QLatin1String("Result")).toInt(),
-                                           object.value(QLatin1String("SaleStatus")).toInt());
+        emit getSaleStatusResponseReceived(object.value(QLatin1String("result")).toInt(),
+                                           object.value(QLatin1String("sale_status")).toInt());
     }
 }

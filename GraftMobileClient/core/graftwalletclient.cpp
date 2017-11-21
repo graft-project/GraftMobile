@@ -62,7 +62,7 @@ void GraftWalletClient::rejectPay()
 
 void GraftWalletClient::pay()
 {
-    mApi->pay(mPID, QString(""));
+    mApi->pay(mPID, QString(""), 0);
 }
 
 void GraftWalletClient::getPayStatus()
