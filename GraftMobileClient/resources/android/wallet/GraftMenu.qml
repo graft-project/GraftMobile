@@ -21,7 +21,7 @@ BaseMenu {
             Layout.fillWidth: true
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openWalletScreen()
+                pushScreen.openMainScreen()
             }
         }
 

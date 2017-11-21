@@ -84,7 +84,7 @@ GraftApplicationWindow {
     }
 
     function openQRScanningScreen() {
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
+        stack.push("qrc:/wallet/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
     function openAddCardScreen() {
