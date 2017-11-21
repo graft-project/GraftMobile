@@ -41,9 +41,9 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.preferredHeight: 120
-            Layout.maximumHeight: 100
-            Layout.minimumHeight: 50
+            Layout.preferredHeight: 200
+            Layout.maximumHeight: 150
+            Layout.minimumHeight: 100
             Layout.alignment: Qt.AlignTop
             title: qsTr("Item description")
             wrapMode: TextInput.WordWrap
@@ -78,10 +78,11 @@ Item {
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.topMargin: 5
             Layout.fillHeight: true
+            Layout.preferredHeight: 100
             Layout.preferredWidth: height
-            Layout.maximumHeight: 150
+            Layout.maximumHeight: 250
+            Layout.minimumHeight: 100
             fillMode: Image.PreserveAspectFit
             source: ""
             visible: previewImage.status === Image.Ready
@@ -121,10 +122,6 @@ Item {
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Rectangle {
-                anchors.fill: parent
-                color: "black"
-            }
         }
     }
 }
