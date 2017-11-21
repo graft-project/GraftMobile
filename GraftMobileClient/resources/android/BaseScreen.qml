@@ -16,7 +16,7 @@ Page {
             if(navigationButtonState) {
                 basePage.pushScreen.showMenu()
             } else {
-                if (specialBackMode != null) {
+                if (specialBackMode) {
                     specialBackMode()
                 } else {
                     basePage.pushScreen.goBack()

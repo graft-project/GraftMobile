@@ -13,7 +13,7 @@ Page {
         headerText: basePage.title
 
         onNavigationButtonClicked: {
-            if (specialBackMode != null) {
+            if (specialBackMode) {
                 specialBackMode()
             } else {
                 basePage.pushScreen.goBack()
