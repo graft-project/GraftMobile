@@ -53,6 +53,15 @@ BaseScreen {
     StackLayout {
         id: stackLayout
         anchors.fill: parent
+        onCurrentIndexChanged: {
+            if (currentIndex === 1) {
+                accountScreen.screenHeader.actionButtonState = false
+                accountScreen.specialBackMode = changeBehaviorButton
+            } else {
+                accountScreen.specialBackMode = null
+                accountScreen.screenHeader.actionButtonState = true
+            }
+        }
 
         Item {
             ColumnLayout {
@@ -106,8 +115,13 @@ BaseScreen {
         QRScanningView {
             onQrCodeDetected: {
                 walletNumberText.text = message
-                stackLayout.currentIndex = 0
+                changeBehaviorButton()
             }
         }
+    }
+
+    function changeBehaviorButton()
+    {
+        stackLayout.currentIndex = 0
     }
 }
