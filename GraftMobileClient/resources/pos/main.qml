@@ -146,11 +146,7 @@ GraftApplicationWindow {
     function selectButton(name)
     {
         if (Qt.platform.os === "ios") {
-            switch (name) {
-                case "Store": footerLoader.item.seclectedButtonChanged(name); break;
-                case "Wallet": footerLoader.item.seclectedButtonChanged(name); break;
-                case "Settings": footerLoader.item.seclectedButtonChanged(name); break;
-            }
+            footerLoader.item.seclectedButtonChanged(name)
         }
     }
 }
