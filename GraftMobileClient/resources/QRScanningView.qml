@@ -38,6 +38,7 @@ Item {
         anchors.fill: parent
         id: captureZone
         color: "transparent"
+
         Rectangle {
             width: parent.width * 0.75
             height: width
@@ -67,10 +68,9 @@ Item {
             return videoOutput.mapRectToSource(normalizedRect)
         }
 
-
         decoder {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
-
+            tryHarder: false
             onTagFound: {
                 if (lastTag != tag) {
                     lastTag = tag
@@ -79,8 +79,6 @@ Item {
                     qrCodeDetected(tag)
                 }
             }
-
-            tryHarder: false
         }
     }
 }

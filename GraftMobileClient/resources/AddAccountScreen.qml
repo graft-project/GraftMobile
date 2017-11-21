@@ -52,61 +52,58 @@ BaseScreen {
 
     StackLayout {
         id: stackLayout
+        anchors.fill: parent
 
-        anchors {
-            fill: parent
-            bottomMargin: 15
-        }
-
-        ColumnLayout {
-            spacing: 0
-            anchors {
-                fill: parent
-                margins: 15
-            }
-
-            LinearEditItem {
-                id: accountName
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                maximumLength: 50
-            }
-
-            CurrencyComboBox {
-                id: coinsComboBox
-                Layout.alignment: Qt.AlignTop
-            }
-
-            LinearEditItem {
-                id: walletNumberText
-                Layout.fillWidth: true
-                Layout.topMargin: 10
-                Layout.alignment: Qt.AlignTop
-                showLengthIndicator: false
-                validator: RegExpValidator {
-                    regExp: /[\da-zA-Z]+/
+        Item {
+            ColumnLayout {
+                spacing: 0
+                anchors {
+                    fill: parent
+                    margins: 15
                 }
-            }
 
-            Item {
-                Layout.fillHeight: true
-            }
+                LinearEditItem {
+                    id: accountName
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignTop
+                    maximumLength: 50
+                }
 
-            WideActionButton {
-                text: qsTr("Scan QR Code")
-                Layout.alignment: Qt.AlignBottom
-                onClicked: stackLayout.currentIndex = 1
-            }
+                CurrencyComboBox {
+                    id: coinsComboBox
+                    Layout.alignment: Qt.AlignTop
+                }
 
-            WideActionButton {
-                text: qsTr("Add")
-                Layout.alignment: Qt.AlignBottom
-                onClicked: addAccount()
+                LinearEditItem {
+                    id: walletNumberText
+                    Layout.fillWidth: true
+                    Layout.topMargin: 10
+                    Layout.alignment: Qt.AlignTop
+                    showLengthIndicator: false
+                    validator: RegExpValidator {
+                        regExp: /[\da-zA-Z]+/
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                }
+
+                WideActionButton {
+                    Layout.alignment: Qt.AlignBottom
+                    text: qsTr("Scan QR Code")
+                    onClicked: stackLayout.currentIndex = 1
+                }
+
+                WideActionButton {
+                    Layout.alignment: Qt.AlignBottom
+                    text: qsTr("Add")
+                    onClicked: addAccount()
+                }
             }
         }
 
         QRScanningView {
-            anchors.fill: parent
             onQrCodeDetected: {
                 walletNumberText.text = message
                 stackLayout.currentIndex = 0

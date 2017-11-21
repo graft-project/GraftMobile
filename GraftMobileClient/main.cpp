@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFileInfo>
+#include <QZXing.h>
 #include <QDir>
 
 #include "core/cardmodel.h"
@@ -22,10 +23,6 @@
 #endif
 #endif
 
-#ifdef WALLET_BUILD
-#include <QZXing.h>
-#endif
-
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
 #endif
@@ -41,6 +38,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
+    QZXing::registerQMLTypes();
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
@@ -70,7 +68,6 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
-    QZXing::registerQMLTypes();
     GraftWalletClient client;
     client.registerTypes(&engine);
 
