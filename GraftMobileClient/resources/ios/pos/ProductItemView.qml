@@ -52,7 +52,6 @@ Item {
                 id: price
                 title: qsTr("Price:")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftComboBox.height
                 Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
@@ -64,7 +63,6 @@ Item {
             CurrencyComboBox {
                 id: graftComboBox
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredWidth: 130
                 dropdownTitle: qsTr("Currency:")
