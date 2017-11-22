@@ -84,7 +84,7 @@ BaseScreen {
                 id: addButton
                 text: qsTr("Checkout")
                 Layout.alignment: Qt.AlignBottom
-                Layout.topMargin: 10
+                Layout.topMargin: 15
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 onClicked: {
@@ -100,7 +100,6 @@ BaseScreen {
                 text: qsTr("Quick Deal")
                 Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 Layout.alignment: Qt.AlignBottom
-                Layout.topMargin: 10
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
