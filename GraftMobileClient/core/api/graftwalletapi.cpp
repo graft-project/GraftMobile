@@ -68,7 +68,7 @@ void GraftWalletAPI::receiveReadyToPayResponse()
     if (!object.isEmpty())
     {
         emit readyToPayReceived(object.value(QLatin1String("result")).toInt(),
-                                object.value(QLatin1String("transaction")).toString());
+                                object.value(QLatin1String("data")).toString());
     }
 }
 
