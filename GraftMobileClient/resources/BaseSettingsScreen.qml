@@ -77,11 +77,8 @@ BaseScreen {
 
                 LinearEditItem {
                     id: ipTextField
-                    inputMask: "999.999.999.999; "
+                    inputMask: "000.000.000.000; "
                     inputMethodHints: Qt.ImhDigitsOnly
-                    validator: RegExpValidator {
-                        regExp: /\d/
-                    }
                     showLengthIndicator: false
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("ip") : ""
                 }
@@ -93,7 +90,7 @@ BaseScreen {
                     showLengthIndicator: false
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
-                        regExp: /\d{5}/
+                        regExp: /\d{1,5}/
                     }
                 }
             }
