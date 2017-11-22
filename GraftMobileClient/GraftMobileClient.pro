@@ -10,6 +10,7 @@ android {
 include(android/android.pri)
 }
 
+include(QZXing.pri)
 contains(DEFINES, POS_BUILD) {
 include(QRCodeGenerator.pri)
 
@@ -32,8 +33,6 @@ HEADERS += \
 }
 
 contains(DEFINES, WALLET_BUILD) {
-include(QZXing.pri)
-
 TARGET = GraftWallet
 
 SOURCES += \

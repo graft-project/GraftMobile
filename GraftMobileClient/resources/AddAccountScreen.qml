@@ -50,49 +50,78 @@ BaseScreen {
         icon: StandardIcon.Warning
     }
 
-    ColumnLayout {
-        spacing: 0
-        anchors {
-            fill: parent
-            margins: 15
-        }
-
-        LinearEditItem {
-            id: accountName
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            maximumLength: 50
-        }
-
-        CurrencyComboBox {
-            id: coinsComboBox
-            Layout.alignment: Qt.AlignTop
-        }
-
-        LinearEditItem {
-            id: walletNumberText
-            Layout.fillWidth: true
-            Layout.topMargin: 10
-            Layout.alignment: Qt.AlignTop
-            showLengthIndicator: false
-            validator: RegExpValidator {
-                regExp: /[\da-zA-Z]+/
+    StackLayout {
+        id: stackLayout
+        anchors.fill: parent
+        onCurrentIndexChanged: {
+            if (currentIndex === 1) {
+                accountScreen.screenHeader.actionButtonState = false
+                accountScreen.specialBackMode = changeBehaviorButton
+            } else {
+                accountScreen.specialBackMode = null
+                accountScreen.screenHeader.actionButtonState = true
             }
         }
 
         Item {
-            Layout.fillHeight: true
+            ColumnLayout {
+                spacing: 0
+                anchors {
+                    fill: parent
+                    margins: 15
+                }
+
+                LinearEditItem {
+                    id: accountName
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignTop
+                    maximumLength: 50
+                }
+
+                CurrencyComboBox {
+                    id: coinsComboBox
+                    Layout.alignment: Qt.AlignTop
+                }
+
+                LinearEditItem {
+                    id: walletNumberText
+                    Layout.fillWidth: true
+                    Layout.topMargin: 10
+                    Layout.alignment: Qt.AlignTop
+                    showLengthIndicator: false
+                    validator: RegExpValidator {
+                        regExp: /[\da-zA-Z]+/
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                }
+
+                WideActionButton {
+                    Layout.alignment: Qt.AlignBottom
+                    text: qsTr("Scan QR Code")
+                    onClicked: stackLayout.currentIndex = 1
+                }
+
+                WideActionButton {
+                    Layout.alignment: Qt.AlignBottom
+                    text: qsTr("Add")
+                    onClicked: addAccount()
+                }
+            }
         }
 
-        WideActionButton {
-            text: qsTr("Scan QR Code")
-            Layout.alignment: Qt.AlignBottom
+        QRScanningView {
+            onQrCodeDetected: {
+                walletNumberText.text = message
+                changeBehaviorButton()
+            }
         }
+    }
 
-        WideActionButton {
-            text: qsTr("Add")
-            Layout.alignment: Qt.AlignBottom
-            onClicked: addAccount()
-        }
+    function changeBehaviorButton()
+    {
+        stackLayout.currentIndex = 0
     }
 }

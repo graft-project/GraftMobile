@@ -6,13 +6,18 @@ Page {
     property var pushScreen
     property var action
     property alias screenHeader: appHeader
+    property var specialBackMode: null
 
     header: Header {
         id: appHeader
         headerText: basePage.title
 
         onNavigationButtonClicked: {
-            basePage.pushScreen.goBack()
+            if (specialBackMode) {
+                specialBackMode()
+            } else {
+                basePage.pushScreen.goBack()
+            }
         }
 
         onActionButtonClicked: {
