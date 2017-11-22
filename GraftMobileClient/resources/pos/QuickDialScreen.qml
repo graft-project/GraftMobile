@@ -50,7 +50,7 @@ BaseScreen {
 
                 CurrencyComboBox {
                     id: currencyCBox
-                    Layout.preferredWidth: 50
+                    Layout.preferredWidth: Qt.platform.os === "android" ? 50 : 130
                     Layout.alignment: Qt.AlignTop
                     dropdownTitle: Qt.platform.os === "android" ? qsTr("Currency") : qsTr("Currency:")
                 }
