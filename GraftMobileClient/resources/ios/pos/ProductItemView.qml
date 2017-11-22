@@ -39,9 +39,8 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.preferredHeight: 200
             Layout.maximumHeight: 150
-            Layout.minimumHeight: 100
+            Layout.minimumHeight: 120
             title: qsTr("Item description:")
             wrapMode: TextInput.WordWrap
             maximumLength: 150
@@ -75,7 +74,7 @@ Item {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
             Layout.fillHeight: true
-            Layout.preferredWidth: 100
+            Layout.fillWidth: true
             Layout.maximumHeight: 250
             Layout.minimumHeight: 100
             fillMode: Image.PreserveAspectFit
