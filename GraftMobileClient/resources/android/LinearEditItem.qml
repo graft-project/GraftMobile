@@ -26,7 +26,6 @@ ColumnLayout {
         Layout.fillWidth: true
         verticalAlignment: Qt.AlignTop
         color: "#404040"
-        inputMethodHints: Qt.ImhNoPredictiveText
         onWrapModeChanged: {
             if (wrapMode === TextField.NoWrap) {
                 Layout.fillHeight = false
@@ -40,7 +39,7 @@ ColumnLayout {
     Text {
         id: textCount
         Layout.alignment: Qt.AlignRight
-        text: qsTr("%1 / %2").arg(editItem.length).arg(editItem.maximumLength)
+        text: qsTr("%1 / %2").arg(editItem.displayText.length).arg(editItem.maximumLength)
         color: "#BBBBBB"
         font.pointSize: 12
     }
