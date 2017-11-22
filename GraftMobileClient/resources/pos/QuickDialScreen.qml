@@ -38,7 +38,7 @@ BaseScreen {
 
             RowLayout {
                 Layout.alignment: Qt.AlignTop
-                spacing: 20
+                spacing: 10
 
                 LinearEditItem {
                     id: price
@@ -50,7 +50,7 @@ BaseScreen {
 
                 CurrencyComboBox {
                     id: currencyCBox
-                    Layout.preferredWidth: Qt.platform.os === "android" ? root.width * 0.25 : root.width * 0.5
+                    Layout.preferredWidth: 50
                     Layout.alignment: Qt.AlignTop
                     dropdownTitle: Qt.platform.os === "android" ? qsTr("Currency") : qsTr("Currency:")
                 }
