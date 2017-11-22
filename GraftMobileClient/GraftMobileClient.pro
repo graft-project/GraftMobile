@@ -62,7 +62,8 @@ SOURCES += main.cpp \
     core/accountmodel.cpp \
     core/quickexchangeitem.cpp \
     core/quickexchangemodel.cpp \
-    core/accountmodelserializator.cpp
+    core/accountmodelserializator.cpp \
+    core/accountmanager.cpp
 
 HEADERS += \
     core/config.h \
@@ -83,7 +84,8 @@ HEADERS += \
     core/accountmodel.h \
     core/quickexchangeitem.h \
     core/quickexchangemodel.h \
-    core/accountmodelserializator.h
+    core/accountmodelserializator.h \
+    core/accountmanager.h
 
 include(resources/resources.pri)
 

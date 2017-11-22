@@ -12,10 +12,10 @@ GraftWalletAPI::GraftWalletAPI(const QUrl &url, QObject *parent)
 
 void GraftWalletAPI::readyToPay(const QString &pid, const QString &keyImage)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("ReadyToPay"));
-    data.insert(QStringLiteral("PID"), pid);
-    data.insert(QStringLiteral("KeyImage"), keyImage);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    params.insert(QStringLiteral("key_image"), keyImage);
+    QJsonObject data = buildMessage(QStringLiteral("ReadyToPay"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
@@ -24,22 +24,27 @@ void GraftWalletAPI::readyToPay(const QString &pid, const QString &keyImage)
 
 void GraftWalletAPI::rejectPay(const QString &pid)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("RejectPay"));
-    data.insert(QStringLiteral("PID"), pid);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    QJsonObject data = buildMessage(QStringLiteral("RejectPay"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
     connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveRejectPayResponse);
 }
 
-void GraftWalletAPI::pay(const QString &pid, const QString &transaction)
+void GraftWalletAPI::pay(const QString &pid, const QString &address, double amount)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("Pay"));
-    data.insert(QStringLiteral("PID"), pid);
-    data.insert(QStringLiteral("Transaction"), transaction);
+    QJsonObject trans;
+    trans.insert(QStringLiteral("address"), address);
+    trans.insert(QStringLiteral("amount"), (int)amount);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    params.insert(QStringLiteral("account"), accountPlaceholder());
+    params.insert(QStringLiteral("transaction"), trans);
+    QJsonObject data = buildMessage(QStringLiteral("Pay"), params);
     QByteArray array = QJsonDocument(data).toJson();
+    array.replace("????", mAccountData);
     mTimer.start();
     mReply = mManager->post(mRequest, array);
     connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
@@ -47,9 +52,9 @@ void GraftWalletAPI::pay(const QString &pid, const QString &transaction)
 
 void GraftWalletAPI::getPayStatus(const QString &pid)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("GetPayStatus"));
-    data.insert(QStringLiteral("PID"), pid);
+    QJsonObject params;
+    params.insert(QStringLiteral("pid"), pid);
+    QJsonObject data = buildMessage(QStringLiteral("GetPayStatus"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mReply = mManager->post(mRequest, array);
@@ -62,8 +67,8 @@ void GraftWalletAPI::receiveReadyToPayResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit readyToPayReceived(object.value(QLatin1String("Result")).toInt(),
-                                object.value(QLatin1String("Transaction")).toString());
+        emit readyToPayReceived(object.value(QLatin1String("result")).toInt(),
+                                object.value(QLatin1String("data")).toString());
     }
 }
 
@@ -73,7 +78,7 @@ void GraftWalletAPI::receiveRejectPayResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit rejectPayReceived(object.value(QLatin1String("Result")).toInt());
+        emit rejectPayReceived(object.value(QLatin1String("result")).toInt());
     }
 }
 
@@ -83,7 +88,7 @@ void GraftWalletAPI::receivePayResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit payReceived(object.value(QLatin1String("Result")).toInt());
+        emit payReceived(object.value(QLatin1String("result")).toInt());
     }
 }
 
@@ -93,7 +98,7 @@ void GraftWalletAPI::receivePayStatusResponse()
     QJsonObject object = processReply();
     if (!object.isEmpty())
     {
-        emit getPayStatusReceived(object.value(QLatin1String("Result")).toInt(),
-                                  object.value(QLatin1String("PayStatus")).toInt());
+        emit getPayStatusReceived(object.value(QLatin1String("result")).toInt(),
+                                  object.value(QLatin1String("pay_status")).toInt());
     }
 }

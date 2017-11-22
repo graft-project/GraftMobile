@@ -1,7 +1,9 @@
 #include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
+#include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
 #include "graftbaseclient.h"
+#include "accountmanager.h"
 #include "currencymodel.h"
 #include "currencyitem.h"
 #include "accountmodel.h"
@@ -10,6 +12,7 @@
 #include <QStandardPaths>
 #include <QHostAddress>
 #include <QQmlContext>
+#include <QTimerEvent>
 #include <QQmlEngine>
 #include <QSettings>
 #include <QFileInfo>
@@ -28,8 +31,15 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mAccountModel(nullptr)
     ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
+    ,mBalanceTimer(-1)
+    ,mAccountManager(new AccountManager())
 {
     initSettings();
+}
+
+GraftBaseClient::~GraftBaseClient()
+{
+    delete mAccountManager;
 }
 
 AccountModel *GraftBaseClient::accountModel() const
@@ -70,6 +80,14 @@ QString GraftBaseClient::qrCodeImage() const
 void GraftBaseClient::saveAccounts() const
 {
     saveModel(scAccountModelDataFile, AccountModelSerializator::serialize(mAccountModel));
+}
+
+void GraftBaseClient::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == mBalanceTimer && !mAccountManager->account().isEmpty())
+    {
+        updateBalance();
+    }
 }
 
 void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
@@ -126,6 +144,44 @@ QUrl GraftBaseClient::getServiceUrl() const
         finalUrl = cSeedSupernodes.value(qrand() % cSeedSupernodes.count());
     }
     return QUrl(cUrl.arg(finalUrl));
+}
+
+void GraftBaseClient::requestAccount(GraftGenericAPI *api)
+{
+    if (mAccountManager->account().isEmpty() && api)
+    {
+        connect(api, &GraftGenericAPI::createAccountReceived,
+                this, &GraftBaseClient::receiveAccount);
+        api->createAccount(mAccountManager->passsword());
+    }
+}
+
+void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
+{
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::getBalanceReceived, this, &GraftBaseClient::receiveBalance);
+        mBalanceTimer = startTimer(20000);
+    }
+}
+
+void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password)
+{
+    if (mAccountManager->passsword() == password && !accountData.isEmpty())
+    {
+        mAccountManager->setAccount(accountData);
+    }
+}
+
+void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
+{
+    if (balance >= 0 && unlockedBalance >= 0)
+    {
+        mBalances.insert(LockedBalance, balance);
+        mBalances.insert(UnlockedBalance, unlockedBalance);
+        mBalances.insert(LocalBalance, unlockedBalance);
+        emit balanceUpdated();
+    }
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
@@ -206,6 +262,11 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
 {
     QHostAddress validateIp;
     return validateIp.setAddress(ip);
+}
+
+double GraftBaseClient::balance(GraftBaseClient::BalanceTypes type) const
+{
+    return mBalances.value(type, 0);
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)

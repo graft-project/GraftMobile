@@ -25,6 +25,8 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
     initProductModels();
+    requestAccount(mApi);
+    registerBalanceTimer(mApi);
 }
 
 GraftPOSClient::~GraftPOSClient()
@@ -137,4 +139,9 @@ void GraftPOSClient::initProductModels()
     ProductModelSerializator::deserialize(loadModel(scProductModelDataFile), mProductModel);
     mSelectedProductModel = new SelectedProductProxyModel(this);
     mSelectedProductModel->setSourceModel(mProductModel);
+}
+
+void GraftPOSClient::updateBalance()
+{
+    mApi->getBalance();
 }

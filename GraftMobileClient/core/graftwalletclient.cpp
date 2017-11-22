@@ -17,6 +17,8 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
 
     mPaymentProductModel = new ProductModel(this);
+    requestAccount(mApi);
+    registerBalanceTimer(mApi);
 }
 
 double GraftWalletClient::totalCost() const
@@ -62,7 +64,7 @@ void GraftWalletClient::rejectPay()
 
 void GraftWalletClient::pay()
 {
-    mApi->pay(mPID, QString(""));
+    mApi->pay(mPID, mPrivateKey, mTotalCost);
 }
 
 void GraftWalletClient::getPayStatus()
@@ -115,4 +117,9 @@ void GraftWalletClient::receivePayStatus(int result, int payStatus)
     {
         emit payStatusReceived(false);
     }
+}
+
+void GraftWalletClient::updateBalance()
+{
+    mApi->getBalance();
 }

@@ -11,7 +11,7 @@ public:
 
     void readyToPay(const QString &pid, const QString &keyImage);
     void rejectPay(const QString &pid);
-    void pay(const QString &pid, const QString &transaction);
+    void pay(const QString &pid, const QString &address, double amount);
     void getPayStatus(const QString &pid);
 
 signals:
