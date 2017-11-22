@@ -17,7 +17,6 @@
 #include <QSettings>
 #include <QFileInfo>
 #include <QDir>
-#include <QDebug>
 
 static const QString cBarcodeImageProviderID("barcodes");
 static const QString cQRCodeImageID("qrcode");
@@ -170,7 +169,6 @@ void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QStrin
 {
     if (mAccountManager->passsword() == password && !accountData.isEmpty())
     {
-        qDebug() << accountData;
         mAccountManager->setAccount(accountData);
     }
 }
