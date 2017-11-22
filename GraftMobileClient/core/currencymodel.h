@@ -12,7 +12,7 @@ public:
     enum CurrencyRoles {
         TitleRole = Qt::UserRole + 1,
         CodeRole,
-        ImageRole
+        ImagePathRole
     };
     Q_ENUM(CurrencyRoles)
 
@@ -25,12 +25,12 @@ public:
 
     Q_INVOKABLE int indexOf(const QString &code) const;
     Q_INVOKABLE QString codeOf(const QString &name) const;
-    Q_INVOKABLE QString imageOf(const QString &name) const;
+    Q_INVOKABLE QString imagePath(const QString &code) const;
 
     QVector<CurrencyItem *> currencies() const;
 
 public slots:
-    void add(const QString &name, const QString &code, const QString &image = QString());
+    void add(const QString &name, const QString &code);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;

@@ -29,8 +29,8 @@ QVariant CurrencyModel::data(const QModelIndex &index, int role) const
         return currency->name();
     case CodeRole:
         return currency->code();
-    case ImageRole:
-        return currency->image();
+    case ImagePathRole:
+        return imagePath(currency->code());
     default:
         return QVariant();
     }
@@ -48,8 +48,8 @@ bool CurrencyModel::setData(const QModelIndex &index, const QVariant &value, int
         case CodeRole:
             mCurrency[index.row()]->setCode(value.toString());
             break;
-        case ImageRole:
-            mCurrency[index.row()]->setImage(value.toString());
+        case ImagePathRole:
+            break;
         default:
             break;
         }
@@ -83,16 +83,10 @@ QString CurrencyModel::codeOf(const QString &name) const
     return QString();
 }
 
-QString CurrencyModel::imageOf(const QString &name) const
+QString CurrencyModel::imagePath(const QString &code) const
 {
-    for (int i = 0; i < mCurrency.size(); ++i)
-    {
-        if (mCurrency.at(i)->name() == name)
-        {
-            return mCurrency.at(i)->image();
-        }
-    }
-    return QString();
+    static QString path("qrc:/coins/%1.png");
+    return path.arg(code.toLower());
 }
 
 QVector<CurrencyItem *> CurrencyModel::currencies() const
@@ -100,11 +94,14 @@ QVector<CurrencyItem *> CurrencyModel::currencies() const
     return mCurrency;
 }
 
-void CurrencyModel::add(const QString &name, const QString &code, const QString &image)
+void CurrencyModel::add(const QString &name, const QString &code)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mCurrency << new CurrencyItem(name, code, image);
-    endInsertRows();
+    if((!name.isEmpty() || !code.isEmpty()) && (code != codeOf(name)))
+    {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        mCurrency << new CurrencyItem(name, code);
+        endInsertRows();
+    }
 }
 
 QHash<int, QByteArray> CurrencyModel::roleNames() const
@@ -112,6 +109,6 @@ QHash<int, QByteArray> CurrencyModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[TitleRole] = "name";
     roles[CodeRole] = "code";
-    roles[ImageRole] = "image";
+    roles[ImagePathRole] = "imagePath";
     return roles;
 }

@@ -143,24 +143,15 @@ void GraftBaseClient::initCurrencyModel(QQmlEngine *engine)
     if(!mCurrencyModel)
     {
         mCurrencyModel = new CurrencyModel(this);
-        mCurrencyModel->add(QStringLiteral("BITCOIN"),
-                            QStringLiteral("BTC"), QStringLiteral("qrc:/coins/btc.png"));
-        mCurrencyModel->add(QStringLiteral("BITCONNECT COIN"),
-                            QStringLiteral("BCC"), QStringLiteral("qrc:/coins/bcc.png"));
-        mCurrencyModel->add(QStringLiteral("DASH"),
-                            QStringLiteral("DASH"), QStringLiteral("qrc:/coins/dash.png"));
-        mCurrencyModel->add(QStringLiteral("ETHER"),
-                            QStringLiteral("ETH"), QStringLiteral("qrc:/coins/eth.png"));
-        mCurrencyModel->add(QStringLiteral("LITECOIN"),
-                            QStringLiteral("LTC"), QStringLiteral("qrc:/coins/ltc.png"));
-        mCurrencyModel->add(QStringLiteral("NEW ECONOMY MOVEMENT"),
-                            QStringLiteral("NEM"), QStringLiteral("qrc:/coins/nem.png"));
-        mCurrencyModel->add(QStringLiteral("NEO"),
-                            QStringLiteral("NEO"), QStringLiteral("qrc:/coins/neo.png"));
-        mCurrencyModel->add(QStringLiteral("RIPPLE"),
-                            QStringLiteral("XRP"), QStringLiteral("qrc:/coins/xrp.png"));
-        mCurrencyModel->add(QStringLiteral("MONERO"),
-                            QStringLiteral("XMR"), QStringLiteral("qrc:/coins/xmr.png"));
+        mCurrencyModel->add(QStringLiteral("BITCOIN"), QStringLiteral("BTC"));
+        mCurrencyModel->add(QStringLiteral("BITCONNECT COIN"), QStringLiteral("BCC"));
+        mCurrencyModel->add(QStringLiteral("DASH"), QStringLiteral("DASH"));
+        mCurrencyModel->add(QStringLiteral("ETHER"), QStringLiteral("ETH"));
+        mCurrencyModel->add(QStringLiteral("LITECOIN"), QStringLiteral("LTC"));
+        mCurrencyModel->add(QStringLiteral("NEW ECONOMY MOVEMENT"), QStringLiteral("NEM"));
+        mCurrencyModel->add(QStringLiteral("NEO"), QStringLiteral("NEO"));
+        mCurrencyModel->add(QStringLiteral("RIPPLE"), QStringLiteral("XRP"));
+        mCurrencyModel->add(QStringLiteral("MONERO"), QStringLiteral("XMR"));
         engine->rootContext()->setContextProperty(QStringLiteral("CoinModel"), mCurrencyModel);
     }
 }

@@ -14,7 +14,7 @@ BaseScreen {
 
     function addAccount() {
         if (accountName.text !== "" && walletNumberText.text !== "") {
-            if (AccountModel.add(CoinModel.imageOf(coinsComboBox.currentText), accountName.text,
+            if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)), accountName.text,
                                  CoinModel.codeOf(coinsComboBox.currentText), walletNumberText.text)) {
                 GraftClient.saveAccounts()
                 pushScreen.goBack()
