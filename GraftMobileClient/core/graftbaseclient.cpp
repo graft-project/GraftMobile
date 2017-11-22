@@ -84,7 +84,7 @@ void GraftBaseClient::saveAccounts() const
 
 void GraftBaseClient::timerEvent(QTimerEvent *event)
 {
-    if (event->timerId() == mBalanceTimer)
+    if (event->timerId() == mBalanceTimer && !mAccountManager->account().isEmpty())
     {
         updateBalance();
     }
