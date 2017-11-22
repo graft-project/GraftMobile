@@ -40,6 +40,7 @@ private slots:
 
 private:
     void initProductModels();
+    void updateBalance() override;
 
     GraftPOSAPI *mApi;
     QRCodeGenerator *mQRCodeEncoder;

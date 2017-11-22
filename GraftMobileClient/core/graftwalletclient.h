@@ -35,6 +35,8 @@ private slots:
     void receivePayStatus(int result, int payStatus);
 
 private:
+    void updateBalance() override;
+
     GraftWalletAPI *mApi;
     QString mPID;
     QString mPrivateKey;
