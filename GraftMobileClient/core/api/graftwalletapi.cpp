@@ -18,8 +18,8 @@ void GraftWalletAPI::readyToPay(const QString &pid, const QString &keyImage)
     QJsonObject data = buildMessage(QStringLiteral("ReadyToPay"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveReadyToPayResponse);
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveReadyToPayResponse);
 }
 
 void GraftWalletAPI::rejectPay(const QString &pid)
@@ -29,8 +29,8 @@ void GraftWalletAPI::rejectPay(const QString &pid)
     QJsonObject data = buildMessage(QStringLiteral("RejectPay"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveRejectPayResponse);
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveRejectPayResponse);
 }
 
 void GraftWalletAPI::pay(const QString &pid, const QString &address, double amount)
@@ -46,8 +46,8 @@ void GraftWalletAPI::pay(const QString &pid, const QString &address, double amou
     QByteArray array = QJsonDocument(data).toJson();
     array.replace("????", mAccountData);
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
 }
 
 void GraftWalletAPI::getPayStatus(const QString &pid)
@@ -57,14 +57,15 @@ void GraftWalletAPI::getPayStatus(const QString &pid)
     QJsonObject data = buildMessage(QStringLiteral("GetPayStatus"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayStatusResponse);
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayStatusResponse);
 }
 
 void GraftWalletAPI::receiveReadyToPayResponse()
 {
     qDebug() << "ReadyToPay Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit readyToPayReceived(object.value(QLatin1String("result")).toInt(),
@@ -75,7 +76,8 @@ void GraftWalletAPI::receiveReadyToPayResponse()
 void GraftWalletAPI::receiveRejectPayResponse()
 {
     qDebug() << "RejectPay Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit rejectPayReceived(object.value(QLatin1String("result")).toInt());
@@ -85,7 +87,8 @@ void GraftWalletAPI::receiveRejectPayResponse()
 void GraftWalletAPI::receivePayResponse()
 {
     qDebug() << "Pay Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit payReceived(object.value(QLatin1String("result")).toInt());
@@ -95,7 +98,8 @@ void GraftWalletAPI::receivePayResponse()
 void GraftWalletAPI::receivePayStatusResponse()
 {
     qDebug() << "GetPayStatus Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit getPayStatusReceived(object.value(QLatin1String("result")).toInt(),

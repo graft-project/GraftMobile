@@ -45,7 +45,7 @@ signals:
 protected:
     QString accountPlaceholder() const;
     QJsonObject buildMessage(const QString &key, const QJsonObject &params = QJsonObject()) const;
-    QJsonObject processReply();
+    QJsonObject processReply(QNetworkReply *reply);
 
 private slots:
     void receiveCreateAccountResponse();
@@ -55,7 +55,6 @@ private slots:
 protected:
     QNetworkAccessManager *mManager;
     QNetworkRequest mRequest;
-    QNetworkReply *mReply;
     QElapsedTimer mTimer;
 
     QByteArray mAccountData;
