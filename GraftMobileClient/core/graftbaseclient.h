@@ -42,7 +42,7 @@ public:
     void updateQuickExchange(double cost);
 
 signals:
-    void errorReceived();
+    void errorReceived(const QString &message);
     void balanceUpdated();
 
 public slots:

@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import org.graft 1.0
 import "../"
@@ -35,6 +36,30 @@ GraftApplicationWindow {
         } else {
             drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
         }
+    }
+
+    Connections {
+        target: GraftClient
+
+        onErrorReceived: {
+            if (message !== "") {
+                messageDialog.title = qsTr("Network Error")
+                messageDialog.text = message
+            } else {
+                messageDialog.title = qsTr("Pay failed!")
+                messageDialog.text = qsTr("Pay request failed.\nPlease try again.")
+            }
+            messageDialog.open()
+        }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Pay failed!")
+        icon: StandardIcon.Warning
+        text: qsTr("Pay request failed.\nPlease try again.")
+        standardButtons: MessageDialog.Ok
+        onAccepted: openMainScreen()
     }
 
     StackView {

@@ -24,7 +24,7 @@ void GraftGenericAPI::setUrl(const QUrl &url)
 void GraftGenericAPI::setAccountData(const QByteArray &accountData, const QString &password)
 {
     mAccountData = accountData;
-    mPassword = mPassword;
+    mPassword = password;
 }
 
 QByteArray GraftGenericAPI::accountData() const
@@ -55,7 +55,7 @@ void GraftGenericAPI::getBalance()
     if (mAccountData.isEmpty())
     {
         qDebug() << "GraftGenericAPI: Account Data is empty.";
-        emit error();
+        emit error(QStringLiteral("Couldn't find account data."));
         return;
     }
     QJsonObject params;
@@ -74,7 +74,7 @@ void GraftGenericAPI::getPaymentAddress(const QString &pid)
     if (mAccountData.isEmpty())
     {
         qDebug() << "GraftGenericAPI: Account Data is empty.";
-        emit error();
+        emit error(QStringLiteral("Couldn't find account data."));
         return;
     }
     QJsonObject params;
@@ -135,16 +135,20 @@ QJsonObject GraftGenericAPI::processReply(QNetworkReply *reply)
             }
             else
             {
-                qDebug() << "Error" << response.toVariantMap();
+                emit error(QStringLiteral("Response error"));
             }
         }
+        else
+        {
+            emit error(QStringLiteral("Couldn't parse request response."));
+        }
+    }
+    else
+    {
+        emit error(reply->errorString());
     }
     reply->deleteLater();
     reply = nullptr;
-    if (object.isEmpty())
-    {
-        emit error();
-    }
     return object;
 }
 

@@ -37,7 +37,7 @@ public:
     static int toAtomic(double coins);
 
 signals:
-    void error();
+    void error(const QString &message);
     void createAccountReceived(const QByteArray &accountData, const QString &password);
     void getBalanceReceived(double balance, double unlockedBalance);
     void getPaymentAddressReceived(const QString &address, const QString &pid);

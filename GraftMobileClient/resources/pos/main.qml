@@ -36,6 +36,13 @@ GraftApplicationWindow {
         target: GraftClient
 
         onErrorReceived: {
+            if (message !== "") {
+                messageDialog.title = qsTr("Network Error")
+                messageDialog.text = message
+            } else {
+                messageDialog.title = qsTr("Sale failed!")
+                messageDialog.text = qsTr("Sale request failed.\nPlease try again.")
+            }
             messageDialog.open()
         }
     }
