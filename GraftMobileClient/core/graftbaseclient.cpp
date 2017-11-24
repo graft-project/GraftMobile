@@ -148,11 +148,18 @@ QUrl GraftBaseClient::getServiceUrl() const
 
 void GraftBaseClient::requestAccount(GraftGenericAPI *api)
 {
-    if (mAccountManager->account().isEmpty() && api)
+    if (api)
     {
-        connect(api, &GraftGenericAPI::createAccountReceived,
-                this, &GraftBaseClient::receiveAccount);
-        api->createAccount(mAccountManager->passsword());
+        if (mAccountManager->account().isEmpty())
+        {
+            connect(api, &GraftGenericAPI::createAccountReceived,
+                    this, &GraftBaseClient::receiveAccount);
+            api->createAccount(mAccountManager->passsword());
+        }
+        else
+        {
+            api->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+        }
     }
 }
 
