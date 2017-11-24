@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
+import org.graft 1.0
 import "../components"
 import "../"
 
@@ -8,6 +9,13 @@ BaseMenu {
     property alias balanceInGraft: walletItem.balanceInGraft
 
     logo: "qrc:/imgs/graft_pos_logo_small.png"
+
+    Connections {
+        target: GraftClient
+        onBalanceUpdated: {
+            walletItem.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
+        }
+    }
 
     ColumnLayout {
         spacing: 0

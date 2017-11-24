@@ -2,6 +2,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick 2.9
+import org.graft 1.0
 import "../"
 
 GraftApplicationWindow {
@@ -14,7 +15,7 @@ GraftApplicationWindow {
         onLoaded: {
             drawer = drawerLoader.item
             drawerLoader.item.pushScreen = screenTransitions()
-            drawerLoader.item.balanceInGraft = "1.14"
+            drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 
@@ -122,7 +123,7 @@ GraftApplicationWindow {
     function openInfoWalletScreen() {
         selectButton("Wallet")
         stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions(),
-                   "amountMoney": 145, "amountGraft": 1.14})
+                   "amountGraft": GraftClient.balance(GraftClientTools.UnlockedBalance)})
     }
 
     function openMainScreen() {

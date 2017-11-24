@@ -70,6 +70,7 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
+    qmlRegisterType<GraftClientTools>("org.graft", 1, 0, "GraftClientTools");
 }
 
 QString GraftBaseClient::qrCodeImage() const
@@ -184,9 +185,9 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
 {
     if (balance >= 0 && unlockedBalance >= 0)
     {
-        mBalances.insert(LockedBalance, balance);
-        mBalances.insert(UnlockedBalance, unlockedBalance);
-        mBalances.insert(LocalBalance, unlockedBalance);
+        mBalances.insert(GraftClientTools::LockedBalance, balance);
+        mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
+        mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         emit balanceUpdated();
     }
 }
@@ -262,7 +263,7 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
     return validateIp.setAddress(ip);
 }
 
-double GraftBaseClient::balance(GraftBaseClient::BalanceTypes type) const
+double GraftBaseClient::balance(int type) const
 {
     return mBalances.value(type, 0);
 }
