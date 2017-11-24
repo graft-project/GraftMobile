@@ -24,7 +24,7 @@ void GraftGenericAPI::setUrl(const QUrl &url)
 void GraftGenericAPI::setAccountData(const QByteArray &accountData, const QString &password)
 {
     mAccountData = accountData;
-    mPassword = mPassword;
+    mPassword = password;
 }
 
 QByteArray GraftGenericAPI::accountData() const
