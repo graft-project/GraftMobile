@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import org.graft 1.0
 import "../"
 import "../components"
 
@@ -19,7 +20,7 @@ GraftApplicationWindow {
         onLoaded: {
             drawer = drawerLoader.item
             drawerLoader.item.pushScreen = transitionsBetweenScreens()
-            drawerLoader.item.balanceInGraft = "1.14"
+            drawerLoader.item.balanceInGraft =  GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 
@@ -51,8 +52,7 @@ GraftApplicationWindow {
 
     BalanceScreen {
         id: initialScreen
-        amountGraft: 1.14
-        amountMoney: 145
+        amountGraft: GraftClient.balance(GraftClientTools.UnlockedBalance)
         pushScreen: transitionsBetweenScreens()
     }
 

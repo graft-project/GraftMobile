@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVariant>
+#include "graftclienttools.h"
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
@@ -17,13 +18,6 @@ class GraftBaseClient : public QObject
 {
     Q_OBJECT
 public:
-    enum BalanceTypes {
-        LockedBalance,
-        UnlockedBalance,
-        LocalBalance
-    };
-    Q_ENUM(BalanceTypes)
-
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
@@ -43,7 +37,7 @@ public:
     virtual bool resetUrl(const QString &ip, const QString &port);
     bool isValidIp(const QString &ip) const;
 
-    Q_INVOKABLE double balance(BalanceTypes type) const;
+    Q_INVOKABLE double balance(int type) const;
 
     void updateQuickExchange(double cost);
 
