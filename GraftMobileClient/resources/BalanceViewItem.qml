@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id: balance
 
-    property real amountMoneyCost: 0
     property real amountGraftCost: 0
 
     height: 70
@@ -36,24 +35,13 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft
         }
 
-        ColumnLayout {
-            spacing: 0
+        Text {
+            id:graftCost
+            text: amountGraftCost
+            color: "#404040"
+            font.pointSize: 20
             Layout.rightMargin: 8
-
-            Text {
-                id:graftCost
-                text: amountGraftCost
-                color: "#404040"
-                font.pointSize: 20
-                Layout.alignment: Qt.AlignRight
-            }
-
-            Text {
-                text: "$" + amountMoneyCost
-                color: "#b39036"
-                font.pointSize: 12
-                Layout.alignment: Qt.AlignRight
-            }
+            Layout.alignment: Qt.AlignRight
         }
     }
 
