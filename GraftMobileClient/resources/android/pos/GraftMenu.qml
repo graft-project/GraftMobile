@@ -13,7 +13,7 @@ BaseMenu {
     Connections {
         target: GraftClient
         onBalanceUpdated: {
-            GraftClient.balance(GraftClientTools.UnlockedBalance)
+            walletItem.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 

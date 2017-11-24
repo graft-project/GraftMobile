@@ -13,7 +13,7 @@ Rectangle {
     Connections {
         target: GraftClient
         onBalanceUpdated: {
-            GraftClient.balance(GraftClientTools.UnlockedBalance)
+            amountGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 
