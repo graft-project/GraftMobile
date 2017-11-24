@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import org.graft 1.0
 
 ListView {
     id: accountListView
@@ -12,6 +11,6 @@ ListView {
         width: accountListView.width
         productImage: imagePath
         accountTitle: accountName
-        accountBalance: GraftClient.balance(GraftClientTools.UnlockedBalance)
+        accountBalance: balance
     }
 }

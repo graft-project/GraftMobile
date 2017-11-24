@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import org.graft 1.0
 
 Rectangle {
     id: balance
@@ -8,6 +9,13 @@ Rectangle {
 
     height: 70
     color: "#ffffff"
+
+    Connections {
+        target: GraftClient
+        onBalanceUpdated: {
+            GraftClient.balance(GraftClientTools.UnlockedBalance)
+        }
+    }
 
     RowLayout {
         spacing: 0

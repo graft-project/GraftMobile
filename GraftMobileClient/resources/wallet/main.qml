@@ -21,7 +21,7 @@ GraftApplicationWindow {
         onLoaded: {
             drawer = drawerLoader.item
             drawerLoader.item.pushScreen = transitionsBetweenScreens()
-            drawerLoader.item.balanceInGraft =  GraftClient.balance(GraftClientTools.UnlockedBalance)
+            drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 
