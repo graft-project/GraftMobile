@@ -27,7 +27,7 @@ BaseScreen {
         id: messageDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("QR Code data is wrong. \nPlease, scan another QR Code.")
+        text: qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
     }
 
     QRScanningView {
