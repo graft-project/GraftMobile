@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
@@ -21,9 +22,21 @@ BaseScreen {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
-        GraftClient.resetUrl(ipTextField.text, portTextField.text)
+        if (serviceAddr.checked) {
+            if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
+                messageDialog.open()
+                return
+            }
+        }
         GraftClient.saveSettings()
         pushScreen.openMainScreen()
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("The service IP or port is invalid. Please, enter the correct service address.")
     }
 
     ColumnLayout {
