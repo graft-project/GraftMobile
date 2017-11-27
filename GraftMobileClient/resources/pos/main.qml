@@ -123,7 +123,8 @@ GraftApplicationWindow {
     function openInfoWalletScreen() {
         selectButton("Wallet")
         stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions(),
-                   "amountGraft": GraftClient.balance(GraftClientTools.UnlockedBalance)})
+                   "amountUnlockGraft": GraftClient.balance(GraftClientTools.UnlockedBalance),
+                   "amountLockGraft": GraftClient.balance(GraftClientTools.LockedBalance)})
     }
 
     function openMainScreen() {
