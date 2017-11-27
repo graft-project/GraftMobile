@@ -72,6 +72,7 @@
         <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
         <file alias="gallery.png">imgs/gallery.png</file>
         <file alias="photo.png">imgs/photo.png</file>
+        <file alias="lock.png">imgs/lock.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

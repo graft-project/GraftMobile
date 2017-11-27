@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 import "components"
 
 BaseScreen {
-    property alias amountGraft: balanceItem.amountGraftCost
+    property alias amountUnlockGraft: balanceItem.amountUnlockGraftCost
+    property alias amountLockGraft: balanceItem.amountLockGraftCost
     property alias graftWalletLogo: graftWalletLogo.source
     default property alias content: placeholder.data
 

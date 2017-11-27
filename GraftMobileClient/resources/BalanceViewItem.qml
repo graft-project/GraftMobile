@@ -5,19 +5,21 @@ import org.graft 1.0
 Rectangle {
     id: balance
 
-    property real amountGraftCost: 0
+    property real amountUnlockGraftCost: 0
+    property real amountLockGraftCost: 0
 
-    height: 70
-    color: "#ffffff"
+    height: 120
+    color: "#FCF9F1"
 
     Connections {
         target: GraftClient
         onBalanceUpdated: {
-            amountGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            amountUnlockGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            amountLockGraftCost = GraftClient.balance(GraftClientTools.LockedBalance)
         }
     }
 
-    RowLayout {
+    ColumnLayout {
         spacing: 0
         anchors {
             fill: parent
@@ -26,42 +28,97 @@ Rectangle {
             verticalCenter: parent.verticalCenter
         }
 
-        Image {
-            Layout.preferredHeight: 42
-            Layout.preferredWidth: 48
-            Layout.alignment: Qt.AlignLeft
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/imgs/g-max.png"
-        }
-
-        Text {
-            text: qsTr("Main Balance:")
-            color: "#233146"
-            font.pointSize: 20
+        RowLayout {
+            spacing: 0
             Layout.fillWidth: true
-            Layout.leftMargin: 14
-            Layout.alignment: Qt.AlignLeft
+            Layout.preferredHeight: 60
+
+            Image {
+                Layout.preferredHeight: 42
+                Layout.preferredWidth: 48
+                Layout.alignment: Qt.AlignLeft
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/imgs/g-max.png"
+            }
+
+            ColumnLayout {
+                spacing: 0
+                Layout.leftMargin: 14
+
+                Text {
+                    text: qsTr("Main Balance")
+                    color: "#233146"
+                    font.pointSize: 20
+                    Layout.alignment: Qt.AlignLeft
+                }
+
+                Text {
+                    text: qsTr("Unlocked")
+                    color: "#3d4757"
+                    font.pointSize: 12
+                    Layout.alignment: Qt.AlignLeft
+                }
+            }
+
+            Text {
+                text: amountUnlockGraftCost
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight
+                horizontalAlignment: Text.AlignRight
+                color: "#404040"
+                font.pointSize: 20
+                Layout.rightMargin: 8
+            }
         }
 
-        Text {
-            id:graftCost
-            text: amountGraftCost
-            color: "#404040"
-            font.pointSize: 20
-            Layout.rightMargin: 8
-            Layout.alignment: Qt.AlignRight
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 1
+            color: "#e6e6e8"
         }
-    }
 
-    Rectangle {
-        height: 1
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            leftMargin: 15
-            rightMargin: 15
+        RowLayout {
+            spacing: 0
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+
+            Image {
+                Layout.preferredHeight: 42
+                Layout.preferredWidth: 48
+                Layout.maximumWidth: 100
+                Layout.alignment: Qt.AlignLeft
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/imgs/lock.png"
+            }
+
+            ColumnLayout {
+                spacing: 0
+                Layout.leftMargin: 14
+
+                Text {
+                    text: qsTr("Main Balance")
+                    color: "#233146"
+                    font.pointSize: 20
+                    Layout.alignment: Qt.AlignLeft
+                }
+
+                Text {
+                    text: qsTr("Locked")
+                    color: "#3d4757"
+                    font.pointSize: 12
+                    Layout.alignment: Qt.AlignLeft
+                }
+            }
+
+            Text {
+                text: amountLockGraftCost
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight
+                horizontalAlignment: Text.AlignRight
+                color: "#d1cfc8"
+                font.pointSize: 20
+                Layout.rightMargin: 8
+            }
         }
-        color: "#e6e6e8"
     }
 }

@@ -77,7 +77,8 @@ GraftApplicationWindow {
 
     BalanceScreen {
         id: initialScreen
-        amountGraft: GraftClient.balance(GraftClientTools.UnlockedBalance)
+        amountUnlockGraft: GraftClient.balance(GraftClientTools.UnlockedBalance)
+        amountLockGraft: GraftClient.balance(GraftClientTools.LockedBalance)
         pushScreen: transitionsBetweenScreens()
     }
 
