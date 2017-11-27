@@ -54,6 +54,10 @@ void GraftWalletClient::readyToPay(const QString &data)
             updateQuickExchange(mTotalCost);
             mApi->readyToPay(mPID, QString());
         }
+        else
+        {
+            emit readyToPayReceived(false);
+        }
     }
 }
 
