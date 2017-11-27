@@ -21,13 +21,15 @@ BaseScreen {
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        if (GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-            GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
-            GraftClient.saveSettings()
-            pushScreen.openMainScreen()
-        } else {
-            messageDialog.open()
+        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        if (serviceAddr.checked) {
+            if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
+                messageDialog.open()
+                return
+            }
         }
+        GraftClient.saveSettings()
+        pushScreen.openMainScreen()
     }
 
     MessageDialog {
