@@ -36,7 +36,7 @@ BaseScreen {
         id: messageDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("Don't leave blank or wrong fields as it isn't correct!")
+        text: qsTr("The service IP or port is invalid. Please, enter the correct service address.")
     }
 
     ColumnLayout {
