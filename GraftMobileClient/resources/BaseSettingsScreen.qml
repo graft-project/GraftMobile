@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
@@ -20,10 +21,20 @@ BaseScreen {
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
-        GraftClient.resetUrl(ipTextField.text, portTextField.text)
-        GraftClient.saveSettings()
-        pushScreen.openMainScreen()
+        if (GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
+            GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+            GraftClient.saveSettings()
+            pushScreen.openMainScreen()
+        } else {
+            messageDialog.open()
+        }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("Don't leave blank or wrong fields as it isn't correct!")
     }
 
     ColumnLayout {
