@@ -161,15 +161,33 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     reply = nullptr;
     QByteArray temp("\"account\": \"");
     int index = arr.indexOf(temp);
-    int end = arr.indexOf("\"\r\n  }\r\n}");
+    int end = arr.indexOf("\",\r\n    \"address\"");
     QByteArray accountArr;
     for (int i = index + temp.size(); i < end; ++i)
     {
         accountArr.append(arr.at(i));
     }
+    arr.remove(index + temp.size(), end - (index + temp.size()));
+    QString address;
+    QJsonObject response = QJsonDocument::fromJson(arr).object();
+    if (response.contains(QLatin1String("result")))
+    {
+        QJsonObject object = response.value(QLatin1String("result")).toObject();
+        address = object.value(QLatin1String("address")).toString();
+    }
+    else
+    {
+        emit error(QStringLiteral("Response error"));
+        return;
+    }
+    if (accountArr.isEmpty() || address.isEmpty())
+    {
+        emit error(QStringLiteral("Couldn't get account data!"));
+        return;
+    }
     mAccountData = accountArr;
-    qDebug() << mAccountData;
-    emit createAccountReceived(mAccountData, mPassword);
+    qDebug() << mAccountData << address;
+    emit createAccountReceived(mAccountData, mPassword, address);
 }
 
 void GraftGenericAPI::receiveGetBalanceResponse()

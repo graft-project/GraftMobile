@@ -3,7 +3,7 @@
 
 QString KeyGenerator::generatePID()
 {
-    return generateUUID(8);
+    return generateUUID(16);
 }
 
 QString KeyGenerator::generateSpendingKey()

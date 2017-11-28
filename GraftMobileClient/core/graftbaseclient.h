@@ -69,7 +69,8 @@ protected:
     QMap<int, double> mBalances;
 
 private slots:
-    void receiveAccount(const QByteArray &accountData, const QString &password);
+    void receiveAccount(const QByteArray &accountData, const QString &password,
+                        const QString &address);
     void receiveBalance(double balance, double unlockedBalance);
 
 private:

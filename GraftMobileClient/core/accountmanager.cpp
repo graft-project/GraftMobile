@@ -36,6 +36,20 @@ QByteArray AccountManager::account() const
     return mAccountData;
 }
 
+void AccountManager::setAddress(const QString &a)
+{
+    if (mAddress != a)
+    {
+        mAddress = a;
+        save();
+    }
+}
+
+QString AccountManager::address() const
+{
+    return mAddress;
+}
+
 void AccountManager::save() const
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
@@ -48,7 +62,7 @@ void AccountManager::save() const
     if (lFile.open(QFile::WriteOnly))
     {
         QDataStream in(&lFile);
-        in << mPassword << mAccountData;
+        in << mPassword << mAccountData << mAddress;
     }
 }
 
@@ -62,7 +76,7 @@ void AccountManager::read()
         if (lFile.open(QFile::ReadOnly))
         {
             QDataStream in(&lFile);
-            in >> mPassword >> mAccountData;
+            in >> mPassword >> mAccountData >> mAddress;
         }
     }
 }
