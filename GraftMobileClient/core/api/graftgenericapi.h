@@ -38,7 +38,8 @@ public:
 
 signals:
     void error(const QString &message);
-    void createAccountReceived(const QByteArray &accountData, const QString &password);
+    void createAccountReceived(const QByteArray &accountData, const QString &password,
+                               const QString &address);
     void getBalanceReceived(double balance, double unlockedBalance);
     void getPaymentAddressReceived(const QString &address, const QString &pid);
 

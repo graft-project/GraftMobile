@@ -13,6 +13,9 @@ public:
     void setAccount(const QByteArray &data);
     QByteArray account() const;
 
+    void setAddress(const QString &a);
+    QString address() const;
+
     void save() const;
 
 private:
@@ -20,6 +23,7 @@ private:
 
     QString mPassword;
     QByteArray mAccountData;
+    QString mAddress;
 };
 
 #endif // ACCOUNTMANAGER_H

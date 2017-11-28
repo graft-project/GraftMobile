@@ -3,6 +3,7 @@
 #include "qrcodegenerator.h"
 #include "api/graftposapi.h"
 #include "graftposclient.h"
+#include "accountmanager.h"
 #include "keygenerator.h"
 #include "productmodel.h"
 #include "config.h"
@@ -70,9 +71,7 @@ void GraftPOSClient::sale()
     if (mProductModel->totalCost() > 0)
     {
         mPID = KeyGenerator::generatePID();
-        QString address = QString("%1%2").arg(KeyGenerator::generateSpendingKey())
-                .arg(KeyGenerator::generateViewKey());
-        QString qrText = QString("%1;%2;%3").arg(mPID).arg(address)
+        QString qrText = QString("%1;%2;%3").arg(mPID).arg(mAccountManager->address())
                 .arg(mProductModel->totalCost());
         setQRCodeImage(mQRCodeEncoder->encode(qrText));
         updateQuickExchange(mProductModel->totalCost());
