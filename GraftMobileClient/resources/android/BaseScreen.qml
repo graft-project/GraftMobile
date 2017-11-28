@@ -7,6 +7,7 @@ Page {
     property var action
     property alias screenHeader: appHeader
     property var specialBackMode: null
+    property alias isMenuActive: appHeader.navigationButtonState
 
     header: Header {
         id: appHeader

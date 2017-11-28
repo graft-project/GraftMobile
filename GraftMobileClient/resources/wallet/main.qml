@@ -73,6 +73,12 @@ GraftApplicationWindow {
                 event.accepted = true
             }
         }
+
+        onCurrentItemChanged: {
+            if (drawerLoader.status === Loader.Ready) {
+                drawerLoader.item.interactive = currentItem.isMenuActive
+            }
+        }
     }
 
     BalanceScreen {
@@ -119,17 +125,17 @@ GraftApplicationWindow {
 
     function openPaymentConfirmationScreen() {
         stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
-                       "pushScreen": transitionsBetweenScreens(),
-                       "totalAmount": GraftClient.totalCost(),
-                       "currencyModel": currencyModel,
-                       "balanceInGraft": balanceInGraft,
-                       "balanceInUSD": balanceInUSD,
-                       "productModel": PaymentProductModel})
+                   "pushScreen": transitionsBetweenScreens(),
+                   "totalAmount": GraftClient.totalCost(),
+                   "currencyModel": currencyModel,
+                   "balanceInGraft": balanceInGraft,
+                   "balanceInUSD": balanceInUSD,
+                   "productModel": PaymentProductModel})
     }
 
     function openPaymentScreen() {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
-                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!"), "isSpacing": true})
+                   "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!"), "isSpacing": true})
     }
 
     function openAddAccountScreen() {
