@@ -81,6 +81,7 @@ GraftApplicationWindow {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["openMainScreen"] = openMainScreen
         transitionsMap["privateClearChecked"] = privateClearChecked
         return transitionsMap
     }

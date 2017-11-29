@@ -29,7 +29,7 @@ BaseScreen {
             }
         }
         GraftClient.saveSettings()
-        pushScreen.goBack()
+        pushScreen.openMainScreen()
     }
 
     MessageDialog {
