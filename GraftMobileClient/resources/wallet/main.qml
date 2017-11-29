@@ -1,5 +1,4 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import org.graft 1.0
@@ -9,8 +8,6 @@ import "../components"
 GraftApplicationWindow {
     id: root
     title: qsTr("WALLET")
-
-    property real totalAmount: 100
 
     Loader {
         id: drawerLoader

@@ -35,7 +35,6 @@ BaseStackViewer {
     function openPaymentConfirmationScreen() {
         stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
                        "pushScreen": walletsTransitions(),
-                       "totalAmount": GraftClient.totalCost(),
                        "productModel": PaymentProductModel})
     }
 
