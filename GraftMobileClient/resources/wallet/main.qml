@@ -1,5 +1,4 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import org.graft 1.0
@@ -10,24 +9,17 @@ GraftApplicationWindow {
     id: root
     title: qsTr("WALLET")
 
-    property real totalAmount: 100
-    property var currencyModel: ["Graft", "USD"]
-    property real balanceInGraft: 1
-    property real balanceInUSD: 200
-    property var drawer
-
     Loader {
         id: drawerLoader
         onLoaded: {
-            drawer = drawerLoader.item
-            drawerLoader.item.pushScreen = transitionsBetweenScreens()
+            drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 
     footer: Loader {
         id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = transitionsBetweenScreens()
+        onLoaded: footerLoader.item.pushScreen = menuTransitions()
     }
 
     Component.onCompleted: {
@@ -62,97 +54,54 @@ GraftApplicationWindow {
         onAccepted: openMainScreen()
     }
 
-    StackView {
-        id: stack
+    StackLayout {
+        id: mainLayout
         anchors.fill: parent
-        initialItem: initialScreen
-        focus: true
-        Keys.onReleased: {
-            if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
-                if (currentItem.isMenuActive === false) {
-                    pop()
-                    event.accepted = true
-                }
-            }
+        currentIndex: 0
+
+        WalletStackViewer {
+            id: walletViewer
+            pushScreen: generalTransitions()
+            menuLoader: drawerLoader
         }
 
-        onCurrentItemChanged: {
-            if (drawerLoader.status === Loader.Ready) {
-                drawerLoader.item.interactive = currentItem.isMenuActive
-            }
+        SettingsScreen {
+            id: settingsScreen
+            pushScreen: generalTransitions()
         }
     }
 
-    BalanceScreen {
-        id: initialScreen
-        amountUnlockGraft: GraftClient.balance(GraftClientTools.UnlockedBalance)
-        amountLockGraft: GraftClient.balance(GraftClientTools.LockedBalance)
-        pushScreen: transitionsBetweenScreens()
-    }
-
-    function transitionsBetweenScreens() {
+    function generalTransitions() {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
-        transitionsMap["goBack"] = goBack
-        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
-        transitionsMap["addCardScreen"] = openAddCardScreen
-        transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
-        transitionsMap["openPaymentScreen"] = openPaymentScreen
-        transitionsMap["openAddAccountScreen"] = openAddAccountScreen
+        return transitionsMap
+    }
+
+    function menuTransitions() {
+        var transitionsMap = {}
+        transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openMainScreen"] = openMainScreen
         return transitionsMap
     }
 
-    function showMenu() {
-        drawer.open()
-    }
-
-    function hideMenu() {
-        drawer.close()
-    }
-
-    function goBack() {
-        stack.pop()
-    }
-
-    function openQRScanningScreen() {
-        stack.push("qrc:/wallet/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
-    }
-
-    function openAddCardScreen() {
-        stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": transitionsBetweenScreens()})
-    }
-
-    function openPaymentConfirmationScreen() {
-        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
-                   "pushScreen": transitionsBetweenScreens(),
-                   "totalAmount": GraftClient.totalCost(),
-                   "currencyModel": currencyModel,
-                   "balanceInGraft": balanceInGraft,
-                   "balanceInUSD": balanceInUSD,
-                   "productModel": PaymentProductModel})
-    }
-
-    function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
-                   "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!"), "isSpacing": true})
-    }
-
-    function openAddAccountScreen() {
-        stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": transitionsBetweenScreens(),
-                   "coinModel": CoinModel})
+    function openMainScreen() {
+        mainLayout.currentIndex = 0
+        selectButton("Wallet")
     }
 
     function openSettingsScreen() {
+        mainLayout.currentIndex = 1
         selectButton("Settings")
-        stack.push("qrc:/wallet/SettingsScreen.qml", {"pushScreen": transitionsBetweenScreens()})
     }
 
-    function openMainScreen() {
-        selectButton("Wallet")
-        stack.pop(initialScreen)
+    function showMenu() {
+        drawerLoader.item.open()
+    }
+
+    function hideMenu() {
+        drawerLoader.item.close()
     }
 
     function selectButton(name)

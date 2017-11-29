@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import "components"
 
@@ -17,7 +16,7 @@ BaseScreen {
             if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)), accountName.text,
                                  CoinModel.codeOf(coinsComboBox.currentText), walletNumberText.text)) {
                 GraftClient.saveAccounts()
-                pushScreen.goBack()
+                accountScreen.pushScreen.goBack()
             } else {
                 attentionDialog.text = qsTr("The wallet number already exists! Please, "+
                                             "enter another wallet number.")

@@ -8,12 +8,10 @@ import "../"
 GraftApplicationWindow {
     id: root
     title: qsTr("POS")
-    property var drawer
 
     Loader {
         id: drawerLoader
         onLoaded: {
-            drawer = drawerLoader.item
             drawerLoader.item.pushScreen = screenTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
@@ -100,11 +98,11 @@ GraftApplicationWindow {
     }
 
     function showMenu() {
-        drawer.open()
+        drawerLoader.item.open()
     }
 
     function hideMenu() {
-        drawer.close()
+        drawerLoader.item.close()
     }
 
     function openEditingItemScreen(index) {

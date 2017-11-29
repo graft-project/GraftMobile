@@ -5,7 +5,6 @@ import "../components"
 BaseScreen {
     id: root
 
-    property real totalAmount: 0
     property var productModel
 
     title: qsTr("Pay")
