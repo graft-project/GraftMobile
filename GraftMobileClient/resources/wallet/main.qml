@@ -11,15 +11,10 @@ GraftApplicationWindow {
     title: qsTr("WALLET")
 
     property real totalAmount: 100
-    property var currencyModel: ["Graft", "USD"]
-    property real balanceInGraft: 1
-    property real balanceInUSD: 200
-    property var drawer
 
     Loader {
         id: drawerLoader
         onLoaded: {
-            drawer = drawerLoader.item
             drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
@@ -105,11 +100,11 @@ GraftApplicationWindow {
     }
 
     function showMenu() {
-        drawer.open()
+        drawerLoader.item.open()
     }
 
     function hideMenu() {
-        drawer.close()
+        drawerLoader.item.close()
     }
 
     function selectButton(name)

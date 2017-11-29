@@ -33,7 +33,6 @@
     <qresource prefix="/wallet">
         <file alias="main.qml">wallet/main.qml</file>
         <file alias="BasePaymentConfirmationScreen.qml">wallet/BasePaymentConfirmationScreen.qml</file>
-        <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
         <file alias="AddCardScreen.qml">wallet/AddCardScreen.qml</file>
         <file alias="QRScanningScreen.qml">wallet/QRScanningScreen.qml</file>
         <file alias="WalletStackViewer.qml">wallet/WalletStackViewer.qml</file>

@@ -20,6 +20,7 @@ BaseStackViewer {
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
+        transitionsMap["goBack"] = goBack
         return transitionsMap
     }
 
@@ -35,9 +36,6 @@ BaseStackViewer {
         stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
                        "pushScreen": walletsTransitions(),
                        "totalAmount": GraftClient.totalCost(),
-//                       "currencyModel": currencyModel,
-//                       "balanceInGraft": balanceInGraft,
-//                       "balanceInUSD": balanceInUSD,
                        "productModel": PaymentProductModel})
     }
 
