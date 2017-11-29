@@ -21,10 +21,6 @@ BaseStackViewer {
         return transitionsMap
     }
 
-    function openMainScreen() {
-        stack.pop(productScreen)
-    }
-
     function openEditingItemScreen(index) {
         stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": posTransitions(),
                    "currencyModel": CurrencyModel, "index": index})

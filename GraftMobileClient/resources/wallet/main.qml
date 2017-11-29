@@ -75,6 +75,7 @@ GraftApplicationWindow {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["goBack"] = openMainScreen
         return transitionsMap
     }
 
