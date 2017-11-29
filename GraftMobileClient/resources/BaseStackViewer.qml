@@ -22,4 +22,8 @@ StackView {
             menuLoader.item.interactive = currentItem.isMenuActive
         }
     }
+
+    function goBack() {
+        pop()
+    }
 }

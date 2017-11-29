@@ -17,7 +17,7 @@ BaseScreen {
             if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)), accountName.text,
                                  CoinModel.codeOf(coinsComboBox.currentText), walletNumberText.text)) {
                 GraftClient.saveAccounts()
-                pushScreen.goBack()
+                accountScreen.pushScreen.goBack()
             } else {
                 attentionDialog.text = qsTr("The wallet number already exists! Please, "+
                                             "enter another wallet number.")
