@@ -40,7 +40,7 @@ BaseScreen {
                 ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
                                  currencyCode, productItem.descriptionText)
             }
-            editingItem.pushScreen.openMainScreen()
+            editingItem.pushScreen.goBack()
             GraftClient.saveProducts()
         } else {
             messageDialog.open()

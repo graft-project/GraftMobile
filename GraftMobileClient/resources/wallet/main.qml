@@ -104,8 +104,7 @@ GraftApplicationWindow {
         drawerLoader.item.close()
     }
 
-    function selectButton(name)
-    {
+    function selectButton(name) {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
         }

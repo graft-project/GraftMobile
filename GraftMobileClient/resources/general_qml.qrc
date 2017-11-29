@@ -29,6 +29,8 @@
         <file alias="EditingItemScreen.qml">pos/EditingItemScreen.qml</file>
         <file alias="InfoWalletScreen.qml">pos/InfoWalletScreen.qml</file>
         <file alias="QuickDialScreen.qml">pos/QuickDialScreen.qml</file>
+        <file alias="ProductStackViewer.qml">pos/ProductStackViewer.qml</file>
+        <file alias="InfoWalletStackViewer.qml">pos/InfoWalletStackViewer.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="main.qml">wallet/main.qml</file>
