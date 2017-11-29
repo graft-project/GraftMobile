@@ -67,6 +67,12 @@ GraftApplicationWindow {
                 event.accepted = true
             }
         }
+
+        onCurrentItemChanged: {
+            if (drawerLoader.status === Loader.Ready) {
+                drawerLoader.item.interactive = currentItem.isMenuActive
+            }
+        }
     }
 
     ProductScreen {
@@ -101,7 +107,7 @@ GraftApplicationWindow {
 
     function openEditingItemScreen(index) {
         stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": screenTransitions(),
-                       "currencyModel": CurrencyModel, "index": index})
+                   "currencyModel": CurrencyModel, "index": index})
     }
 
     function openQuickDealScreen() {
@@ -111,13 +117,13 @@ GraftApplicationWindow {
 
     function openCartScreen() {
         stack.push("qrc:/pos/CartScreen.qml", {"pushScreen": screenTransitions(),
-                       "price": ProductModel.totalCost()})
+                   "price": ProductModel.totalCost()})
     }
 
     function openPaymentScreen() {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
-                       "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!"),
-                       "isSpacing": false})
+                   "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!"),
+                   "isSpacing": false})
     }
 
     function openInfoWalletScreen() {
