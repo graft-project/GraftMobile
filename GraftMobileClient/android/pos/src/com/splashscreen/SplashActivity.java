@@ -12,5 +12,6 @@ public class SplashActivity extends Activity {
 
         Intent intent = new Intent(this, org.qtproject.qt5.android.bindings.QtActivity.class);
         startActivity(intent);
+        finish();
     }
 }

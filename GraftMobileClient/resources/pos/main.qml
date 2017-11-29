@@ -63,8 +63,10 @@ GraftApplicationWindow {
         focus: true
         Keys.onReleased: {
             if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
-                pop()
-                event.accepted = true
+                if (currentItem.isMenuActive === false) {
+                    pop()
+                    event.accepted = true
+                }
             }
         }
 
