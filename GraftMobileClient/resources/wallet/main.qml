@@ -75,6 +75,7 @@ GraftApplicationWindow {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["openMainScreen"] = openMainScreen
         return transitionsMap
     }
 
@@ -104,8 +105,7 @@ GraftApplicationWindow {
         drawerLoader.item.close()
     }
 
-    function selectButton(name)
-    {
+    function selectButton(name) {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
         }

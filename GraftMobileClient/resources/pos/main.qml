@@ -1,9 +1,9 @@
-import QtQuick.Controls 2.2
+import QtQuick 2.9
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
-import QtQuick 2.9
 import org.graft 1.0
 import "../"
+import "../components"
 
 GraftApplicationWindow {
     id: root
@@ -12,14 +12,14 @@ GraftApplicationWindow {
     Loader {
         id: drawerLoader
         onLoaded: {
-            drawerLoader.item.pushScreen = screenTransitions()
+            drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
         }
     }
 
     footer: Loader {
         id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = screenTransitions()
+        onLoaded: footerLoader.item.pushScreen = menuTransitions()
     }
 
     Component.onCompleted: {
@@ -51,49 +51,47 @@ GraftApplicationWindow {
         icon: StandardIcon.Warning
         text: qsTr("Sale request failed.\nPlease try again.")
         standardButtons: MessageDialog.Ok
-        onAccepted: clearChecked()
+        onAccepted: productViewer.clearChecked()
     }
 
-    StackView {
-        id: stack
+    StackLayout {
+        id: mainLayout
         anchors.fill: parent
-        initialItem: mainScreen
-        focus: true
-        Keys.onReleased: {
-            if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
-                if (currentItem.isMenuActive === false) {
-                    pop()
-                    event.accepted = true
-                }
-            }
+        currentIndex: 0
+
+        ProductStackViewer {
+            id: productViewer
+            pushScreen: generalTransitions()
+            menuLoader: drawerLoader
         }
 
-        onCurrentItemChanged: {
-            if (drawerLoader.status === Loader.Ready) {
-                drawerLoader.item.interactive = currentItem.isMenuActive
-            }
+        InfoWalletStackViewer {
+            id: infoWalletViewer
+            pushScreen: generalTransitions()
+            menuLoader: drawerLoader
+        }
+
+        SettingsScreen {
+            id: settingsScreen
+            pushScreen: generalTransitions()
         }
     }
 
-    ProductScreen {
-        id: mainScreen
-        pushScreen: screenTransitions()
-    }
-
-    function screenTransitions() {
+    function generalTransitions() {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
-        transitionsMap["openEditingItemScreen"] = openEditingItemScreen
-        transitionsMap["openQuickDealScreen"] = openQuickDealScreen
-        transitionsMap["initializingCheckout"] = openCartScreen
-        transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openMainScreen"] = openMainScreen
+        transitionsMap["privateClearChecked"] = privateClearChecked
+        return transitionsMap
+    }
+
+    function menuTransitions() {
+        var transitionsMap = {}
+        transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["openMainScreen"] = openMainScreen
+        transitionsMap["openWalletScreen"] = openInfoWalletScreen
         transitionsMap["openSettingsScreen"] = openSettingsScreen
-        transitionsMap["openPaymentScreen"] = openPaymentScreen
-        transitionsMap["openAddAccountScreen"] = openAddAccountScreen
-        transitionsMap["goBack"] = turnBack
-        transitionsMap["clearChecked"] = clearChecked
         return transitionsMap
     }
 
@@ -105,61 +103,27 @@ GraftApplicationWindow {
         drawerLoader.item.close()
     }
 
-    function openEditingItemScreen(index) {
-        stack.push("qrc:/pos/EditingItemScreen.qml", {"pushScreen": screenTransitions(),
-                   "currencyModel": CurrencyModel, "index": index})
-    }
-
-    function openQuickDealScreen() {
-        stack.push("qrc:/pos/QuickDialScreen.qml", {"pushScreen": screenTransitions(),
-                   "textLabel": qsTr("Quick Dial"), "currencyModel": CurrencyModel})
-    }
-
-    function openCartScreen() {
-        stack.push("qrc:/pos/CartScreen.qml", {"pushScreen": screenTransitions(),
-                   "price": ProductModel.totalCost()})
-    }
-
-    function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
-                   "title": qsTr("Cart"), "textLabel": qsTr("Checkout complete!"),
-                   "isSpacing": false})
+    function openMainScreen() {
+        mainLayout.currentIndex = 0
+        selectButton("Store")
     }
 
     function openInfoWalletScreen() {
+        mainLayout.currentIndex = 1
         selectButton("Wallet")
-        stack.push("qrc:/pos/InfoWalletScreen.qml", {"pushScreen": screenTransitions(),
-                   "amountUnlockGraft": GraftClient.balance(GraftClientTools.UnlockedBalance),
-                   "amountLockGraft": GraftClient.balance(GraftClientTools.LockedBalance)})
-    }
-
-    function openMainScreen() {
-        selectButton("Store")
-        stack.pop(mainScreen)
     }
 
     function openSettingsScreen() {
+        mainLayout.currentIndex = 2
         selectButton("Settings")
-        stack.push("qrc:/pos/SettingsScreen.qml", {"pushScreen": screenTransitions()})
     }
 
-    function openAddAccountScreen() {
-        stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": screenTransitions(),
-                   "coinModel": CoinModel})
-    }
+    function privateClearChecked() {
+          selectButton("Store")
+          ProductModel.clearSelections()
+      }
 
-    function turnBack() {
-        stack.pop()
-    }
-
-    function clearChecked() {
-        selectButton("Store")
-        ProductModel.clearSelections()
-        stack.pop(mainScreen)
-    }
-
-    function selectButton(name)
-    {
+    function selectButton(name) {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
         }
