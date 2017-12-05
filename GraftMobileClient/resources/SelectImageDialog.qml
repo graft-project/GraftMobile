@@ -21,7 +21,7 @@ Popup {
 
         SelectImageButton {
             selectIcon: "qrc:/imgs/gallery.png"
-            selectText: qsTr("Open gallary")
+            selectText: qsTr("Open gallery")
             onClicked: {
                 ImagePicker.openGallary()
                 popUp.close()
