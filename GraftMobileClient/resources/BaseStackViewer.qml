@@ -12,8 +12,8 @@ StackView {
         if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
             if (currentItem.isMenuActive === false) {
                 pop()
-                event.accepted = true
             }
+            event.accepted = true
         }
     }
 
