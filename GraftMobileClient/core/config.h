@@ -8,6 +8,6 @@ const QStringList cSeedSupernodes{"54.207.21.115:28900"
                                   //"54.233.159.189:28900"
                                  };
 
-const QString cUrl("http://%1/json_rpc");
+const QString cUrl("http://%1/dapi");
 
 #endif // CONFIG_H

@@ -31,7 +31,8 @@ public:
 
     void createAccount(const QString &password);
     void getBalance();
-    void getPaymentAddress(const QString &pid);
+    void getSeed();
+    void restoreAccount(const QString &seed, const QString &password);
 
     static double toCoins(int atomic);
     static int toAtomic(double coins);
@@ -41,7 +42,9 @@ signals:
     void createAccountReceived(const QByteArray &accountData, const QString &password,
                                const QString &address);
     void getBalanceReceived(double balance, double unlockedBalance);
-    void getPaymentAddressReceived(const QString &address, const QString &pid);
+    void getSeedReceived(const QString &seed);
+    void restoreAccountReceived(const QByteArray &accountData, const QString &password,
+                                const QString &address);
 
 protected:
     QString accountPlaceholder() const;
@@ -51,7 +54,8 @@ protected:
 private slots:
     void receiveCreateAccountResponse();
     void receiveGetBalanceResponse();
-    void receiveGetPaymentAddressResponse();
+    void receiveGetSeedResponse();
+    void receiveRestoreAccountResponse();
 
 protected:
     QNetworkAccessManager *mManager;
