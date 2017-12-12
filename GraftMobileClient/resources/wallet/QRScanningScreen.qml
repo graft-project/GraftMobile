@@ -12,7 +12,7 @@ BaseScreen {
     Connections {
         target: GraftClient
 
-        onReadyToPayReceived: {
+        onGetPOSDataReceived: {
             if (result === true) {
                 pushScreen.openPaymentConfirmationScreen()
             }
@@ -32,6 +32,6 @@ BaseScreen {
 
     QRScanningView {
         anchors.fill: parent
-        onQrCodeDetected: GraftClient.readyToPay(message)
+        onQrCodeDetected: GraftClient.getPOSData(message)
     }
 }

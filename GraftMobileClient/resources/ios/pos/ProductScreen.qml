@@ -21,6 +21,17 @@ BaseScreen {
         }
     }
 
+    Connections {
+        target: GraftClient
+        onSaleReceived: {
+            if (result) {
+                pushScreen.initializingCheckout()
+            } else {
+//                TODO: Add error handling
+            }
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "#ffffff"
@@ -90,7 +101,6 @@ BaseScreen {
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
                         GraftClient.sale()
-                        pushScreen.initializingCheckout()
                     }
                 }
             }

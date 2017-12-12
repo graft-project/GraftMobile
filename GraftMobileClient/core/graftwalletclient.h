@@ -17,7 +17,7 @@ public:
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
 signals:
-    void readyToPayReceived(bool result);
+    void getPOSDataReceived(bool result);
     void rejectPayReceived(bool result);
     void payReceived(bool result);
     void payStatusReceived(bool result);

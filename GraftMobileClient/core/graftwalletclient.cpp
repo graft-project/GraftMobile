@@ -58,7 +58,7 @@ void GraftWalletClient::getPOSData(const QString &data)
         }
         else
         {
-            emit readyToPayReceived(false);
+            emit getPOSDataReceived(false);
         }
     }
 }
@@ -84,7 +84,7 @@ void GraftWalletClient::receiveGetPOSData(int result, const QString &payDetails)
     mPaymentProductModel->clear();
     QByteArray data = QByteArray::fromHex(payDetails.toLatin1());
     ProductModelSerializator::deserialize(data, mPaymentProductModel);
-    emit readyToPayReceived(isStatusOk);
+    emit getPOSDataReceived(isStatusOk);
 }
 
 void GraftWalletClient::receiveRejectPay(int result)
