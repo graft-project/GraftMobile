@@ -70,13 +70,9 @@ void GraftPOSClient::sale()
 {
     if (mProductModel->totalCost() > 0)
     {
-        mPID = KeyGenerator::generatePID();
-        QString qrText = QString("%1;%2;%3").arg(mPID).arg(mAccountManager->address())
-                .arg(mProductModel->totalCost());
-        setQRCodeImage(mQRCodeEncoder->encode(qrText));
         updateQuickExchange(mProductModel->totalCost());
         QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
-        mApi->sale(mPID, selectedProducts.toHex());
+        mApi->sale(mPID, mProductModel->totalCost(), selectedProducts.toHex());
     }
     else
     {
@@ -94,9 +90,13 @@ void GraftPOSClient::getSaleStatus()
     mApi->getSaleStatus(mPID);
 }
 
-void GraftPOSClient::receiveSale(int result)
+void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNum)
 {
     const bool isStatusOk = (result == 0);
+    mPID = pid;
+    QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
+            .arg(mProductModel->totalCost()).arg(blockNum);
+    setQRCodeImage(mQRCodeEncoder->encode(qrText));
     emit saleReceived(isStatusOk);
     if (isStatusOk)
     {
@@ -113,17 +113,20 @@ void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
 {
     if (result == 0)
     {
-        if (saleStatus == GraftPOSAPI::StatusProcessing)
-        {
+        switch (saleStatus) {
+        case GraftPOSAPI::StatusProcessing:
             getSaleStatus();
-        }
-        else if (saleStatus == GraftPOSAPI::StatusApproved)
-        {
+            break;
+        case GraftPOSAPI::StatusApproved:
             emit saleStatusReceived(true);
-        }
-        else if (saleStatus == GraftPOSAPI::StatusRejected)
-        {
+            break;
+        case GraftPOSAPI::StatusNone:
+        case GraftPOSAPI::StatusFailed:
+        case GraftPOSAPI::StatusPOSRejected:
+        case GraftPOSAPI::StatusWalletRejected:
+        default:
             emit saleStatusReceived(false);
+            break;
         }
     }
     else

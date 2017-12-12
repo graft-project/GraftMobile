@@ -34,7 +34,7 @@ public slots:
     void getSaleStatus();
 
 private slots:
-    void receiveSale(int result);
+    void receiveSale(int result, const QString &pid, int blockNum);
     void receiveRejectSale(int result);
     void receiveSaleStatus(int result, int saleStatus);
 

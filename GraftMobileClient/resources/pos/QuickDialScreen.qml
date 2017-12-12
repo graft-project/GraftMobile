@@ -72,7 +72,6 @@ BaseScreen {
                              currencyModel.codeOf(currencyCBox.currencyText), "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
-            pushScreen.initializingCheckout()
         } else {
             messageDialog.open()
         }

@@ -23,13 +23,13 @@ signals:
     void payStatusReceived(bool result);
 
 public slots:
-    void readyToPay(const QString &data);
+    void getPOSData(const QString &data);
     void rejectPay();
     void pay();
     void getPayStatus();
 
 private slots:
-    void receiveReadyToPay(int result, const QString &transaction);
+    void receiveGetPOSData(int result, const QString &payDetails);
     void receiveRejectPay(int result);
     void receivePay(int result);
     void receivePayStatus(int result, int payStatus);
@@ -40,6 +40,7 @@ private:
     GraftWalletAPI *mApi;
     QString mPID;
     QString mPrivateKey;
+    int mBlockNum;
 
     double mTotalCost;
     ProductModel *mPaymentProductModel;
