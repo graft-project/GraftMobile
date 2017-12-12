@@ -72,7 +72,8 @@ void GraftPOSClient::sale()
     {
         updateQuickExchange(mProductModel->totalCost());
         QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
-        mApi->sale(mPID, mProductModel->totalCost(), selectedProducts.toHex());
+        mApi->sale(mAccountManager->address(), mProductModel->totalCost(),
+                   selectedProducts.toHex());
     }
     else
     {

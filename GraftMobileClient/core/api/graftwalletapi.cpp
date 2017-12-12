@@ -41,7 +41,7 @@ void GraftWalletAPI::pay(const QString &pid, const QString &address, double amou
     params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("PaymentID"), pid);
     params.insert(QStringLiteral("POSAddress"), address);
-    params.insert(QStringLiteral("Amount"), (int)amount);
+    params.insert(QStringLiteral("Amount"), toAtomic(amount));
     params.insert(QStringLiteral("BlockNum"), blockNum);
     QJsonObject data = buildMessage(QStringLiteral("Pay"), params);
     QByteArray array = QJsonDocument(data).toJson();

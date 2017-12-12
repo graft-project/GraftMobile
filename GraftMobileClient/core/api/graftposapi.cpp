@@ -15,7 +15,7 @@ void GraftPOSAPI::sale(const QString &address, int amount, const QString &saleDe
     QJsonObject params;
     params.insert(QStringLiteral("POSAddress"), address);
     params.insert(QStringLiteral("POSSaleDetails"), saleDetails);
-    params.insert(QStringLiteral("Amount"), amount);
+    params.insert(QStringLiteral("Amount"), toAtomic(amount));
     QJsonObject data = buildMessage(QStringLiteral("Sale"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
