@@ -1,20 +1,17 @@
 <?xml version="1.0"?>
 <manifest package="org.graft.pos" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.3.3" android:versionCode="10303" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Graft Point-of-Sale" android:icon="@drawable/icon">
-        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:label="Graft Point-of-Sale" android:launchMode="singleTask">
+        <activity android:theme="@style/SplashTheme" android:label="Graft Point-of-Sale" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:screenOrientation="portrait" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
-        </activity>
 
-        <!-- Image Picker-->
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" android:label="Graft Point-of-Sale">
-            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
-        </activity>
+            <!-- Image Picker-->
+            <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" android:label="Graft Point-of-Sale">
+                <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
+            </activity>
 
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:label="Graft Point-of-Sale" android:screenOrientation="portrait" android:launchMode="singleTop">
             <!-- Application arguments -->
             <!-- meta-data android:name="android.app.arguments" android:value="arg1 arg2 arg3"/ -->
             <!-- Application arguments -->
@@ -81,5 +78,4 @@
 
     <!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.
          Remove the comment if you do not require these default features. -->
-
 </manifest>
