@@ -12,7 +12,7 @@ BaseScreen {
     property int screenState: 0
 
     Component.onCompleted: {
-        if (screenState)
+        if (screenState)//!
         {
             root.state = "successfulPaid"
         } else {
@@ -44,7 +44,6 @@ BaseScreen {
                 height: 200
                 width: height
                 fillMode: Image.PreserveAspectFit
-                source: "qrc:/imgs/paid_icon.png"
             }
         }
 
@@ -63,7 +62,6 @@ BaseScreen {
 
             contentItem: Rectangle {
                 id: completeLabelBackground
-                color: ColorFactory.color(DesignFactory.CircleBackground)
 
                 Text {
                     id: completeLabelText
@@ -83,7 +81,6 @@ BaseScreen {
                 rightMargin:15
                 bottomMargin: 15
             }
-            text: qsTr("DONE")
             onClicked: pushScreen()
         }
     }
@@ -93,12 +90,21 @@ BaseScreen {
             name: "successfulPaid"
 
             PropertyChanges {
+                target: root
+
+                action: pushScreen
+                screenHeader {
+                    navigationButtonState: Qt.platform.os === "android"
+                    actionButtonState: true
+                }
+            }
+            PropertyChanges {
                 target: image
                 source: "qrc:/imgs/paid_icon.png"
             }
             PropertyChanges {
                 target: completeLabelBackground
-                color: "#FE4200"
+                color: ColorFactory.color(DesignFactory.CircleBackground)
             }
             PropertyChanges {
                 target: completeLabelText
@@ -106,7 +112,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: button
-                text: qsTr("DONE")
+                text: Qt.platform.os === "ios" ? qsTr("Done") : qsTr("DONE")
             }
         },
         State {
@@ -135,7 +141,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: button
-                text: qsTr("BACK")
+                text: Qt.platform.os === "ios" ? qsTr("Back") : qsTr("BACK")
             }
         }
     ]
