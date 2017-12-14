@@ -23,9 +23,7 @@ BaseScreen {
 
         onPayStatusReceived: {
             if (result === true) {
-                pushScreen.openPaymentScreen()
-            } else {
-                pushScreen.openMainScreen()
+                pushScreen.openPaymentScreen(result)
             }
         }
     }
