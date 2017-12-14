@@ -12,19 +12,13 @@ BaseScreen {
     property int screenState: 0
 
     Component.onCompleted: {
-        if (screenState)//!
+        if (screenState)
         {
             root.state = "successfulPaid"
         } else {
             root.state = "failPaid"
         }
     }
-
-    screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
-        actionButtonState: true
-    }
-    action: pushScreen
 
     Rectangle {
         anchors.fill: parent
