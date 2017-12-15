@@ -8,14 +8,18 @@ import "components"
 BaseScreen {
     id: root
 
-    property alias textLabel: completeLabelText.text
     property bool isSpacing: false
+    property string completeText: ""
+    property int screenState: 0
 
-    screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
-        actionButtonState: true
+    Component.onCompleted: {
+        if (screenState)
+        {
+            root.state = "successfulPaid"
+        } else {
+            root.state = "failPaid"
+        }
     }
-    action: pushScreen
 
     Rectangle {
         anchors.fill: parent
@@ -30,11 +34,11 @@ BaseScreen {
             }
 
             Image {
+                id: image
                 anchors.centerIn: parent
                 height: 200
                 width: height
                 fillMode: Image.PreserveAspectFit
-                source: "qrc:/imgs/paid_icon.png"
             }
         }
 
@@ -45,25 +49,26 @@ BaseScreen {
             anchors {
                 right: parent.right
                 left: parent.left
-                bottom: doneButton.top
+                bottom: button.top
                 bottomMargin: addBottomMargin()
             }
             Material.elevation: Qt.platform.os === "android" ? 6 : 0
             padding: 0
 
             contentItem: Rectangle {
-                color: ColorFactory.color(DesignFactory.CircleBackground)
+                id: completeLabelBackground
 
                 Text {
                     id: completeLabelText
                     anchors.centerIn: parent
                     color: "#FFFFFF"
+                    text: completeText
                 }
             }
         }
 
         WideActionButton {
-            id: doneButton
+            id: button
             anchors {
                 left: parent.left
                 right: parent.right
@@ -72,15 +77,71 @@ BaseScreen {
                 rightMargin:15
                 bottomMargin: 15
             }
-            text: qsTr("DONE")
             onClicked: pushScreen()
         }
     }
 
+    states: [
+        State {
+            name: "successfulPaid"
+
+            PropertyChanges {
+                target: root
+
+                action: pushScreen
+                screenHeader {
+                    navigationButtonState: Qt.platform.os === "android"
+                    actionButtonState: true
+                }
+            }
+            PropertyChanges {
+                target: image
+                source: "qrc:/imgs/paid_icon.png"
+            }
+            PropertyChanges {
+                target: completeLabelBackground
+                color: ColorFactory.color(DesignFactory.CircleBackground)
+            }
+            PropertyChanges {
+                target: button
+                text: qsTr("Done")
+            }
+        },
+        State {
+            name: "failPaid"
+
+            PropertyChanges {
+                target: root
+
+                specialBackMode: pushScreen
+                screenHeader {
+                    navigationButtonState: Qt.platform.os !== "android"
+                    actionButtonState: false
+                }
+            }
+            PropertyChanges {
+                target: image
+                source: "qrc:/imgs/Error.png"
+            }
+            PropertyChanges {
+                target: completeLabelBackground
+                color: "#FE4200"
+            }
+            PropertyChanges {
+                target: completeLabelText
+                text: qsTr("Something getting wrong")
+            }
+            PropertyChanges {
+                target: button
+                text: qsTr("Back")
+            }
+        }
+    ]
+
     function addBottomMargin() {
         var addBottomMargin = 0;
         if (isSpacing === true) {
-            return addBottomMargin = Qt.platform.os === "android" ? 15 : doneButton.height + 15
+            return addBottomMargin = Qt.platform.os === "android" ? 15 : button.height + 15
         } else {
             return addBottomMargin = 15
         }

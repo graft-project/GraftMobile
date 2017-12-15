@@ -18,9 +18,7 @@ BaseScreen {
             screenClosed()
 
             if (result === true) {
-                pushScreen.openPaymentScreen()
-            } else {
-                pushScreen.clearChecked()
+                pushScreen.openPaymentScreen(result)
             }
         }
     }
