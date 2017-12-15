@@ -9,6 +9,7 @@ BaseScreen {
     id: root
 
     property bool isSpacing: false
+    property string completeText: ""
     property int screenState: 0
 
     Component.onCompleted: {
@@ -61,6 +62,7 @@ BaseScreen {
                     id: completeLabelText
                     anchors.centerIn: parent
                     color: "#FFFFFF"
+                    text: completeText
                 }
             }
         }
@@ -101,12 +103,8 @@ BaseScreen {
                 color: ColorFactory.color(DesignFactory.CircleBackground)
             }
             PropertyChanges {
-                target: completeLabelText
-                text: Qt.platform.os === "ios" ? qsTr("Paid complete!") : qsTr("Checkout complete!")
-            }
-            PropertyChanges {
                 target: button
-                text: Qt.platform.os === "ios" ? qsTr("Done") : qsTr("DONE")
+                text: qsTr("Done")
             }
         },
         State {
@@ -135,7 +133,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: button
-                text: Qt.platform.os === "ios" ? qsTr("Back") : qsTr("BACK")
+                text: qsTr("Back")
             }
         }
     ]

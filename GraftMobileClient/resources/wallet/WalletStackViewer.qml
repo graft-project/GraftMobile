@@ -44,7 +44,8 @@ BaseStackViewer {
 
     function openPaymentScreen(state) {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
-                       "title": qsTr("Pay"), "isSpacing": true, "screenState": state})
+                       "title": qsTr("Pay"), "isSpacing": true, "completeText": qsTr("Paid complete!"),
+                       "screenState": state})
     }
 
     function openAddAccountScreen() {
