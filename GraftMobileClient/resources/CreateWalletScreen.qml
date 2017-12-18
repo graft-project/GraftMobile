@@ -56,7 +56,7 @@ BaseScreen {
                 Layout.fillWidth: true
                 horizontalAlignment: Label.AlignHCenter
                 color: "#BBBBBB"
-                text: qsTr("Restor wallet from mnemonic phrase")
+                text: qsTr("Restore wallet from mnemonic phrase")
             }
         }
 
