@@ -5,7 +5,7 @@ import QtQuick.Controls 2.2
 GridLayout {
     id: gridLayout
 
-    property string bigString: ""
+    property string mnemonicPhrase: ""
     readonly property int mnemonicPhraseSize: 25
 
     anchors {
@@ -22,7 +22,7 @@ GridLayout {
 
     Repeater {
         id: repeater
-        model: bigString.split(' ', mnemonicPhraseSize)
+        model: mnemonicPhrase.split(' ', mnemonicPhraseSize)
 
         Label {
             font.pointSize: 20
