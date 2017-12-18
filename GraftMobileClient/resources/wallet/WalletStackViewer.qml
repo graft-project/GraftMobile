@@ -55,6 +55,6 @@ BaseStackViewer {
     }
 
     function openCreateWalletScreen() {
-        stack.push("qrc:/CreateWalletScreen.qml", {"pushScreen": walletsTransitions()})
+        stack.push("qrc:/CreateWalletScreen.qml")
     }
 }
