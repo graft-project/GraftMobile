@@ -12,6 +12,7 @@ ColumnLayout {
     property bool inlineTitle: false
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
+    property alias echoMode: editItem.echoMode
 
     spacing: 0
 
