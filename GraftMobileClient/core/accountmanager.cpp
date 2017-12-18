@@ -11,10 +11,6 @@ static const QString scAccountDataFile("account.dat");
 AccountManager::AccountManager()
 {
     read();
-    if (mPassword.isEmpty())
-    {
-        mPassword = KeyGenerator::generateUUID(10);
-    }
 }
 
 QString AccountManager::passsword() const
@@ -50,6 +46,20 @@ QString AccountManager::address() const
     return mAddress;
 }
 
+void AccountManager::setSeed(const QString &seed)
+{
+    if (mSeed != seed)
+    {
+        mSeed = seed;
+        save();
+    }
+}
+
+QString AccountManager::seed() const
+{
+    return mSeed;
+}
+
 void AccountManager::save() const
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
@@ -62,7 +72,7 @@ void AccountManager::save() const
     if (lFile.open(QFile::WriteOnly))
     {
         QDataStream in(&lFile);
-        in << mPassword << mAccountData << mAddress;
+        in << mPassword << mAccountData << mAddress << mSeed;
     }
 }
 
@@ -76,7 +86,7 @@ void AccountManager::read()
         if (lFile.open(QFile::ReadOnly))
         {
             QDataStream in(&lFile);
-            in >> mPassword >> mAccountData >> mAddress;
+            in >> mPassword >> mAccountData >> mAddress >> mSeed;
         }
     }
 }
