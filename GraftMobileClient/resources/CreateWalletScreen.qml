@@ -23,7 +23,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignTop
             Layout.topMargin: 10
             maximumLength: 50
-            title: qsTr("Password")
+            title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
             echoMode: TextInput.Password
         }
 
@@ -64,7 +64,7 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
-            text: qsTr("Resore Wallet")
+            text: qsTr("Restore Wallet")
         }
     }
 }
