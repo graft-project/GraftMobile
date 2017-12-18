@@ -7,10 +7,8 @@ BaseScreen {
     id: root
 
     title: qsTr("Create wallet")
-    action: pushScreen
     screenHeader {
-        navigationButtonState: Qt.platform.os !== "android"
-        actionButtonState: true
+        isNavigationButtonVisible: false
     }
 
     ColumnLayout {
@@ -44,7 +42,8 @@ BaseScreen {
             spacing: 0
 
             Label {
-                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                horizontalAlignment: Label.AlignHCenter
                 font {
                     bold: true
                     pointSize: 18
@@ -54,7 +53,8 @@ BaseScreen {
             }
 
             Label {
-                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                horizontalAlignment: Label.AlignHCenter
                 color: "#BBBBBB"
                 text: qsTr("Restor wallet from mnemonic phrase")
             }
