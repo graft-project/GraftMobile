@@ -23,6 +23,7 @@
         <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
         <file alias="CoinListView.qml">CoinListView.qml</file>
         <file alias="BaseStackViewer.qml">BaseStackViewer.qml</file>
+        <file alias="MnemonicPhraseView.qml">MnemonicPhraseView.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -38,7 +39,6 @@
         <file alias="AddCardScreen.qml">wallet/AddCardScreen.qml</file>
         <file alias="QRScanningScreen.qml">wallet/QRScanningScreen.qml</file>
         <file alias="WalletStackViewer.qml">wallet/WalletStackViewer.qml</file>
-        <file alias="MnemonicPhraseView.qml">wallet/MnemonicPhraseView.qml</file>
     </qresource>
     <qresource prefix="/imgs">
         <file alias="card_icon.png">imgs/card_icon.png</file>
