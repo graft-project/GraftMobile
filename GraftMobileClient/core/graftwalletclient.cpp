@@ -1,7 +1,9 @@
 #include "productmodelserializator.h"
 #include "api/graftwalletapi.h"
 #include "graftwalletclient.h"
+#include "accountmanager.h"
 #include "productmodel.h"
+#include "keygenerator.h"
 #include "config.h"
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
@@ -18,7 +20,14 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
 
     mPaymentProductModel = new ProductModel(this);
-    requestAccount(mApi);
+    if (isAccountExists())
+    {
+        mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+    }
+    else
+    {
+        requestAccount(mApi, KeyGenerator::generateUUID(8));
+    }
     registerBalanceTimer(mApi);
 }
 
@@ -40,6 +49,16 @@ bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
         return true;
     }
     return false;
+}
+
+void GraftWalletClient::createAccount(const QString &password)
+{
+    GraftBaseClient::requestAccount(mApi, password);
+}
+
+void GraftWalletClient::restoreAccount(const QString &seed, const QString &password)
+{
+    GraftBaseClient::requestRestoreAccount(mApi, seed, password);
 }
 
 void GraftWalletClient::getPOSData(const QString &data)
