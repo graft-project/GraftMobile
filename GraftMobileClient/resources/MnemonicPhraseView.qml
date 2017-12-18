@@ -20,21 +20,14 @@ GridLayout {
     columnSpacing: 5
     rowSpacing: 35
 
-    Component.onCompleted: {
-        var splitBigString = bigString.split(' ', mnemonicPhraseSize)
-        for (var i = 0; i < mnemonicPhraseSize; i++)
-        {
-            repeater.itemAt(i).text = splitBigString[i]
-        }
-    }
-
     Repeater {
         id: repeater
-        model: mnemonicPhraseSize
+        model: bigString.split(' ', mnemonicPhraseSize)
 
         Label {
             font.pointSize: 20
             Layout.alignment: Qt.AlignHCenter
+            text: modelData
         }
     }
 }
