@@ -11,6 +11,15 @@ ColumnLayout {
     property alias validator: editItem.validator
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
+    property bool wordCountingMode: true
+
+    function wordCounting() {
+        if (editItem.displayText.match(/(\w+)/g) !== null) {
+            return editItem.displayText.match(/(\w+)/g).length
+        } else {
+            return 0
+        }
+    }
 
     spacing: 0
 
@@ -39,7 +48,8 @@ ColumnLayout {
     Text {
         id: textCount
         Layout.alignment: Qt.AlignRight
-        text: qsTr("%1 / %2").arg(editItem.displayText.length).arg(editItem.maximumLength)
+        text: qsTr("%1 / %2").arg(wordCountingMode ? editItem.displayText.length :
+                                                     wordCounting()).arg(editItem.maximumLength)
         color: "#BBBBBB"
         font.pointSize: 12
     }
