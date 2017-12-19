@@ -16,6 +16,9 @@ public:
     void setAddress(const QString &a);
     QString address() const;
 
+    void setSeed(const QString &seed);
+    QString seed() const;
+
     void save() const;
 
 private:
@@ -24,6 +27,7 @@ private:
     QString mPassword;
     QByteArray mAccountData;
     QString mAddress;
+    QString mSeed;
 };
 
 #endif // ACCOUNTMANAGER_H

@@ -30,6 +30,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignTop
             title: qsTr("Mnemonic Phrase")
             wrapMode: TextInput.WordWrap
+            letterCountingMode: false
             maximumLength: 25
             validator: RegExpValidator {
                 regExp: /(\w+ ){24}(\w+){1}/g

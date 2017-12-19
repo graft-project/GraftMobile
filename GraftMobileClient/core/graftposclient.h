@@ -22,6 +22,9 @@ public:
     void registerTypes(QQmlEngine *engine) override;
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
+    Q_INVOKABLE void createAccount(const QString &password) override;
+    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password) override;
+
 signals:
     void saleReceived(bool result);
     void rejectSaleReceived(bool result);

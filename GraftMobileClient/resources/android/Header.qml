@@ -29,6 +29,7 @@ BaseHeader {
             Layout.fillHeight: true
             Layout.preferredWidth: 24
             Layout.alignment: Qt.AlignLeft
+            visible: isNavigationButtonVisible
 
             Image {
                 id: menuIcon
@@ -46,7 +47,7 @@ BaseHeader {
 
         Text {
             Layout.fillWidth: true
-            Layout.leftMargin: 25
+            Layout.leftMargin: isNavigationButtonVisible ? 25 : 5
             Layout.alignment: Qt.AlignLeft
             text: rootItem.headerText
             font {

@@ -81,7 +81,6 @@ BaseScreen {
                                     GraftClient.saveProducts()
                                 }
                             }
-
                             onRemoveItemClicked: messageDialog.open()
                             onEditItemClicked: pushScreen.openEditingItemScreen(index)
                         }
@@ -118,8 +117,7 @@ BaseScreen {
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
-                onClicked: pushScreen.restoreWallet() // видалити!-----------------------------
-//                onClicked: pushScreen.openQuickDealScreen()
+                onClicked: pushScreen.openQuickDealScreen()
             }
         }
     }

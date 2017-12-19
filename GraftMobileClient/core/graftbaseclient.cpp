@@ -42,6 +42,16 @@ GraftBaseClient::~GraftBaseClient()
     delete mAccountManager;
 }
 
+bool GraftBaseClient::isAccountExists() const
+{
+    return !mAccountManager->account().isEmpty();
+}
+
+QString GraftBaseClient::getSeed() const
+{
+    return mAccountManager->seed();
+}
+
 AccountModel *GraftBaseClient::accountModel() const
 {
     return mAccountModel;
@@ -147,15 +157,15 @@ QUrl GraftBaseClient::getServiceUrl() const
     return QUrl(cUrl.arg(finalUrl));
 }
 
-void GraftBaseClient::requestAccount(GraftGenericAPI *api)
+void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &password)
 {
     if (api)
     {
         if (mAccountManager->account().isEmpty())
         {
             connect(api, &GraftGenericAPI::createAccountReceived,
-                    this, &GraftBaseClient::receiveAccount);
-            api->createAccount(mAccountManager->passsword());
+                    this, &GraftBaseClient::receiveAccount, Qt::UniqueConnection);
+            api->createAccount(password);
         }
         else
         {
@@ -164,22 +174,48 @@ void GraftBaseClient::requestAccount(GraftGenericAPI *api)
     }
 }
 
+void GraftBaseClient::requestRestoreAccount(GraftGenericAPI *api, const QString &seed,
+                                            const QString &password)
+{
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::restoreAccountReceived,
+                this, &GraftBaseClient::receiveRestoreAccount, Qt::UniqueConnection);
+        api->restoreAccount(seed, password);
+    }
+}
+
 void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
 {
     if (api)
     {
-        connect(api, &GraftGenericAPI::getBalanceReceived, this, &GraftBaseClient::receiveBalance);
+        connect(api, &GraftGenericAPI::getBalanceReceived, this, &GraftBaseClient::receiveBalance,
+                Qt::UniqueConnection);
         mBalanceTimer = startTimer(20000);
     }
 }
 
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
-                                     const QString &address)
+                                     const QString &address, const QString &seed)
 {
     if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
         mAccountManager->setAddress(address);
+        mAccountManager->setSeed(seed);
+        emit createAccountReceived();
+    }
+}
+
+void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const QString &password,
+                                            const QString &address, const QString &seed)
+{
+    if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
+    {
+        mAccountManager->setAccount(accountData);
+        mAccountManager->setAddress(address);
+        mAccountManager->setSeed(seed);
+        emit restoreAccountReceived();
     }
 }
 

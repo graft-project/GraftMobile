@@ -18,12 +18,7 @@ BaseStackViewer {
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["clearChecked"] = clearChecked
         transitionsMap["goBack"] = goBack
-        transitionsMap["restoreWallet"] = restore //видалити-----
         return transitionsMap
-    }
-
-    function restore() {
-        stack.push("qrc:/RestoreScreen.qml")
     }
 
     function openEditingItemScreen(index) {

@@ -26,7 +26,14 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
     initProductModels();
-    requestAccount(mApi);
+    if (isAccountExists())
+    {
+        mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+    }
+    else
+    {
+        requestAccount(mApi, KeyGenerator::generateUUID(8));
+    }
     registerBalanceTimer(mApi);
 }
 
@@ -59,6 +66,16 @@ bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
         return true;
     }
     return false;
+}
+
+void GraftPOSClient::createAccount(const QString &password)
+{
+    GraftBaseClient::requestAccount(mApi, password);
+}
+
+void GraftPOSClient::restoreAccount(const QString &seed, const QString &password)
+{
+    GraftBaseClient::requestRestoreAccount(mApi, seed, password);
 }
 
 void GraftPOSClient::saveProducts() const

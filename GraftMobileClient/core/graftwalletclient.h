@@ -16,6 +16,9 @@ public:
     Q_INVOKABLE ProductModel *paymentProductModel() const;
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
+    Q_INVOKABLE void createAccount(const QString &password) override;
+    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password) override;
+
 signals:
     void getPOSDataReceived(bool result);
     void rejectPayReceived(bool result);

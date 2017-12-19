@@ -43,11 +43,11 @@ public:
 signals:
     void error(const QString &message);
     void createAccountReceived(const QByteArray &accountData, const QString &password,
-                               const QString &address);
+                               const QString &address, const QString &seed);
     void getBalanceReceived(double balance, double unlockedBalance);
     void getSeedReceived(const QString &seed);
     void restoreAccountReceived(const QByteArray &accountData, const QString &password,
-                                const QString &address);
+                                const QString &address, const QString &seed);
 
 protected:
     QString accountPlaceholder() const;
