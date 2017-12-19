@@ -21,6 +21,13 @@ public:
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
+    bool isAccountExists() const;
+
+    virtual void createAccount(const QString &password) = 0;
+    virtual void restoreAccount(const QString &seed, const QString &password) = 0;
+
+    Q_INVOKABLE QString getSeed() const;
+
     AccountModel *accountModel() const;
     CurrencyModel *currencyModel() const;
     QuickExchangeModel *quickExchangeModel() const;
@@ -44,6 +51,8 @@ public:
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();
+    void createAccountReceived();
+    void restoreAccountReceived();
 
 public slots:
     void saveAccounts() const;
@@ -55,7 +64,9 @@ protected:
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
     QUrl getServiceUrl() const;
-    void requestAccount(GraftGenericAPI *api);
+    void requestAccount(GraftGenericAPI *api, const QString &password);
+    void requestRestoreAccount(GraftGenericAPI *api, const QString &seed, const QString &password);
+
     void registerBalanceTimer(GraftGenericAPI *api);
     virtual void updateBalance() = 0;
 
@@ -63,14 +74,16 @@ protected:
     AccountModel *mAccountModel;
     CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;
-    QSettings *mClientSettings;
     AccountManager *mAccountManager;
+    QSettings *mClientSettings;
 
     QMap<int, double> mBalances;
 
 private slots:
     void receiveAccount(const QByteArray &accountData, const QString &password,
-                        const QString &address);
+                        const QString &address, const QString &seed);
+    void receiveRestoreAccount(const QByteArray &accountData, const QString &password,
+                               const QString &address, const QString &seed);
     void receiveBalance(double balance, double unlockedBalance);
 
 private:
