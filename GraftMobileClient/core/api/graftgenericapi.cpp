@@ -182,11 +182,13 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     }
     arr.remove(index + temp.size(), end - (index + temp.size()));
     QString address;
+    QString seed;
     QJsonObject response = QJsonDocument::fromJson(arr).object();
     if (response.contains(QLatin1String("result")))
     {
         QJsonObject object = response.value(QLatin1String("result")).toObject();
         address = object.value(QLatin1String("Address")).toString();
+        seed = object.value(QLatin1String("Seed")).toString();
     }
     else
     {
@@ -200,7 +202,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     }
     mAccountData = accountArr;
     qDebug() << mAccountData << address;
-    emit createAccountReceived(mAccountData, mPassword, address);
+    emit createAccountReceived(mAccountData, mPassword, address, seed);
 }
 
 void GraftGenericAPI::receiveGetBalanceResponse()
@@ -243,11 +245,13 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
     }
     arr.remove(index + temp.size(), end - (index + temp.size()));
     QString address;
+    QString seed;
     QJsonObject response = QJsonDocument::fromJson(arr).object();
     if (response.contains(QLatin1String("result")))
     {
         QJsonObject object = response.value(QLatin1String("result")).toObject();
         address = object.value(QLatin1String("Address")).toString();
+        seed = object.value(QLatin1String("Seed")).toString();
     }
     else
     {
@@ -261,5 +265,5 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
     }
     mAccountData = accountArr;
     qDebug() << mAccountData << address;
-    emit restoreAccountReceived(mAccountData, mPassword, address);
+    emit restoreAccountReceived(mAccountData, mPassword, address, seed);
 }
