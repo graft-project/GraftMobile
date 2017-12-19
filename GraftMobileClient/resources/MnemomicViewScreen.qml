@@ -20,7 +20,7 @@ BaseScreen {
         ColumnLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
-            Layout.topMargin: 10
+            Layout.topMargin: screenState ? 100 : 10
             spacing: 100
 
             Label {
