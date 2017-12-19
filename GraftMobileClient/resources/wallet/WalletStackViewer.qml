@@ -20,7 +20,6 @@ BaseStackViewer {
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
-        transitionsMap["openMnemomicViewScreen"] = openMnemomicViewScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -52,9 +51,5 @@ BaseStackViewer {
     function openAddAccountScreen() {
         stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": walletsTransitions(),
                        "coinModel": CoinModel})
-    }
-
-    function openMnemomicViewScreen() {
-        stack.push("qrc:/MnemomicViewScreen.qml")
     }
 }

@@ -35,7 +35,7 @@ BaseScreen {
 
             MnemonicPhraseView {
                 id: mnemonicPhraseView
-                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width
             }
         }
 

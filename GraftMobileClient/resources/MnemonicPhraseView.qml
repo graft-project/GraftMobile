@@ -5,13 +5,13 @@ import QtQuick.Controls 2.2
 GridLayout {
     id: gridLayout
 
-    property string mnemonicPhrase: "Cat Sun Universe Stone Grass Cup Print Task Pensil Touch Soup Finger Lip Gas Water Air Cloud Tomato Spoon Sky Mirror Voice Nut Wire Exit"
+    property string mnemonicPhrase: ""
     readonly property int mnemonicPhraseSize: 25
 
     anchors {
         verticalCenter: parent.verticalCenter
-        leftMargin: 5
-        rightMargin: 5
+        leftMargin: 10
+        rightMargin: 10
     }
     columns: 5
     rows: 5
@@ -23,7 +23,7 @@ GridLayout {
         model: mnemonicPhrase.split(' ', mnemonicPhraseSize)
 
         Label {
-            font.pointSize: 20
+            font.pointSize: 16
             Layout.alignment: Qt.AlignHCenter
             text: modelData
         }
