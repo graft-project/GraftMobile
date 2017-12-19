@@ -8,14 +8,7 @@ BaseScreen {
 
     property bool screenState: true
 
-    Component.onCompleted: {
-        if (screenState)
-        {
-            root.state = "overviewWallet"
-        } else {
-            root.state = "createWallet"
-        }
-    }
+    state: screenState ? "overviewWallet" : "createWallet"
 
     ColumnLayout {
         anchors {

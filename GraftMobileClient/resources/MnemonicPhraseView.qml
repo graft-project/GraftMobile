@@ -10,8 +10,6 @@ GridLayout {
 
     anchors {
         verticalCenter: parent.verticalCenter
-        left: parent.left
-        right: parent.right
         leftMargin: 5
         rightMargin: 5
     }
@@ -25,7 +23,7 @@ GridLayout {
         model: mnemonicPhrase.split(' ', mnemonicPhraseSize)
 
         Label {
-            font.pointSize: 20
+            font.pointSize: 15
             Layout.alignment: Qt.AlignHCenter
             text: modelData
         }
