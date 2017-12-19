@@ -12,6 +12,16 @@ ColumnLayout {
     property bool inlineTitle: false
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
+    property bool letterCountingMode: true
+
+    function wordCounting() {
+        var wordList = editItem.displayText.match(/(\w+)/g)
+        if (wordList !== null) {
+            return wordList.length
+        } else {
+            return 0
+        }
+    }
 
     spacing: 0
 
@@ -58,7 +68,8 @@ ColumnLayout {
         Layout.topMargin: 0
         Layout.alignment: Qt.AlignRight
         font.pointSize: 12
-        text: qsTr("%1/%2").arg(editItem.length).arg(editItem.maximumLength)
+        text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
+                                                       wordCounting()).arg(editItem.maximumLength)
         color: "#8e8e93"
     }
 }
