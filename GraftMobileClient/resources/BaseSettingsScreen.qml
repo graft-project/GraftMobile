@@ -114,10 +114,52 @@ BaseScreen {
         }
 
         WideActionButton {
+            id: mnemonicButton
+            Layout.bottomMargin: 5
+            text: qsTr("Show Mnemonic Password")
+            onClicked: mnemonicPhraseDialog.open()
+        }
+
+        WideActionButton {
             id: saveButton
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             onClicked: saveChanges()
+        }
+    }
+
+    Dialog {
+        id: mnemonicPhraseDialog
+        visible: false
+        modal: true
+        width: 300
+        topMargin: parent.height / 2 - mnemonicPhraseDialog.height / 2
+        leftMargin: parent.width / 2 - mnemonicPhraseDialog.width / 2
+        title: "Enter password:"
+        standardButtons: StandardButton.Ok | StandardButton.Close
+
+        TextField {
+            id: passwordTextField
+            width: parent.width
+            echoMode: TextInput.Password
+        }
+
+        onAccepted: {
+            checkingPassword(passwordTextField.text)
+        }
+
+        onRejected: passwordTextField.clear()
+    }
+
+    function checkingPassword(string)
+    {
+        if (GraftClient.checkPassword(string)) {
+            passwordTextField.clear()
+        } else {
+            messageDialog.title = "Error"
+            messageDialog.text = "You enter incorect password!\nPlease try again..."
+            messageDialog.open()
+            passwordTextField.clear()
         }
     }
 }

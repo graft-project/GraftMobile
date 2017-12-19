@@ -48,6 +48,8 @@ public:
 
     void updateQuickExchange(double cost);
 
+    Q_INVOKABLE bool checkPassword(const QString &password);
+
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();

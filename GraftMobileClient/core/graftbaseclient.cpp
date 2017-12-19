@@ -320,6 +320,11 @@ void GraftBaseClient::updateQuickExchange(double cost)
     }
 }
 
+bool GraftBaseClient::checkPassword(const QString &password)
+{
+    return mAccountManager->passsword() == password;
+}
+
 QVariant GraftBaseClient::settings(const QString &key) const
 {
     return mClientSettings->value(key);
