@@ -12,7 +12,6 @@ ColumnLayout {
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
-    property alias fontPointSize: editItem.font.pointSize
     property bool letterCountingMode: true
     property int maximumLength: 0
 

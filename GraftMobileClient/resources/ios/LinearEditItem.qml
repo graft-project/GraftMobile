@@ -13,7 +13,6 @@ ColumnLayout {
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
-    property alias fontPointSize: editItem.font.pointSize
     property bool letterCountingMode: true
     property int maximumLength: 0
 
@@ -73,7 +72,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignRight
         font.pointSize: 12
         text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
-                                                       wordCounting()).arg(editItem.maximumLength)
+                                                       wordCounting()).arg(maximumLength)
         color: "#8e8e93"
     }
 }
