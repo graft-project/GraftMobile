@@ -11,6 +11,8 @@ ColumnLayout {
     property alias validator: editItem.validator
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
+    property alias echoMode: editItem.echoMode
+    property alias fontPointSize: editItem.font.pointSize
 
     spacing: 0
 
