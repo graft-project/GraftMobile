@@ -40,9 +40,8 @@ BaseScreen {
         LinearEditItem {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
-            title: qsTr("New Password")
+            title: Qt.platform.os === "ios" ? qsTr("Password:") : qsTr("Password")
             maximumLength: 50
-            fontPointSize: 8
             echoMode: TextInput.Password
         }
 
