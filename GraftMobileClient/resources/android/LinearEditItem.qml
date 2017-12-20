@@ -3,9 +3,9 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
+    id: linearEditItem
     property alias title: titleItem.text
     property alias text: editItem.text
-    property alias maximumLength: editItem.maximumLength
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
     property alias validator: editItem.validator
@@ -13,6 +13,7 @@ ColumnLayout {
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property bool letterCountingMode: true
+    property int maximumLength: 0
 
     function wordCounting() {
         var wordList = editItem.displayText.match(/(\w+)/g)
@@ -45,13 +46,14 @@ ColumnLayout {
                 Layout.maximumHeight = 200
             }
         }
+        maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
     }
 
     Text {
         id: textCount
         Layout.alignment: Qt.AlignRight
         text: qsTr("%1 / %2").arg(letterCountingMode ? editItem.displayText.length :
-                                                       wordCounting()).arg(editItem.maximumLength)
+                                                       wordCounting()).arg(maximumLength)
         color: "#BBBBBB"
         font.pointSize: 12
     }

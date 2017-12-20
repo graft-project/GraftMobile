@@ -81,7 +81,6 @@ BaseScreen {
                                     GraftClient.saveProducts()
                                 }
                             }
-
                             onRemoveItemClicked: messageDialog.open()
                             onEditItemClicked: pushScreen.openEditingItemScreen(index)
                         }
