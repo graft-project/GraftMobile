@@ -18,6 +18,15 @@ QString AccountManager::passsword() const
     return mPassword;
 }
 
+void AccountManager::setPassword(const QString &passsword)
+{
+    if (mPassword != passsword)
+    {
+        mPassword = passsword;
+        save();
+    }
+}
+
 void AccountManager::setAccount(const QByteArray &data)
 {
     if (mAccountData != data)

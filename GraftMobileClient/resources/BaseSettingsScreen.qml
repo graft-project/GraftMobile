@@ -155,6 +155,7 @@ BaseScreen {
     {
         if (GraftClient.checkPassword(password)) {
             passwordTextField.clear()
+            pushScreen.openMnemonicViewScreen(true)
         } else {
             messageDialog.title = qsTr("Error")
             messageDialog.text = qsTr("You enter incorrect password!\nPlease try again...")

@@ -28,6 +28,7 @@
         <file alias="MnemomicViewScreen.qml">MnemomicViewScreen.qml</file>
         <file alias="CreateWalletScreen.qml">CreateWalletScreen.qml</file>
         <file alias="CreateWalletStackViewer.qml">CreateWalletStackViewer.qml</file>
+        <file alias="SettingsStackViewer.qml">SettingsStackViewer.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

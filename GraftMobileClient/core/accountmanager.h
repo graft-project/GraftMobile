@@ -9,6 +9,7 @@ public:
     AccountManager();
 
     QString passsword() const;
+    void setPassword(const QString &passsword);
 
     void setAccount(const QByteArray &data);
     QByteArray account() const;

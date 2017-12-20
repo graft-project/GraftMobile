@@ -59,6 +59,22 @@ GraftApplicationWindow {
         anchors.fill: parent
         currentIndex: 0
 
+        onCurrentIndexChanged: {
+            if (currentIndex > 0) {
+                if (Qt.platform.os === "ios") {
+                    footerLoader.active = true
+                } else {
+                    drawerLoader.active = true
+                }
+            }
+        }
+
+        CreateWalletStackViewer {
+            id: createWalletStackViewer
+            pushScreen: generalTransitions()
+            menuLoader: Qt.platform.os === "ios" ? footerLoader : drawerLoader
+        }
+
         ProductStackViewer {
             id: productViewer
             pushScreen: generalTransitions()
@@ -71,9 +87,10 @@ GraftApplicationWindow {
             menuLoader: drawerLoader
         }
 
-        SettingsScreen {
-            id: settingsScreen
+        SettingsStackViewer {
+            id: settingsStackViewer
             pushScreen: generalTransitions()
+            appType: "pos"
         }
     }
 
@@ -104,17 +121,17 @@ GraftApplicationWindow {
     }
 
     function openMainScreen() {
-        mainLayout.currentIndex = 0
+        mainLayout.currentIndex = 1
         selectButton("Store")
     }
 
     function openInfoWalletScreen() {
-        mainLayout.currentIndex = 1
+        mainLayout.currentIndex = 2
         selectButton("Wallet")
     }
 
     function openSettingsScreen() {
-        mainLayout.currentIndex = 2
+        mainLayout.currentIndex = 3
         selectButton("Settings")
     }
 

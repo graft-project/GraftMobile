@@ -5,7 +5,7 @@ import "components"
 
 BaseScreen {
     title: qsTr("Restore wallet")
-
+    action: pushScreen.openMainScreen
     screenHeader {
         navigationButtonState: Qt.platform.os === "ios"
         actionButtonState: true
@@ -18,6 +18,14 @@ BaseScreen {
         }
     }
 
+    Connections {
+        target: GraftClient
+
+        onRestoreAccountReceived: {
+            pushScreen.openMainScreen
+        }
+    }
+
     ColumnLayout {
         anchors {
             fill: parent
@@ -25,6 +33,7 @@ BaseScreen {
         }
 
         LinearEditItem {
+            id: seedTextField
             Layout.fillWidth: true
             Layout.maximumHeight: 100
             Layout.alignment: Qt.AlignTop
@@ -38,6 +47,7 @@ BaseScreen {
         }
 
         LinearEditItem {
+            id: passwordTextField
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
             title: Qt.platform.os === "ios" ? qsTr("Password:") : qsTr("Password")
@@ -53,6 +63,7 @@ BaseScreen {
         WideActionButton {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore wallet")
+            onClicked: GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
         }
     }
 }

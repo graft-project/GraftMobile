@@ -21,7 +21,7 @@ public:
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
-    bool isAccountExists() const;
+    Q_INVOKABLE bool isAccountExists() const;
 
     virtual void createAccount(const QString &password) = 0;
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;

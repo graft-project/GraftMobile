@@ -165,6 +165,7 @@ void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &passwo
         {
             connect(api, &GraftGenericAPI::createAccountReceived,
                     this, &GraftBaseClient::receiveAccount, Qt::UniqueConnection);
+            mAccountManager->setPassword(password);
             api->createAccount(password);
         }
         else
@@ -181,6 +182,7 @@ void GraftBaseClient::requestRestoreAccount(GraftGenericAPI *api, const QString 
     {
         connect(api, &GraftGenericAPI::restoreAccountReceived,
                 this, &GraftBaseClient::receiveRestoreAccount, Qt::UniqueConnection);
+        mAccountManager->setPassword(password);
         api->restoreAccount(seed, password);
     }
 }
@@ -198,7 +200,7 @@ void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
                                      const QString &address, const QString &seed)
 {
-    if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
+    if (mAccountManager->passsword() == password && !accountData.isEmpty() && !address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
         mAccountManager->setAddress(address);

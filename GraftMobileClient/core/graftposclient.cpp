@@ -28,11 +28,11 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     initProductModels();
     if (isAccountExists())
     {
-        mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+//        mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
     }
     else
     {
-        requestAccount(mApi, KeyGenerator::generateUUID(8));
+//        requestAccount(mApi, KeyGenerator::generateUUID(8));
     }
     registerBalanceTimer(mApi);
 }

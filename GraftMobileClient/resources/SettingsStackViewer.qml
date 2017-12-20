@@ -6,13 +6,10 @@ StackView {
 
     property var menuLoader
     property var pushScreen: ({})
-
-    Component.onCompleted: {
-        menuLoader.active = false
-    }
+    property string appType: "pos"
 
     focus: true
-    initialItem: createWalletScreen
+    initialItem: openSettingsScreen()
     Keys.onReleased: {
         if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
             if (currentItem.isMenuActive === false) {
@@ -22,26 +19,25 @@ StackView {
         }
     }
 
-    CreateWalletScreen {
-        id: createWalletScreen
-        pushScreen: createWalletsTransitions()
-    }
-
-    function createWalletsTransitions() {
+    function settingsTransitions() {
         var transitionsMap = pushScreen
-        transitionsMap["openRestoreWalletScreen"] = openRestoreWalletScreen
+        transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openMnemonicViewScreen"] = openMnemonicViewScreen
         transitionsMap["openMainScreen"] = openMainScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
 
-    function openRestoreWalletScreen() {
-        stack.push("qrc:/RestoreScreen.qml", {"pushScreen": createWalletsTransitions()})
+    function openSettingsScreen() {
+        if (appType === "pos") {
+            stack.push("qrc:/pos/SettingsScreen.qml", {"pushScreen": settingsTransitions()})
+        } else {
+            stack.push("qrc:/wallet/SettingsScreen.qml", {"pushScreen": settingsTransitions()})
+        }
     }
 
     function openMnemonicViewScreen(isAccountExist) {
-        stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": openMainScreen,
+        stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": settingsTransitions(),
                    "screenState": isAccountExist})
     }
 

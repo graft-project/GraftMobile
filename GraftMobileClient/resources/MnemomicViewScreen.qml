@@ -36,6 +36,7 @@ BaseScreen {
             MnemonicPhraseView {
                 id: mnemonicPhraseView
                 Layout.preferredWidth: parent.width
+                mnemonicPhrase: GraftClient.getSeed()
             }
         }
 
@@ -44,6 +45,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             text: qsTr("I Save It!")
+            onClicked: pushScreen()
         }
     }
 

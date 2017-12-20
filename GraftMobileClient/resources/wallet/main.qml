@@ -57,7 +57,23 @@ GraftApplicationWindow {
     StackLayout {
         id: mainLayout
         anchors.fill: parent
-        currentIndex: 0
+        currentIndex: GraftClient.isAccountExists() ? 1 : 0
+
+        onCurrentIndexChanged: {
+            if (currentIndex > 0) {
+                if (Qt.platform.os === "ios") {
+                    footerLoader.active = true
+                } else {
+                    drawerLoader.active = true
+                }
+            }
+        }
+
+        CreateWalletStackViewer {
+            id: createWalletStackViewer
+            pushScreen: generalTransitions()
+            menuLoader: Qt.platform.os === "ios" ? footerLoader : drawerLoader
+        }
 
         WalletStackViewer {
             id: walletViewer
@@ -65,9 +81,10 @@ GraftApplicationWindow {
             menuLoader: drawerLoader
         }
 
-        SettingsScreen {
-            id: settingsScreen
+        SettingsStackViewer {
+            id: settingsStackViewer
             pushScreen: generalTransitions()
+            appType: "wallet"
         }
     }
 
@@ -88,12 +105,12 @@ GraftApplicationWindow {
     }
 
     function openMainScreen() {
-        mainLayout.currentIndex = 0
+        mainLayout.currentIndex = 1
         selectButton("Wallet")
     }
 
     function openSettingsScreen() {
-        mainLayout.currentIndex = 1
+        mainLayout.currentIndex = 2
         selectButton("Settings")
     }
 
