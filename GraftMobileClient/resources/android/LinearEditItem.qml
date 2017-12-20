@@ -13,7 +13,7 @@ ColumnLayout {
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property bool letterCountingMode: true
-    property int maximumLength: 0
+    property int maximumLength: 32767
 
     function wordCounting() {
         var wordList = editItem.displayText.match(/(\w+)/g)

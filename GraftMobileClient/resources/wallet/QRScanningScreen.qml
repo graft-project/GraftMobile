@@ -17,17 +17,11 @@ BaseScreen {
                 pushScreen.openPaymentConfirmationScreen()
             }
             else {
-                messageDialog.open()
+                screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
+                screenDialog.open()
                 pushScreen.openMainScreen()
             }
-         }
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
+        }
     }
 
     QRScanningView {

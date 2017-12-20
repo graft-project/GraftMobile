@@ -13,23 +13,25 @@ BaseScreen {
 
     function addAccount() {
         if (accountName.text !== "" && walletNumberText.text !== "") {
-            if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)), accountName.text,
-                                 CoinModel.codeOf(coinsComboBox.currentText), walletNumberText.text)) {
+            if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)),
+                                 accountName.text, CoinModel.codeOf(coinsComboBox.currentText),
+                                 walletNumberText.text)) {
                 GraftClient.saveAccounts()
                 accountScreen.pushScreen.goBack()
             } else {
-                attentionDialog.text = qsTr("The wallet number already exists! Please, "+
-                                            "enter another wallet number.")
-                attentionDialog.open()
+                screenDialog.text = qsTr("The wallet number already exists! Please, "+
+                                         "enter another wallet number.")
+                screenDialog.open()
             }
         } else {
-            attentionDialog.text = qsTr("Don't leave blank fields as it isn't correct! "+
-                                        "You must enter the account name, type and wallet number.")
-            attentionDialog.open()
+            screenDialog.text = qsTr("You must enter the account name and wallet number.")
+            screenDialog.open()
         }
     }
 
     Component.onCompleted: {
+        screenDialog.text = qsTr("Please, enter the account name and wallet number.")
+        screenDialog.open()
         if (Qt.platform.os === "ios") {
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
@@ -41,12 +43,6 @@ BaseScreen {
             coinsComboBox.dropdownTitle = qsTr("Type")
             walletNumberText.title = qsTr("Wallet number")
         }
-    }
-
-    MessageDialog {
-        id: attentionDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
     }
 
     StackLayout {
