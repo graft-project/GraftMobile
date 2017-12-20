@@ -53,7 +53,7 @@ BaseScreen {
 
         WideActionButton {
             Layout.alignment: Qt.AlignBottom
-            text: qsTr("Restore waller")
+            text: qsTr("Restore wallet")
         }
     }
 }
