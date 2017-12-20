@@ -157,7 +157,7 @@ BaseScreen {
             passwordTextField.clear()
         } else {
             messageDialog.title = qsTr("Error")
-            messageDialog.text = qsTr("You enter incorect password!\nPlease try again...")
+            messageDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             messageDialog.open()
             passwordTextField.clear()
         }
