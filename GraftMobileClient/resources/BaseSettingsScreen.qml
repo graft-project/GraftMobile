@@ -24,7 +24,8 @@ BaseScreen {
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         if (serviceAddr.checked) {
             if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the correct service address.")
+                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
+                                         "correct service address.")
                 screenDialog.open()
                 return
             }

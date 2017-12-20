@@ -19,7 +19,7 @@ BaseScreen {
                 GraftClient.saveAccounts()
                 accountScreen.pushScreen.goBack()
             } else {
-                screenDialog.text = qsTr("The wallet number already exists! Please, "+
+                screenDialog.text = qsTr("The wallet number already exists! Please, " +
                                          "enter another wallet number.")
                 screenDialog.open()
             }
