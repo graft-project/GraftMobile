@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 
 Page {
     id: basePage
@@ -8,6 +9,7 @@ Page {
     property alias screenHeader: appHeader
     property var specialBackMode: null
     property alias isMenuActive: appHeader.navigationButtonState
+    property alias screenDialog: attentionDialog
 
     header: Header {
         id: appHeader
@@ -28,5 +30,11 @@ Page {
         onActionButtonClicked: {
             action()
         }
+    }
+
+    MessageDialog {
+        id: attentionDialog
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
     }
 }
