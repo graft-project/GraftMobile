@@ -320,7 +320,7 @@ void GraftBaseClient::updateQuickExchange(double cost)
     }
 }
 
-bool GraftBaseClient::checkPassword(const QString &password)
+bool GraftBaseClient::checkPassword(const QString &password) const
 {
     return mAccountManager->passsword() == password;
 }

@@ -133,9 +133,9 @@ BaseScreen {
         visible: false
         modal: true
         width: 300
-        topMargin: parent.height / 2 - mnemonicPhraseDialog.height / 2
-        leftMargin: parent.width / 2 - mnemonicPhraseDialog.width / 2
-        title: "Enter password:"
+        topMargin: (parent.height - mnemonicPhraseDialog.height) / 2
+        leftMargin: (parent.width - mnemonicPhraseDialog.width) / 2
+        title: qsTr("Enter password:")
         standardButtons: StandardButton.Ok | StandardButton.Close
 
         TextField {
@@ -151,13 +151,13 @@ BaseScreen {
         onRejected: passwordTextField.clear()
     }
 
-    function checkingPassword(string)
+    function checkingPassword(password)
     {
-        if (GraftClient.checkPassword(string)) {
+        if (GraftClient.checkPassword(password)) {
             passwordTextField.clear()
         } else {
-            messageDialog.title = "Error"
-            messageDialog.text = "You enter incorect password!\nPlease try again..."
+            messageDialog.title = qsTr("Error")
+            messageDialog.text = qsTr("You enter incorect password!\nPlease try again...")
             messageDialog.open()
             passwordTextField.clear()
         }
