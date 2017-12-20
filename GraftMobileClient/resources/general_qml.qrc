@@ -24,6 +24,7 @@
         <file alias="CoinListView.qml">CoinListView.qml</file>
         <file alias="BaseStackViewer.qml">BaseStackViewer.qml</file>
         <file alias="MnemonicPhraseView.qml">MnemonicPhraseView.qml</file>
+        <file alias="MnemomicViewScreen.qml">MnemomicViewScreen.qml</file>
         <file alias="CreateWalletScreen.qml">CreateWalletScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
