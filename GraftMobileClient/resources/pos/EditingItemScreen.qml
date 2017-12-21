@@ -21,6 +21,8 @@ BaseScreen {
     property int index: -1
 
     Component.onCompleted: {
+        screenDialog.text = qsTr("Please, enter the item title and price.")
+        screenDialog.open()
         if (Qt.platform.os === "ios") {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
@@ -43,7 +45,8 @@ BaseScreen {
             editingItem.pushScreen.goBack()
             GraftClient.saveProducts()
         } else {
-            messageDialog.open()
+            screenDialog.text = qsTr("You must enter the item title and price.")
+            screenDialog.open()
         }
     }
 
@@ -55,13 +58,6 @@ BaseScreen {
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
         productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index, ProductModelEnum.CurrencyRole))
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the item title and price.")
     }
 
     ColumnLayout {

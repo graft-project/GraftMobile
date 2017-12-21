@@ -74,14 +74,13 @@ BaseScreen {
                                 id: messageDialog
                                 title: qsTr("Delete item")
                                 icon: StandardIcon.Warning
-                                text: qsTr("Are you sure that you want to remove this particular item?")
+                                text: qsTr("Are you sure that you want to remove this item?")
                                 standardButtons: StandardButton.Yes | StandardButton.No
                                 onYes: {
                                     ProductModel.removeProduct(index)
                                     GraftClient.saveProducts()
                                 }
                             }
-
                             onRemoveItemClicked: messageDialog.open()
                             onEditItemClicked: pushScreen.openEditingItemScreen(index)
                         }

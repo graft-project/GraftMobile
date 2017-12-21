@@ -24,19 +24,14 @@ BaseScreen {
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         if (serviceAddr.checked) {
             if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-                messageDialog.open()
+                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
+                                         "correct service address.")
+                screenDialog.open()
                 return
             }
         }
         GraftClient.saveSettings()
         pushScreen.openMainScreen()
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("The service IP or port is invalid. Please, enter the correct service address.")
     }
 
     ColumnLayout {
@@ -114,10 +109,52 @@ BaseScreen {
         }
 
         WideActionButton {
+            id: mnemonicButton
+            Layout.bottomMargin: 5
+            text: qsTr("Show Mnemonic Password")
+            onClicked: mnemonicPhraseDialog.open()
+        }
+
+        WideActionButton {
             id: saveButton
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             onClicked: saveChanges()
+        }
+    }
+
+    Dialog {
+        id: mnemonicPhraseDialog
+        visible: false
+        modal: true
+        width: 300
+        topMargin: (parent.height - mnemonicPhraseDialog.height) / 2
+        leftMargin: (parent.width - mnemonicPhraseDialog.width) / 2
+        title: qsTr("Enter password:")
+        standardButtons: StandardButton.Ok | StandardButton.Close
+
+        TextField {
+            id: passwordTextField
+            width: parent.width
+            echoMode: TextInput.Password
+        }
+
+        onAccepted: {
+            checkingPassword(passwordTextField.text)
+        }
+
+        onRejected: passwordTextField.clear()
+    }
+
+    function checkingPassword(password)
+    {
+        if (GraftClient.checkPassword(password)) {
+            passwordTextField.clear()
+        } else {
+            screenDialog.title = qsTr("Error")
+            screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
+            screenDialog.open()
+            passwordTextField.clear()
         }
     }
 }

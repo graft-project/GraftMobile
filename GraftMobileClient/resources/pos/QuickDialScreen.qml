@@ -73,14 +73,8 @@ BaseScreen {
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
         } else {
-            messageDialog.open()
+            screenDialog.text = qsTr("The price cannot be zero. Please, enter the price.")
+            screenDialog.open()
         }
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Attention")
-        text: qsTr("The price cannot be zero. Please, enter the price.")
-        icon: StandardIcon.Warning
     }
 }
