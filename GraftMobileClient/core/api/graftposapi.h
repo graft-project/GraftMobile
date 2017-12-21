@@ -9,7 +9,8 @@ class GraftPOSAPI : public GraftGenericAPI
 public:
     explicit GraftPOSAPI(const QUrl &url, QObject *parent = nullptr);
 
-    void sale(const QString &address, int amount, const QString &saleDetails = QString());
+    void sale(const QString &address, const QString &viewKey, double amount,
+              const QString &saleDetails = QString());
     void rejectSale(const QString &pid);
     void getSaleStatus(const QString &pid);
 

@@ -10,15 +10,19 @@ GraftPOSAPI::GraftPOSAPI(const QUrl &url, QObject *parent)
 {
 }
 
-void GraftPOSAPI::sale(const QString &address, int amount, const QString &saleDetails)
+void GraftPOSAPI::sale(const QString &address, const QString &viewKey, double amount,
+                       const QString &saleDetails)
 {
     QJsonObject params;
     params.insert(QStringLiteral("POSAddress"), address);
+    params.insert(QStringLiteral("POSViewKey"), viewKey);
     params.insert(QStringLiteral("POSSaleDetails"), saleDetails);
-    params.insert(QStringLiteral("Amount"), toAtomic(amount));
+    params.insert(QStringLiteral("Amount"), -666);
     QJsonObject data = buildMessage(QStringLiteral("Sale"), params);
     QByteArray array = QJsonDocument(data).toJson();
+    array.replace("-666", serializeAmount(amount));
     mTimer.start();
+    qDebug() << array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveSaleResponse);
 }

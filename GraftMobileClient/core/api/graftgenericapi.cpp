@@ -101,19 +101,26 @@ void GraftGenericAPI::restoreAccount(const QString &seed, const QString &passwor
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveRestoreAccountResponse);
 }
 
-double GraftGenericAPI::toCoins(int atomic)
+double GraftGenericAPI::toCoins(double atomic)
 {
     return (1.0 * atomic) / 1000000000000.0;
 }
 
-int GraftGenericAPI::toAtomic(double coins)
+double GraftGenericAPI::toAtomic(double coins)
 {
-    return (int)(coins * 1000000000000);
+    return coins * 1000000000000;
 }
 
 QString GraftGenericAPI::accountPlaceholder() const
 {
     return QString("????");
+}
+
+QByteArray GraftGenericAPI::serializeAmount(double amount) const
+{
+    QByteArray serializedAmount;
+    serializedAmount.setNum(toAtomic(amount), 'f', 0);
+    return serializedAmount;
 }
 
 QJsonObject GraftGenericAPI::buildMessage(const QString &key, const QJsonObject &params) const
@@ -182,6 +189,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     }
     arr.remove(index + temp.size(), end - (index + temp.size()));
     QString address;
+    QString viewKey;
     QString seed;
     QJsonObject response = QJsonDocument::fromJson(arr).object();
     if (response.contains(QLatin1String("result")))
@@ -189,6 +197,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
         QJsonObject object = response.value(QLatin1String("result")).toObject();
         address = object.value(QLatin1String("Address")).toString();
         seed = object.value(QLatin1String("Seed")).toString();
+        viewKey = object.value(QLatin1String("ViewKey")).toString();
     }
     else
     {
@@ -202,7 +211,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     }
     mAccountData = accountArr;
     qDebug() << mAccountData << address;
-    emit createAccountReceived(mAccountData, mPassword, address, seed);
+    emit createAccountReceived(mAccountData, mPassword, address, viewKey, seed);
 }
 
 void GraftGenericAPI::receiveGetBalanceResponse()
@@ -245,6 +254,7 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
     }
     arr.remove(index + temp.size(), end - (index + temp.size()));
     QString address;
+    QString viewKey;
     QString seed;
     QJsonObject response = QJsonDocument::fromJson(arr).object();
     if (response.contains(QLatin1String("result")))
@@ -252,6 +262,7 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
         QJsonObject object = response.value(QLatin1String("result")).toObject();
         address = object.value(QLatin1String("Address")).toString();
         seed = object.value(QLatin1String("Seed")).toString();
+        viewKey = object.value(QLatin1String("ViewKey")).toString();
     }
     else
     {
@@ -260,10 +271,10 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
     }
     if (accountArr.isEmpty() || address.isEmpty())
     {
-        emit error(QStringLiteral("Couldn't get account data!"));
+        emit error(QStringLiteral("Couldn't restore account data!"));
         return;
     }
     mAccountData = accountArr;
     qDebug() << mAccountData << address;
-    emit restoreAccountReceived(mAccountData, mPassword, address, seed);
+    emit restoreAccountReceived(mAccountData, mPassword, address, viewKey, seed);
 }
