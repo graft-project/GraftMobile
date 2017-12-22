@@ -17,7 +17,6 @@ static const QString scProductModelDataFile("productList.dat");
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mQRCodeEncoder = new QRCodeGenerator();
     mApi = new GraftPOSAPI(getServiceUrl(), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
@@ -39,7 +38,6 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
 
 GraftPOSClient::~GraftPOSClient()
 {
-    delete mQRCodeEncoder;
 }
 
 ProductModel *GraftPOSClient::productModel() const
@@ -89,8 +87,8 @@ void GraftPOSClient::sale()
     {
         updateQuickExchange(mProductModel->totalCost());
         QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
-        mApi->sale(mAccountManager->address(), mProductModel->totalCost(),
-                   selectedProducts.toHex());
+        mApi->sale(mAccountManager->address(), mAccountManager->viewKey(),
+                   mProductModel->totalCost(), selectedProducts.toHex());
     }
     else
     {
