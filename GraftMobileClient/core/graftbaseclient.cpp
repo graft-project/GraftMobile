@@ -38,7 +38,6 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mAccountManager(new AccountManager())
 {
     initSettings();
-    updateAddressQRCode();
 }
 
 GraftBaseClient::~GraftBaseClient()
