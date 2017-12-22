@@ -14,6 +14,7 @@ GraftApplicationWindow {
         onLoaded: {
             drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            drawerLoader.item.interactive = !createWalletStackViewer.visible
         }
     }
 
@@ -59,20 +60,17 @@ GraftApplicationWindow {
         anchors.fill: parent
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
 
-        onCurrentIndexChanged: {
-            if (currentIndex > 0) {
-                if (Qt.platform.os === "ios") {
-                    footerLoader.active = true
-                } else {
-                    drawerLoader.active = true
-                }
-            }
-        }
-
         CreateWalletStackViewer {
             id: createWalletStackViewer
             pushScreen: generalTransitions()
             menuLoader: Qt.platform.os === "ios" ? footerLoader : drawerLoader
+            onVisibleChanged: {
+                if (Qt.platform.os === "ios") {
+                    footerLoader.item.visible = !visible
+                } else {
+                    drawerLoader.item.interactive = !visible
+                }
+            }
         }
 
         WalletStackViewer {

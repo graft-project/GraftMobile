@@ -5,10 +5,6 @@ BaseStackViewer {
     id: stack
     initialItem: createWalletScreen
 
-    Component.onCompleted: {
-        menuLoader.active = false
-    }
-
     CreateWalletScreen {
         id: createWalletScreen
         pushScreen: createWalletsTransitions()
