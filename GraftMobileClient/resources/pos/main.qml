@@ -20,7 +20,10 @@ GraftApplicationWindow {
 
     footer: Loader {
         id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = menuTransitions()
+        onLoaded: {
+            footerLoader.item.pushScreen = menuTransitions()
+            footerLoader.item.interactive = !createWalletStackViewer.visible
+        }
     }
 
     Component.onCompleted: {
