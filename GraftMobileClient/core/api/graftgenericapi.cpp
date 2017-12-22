@@ -176,7 +176,6 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     qDebug() << "CreateAccount Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     QByteArray arr = reply->readAll();
-    qDebug() << arr;
     reply->deleteLater();
     reply = nullptr;
     QByteArray temp("\"Account\": \"");
@@ -210,7 +209,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
         return;
     }
     mAccountData = accountArr;
-    qDebug() << mAccountData << address;
+    qDebug() << mAccountData << address << viewKey << seed;
     emit createAccountReceived(mAccountData, mPassword, address, viewKey, seed);
 }
 
@@ -275,6 +274,6 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
         return;
     }
     mAccountData = accountArr;
-    qDebug() << mAccountData << address;
+    qDebug() << mAccountData << address << viewKey << seed;
     emit restoreAccountReceived(mAccountData, mPassword, address, viewKey, seed);
 }
