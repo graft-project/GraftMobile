@@ -26,7 +26,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     }
     else
     {
-        requestAccount(mApi, KeyGenerator::generateUUID(8));
+//        requestAccount(mApi, KeyGenerator::generateUUID(8));
     }
     registerBalanceTimer(mApi);
 }
