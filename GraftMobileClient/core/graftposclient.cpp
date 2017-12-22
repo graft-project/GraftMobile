@@ -29,10 +29,6 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     {
         mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
     }
-    else
-    {
-//        requestAccount(mApi, KeyGenerator::generateUUID(8));
-    }
     registerBalanceTimer(mApi);
 }
 
