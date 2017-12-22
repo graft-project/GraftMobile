@@ -10,6 +10,11 @@ void BarcodeImageProvider::setBarcodeImage(const QString &id, const QImage &imag
     mBarcodes.insert(id, image);
 }
 
+QImage BarcodeImageProvider::barcodeImage(const QString &id) const
+{
+    return mBarcodes.value(id);
+}
+
 QImage BarcodeImageProvider::requestImage(const QString &id, QSize *size,
                                           const QSize &requestedSize)
 {

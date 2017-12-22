@@ -53,7 +53,6 @@ SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
 void GraftPOSClient::registerTypes(QQmlEngine *engine)
 {
     GraftBaseClient::registerTypes(engine);
-    registerImageProvider(engine);
 }
 
 bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)

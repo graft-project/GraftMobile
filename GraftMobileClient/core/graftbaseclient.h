@@ -38,7 +38,7 @@ public:
     virtual void registerTypes(QQmlEngine *engine);
 
     Q_INVOKABLE QString qrCodeImage() const;
-    Q_INVOKABLE QString addressQRCodeImage() const;
+    Q_INVOKABLE QString addressQRCodeImage();
 
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
