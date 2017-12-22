@@ -21,8 +21,6 @@ BaseScreen {
     property int index: -1
 
     Component.onCompleted: {
-        screenDialog.text = qsTr("Please, enter the item title and price.")
-        screenDialog.open()
         if (Qt.platform.os === "ios") {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
@@ -45,7 +43,7 @@ BaseScreen {
             editingItem.pushScreen.goBack()
             GraftClient.saveProducts()
         } else {
-            screenDialog.text = qsTr("You must enter the item title and price.")
+            screenDialog.text = qsTr("Please, enter the item title and price.")
             screenDialog.open()
         }
     }

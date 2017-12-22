@@ -9,6 +9,7 @@ public:
     BarcodeImageProvider();
 
     void setBarcodeImage(const QString &id, const QImage &image);
+    QImage barcodeImage(const QString &id) const;
 
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
 

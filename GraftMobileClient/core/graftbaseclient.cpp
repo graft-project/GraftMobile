@@ -38,7 +38,6 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mAccountManager(new AccountManager())
 {
     initSettings();
-    updateAddressQRCode();
 }
 
 GraftBaseClient::~GraftBaseClient()
@@ -87,6 +86,7 @@ void GraftBaseClient::setQRCodeImage(const QImage &image)
 
 void GraftBaseClient::registerTypes(QQmlEngine *engine)
 {
+    registerImageProvider(engine);
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
@@ -98,8 +98,12 @@ QString GraftBaseClient::qrCodeImage() const
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scQRCodeImageID);
 }
 
-QString GraftBaseClient::addressQRCodeImage() const
+QString GraftBaseClient::addressQRCodeImage()
 {
+    if (mImageProvider && mImageProvider->barcodeImage(scAddressQRCodeImageID).isNull())
+    {
+        updateAddressQRCode();
+    }
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scAddressQRCodeImageID);
 }
 
