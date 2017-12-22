@@ -1,8 +1,9 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.2
 
-Rectangle {
+Button {
     property alias accountBalance: accountBalance.text
     property alias accountTitle: accountName.text
     property alias productImage: picture.source
@@ -10,6 +11,14 @@ Rectangle {
     property alias bottomLineVisible: bottomLine.visible
 
     height: 60
+    flat: true
+    background {
+        x: 0
+        y: 0
+        width: background.parent.width
+        height: background.parent.height
+    }
+    onClicked: {} //написати
 
     ColumnLayout {
         spacing: 0
@@ -67,7 +76,14 @@ Rectangle {
                 id: accountBalance
                 color: "#404040"
                 font.pointSize: 20
-                Layout.rightMargin: 8
+                Layout.rightMargin: 15
+                Layout.alignment: Qt.AlignRight
+            }
+
+            Image {
+                source: "qrc:/imgs/arrow.png"
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 12
                 Layout.alignment: Qt.AlignRight
             }
         }

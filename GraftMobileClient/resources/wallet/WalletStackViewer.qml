@@ -20,6 +20,7 @@ BaseStackViewer {
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
+        transitionsMap["openMainBalanceScreen"] = openMainBalanceScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -51,5 +52,9 @@ BaseStackViewer {
     function openAddAccountScreen() {
         stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": walletsTransitions(),
                        "coinModel": CoinModel})
+    }
+
+    function openMainBalanceScreen() {
+        stack.push("qrc:/MainBalanceScreen.qml")
     }
 }

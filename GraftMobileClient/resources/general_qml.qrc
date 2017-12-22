@@ -27,6 +27,7 @@
         <file alias="RestoreScreen.qml">RestoreScreen.qml</file>
         <file alias="MnemomicViewScreen.qml">MnemomicViewScreen.qml</file>
         <file alias="CreateWalletScreen.qml">CreateWalletScreen.qml</file>
+        <file alias="MainBalanceScreen.qml">MainBalanceScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -81,6 +82,7 @@
         <file alias="photo.png">imgs/photo.png</file>
         <file alias="lock.png">imgs/lock.png</file>
         <file alias="Error.png">imgs/Error.png</file>
+        <file alias="arrow.png">imgs/arrow.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>
