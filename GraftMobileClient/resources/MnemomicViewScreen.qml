@@ -45,7 +45,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             text: qsTr("I Save It!")
-            onClicked: pushScreen()
+            onClicked: pushScreen.openMainScreen()
         }
     }
 
@@ -59,7 +59,7 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 title: qsTr("Create wallet")
-                action: pushScreen
+                action: pushScreen.openMainScreen
                 screenHeader {
                     isNavigationButtonVisible: false
                     actionButtonState: true
@@ -75,7 +75,7 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 title: qsTr("Mnemonic phrase")
-                action: pushScreen
+                action: pushScreen.openMainScreen
                 screenHeader {
                     navigationButtonState: Qt.platform.os !== "android"
                     actionButtonState: true

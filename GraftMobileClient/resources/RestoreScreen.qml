@@ -5,7 +5,7 @@ import "components"
 
 BaseScreen {
     title: qsTr("Restore wallet")
-    action: pushScreen.openMainScreen
+    action: restoreWallet
     screenHeader {
         navigationButtonState: Qt.platform.os === "ios"
         actionButtonState: true
@@ -63,7 +63,11 @@ BaseScreen {
         WideActionButton {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore wallet")
-            onClicked: GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
+            onClicked: restoreWallet()
         }
+    }
+
+    function restoreWallet() {
+        GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
     }
 }

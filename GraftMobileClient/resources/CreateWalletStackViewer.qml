@@ -41,7 +41,7 @@ StackView {
     }
 
     function openMnemonicViewScreen(isAccountExist) {
-        stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": openMainScreen,
+        stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": createWalletsTransitions(),
                    "screenState": isAccountExist})
     }
 
