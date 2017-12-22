@@ -22,7 +22,7 @@ GraftApplicationWindow {
         id: footerLoader
         onLoaded: {
             footerLoader.item.pushScreen = menuTransitions()
-            footerLoader.item.interactive = !createWalletStackViewer.visible
+            footerLoader.item.visible = !createWalletStackViewer.visible
         }
     }
 
