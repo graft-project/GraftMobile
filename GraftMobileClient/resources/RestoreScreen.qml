@@ -22,7 +22,7 @@ BaseScreen {
         target: GraftClient
 
         onRestoreAccountReceived: {
-            pushScreen.openMainScreen
+            pushScreen.openMainScreen()
         }
     }
 
