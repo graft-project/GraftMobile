@@ -8,6 +8,7 @@
 class BarcodeImageProvider;
 class QuickExchangeModel;
 class GraftGenericAPI;
+class QRCodeGenerator;
 class AccountManager;
 class CurrencyModel;
 class AccountModel;
@@ -27,6 +28,7 @@ public:
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;
 
     Q_INVOKABLE QString getSeed() const;
+    Q_INVOKABLE QString address() const;
 
     AccountModel *accountModel() const;
     CurrencyModel *currencyModel() const;
@@ -36,6 +38,7 @@ public:
     virtual void registerTypes(QQmlEngine *engine);
 
     Q_INVOKABLE QString qrCodeImage() const;
+    Q_INVOKABLE QString addressQRCodeImage() const;
 
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
@@ -72,7 +75,25 @@ protected:
     void registerBalanceTimer(GraftGenericAPI *api);
     virtual void updateBalance() = 0;
 
+private slots:
+    void receiveAccount(const QByteArray &accountData, const QString &password,
+                        const QString &address, const QString &viewKey,
+                        const QString &seed);
+    void receiveRestoreAccount(const QByteArray &accountData, const QString &password,
+                               const QString &address, const QString &viewKey,
+                               const QString &seed);
+    void receiveBalance(double balance, double unlockedBalance);
+
+private:
+    void initSettings();
+    void initAccountModel(QQmlEngine *engine);
+    void initCurrencyModel(QQmlEngine *engine);
+    void initQuickExchangeModel(QQmlEngine *engine);
+    void updateAddressQRCode();
+
+protected:
     BarcodeImageProvider *mImageProvider;
+    QRCodeGenerator *mQRCodeEncoder;
     AccountModel *mAccountModel;
     CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;
@@ -81,19 +102,7 @@ protected:
 
     QMap<int, double> mBalances;
 
-private slots:
-    void receiveAccount(const QByteArray &accountData, const QString &password,
-                        const QString &address, const QString &seed);
-    void receiveRestoreAccount(const QByteArray &accountData, const QString &password,
-                               const QString &address, const QString &seed);
-    void receiveBalance(double balance, double unlockedBalance);
-
 private:
-    void initSettings();
-    void initAccountModel(QQmlEngine *engine);
-    void initCurrencyModel(QQmlEngine *engine);
-    void initQuickExchangeModel(QQmlEngine *engine);
-
     int mBalanceTimer;
 };
 

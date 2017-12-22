@@ -41,11 +41,12 @@ void GraftWalletAPI::pay(const QString &pid, const QString &address, double amou
     params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("PaymentID"), pid);
     params.insert(QStringLiteral("POSAddress"), address);
-    params.insert(QStringLiteral("Amount"), toAtomic(amount));
+    params.insert(QStringLiteral("Amount"), -666);
     params.insert(QStringLiteral("BlockNum"), blockNum);
     QJsonObject data = buildMessage(QStringLiteral("Pay"), params);
     QByteArray array = QJsonDocument(data).toJson();
     array.replace("????", mAccountData);
+    array.replace("-666", serializeAmount(amount));
     mTimer.start();
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);

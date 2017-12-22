@@ -24,19 +24,14 @@ BaseScreen {
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         if (serviceAddr.checked) {
             if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-                messageDialog.open()
+                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
+                                         "correct service address.")
+                screenDialog.open()
                 return
             }
         }
         GraftClient.saveSettings()
         pushScreen.openMainScreen()
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("The service IP or port is invalid. Please, enter the correct service address.")
     }
 
     ColumnLayout {
@@ -157,9 +152,9 @@ BaseScreen {
             passwordTextField.clear()
             pushScreen.openMnemonicViewScreen(true)
         } else {
-            messageDialog.title = qsTr("Error")
-            messageDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
-            messageDialog.open()
+            screenDialog.title = qsTr("Error")
+            screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
+            screenDialog.open()
             passwordTextField.clear()
         }
     }

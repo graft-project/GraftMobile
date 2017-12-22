@@ -23,8 +23,8 @@ public:
 
 private:
     QString mName;
-    QString mPrice;
     QString mCode;
+    QString mPrice;
     bool mPrimary;
 };
 

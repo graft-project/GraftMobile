@@ -5,7 +5,6 @@
 #include <QVariant>
 
 class SelectedProductProxyModel;
-class QRCodeGenerator;
 class ProductModel;
 class GraftPOSAPI;
 
@@ -46,7 +45,6 @@ private:
     void updateBalance() override;
 
     GraftPOSAPI *mApi;
-    QRCodeGenerator *mQRCodeEncoder;
     QString mPID;
     ProductModel *mProductModel;
     SelectedProductProxyModel *mSelectedProductModel;

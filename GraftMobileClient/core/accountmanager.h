@@ -17,6 +17,9 @@ public:
     void setAddress(const QString &a);
     QString address() const;
 
+    void setViewKey(const QString &key);
+    QString viewKey() const;
+
     void setSeed(const QString &seed);
     QString seed() const;
 
@@ -28,6 +31,7 @@ private:
     QString mPassword;
     QByteArray mAccountData;
     QString mAddress;
+    QString mViewKey;
     QString mSeed;
 };
 

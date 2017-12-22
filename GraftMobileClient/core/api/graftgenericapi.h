@@ -37,22 +37,25 @@ public:
     void getSeed();
     void restoreAccount(const QString &seed, const QString &password);
 
-    static double toCoins(int atomic);
-    static int toAtomic(double coins);
+    static double toCoins(double atomic);
+    static double toAtomic(double coins);
 
 signals:
     void error(const QString &message);
     void createAccountReceived(const QByteArray &accountData, const QString &password,
-                               const QString &address, const QString &seed);
+                               const QString &address, const QString &viewKey, const QString &seed);
     void getBalanceReceived(double balance, double unlockedBalance);
     void getSeedReceived(const QString &seed);
     void restoreAccountReceived(const QByteArray &accountData, const QString &password,
-                                const QString &address, const QString &seed);
+                                const QString &address, const QString &viewKey,
+                                const QString &seed);
 
 protected:
     QString accountPlaceholder() const;
+    QByteArray serializeAmount(double amount) const;
     QJsonObject buildMessage(const QString &key, const QJsonObject &params = QJsonObject()) const;
     QJsonObject processReply(QNetworkReply *reply);
+
 
 private slots:
     void receiveCreateAccountResponse();

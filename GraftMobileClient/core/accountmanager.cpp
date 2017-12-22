@@ -55,6 +55,20 @@ QString AccountManager::address() const
     return mAddress;
 }
 
+void AccountManager::setViewKey(const QString &key)
+{
+    if (mViewKey != key)
+    {
+        mViewKey = key;
+        save();
+    }
+}
+
+QString AccountManager::viewKey() const
+{
+    return mViewKey;
+}
+
 void AccountManager::setSeed(const QString &seed)
 {
     if (mSeed != seed)
@@ -81,7 +95,7 @@ void AccountManager::save() const
     if (lFile.open(QFile::WriteOnly))
     {
         QDataStream in(&lFile);
-        in << mPassword << mAccountData << mAddress << mSeed;
+        in << mPassword << mAccountData << mAddress << mSeed << mViewKey;
     }
 }
 
@@ -95,7 +109,7 @@ void AccountManager::read()
         if (lFile.open(QFile::ReadOnly))
         {
             QDataStream in(&lFile);
-            in >> mPassword >> mAccountData >> mAddress >> mSeed;
+            in >> mPassword >> mAccountData >> mAddress >> mSeed >> mViewKey;
         }
     }
 }
