@@ -24,14 +24,12 @@ BaseScreen {
                 screenDialog.open()
             }
         } else {
-            screenDialog.text = qsTr("You must enter the account name and wallet number.")
+            screenDialog.text = qsTr("Please, enter the account name and wallet number.")
             screenDialog.open()
         }
     }
 
     Component.onCompleted: {
-        screenDialog.text = qsTr("Please, enter the account name and wallet number.")
-        screenDialog.open()
         if (Qt.platform.os === "ios") {
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
