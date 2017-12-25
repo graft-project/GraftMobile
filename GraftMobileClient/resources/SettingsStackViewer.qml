@@ -24,8 +24,8 @@ BaseStackViewer {
         }
     }
 
-    function openMnemonicViewScreen(isAccountExist) {
+    function openMnemonicViewScreen(isAccountExists) {
         stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": settingsTransitions(),
-                   "screenState": isAccountExist})
+                   "screenState": isAccountExists})
     }
 }
