@@ -14,12 +14,16 @@ GraftApplicationWindow {
         onLoaded: {
             drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            drawerLoader.item.interactive = !createWalletStackViewer.visible
         }
     }
 
     footer: Loader {
         id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = menuTransitions()
+        onLoaded: {
+            footerLoader.item.pushScreen = menuTransitions()
+            footerLoader.item.visible = !createWalletStackViewer.visible
+        }
     }
 
     Component.onCompleted: {
@@ -57,7 +61,20 @@ GraftApplicationWindow {
     StackLayout {
         id: mainLayout
         anchors.fill: parent
-        currentIndex: 0
+        currentIndex: GraftClient.isAccountExists() ? 1 : 0
+
+        CreateWalletStackViewer {
+            id: createWalletStackViewer
+            pushScreen: generalTransitions()
+            menuLoader: drawerLoader
+            onVisibleChanged: {
+                if (Qt.platform.os === "ios") {
+                    footerLoader.item.visible = !visible
+                } else {
+                    drawerLoader.item.interactive = !visible
+                }
+            }
+        }
 
         ProductStackViewer {
             id: productViewer
@@ -71,9 +88,10 @@ GraftApplicationWindow {
             menuLoader: drawerLoader
         }
 
-        SettingsScreen {
-            id: settingsScreen
+        SettingsStackViewer {
+            id: settingsStackViewer
             pushScreen: generalTransitions()
+            appType: "pos"
         }
     }
 
@@ -104,17 +122,17 @@ GraftApplicationWindow {
     }
 
     function openMainScreen() {
-        mainLayout.currentIndex = 0
+        mainLayout.currentIndex = 1
         selectButton("Store")
     }
 
     function openInfoWalletScreen() {
-        mainLayout.currentIndex = 1
+        mainLayout.currentIndex = 2
         selectButton("Wallet")
     }
 
     function openSettingsScreen() {
-        mainLayout.currentIndex = 2
+        mainLayout.currentIndex = 3
         selectButton("Settings")
     }
 

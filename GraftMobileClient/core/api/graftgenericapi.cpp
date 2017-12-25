@@ -91,6 +91,7 @@ void GraftGenericAPI::getSeed()
 
 void GraftGenericAPI::restoreAccount(const QString &seed, const QString &password)
 {
+    mPassword = password;
     QJsonObject params;
     params.insert(QStringLiteral("Password"), password);
     params.insert(QStringLiteral("Seed"), seed);

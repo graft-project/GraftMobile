@@ -11,9 +11,9 @@ include(android/android.pri)
 }
 
 include(QZXing.pri)
-contains(DEFINES, POS_BUILD) {
 include(QRCodeGenerator.pri)
 
+contains(DEFINES, POS_BUILD) {
 ios|android {
 include(imagepicker/ImagePickerLibrary.pri)
 }
@@ -22,13 +22,11 @@ TARGET = GraftPointOfSale
 
 SOURCES += \
     core/api/graftposapi.cpp \
-    core/graftposclient.cpp \
-    core/qrcodegenerator.cpp
+    core/graftposclient.cpp
 
 HEADERS += \
     core/api/graftposapi.h \
     core/graftposclient.h \
-    core/qrcodegenerator.h \
     core/defines.h
 }
 
@@ -64,7 +62,8 @@ SOURCES += main.cpp \
     core/quickexchangemodel.cpp \
     core/accountmodelserializator.cpp \
     core/accountmanager.cpp \
-    core/graftclienttools.cpp
+    core/graftclienttools.cpp \
+    core/qrcodegenerator.cpp
 
 HEADERS += \
     core/config.h \
@@ -87,7 +86,8 @@ HEADERS += \
     core/quickexchangemodel.h \
     core/accountmodelserializator.h \
     core/accountmanager.h \
-    core/graftclienttools.h
+    core/graftclienttools.h \
+    core/qrcodegenerator.h
 
 include(resources/resources.pri)
 

@@ -3,6 +3,7 @@
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
 #include "graftbaseclient.h"
+#include "qrcodegenerator.h"
 #include "accountmanager.h"
 #include "currencymodel.h"
 #include "currencyitem.h"
@@ -18,15 +19,17 @@
 #include <QFileInfo>
 #include <QDir>
 
-static const QString cBarcodeImageProviderID("barcodes");
-static const QString cQRCodeImageID("qrcode");
-static const QString cProviderScheme("image://%1/%2");
+static const QString scBarcodeImageProviderID("barcodes");
+static const QString scQRCodeImageID("qrcode");
+static const QString scAddressQRCodeImageID("address_qrcode");
+static const QString scProviderScheme("image://%1/%2");
 static const QString scAccountModelDataFile("accountList.dat");
 static const QString scSettingsDataFile("Settings.ini");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
+    ,mQRCodeEncoder(new QRCodeGenerator())
     ,mClientSettings(nullptr)
     ,mAccountModel(nullptr)
     ,mCurrencyModel(nullptr)
@@ -39,6 +42,7 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
 
 GraftBaseClient::~GraftBaseClient()
 {
+    delete mQRCodeEncoder;
     delete mAccountManager;
 }
 
@@ -50,6 +54,11 @@ bool GraftBaseClient::isAccountExists() const
 QString GraftBaseClient::getSeed() const
 {
     return mAccountManager->seed();
+}
+
+QString GraftBaseClient::address() const
+{
+    return mAccountManager->address();
 }
 
 AccountModel *GraftBaseClient::accountModel() const
@@ -71,12 +80,13 @@ void GraftBaseClient::setQRCodeImage(const QImage &image)
 {
     if (mImageProvider)
     {
-        mImageProvider->setBarcodeImage(cQRCodeImageID, image);
+        mImageProvider->setBarcodeImage(scQRCodeImageID, image);
     }
 }
 
 void GraftBaseClient::registerTypes(QQmlEngine *engine)
 {
+    registerImageProvider(engine);
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
@@ -85,7 +95,16 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
 
 QString GraftBaseClient::qrCodeImage() const
 {
-    return cProviderScheme.arg(cBarcodeImageProviderID).arg(cQRCodeImageID);
+    return scProviderScheme.arg(scBarcodeImageProviderID).arg(scQRCodeImageID);
+}
+
+QString GraftBaseClient::addressQRCodeImage()
+{
+    if (mImageProvider && mImageProvider->barcodeImage(scAddressQRCodeImageID).isNull())
+    {
+        updateAddressQRCode();
+    }
+    return scProviderScheme.arg(scBarcodeImageProviderID).arg(scAddressQRCodeImageID);
 }
 
 void GraftBaseClient::saveAccounts() const
@@ -106,7 +125,7 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
     if (!mImageProvider)
     {
         mImageProvider = new BarcodeImageProvider();
-        engine->addImageProvider(cBarcodeImageProviderID, mImageProvider);
+        engine->addImageProvider(scBarcodeImageProviderID, mImageProvider);
     }
 }
 
@@ -165,6 +184,7 @@ void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &passwo
         {
             connect(api, &GraftGenericAPI::createAccountReceived,
                     this, &GraftBaseClient::receiveAccount, Qt::UniqueConnection);
+            mAccountManager->setPassword(password);
             api->createAccount(password);
         }
         else
@@ -181,6 +201,7 @@ void GraftBaseClient::requestRestoreAccount(GraftGenericAPI *api, const QString 
     {
         connect(api, &GraftGenericAPI::restoreAccountReceived,
                 this, &GraftBaseClient::receiveRestoreAccount, Qt::UniqueConnection);
+        mAccountManager->setPassword(password);
         api->restoreAccount(seed, password);
     }
 }
@@ -196,25 +217,31 @@ void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
 }
 
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
-                                     const QString &address, const QString &seed)
+                                     const QString &address, const QString &viewKey,
+                                     const QString &seed)
 {
-    if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
+    if (mAccountManager->passsword() == password && !accountData.isEmpty() && !address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
         mAccountManager->setAddress(address);
+        mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
+        updateAddressQRCode();
         emit createAccountReceived();
     }
 }
 
 void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const QString &password,
-                                            const QString &address, const QString &seed)
+                                            const QString &address, const QString &viewKey,
+                                            const QString &seed)
 {
     if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
         mAccountManager->setAddress(address);
+        mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
+        updateAddressQRCode();
         emit restoreAccountReceived();
     }
 }
@@ -272,6 +299,11 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
     }
+}
+
+void GraftBaseClient::updateAddressQRCode()
+{
+    mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
 }
 
 void GraftBaseClient::setSettings(const QString &key, const QVariant &value)
