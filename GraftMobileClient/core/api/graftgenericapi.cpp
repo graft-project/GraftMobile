@@ -220,8 +220,8 @@ void GraftGenericAPI::receiveGetBalanceResponse()
     QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
-        emit getBalanceReceived(toCoins(object.value(QLatin1String("balance")).toInt()),
-                                toCoins(object.value(QLatin1String("unlocked_balance")).toInt()));
+        emit getBalanceReceived(toCoins(object.value(QLatin1String("Balance")).toDouble()),
+                                toCoins(object.value(QLatin1String("UnlockedBalance")).toDouble()));
     }
 }
 
