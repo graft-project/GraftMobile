@@ -36,6 +36,7 @@ BaseScreen {
             MnemonicPhraseView {
                 id: mnemonicPhraseView
                 Layout.preferredWidth: parent.width
+                mnemonicPhrase: GraftClient.getSeed()
             }
         }
 
@@ -44,6 +45,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             text: qsTr("I Save It!")
+            onClicked: save()
         }
     }
 
@@ -57,7 +59,7 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 title: qsTr("Create wallet")
-                action: pushScreen
+                action: save
                 screenHeader {
                     isNavigationButtonVisible: false
                     actionButtonState: true
@@ -73,7 +75,7 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 title: qsTr("Mnemonic phrase")
-                action: pushScreen
+                action: save
                 screenHeader {
                     navigationButtonState: Qt.platform.os !== "android"
                     actionButtonState: true
@@ -81,4 +83,9 @@ BaseScreen {
             }
         }
     ]
+
+    function save() {
+        pushScreen.goBack()
+        pushScreen.openMainScreen()
+    }
 }
