@@ -22,8 +22,8 @@ BaseStackViewer {
         stack.push("qrc:/RestoreScreen.qml", {"pushScreen": createWalletsTransitions()})
     }
 
-    function openMnemonicViewScreen(isAccountExist) {
+    function openMnemonicViewScreen(isAccountExists) {
         stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": createWalletsTransitions(),
-                   "screenState": isAccountExist})
+                   "screenState": isAccountExists})
     }
 }

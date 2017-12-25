@@ -13,11 +13,6 @@ AccountManager::AccountManager()
     read();
 }
 
-QString AccountManager::passsword() const
-{
-    return mPassword;
-}
-
 void AccountManager::setPassword(const QString &passsword)
 {
     if (mPassword != passsword)
@@ -25,6 +20,11 @@ void AccountManager::setPassword(const QString &passsword)
         mPassword = passsword;
         save();
     }
+}
+
+QString AccountManager::passsword() const
+{
+    return mPassword;
 }
 
 void AccountManager::setAccount(const QByteArray &data)
