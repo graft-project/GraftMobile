@@ -12,5 +12,7 @@ ListView {
         productImage: imagePath
         accountTitle: accountName
         accountBalance: balance
+        arrowVisible: true
+        onClicked: pushScreen.openAddressScreen(balance, accountName, imagePath, "coinsAddress")
     }
 }

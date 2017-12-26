@@ -121,7 +121,7 @@ GraftApplicationWindow {
     function privateClearChecked() {
           selectButton("Store")
           ProductModel.clearSelections()
-      }
+    }
 
     function selectButton(name) {
         if (Qt.platform.os === "ios") {

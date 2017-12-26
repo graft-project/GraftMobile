@@ -27,7 +27,7 @@
         <file alias="RestoreScreen.qml">RestoreScreen.qml</file>
         <file alias="MnemomicViewScreen.qml">MnemomicViewScreen.qml</file>
         <file alias="CreateWalletScreen.qml">CreateWalletScreen.qml</file>
-        <file alias="MainBalanceScreen.qml">MainBalanceScreen.qml</file>
+        <file alias="WalletAddressScreen.qml">WalletAddressScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

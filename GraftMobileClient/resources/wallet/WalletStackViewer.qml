@@ -20,7 +20,8 @@ BaseStackViewer {
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
-        transitionsMap["openMainBalanceScreen"] = openMainBalanceScreen
+        transitionsMap["openMainAddressScreen"] = openMainAddressScreen
+        transitionsMap["openAddressScreen"] = openAddressScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -54,7 +55,12 @@ BaseStackViewer {
                        "coinModel": CoinModel})
     }
 
-    function openMainBalanceScreen() {
-        stack.push("qrc:/MainBalanceScreen.qml")
+    function openMainAddressScreen(balanceState) {
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(), "balanceState": balanceState})
+    }
+
+    function openAddressScreen(balance, accountName, imagePath, balanceState) {
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(), "accountBalance": balance,
+                       "accountName": accountName, "accountImage": imagePath, "balanceState": balanceState})
     }
 }

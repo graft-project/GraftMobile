@@ -4,10 +4,12 @@ import QtQuick.Controls 2.2
 import org.graft 1.0
 
 Rectangle {
-    id: balance
-
     property real amountUnlockGraftCost: 0
     property real amountLockGraftCost: 0
+    property alias lockedArrowVisible: lockedArrow.visible
+    property alias lockedBalanceButton: lockedMainBalance
+    property alias unlockedArrowVisible: unlockedArrow.visible
+    property alias unlockedBalanceButton: unlockedMainBalance
 
     height: 120
     color: "#FCF9F1"
@@ -28,6 +30,7 @@ Rectangle {
         }
 
         Button {
+            id: unlockedMainBalance
             flat: true
             Layout.fillWidth: true
             Layout.preferredHeight: 60
@@ -37,11 +40,7 @@ Rectangle {
                 width: background.parent.width
                 height: background.parent.height
             }
-            onClicked: {
-                console.log(GraftClient.addressQRCodeImage())
-                console.log(GraftClient.address())
-                pushScreen.openMainBalanceScreen() //написати
-            }
+            onClicked: pushScreen.openMainAddressScreen("mainAddress")
 
             RowLayout {
                 spacing: 0
@@ -90,6 +89,7 @@ Rectangle {
                 }
 
                 Image {
+                    id: unlockedArrow
                     source: "qrc:/imgs/arrow.png"
                     Layout.preferredHeight: 20
                     Layout.preferredWidth: 15
@@ -107,6 +107,7 @@ Rectangle {
         }
 
         Button {
+            id: lockedMainBalance
             flat: true
             Layout.preferredHeight: 60
             Layout.fillWidth: true
@@ -116,7 +117,7 @@ Rectangle {
                 width: background.parent.width
                 height: background.parent.height
             }
-            onClicked: {} //написати
+            onClicked: pushScreen.openMainAddressScreen("mainAddress")
 
             RowLayout {
                 spacing: 0
@@ -160,15 +161,16 @@ Rectangle {
                     font.pointSize: 20
                     color: "#d1cfc8"
                     Layout.fillWidth: true
-                    Layout.rightMargin: 15
+                    Layout.rightMargin: 12
                     Layout.alignment: Qt.AlignRight
                     horizontalAlignment: Text.AlignRight
                 }
 
                 Image {
+                    id: lockedArrow
                     source: "qrc:/imgs/arrow.png"
                     Layout.preferredHeight: 20
-                    Layout.preferredWidth: 12
+                    Layout.preferredWidth: 15
                     Layout.alignment: Qt.AlignRight
                 }
             }
