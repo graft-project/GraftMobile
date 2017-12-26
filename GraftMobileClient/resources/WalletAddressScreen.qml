@@ -9,6 +9,7 @@ BaseScreen {
     property alias accountName: coinAccountDelegate.accountTitle
     property alias accountImage: coinAccountDelegate.productImage
     property alias accountBalance: coinAccountDelegate.accountBalance
+    property string accountNumber: ""
 
     state: balanceState
     screenHeader {
@@ -54,8 +55,8 @@ BaseScreen {
             color: "#e9e9e9"
 
             Image {
+                id: qrCodeImage
                 cache: false
-                source: GraftClient.addressQRCodeImage()
                 height: 160
                 width: height
                 anchors {
@@ -77,7 +78,7 @@ BaseScreen {
                 }
 
                 Text {
-                    text: GraftClient.address()
+                    id: address
                     Layout.fillWidth: true
                     Layout.leftMargin: 20
                     Layout.rightMargin: 20
@@ -114,6 +115,14 @@ BaseScreen {
                 target: coinAccountDelegate
                 visible: false
             }
+            PropertyChanges {
+                target: address
+                text: GraftClient.address()
+            }
+            PropertyChanges {
+                target: qrCodeImage
+                source: GraftClient.addressQRCodeImage()
+            }
         },
 
         State {
@@ -129,6 +138,14 @@ BaseScreen {
             PropertyChanges {
                 target: coinAccountDelegate
                 visible: true
+            }
+            PropertyChanges {
+                target: address
+                text: accountNumber
+            }
+            PropertyChanges {
+                target: qrCodeImage
+                source: GraftClient.coinAddressQRCodeImage(accountNumber)
             }
         }
     ]

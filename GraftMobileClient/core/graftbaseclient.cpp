@@ -107,6 +107,12 @@ QString GraftBaseClient::addressQRCodeImage()
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scAddressQRCodeImageID);
 }
 
+QString GraftBaseClient::coinAddressQRCodeImage(QString address)
+{
+    mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address));
+    return scProviderScheme.arg(scBarcodeImageProviderID).arg(scAddressQRCodeImageID);
+}
+
 void GraftBaseClient::saveAccounts() const
 {
     saveModel(scAccountModelDataFile, AccountModelSerializator::serialize(mAccountModel));

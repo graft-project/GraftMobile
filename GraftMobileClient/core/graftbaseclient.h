@@ -39,6 +39,7 @@ public:
 
     Q_INVOKABLE QString qrCodeImage() const;
     Q_INVOKABLE QString addressQRCodeImage();
+    Q_INVOKABLE QString coinAddressQRCodeImage(QString address);
 
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;

@@ -56,11 +56,13 @@ BaseStackViewer {
     }
 
     function openMainAddressScreen(balanceState) {
-        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(), "balanceState": balanceState})
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
+                       "balanceState": balanceState})
     }
 
-    function openAddressScreen(balance, accountName, imagePath, balanceState) {
+    function openAddressScreen(balance, accountName, imagePath, balanceState, accountNumber) {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(), "accountBalance": balance,
-                       "accountName": accountName, "accountImage": imagePath, "balanceState": balanceState})
+                       "accountName": accountName, "accountImage": imagePath, "balanceState": balanceState,
+                       "accountNumber": accountNumber})
     }
 }
