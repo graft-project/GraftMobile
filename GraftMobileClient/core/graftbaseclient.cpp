@@ -213,12 +213,11 @@ void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
         mBalanceTimer = startTimer(20000);
     }
 }
-#include <QDebug>
+
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
                                      const QString &address, const QString &viewKey,
                                      const QString &seed)
 {
-    qDebug()<<"mAccountManager->passsword()---"<<mAccountManager->passsword()<< "\npassword---" <<password <<"\naccountData---"<<accountData<< "\naddress---"<<address;
     if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
