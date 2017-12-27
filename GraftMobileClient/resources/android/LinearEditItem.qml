@@ -14,15 +14,8 @@ ColumnLayout {
     property alias echoMode: editItem.echoMode
     property bool letterCountingMode: true
     property int maximumLength: 32767
-
-    function wordCounting() {
-        var wordList = editItem.displayText.match(/(\w+)/g)
-        if (wordList !== null) {
-            return wordList.length
-        } else {
-            return 0
-        }
-    }
+    property alias passwordCharacter: editItem.passwordCharacter
+    property alias textSize: editItem.font.pointSize
 
     spacing: 0
 
@@ -56,5 +49,14 @@ ColumnLayout {
                                                        wordCounting()).arg(maximumLength)
         color: "#BBBBBB"
         font.pointSize: 12
+    }
+
+    function wordCounting() {
+        var wordList = editItem.displayText.split(' ')
+        if (wordList !== null) {
+            return wordList.length
+        } else {
+            return 0
+        }
     }
 }

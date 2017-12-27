@@ -18,11 +18,15 @@ GraftApplicationWindow {
         }
     }
 
-    footer: Loader {
-        id: footerLoader
-        onLoaded: {
-            footerLoader.item.pushScreen = menuTransitions()
-            footerLoader.item.visible = !createWalletStackViewer.visible
+    footer: Item {
+        id: graftApplicationFooter
+        height: Qt.platform.os === "ios" ? 49 : 0
+        visible: !createWalletStackViewer.visible
+
+        Loader {
+            id: footerLoader
+            anchors.fill: parent
+            onLoaded: footerLoader.item.pushScreen = menuTransitions()
         }
     }
 
@@ -69,7 +73,7 @@ GraftApplicationWindow {
             menuLoader: drawerLoader
             onVisibleChanged: {
                 if (Qt.platform.os === "ios") {
-                    footerLoader.item.visible = !visible
+                    graftApplicationFooter.visible = !visible
                 } else {
                     drawerLoader.item.interactive = !visible
                 }
