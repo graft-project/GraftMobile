@@ -137,6 +137,8 @@ BaseScreen {
             id: passwordTextField
             width: parent.width
             echoMode: TextInput.Password
+            passwordCharacter: '•'
+            font.pointSize: 24
         }
 
         onAccepted: {

@@ -16,14 +16,14 @@ GridLayout {
     columns: 5
     rows: 5
     columnSpacing: 5
-    rowSpacing: 35
+    rowSpacing: 45
 
     Repeater {
         id: repeater
         model: mnemonicPhrase.split(' ', mnemonicPhraseSize)
 
         Label {
-            font.pointSize: 16
+            font.pointSize: 14
             Layout.alignment: Qt.AlignHCenter
             text: modelData
         }

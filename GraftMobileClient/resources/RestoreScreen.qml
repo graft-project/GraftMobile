@@ -14,7 +14,7 @@ BaseScreen {
     Component.onCompleted: {
         if (Qt.platform.os === "ios") {
             navigationText: qsTr("Cancel")
-            actionText: qsTr("Done")
+            actionText: qsTr("Restore")
         }
     }
 
@@ -35,15 +35,16 @@ BaseScreen {
         LinearEditItem {
             id: seedTextField
             Layout.fillWidth: true
-            Layout.maximumHeight: 100
+            Layout.maximumHeight: 130
             Layout.alignment: Qt.AlignTop
             title: qsTr("Mnemonic Phrase")
             wrapMode: TextInput.WordWrap
             letterCountingMode: false
             maximumLength: 25
             validator: RegExpValidator {
-                regExp: /(\w+ ){24}(\w+){1}/g
+                regExp: /^([^\s]([a-z]+\s){24}([a-z]+){1})/g
             }
+            inputMethodHints: Qt.ImhNoPredictiveText
         }
 
         LinearEditItem {
@@ -53,6 +54,8 @@ BaseScreen {
             title: Qt.platform.os === "ios" ? qsTr("Password:") : qsTr("Password")
             maximumLength: 50
             echoMode: TextInput.Password
+            passwordCharacter: '•'
+            textSize: 24
         }
 
         Item {
