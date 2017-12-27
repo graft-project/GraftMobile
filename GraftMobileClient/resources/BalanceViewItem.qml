@@ -15,7 +15,9 @@ Rectangle {
         target: GraftClient
         onBalanceUpdated: {
             amountUnlockGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            amountUnlockGraftCost.toFixed(4)
             amountLockGraftCost = GraftClient.balance(GraftClientTools.LockedBalance)
+            amountLockGraftCost.toFixed(4)
         }
     }
 
