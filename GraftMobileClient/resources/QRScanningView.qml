@@ -6,8 +6,14 @@ import QZXing 2.3
 
 Item {
     property string lastTag: ""
+    property alias cameraReset: camera
 
     signal qrCodeDetected(string message)
+
+    function reset() {
+        camera.start()
+        lastTag = ""
+    }
 
     onVisibleChanged: {
         if (visible) {
@@ -72,12 +78,12 @@ Item {
             enabledDecoders: QZXing.DecoderFormat_QR_CODE
             tryHarder: false
             onTagFound: {
-                if (lastTag != tag) {
-                    lastTag = tag
-                    console.log(tag + " | " + " | " + decoder.charSet())
-                    camera.stop()
-                    qrCodeDetected(tag)
-                }
+                //                if (lastTag != tag) {
+                lastTag = tag
+                console.log(tag + " | " + " | " + decoder.charSet())
+                camera.stop()
+                qrCodeDetected(tag)
+                //                }
             }
         }
     }

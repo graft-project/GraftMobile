@@ -16,8 +16,14 @@ BaseScreen {
             if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)),
                                  accountName.text, CoinModel.codeOf(coinsComboBox.currentText),
                                  walletNumberText.text)) {
-                GraftClient.saveAccounts()
-                accountScreen.pushScreen.goBack()
+                if (AccountModel.isAccountNameExists(accountName.text)) {
+                    screenDialog.text = qsTr("The account name already exists! Please, enter " +
+                                             "another account name.")
+                    screenDialog.open()
+                } else {
+                    GraftClient.saveAccounts()
+                    accountScreen.pushScreen.goBack()
+                }
             } else {
                 screenDialog.text = qsTr("The wallet number already exists! Please, " +
                                          "enter another wallet number.")

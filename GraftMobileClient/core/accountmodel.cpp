@@ -93,6 +93,14 @@ bool AccountModel::isWalletNumberExists(const QString &number) const
     });
 }
 
+bool AccountModel::isAccountNameExists(const QString &name) const
+{
+    return std::any_of(mAccounts.cbegin(), mAccounts.cend(), [&name](AccountItem *account) {
+        Q_ASSERT(account);
+        return account->name() == name;
+    });
+}
+
 bool AccountModel::add(const QString &imagePath, const QString &name, const QString &currency,
                        const QString &number)
 {
