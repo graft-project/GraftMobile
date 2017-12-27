@@ -34,6 +34,7 @@ BaseScreen {
             title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
             echoMode: TextInput.Password
             passwordCharacter: '•'
+            textSize: 24
         }
 
         WideActionButton {
