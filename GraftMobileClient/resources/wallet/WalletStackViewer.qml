@@ -36,8 +36,8 @@ BaseStackViewer {
 
     function openPaymentConfirmationScreen() {
         stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
-                       "pushScreen": walletsTransitions(),
-                       "productModel": PaymentProductModel})
+                   "pushScreen": walletsTransitions(),
+                   "productModel": PaymentProductModel})
     }
 
     function openMainScreen() {
@@ -45,24 +45,23 @@ BaseStackViewer {
     }
 
     function openPaymentScreen(state) {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
-                       "title": qsTr("Pay"), "isSpacing": true, "completeText": qsTr("Paid complete!"),
-                       "screenState": state})
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen, "title": qsTr("Pay"),
+                   "isSpacing": true, "completeText": qsTr("Paid complete!"), "screenState": state})
     }
 
     function openAddAccountScreen() {
         stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": walletsTransitions(),
-                       "coinModel": CoinModel})
+                   "coinModel": CoinModel})
     }
 
     function openMainAddressScreen(balanceState) {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
-                       "balanceState": balanceState})
+                   "balanceState": balanceState})
     }
 
     function openAddressScreen(balance, accountName, imagePath, balanceState, accountNumber) {
-        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(), "accountBalance": balance,
-                       "accountName": accountName, "accountImage": imagePath, "balanceState": balanceState,
-                       "accountNumber": accountNumber})
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
+                   "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
+                   "balanceState": balanceState, "accountNumber": accountNumber})
     }
 }

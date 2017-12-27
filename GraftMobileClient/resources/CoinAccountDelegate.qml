@@ -11,8 +11,8 @@ Button {
     property alias productImage: picture.source
     property alias topLineVisible: topLine.visible
     property alias bottomLineVisible: bottomLine.visible
-    property alias coinClicked: coin.enabled
     property alias arrowVisible: arrow.visible
+    property alias coinClicked: coin.enabled
 
     height: 60
     flat: true

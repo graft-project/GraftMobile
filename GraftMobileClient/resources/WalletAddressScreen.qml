@@ -33,8 +33,8 @@ BaseScreen {
             Layout.fillWidth: true
             lockedArrowVisible: false
             unlockedArrowVisible: false
-            lockedBalanceButton.enabled: false
-            unlockedBalanceButton.enabled: false
+            lockedBalanceButton: false
+            unlockedBalanceButton: false
         }
 
         CoinAccountDelegate {

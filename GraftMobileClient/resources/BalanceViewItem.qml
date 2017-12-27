@@ -7,9 +7,9 @@ Rectangle {
     property real amountUnlockGraftCost: 0
     property real amountLockGraftCost: 0
     property alias lockedArrowVisible: lockedArrow.visible
-    property alias lockedBalanceButton: lockedMainBalance
+    property alias lockedBalanceButton: lockedMainBalance.enabled
     property alias unlockedArrowVisible: unlockedArrow.visible
-    property alias unlockedBalanceButton: unlockedMainBalance
+    property alias unlockedBalanceButton: unlockedMainBalance.enabled
 
     height: 120
     color: "#FCF9F1"
@@ -62,19 +62,18 @@ Rectangle {
                 ColumnLayout {
                     spacing: 0
                     Layout.leftMargin: 14
+                    Layout.alignment: Qt.AlignLeft
 
                     Text {
                         text: qsTr("Main Balance")
                         font.pointSize: 20
                         color: "#233146"
-                        Layout.alignment: Qt.AlignLeft
                     }
 
                     Text {
                         text: qsTr("Unlocked")
                         font.pointSize: 12
                         color: "#3d4757"
-                        Layout.alignment: Qt.AlignLeft
                     }
                 }
 
@@ -100,17 +99,17 @@ Rectangle {
 
         Rectangle {
             Layout.fillWidth: true
-            Layout.preferredHeight: 1
             Layout.leftMargin: 15
             Layout.rightMargin: 15
+            Layout.preferredHeight: 1
             color: "#e6e6e8"
         }
 
         Button {
             id: lockedMainBalance
             flat: true
-            Layout.preferredHeight: 60
             Layout.fillWidth: true
+            Layout.preferredHeight: 60
             background {
                 x: 0
                 y: 0
@@ -131,7 +130,6 @@ Rectangle {
                 Image {
                     Layout.preferredHeight: 42
                     Layout.preferredWidth: 48
-                    Layout.maximumWidth: 100
                     Layout.alignment: Qt.AlignLeft
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/imgs/lock.png"
@@ -140,19 +138,18 @@ Rectangle {
                 ColumnLayout {
                     spacing: 0
                     Layout.leftMargin: 14
+                    Layout.alignment: Qt.AlignLeft
 
                     Text {
                         text: qsTr("Main Balance")
                         font.pointSize: 20
                         color: "#233146"
-                        Layout.alignment: Qt.AlignLeft
                     }
 
                     Text {
                         text: qsTr("Locked")
                         font.pointSize: 12
                         color: "#3d4757"
-                        Layout.alignment: Qt.AlignLeft
                     }
                 }
 
