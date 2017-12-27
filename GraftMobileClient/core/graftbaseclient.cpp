@@ -22,6 +22,7 @@
 static const QString scBarcodeImageProviderID("barcodes");
 static const QString scQRCodeImageID("qrcode");
 static const QString scAddressQRCodeImageID("address_qrcode");
+static const QString scCoinAddressQRCodeImageID("coin_address_qrcode");
 static const QString scProviderScheme("image://%1/%2");
 static const QString scAccountModelDataFile("accountList.dat");
 static const QString scSettingsDataFile("Settings.ini");
@@ -109,8 +110,8 @@ QString GraftBaseClient::addressQRCodeImage()
 
 QString GraftBaseClient::coinAddressQRCodeImage(QString address)
 {
-    mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address));
-    return scProviderScheme.arg(scBarcodeImageProviderID).arg(scAddressQRCodeImageID);
+    mImageProvider->setBarcodeImage(scCoinAddressQRCodeImageID, mQRCodeEncoder->encode(address));
+    return scProviderScheme.arg(scBarcodeImageProviderID).arg(scCoinAddressQRCodeImageID);
 }
 
 void GraftBaseClient::saveAccounts() const
