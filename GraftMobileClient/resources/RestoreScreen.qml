@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import "components"
 
 BaseScreen {
+    id: root
     title: qsTr("Restore wallet")
     action: restoreWallet
     screenHeader {
@@ -64,11 +65,44 @@ BaseScreen {
         }
 
         WideActionButton {
+            id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore wallet")
-            onClicked: restoreWallet()
+            onClicked: {
+                root.state = "restoreWalletPressed"
+                restoreWallet()
+            }
         }
     }
+
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: false
+    }
+
+    states: [
+        State {
+            name: "restoreWalletPressed"
+
+            PropertyChanges {
+                target: busyIndicator
+                running: true
+            }
+            PropertyChanges {
+                target: seedTextField
+                enabled: false
+            }
+            PropertyChanges {
+                target: passwordTextField
+                enabled: false
+            }
+            PropertyChanges {
+                target: restoreWalletButton
+                enabled: false
+            }
+        }
+    ]
 
     function restoreWallet() {
         GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
