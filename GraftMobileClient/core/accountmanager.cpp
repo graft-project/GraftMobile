@@ -13,6 +13,15 @@ AccountManager::AccountManager()
     read();
 }
 
+void AccountManager::setPassword(const QString &passsword)
+{
+    if (mPassword != passsword)
+    {
+        mPassword = passsword;
+        save();
+    }
+}
+
 QString AccountManager::passsword() const
 {
     return mPassword;

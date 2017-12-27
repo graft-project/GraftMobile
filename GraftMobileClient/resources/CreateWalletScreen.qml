@@ -11,6 +11,14 @@ BaseScreen {
         isNavigationButtonVisible: false
     }
 
+    Connections {
+        target: GraftClient
+
+        onCreateAccountReceived: {
+            pushScreen.openMnemonicViewScreen(false)
+        }
+    }
+
     ColumnLayout {
         anchors {
             fill: parent
@@ -25,12 +33,15 @@ BaseScreen {
             maximumLength: 50
             title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
             echoMode: TextInput.Password
+            passwordCharacter: '•'
+            textSize: 24
         }
 
         WideActionButton {
             id: createWalletButton
             Layout.bottomMargin: 15
             text: qsTr("Create New Wallet")
+            onClicked: GraftClient.createAccount(passwordTextField.text)
         }
 
         Item {
@@ -65,6 +76,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             Layout.bottomMargin: 15
             text: qsTr("Restore Wallet")
+            onClicked: pushScreen.openRestoreWalletScreen()
         }
     }
 }

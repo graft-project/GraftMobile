@@ -137,6 +137,8 @@ BaseScreen {
             id: passwordTextField
             width: parent.width
             echoMode: TextInput.Password
+            passwordCharacter: '•'
+            font.pointSize: 24
         }
 
         onAccepted: {
@@ -150,6 +152,7 @@ BaseScreen {
     {
         if (GraftClient.checkPassword(password)) {
             passwordTextField.clear()
+            pushScreen.openMnemonicViewScreen(true)
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")

@@ -8,6 +8,7 @@ class AccountManager
 public:
     AccountManager();
 
+    void setPassword(const QString &passsword);
     QString passsword() const;
 
     void setAccount(const QByteArray &data);

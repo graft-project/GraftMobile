@@ -10,40 +10,49 @@ BaseScreen {
 
     state: screenState ? "overviewWallet" : "createWallet"
 
-    ColumnLayout {
+    Item {
         anchors {
             fill: parent
+            topMargin: 15
             leftMargin: 10
             rightMargin: 10
+            bottomMargin: 15
         }
 
-        ColumnLayout {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            Layout.topMargin: screenState ? 100 : 10
-            spacing: 100
-
-            Label {
-                id: label
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                horizontalAlignment: Label.AlignHCenter
-                color: "#BBBBBB"
-                wrapMode: Label.WordWrap
-                text: qsTr("You wallet created! Save and place in save this mnemonic password")
+        Label {
+            id: label
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
             }
+            horizontalAlignment: Label.AlignHCenter
+            color: "#BBBBBB"
+            wrapMode: Label.WordWrap
+            text: qsTr("Your wallet is created! Save and place in save this mnemonic password")
+        }
 
-            MnemonicPhraseView {
-                id: mnemonicPhraseView
-                Layout.preferredWidth: parent.width
+        MnemonicPhraseView {
+            id: mnemonicPhraseView
+            anchors {
+                verticalCenterOffset: screenState ? -30 : -20
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                right: parent.right
+
             }
+            mnemonicPhrase: GraftClient.getSeed()
         }
 
         WideActionButton {
             id: saveButton
-            Layout.alignment: Qt.AlignBottom
-            Layout.bottomMargin: 15
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
             text: qsTr("I Save It!")
+            onClicked: save()
         }
     }
 
@@ -57,7 +66,7 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 title: qsTr("Create wallet")
-                action: pushScreen
+                action: save
                 screenHeader {
                     isNavigationButtonVisible: false
                     actionButtonState: true
@@ -73,12 +82,19 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 title: qsTr("Mnemonic phrase")
-                action: pushScreen
+                action: save
                 screenHeader {
                     navigationButtonState: Qt.platform.os !== "android"
-                    actionButtonState: true
                 }
             }
         }
     ]
+
+    function save() {
+        if (screenState) {
+            pushScreen.goBack()
+        } else {
+            pushScreen.openMainScreen()
+        }
+    }
 }

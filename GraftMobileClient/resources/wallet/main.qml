@@ -14,12 +14,20 @@ GraftApplicationWindow {
         onLoaded: {
             drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            drawerLoader.item.interactive = !createWalletStackViewer.visible
         }
     }
 
-    footer: Loader {
-        id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = menuTransitions()
+    footer: Item {
+        id: graftApplicationFooter
+        height: Qt.platform.os === "ios" ? 49 : 0
+        visible: !createWalletStackViewer.visible
+
+        Loader {
+            id: footerLoader
+            anchors.fill: parent
+            onLoaded: footerLoader.item.pushScreen = menuTransitions()
+        }
     }
 
     Component.onCompleted: {
@@ -57,7 +65,20 @@ GraftApplicationWindow {
     StackLayout {
         id: mainLayout
         anchors.fill: parent
-        currentIndex: 0
+        currentIndex: GraftClient.isAccountExists() ? 1 : 0
+
+        CreateWalletStackViewer {
+            id: createWalletStackViewer
+            pushScreen: generalTransitions()
+            menuLoader: Qt.platform.os === "ios" ? footerLoader : drawerLoader
+            onVisibleChanged: {
+                if (Qt.platform.os === "ios") {
+                    graftApplicationFooter.visible = !visible
+                } else {
+                    drawerLoader.item.interactive = !visible
+                }
+            }
+        }
 
         WalletStackViewer {
             id: walletViewer
@@ -65,9 +86,10 @@ GraftApplicationWindow {
             menuLoader: drawerLoader
         }
 
-        SettingsScreen {
-            id: settingsScreen
+        SettingsStackViewer {
+            id: settingsStackViewer
             pushScreen: generalTransitions()
+            appType: "wallet"
         }
     }
 
@@ -88,12 +110,12 @@ GraftApplicationWindow {
     }
 
     function openMainScreen() {
-        mainLayout.currentIndex = 0
+        mainLayout.currentIndex = 1
         selectButton("Wallet")
     }
 
     function openSettingsScreen() {
-        mainLayout.currentIndex = 1
+        mainLayout.currentIndex = 2
         selectButton("Settings")
     }
 
