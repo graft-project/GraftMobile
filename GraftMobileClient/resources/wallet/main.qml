@@ -20,7 +20,7 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: 49
+        height: Qt.platform.os === "ios" ? 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
