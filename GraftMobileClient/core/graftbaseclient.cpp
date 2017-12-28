@@ -99,7 +99,7 @@ QString GraftBaseClient::qrCodeImage() const
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scQRCodeImageID);
 }
 
-QString GraftBaseClient::addressQRCodeImage()
+QString GraftBaseClient::addressQRCodeImage() const
 {
     if (mImageProvider && mImageProvider->barcodeImage(scAddressQRCodeImageID).isNull())
     {
@@ -308,7 +308,7 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
     }
 }
 
-void GraftBaseClient::updateAddressQRCode()
+void GraftBaseClient::updateAddressQRCode() const
 {
     mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
 }

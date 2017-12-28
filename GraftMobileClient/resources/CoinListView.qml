@@ -13,6 +13,6 @@ ListView {
         accountTitle: accountName
         accountBalance: balance
         arrowVisible: true
-        onClicked: pushScreen.openAddressScreen(balance, accountName, imagePath, "coinsAddress", accountNumber, type)
+        onClicked: pushScreen.openAddressScreen(balance, accountName, imagePath, accountNumber, type)
     }
 }
