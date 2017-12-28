@@ -56,7 +56,6 @@ BaseScreen {
             maximumLength: 50
             echoMode: TextInput.Password
             passwordCharacter: '•'
-            textSize: 24
         }
 
         Item {

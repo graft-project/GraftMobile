@@ -15,7 +15,6 @@ ColumnLayout {
     property bool letterCountingMode: true
     property int maximumLength: 32767
     property alias passwordCharacter: editItem.passwordCharacter
-    property alias textSize: editItem.font.pointSize
 
     spacing: 0
 
