@@ -10,6 +10,7 @@ BaseScreen {
     property alias accountImage: coinAccountDelegate.productImage
     property alias accountBalance: coinAccountDelegate.accountBalance
     property string accountNumber: ""
+    property string accountType: ""
 
     state: balanceState
     screenHeader {
@@ -105,7 +106,7 @@ BaseScreen {
             name: "mainAddress"
             PropertyChanges {
                 target: balance
-                title: qsTr("Main Balance")
+                title: qsTr("Main Account")
             }
             PropertyChanges {
                 target: mainBalance
@@ -131,7 +132,7 @@ BaseScreen {
             name: "coinsAddress"
             PropertyChanges {
                 target: balance
-                title: qsTr("%1 Balance").arg(accountName)
+                title: qsTr("%1 Account").arg(accountType)
             }
             PropertyChanges {
                 target: mainBalance

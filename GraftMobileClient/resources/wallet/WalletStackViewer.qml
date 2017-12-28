@@ -58,9 +58,9 @@ BaseStackViewer {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions()})
     }
 
-    function openAddressScreen(balance, accountName, imagePath, balanceState, accountNumber) {
+    function openAddressScreen(balance, accountName, imagePath, balanceState, accountNumber, type) {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
                    "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
-                   "balanceState": balanceState, "accountNumber": accountNumber})
+                   "balanceState": balanceState, "accountNumber": accountNumber, "accountType": type})
     }
 }

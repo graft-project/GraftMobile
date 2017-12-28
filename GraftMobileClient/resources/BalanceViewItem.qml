@@ -29,17 +29,10 @@ Rectangle {
             verticalCenter: parent.verticalCenter
         }
 
-        Button {
+        BorderlessButton {
             id: unlockedMainBalance
-            flat: true
             Layout.fillWidth: true
             Layout.preferredHeight: 60
-            background {
-                x: 0
-                y: 0
-                width: background.parent.width
-                height: background.parent.height
-            }
             onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {
@@ -105,17 +98,10 @@ Rectangle {
             color: "#e6e6e8"
         }
 
-        Button {
+        BorderlessButton {
             id: lockedMainBalance
-            flat: true
             Layout.fillWidth: true
             Layout.preferredHeight: 60
-            background {
-                x: 0
-                y: 0
-                width: background.parent.width
-                height: background.parent.height
-            }
             onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {

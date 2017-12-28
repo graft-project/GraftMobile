@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.2
 
-Button {
+BorderlessButton {
     id: coin
 
     property alias accountBalance: accountBalance.text
@@ -15,13 +15,6 @@ Button {
     property alias coinClicked: coin.enabled
 
     height: 60
-    flat: true
-    background {
-        x: 0
-        y: 0
-        width: background.parent.width
-        height: background.parent.height
-    }
 
     ColumnLayout {
         spacing: 0
