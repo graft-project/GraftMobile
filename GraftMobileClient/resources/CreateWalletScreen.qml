@@ -41,7 +41,10 @@ BaseScreen {
             id: createWalletButton
             Layout.bottomMargin: 15
             text: qsTr("Create New Wallet")
-            onClicked: GraftClient.createAccount(passwordTextField.text)
+            onClicked: {
+                root.state = "createWalletPressed"
+                GraftClient.createAccount(passwordTextField.text)
+            }
         }
 
         Item {
@@ -79,4 +82,25 @@ BaseScreen {
             onClicked: pushScreen.openRestoreWalletScreen()
         }
     }
+
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: false
+    }
+
+    states: [
+        State {
+            name: "createWalletPressed"
+
+            PropertyChanges {
+                target: busyIndicator
+                running: true
+            }
+            PropertyChanges {
+                target: root
+                enabled: false
+            }
+        }
+    ]
 }
