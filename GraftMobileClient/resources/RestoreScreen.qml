@@ -90,15 +90,7 @@ BaseScreen {
                 running: true
             }
             PropertyChanges {
-                target: seedTextField
-                enabled: false
-            }
-            PropertyChanges {
-                target: passwordTextField
-                enabled: false
-            }
-            PropertyChanges {
-                target: restoreWalletButton
+                target: root
                 enabled: false
             }
         }
