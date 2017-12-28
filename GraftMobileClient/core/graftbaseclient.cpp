@@ -108,7 +108,7 @@ QString GraftBaseClient::addressQRCodeImage()
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scAddressQRCodeImageID);
 }
 
-QString GraftBaseClient::coinAddressQRCodeImage(QString address)
+QString GraftBaseClient::coinAddressQRCodeImage(const QString &address) const
 {
     mImageProvider->setBarcodeImage(scCoinAddressQRCodeImageID, mQRCodeEncoder->encode(address));
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scCoinAddressQRCodeImageID);

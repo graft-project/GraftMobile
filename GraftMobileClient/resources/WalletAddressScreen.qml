@@ -33,8 +33,8 @@ BaseScreen {
             Layout.fillWidth: true
             lockedArrowVisible: false
             unlockedArrowVisible: false
-            lockedBalanceButton: false
-            unlockedBalanceButton: false
+            lockedBalanceButton: true
+            unlockedBalanceButton: true
         }
 
         CoinAccountDelegate {
@@ -110,6 +110,8 @@ BaseScreen {
             PropertyChanges {
                 target: mainBalance
                 visible: true
+                lockedBalanceButton: false
+                unlockedBalanceButton: false
             }
             PropertyChanges {
                 target: coinAccountDelegate

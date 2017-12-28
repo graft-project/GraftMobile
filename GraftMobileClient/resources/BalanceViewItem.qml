@@ -40,7 +40,7 @@ Rectangle {
                 width: background.parent.width
                 height: background.parent.height
             }
-            onClicked: pushScreen.openMainAddressScreen("mainAddress")
+            onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {
                 spacing: 0
@@ -116,7 +116,7 @@ Rectangle {
                 width: background.parent.width
                 height: background.parent.height
             }
-            onClicked: pushScreen.openMainAddressScreen("mainAddress")
+            onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {
                 spacing: 0

@@ -27,9 +27,8 @@ BaseStackViewer {
                    "coinModel": CoinModel})
     }
 
-    function openMainAddressScreen(balanceState) {
-        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletTransitions(),
-                   "balanceState": balanceState})
+    function openMainAddressScreen() {
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletTransitions()})
     }
 
     function openAddressScreen(balance, accountName, imagePath, balanceState, accountNumber) {
