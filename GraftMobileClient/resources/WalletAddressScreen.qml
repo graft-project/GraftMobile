@@ -58,11 +58,11 @@ BaseScreen {
             Image {
                 id: qrCodeImage
                 cache: false
-                height: 160
+                height: 230
                 width: height
                 anchors {
                     centerIn: parent
-                    margins: 20
+                    margins: 10
                 }
             }
         }
@@ -70,9 +70,10 @@ BaseScreen {
         Rectangle {
             color: "#ffffff"
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredHeight: 180
 
             ColumnLayout {
+                spacing: 0
                 anchors {
                     fill: parent
                     margins: 15
