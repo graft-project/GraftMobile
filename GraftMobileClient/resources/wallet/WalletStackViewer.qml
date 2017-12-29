@@ -20,6 +20,8 @@ BaseStackViewer {
         transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
         transitionsMap["openPaymentScreen"] = openPaymentScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
+        transitionsMap["openMainAddressScreen"] = openMainAddressScreen
+        transitionsMap["openAddressScreen"] = openAddressScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -34,8 +36,8 @@ BaseStackViewer {
 
     function openPaymentConfirmationScreen() {
         stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
-                       "pushScreen": walletsTransitions(),
-                       "productModel": PaymentProductModel})
+                   "pushScreen": walletsTransitions(),
+                   "productModel": PaymentProductModel})
     }
 
     function openMainScreen() {
@@ -43,13 +45,22 @@ BaseStackViewer {
     }
 
     function openPaymentScreen(state) {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen,
-                       "title": qsTr("Pay"), "isSpacing": true, "completeText": qsTr("Paid complete!"),
-                       "screenState": state})
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen, "title": qsTr("Pay"),
+                   "isSpacing": true, "completeText": qsTr("Paid complete!"), "screenState": state})
     }
 
     function openAddAccountScreen() {
         stack.push("qrc:/AddAccountScreen.qml", {"pushScreen": walletsTransitions(),
-                       "coinModel": CoinModel})
+                   "coinModel": CoinModel})
+    }
+
+    function openMainAddressScreen() {
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions()})
+    }
+
+    function openAddressScreen(balance, accountName, imagePath, accountNumber, type) {
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
+                   "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
+                   "balanceState": "coinsAddress", "accountNumber": accountNumber, "accountType": type})
     }
 }

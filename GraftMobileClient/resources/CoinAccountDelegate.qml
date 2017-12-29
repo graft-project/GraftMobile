@@ -1,15 +1,20 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.2
 
-Rectangle {
+BorderlessButton {
+    id: coin
+
     property alias accountBalance: accountBalance.text
     property alias accountTitle: accountName.text
     property alias productImage: picture.source
     property alias topLineVisible: topLine.visible
     property alias bottomLineVisible: bottomLine.visible
+    property bool coinVisible: true
 
     height: 60
+    enabled: coinVisible
 
     ColumnLayout {
         spacing: 0
@@ -67,7 +72,16 @@ Rectangle {
                 id: accountBalance
                 color: "#404040"
                 font.pointSize: 20
-                Layout.rightMargin: 8
+                Layout.rightMargin: 12
+                Layout.alignment: Qt.AlignRight
+            }
+
+            Image {
+                id: arrow
+                visible: coinVisible
+                source: "qrc:/imgs/arrow.png"
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 15
                 Layout.alignment: Qt.AlignRight
             }
         }

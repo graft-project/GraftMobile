@@ -68,7 +68,7 @@ BaseScreen {
                     id: accountName
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignTop
-                    maximumLength: 50
+                    maximumLength: 15
                 }
 
                 CurrencyComboBox {

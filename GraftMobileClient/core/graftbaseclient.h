@@ -38,7 +38,8 @@ public:
     virtual void registerTypes(QQmlEngine *engine);
 
     Q_INVOKABLE QString qrCodeImage() const;
-    Q_INVOKABLE QString addressQRCodeImage();
+    Q_INVOKABLE QString addressQRCodeImage() const;
+    Q_INVOKABLE QString coinAddressQRCodeImage(const QString &address) const;
 
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
@@ -89,7 +90,7 @@ private:
     void initAccountModel(QQmlEngine *engine);
     void initCurrencyModel(QQmlEngine *engine);
     void initQuickExchangeModel(QQmlEngine *engine);
-    void updateAddressQRCode();
+    void updateAddressQRCode() const;
 
 protected:
     BarcodeImageProvider *mImageProvider;

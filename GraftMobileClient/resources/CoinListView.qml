@@ -12,5 +12,6 @@ ListView {
         productImage: imagePath
         accountTitle: accountName
         accountBalance: balance
+        onClicked: pushScreen.openAddressScreen(balance, accountName, imagePath, accountNumber, type)
     }
 }
