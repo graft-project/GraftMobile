@@ -70,10 +70,10 @@ GraftApplicationWindow {
 
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
-                graftApplicationFooter.visible = currentIndex === 0 ? false : true
+                graftApplicationFooter.visible = currentIndex !== 0
             } else {
                 if (drawerLoader && drawerLoader.status === Loader.Ready) {
-                    drawerLoader.item.interactive = currentIndex === 0 ? false : true
+                    drawerLoader.item.interactive = currentIndex !== 0
                 }
             }
         }
