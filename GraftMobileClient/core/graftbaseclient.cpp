@@ -1,4 +1,4 @@
-#include "accountmodelserializator.h"
+ #include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
@@ -250,8 +250,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
 {
     if (balance >= 0 && unlockedBalance >= 0)
     {
-        balance -= unlockedBalance;
-        mBalances.insert(GraftClientTools::LockedBalance, balance);
+        mBalances.insert(GraftClientTools::LockedBalance, balance -= unlockedBalance);
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         emit balanceUpdated();
