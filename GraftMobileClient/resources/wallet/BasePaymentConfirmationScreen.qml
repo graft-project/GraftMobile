@@ -34,6 +34,6 @@ BaseScreen {
 
     function cancelPay() {
         GraftClient.rejectPay()
-        pushScreen.goBack()
+        pushScreen.openMainScreen()
     }
 }

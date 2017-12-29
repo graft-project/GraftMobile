@@ -69,19 +69,20 @@ GraftApplicationWindow {
         interactive: false
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
 
+        onCurrentIndexChanged: {
+            if (Qt.platform.os === "ios") {
+                graftApplicationFooter.visible = currentIndex === 0 ? false : true
+            } else {
+                if (drawerLoader && drawerLoader.status === Loader.Ready) {
+                    drawerLoader.item.interactive = currentIndex === 0 ? false : true
+                }
+            }
+        }
+
         CreateWalletStackViewer {
             id: createWalletStackViewer
             pushScreen: generalTransitions()
             menuLoader: Qt.platform.os === "ios" ? footerLoader : drawerLoader
-            onVisibleChanged: {
-                if (Qt.platform.os === "ios") {
-                    graftApplicationFooter.visible = !visible
-                } else {
-                    if (drawerLoader && drawerLoader.status === Loader.Ready) {
-                        drawerLoader.item.interactive = !visible
-                    }
-                }
-            }
         }
 
         WalletStackViewer {
