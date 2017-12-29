@@ -27,8 +27,9 @@ BaseStackViewer {
                    "coinModel": CoinModel})
     }
 
-    function openMainAddressScreen() {
-        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletTransitions()})
+    function openMainAddressScreen(amountUnlockGraftCost, amountLockGraftCost) {
+        stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletTransitions(),
+                   "mainBalanceUnlocked": amountUnlockGraftCost, "mainBalanceLocked": amountLockGraftCost})
     }
 
     function openAddressScreen(balance, accountName, imagePath, accountNumber, type) {
