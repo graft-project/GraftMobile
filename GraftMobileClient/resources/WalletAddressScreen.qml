@@ -11,6 +11,8 @@ BaseScreen {
     property alias accountBalance: coinAccountDelegate.accountBalance
     property string accountNumber: ""
     property string accountType: ""
+    property alias mainBalanceUnlocked: mainBalance.amountUnlockGraftCost
+    property alias mainBalanceLocked: mainBalance.amountLockGraftCost
 
     state: balanceState
     screenHeader {
