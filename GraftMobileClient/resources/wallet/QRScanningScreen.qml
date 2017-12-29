@@ -19,9 +19,7 @@ BaseScreen {
             else {
                 screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
                 screenDialog.open()
-                qRScanningView.reset()
-                console.log("ddddd")
-//                qRScanningView.cameraReset.start()
+                qRScanningView.resetView()
             }
         }
     }

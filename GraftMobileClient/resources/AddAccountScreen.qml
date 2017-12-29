@@ -16,14 +16,8 @@ BaseScreen {
             if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)),
                                  accountName.text, CoinModel.codeOf(coinsComboBox.currentText),
                                  walletNumberText.text)) {
-                if (AccountModel.isAccountNameExists(accountName.text)) {
-                    screenDialog.text = qsTr("The account name already exists! Please, enter " +
-                                             "another account name.")
-                    screenDialog.open()
-                } else {
-                    GraftClient.saveAccounts()
-                    accountScreen.pushScreen.goBack()
-                }
+                GraftClient.saveAccounts()
+                accountScreen.pushScreen.goBack()
             } else {
                 screenDialog.text = qsTr("The wallet number already exists! Please, " +
                                          "enter another wallet number.")
@@ -33,6 +27,15 @@ BaseScreen {
             screenDialog.text = qsTr("Please, enter the account name and wallet number.")
             screenDialog.open()
         }
+
+
+//        console.log(accountName.text)
+//        console.log(AccountModel.isAccountNameExists(accountName.text))
+//        if (AccountModel.isAccountNameExists(accountName.text)) {
+//            screenDialog.text = qsTr("The account name already exists! Please, enter " +
+//                                     "another account name.")
+//            screenDialog.open()
+//        }
     }
 
     Component.onCompleted: {
