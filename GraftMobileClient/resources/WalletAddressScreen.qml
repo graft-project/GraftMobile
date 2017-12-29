@@ -92,6 +92,7 @@ BaseScreen {
                     Layout.fillWidth: true
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
+                    onClicked: GraftClient.copyWalletNumber(accountNumber)
                 }
             }
         }
