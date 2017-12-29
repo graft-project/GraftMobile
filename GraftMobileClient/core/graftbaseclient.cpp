@@ -10,10 +10,12 @@
 #include "accountmodel.h"
 #include "config.h"
 
+#include <QGuiApplication>
 #include <QStandardPaths>
 #include <QHostAddress>
 #include <QQmlContext>
 #include <QTimerEvent>
+#include <QClipboard>
 #include <QQmlEngine>
 #include <QSettings>
 #include <QFileInfo>
@@ -363,6 +365,12 @@ void GraftBaseClient::updateQuickExchange(double cost)
 bool GraftBaseClient::checkPassword(const QString &password) const
 {
     return mAccountManager->passsword() == password;
+}
+
+void GraftBaseClient::copyWalletNumber(const QString &walletNumber) const
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    clipboard->setText(walletNumber);
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

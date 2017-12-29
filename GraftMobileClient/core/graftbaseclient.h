@@ -53,6 +53,7 @@ public:
     void updateQuickExchange(double cost);
 
     Q_INVOKABLE bool checkPassword(const QString &password) const;
+    Q_INVOKABLE void copyWalletNumber(const QString &walletNumber) const;
 
 signals:
     void errorReceived(const QString &message);
