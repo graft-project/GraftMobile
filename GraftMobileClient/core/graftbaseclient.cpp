@@ -219,7 +219,7 @@ void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
     {
         connect(api, &GraftGenericAPI::getBalanceReceived, this, &GraftBaseClient::receiveBalance,
                 Qt::UniqueConnection);
-        mBalanceTimer = startTimer(20000);
+        mBalanceTimer = startTimer(120000);
     }
 }
 
