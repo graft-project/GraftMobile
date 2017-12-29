@@ -38,7 +38,8 @@ BaseScreen {
             id: coinAccountDelegate
             visible: false
             Layout.fillWidth: true
-            Layout.margins: 10
+            Layout.topMargin: 10
+            Layout.bottomMargin: 10
             topLineVisible: false
             bottomLineVisible: false
         }

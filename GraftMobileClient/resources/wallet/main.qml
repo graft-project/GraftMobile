@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import org.graft 1.0
 import "../"
 import "../components"
@@ -62,9 +63,10 @@ GraftApplicationWindow {
         onAccepted: openMainScreen()
     }
 
-    StackLayout {
+    SwipeView {
         id: mainLayout
         anchors.fill: parent
+        interactive: false
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
 
         CreateWalletStackViewer {
@@ -75,7 +77,9 @@ GraftApplicationWindow {
                 if (Qt.platform.os === "ios") {
                     graftApplicationFooter.visible = !visible
                 } else {
-                    drawerLoader.item.interactive = !visible
+                    if (drawerLoader && drawerLoader.status === Loader.Ready) {
+                        drawerLoader.item.interactive = !visible
+                    }
                 }
             }
         }

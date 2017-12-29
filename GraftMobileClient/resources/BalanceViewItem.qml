@@ -4,6 +4,8 @@ import QtQuick.Controls 2.2
 import org.graft 1.0
 
 Rectangle {
+    id: balance
+
     property real amountUnlockGraftCost: 0
     property real amountLockGraftCost: 0
     property bool balanceVisible: true

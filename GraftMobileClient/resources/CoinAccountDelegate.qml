@@ -72,7 +72,7 @@ BorderlessButton {
                 id: accountBalance
                 color: "#404040"
                 font.pointSize: 20
-                Layout.rightMargin: 15
+                Layout.rightMargin: 12
                 Layout.alignment: Qt.AlignRight
             }
 
