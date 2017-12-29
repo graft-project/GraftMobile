@@ -89,10 +89,10 @@ BaseScreen {
                 }
 
                 WideActionButton {
+                    id: clipboardButton
                     Layout.fillWidth: true
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
-                    onClicked: GraftClient.copyWalletNumber(accountNumber)
                 }
             }
         }
@@ -122,6 +122,10 @@ BaseScreen {
                 target: qrCodeImage
                 source: GraftClient.addressQRCodeImage()
             }
+            PropertyChanges {
+                target: clipboardButton
+                onClicked: GraftClient.copyWalletNumber(GraftClient.address())
+            }
         },
 
         State {
@@ -146,6 +150,10 @@ BaseScreen {
             PropertyChanges {
                 target: qrCodeImage
                 source: GraftClient.coinAddressQRCodeImage(accountNumber)
+            }
+            PropertyChanges {
+                target: clipboardButton
+                onClicked: GraftClient.copyWalletNumber(accountNumber)
             }
         }
     ]

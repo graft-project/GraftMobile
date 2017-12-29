@@ -371,7 +371,6 @@ void GraftBaseClient::copyWalletNumber(const QString &walletNumber) const
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(walletNumber);
-    clipboard->text();
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const
