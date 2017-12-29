@@ -6,10 +6,7 @@ import org.graft 1.0
 Rectangle {
     property real amountUnlockGraftCost: 0
     property real amountLockGraftCost: 0
-    property alias lockedArrowVisible: lockedArrow.visible
-    property alias lockedBalanceButton: lockedMainBalance.enabled
-    property alias unlockedArrowVisible: unlockedArrow.visible
-    property alias unlockedBalanceButton: unlockedMainBalance.enabled
+    property bool balanceVisible: true
 
     height: 120
     color: "#FCF9F1"
@@ -31,6 +28,7 @@ Rectangle {
 
         BorderlessButton {
             id: unlockedMainBalance
+            enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
             onClicked: pushScreen.openMainAddressScreen()
@@ -82,6 +80,7 @@ Rectangle {
 
                 Image {
                     id: unlockedArrow
+                    visible: balanceVisible
                     source: "qrc:/imgs/arrow.png"
                     Layout.preferredHeight: 20
                     Layout.preferredWidth: 15
@@ -100,6 +99,7 @@ Rectangle {
 
         BorderlessButton {
             id: lockedMainBalance
+            enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
             onClicked: pushScreen.openMainAddressScreen()
@@ -151,6 +151,7 @@ Rectangle {
 
                 Image {
                     id: lockedArrow
+                    visible: balanceVisible
                     source: "qrc:/imgs/arrow.png"
                     Layout.preferredHeight: 20
                     Layout.preferredWidth: 15

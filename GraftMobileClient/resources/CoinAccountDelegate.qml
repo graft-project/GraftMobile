@@ -11,10 +11,10 @@ BorderlessButton {
     property alias productImage: picture.source
     property alias topLineVisible: topLine.visible
     property alias bottomLineVisible: bottomLine.visible
-    property alias arrowVisible: arrow.visible
-    property alias coinClicked: coin.enabled
+    property bool coinVisible: true
 
     height: 60
+    enabled: coinVisible
 
     ColumnLayout {
         spacing: 0
@@ -78,6 +78,7 @@ BorderlessButton {
 
             Image {
                 id: arrow
+                visible: coinVisible
                 source: "qrc:/imgs/arrow.png"
                 Layout.preferredHeight: 20
                 Layout.preferredWidth: 15

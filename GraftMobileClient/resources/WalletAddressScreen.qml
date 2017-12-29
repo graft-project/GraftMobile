@@ -32,10 +32,6 @@ BaseScreen {
             id: mainBalance
             visible: false
             Layout.fillWidth: true
-            lockedArrowVisible: false
-            unlockedArrowVisible: false
-            lockedBalanceButton: true
-            unlockedBalanceButton: true
         }
 
         CoinAccountDelegate {
@@ -43,8 +39,6 @@ BaseScreen {
             visible: false
             Layout.fillWidth: true
             Layout.margins: 10
-            coinClicked: false
-            arrowVisible: false
             topLineVisible: false
             bottomLineVisible: false
         }
@@ -112,8 +106,7 @@ BaseScreen {
             PropertyChanges {
                 target: mainBalance
                 visible: true
-                lockedBalanceButton: false
-                unlockedBalanceButton: false
+                balanceVisible: false
             }
             PropertyChanges {
                 target: coinAccountDelegate
@@ -141,6 +134,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: coinAccountDelegate
+                coinVisible: false
                 visible: true
             }
             PropertyChanges {
