@@ -6,8 +6,8 @@ import org.graft 1.0
 Rectangle {
     id: balance
 
-    property real amountUnlockGraftCost: 0
-    property real amountLockGraftCost: 0
+    property real amountUnlockGraftCost: 0.0
+    property real amountLockGraftCost: 0.0
     property bool balanceVisible: true
 
     height: 120
