@@ -1,4 +1,4 @@
-#include "accountmodelserializator.h"
+ #include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
@@ -250,7 +250,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
 {
     if (balance >= 0 && unlockedBalance >= 0)
     {
-        mBalances.insert(GraftClientTools::LockedBalance, balance);
+        mBalances.insert(GraftClientTools::LockedBalance, balance - unlockedBalance);
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         emit balanceUpdated();
@@ -335,7 +335,8 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
 
 double GraftBaseClient::balance(int type) const
 {
-    return mBalances.value(type, 0);
+    QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
+    return rValue.toDouble();
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)
