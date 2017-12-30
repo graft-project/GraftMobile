@@ -15,7 +15,7 @@ GraftApplicationWindow {
         onLoaded: {
             drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
-            drawerLoader.item.interactive = !createWalletStackViewer.visible
+            drawerLoader.item.interactive = mainLayout.currentIndex !== 0
         }
     }
 
