@@ -11,7 +11,7 @@ Page {
     property alias isMenuActive: appHeader.navigationButtonState
     property alias screenDialog: attentionDialog
 
-    signal attentionException()
+    signal attentionAccepted()
 
     header: Header {
         id: appHeader
@@ -38,6 +38,6 @@ Page {
         id: attentionDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        onAccepted: attentionException()
+        onAccepted: attentionAccepted()
     }
 }

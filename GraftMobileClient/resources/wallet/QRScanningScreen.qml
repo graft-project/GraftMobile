@@ -25,7 +25,7 @@ BaseScreen {
 
     Connections {
         target: qrScanning
-        onAttentionException: qRScanningView.resetView()
+        onAttentionAccepted: qRScanningView.resetView()
     }
 
     QRScanningView {
