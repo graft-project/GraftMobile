@@ -93,13 +93,8 @@ BaseScreen {
                     Layout.fillWidth: true
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
-                    onClicked: {
-                        if (balanceState === "mainAddress") {
-                            GraftClient.copyWalletNumber(GraftClient.address())
-                        } else {
-                            GraftClient.copyWalletNumber(accountNumber)
-                        }
-                    }
+                    onClicked: GraftClient.copyWalletNumber(balanceState === "mainAddress" ?
+                                                            GraftClient.address() : accountNumber)
                 }
             }
         }
