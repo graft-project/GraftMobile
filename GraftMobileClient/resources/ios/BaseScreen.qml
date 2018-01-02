@@ -10,6 +10,8 @@ Page {
     property var specialBackMode: null
     property alias screenDialog: attentionDialog
 
+    signal attentionAccepted()
+
     header: Header {
         id: appHeader
         headerText: basePage.title
@@ -31,5 +33,6 @@ Page {
         id: attentionDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
+        onAccepted: attentionAccepted()
     }
 }

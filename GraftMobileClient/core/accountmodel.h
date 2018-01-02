@@ -27,6 +27,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     Q_INVOKABLE bool isWalletNumberExists(const QString &number) const;
+    Q_INVOKABLE bool isAccountNameExists(const QString &name) const;
 
 public slots:
     bool add(const QString &imagePath, const QString &name, const QString &currency,

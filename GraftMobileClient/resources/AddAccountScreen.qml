@@ -11,24 +11,6 @@ BaseScreen {
     screenHeader.actionButtonState: true
     action: addAccount
 
-    function addAccount() {
-        if (accountName.text !== "" && walletNumberText.text !== "") {
-            if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)),
-                                 accountName.text, CoinModel.codeOf(coinsComboBox.currentText),
-                                 walletNumberText.text)) {
-                GraftClient.saveAccounts()
-                accountScreen.pushScreen.goBack()
-            } else {
-                screenDialog.text = qsTr("The wallet number already exists! Please, " +
-                                         "enter another wallet number.")
-                screenDialog.open()
-            }
-        } else {
-            screenDialog.text = qsTr("Please, enter the account name and wallet number.")
-            screenDialog.open()
-        }
-    }
-
     Component.onCompleted: {
         if (Qt.platform.os === "ios") {
             screenHeader.navigationButtonState = true
@@ -113,8 +95,29 @@ BaseScreen {
         }
     }
 
-    function changeBehaviorButton()
-    {
+    function addAccount() {
+        if (accountName.text !== "" && walletNumberText.text !== "") {
+            if (AccountModel.isAccountNameExists(accountName.text)) {
+                screenDialog.text = qsTr("The account name already exists! Please, enter " +
+                                         "another account name.")
+                screenDialog.open()
+            } else if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)),
+                                        accountName.text, CoinModel.codeOf(coinsComboBox.currentText),
+                                        walletNumberText.text)) {
+                GraftClient.saveAccounts()
+                accountScreen.pushScreen.goBack()
+            } else {
+                screenDialog.text = qsTr("The wallet number already exists! Please, " +
+                                         "enter another wallet number.")
+                screenDialog.open()
+            }
+        } else {
+            screenDialog.text = qsTr("Please, enter the account name and wallet number.")
+            screenDialog.open()
+        }
+    }
+
+    function changeBehaviorButton() {
         stackLayout.currentIndex = 0
     }
 }

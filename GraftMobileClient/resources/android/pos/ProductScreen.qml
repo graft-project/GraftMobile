@@ -105,6 +105,9 @@ BaseScreen {
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
                         GraftClient.sale()
+                    } else {
+                        screenDialog.text = qsTr("Please, select one or more products to continue.")
+                        screenDialog.open()
                     }
                 }
             }

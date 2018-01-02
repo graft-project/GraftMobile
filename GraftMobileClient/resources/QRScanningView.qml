@@ -12,6 +12,8 @@ Item {
     onVisibleChanged: {
         if (visible) {
             camera.start()
+        } else {
+            camera.stop()
         }
     }
 
@@ -80,5 +82,10 @@ Item {
                 }
             }
         }
+    }
+
+    function resetView() {
+        camera.start()
+        lastTag = ""
     }
 }
