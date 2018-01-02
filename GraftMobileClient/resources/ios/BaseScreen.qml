@@ -10,7 +10,7 @@ Page {
     property var specialBackMode: null
     property alias screenDialog: attentionDialog
 
-    signal influence()
+    signal attentionException()
 
     header: Header {
         id: appHeader
@@ -33,6 +33,6 @@ Page {
         id: attentionDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        onAccepted: influence()
+        onAccepted: attentionException()
     }
 }
