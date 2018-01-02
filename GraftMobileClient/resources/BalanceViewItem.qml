@@ -33,7 +33,7 @@ Rectangle {
             enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
-            onClicked: pushScreen.openMainAddressScreen(amountUnlockGraftCost, amountLockGraftCost)
+            onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {
                 spacing: 0
@@ -104,7 +104,7 @@ Rectangle {
             enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
-            onClicked: pushScreen.openMainAddressScreen(amountUnlockGraftCost, amountLockGraftCost)
+            onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {
                 spacing: 0

@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -11,8 +12,6 @@ BaseScreen {
     property alias accountBalance: coinAccountDelegate.accountBalance
     property string accountNumber: ""
     property string accountType: ""
-    property alias mainBalanceUnlocked: mainBalance.amountUnlockGraftCost
-    property alias mainBalanceLocked: mainBalance.amountLockGraftCost
 
     state: balanceState
     screenHeader {
@@ -34,6 +33,8 @@ BaseScreen {
             id: mainBalance
             visible: false
             Layout.fillWidth: true
+            amountUnlockGraftCost: GraftClient.balance(GraftClientTools.UnlockedBalance)
+            amountLockGraftCost: GraftClient.balance(GraftClientTools.LockedBalance)
         }
 
         CoinAccountDelegate {
