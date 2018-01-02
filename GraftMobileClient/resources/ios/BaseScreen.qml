@@ -10,6 +10,8 @@ Page {
     property var specialBackMode: null
     property alias screenDialog: attentionDialog
 
+    signal influence()
+
     header: Header {
         id: appHeader
         headerText: basePage.title

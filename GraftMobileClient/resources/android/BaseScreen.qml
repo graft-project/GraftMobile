@@ -11,6 +11,8 @@ Page {
     property alias isMenuActive: appHeader.navigationButtonState
     property alias screenDialog: attentionDialog
 
+    signal influence()
+
     header: Header {
         id: appHeader
         headerText: basePage.title

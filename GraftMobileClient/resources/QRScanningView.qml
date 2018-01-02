@@ -9,14 +9,11 @@ Item {
 
     signal qrCodeDetected(string message)
 
-    function resetView() {
-        camera.start()
-        lastTag = ""
-    }
-
     onVisibleChanged: {
         if (visible) {
             camera.start()
+        } else {
+            camera.stop()
         }
     }
 
@@ -85,5 +82,10 @@ Item {
                 }
             }
         }
+    }
+
+    function resetView() {
+        camera.start()
+        lastTag = ""
     }
 }

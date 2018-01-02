@@ -4,6 +4,7 @@ import "../components"
 import "../"
 
 BaseScreen {
+    id: qrScanning
     title: qsTr("Pay")
     screenHeader {
         navigationButtonState: Qt.platform.os !== "android"
@@ -22,13 +23,14 @@ BaseScreen {
         }
     }
 
+    Connections {
+        target: qrScanning
+        onInfluence: qRScanningView.resetView()
+    }
+
     QRScanningView {
         id: qRScanningView
         anchors.fill: parent
         onQrCodeDetected: GraftClient.getPOSData(message)
-    }
-
-    function influence() {
-        qRScanningView.resetView()
     }
 }
