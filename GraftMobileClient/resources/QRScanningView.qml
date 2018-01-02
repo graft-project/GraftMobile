@@ -11,6 +11,7 @@ Item {
 
     function resetView() {
         camera.start()
+        lastTag = ""
     }
 
     onVisibleChanged: {
@@ -77,12 +78,10 @@ Item {
             tryHarder: false
             onTagFound: {
                 if (lastTag != tag) {
-                    camera.stop()
                     lastTag = tag
                     console.log(tag + " | " + " | " + decoder.charSet())
+                    camera.stop()
                     qrCodeDetected(tag)
-                } else {
-                    lastTag = ""
                 }
             }
         }

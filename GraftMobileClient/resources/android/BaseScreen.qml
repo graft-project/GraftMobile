@@ -36,5 +36,6 @@ Page {
         id: attentionDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
+        onAccepted: influence()
     }
 }
