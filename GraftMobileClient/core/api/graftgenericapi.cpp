@@ -104,12 +104,12 @@ void GraftGenericAPI::restoreAccount(const QString &seed, const QString &passwor
 
 double GraftGenericAPI::toCoins(double atomic)
 {
-    return (1.0 * atomic) / 1000000000000.0;
+    return (1.0 * atomic) / 10000000000.0;
 }
 
 double GraftGenericAPI::toAtomic(double coins)
 {
-    return coins * 1000000000000;
+    return coins * 10000000000;
 }
 
 QString GraftGenericAPI::accountPlaceholder() const
