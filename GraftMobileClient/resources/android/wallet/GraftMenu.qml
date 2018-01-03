@@ -40,6 +40,7 @@ BaseMenu {
             icon: "qrc:/imgs/transaction.png"
             name: qsTr("Transaction")
             enabled: false
+            opacity: 0.2
             onClicked: {
                 pushScreen.hideMenu()
                 pushScreen.openTransactionScreen()
@@ -52,6 +53,7 @@ BaseMenu {
             icon: "qrc:/imgs/transfer.png"
             name: qsTr("Transfer")
             enabled: false
+            opacity: 0.2
             onClicked: {
                 pushScreen.hideMenu()
                 pushScreen.openTransferScreen()
