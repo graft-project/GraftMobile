@@ -29,6 +29,8 @@ BaseGraftToolBar {
             id: transactionButton
             text: qsTr("Transaction")
             source: "qrc:/imgs/transactionIos.png"
+            enabled: false
+            opacity: 0.2
             onClicked: pushScreen.openTransactionScreen()
         }
 
@@ -36,6 +38,8 @@ BaseGraftToolBar {
             id: transferButton
             text: qsTr("Transfer")
             source: "qrc:/imgs/transferIos.png"
+            enabled: false
+            opacity: 0.2
             onClicked: pushScreen.openTransferScreen()
         }
 
