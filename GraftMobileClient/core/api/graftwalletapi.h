@@ -7,7 +7,7 @@ class GraftWalletAPI : public GraftGenericAPI
 {
     Q_OBJECT
 public:
-    explicit GraftWalletAPI(const QUrl &url, QObject *parent = nullptr);
+    explicit GraftWalletAPI(const QUrl &url, const QString &dapiVersion, QObject *parent = nullptr);
 
     void getPOSData(const QString &pid, int blockNum);
     void rejectPay(const QString &pid, int blockNum);

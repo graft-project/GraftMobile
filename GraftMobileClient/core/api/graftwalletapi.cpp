@@ -5,8 +5,8 @@
 #include <QJsonObject>
 #include <QDebug>
 
-GraftWalletAPI::GraftWalletAPI(const QUrl &url, QObject *parent)
-    : GraftGenericAPI(url, parent)
+GraftWalletAPI::GraftWalletAPI(const QUrl &url, const QString &dapiVersion, QObject *parent)
+    : GraftGenericAPI(url, dapiVersion, parent)
 {
 }
 
@@ -47,6 +47,7 @@ void GraftWalletAPI::pay(const QString &pid, const QString &address, double amou
     QByteArray array = QJsonDocument(data).toJson();
     array.replace("????", mAccountData);
     array.replace("-666", serializeAmount(amount));
+    qDebug() << array;
     mTimer.start();
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);

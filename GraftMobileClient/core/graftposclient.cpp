@@ -17,7 +17,7 @@ static const QString scProductModelDataFile("productList.dat");
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mApi = new GraftPOSAPI(getServiceUrl(), this);
+    mApi = new GraftPOSAPI(getServiceUrl(), cDAPIVersion, this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
             this, &GraftPOSClient::receiveRejectSale);

@@ -5,8 +5,8 @@
 #include <QJsonObject>
 #include <QDebug>
 
-GraftPOSAPI::GraftPOSAPI(const QUrl &url, QObject *parent)
-    : GraftGenericAPI(url, parent)
+GraftPOSAPI::GraftPOSAPI(const QUrl &url, const QString &dapiVersion, QObject *parent)
+    : GraftGenericAPI(url, dapiVersion, parent)
 {
 }
 

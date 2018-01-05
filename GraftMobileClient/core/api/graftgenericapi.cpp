@@ -4,8 +4,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-GraftGenericAPI::GraftGenericAPI(const QUrl &url, QObject *parent)
+GraftGenericAPI::GraftGenericAPI(const QUrl &url, const QString &dapiVersion, QObject *parent)
     : QObject(parent)
+    ,mDAPIVersion(dapiVersion)
 {
     mManager = new QNetworkAccessManager(this);
     mRequest = QNetworkRequest(url);
@@ -19,6 +20,11 @@ GraftGenericAPI::~GraftGenericAPI()
 void GraftGenericAPI::setUrl(const QUrl &url)
 {
     mRequest.setUrl(url);
+}
+
+void GraftGenericAPI::setDAPIVersion(const QString &version)
+{
+    mDAPIVersion = version;
 }
 
 void GraftGenericAPI::setAccountData(const QByteArray &accountData, const QString &password)
@@ -130,6 +136,7 @@ QJsonObject GraftGenericAPI::buildMessage(const QString &key, const QJsonObject 
     data.insert(QStringLiteral("jsonrpc"), QStringLiteral("2.0"));
     data.insert(QStringLiteral("id"), QStringLiteral("0"));
     data.insert(QStringLiteral("method"), key);
+    data.insert(QStringLiteral("dapi_version"), mDAPIVersion);
     if (!params.isEmpty())
     {
         data.insert(QStringLiteral("params"), params);
@@ -140,7 +147,6 @@ QJsonObject GraftGenericAPI::buildMessage(const QString &key, const QJsonObject 
 QJsonObject GraftGenericAPI::processReply(QNetworkReply *reply)
 {
     QJsonObject object;
-    qDebug() << reply->error();
     if (reply->error() == QNetworkReply::NoError)
     {
         QByteArray rawData = reply->readAll();
@@ -176,6 +182,13 @@ void GraftGenericAPI::receiveCreateAccountResponse()
 {
     qDebug() << "CreateAccount Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    if (reply->error() != QNetworkReply::NoError)
+    {
+        emit error(reply->errorString());
+        reply->deleteLater();
+        reply = nullptr;
+        return;
+    }
     QByteArray arr = reply->readAll();
     reply->deleteLater();
     reply = nullptr;
@@ -241,6 +254,13 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
 {
     qDebug() << "RestoreAccount Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    if (reply->error() != QNetworkReply::NoError)
+    {
+        emit error(reply->errorString());
+        reply->deleteLater();
+        reply = nullptr;
+        return;
+    }
     QByteArray arr = reply->readAll();
     reply->deleteLater();
     reply = nullptr;

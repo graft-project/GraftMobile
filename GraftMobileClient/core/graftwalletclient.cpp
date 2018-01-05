@@ -10,7 +10,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
 {
     mBlockNum = 0;
-    mApi = new GraftWalletAPI(getServiceUrl(), this);
+    mApi = new GraftWalletAPI(getServiceUrl(), cDAPIVersion, this);
     connect(mApi, &GraftWalletAPI::getPOSDataReceived,
             this, &GraftWalletClient::receiveGetPOSData);
     connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
