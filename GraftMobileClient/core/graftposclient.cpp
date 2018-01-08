@@ -36,6 +36,12 @@ GraftPOSClient::~GraftPOSClient()
 {
 }
 
+void GraftPOSClient::setNetworkType(int networkType)
+{
+    GraftBaseClient::setNetworkType(networkType);
+    mApi->setDAPIVersion(dapiVersion());
+}
+
 ProductModel *GraftPOSClient::productModel() const
 {
     return mProductModel;
