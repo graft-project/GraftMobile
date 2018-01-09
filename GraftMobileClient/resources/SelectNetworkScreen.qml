@@ -7,9 +7,7 @@ import "components"
 
 BaseScreen {
     title: qsTr("Select Newtork")
-    screenHeader {
-        isNavigationButtonVisible: false
-    }
+    screenHeader.isNavigationButtonVisible: false
 
     ColumnLayout {
         spacing: 0
