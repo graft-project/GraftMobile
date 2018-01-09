@@ -19,18 +19,21 @@ BaseScreen {
         }
 
         RadioButton {
+            id: mainNet
             Layout.alignment: Qt.AlignTop
             Material.accent: ColorFactory.color(DesignFactory.Foreground)
             text: qsTr("Mainnet")
         }
 
         RadioButton {
+            id: testNet
             Layout.alignment: Qt.AlignTop
             Material.accent: ColorFactory.color(DesignFactory.Foreground)
             text: qsTr("Public Testnet")
         }
 
         RadioButton {
+            id: rtaTestNet
             Layout.alignment: Qt.AlignTop
             Material.accent: ColorFactory.color(DesignFactory.Foreground)
             text: qsTr("Public RTA Testnet")
@@ -43,7 +46,20 @@ BaseScreen {
         WideActionButton {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
-            onClicked: pushScreen.openCreateWalletScreen()
+            onClicked: {
+                setNetworkType()
+                pushScreen.openCreateWalletScreen()
+            }
+        }
+    }
+
+    function setNetworkType() {
+        if (mainNet.checked) {
+            GraftClient.setNetworkType(0)
+        } else if (testNet.checked) {
+            GraftClient.setNetworkType(1)
+        } else if (rtaTestNet.checked) {
+            GraftClient.setNetworkType(2)
         }
     }
 }

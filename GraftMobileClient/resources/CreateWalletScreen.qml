@@ -5,11 +5,7 @@ import "components"
 
 BaseScreen {
     id: root
-
     title: qsTr("Create wallet")
-    screenHeader {
-        isNavigationButtonVisible: false
-    }
 
     Connections {
         target: GraftClient
