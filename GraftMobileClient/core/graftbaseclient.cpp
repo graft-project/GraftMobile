@@ -49,6 +49,11 @@ GraftBaseClient::~GraftBaseClient()
     delete mAccountManager;
 }
 
+void GraftBaseClient::setNetworkType(int networkType)
+{
+    mAccountManager->setNetworkType(networkType);
+}
+
 bool GraftBaseClient::isAccountExists() const
 {
     return !mAccountManager->account().isEmpty();
@@ -180,9 +185,10 @@ QUrl GraftBaseClient::getServiceUrl() const
     }
     else
     {
-        finalUrl = cSeedSupernodes.value(qrand() % cSeedSupernodes.count());
+        QStringList seedNodes = seedSupernodes();
+        finalUrl = seedNodes.value(qrand() % seedNodes.count());
     }
-    return QUrl(cUrl.arg(finalUrl));
+    return QUrl(scUrl.arg(finalUrl));
 }
 
 void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &password)
@@ -371,6 +377,51 @@ void GraftBaseClient::copyWalletNumber(const QString &walletNumber) const
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(walletNumber);
+}
+
+QString GraftBaseClient::networkName() const
+{
+    switch (mAccountManager->networkType())
+    {
+    case Mainnet:
+        return MainnetConfiguration::scConfigTitle;
+    case PublicTestnet:
+        return TestnetConfiguration::scConfigTitle;
+    case PublicExperimentalTestnet:
+        return ExperimentalTestnetConfiguration::scConfigTitle;
+    default:
+        return QString();
+    }
+}
+
+QString GraftBaseClient::dapiVersion() const
+{
+    switch (mAccountManager->networkType())
+    {
+    case Mainnet:
+        return MainnetConfiguration::scDAPIVersion;
+    case PublicTestnet:
+        return TestnetConfiguration::scDAPIVersion;
+    case PublicExperimentalTestnet:
+        return ExperimentalTestnetConfiguration::scDAPIVersion;
+    default:
+        return QString();
+    }
+}
+
+QStringList GraftBaseClient::seedSupernodes() const
+{
+    switch (mAccountManager->networkType())
+    {
+    case Mainnet:
+        return MainnetConfiguration::scSeedSupernodes;
+    case PublicTestnet:
+        return TestnetConfiguration::scSeedSupernodes;
+    case PublicExperimentalTestnet:
+        return ExperimentalTestnetConfiguration::scSeedSupernodes;
+    default:
+        return QStringList();
+    }
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

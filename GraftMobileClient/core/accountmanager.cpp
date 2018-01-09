@@ -10,7 +10,22 @@ static const QString scAccountDataFile("account.dat");
 
 AccountManager::AccountManager()
 {
+    mNetworkType = 0;
     read();
+}
+
+void AccountManager::setNetworkType(int network)
+{
+    if (mNetworkType != network)
+    {
+        mNetworkType = network;
+        save();
+    }
+}
+
+int AccountManager::networkType() const
+{
+    return mNetworkType;
 }
 
 void AccountManager::setPassword(const QString &passsword)
@@ -95,7 +110,7 @@ void AccountManager::save() const
     if (lFile.open(QFile::WriteOnly))
     {
         QDataStream in(&lFile);
-        in << mPassword << mAccountData << mAddress << mSeed << mViewKey;
+        in << mPassword << mAccountData << mAddress << mSeed << mViewKey << mNetworkType;
     }
 }
 
@@ -109,7 +124,7 @@ void AccountManager::read()
         if (lFile.open(QFile::ReadOnly))
         {
             QDataStream in(&lFile);
-            in >> mPassword >> mAccountData >> mAddress >> mSeed >> mViewKey;
+            in >> mPassword >> mAccountData >> mAddress >> mSeed >> mViewKey >> mNetworkType;
         }
     }
 }

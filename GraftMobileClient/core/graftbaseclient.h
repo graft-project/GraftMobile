@@ -19,9 +19,17 @@ class GraftBaseClient : public QObject
 {
     Q_OBJECT
 public:
+    enum NetworkConfiguration
+    {
+        Mainnet = 0,
+        PublicTestnet = 1,
+        PublicExperimentalTestnet = 2
+    };
+
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
+    virtual void setNetworkType(int networkType);
     Q_INVOKABLE bool isAccountExists() const;
 
     virtual void createAccount(const QString &password) = 0;
@@ -54,6 +62,11 @@ public:
 
     Q_INVOKABLE bool checkPassword(const QString &password) const;
     Q_INVOKABLE void copyWalletNumber(const QString &walletNumber) const;
+
+    Q_INVOKABLE QString networkName() const;
+    Q_INVOKABLE QString dapiVersion() const;
+    QStringList seedSupernodes() const;
+
 
 signals:
     void errorReceived(const QString &message);
