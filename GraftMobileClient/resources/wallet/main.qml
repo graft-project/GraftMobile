@@ -82,7 +82,7 @@ GraftApplicationWindow {
         CreateWalletStackViewer {
             id: createWalletStackViewer
             pushScreen: generalTransitions()
-            menuLoader: Qt.platform.os === "ios" ? footerLoader : drawerLoader
+            menuLoader: drawerLoader
         }
 
         WalletStackViewer {

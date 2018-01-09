@@ -5,11 +5,8 @@ import "components"
 
 BaseScreen {
     id: root
-
     title: qsTr("Create wallet")
-    screenHeader {
-        isNavigationButtonVisible: false
-    }
+    screenHeader.navigationButtonState: Qt.platform.os === "ios"
 
     Connections {
         target: GraftClient

@@ -3,10 +3,10 @@ import QtQuick.Controls 2.2
 
 BaseStackViewer {
     id: stack
-    initialItem: createWalletScreen
+    initialItem: selectNetworkScreen
 
-    CreateWalletScreen {
-        id: createWalletScreen
+    SelectNetworkScreen {
+        id: selectNetworkScreen
         pushScreen: createWalletsTransitions()
     }
 
@@ -14,6 +14,7 @@ BaseStackViewer {
         var transitionsMap = pushScreen
         transitionsMap["openRestoreWalletScreen"] = openRestoreWalletScreen
         transitionsMap["openMnemonicViewScreen"] = openMnemonicViewScreen
+        transitionsMap["openCreateWalletScreen"] = openCreateWalletScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -25,5 +26,9 @@ BaseStackViewer {
     function openMnemonicViewScreen(isAccountExists) {
         stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": createWalletsTransitions(),
                    "screenState": isAccountExists})
+    }
+
+    function openCreateWalletScreen() {
+        stack.push("qrc:/CreateWalletScreen.qml", {"pushScreen": createWalletsTransitions()})
     }
 }
