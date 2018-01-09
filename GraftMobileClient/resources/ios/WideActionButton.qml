@@ -7,8 +7,8 @@ import com.graft.design 1.0
 RoundButton {
     radius: 8
     highlighted: true
-    Material.elevation: 0
-    Material.accent: ColorFactory.color(DesignFactory.Foreground)
+    Material.elevation: 1
+    Material.accent: pressed ? ColorFactory.color(DesignFactory.AndroidStatusBar) : ColorFactory.color(DesignFactory.Foreground)
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true
     font {
