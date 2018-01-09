@@ -6,7 +6,7 @@ import com.graft.design 1.0
 import "components"
 
 BaseScreen {
-    title: qsTr("Select Newtork")
+    title: qsTr("Select Newtork Type")
     screenHeader.isNavigationButtonVisible: false
 
     ColumnLayout {
