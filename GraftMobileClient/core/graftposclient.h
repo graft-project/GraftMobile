@@ -15,6 +15,8 @@ public:
     explicit GraftPOSClient(QObject *parent = nullptr);
     ~GraftPOSClient();
 
+    Q_INVOKABLE void setNetworkType(int networkType) override;
+
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;
 

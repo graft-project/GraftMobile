@@ -8,6 +8,9 @@ class AccountManager
 public:
     AccountManager();
 
+    void setNetworkType(int network);
+    int networkType() const;
+
     void setPassword(const QString &passsword);
     QString passsword() const;
 
@@ -33,6 +36,7 @@ private:
     QString mAddress;
     QString mViewKey;
     QString mSeed;
+    int mNetworkType;
 };
 
 #endif // ACCOUNTMANAGER_H

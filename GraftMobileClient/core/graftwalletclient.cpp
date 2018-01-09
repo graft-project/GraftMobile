@@ -10,7 +10,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
 {
     mBlockNum = 0;
-    mApi = new GraftWalletAPI(getServiceUrl(), cDAPIVersion, this);
+    mApi = new GraftWalletAPI(getServiceUrl(), dapiVersion(), this);
     connect(mApi, &GraftWalletAPI::getPOSDataReceived,
             this, &GraftWalletClient::receiveGetPOSData);
     connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
@@ -27,6 +27,12 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     registerBalanceTimer(mApi);
 }
 
+void GraftWalletClient::setNetworkType(int networkType)
+{
+    GraftBaseClient::setNetworkType(networkType);
+    mApi->setDAPIVersion(dapiVersion());
+}
+
 double GraftWalletClient::totalCost() const
 {
     return mTotalCost;
@@ -41,7 +47,7 @@ bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
 {
     if (GraftBaseClient::resetUrl(ip, port))
     {
-        mApi->setUrl(QUrl(cUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+        mApi->setUrl(QUrl(scUrl.arg(QString("%1:%2").arg(ip).arg(port))));
         return true;
     }
     return false;
