@@ -110,6 +110,7 @@ GraftApplicationWindow {
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openMainScreen"] = openMainScreen
         transitionsMap["privateClearChecked"] = privateClearChecked
+        transitionsMap["openCreateWalletStackViewer"] = openCreateWalletStackViewer
         return transitionsMap
     }
 
@@ -148,6 +149,10 @@ GraftApplicationWindow {
     function privateClearChecked() {
           selectButton("Store")
           ProductModel.clearSelections()
+    }
+
+    function openCreateWalletStackViewer() {
+        mainLayout.currentIndex = 0
     }
 
     function selectButton(name) {

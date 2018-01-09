@@ -94,7 +94,7 @@ BaseScreen {
         if (screenState) {
             pushScreen.goBack()
         } else {
-            pushScreen.openMainScreen()
+            pushScreen.openBaseScreen()
         }
     }
 }
