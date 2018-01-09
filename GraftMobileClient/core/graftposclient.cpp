@@ -17,7 +17,7 @@ static const QString scProductModelDataFile("productList.dat");
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mApi = new GraftPOSAPI(getServiceUrl(), cDAPIVersion, this);
+    mApi = new GraftPOSAPI(getServiceUrl(), dapiVersion(), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
             this, &GraftPOSClient::receiveRejectSale);
@@ -61,7 +61,7 @@ bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
 {
     if (GraftBaseClient::resetUrl(ip, port))
     {
-        mApi->setUrl(QUrl(cUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+        mApi->setUrl(QUrl(scUrl.arg(QString("%1:%2").arg(ip).arg(port))));
         return true;
     }
     return false;
