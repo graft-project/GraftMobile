@@ -87,24 +87,28 @@ GraftApplicationWindow {
             id: createWalletStackViewer
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
         }
 
         ProductStackViewer {
             id: productViewer
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
         }
 
         InfoWalletStackViewer {
             id: infoWalletViewer
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
         }
 
         SettingsStackViewer {
             id: settingsStackViewer
             pushScreen: generalTransitions()
             appType: "pos"
+            isActive: SwipeView.isCurrentItem
         }
     }
 
@@ -151,8 +155,8 @@ GraftApplicationWindow {
     }
 
     function privateClearChecked() {
-          selectButton("Store")
-          ProductModel.clearSelections()
+        selectButton("Store")
+        ProductModel.clearSelections()
     }
 
     function openCreateWalletStackViewer() {

@@ -34,7 +34,7 @@ BaseStackViewer {
     }
 
     function openBaseScreen() {
-        pushScreen.openMainScreen()
         stack.pop(selectNetworkScreen)
+        pushScreen.openMainScreen()
     }
 }

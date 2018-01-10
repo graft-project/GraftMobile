@@ -6,6 +6,7 @@ StackView {
 
     property var menuLoader
     property var pushScreen: ({})
+    property bool isActive: false
 
     focus: true
     Keys.onReleased: {
@@ -18,7 +19,7 @@ StackView {
     }
 
     onCurrentItemChanged: {
-        if (menuLoader && menuLoader.status === Loader.Ready) {
+        if (isActive && menuLoader && menuLoader.status === Loader.Ready) {
             menuLoader.item.interactive = currentItem.isMenuActive
         }
     }
