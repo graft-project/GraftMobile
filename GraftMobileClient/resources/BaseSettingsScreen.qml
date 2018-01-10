@@ -155,7 +155,7 @@ BaseScreen {
     }
 
     function resetWalletAccount() {
-        GraftClient.resetDate()
+        GraftClient.resetData()
         pushScreen.openCreateWalletStackViewer()
     }
 

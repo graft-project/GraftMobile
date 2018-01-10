@@ -37,6 +37,10 @@ BaseScreen {
                 }
             }
 
+            NetworkIndicator {
+                Layout.fillWidth: true
+            }
+
             BalanceViewItem {
                 id: balanceItem
                 Layout.fillWidth: true
