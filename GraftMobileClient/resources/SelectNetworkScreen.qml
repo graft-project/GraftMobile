@@ -35,7 +35,8 @@ BaseScreen {
             color: "#BBBBBB"
             font.pointSize: 14
             wrapMode: Label.WordWrap
-            text: qsTr("The production network with real coins.")
+            text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
+                       "that carry real GRF transactions.")
         }
 
         RadioButton {
@@ -57,8 +58,8 @@ BaseScreen {
             color: "#BBBBBB"
             font.pointSize: 14
             wrapMode: Label.WordWrap
-            text: qsTr("The public test network for beginners which want to " +
-                       "try how Graft Ecosystem is working.")
+            text: qsTr("Exact functional copy of mainnet for public testing of mining, " +
+                       "supernodes, wallet apps, and other features of GRAFT ecosystem.")
         }
 
         RadioButton {
@@ -81,8 +82,9 @@ BaseScreen {
             color: "#BBBBBB"
             font.pointSize: 14
             wrapMode: Label.WordWrap
-            text: qsTr("The public experimental test network which provides the unreleased" +
-                       " version of Real-Time Authorization functionality.")
+            text: qsTr("Blockchain and test network running on the code branch that contains " +
+                       "Real Time Authorization and other future features that are not yet " +
+                       "available on mainnet.")
         }
 
         Item {
