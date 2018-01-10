@@ -73,4 +73,48 @@ The balance is updating automatically and you can check it on the Wallet page.
 
 ## Interaction with Graft Command Line Interface (CLI)
 
+Since Mobile Clients are read-only currently, if you want to process 
+transactions or make other actions, you need to use Graft Command Line 
+Interface on your PC. You can install Graft CLI from binary packages or sources 
+for all main platforms: Linux, Windows, MacOS.
 
+To restore your wallet via Graft CLI, you need to get the mnemonic phrase of 
+your Graft wallet and run Graft CLI with the following options:
+
+```sh
+--restore-deterministic-wallet      \\allow to create wallet from mnemonic phrase
+--electrum-seed "<mnemonic phrase>" \\mnemonic phrase of your Graft wallet
+```
+
+For example:
+
+**Linux/MacOS**:
+
+```bash
+./<path to GraftNetwork install directory>/graft-wallet-cli --restore-deterministic-wallet --electrum-seed "<mnemonic phrase>"
+
+```
+
+**Windows**:
+
+```cmd
+<path to GraftNetwork install directory>\graft-wallet-cli.exe --restore-deterministic-wallet --electrum-seed "<mnemonic phrase>"
+
+```
+
+Then Graft CLI will ask to enter a file name for your wallet and password to 
+secure your wallet.
+
+**Note**: This password hasn't a relation to the password in the Mobile Client, 
+so you can enter any which you want.
+
+To get more information about options of Graft CLI you can run it with `--help` 
+option:
+
+```bash
+./<path to GraftNetwork install directory>/graft-wallet-cli --help
+
+```
+
+To get information about actions which are available for your wallet in the 
+Graft CLI, enter `help` command when opening your Graft wallet in the Graft CLI.
