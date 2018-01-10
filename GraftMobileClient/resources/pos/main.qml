@@ -60,7 +60,11 @@ GraftApplicationWindow {
         icon: StandardIcon.Warning
         text: qsTr("Sale request failed.\nPlease try again.")
         standardButtons: MessageDialog.Ok
-        onAccepted: productViewer.clearChecked()
+        onAccepted: {
+            if (GraftClient.isAccountExists()) {
+                productViewer.clearChecked()
+            }
+        }
     }
 
     SwipeView {

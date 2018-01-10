@@ -33,6 +33,7 @@ BaseBalanceScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.alignment: Qt.AlignBottom
+            enabled: false
             text: qsTr("Transfer to Paypal")
         }
 
@@ -41,6 +42,7 @@ BaseBalanceScreen {
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignBottom
+            enabled: false
             text: qsTr("Chase XXX929")
         }
     }

@@ -72,8 +72,8 @@ public:
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();
-    void createAccountReceived();
-    void restoreAccountReceived();
+    void createAccountReceived(bool isAccountCreated);
+    void restoreAccountReceived(bool isAccountRestored);
 
 public slots:
     void saveAccounts() const;

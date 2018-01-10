@@ -187,6 +187,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
         emit error(reply->errorString());
         reply->deleteLater();
         reply = nullptr;
+        emit createAccountReceived(mAccountData, mPassword, "", "", "");
         return;
     }
     QByteArray arr = reply->readAll();
@@ -215,11 +216,13 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     else
     {
         emit error(QStringLiteral("Response error"));
+        emit createAccountReceived(mAccountData, mPassword, "", "", "");
         return;
     }
     if (accountArr.isEmpty() || address.isEmpty())
     {
         emit error(QStringLiteral("Couldn't get account data!"));
+        emit createAccountReceived(mAccountData, mPassword, "", "", "");
         return;
     }
     mAccountData = accountArr;
@@ -259,6 +262,7 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
         emit error(reply->errorString());
         reply->deleteLater();
         reply = nullptr;
+        emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
         return;
     }
     QByteArray arr = reply->readAll();
@@ -287,11 +291,13 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
     else
     {
         emit error(QStringLiteral("Response error"));
+        emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
         return;
     }
     if (accountArr.isEmpty() || address.isEmpty())
     {
         emit error(QStringLiteral("Couldn't restore account data!"));
+        emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
         return;
     }
     mAccountData = accountArr;

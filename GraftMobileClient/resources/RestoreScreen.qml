@@ -23,7 +23,11 @@ BaseScreen {
         target: GraftClient
 
         onRestoreAccountReceived: {
-            pushScreen.openBaseScreen()
+            if (isAccountRestored) {
+                pushScreen.openBaseScreen()
+            } else {
+                root.state = "accountNotRestored"
+            }
         }
     }
 
@@ -91,6 +95,18 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 enabled: false
+            }
+        },
+        State {
+            name: "accountNotRestored"
+
+            PropertyChanges {
+                target: busyIndicator
+                running: false
+            }
+            PropertyChanges {
+                target: root
+                enabled: true
             }
         }
     ]

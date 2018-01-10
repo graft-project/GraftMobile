@@ -240,6 +240,7 @@ void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QStrin
                                      const QString &address, const QString &viewKey,
                                      const QString &seed)
 {
+    bool isAccountCreated = false;
     if (mAccountManager->passsword() == password && !accountData.isEmpty() && !address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
@@ -247,14 +248,16 @@ void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QStrin
         mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
         updateAddressQRCode();
-        emit createAccountReceived();
+        isAccountCreated = true;
     }
+    emit createAccountReceived(isAccountCreated);
 }
 
 void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const QString &password,
                                             const QString &address, const QString &viewKey,
                                             const QString &seed)
 {
+    bool isAccountRestored = false;
     if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
@@ -262,8 +265,9 @@ void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const
         mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
         updateAddressQRCode();
-        emit restoreAccountReceived();
+        isAccountRestored = true;
     }
+    emit restoreAccountReceived(isAccountRestored);
 }
 
 void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
