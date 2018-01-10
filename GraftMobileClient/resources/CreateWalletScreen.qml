@@ -12,7 +12,11 @@ BaseScreen {
         target: GraftClient
 
         onCreateAccountReceived: {
-            pushScreen.openMnemonicViewScreen(false)
+            if (isAccountCreated) {
+                pushScreen.openMnemonicViewScreen(false)
+            } else {
+                root.state = "accountNotExist"
+            }
         }
     }
 
@@ -96,6 +100,18 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 enabled: false
+            }
+        },
+        State {
+            name: "accountNotExist"
+
+            PropertyChanges {
+                target: busyIndicator
+                running: false
+            }
+            PropertyChanges {
+                target: root
+                enabled: true
             }
         }
     ]
