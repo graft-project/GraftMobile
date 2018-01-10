@@ -68,6 +68,7 @@ signals:
     void balanceUpdated();
     void createAccountReceived(bool isAccountCreated);
     void restoreAccountReceived(bool isAccountRestored);
+    void networkTypeChanged();
 
 public slots:
     void saveAccounts() const;
