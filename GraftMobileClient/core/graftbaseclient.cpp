@@ -1,4 +1,4 @@
- #include "accountmodelserializator.h"
+#include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
@@ -119,8 +119,8 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
     qmlRegisterUncreatableType<GraftClientTools>("org.graft", 1, 0,
-                                                     "GraftClientTools",
-                                                     "You cannot create an instance of GraftClientTools type.");
+                                                 "GraftClientTools",
+                                                 "You cannot create an instance of GraftClientTools type.");
 }
 
 QString GraftBaseClient::qrCodeImage() const
