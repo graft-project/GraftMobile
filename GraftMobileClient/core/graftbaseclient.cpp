@@ -53,6 +53,7 @@ GraftBaseClient::~GraftBaseClient()
 void GraftBaseClient::setNetworkType(int networkType)
 {
     mAccountManager->setNetworkType(networkType);
+    emit networkTypeChanged();
 }
 
 int GraftBaseClient::networkType() const

@@ -62,7 +62,7 @@ GraftApplicationWindow {
         standardButtons: MessageDialog.Ok
         onAccepted: {
             if (GraftClient.isAccountExists()) {
-                 openMainScreen()
+                openMainScreen()
             }
         }
     }
@@ -87,18 +87,21 @@ GraftApplicationWindow {
             id: createWalletStackViewer
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
         }
 
         WalletStackViewer {
             id: walletViewer
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
         }
 
         SettingsStackViewer {
             id: settingsStackViewer
             pushScreen: generalTransitions()
             appType: "wallet"
+            isActive: SwipeView.isCurrentItem
         }
     }
 

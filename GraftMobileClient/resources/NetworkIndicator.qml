@@ -5,7 +5,13 @@ Rectangle {
     height: 40
     color: "#989FAB"
 
+    Connections {
+        target: GraftClient
+        onNetworkTypeChanged: nameTypeNetwork.text = GraftClient.networkName()
+    }
+
     Text {
+        id: nameTypeNetwork
         anchors {
             verticalCenter: networkIndicator.verticalCenter
             left: networkIndicator.left
