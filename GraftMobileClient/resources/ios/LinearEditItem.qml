@@ -69,8 +69,8 @@ ColumnLayout {
     }
 
     function wordCounting() {
-        var wordList = editItem.displayText.split(' ')
-        if (wordList !== null) {
+        if (editItem.displayText.length !== 0) {
+            var wordList = editItem.displayText.split(' ')
             return wordList.length
         } else {
             return 0

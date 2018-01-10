@@ -2,6 +2,7 @@
 #include "barcodeimageprovider.h"
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
+#include "graftclienttools.h"
 #include "graftbaseclient.h"
 #include "qrcodegenerator.h"
 #include "accountmanager.h"
@@ -54,6 +55,20 @@ void GraftBaseClient::setNetworkType(int networkType)
     mAccountManager->setNetworkType(networkType);
 }
 
+int GraftBaseClient::networkType() const
+{
+    switch (mAccountManager->networkType()) {
+    case GraftClientTools::Mainnet:
+        return GraftClientTools::Mainnet;
+    case GraftClientTools::PublicTestnet:
+        return GraftClientTools::PublicTestnet;
+    case GraftClientTools::PublicExperimentalTestnet:
+        return GraftClientTools::PublicExperimentalTestnet;
+    default:
+        return -1;
+    }
+}
+
 bool GraftBaseClient::isAccountExists() const
 {
     return !mAccountManager->account().isEmpty();
@@ -103,7 +118,9 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
-    qmlRegisterType<GraftClientTools>("org.graft", 1, 0, "GraftClientTools");
+    qmlRegisterUncreatableType<GraftClientTools>("org.graft", 1, 0,
+                                                     "GraftClientTools",
+                                                     "You cannot create an instance of GraftClientTools type.");
 }
 
 QString GraftBaseClient::qrCodeImage() const
@@ -392,11 +409,11 @@ QString GraftBaseClient::networkName() const
 {
     switch (mAccountManager->networkType())
     {
-    case Mainnet:
+    case GraftClientTools::Mainnet:
         return MainnetConfiguration::scConfigTitle;
-    case PublicTestnet:
+    case GraftClientTools::PublicTestnet:
         return TestnetConfiguration::scConfigTitle;
-    case PublicExperimentalTestnet:
+    case GraftClientTools::PublicExperimentalTestnet:
         return ExperimentalTestnetConfiguration::scConfigTitle;
     default:
         return QString();
@@ -407,11 +424,11 @@ QString GraftBaseClient::dapiVersion() const
 {
     switch (mAccountManager->networkType())
     {
-    case Mainnet:
+    case GraftClientTools::Mainnet:
         return MainnetConfiguration::scDAPIVersion;
-    case PublicTestnet:
+    case GraftClientTools::PublicTestnet:
         return TestnetConfiguration::scDAPIVersion;
-    case PublicExperimentalTestnet:
+    case GraftClientTools::PublicExperimentalTestnet:
         return ExperimentalTestnetConfiguration::scDAPIVersion;
     default:
         return QString();
@@ -422,11 +439,11 @@ QStringList GraftBaseClient::seedSupernodes() const
 {
     switch (mAccountManager->networkType())
     {
-    case Mainnet:
+    case GraftClientTools::Mainnet:
         return MainnetConfiguration::scSeedSupernodes;
-    case PublicTestnet:
+    case GraftClientTools::PublicTestnet:
         return TestnetConfiguration::scSeedSupernodes;
-    case PublicExperimentalTestnet:
+    case GraftClientTools::PublicExperimentalTestnet:
         return ExperimentalTestnetConfiguration::scSeedSupernodes;
     default:
         return QStringList();

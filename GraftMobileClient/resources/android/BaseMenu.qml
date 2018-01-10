@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import com.graft.design 1.0
+import "../"
 
 Drawer {
     property var pushScreen
@@ -31,13 +32,22 @@ Drawer {
         }
     }
 
+    NetworkIndicator {
+        id: networkIndicator
+        anchors {
+            top: foreground.bottom
+            left: foreground.left
+            right: foreground.right
+        }
+    }
+
     Item {
         id: placeholder
         anchors {
+            top: networkIndicator.bottom
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            top: foreground.bottom
         }
     }
 }

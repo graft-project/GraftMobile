@@ -19,17 +19,11 @@ class GraftBaseClient : public QObject
 {
     Q_OBJECT
 public:
-    enum NetworkConfiguration
-    {
-        Mainnet = 0,
-        PublicTestnet = 1,
-        PublicExperimentalTestnet = 2
-    };
-
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
     virtual void setNetworkType(int networkType);
+    Q_INVOKABLE int networkType() const;
     Q_INVOKABLE bool isAccountExists() const;
     Q_INVOKABLE void resetData() const;
 

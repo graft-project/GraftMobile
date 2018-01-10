@@ -3,9 +3,9 @@
 
 #include <QObject>
 
-class GraftClientTools : public QObject
+class GraftClientTools
 {
-    Q_OBJECT
+    Q_GADGET
 public:
     enum BalanceTypes {
         LockedBalance,
@@ -14,7 +14,13 @@ public:
     };
     Q_ENUM(BalanceTypes)
 
-    explicit GraftClientTools(QObject *parent = nullptr);
+    enum NetworkConfiguration
+    {
+        Mainnet = 0,
+        PublicTestnet = 1,
+        PublicExperimentalTestnet = 2
+    };
+    Q_ENUM(NetworkConfiguration)
 };
 
 #endif // GRAFTCLIENTTOOLS_H
