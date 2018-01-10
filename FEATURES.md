@@ -6,12 +6,13 @@ This document contains the list of available features of Mobile Clients.
 ## Select Network
 
 Graft Mobile Clients support three types of network:
-*  Mainnet - the production network with real coins;
-*  Public Testnet - the public test network for beginners which want to try 
-how Graft Ecosystem is working;
-*  Public RTA Testnet - the public experimental test network which provides 
-the unreleased version of Real-Time Authorization functionality. For more 
-details about Real-Time Authorization see 
+*  Mainnet - Actual GRAFT blockchain, production network. This is the 
+blockchain that carry real GRF transactions;
+*  Public Testnet - Exact functional copy of mainnet for public testing of 
+mining, supernodes, wallet apps, and other features of GRAFT ecosystem;
+*  Public RTA Testnet - Blockchain and test network running on the code branch 
+that contains Real Time Authorization and other future features that are not 
+yet available on mainnet. For more details about Real-Time Authorization see 
 [Graft Network Whitepaper](https://www.graft.network/wp-content/uploads/2017/09/Graft-1.1.pdf).
 
 The mobile client works only with one network at same time. When you install 
