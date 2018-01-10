@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import org.graft 1.0
 import "components"
 
@@ -56,11 +57,37 @@ BaseScreen {
             Image {
                 id: qrCodeImage
                 cache: false
-                height: 230
+                height: parent.height - 20
                 width: height
                 anchors {
                     centerIn: parent
                     margins: 10
+                }
+
+                Rectangle {
+                    id: temporaryLabel
+                    anchors.centerIn: parent
+                    height: messageLabel.height + 20
+                    width: messageLabel.width + 20
+                    radius: height
+                    color: "#353535"
+                    opacity: 0.0
+
+                    Label {
+                        id: messageLabel
+                        anchors.centerIn: parent
+                        color: "#FFFFFF"
+                        font.pointSize: 16
+                        text: qsTr("Wallet address is copied!")
+                    }
+
+                    OpacityAnimator {
+                        id: opacityAnimator
+                        target: temporaryLabel
+                        from: 1.0
+                        to: 0.0
+                        duration: 1000
+                    }
                 }
             }
         }
@@ -96,11 +123,21 @@ BaseScreen {
                     Layout.fillWidth: true
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
-                    onClicked: GraftClient.copyWalletNumber(balanceState === "mainAddress" ?
-                                                            GraftClient.address() : accountNumber)
+                    onClicked: {
+                        GraftClient.copyWalletNumber(balanceState === "mainAddress" ?
+                                                         GraftClient.address() : accountNumber)
+                        temporaryLabel.opacity = 1.0
+                        timer.start()
+                    }
                 }
             }
         }
+    }
+
+    Timer {
+        id: timer
+        interval: 4000
+        onTriggered: opacityAnimator.running = true
     }
 
     states: [
