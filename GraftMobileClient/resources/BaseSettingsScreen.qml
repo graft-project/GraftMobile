@@ -16,6 +16,7 @@ BaseScreen {
     property alias portTitle: portTextField.title
     property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
+    property var confirmPasswordAction: null
 
     function saveChanges() {
         if (companyNameTextField.visible) {
@@ -38,8 +39,7 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            leftMargin: 15
-            rightMargin: 15
+            margins: 15
         }
 
         LinearEditItem {
@@ -109,27 +109,37 @@ BaseScreen {
         }
 
         WideActionButton {
+            id: resetWalletButton
+            text: qsTr("Reset Account")
+            onClicked: {
+                confirmPasswordAction = resetWalletAccount
+                passwordDialog.open()
+            }
+        }
+
+        WideActionButton {
             id: mnemonicButton
-            Layout.bottomMargin: 5
             text: qsTr("Show Mnemonic Password")
-            onClicked: mnemonicPhraseDialog.open()
+            onClicked:  {
+                confirmPasswordAction = openMnemonicScreen
+                passwordDialog.open()
+            }
         }
 
         WideActionButton {
             id: saveButton
             Layout.alignment: Qt.AlignBottom
-            Layout.bottomMargin: 15
             onClicked: saveChanges()
         }
     }
 
     Dialog {
-        id: mnemonicPhraseDialog
+        id: passwordDialog
         visible: false
         modal: true
         width: 300
-        topMargin: (parent.height - mnemonicPhraseDialog.height) / 2
-        leftMargin: (parent.width - mnemonicPhraseDialog.width) / 2
+        topMargin: (parent.height - passwordDialog.height) / 2
+        leftMargin: (parent.width - passwordDialog.width) / 2
         title: qsTr("Enter password:")
         standardButtons: StandardButton.Ok | StandardButton.Close
 
@@ -140,19 +150,24 @@ BaseScreen {
             passwordCharacter: '•'
             font.pointSize: 24
         }
-
-        onAccepted: {
-            checkingPassword(passwordTextField.text)
-        }
-
+        onAccepted: checkingPassword(passwordTextField.text)
         onRejected: passwordTextField.clear()
+    }
+
+    function resetWalletAccount() {
+        GraftClient.resetDate()
+        pushScreen.openCreateWalletStackViewer()
+    }
+
+    function openMnemonicScreen() {
+        pushScreen.openMnemonicViewScreen(true)
     }
 
     function checkingPassword(password)
     {
         if (GraftClient.checkPassword(password)) {
             passwordTextField.clear()
-            pushScreen.openMnemonicViewScreen(true)
+            confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")

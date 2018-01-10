@@ -15,6 +15,7 @@ BaseStackViewer {
         transitionsMap["openRestoreWalletScreen"] = openRestoreWalletScreen
         transitionsMap["openMnemonicViewScreen"] = openMnemonicViewScreen
         transitionsMap["openCreateWalletScreen"] = openCreateWalletScreen
+        transitionsMap["openBaseScreen"] = openBaseScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -30,5 +31,10 @@ BaseStackViewer {
 
     function openCreateWalletScreen() {
         stack.push("qrc:/CreateWalletScreen.qml", {"pushScreen": createWalletsTransitions()})
+    }
+
+    function openBaseScreen() {
+        pushScreen.openMainScreen()
+        stack.pop(selectNetworkScreen)
     }
 }

@@ -24,7 +24,7 @@ BaseScreen {
 
         onRestoreAccountReceived: {
             if (isAccountRestored) {
-                pushScreen.openMainScreen()
+                pushScreen.openBaseScreen()
             } else {
                 root.state = "accountNotRestored"
             }

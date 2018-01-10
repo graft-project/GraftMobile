@@ -59,6 +59,11 @@ bool GraftBaseClient::isAccountExists() const
     return !mAccountManager->account().isEmpty();
 }
 
+void GraftBaseClient::resetData() const
+{
+    mAccountManager->clearData();
+}
+
 QString GraftBaseClient::getSeed() const
 {
     return mAccountManager->seed();
