@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import "../"
 import "../components"
+import org.graft 1.0
 
 BaseBalanceScreen {
     id: balanceScreen
@@ -30,6 +31,7 @@ BaseBalanceScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
+            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
             onClicked: pushScreen.openQRCodeScanner()
         }
     }
