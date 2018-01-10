@@ -66,11 +66,8 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            text: qsTr("Restore wallet")
-            onClicked: {
-                root.state = "restoreWalletPressed"
-                restoreWallet()
-            }
+            text: qsTr("Restore")
+            onClicked: restoreWallet()
         }
     }
 
@@ -95,7 +92,36 @@ BaseScreen {
         }
     ]
 
+    Dialog {
+        id: dialog
+        visible: false
+        modal: true
+        width: errorLabel.width + 20
+        topMargin: (parent.height - dialog.height) / 2
+        leftMargin: (parent.width - dialog.width) / 2
+        standardButtons: Dialog.Ok
+
+        Label {
+            id: errorLabel
+            anchors.centerIn: parent
+            font {
+                bold: true
+                pointSize: 16
+            }
+        }
+
+        onAccepted: dialog.close()
+    }
+
     function restoreWallet() {
-        GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
+        if (seedTextField.text.split(' ').length < 25) {
+            dialog.open()
+            errorLabel.text = seedTextField.text.length === 0 ?
+                        qsTr("The mnemonic phrase is empty.\nPlease enter the mnemonic phrase.") :
+                        qsTr("The mnemonic phrase isn't full.\nPlease enter the full mnemonic phrase.")
+        } else {
+            root.state = "restoreWalletPressed"
+            GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
+        }
     }
 }
