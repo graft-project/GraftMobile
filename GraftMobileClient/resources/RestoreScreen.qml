@@ -133,8 +133,8 @@ BaseScreen {
         if (seedTextField.text.split(' ').length < 25) {
             dialog.open()
             errorLabel.text = seedTextField.text.length === 0 ?
-                        qsTr("The mnemonic phrase is empty.\nPlease enter the mnemonic phrase.") :
-                        qsTr("The mnemonic phrase isn't full.\nPlease enter the full mnemonic phrase.")
+                        qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
+                        qsTr("The mnemonic phrase must contain 25 words.\nPlease, enter the correct mnemonic phrase.")
         } else {
             root.state = "restoreWalletPressed"
             GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
