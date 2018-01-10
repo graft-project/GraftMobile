@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Dialogs 1.2
+import org.graft 1.0
 import com.graft.design 1.0
 import "../components"
 import "../"
@@ -102,6 +103,7 @@ BaseScreen {
                 Layout.topMargin: 15
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
+                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
                         GraftClient.sale()
@@ -120,6 +122,7 @@ BaseScreen {
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
+                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: pushScreen.openQuickDealScreen()
             }
         }
