@@ -59,7 +59,7 @@ bool GraftBaseClient::isAccountExists() const
     return !mAccountManager->account().isEmpty();
 }
 
-void GraftBaseClient::resetDate() const
+void GraftBaseClient::resetData() const
 {
     mAccountManager->clearData();
 }
