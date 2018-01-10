@@ -62,7 +62,6 @@ SOURCES += main.cpp \
     core/quickexchangemodel.cpp \
     core/accountmodelserializator.cpp \
     core/accountmanager.cpp \
-    core/graftclienttools.cpp \
     core/qrcodegenerator.cpp
 
 HEADERS += \
