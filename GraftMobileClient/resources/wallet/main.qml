@@ -60,7 +60,7 @@ GraftApplicationWindow {
         icon: StandardIcon.Warning
         text: qsTr("Pay request failed.\nPlease try again.")
         standardButtons: MessageDialog.Ok
-        onAccepted: openMainScreen()
+        onAccepted: GraftClient.isAccountExists() ? openMainScreen() : null
     }
 
     SwipeView {
