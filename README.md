@@ -1,3 +1,12 @@
+# Graft Mobile Clients
+
+Clients:
+* Point of Sale (POS)
+* Wallet
+
+More information about currently available clients features you can find 
+[here](FEATURES.md).
+
 ## Build Settings ##
 **POS**
 
