@@ -114,6 +114,17 @@ void AccountManager::save() const
     }
 }
 
+void AccountManager::clearData()
+{
+    mAccountData.clear();
+    mPassword.clear();
+    mViewKey.clear();
+    mAddress.clear();
+    mNetworkType = 0;
+    mSeed.clear();
+    save();
+}
+
 void AccountManager::read()
 {
     QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,

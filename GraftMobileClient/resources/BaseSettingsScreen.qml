@@ -112,7 +112,7 @@ BaseScreen {
             id: resetWalletButton
             text: qsTr("Reset Account")
             onClicked: {
-                confirmPasswordAction = pushScreen.openCreateWalletStackViewer
+                confirmPasswordAction = resetWalletAccount
                 passwordDialog.open()
             }
         }
@@ -152,6 +152,11 @@ BaseScreen {
         }
         onAccepted: checkingPassword(passwordTextField.text)
         onRejected: passwordTextField.clear()
+    }
+
+    function resetWalletAccount() {
+        GraftClient.resetDate()
+        pushScreen.openCreateWalletStackViewer()
     }
 
     function openMnemonicScreen() {
