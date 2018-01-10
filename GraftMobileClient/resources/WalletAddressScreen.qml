@@ -124,10 +124,10 @@ BaseScreen {
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        temporaryLabel.opacity = 1.0
-                        timer.start()
                         GraftClient.copyWalletNumber(balanceState === "mainAddress" ?
                                                          GraftClient.address() : accountNumber)
+                        temporaryLabel.opacity = 1.0
+                        timer.start()
                     }
                 }
             }
