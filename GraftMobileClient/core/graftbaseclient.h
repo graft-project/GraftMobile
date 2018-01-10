@@ -31,6 +31,7 @@ public:
 
     virtual void setNetworkType(int networkType);
     Q_INVOKABLE bool isAccountExists() const;
+    Q_INVOKABLE void resetData() const;
 
     virtual void createAccount(const QString &password) = 0;
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;
@@ -71,8 +72,8 @@ public:
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();
-    void createAccountReceived();
-    void restoreAccountReceived();
+    void createAccountReceived(bool isAccountCreated);
+    void restoreAccountReceived(bool isAccountRestored);
 
 public slots:
     void saveAccounts() const;

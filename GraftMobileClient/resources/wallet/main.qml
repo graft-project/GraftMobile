@@ -60,7 +60,11 @@ GraftApplicationWindow {
         icon: StandardIcon.Warning
         text: qsTr("Pay request failed.\nPlease try again.")
         standardButtons: MessageDialog.Ok
-        onAccepted: openMainScreen()
+        onAccepted: {
+            if (GraftClient.isAccountExists()) {
+                 openMainScreen()
+            }
+        }
     }
 
     SwipeView {
@@ -103,6 +107,7 @@ GraftApplicationWindow {
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openMainScreen"] = openMainScreen
+        transitionsMap["openCreateWalletStackViewer"] = openCreateWalletStackViewer
         return transitionsMap
     }
 
@@ -114,22 +119,26 @@ GraftApplicationWindow {
         return transitionsMap
     }
 
-    function openMainScreen() {
-        mainLayout.currentIndex = 1
-        selectButton("Wallet")
-    }
-
-    function openSettingsScreen() {
-        mainLayout.currentIndex = 2
-        selectButton("Settings")
-    }
-
     function showMenu() {
         drawerLoader.item.open()
     }
 
     function hideMenu() {
         drawerLoader.item.close()
+    }
+
+    function openMainScreen() {
+        mainLayout.currentIndex = 1
+        selectButton("Wallet")
+    }
+
+    function openCreateWalletStackViewer() {
+        mainLayout.currentIndex = 0
+    }
+
+    function openSettingsScreen() {
+        mainLayout.currentIndex = 2
+        selectButton("Settings")
     }
 
     function selectButton(name) {

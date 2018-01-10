@@ -60,7 +60,11 @@ GraftApplicationWindow {
         icon: StandardIcon.Warning
         text: qsTr("Sale request failed.\nPlease try again.")
         standardButtons: MessageDialog.Ok
-        onAccepted: productViewer.clearChecked()
+        onAccepted: {
+            if (GraftClient.isAccountExists()) {
+                productViewer.clearChecked()
+            }
+        }
     }
 
     SwipeView {
@@ -110,6 +114,7 @@ GraftApplicationWindow {
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openMainScreen"] = openMainScreen
         transitionsMap["privateClearChecked"] = privateClearChecked
+        transitionsMap["openCreateWalletStackViewer"] = openCreateWalletStackViewer
         return transitionsMap
     }
 
@@ -148,6 +153,10 @@ GraftApplicationWindow {
     function privateClearChecked() {
           selectButton("Store")
           ProductModel.clearSelections()
+    }
+
+    function openCreateWalletStackViewer() {
+        mainLayout.currentIndex = 0
     }
 
     function selectButton(name) {

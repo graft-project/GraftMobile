@@ -27,6 +27,7 @@ public:
     QString seed() const;
 
     void save() const;
+    void clearData();
 
 private:
     void read();
