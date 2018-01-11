@@ -7,6 +7,14 @@ import org.graft 1.0
 BaseBalanceScreen {
     id: balanceScreen
 
+    Connections {
+        target: GraftClient
+
+        onNetworkTypeChanged: {
+            payButton.enabled = GraftClient.networkType()
+        }
+    }
+
     ColumnLayout {
         spacing: 0
         anchors.fill: parent
@@ -27,6 +35,7 @@ BaseBalanceScreen {
         }
 
         WideActionButton {
+            id: payButton
             text: qsTr("PAY")
             Layout.leftMargin: 15
             Layout.rightMargin: 15

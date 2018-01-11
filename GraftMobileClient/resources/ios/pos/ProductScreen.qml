@@ -31,6 +31,10 @@ BaseScreen {
 //                TODO: Add error handling
             }
         }
+        onNetworkTypeChanged: {
+            addButton.enabled = GraftClient.networkType()
+            quickDealButton.enabled = GraftClient.networkType()
+        }
     }
 
     Rectangle {
