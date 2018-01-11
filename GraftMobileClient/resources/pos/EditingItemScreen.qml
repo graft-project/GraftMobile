@@ -10,7 +10,7 @@ import "../"
 BaseScreen {
     id: editingItem
     title: qsTr("Add item")
-    action: editingItem.confirmProductParameters
+    action: confirmProductParameters
 
     screenHeader {
         navigationButtonState: Qt.platform.os === "ios"
@@ -24,27 +24,6 @@ BaseScreen {
         if (Qt.platform.os === "ios") {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
-        }
-    }
-
-    function confirmProductParameters() {
-        var currencyCode = currencyModel.codeOf(productItem.currencyText)
-        if (productItem.titleText !== "" && productItem.price !== "") {
-            if (index >= 0) {
-                ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
-                ProductModel.setProductData(index, productItem.productImage, ProductModelEnum.ImageRole)
-                ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
-                ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
-                ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
-            } else {
-                ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
-                                 currencyCode, productItem.descriptionText)
-            }
-            editingItem.pushScreen.goBack()
-            GraftClient.saveProducts()
-        } else {
-            screenDialog.text = qsTr("Please, enter the item title and price.")
-            screenDialog.open()
         }
     }
 
@@ -77,6 +56,27 @@ BaseScreen {
             id: multiTaskingButton
             text: qsTr("Confirm")
             onClicked: confirmProductParameters()
+        }
+    }
+
+    function confirmProductParameters() {
+        var currencyCode = currencyModel.codeOf(productItem.currencyText)
+        if (productItem.titleText !== "" && productItem.price !== "") {
+            if (index >= 0) {
+                ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
+                ProductModel.setProductData(index, productItem.productImage, ProductModelEnum.ImageRole)
+                ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
+                ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
+                ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
+            } else {
+                ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
+                                 currencyCode, productItem.descriptionText)
+            }
+            editingItem.pushScreen.goBack()
+            GraftClient.saveProducts()
+        } else {
+            screenDialog.text = qsTr("Please, enter the item title and price.")
+            screenDialog.open()
         }
     }
 }

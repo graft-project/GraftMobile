@@ -16,6 +16,10 @@ BaseScreen {
         navigationButtonState: true
     }
 
+    Component.onCompleted: {
+        console.log(GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet, GraftClient.networkType(), GraftClientTools.PublicExperimentalTestnet)
+    }
+
     Connections {
         target: ProductModel
         onSelectedProductCountChanged: {
@@ -31,6 +35,10 @@ BaseScreen {
             } else {
 //                TODO: Add error handling
             }
+        }
+        onNetworkTypeChanged: {
+            addButton.enabled = GraftClient.networkType()
+            quickDealButton.enabled = GraftClient.networkType()
         }
     }
 

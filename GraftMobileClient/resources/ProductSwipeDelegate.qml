@@ -95,7 +95,10 @@ SwipeDelegate {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: editItemClicked()
+                onClicked: {
+                    swipe.close()
+                    editItemClicked()
+                }
             }
         }
 
