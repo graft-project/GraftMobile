@@ -40,6 +40,7 @@ void GraftPOSClient::setNetworkType(int networkType)
 {
     GraftBaseClient::setNetworkType(networkType);
     mApi->setDAPIVersion(dapiVersion());
+    mApi->setUrl(getServiceUrl());
 }
 
 ProductModel *GraftPOSClient::productModel() const

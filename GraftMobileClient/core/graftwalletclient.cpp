@@ -31,6 +31,7 @@ void GraftWalletClient::setNetworkType(int networkType)
 {
     GraftBaseClient::setNetworkType(networkType);
     mApi->setDAPIVersion(dapiVersion());
+    mApi->setUrl(getServiceUrl());
 }
 
 double GraftWalletClient::totalCost() const
