@@ -32,7 +32,7 @@ static const QString scConfigTitle("Public RTA Testnet");
 
 static const QStringList scSeedSupernodes{"34.200.186.98:28900",
                                           "34.224.118.182:28900",
-                                          "54.207.21.115:28900"
+                                          "52.206.105.250:28900"
                                          };
 
 static const QString scDAPIVersion("1.0R");
