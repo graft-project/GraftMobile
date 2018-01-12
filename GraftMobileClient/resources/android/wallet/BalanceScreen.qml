@@ -35,6 +35,14 @@ BaseBalanceScreen {
         }
 
         WideActionButton {
+            id: sendCoinsButton
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            text: qsTr("Send")
+            onClicked: pushScreen.openSendCoinScreen()
+        }
+
+        WideActionButton {
             id: payButton
             text: qsTr("PAY")
             Layout.leftMargin: 15

@@ -8,7 +8,17 @@ BaseScreen {
     id: sendCoinScreen
 
     title: qsTr("Send Coins")
-    screenHeader.actionButtonState: true
+    screenHeader {
+        actionButtonState: true
+        navigationButtonState: Qt.platform.os !== "android"
+    }
+    action: pushScreen.openPaymentScreen
+
+    Component.onCompleted: {
+        if (Qt.platform.os === "ios") {
+            screenHeader.actionText = qsTr("Send")
+        }
+    }
 
     StackLayout {
         id: stackLayout
@@ -41,7 +51,7 @@ BaseScreen {
                     LinearEditItem {
                         id: receiversAddress
                         Layout.fillWidth: true
-                        Layout.maximumHeight: 150
+                        Layout.maximumHeight: 130
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
                         title: Qt.platform.os === "ios" ? qsTr("Receivers address:") : qsTr("Receivers address")
@@ -63,7 +73,7 @@ BaseScreen {
                         anchors {
                             right: coinsAmountTextField.right
                             verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: 3
+                            verticalCenterOffset: Qt.platform.os === "ios" ? -5 : 3
                         }
                         color: "#BBBBBB"
                         font {
@@ -90,6 +100,7 @@ BaseScreen {
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignBottom
                     text: qsTr("Send")
+                    onClicked: pushScreen.openPaymentScreen()
                 }
             }
         }
