@@ -39,9 +39,20 @@ BaseScreen {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right
-
             }
             mnemonicPhrase: GraftClient.getSeed()
+        }
+
+        WideActionButton {
+            id: copyMnemonicButton
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: saveButton.top
+                bottomMargin: 15
+            }
+            text: qsTr("Copy to clipboard")
+            onClicked: GraftClient.copyToClipboard(GraftClient.getSeed())
         }
 
         WideActionButton {

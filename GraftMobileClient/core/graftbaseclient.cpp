@@ -400,10 +400,10 @@ bool GraftBaseClient::checkPassword(const QString &password) const
     return mAccountManager->passsword() == password;
 }
 
-void GraftBaseClient::copyWalletNumber(const QString &walletNumber) const
+void GraftBaseClient::copyToClipboard(const QString &data) const
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
-    clipboard->setText(walletNumber);
+    clipboard->setText(data);
 }
 
 QString GraftBaseClient::networkName() const
