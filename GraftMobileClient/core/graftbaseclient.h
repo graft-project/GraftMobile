@@ -56,7 +56,7 @@ public:
     void updateQuickExchange(double cost);
 
     Q_INVOKABLE bool checkPassword(const QString &password) const;
-    Q_INVOKABLE void copyWalletNumber(const QString &walletNumber) const;
+    Q_INVOKABLE void copyToClipboard(const QString &data) const;
 
     Q_INVOKABLE QString networkName() const;
     Q_INVOKABLE QString dapiVersion() const;

@@ -35,13 +35,53 @@ BaseScreen {
         MnemonicPhraseView {
             id: mnemonicPhraseView
             anchors {
-                verticalCenterOffset: screenState ? -30 : -20
+                verticalCenterOffset: -30
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right
-
             }
             mnemonicPhrase: GraftClient.getSeed()
+        }
+
+        Rectangle {
+            id: temporaryLabel
+            anchors.centerIn: parent
+            height: messageLabel.height + 20
+            width: messageLabel.width + 20
+            radius: height
+            color: "#353535"
+            opacity: 0.0
+
+            Label {
+                id: messageLabel
+                anchors.centerIn: parent
+                color: "#FFFFFF"
+                font.pointSize: 16
+                text: qsTr("Mnemonic phrase is copied!")
+            }
+
+            OpacityAnimator {
+                id: opacityAnimator
+                target: temporaryLabel
+                from: 1.0
+                to: 0.0
+                duration: 1000
+            }
+        }
+
+        WideActionButton {
+            id: copyMnemonicButton
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: screenState ? parent.bottom : saveButton.top
+            }
+            text: qsTr("Copy to clipboard")
+            onClicked: {
+                GraftClient.copyToClipboard(GraftClient.getSeed())
+                temporaryLabel.opacity = 1.0
+                timer.start()
+            }
         }
 
         WideActionButton {
@@ -56,9 +96,16 @@ BaseScreen {
         }
     }
 
+    Timer {
+        id: timer
+        interval: 4000
+        onTriggered: opacityAnimator.running = true
+    }
+
     states: [
         State {
             name: "createWallet"
+
             PropertyChanges {
                 target: label
                 visible: true
@@ -75,8 +122,13 @@ BaseScreen {
         },
         State {
             name: "overviewWallet"
+
             PropertyChanges {
                 target: label
+                visible: false
+            }
+            PropertyChanges {
+                target: saveButton
                 visible: false
             }
             PropertyChanges {
