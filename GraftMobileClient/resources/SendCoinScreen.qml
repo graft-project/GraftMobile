@@ -154,8 +154,7 @@ BaseScreen {
             screenDialog.title = qsTr("Input error")
             screenDialog.text = qsTr("You entered the wrong account number!\nPlease input correct account number")
             screenDialog.open()
-        }
-        if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
+        } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")
             screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value")
             screenDialog.open()
