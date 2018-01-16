@@ -108,33 +108,12 @@ BaseScreen {
         }
     ]
 
-    Dialog {
-        id: dialog
-        visible: false
-        modal: true
-        width: errorLabel.width + 20
-        topMargin: (parent.height - dialog.height) / 2
-        leftMargin: (parent.width - dialog.width) / 2
-        standardButtons: Dialog.Ok
-
-        Label {
-            id: errorLabel
-            anchors.centerIn: parent
-            font {
-                bold: true
-                pointSize: 16
-            }
-        }
-
-        onAccepted: dialog.close()
-    }
-
     function restoreWallet() {
         if (seedTextField.text.split(' ').length < 25) {
-            dialog.open()
-            errorLabel.text = seedTextField.text.length === 0 ?
+            screenDialog.text = seedTextField.text.length === 0 ?
                         qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
-                        qsTr("The mnemonic phrase must contain 25 words.\nPlease, enter the correct mnemonic phrase.")
+                        qsTr("The mnemonic phrase must contain 25 words. Please, enter the correct mnemonic phrase.")
+            screenDialog.open()
         } else {
             root.state = "restoreWalletPressed"
             GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
