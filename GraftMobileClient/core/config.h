@@ -8,9 +8,9 @@ static const QString scUrl("http://%1/dapi");
 namespace MainnetConfiguration {
 static const QString scConfigTitle("Mainnet");
 
-static const QStringList scSeedSupernodes{"13.58.215.50:28900",
-                                          "13.59.105.220:28900",
-                                          "18.216.94.64:28900"
+static const QStringList scSeedSupernodes{"13.58.215.50:18900",
+                                          "13.59.105.220:18900",
+                                          "18.216.94.64:18900"
                                          };
 
 static const QString scDAPIVersion("1.0G");
