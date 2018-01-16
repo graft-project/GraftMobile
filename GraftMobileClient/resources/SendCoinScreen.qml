@@ -12,7 +12,7 @@ BaseScreen {
         actionButtonState: true
         navigationButtonState: Qt.platform.os !== "android"
     }
-    action: pushScreen.openPaymentScreen
+    action: checkingData
 
     Component.onCompleted: {
         if (Qt.platform.os === "ios") {
@@ -63,9 +63,8 @@ BaseScreen {
                         title: Qt.platform.os === "ios" ? qsTr("Amount:") : qsTr("Amount")
                         showLengthIndicator: false
                         inputMethodHints: Qt.ImhDigitsOnly
-                        validator: DoubleValidator {
-                            bottom: 0.0001
-                            top: 100000.0
+                        validator: RegExpValidator {
+                            regExp: /^(([0-9]){1,6}|([0-9]){1,6}\.([0-9]){1,4})$/g
                         }
                     }
 
@@ -100,7 +99,7 @@ BaseScreen {
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignBottom
                     text: qsTr("Send")
-                    onClicked: pushScreen.openPaymentScreen()
+                    onClicked: checkingData()
                 }
             }
         }
@@ -113,7 +112,56 @@ BaseScreen {
         }
     }
 
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: false
+    }
+
+    states: [
+        State {
+            name: "afterSend"
+
+            PropertyChanges {
+                target: busyIndicator
+                running: true
+            }
+            PropertyChanges {
+                target: sendCoinScreen
+                enabled: false
+            }
+        },
+        State {
+            name: "beforeSend"
+
+            PropertyChanges {
+                target: busyIndicator
+                running: false
+            }
+            PropertyChanges {
+                target: sendCoinScreen
+                enabled: true
+            }
+        }
+    ]
+
     function changeBehaviorButton() {
         stackLayout.currentIndex = 0
+    }
+
+    function checkingData() {
+        if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 100)) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("You entered the wrong account number!\nPlease input correct account number")
+            screenDialog.open()
+        }
+        if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value")
+            screenDialog.open()
+        } else {
+            sendCoinScreen.state = "afterSend"
+            pushScreen.openPaymentScreen()
+        }
     }
 }
