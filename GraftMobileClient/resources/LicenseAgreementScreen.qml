@@ -69,7 +69,7 @@ BaseScreen {
                 Item {
                     id: licenseText
                     width: root.width - 45
-                    height: Qt.platform.os === "ios" ? 730 : 710
+                    height: Qt.platform.os === "ios" ? 750 : 710
 
                     Label {
                         id: mainText
