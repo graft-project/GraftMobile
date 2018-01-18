@@ -9,6 +9,8 @@ BaseScreen {
     title: qsTr("Select Network")
     screenHeader.isNavigationButtonVisible: false
 
+    Component.onCompleted: mainNet.checked = true
+
     ColumnLayout {
         spacing: 0
         anchors {
@@ -37,6 +39,10 @@ BaseScreen {
             wrapMode: Label.WordWrap
             text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
                        "that carry real GRF transactions.")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mainNet.checked = true
+            }
         }
 
         RadioButton {
@@ -60,6 +66,10 @@ BaseScreen {
             wrapMode: Label.WordWrap
             text: qsTr("Exact functional copy of mainnet for public testing of mining, " +
                        "supernodes, wallet apps, and other features of GRAFT ecosystem.")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: testNet.checked = true
+            }
         }
 
         RadioButton {
@@ -85,6 +95,10 @@ BaseScreen {
             text: qsTr("Blockchain and test network running on the code branch that contains " +
                        "Real Time Authorization and other future features that are not yet " +
                        "available on mainnet.")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: rtaTestNet.checked = true
+            }
         }
 
         Item {
