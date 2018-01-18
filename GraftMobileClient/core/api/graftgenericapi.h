@@ -23,11 +23,11 @@ public:
         StatusPOSRejected = 5
     };
 
-    explicit GraftGenericAPI(const QUrl &url, const QString &dapiVersion,
+    explicit GraftGenericAPI(const QStringList &addresses, const QString &dapiVersion,
                              QObject *parent = nullptr);
     virtual ~GraftGenericAPI();
 
-    void setUrl(const QUrl &url);
+    void changeAddresses(const QStringList &addresses);
     void setDAPIVersion(const QString &version);
 
     void setAccountData(const QByteArray &accountData, const QString &password);
@@ -58,6 +58,8 @@ protected:
     QByteArray serializeAmount(double amount) const;
     QJsonObject buildMessage(const QString &key, const QJsonObject &params = QJsonObject()) const;
     QJsonObject processReply(QNetworkReply *reply);
+    QUrl nextAddress();
+    QNetworkReply *retry();
 
 private slots:
     void receiveCreateAccountResponse();
@@ -69,11 +71,17 @@ protected:
     QNetworkAccessManager *mManager;
     QNetworkRequest mRequest;
     QElapsedTimer mTimer;
+    QStringList mAddresses;
+    int mCurrentAddress;
 
     QByteArray mAccountData;
     QString mPassword;
 
     QString mDAPIVersion;
+
+    QString mLastError;
+    int mRetries;
+    QByteArray mLastRequest;
 };
 
 #endif // GRAFTGENERICAPI_H

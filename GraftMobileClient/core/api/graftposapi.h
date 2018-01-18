@@ -7,7 +7,7 @@ class GraftPOSAPI : public GraftGenericAPI
 {
     Q_OBJECT
 public:
-    explicit GraftPOSAPI(const QUrl &url, const QString &dapiVersion, QObject *parent = nullptr);
+    explicit GraftPOSAPI(const QStringList &addresses, const QString &dapiVersion, QObject *parent = nullptr);
 
     void sale(const QString &address, const QString &viewKey, double amount,
               const QString &saleDetails = QString());

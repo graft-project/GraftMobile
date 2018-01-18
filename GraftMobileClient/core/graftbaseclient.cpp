@@ -75,9 +75,11 @@ bool GraftBaseClient::isAccountExists() const
     return !mAccountManager->account().isEmpty();
 }
 
-void GraftBaseClient::resetData() const
+void GraftBaseClient::resetData()
 {
     mAccountManager->clearData();
+    mBalances.clear();
+    emit balanceUpdated();
 }
 
 QString GraftBaseClient::getSeed() const
@@ -197,21 +199,20 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
     return QByteArray();
 }
 
-QUrl GraftBaseClient::getServiceUrl() const
+QStringList GraftBaseClient::getServiceAddresses() const
 {
-    QString finalUrl;
+    QStringList addressList;
     if (useOwnServiceAddress())
     {
         QString ip(settings("ip").toString());
         QString port(settings("port").toString());
-        finalUrl = QString("%1:%2").arg(ip).arg(port);
+        addressList.append(QString("%1:%2").arg(ip).arg(port));
     }
     else
     {
-        QStringList seedNodes = seedSupernodes();
-        finalUrl = seedNodes.value(qrand() % seedNodes.count());
+        addressList = seedSupernodes();
     }
-    return QUrl(scUrl.arg(finalUrl));
+    return addressList;
 }
 
 void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &password)
@@ -266,6 +267,7 @@ void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QStrin
         mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
         updateAddressQRCode();
+        updateBalance();
         isAccountCreated = true;
     }
     emit createAccountReceived(isAccountCreated);
@@ -283,6 +285,7 @@ void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const
         mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
         updateAddressQRCode();
+        updateBalance();
         isAccountRestored = true;
     }
     emit restoreAccountReceived(isAccountRestored);

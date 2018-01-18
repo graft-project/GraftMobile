@@ -5,6 +5,8 @@
 
 static const QString scUrl("http://%1/dapi");
 
+static const int scMaxRetryNumber = 3;
+
 namespace MainnetConfiguration {
 static const QString scConfigTitle("Mainnet");
 

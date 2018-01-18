@@ -25,7 +25,7 @@ public:
     virtual void setNetworkType(int networkType);
     Q_INVOKABLE int networkType() const;
     Q_INVOKABLE bool isAccountExists() const;
-    Q_INVOKABLE void resetData() const;
+    Q_INVOKABLE void resetData();
 
     virtual void createAccount(const QString &password) = 0;
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;
@@ -79,7 +79,7 @@ protected:
     void registerImageProvider(QQmlEngine *engine);
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
-    QUrl getServiceUrl() const;
+    QStringList getServiceAddresses() const;
     void requestAccount(GraftGenericAPI *api, const QString &password);
     void requestRestoreAccount(GraftGenericAPI *api, const QString &seed, const QString &password);
 
