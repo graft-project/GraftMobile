@@ -15,7 +15,7 @@ GraftApplicationWindow {
         onLoaded: {
             drawerLoader.item.pushScreen = menuTransitions()
             drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
-            drawerLoader.item.interactive = mainLayout.currentIndex !== 0
+            drawerLoader.item.interactive = mainLayout.currentIndex > 1
         }
     }
 
@@ -71,16 +71,22 @@ GraftApplicationWindow {
         id: mainLayout
         anchors.fill: parent
         interactive: false
-        currentIndex: GraftClient.isAccountExists() ? 1 : 0
+        currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
 
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
-                graftApplicationFooter.visible = currentIndex !== 0
+                graftApplicationFooter.visible = currentIndex > 1
             } else {
                 if (drawerLoader && drawerLoader.status === Loader.Ready) {
-                    drawerLoader.item.interactive = currentIndex !== 0
+                    drawerLoader.item.interactive = currentIndex > 1
                 }
             }
+        }
+
+        LicenseAgreementScreen {
+            id: licenseScreen
+            logoImage: "qrc:/imgs/graft-wallet-logo.png"
+            acceptAction: acceptLicense
         }
 
         CreateWalletStackViewer {
@@ -131,22 +137,32 @@ GraftApplicationWindow {
     }
 
     function openMainScreen() {
-        mainLayout.currentIndex = 1
+        mainLayout.currentIndex = 2
         selectButton("Wallet")
     }
 
     function openCreateWalletStackViewer() {
-        mainLayout.currentIndex = 0
+        mainLayout.currentIndex = 1
     }
 
     function openSettingsScreen() {
-        mainLayout.currentIndex = 2
+        mainLayout.currentIndex = 3
         selectButton("Settings")
     }
 
     function selectButton(name) {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
+        }
+    }
+
+    function acceptLicense() {
+        GraftClient.setSettings("license", true)
+        GraftClient.saveSettings()
+        if (GraftClient.isAccountExists()) {
+            openMainScreen()
+        } else {
+            openCreateWalletStackViewer()
         }
     }
 }
