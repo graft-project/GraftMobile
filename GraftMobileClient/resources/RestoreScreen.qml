@@ -40,7 +40,7 @@ BaseScreen {
         LinearEditItem {
             id: seedTextField
             Layout.fillWidth: true
-            Layout.maximumHeight: 150
+            Layout.maximumHeight: Qt.platform.os === "ios" ? 160 : 130
             Layout.alignment: Qt.AlignTop
             title: qsTr("Mnemonic Phrase")
             wrapMode: TextInput.WordWrap
