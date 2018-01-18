@@ -46,12 +46,13 @@ public:
 
     Q_INVOKABLE void saveSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
-    Q_INVOKABLE void setSettings(const QString &key, const QVariant &value);
+    Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
     Q_INVOKABLE bool useOwnServiceAddress() const;
     virtual bool resetUrl(const QString &ip, const QString &port);
     bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE double balance(int type) const;
+    void saveBalance() const;
 
     void updateQuickExchange(double cost);
 
@@ -61,7 +62,6 @@ public:
     Q_INVOKABLE QString networkName() const;
     Q_INVOKABLE QString dapiVersion() const;
     QStringList seedSupernodes() const;
-
 
 signals:
     void errorReceived(const QString &message);

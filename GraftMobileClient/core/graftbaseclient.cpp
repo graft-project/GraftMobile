@@ -29,6 +29,12 @@ static const QString scCoinAddressQRCodeImageID("coin_address_qrcode");
 static const QString scProviderScheme("image://%1/%2");
 static const QString scAccountModelDataFile("accountList.dat");
 static const QString scSettingsDataFile("Settings.ini");
+static const QString scIp("ip");
+static const QString scPort("port");
+static const QString scLockedBalance("lockedBalance");
+static const QString scUnlockedBalancee("unlockedBalance");
+static const QString scLocalBalance("localBalance");
+static const QString scUseOwnServiceAddress("useOwnServiceAddress");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
@@ -79,6 +85,7 @@ void GraftBaseClient::resetData()
 {
     mAccountManager->clearData();
     mBalances.clear();
+    saveBalance();
     emit balanceUpdated();
 }
 
@@ -204,8 +211,8 @@ QStringList GraftBaseClient::getServiceAddresses() const
     QStringList addressList;
     if (useOwnServiceAddress())
     {
-        QString ip(settings("ip").toString());
-        QString port(settings("port").toString());
+        QString ip(settings(scIp).toString());
+        QString port(settings(scPort).toString());
         addressList.append(QString("%1:%2").arg(ip).arg(port));
     }
     else
@@ -298,6 +305,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mBalances.insert(GraftClientTools::LockedBalance, balance - unlockedBalance);
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
+        saveBalance();
         emit balanceUpdated();
     }
 }
@@ -351,14 +359,19 @@ void GraftBaseClient::updateAddressQRCode() const
     mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
 }
 
-void GraftBaseClient::setSettings(const QString &key, const QVariant &value)
+QVariant GraftBaseClient::settings(const QString &key) const
+{
+    return mClientSettings->value(key);
+}
+
+void GraftBaseClient::setSettings(const QString &key, const QVariant &value) const
 {
     mClientSettings->setValue(key, value);
 }
 
 bool GraftBaseClient::useOwnServiceAddress() const
 {
-    return mClientSettings->value(QStringLiteral("useOwnServiceAddress")).toBool();
+    return mClientSettings->value(scUseOwnServiceAddress).toBool();
 }
 
 bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
@@ -366,8 +379,8 @@ bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
     bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !ip.isEmpty());
     if (lIsResetUrl)
     {
-        setSettings(QStringLiteral("ip"), ip);
-        setSettings(QStringLiteral("port"), port);
+        setSettings(scIp, ip);
+        setSettings(scPort, port);
     }
     return lIsResetUrl;
 }
@@ -382,6 +395,14 @@ double GraftBaseClient::balance(int type) const
 {
     QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
     return rValue.toDouble();
+}
+
+void GraftBaseClient::saveBalance() const
+{
+    setSettings(scLockedBalance, mBalances.value(GraftClientTools::LockedBalance));
+    setSettings(scUnlockedBalancee, mBalances.value(GraftClientTools::UnlockedBalance));
+    setSettings(scLocalBalance, mBalances.value(GraftClientTools::LocalBalance));
+    saveSettings();
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)
@@ -454,11 +475,6 @@ QStringList GraftBaseClient::seedSupernodes() const
     }
 }
 
-QVariant GraftBaseClient::settings(const QString &key) const
-{
-    return mClientSettings->value(key);
-}
-
 void GraftBaseClient::saveSettings() const
 {
     mClientSettings->sync();
@@ -473,4 +489,8 @@ void GraftBaseClient::initSettings()
     }
     QDir lDir(dataPath);
     mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
+    mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
+    mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
+    mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
+    emit balanceUpdated();
 }
