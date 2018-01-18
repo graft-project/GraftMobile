@@ -359,7 +359,12 @@ void GraftBaseClient::updateAddressQRCode() const
     mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
 }
 
-void GraftBaseClient::setSettings(const QString &key, const QVariant &value)
+QVariant GraftBaseClient::settings(const QString &key) const
+{
+    return mClientSettings->value(key);
+}
+
+void GraftBaseClient::setSettings(const QString &key, const QVariant &value) const
 {
     mClientSettings->setValue(key, value);
 }
@@ -484,7 +489,8 @@ void GraftBaseClient::initSettings()
     }
     QDir lDir(dataPath);
     mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
-    mBalances.insert(GraftClientTools::LockedBalance, mClientSettings->value(scLockedBalance).toDouble();
-    mBalances.insert(GraftClientTools::UnlockedBalance, mClientSettings->value(scUnlockedBalancee).toDouble());
-    mBalances.insert(GraftClientTools::LocalBalance, mClientSettings->value(scLocalBalance).toDouble());
+    mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
+    mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
+    mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
+    emit balanceUpdated();
 }
