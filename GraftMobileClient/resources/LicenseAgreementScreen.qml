@@ -19,6 +19,13 @@ BaseScreen {
 
             Rectangle {
                 Layout.fillWidth: true
+                Layout.preferredHeight: 20
+                Layout.alignment: Qt.AlignTop
+                visible: Qt.platform.os === "ios"
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
                 Layout.preferredHeight: 80
                 Layout.alignment: Qt.AlignTop
                 Layout.margins: 10
