@@ -79,6 +79,7 @@ void GraftBaseClient::resetData()
 {
     mAccountManager->clearData();
     mBalances.clear();
+    saveBalance();
     emit balanceUpdated();
 }
 
@@ -298,6 +299,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mBalances.insert(GraftClientTools::LockedBalance, balance - unlockedBalance);
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
+        saveBalance();
         emit balanceUpdated();
     }
 }
@@ -382,6 +384,22 @@ double GraftBaseClient::balance(int type) const
 {
     QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
     return rValue.toDouble();
+}
+
+void GraftBaseClient::saveBalance() const
+{
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!QFileInfo(dataPath).exists())
+    {
+        QDir().mkpath(dataPath);
+    }
+    QDir lDir(dataPath);
+    QFile lFile(lDir.filePath(scSettingsDataFile));
+    if (lFile.open(QFile::WriteOnly))
+    {
+        QDataStream in(&lFile);
+        in << mBalances;
+    }
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)

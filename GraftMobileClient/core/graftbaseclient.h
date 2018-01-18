@@ -52,6 +52,7 @@ public:
     bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE double balance(int type) const;
+    void saveBalance() const;
 
     void updateQuickExchange(double cost);
 
