@@ -43,30 +43,10 @@ BaseScreen {
             mnemonicPhrase: GraftClient.getSeed()
         }
 
-        Rectangle {
-            id: temporaryLabel
+        TemporaryLabel {
+            id: mnemonicPhraseLabel
             anchors.centerIn: parent
-            height: messageLabel.height + 20
-            width: messageLabel.width + 20
-            radius: height
-            color: "#353535"
-            opacity: 0.0
-
-            Label {
-                id: messageLabel
-                anchors.centerIn: parent
-                color: "#FFFFFF"
-                font.pointSize: 16
-                text: qsTr("Mnemonic phrase is copied!")
-            }
-
-            OpacityAnimator {
-                id: opacityAnimator
-                target: temporaryLabel
-                from: 1.0
-                to: 0.0
-                duration: 1000
-            }
+            labelText: qsTr("Mnemonic phrase is copied!")
         }
 
         WideActionButton {
@@ -79,8 +59,8 @@ BaseScreen {
             text: qsTr("Copy to clipboard")
             onClicked: {
                 GraftClient.copyToClipboard(GraftClient.getSeed())
-                temporaryLabel.opacity = 1.0
-                timer.start()
+                mnemonicPhraseLabel.opacity = 1.0
+                mnemonicPhraseLabel.timer.start()
             }
         }
 
@@ -96,12 +76,6 @@ BaseScreen {
         }
     }
 
-    Timer {
-        id: timer
-        interval: 4000
-        onTriggered: opacityAnimator.running = true
-    }
-
     states: [
         State {
             name: "createWallet"
@@ -115,6 +89,7 @@ BaseScreen {
                 title: qsTr("Create wallet")
                 action: save
                 screenHeader {
+                    navigationButtonState: true
                     isNavigationButtonVisible: false
                     actionButtonState: true
                 }
