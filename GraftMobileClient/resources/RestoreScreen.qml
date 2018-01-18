@@ -47,7 +47,7 @@ BaseScreen {
             letterCountingMode: false
             maximumLength: 25
             validator: RegExpValidator {
-                regExp: /^(([a-z]+\s){1}([a-z]+\s){23}([a-z]+){1})/g
+                regExp: /^(([a-z]+\s){24}([a-z]+){1})/g
             }
             inputMethodHints: Qt.ImhNoPredictiveText
         }
