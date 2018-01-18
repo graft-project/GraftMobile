@@ -71,7 +71,7 @@ GraftApplicationWindow {
         id: mainLayout
         anchors.fill: parent
         interactive: false
-        currentIndex: GraftClient.isAccountExists() ? 1 : 0
+        currentIndex: GraftClient.isAccountExists() ? 1 : 3
 
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
@@ -102,6 +102,12 @@ GraftApplicationWindow {
             pushScreen: generalTransitions()
             appType: "wallet"
             isActive: SwipeView.isCurrentItem
+        }
+
+        LicenseAgreementScreen {
+            id: licenseScreen
+            logoImage: "qrc:/imgs/graft-wallet-logo.png"
+            acceptAction: openCreateWalletStackViewer
         }
     }
 
