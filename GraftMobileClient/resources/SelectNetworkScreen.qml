@@ -9,6 +9,8 @@ BaseScreen {
     title: qsTr("Select Network")
     screenHeader.isNavigationButtonVisible: false
 
+    Component.onCompleted: mainNet.checked = true
+
     ColumnLayout {
         spacing: 0
         anchors {
