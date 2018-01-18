@@ -195,14 +195,11 @@ QJsonObject GraftGenericAPI::processReply(QNetworkReply *reply)
 
 QUrl GraftGenericAPI::nextAddress()
 {
-    qDebug() << mCurrentAddress << mAddresses;
     mCurrentAddress++;
     if (mCurrentAddress >= mAddresses.count())
     {
         mCurrentAddress = 0;
     }
-    qDebug() << mCurrentAddress << mAddresses;
-    qDebug() << mAddresses.value(mCurrentAddress);
     return QUrl(scUrl.arg(mAddresses.value(mCurrentAddress)));
 
 }
@@ -228,7 +225,6 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     mLastError.clear();
     qDebug() << "CreateAccount Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
-    qDebug() << reply->request().url();
     if (reply->error() != QNetworkReply::NoError)
     {
         mLastError = reply->errorString();
