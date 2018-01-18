@@ -11,8 +11,6 @@ Page {
     property var specialBackMode: null
     property alias isMenuActive: appHeader.navigationButtonState
     property alias screenDialog: attentionDialog
-    property alias closeLabelVisible: closeLabel.opacity
-    property alias animationTimer: closeLabel.timer
 
     signal attentionAccepted()
     signal animationCompleted()
@@ -38,7 +36,7 @@ Page {
         }
     }
 
-    TemporaryLabel {
+    PopupMessageLabel {
         id: closeLabel
         anchors {
             left: parent.left
@@ -55,5 +53,10 @@ Page {
         title: qsTr("Attention")
         icon: StandardIcon.Warning
         onAccepted: attentionAccepted()
+    }
+
+    function showCloseLabel() {
+        closeLabel.opacity = 1.0
+        closeLabel.timer.start()
     }
 }

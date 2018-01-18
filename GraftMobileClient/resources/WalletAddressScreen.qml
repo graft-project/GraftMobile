@@ -64,7 +64,7 @@ BaseScreen {
                     margins: 10
                 }
 
-                TemporaryLabel {
+                PopupMessageLabel {
                     id: walletAddressLabel
                     anchors.centerIn: parent
                     labelText: qsTr("Wallet address is copied!")

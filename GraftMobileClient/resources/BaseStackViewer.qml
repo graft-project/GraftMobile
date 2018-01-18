@@ -6,11 +6,11 @@ StackView {
     property var menuLoader
     property var pushScreen: ({})
     property bool isActive: false
-    property bool closeApp: false
+    property bool allowClose: false
 
     Connections {
         target: currentItem
-        onAnimationCompleted: closeApp = false
+        onAnimationCompleted: allowClose = false
     }
 
     focus: true
@@ -20,14 +20,13 @@ StackView {
                 pop()
                 event.accepted = true
             } else {
-                if (closeApp) {
+                if (allowClose) {
                     event.accepted = false
                 } else {
-                    currentItem.closeLabelVisible = 1.0
-                    currentItem.animationTimer.start()
+                    currentItem.showCloseLabel()
                     event.accepted = true
                 }
-                closeApp = !closeApp
+                allowClose = !allowClose
             }
         }
     }

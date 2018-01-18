@@ -43,7 +43,7 @@ BaseScreen {
             mnemonicPhrase: GraftClient.getSeed()
         }
 
-        TemporaryLabel {
+        PopupMessageLabel {
             id: mnemonicPhraseLabel
             anchors.centerIn: parent
             labelText: qsTr("Mnemonic phrase is copied!")
