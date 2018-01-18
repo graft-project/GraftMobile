@@ -86,7 +86,7 @@ GraftApplicationWindow {
         LicenseAgreementScreen {
             id: licenseScreen
             logoImage: "qrc:/imgs/graft-wallet-logo.png"
-            acceptAction: GraftClient.isAccountExists() ? openMainScreen : acceptLicense
+            acceptAction: acceptLicense
         }
 
         CreateWalletStackViewer {
@@ -159,6 +159,10 @@ GraftApplicationWindow {
     function acceptLicense() {
         GraftClient.setSettings("license", true)
         GraftClient.saveSettings()
-        openCreateWalletStackViewer()
+        if (GraftClient.isAccountExists()) {
+            openMainScreen()
+        } else {
+            openCreateWalletStackViewer()
+        }
     }
 }
