@@ -11,8 +11,8 @@ Page {
     property var specialBackMode: null
     property alias isMenuActive: appHeader.navigationButtonState
     property alias screenDialog: attentionDialog
-    property alias closeLabelVisible: label.opacity
-    property alias animationTimer: label.timer
+    property alias closeLabelVisible: closeLabel.opacity
+    property alias animationTimer: closeLabel.timer
 
     signal attentionAccepted()
     signal animationCompleted()
@@ -39,7 +39,7 @@ Page {
     }
 
     TemporaryLabel {
-        id: label
+        id: closeLabel
         anchors {
             left: parent.left
             right: parent.right
