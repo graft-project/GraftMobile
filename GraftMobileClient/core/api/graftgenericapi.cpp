@@ -3,13 +3,18 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "../config.h"
 
-GraftGenericAPI::GraftGenericAPI(const QUrl &url, const QString &dapiVersion, QObject *parent)
+GraftGenericAPI::GraftGenericAPI(const QStringList &addresses, const QString &dapiVersion,
+                                 QObject *parent)
     : QObject(parent)
     ,mDAPIVersion(dapiVersion)
 {
+    mRetries = 0;
+    mCurrentAddress = -1;
+    mAddresses = addresses;
     mManager = new QNetworkAccessManager(this);
-    mRequest = QNetworkRequest(url);
+    mRequest = QNetworkRequest(nextAddress());
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 }
 
@@ -17,9 +22,11 @@ GraftGenericAPI::~GraftGenericAPI()
 {
 }
 
-void GraftGenericAPI::setUrl(const QUrl &url)
+void GraftGenericAPI::changeAddresses(const QStringList &addresses)
 {
-    mRequest.setUrl(url);
+    mAddresses = addresses;
+    mCurrentAddress = -1;
+    mRequest.setUrl(nextAddress());
 }
 
 void GraftGenericAPI::setDAPIVersion(const QString &version)
@@ -45,6 +52,7 @@ QString GraftGenericAPI::password() const
 
 void GraftGenericAPI::createAccount(const QString &password)
 {
+    mRetries = 0;
     mPassword = password;
     QJsonObject params;
     params.insert(QStringLiteral("Password"), mPassword);
@@ -52,12 +60,14 @@ void GraftGenericAPI::createAccount(const QString &password)
     QJsonObject data = buildMessage(QStringLiteral("CreateAccount"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
+    mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveCreateAccountResponse);
 }
 
 void GraftGenericAPI::getBalance()
 {
+    mRetries = 0;
     if (mAccountData.isEmpty())
     {
         qDebug() << "GraftGenericAPI: Account Data is empty.";
@@ -71,12 +81,14 @@ void GraftGenericAPI::getBalance()
     QByteArray array = QJsonDocument(data).toJson();
     array.replace(accountPlaceholder(), mAccountData);
     mTimer.start();
+    mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveGetBalanceResponse);
 }
 
 void GraftGenericAPI::getSeed()
 {
+    mRetries = 0;
     if (mAccountData.isEmpty())
     {
         qDebug() << "GraftGenericAPI: Account Data is empty.";
@@ -91,12 +103,14 @@ void GraftGenericAPI::getSeed()
     QByteArray array = QJsonDocument(data).toJson();
     array.replace(accountPlaceholder(), mAccountData);
     mTimer.start();
+    mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveGetSeedResponse);
 }
 
 void GraftGenericAPI::restoreAccount(const QString &seed, const QString &password)
 {
+    mRetries = 0;
     mPassword = password;
     QJsonObject params;
     params.insert(QStringLiteral("Password"), password);
@@ -104,6 +118,7 @@ void GraftGenericAPI::restoreAccount(const QString &seed, const QString &passwor
     QJsonObject data = buildMessage(QStringLiteral("RestoreAccount"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
+    mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveRestoreAccountResponse);
 }
@@ -161,77 +176,123 @@ QJsonObject GraftGenericAPI::processReply(QNetworkReply *reply)
             }
             else
             {
-                emit error(QStringLiteral("Response error"));
+                mLastError = QLatin1String("Response error");
             }
         }
         else
         {
-            emit error(QStringLiteral("Couldn't parse request response."));
+            mLastError = QLatin1String("Couldn't parse request response.");
         }
     }
     else
     {
-        emit error(reply->errorString());
+        mLastError = reply->errorString();
     }
     reply->deleteLater();
     reply = nullptr;
     return object;
 }
 
-void GraftGenericAPI::receiveCreateAccountResponse()
+QUrl GraftGenericAPI::nextAddress()
 {
-    qDebug() << "CreateAccount Response Received:\nTime: " << mTimer.elapsed();
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
-    if (reply->error() != QNetworkReply::NoError)
+    qDebug() << mCurrentAddress << mAddresses;
+    mCurrentAddress++;
+    if (mCurrentAddress >= mAddresses.count())
     {
-        emit error(reply->errorString());
-        reply->deleteLater();
-        reply = nullptr;
-        emit createAccountReceived(mAccountData, mPassword, "", "", "");
-        return;
+        mCurrentAddress = 0;
     }
-    QByteArray arr = reply->readAll();
-    reply->deleteLater();
-    reply = nullptr;
-    QByteArray temp("\"Account\": \"");
-    int index = arr.indexOf(temp);
-    int end = arr.indexOf("\",\r\n    \"Address\":");
-    QByteArray accountArr;
-    for (int i = index + temp.size(); i < end; ++i)
+    qDebug() << mCurrentAddress << mAddresses;
+    qDebug() << mAddresses.value(mCurrentAddress);
+    return QUrl(scUrl.arg(mAddresses.value(mCurrentAddress)));
+
+}
+
+QNetworkReply *GraftGenericAPI::retry()
+{
+    if (mRetries < scMaxRetryNumber)
     {
-        accountArr.append(arr.at(i));
-    }
-    arr.remove(index + temp.size(), end - (index + temp.size()));
-    QString address;
-    QString viewKey;
-    QString seed;
-    QJsonObject response = QJsonDocument::fromJson(arr).object();
-    if (response.contains(QLatin1String("result")))
-    {
-        QJsonObject object = response.value(QLatin1String("result")).toObject();
-        address = object.value(QLatin1String("Address")).toString();
-        seed = object.value(QLatin1String("Seed")).toString();
-        viewKey = object.value(QLatin1String("ViewKey")).toString();
+        mRetries++;
+        mRequest.setUrl(nextAddress());
+        return mManager->post(mRequest, mLastRequest);
     }
     else
     {
-        emit error(QStringLiteral("Response error"));
-        emit createAccountReceived(mAccountData, mPassword, "", "", "");
-        return;
+        mRetries = 0;
+        emit error(QString("Services cannot process request. Reason: %1").arg(mLastError));
     }
-    if (accountArr.isEmpty() || address.isEmpty())
+    return nullptr;
+}
+
+void GraftGenericAPI::receiveCreateAccountResponse()
+{
+    mLastError.clear();
+    qDebug() << "CreateAccount Response Received:\nTime: " << mTimer.elapsed();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    qDebug() << reply->request().url();
+    if (reply->error() != QNetworkReply::NoError)
     {
-        emit error(QStringLiteral("Couldn't get account data!"));
-        emit createAccountReceived(mAccountData, mPassword, "", "", "");
-        return;
+        mLastError = reply->errorString();
+        reply->deleteLater();
+        reply = nullptr;
     }
-    mAccountData = accountArr;
-    qDebug() << mAccountData << address << viewKey << seed;
-    emit createAccountReceived(mAccountData, mPassword, address, viewKey, seed);
+    else
+    {
+        QByteArray arr = reply->readAll();
+        reply->deleteLater();
+        reply = nullptr;
+        QByteArray temp("\"Account\": \"");
+        int index = arr.indexOf(temp);
+        int end = arr.indexOf("\",\r\n    \"Address\":");
+        QByteArray accountArr;
+        for (int i = index + temp.size(); i < end; ++i)
+        {
+            accountArr.append(arr.at(i));
+        }
+        arr.remove(index + temp.size(), end - (index + temp.size()));
+        QString address;
+        QString viewKey;
+        QString seed;
+        QJsonObject response = QJsonDocument::fromJson(arr).object();
+        if (response.contains(QLatin1String("result")))
+        {
+            QJsonObject object = response.value(QLatin1String("result")).toObject();
+            address = object.value(QLatin1String("Address")).toString();
+            seed = object.value(QLatin1String("Seed")).toString();
+            viewKey = object.value(QLatin1String("ViewKey")).toString();
+            if (accountArr.isEmpty() || address.isEmpty())
+            {
+                mLastError = QLatin1String("Couldn't get account data!");
+            }
+            else
+            {
+                mAccountData = accountArr;
+                qDebug() << mAccountData << address << viewKey << seed;
+                emit createAccountReceived(mAccountData, mPassword, address, viewKey, seed);
+            }
+        }
+        else
+        {
+            mLastError = QLatin1String("Response error");
+        }
+    }
+    if (!mLastError.isEmpty())
+    {
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished,
+                    this, &GraftGenericAPI::receiveCreateAccountResponse);
+        }
+        else
+        {
+            emit createAccountReceived(mAccountData, mPassword, "", "", "");
+        }
+    }
 }
 
 void GraftGenericAPI::receiveGetBalanceResponse()
 {
+    mLastError.clear();
     qDebug() << "GetBalance Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     QJsonObject object = processReply(reply);
@@ -240,10 +301,15 @@ void GraftGenericAPI::receiveGetBalanceResponse()
         emit getBalanceReceived(toCoins(object.value(QLatin1String("Balance")).toDouble()),
                                 toCoins(object.value(QLatin1String("UnlockedBalance")).toDouble()));
     }
+    else
+    {
+        mRequest.setUrl(nextAddress());
+    }
 }
 
 void GraftGenericAPI::receiveGetSeedResponse()
 {
+    mLastError.clear();
     qDebug() << "GetSeed Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     QJsonObject object = processReply(reply);
@@ -251,56 +317,79 @@ void GraftGenericAPI::receiveGetSeedResponse()
     {
         emit getSeedReceived(object.value(QLatin1String("Seed")).toString());
     }
+    else
+    {
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished,
+                    this, &GraftGenericAPI::receiveGetSeedResponse);
+        }
+    }
 }
 
 void GraftGenericAPI::receiveRestoreAccountResponse()
 {
+    mLastError.clear();
     qDebug() << "RestoreAccount Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     if (reply->error() != QNetworkReply::NoError)
     {
-        emit error(reply->errorString());
+        mLastError = reply->errorString();
         reply->deleteLater();
         reply = nullptr;
-        emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
-        return;
-    }
-    QByteArray arr = reply->readAll();
-    reply->deleteLater();
-    reply = nullptr;
-    QByteArray temp("\"Account\": \"");
-    int index = arr.indexOf(temp);
-    int end = arr.indexOf("\",\r\n    \"Address\":");
-    QByteArray accountArr;
-    for (int i = index + temp.size(); i < end; ++i)
-    {
-        accountArr.append(arr.at(i));
-    }
-    arr.remove(index + temp.size(), end - (index + temp.size()));
-    QString address;
-    QString viewKey;
-    QString seed;
-    QJsonObject response = QJsonDocument::fromJson(arr).object();
-    if (response.contains(QLatin1String("result")))
-    {
-        QJsonObject object = response.value(QLatin1String("result")).toObject();
-        address = object.value(QLatin1String("Address")).toString();
-        seed = object.value(QLatin1String("Seed")).toString();
-        viewKey = object.value(QLatin1String("ViewKey")).toString();
     }
     else
     {
-        emit error(QStringLiteral("Response error"));
-        emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
-        return;
+        QByteArray arr = reply->readAll();
+        reply->deleteLater();
+        reply = nullptr;
+        QByteArray temp("\"Account\": \"");
+        int index = arr.indexOf(temp);
+        int end = arr.indexOf("\",\r\n    \"Address\":");
+        QByteArray accountArr;
+        for (int i = index + temp.size(); i < end; ++i)
+        {
+            accountArr.append(arr.at(i));
+        }
+        arr.remove(index + temp.size(), end - (index + temp.size()));
+        QString address;
+        QString viewKey;
+        QString seed;
+        QJsonObject response = QJsonDocument::fromJson(arr).object();
+        if (response.contains(QLatin1String("result")))
+        {
+            QJsonObject object = response.value(QLatin1String("result")).toObject();
+            address = object.value(QLatin1String("Address")).toString();
+            seed = object.value(QLatin1String("Seed")).toString();
+            viewKey = object.value(QLatin1String("ViewKey")).toString();
+            if (accountArr.isEmpty() || address.isEmpty())
+            {
+                mLastError = QLatin1String("Couldn't get account data!");
+            }
+            else
+            {
+                mAccountData = accountArr;
+                qDebug() << mAccountData << address << viewKey << seed;
+                emit restoreAccountReceived(mAccountData, mPassword, address, viewKey, seed);
+            }
+        }
+        else
+        {
+            mLastError = QLatin1String("Response error");
+        }
     }
-    if (accountArr.isEmpty() || address.isEmpty())
+    if (!mLastError.isEmpty())
     {
-        emit error(QStringLiteral("Couldn't restore account data!"));
-        emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
-        return;
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished,
+                    this, &GraftGenericAPI::receiveRestoreAccountResponse);
+        }
+        else
+        {
+            emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
+        }
     }
-    mAccountData = accountArr;
-    qDebug() << mAccountData << address << viewKey << seed;
-    emit restoreAccountReceived(mAccountData, mPassword, address, viewKey, seed);
 }
