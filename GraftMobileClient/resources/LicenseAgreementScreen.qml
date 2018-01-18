@@ -51,8 +51,6 @@ BaseScreen {
                 Layout.rightMargin: 20
                 Layout.bottomMargin: 15
                 ScrollBar.vertical: ScrollBar {
-                    policy: ScrollBar.AsNeeded
-                    snapMode: ScrollBar.SnapAlways
                 }
                 clip: true
 
@@ -61,6 +59,7 @@ BaseScreen {
                 Item {
                     id: licenseText
                     width: root.width - 40
+                    height: 710
 
                     Label {
                         id: mainText
@@ -125,7 +124,12 @@ BaseScreen {
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
-                onClicked: acceptAction()
+                onClicked: {
+                    GraftClient.setSettings("license", true)
+                    if(acceptAction) {
+                        acceptAction()
+                    }
+                }
             }
         }
     }
