@@ -63,7 +63,6 @@ public:
     Q_INVOKABLE QString dapiVersion() const;
     QStringList seedSupernodes() const;
 
-
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();
