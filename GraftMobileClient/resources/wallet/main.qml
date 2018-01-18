@@ -86,7 +86,7 @@ GraftApplicationWindow {
         LicenseAgreementScreen {
             id: licenseScreen
             logoImage: "qrc:/imgs/graft-wallet-logo.png"
-            acceptAction: openCreateWalletStackViewer
+            acceptAction: GraftClient.isAccountExists() ? openMainScreen : acceptLicense
         }
 
         CreateWalletStackViewer {
@@ -154,5 +154,11 @@ GraftApplicationWindow {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
         }
+    }
+
+    function acceptLicense() {
+        GraftClient.setSettings("license", true)
+        GraftClient.saveSettings()
+        openCreateWalletStackViewer()
     }
 }

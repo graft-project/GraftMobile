@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import com.graft.design 1.0
 import "components"
 
 BaseScreen {
@@ -21,6 +22,7 @@ BaseScreen {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignTop
+                color: ColorFactory.color(DesignFactory.IosNavigationBar)
                 visible: Qt.platform.os === "ios"
             }
 
@@ -58,6 +60,7 @@ BaseScreen {
                 Layout.rightMargin: 20
                 Layout.bottomMargin: 15
                 ScrollBar.vertical: ScrollBar {
+                    width: 5
                 }
                 clip: true
 
@@ -65,8 +68,8 @@ BaseScreen {
 
                 Item {
                     id: licenseText
-                    width: root.width - 40
-                    height: 710
+                    width: root.width - 45
+                    height: Qt.platform.os === "ios" ? 730 : 710
 
                     Label {
                         id: mainText
@@ -131,12 +134,7 @@ BaseScreen {
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
-                onClicked: {
-                    GraftClient.setSettings("license", true)
-                    if(acceptAction) {
-                        acceptAction()
-                    }
-                }
+                onClicked: acceptAction()
             }
         }
     }
