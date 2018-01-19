@@ -63,7 +63,7 @@ SOURCES += main.cpp \
     core/accountmodelserializator.cpp \
     core/accountmanager.cpp \
     core/qrcodegenerator.cpp \
-    core/devicedetector.cpp
+    devicedetector.cpp
 
 HEADERS += \
     core/config.h \
@@ -88,7 +88,7 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    core/devicedetector.h
+    devicedetector.h
 
 include(resources/resources.pri)
 
