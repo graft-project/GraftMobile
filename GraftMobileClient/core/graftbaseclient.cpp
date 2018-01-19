@@ -475,6 +475,11 @@ QStringList GraftBaseClient::seedSupernodes() const
     }
 }
 
+QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
+{
+    return seed.simplified();
+}
+
 void GraftBaseClient::saveSettings() const
 {
     mClientSettings->sync();
