@@ -63,7 +63,7 @@ public:
     Q_INVOKABLE QString dapiVersion() const;
     QStringList seedSupernodes() const;
 
-    Q_INVOKABLE QString wideSpacingSimplifyRemove(const QString &seed) const;
+    Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
 
 signals:
     void errorReceived(const QString &message);

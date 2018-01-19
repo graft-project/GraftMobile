@@ -52,7 +52,7 @@ ColumnLayout {
 
     function wordCounting() {
         if (editItem.displayText.length !== 0) {
-            var wordList = GraftClient.wideSpacingSimplifyRemove(seedTextField.text).split(' ')
+            var wordList = GraftClient.wideSpacingSimplify(editItem.displayText).split(' ')
             return wordList.length
         } else {
             return 0

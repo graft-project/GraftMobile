@@ -109,14 +109,14 @@ BaseScreen {
     ]
 
     function restoreWallet() {
-        if(GraftClient.wideSpacingSimplifyRemove(seedTextField.text).split(' ').length < 25) {
+        if (GraftClient.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
             screenDialog.text = seedTextField.text.length === 0 ?
                         qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
                         qsTr("The mnemonic phrase must contain 25 words. Please, enter the correct mnemonic phrase.")
             screenDialog.open()
         } else {
             root.state = "restoreWalletPressed"
-            GraftClient.restoreAccount(GraftClient.wideSpacingSimplifyRemove(seedTextField.text), passwordTextField.text)
+            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text), passwordTextField.text)
         }
     }
 }
