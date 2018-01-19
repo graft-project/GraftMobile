@@ -14,6 +14,7 @@
 #include "core/graftwalletclient.h"
 #include "core/quickexchangemodel.h"
 #include "core/selectedproductproxymodel.h"
+#include "core/devicedetector.h"
 #include "core/defines.h"
 #include "designfactory.h"
 
@@ -43,6 +44,8 @@ int main(int argc, char *argv[])
     DesignFactory factory;
     factory.registrate(engine.rootContext());
     QZXing::registerQMLTypes();
+    DeviceDetector detector;
+    detector.registerTypes(&engine);
 #ifdef POS_BUILD
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
