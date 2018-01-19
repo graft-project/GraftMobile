@@ -57,7 +57,7 @@ BaseScreen {
             Image {
                 id: qrCodeImage
                 cache: false
-                height: parent.height - 20
+                height: (parent.height > parent.width ? parent.width : parent.height) - 20
                 width: height
                 anchors {
                     centerIn: parent
