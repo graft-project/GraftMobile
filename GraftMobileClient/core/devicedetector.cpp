@@ -2,6 +2,7 @@
 
 #include <QGuiApplication>
 #include <QQmlContext>
+#include <QQmlEngine>
 #include <QScreen>
 
 static const QMap<int, QSize> scDevicesMap
@@ -28,9 +29,7 @@ void DeviceDetector::registerTypes(QQmlEngine *engine)
 int DeviceDetector::detectDevice()
 {
     int devicePixelRatio = QGuiApplication::primaryScreen()->devicePixelRatio();
-    int currentDevice = scDevicesMap.key(QSize{QGuiApplication::primaryScreen()->size().width() *
-                                                                                  devicePixelRatio,
-                                            QGuiApplication::primaryScreen()->size().height() *
-                                                                            devicePixelRatio}, -1);
+    int currentDevice = scDevicesMap.key(QSize{QGuiApplication::primaryScreen()->size() *
+                                               devicePixelRatio});
     return currentDevice;
 }

@@ -1,8 +1,9 @@
 #ifndef DEVICEDETECTOR_H
 #define DEVICEDETECTOR_H
 
-#include <QQmlEngine>
 #include <QObject>
+
+class QQmlEngine;
 
 class DeviceDetector : public QObject
 {
