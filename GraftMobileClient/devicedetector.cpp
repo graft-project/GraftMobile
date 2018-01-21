@@ -29,15 +29,17 @@ void DeviceDetector::registerTypes(QQmlEngine *engine)
 int DeviceDetector::detectDevice()
 {
     int devicePixelRatio = QGuiApplication::primaryScreen()->devicePixelRatio();
-    int currentDevice;
-    if (QGuiApplication::primaryScreen()->isPortrait(Qt::PortraitOrientation))
+    int currentDevice = -1;
+    if (QGuiApplication::primaryScreen()->primaryOrientation() == Qt::PortraitOrientation ||
+        QGuiApplication::primaryScreen()->primaryOrientation() == Qt::InvertedPortraitOrientation)
     {
-        currentDevice = scDevicesMap.key(QSize{QGuiApplication::primaryScreen()->size() *
-                                               devicePixelRatio}, -1);
-    } else if (QGuiApplication::primaryScreen()->isLandscape(Qt::LandscapeOrientation))
+        currentDevice = scDevicesMap.key(QGuiApplication::primaryScreen()->size() * devicePixelRatio
+                                         , currentDevice);
+    } else if (QGuiApplication::primaryScreen()->primaryOrientation() == Qt::LandscapeOrientation ||
+               QGuiApplication::primaryScreen()->primaryOrientation() == Qt::InvertedLandscapeOrientation)
     {
-        currentDevice = scDevicesMap.key(QSize{QGuiApplication::primaryScreen()->size().transposed() *
-                                               devicePixelRatio}, -1);
+        currentDevice = scDevicesMap.key(QGuiApplication::primaryScreen()->size().transposed() *
+                                         devicePixelRatio, currentDevice);
     }
     return currentDevice;
 }
