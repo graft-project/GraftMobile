@@ -28,19 +28,22 @@ void DeviceDetector::registerTypes(QQmlEngine *engine)
 
 int DeviceDetector::detectDevice()
 {
-    int devicePixelRatio = QGuiApplication::primaryScreen()->devicePixelRatio();
     int currentDevice = -1;
-    if (QGuiApplication::primaryScreen()->primaryOrientation() == Qt::PortraitOrientation ||
-        QGuiApplication::primaryScreen()->primaryOrientation() == Qt::InvertedPortraitOrientation)
+    QScreen *currentScreen = QGuiApplication::primaryScreen();
+    if (currentScreen)
     {
-        currentDevice = scDevicesMap.key(QGuiApplication::primaryScreen()->size() * devicePixelRatio
-                                         , currentDevice);
-    }
-    else if (QGuiApplication::primaryScreen()->primaryOrientation() == Qt::LandscapeOrientation ||
-               QGuiApplication::primaryScreen()->primaryOrientation() == Qt::InvertedLandscapeOrientation)
-    {
-        currentDevice = scDevicesMap.key(QGuiApplication::primaryScreen()->size().transposed() *
-                                         devicePixelRatio, currentDevice);
+        int devicePixelRatio = currentScreen->devicePixelRatio();
+        if (currentScreen->primaryOrientation() == Qt::PortraitOrientation ||
+            currentScreen->primaryOrientation() == Qt::InvertedPortraitOrientation)
+        {
+            currentDevice = scDevicesMap.key(currentScreen->size() * devicePixelRatio, currentDevice);
+        }
+        else if (currentScreen->primaryOrientation() == Qt::LandscapeOrientation ||
+                 currentScreen->primaryOrientation() == Qt::InvertedLandscapeOrientation)
+        {
+            currentDevice = scDevicesMap.key(currentScreen->size().transposed() * devicePixelRatio,
+                                             currentDevice);
+        }
     }
     return currentDevice;
 }
