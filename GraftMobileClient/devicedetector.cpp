@@ -33,13 +33,12 @@ int DeviceDetector::detectDevice()
     if (currentScreen)
     {
         int devicePixelRatio = currentScreen->devicePixelRatio();
-        if (currentScreen->primaryOrientation() == Qt::PortraitOrientation ||
-            currentScreen->primaryOrientation() == Qt::InvertedPortraitOrientation)
+        auto currentOrientation = currentScreen->primaryOrientation();
+        if (currentOrientation == Qt::PortraitOrientation || currentOrientation == Qt::InvertedPortraitOrientation)
         {
             currentDevice = scDevicesMap.key(currentScreen->size() * devicePixelRatio, currentDevice);
         }
-        else if (currentScreen->primaryOrientation() == Qt::LandscapeOrientation ||
-                 currentScreen->primaryOrientation() == Qt::InvertedLandscapeOrientation)
+        else if (currentOrientation == Qt::LandscapeOrientation || currentOrientation == Qt::InvertedLandscapeOrientation)
         {
             currentDevice = scDevicesMap.key(currentScreen->size().transposed() * devicePixelRatio,
                                              currentDevice);
