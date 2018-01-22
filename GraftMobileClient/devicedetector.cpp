@@ -7,13 +7,13 @@
 
 static const QMap<int, QSize> scDevicesMap
 {
-    {DeviceDetector::iPhoneNormal,  QSize{750,  1334}},
-    {DeviceDetector::iPhonePlus,    QSize{1242, 2208}},
-    {DeviceDetector::iPhoneSE,      QSize{640,  1136}},
-    {DeviceDetector::iPhoneX,       QSize{1125, 2436}},
-    {DeviceDetector::iPadPro12_9,   QSize{2048, 2732}},
-    {DeviceDetector::iPadPro10_5,   QSize{1668, 2224}},
-    {DeviceDetector::iPad,          QSize{1536, 2048}}
+    {DeviceDetector::IPhoneNormal,  QSize{750,  1334}},
+    {DeviceDetector::IPhonePlus,    QSize{1242, 2208}},
+    {DeviceDetector::IPhoneSE,      QSize{640,  1136}},
+    {DeviceDetector::IPhoneX,       QSize{1125, 2436}},
+    {DeviceDetector::IPadPro12_9,   QSize{2048, 2732}},
+    {DeviceDetector::IPadPro10_5,   QSize{1668, 2224}},
+    {DeviceDetector::IPad,          QSize{1536, 2048}}
 };
 
 DeviceDetector::DeviceDetector(QObject *parent) : QObject(parent)

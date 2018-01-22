@@ -10,21 +10,21 @@ class DeviceDetector : public QObject
     Q_OBJECT
 public:
     enum DeviceModels {
-        iPhoneNormal = 0,
-        iPhonePlus,
-        iPhoneSE,
-        iPhoneX,
-        iPadPro12_9,
-        iPadPro10_5,
-        iPad,
-        iPhone6S = iPhoneNormal,
-        iPhone7 = iPhoneNormal,
-        iPhone8 = iPhoneNormal,
-        iPhone6SPlus = iPhonePlus,
-        iPhone7Plus = iPhonePlus,
-        iPhone8Plus = iPhonePlus,
-        iPad9_7 = iPad,
-        iPad7_9 = iPad
+        IPhoneNormal = 0,
+        IPhonePlus,
+        IPhoneSE,
+        IPhoneX,
+        IPadPro12_9,
+        IPadPro10_5,
+        IPad,
+        IPhone6S = IPhoneNormal,
+        IPhone7 = IPhoneNormal,
+        IPhone8 = IPhoneNormal,
+        IPhone6SPlus = IPhonePlus,
+        IPhone7Plus = IPhonePlus,
+        IPhone8Plus = IPhonePlus,
+        IPad9_7 = IPad,
+        IPad7_9 = IPad
     };
     Q_ENUM(DeviceModels)
 

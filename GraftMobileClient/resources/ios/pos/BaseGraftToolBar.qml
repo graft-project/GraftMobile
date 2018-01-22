@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import com.graft.design 1.0
+import com.device.detector 1.0
 
 Rectangle {
     property var pushScreen
@@ -7,6 +8,6 @@ Rectangle {
 
     signal seclectedButtonChanged(string buttonName)
 
-    height: 49
+    height: Device.detectDevice() === DeviceDetector.iPhoneX ? 85 : 49
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 }
