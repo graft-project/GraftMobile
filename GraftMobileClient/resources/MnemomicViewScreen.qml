@@ -29,7 +29,8 @@ BaseScreen {
             horizontalAlignment: Label.AlignHCenter
             color: "#BBBBBB"
             wrapMode: Label.WordWrap
-            text: qsTr("Your wallet is created! Save and place in save this mnemonic password")
+            text: qsTr("Your wallet is created! Copy and store in the safe place this " +
+                       "mnemonic password")
         }
 
         MnemonicPhraseView {
@@ -71,7 +72,7 @@ BaseScreen {
                 right: parent.right
                 bottom: parent.bottom
             }
-            text: qsTr("I Save It!")
+            text: qsTr("I saved it!")
             onClicked: save()
         }
     }
