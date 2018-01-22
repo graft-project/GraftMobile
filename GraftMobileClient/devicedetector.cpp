@@ -35,7 +35,8 @@ int DeviceDetector::detectDevice()
     {
         currentDevice = scDevicesMap.key(QGuiApplication::primaryScreen()->size() * devicePixelRatio
                                          , currentDevice);
-    } else if (QGuiApplication::primaryScreen()->primaryOrientation() == Qt::LandscapeOrientation ||
+    }
+    else if (QGuiApplication::primaryScreen()->primaryOrientation() == Qt::LandscapeOrientation ||
                QGuiApplication::primaryScreen()->primaryOrientation() == Qt::InvertedLandscapeOrientation)
     {
         currentDevice = scDevicesMap.key(QGuiApplication::primaryScreen()->size().transposed() *
