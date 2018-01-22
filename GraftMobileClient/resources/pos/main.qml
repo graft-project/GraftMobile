@@ -22,7 +22,7 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: Qt.platform.os === "ios" ? Device.detectDevice() === DeviceDetector.iPhoneX ? 85 : 49 : 0
+        height: Qt.platform.os === "ios" ? Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
