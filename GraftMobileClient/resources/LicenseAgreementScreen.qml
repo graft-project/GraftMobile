@@ -21,7 +21,7 @@ BaseScreen {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 20
+                Layout.preferredHeight: Device.detectDevice() === DeviceDetector.IPhoneX ? 44 : 20
                 Layout.alignment: Qt.AlignTop
                 color: ColorFactory.color(DesignFactory.IosNavigationBar)
                 visible: Qt.platform.os === "ios"
