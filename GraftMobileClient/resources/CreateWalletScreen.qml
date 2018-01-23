@@ -25,8 +25,11 @@ BaseScreen {
             fill: parent
             margins: 15
         }
+
 //qweqwe
         PasswordFields {
+            Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         WideActionButton {

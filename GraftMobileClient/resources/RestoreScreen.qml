@@ -52,10 +52,11 @@ BaseScreen {
             inputMethodHints: Qt.ImhNoPredictiveText
         }
 
+//qweqwe
         PasswordFields {
+            Layout.alignment: Qt.AlignTop
         }
 
-//qweqwe
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
