@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
+import com.device.detector 1.0
 import "components"
 
 BaseScreen {
@@ -20,7 +21,7 @@ BaseScreen {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 20
+                Layout.preferredHeight: Device.detectDevice() === DeviceDetector.IPhoneX ? 44 : 20
                 Layout.alignment: Qt.AlignTop
                 color: ColorFactory.color(DesignFactory.IosNavigationBar)
                 visible: Qt.platform.os === "ios"
@@ -133,7 +134,7 @@ BaseScreen {
                 text: qsTr("Accept")
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                Layout.bottomMargin: 15
+                Layout.bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
                 onClicked: acceptAction()
             }
         }

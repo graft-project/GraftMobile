@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.detector 1.0
 import "components"
 
 BaseScreen {
@@ -14,9 +15,9 @@ BaseScreen {
         anchors {
             fill: parent
             topMargin: 15
-            leftMargin: 10
-            rightMargin: 10
-            bottomMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
         }
 
         Label {
@@ -90,7 +91,7 @@ BaseScreen {
                 title: qsTr("Create wallet")
                 action: save
                 screenHeader {
-                    navigationButtonState: true
+                    navigationButtonState: Qt.platform.os === "android"
                     isNavigationButtonVisible: false
                     actionButtonState: true
                 }
