@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.detector 1.0
 import "components"
 
 BaseScreen {
@@ -34,7 +35,10 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            margins: 15
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 15
         }
 
         LinearEditItem {

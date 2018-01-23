@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.detector 1.0
 import "components"
 
 BaseScreen {
@@ -23,14 +24,15 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            leftMargin: 10
-            rightMargin: 10
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 15
         }
 
         LinearEditItem {
             id: passwordTextField
             Layout.alignment: Qt.AlignTop
-            Layout.topMargin: 10
             maximumLength: 50
             title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
             echoMode: TextInput.Password
@@ -39,7 +41,6 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
-            Layout.bottomMargin: 15
             text: qsTr("Create New Wallet")
             onClicked: {
                 root.state = "createWalletPressed"
@@ -77,7 +78,6 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            Layout.bottomMargin: 15
             text: qsTr("Restore Wallet")
             onClicked: pushScreen.openRestoreWalletScreen()
         }
