@@ -10,6 +10,10 @@ GraftApplicationWindow {
     id: root
     title: qsTr("WALLET")
 
+    property bool allowClose: false
+
+    signal animationCompleted()
+
     Loader {
         id: drawerLoader
         onLoaded: {
@@ -67,11 +71,39 @@ GraftApplicationWindow {
         }
     }
 
+    PopupMessageLabel {
+        id: closeLabel
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            margins: 35
+        }
+        labelText: qsTr("Please, click again to close \nthe application.")
+        opacityAnimator.onStopped: animationCompleted()
+    }
+
+    onAnimationCompleted: allowClose = false
+
     SwipeView {
         id: mainLayout
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
+        focus: true
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
+                if (!event.accepted) {
+                    if (allowClose) {
+                        event.accepted = false
+                    } else {
+                        showCloseLabel()
+                        event.accepted = true
+                    }
+                    allowClose = !allowClose
+                }
+            }
+        }
 
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
@@ -164,5 +196,10 @@ GraftApplicationWindow {
         } else {
             openCreateWalletStackViewer()
         }
+    }
+
+    function showCloseLabel() {
+        closeLabel.opacity = 1.0
+        closeLabel.timer.start()
     }
 }

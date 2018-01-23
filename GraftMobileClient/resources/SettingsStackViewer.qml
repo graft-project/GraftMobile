@@ -3,10 +3,9 @@ import QtQuick.Controls 2.2
 
 BaseStackViewer {
     id: stack
+    initialItem: openSettingsScreen()
 
     property string appType: "pos"
-
-    initialItem: openSettingsScreen()
 
     function settingsTransitions() {
         var transitionsMap = pushScreen

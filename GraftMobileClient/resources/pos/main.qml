@@ -8,6 +8,11 @@ import "../components"
 
 GraftApplicationWindow {
     id: root
+
+    property bool allowClose: false
+
+    signal animationCompleted()
+
     title: qsTr("POS")
 
     Loader {
@@ -67,11 +72,39 @@ GraftApplicationWindow {
         }
     }
 
+    PopupMessageLabel {
+        id: closeLabel
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            margins: 35
+        }
+        labelText: qsTr("Please, click again to close \nthe application.")
+        opacityAnimator.onStopped: animationCompleted()
+    }
+
+    onAnimationCompleted: allowClose = false
+
     SwipeView {
         id: mainLayout
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
+        focus: true
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
+                if (!event.accepted) {
+                    if (allowClose) {
+                        event.accepted = false
+                    } else {
+                        showCloseLabel()
+                        event.accepted = true
+                    }
+                    allowClose = !allowClose
+                }
+            }
+        }
 
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
@@ -167,5 +200,10 @@ GraftApplicationWindow {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
         }
+    }
+
+    function showCloseLabel() {
+        closeLabel.opacity = 1.0
+        closeLabel.timer.start()
     }
 }
