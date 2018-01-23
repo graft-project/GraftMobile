@@ -84,7 +84,9 @@ GraftApplicationWindow {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            margins: 35
+            leftMargin: 80
+            rightMargin: 80
+            bottomMargin: 80
         }
         labelText: qsTr("Please, click again to close \nthe application.")
         opacityAnimator.onStopped: animationCompleted()
