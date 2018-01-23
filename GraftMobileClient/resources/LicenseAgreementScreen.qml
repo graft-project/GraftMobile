@@ -134,7 +134,7 @@ BaseScreen {
                 text: qsTr("Accept")
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                Layout.bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 15
+                Layout.bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
                 onClicked: acceptAction()
             }
         }

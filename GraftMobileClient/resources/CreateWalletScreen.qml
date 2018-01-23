@@ -27,7 +27,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
         }
 
         LinearEditItem {
