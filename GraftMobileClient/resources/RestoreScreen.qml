@@ -52,16 +52,10 @@ BaseScreen {
             inputMethodHints: Qt.ImhNoPredictiveText
         }
 
-        LinearEditItem {
-            id: passwordTextField
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            title: Qt.platform.os === "ios" ? qsTr("Password:") : qsTr("Password")
-            maximumLength: 50
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
+        PasswordFields {
         }
 
+//qweqwe
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true

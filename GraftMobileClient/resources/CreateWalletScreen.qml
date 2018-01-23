@@ -23,18 +23,10 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            leftMargin: 10
-            rightMargin: 10
+            margins: 15
         }
-
-        LinearEditItem {
-            id: passwordTextField
-            Layout.alignment: Qt.AlignTop
-            Layout.topMargin: 10
-            maximumLength: 50
-            title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
+//qweqwe
+        PasswordFields {
         }
 
         WideActionButton {
