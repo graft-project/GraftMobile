@@ -9,16 +9,6 @@ StackView {
     property bool isActive: false
 
     focus: true
-    Keys.onReleased: {
-        if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
-            if (currentItem.isMenuActive === false) {
-                pop()
-                currentItem.isMenuActive = true
-                event.accepted = true
-            }
-        }
-    }
-
     onCurrentItemChanged: {
         if (isActive && menuLoader && menuLoader.status === Loader.Ready) {
             menuLoader.item.interactive = currentItem.isMenuActive
@@ -27,5 +17,15 @@ StackView {
 
     function goBack() {
         pop()
+    }
+
+    function backButtonhandler() {
+        var back = false
+        if (!busy && currentItem.isMenuActive === false) {
+                goBack()
+                currentItem.isMenuActive = true
+                back = true
+            }
+        return back
     }
 }

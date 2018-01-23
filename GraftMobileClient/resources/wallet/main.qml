@@ -8,11 +8,18 @@ import "../components"
 
 GraftApplicationWindow {
     id: root
-    title: qsTr("WALLET")
 
     property bool allowClose: false
-
     signal animationCompleted()
+
+    title: qsTr("WALLET")
+
+    Shortcut {
+        sequences: ["Esc", "Back"]
+        onActivated: {
+            mainLayout.backButtonHandler()
+        }
+    }
 
     Loader {
         id: drawerLoader
@@ -91,20 +98,6 @@ GraftApplicationWindow {
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
         focus: true
-        Keys.onReleased: {
-            if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
-                if (!event.accepted) {
-                    if (allowClose) {
-                        event.accepted = false
-                    } else {
-                        showCloseLabel()
-                        event.accepted = true
-                    }
-                    allowClose = !allowClose
-                }
-            }
-        }
-
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
                 graftApplicationFooter.visible = currentIndex > 1
@@ -140,6 +133,17 @@ GraftApplicationWindow {
             pushScreen: generalTransitions()
             appType: "wallet"
             isActive: SwipeView.isCurrentItem
+        }
+
+        function backButtonHandler() {
+            if (!currentItem.backButtonhandler()) {
+                if (!allowClose) {
+                    showCloseLabel()
+                } else {
+                    Qt.quit()
+                }
+                allowClose = !allowClose
+            }
         }
     }
 
