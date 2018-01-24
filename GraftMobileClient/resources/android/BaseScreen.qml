@@ -6,10 +6,10 @@ import "../"
 Page {
     id: basePage
 
-    property var pushScreen
-    property var action
-    property alias screenHeader: appHeader
+    property var pushScreen: null
+    property var action: null
     property var specialBackMode: null
+    property alias screenHeader: appHeader
     property alias isMenuActive: appHeader.navigationButtonState
     property alias screenDialog: attentionDialog
 

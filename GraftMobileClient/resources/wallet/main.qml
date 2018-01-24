@@ -71,10 +71,10 @@ GraftApplicationWindow {
 
     SwipeView {
         id: mainLayout
+        focus: true
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
-        focus: true
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
                 graftApplicationFooter.visible = currentIndex > 1
