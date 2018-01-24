@@ -46,6 +46,7 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mQuickExchangeModel(nullptr)
     ,mBalanceTimer(-1)
     ,mAccountManager(new AccountManager())
+    ,mIsBalanceUpdated(false)
 {
     initSettings();
 }
@@ -310,6 +311,11 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
     }
 }
 
+void GraftBaseClient::updateBalanceStatusChanged()
+{
+    mIsBalanceUpdated = true;
+}
+
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
 {
     if(!mAccountModel)
@@ -480,6 +486,11 @@ QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
     return seed.simplified();
 }
 
+bool GraftBaseClient::isBalanceUpdate() const
+{
+    return mIsBalanceUpdated;
+}
+
 void GraftBaseClient::saveSettings() const
 {
     mClientSettings->sync();
@@ -498,4 +509,5 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
     emit balanceUpdated();
+    connect(this, &GraftBaseClient::balanceUpdated, this, &GraftBaseClient::updateBalanceStatusChanged);
 }

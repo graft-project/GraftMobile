@@ -12,10 +12,12 @@ Rectangle {
 
     height: 120
     color: "#FCF9F1"
+    state: GraftClient.isBalanceUpdate() ? "afterUpdate" : "beforeUpdate"
 
     Connections {
         target: GraftClient
         onBalanceUpdated: {
+            balance.state = "afterUpdate"
             amountUnlockGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
             amountLockGraftCost = GraftClient.balance(GraftClientTools.LockedBalance)
         }
@@ -57,27 +59,49 @@ Rectangle {
                     Layout.leftMargin: 14
                     Layout.alignment: Qt.AlignLeft
 
-                    Text {
-                        text: qsTr("Main Balance")
-                        font.pointSize: 20
-                        color: "#233146"
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 10
+
+                        Text {
+                            text: qsTr("Main Balance")
+                            font.pointSize: 20
+                            color: "#233146"
+                        }
+
+                        Text {
+                            text: amountUnlockGraftCost
+                            font.pointSize: 20
+                            color: "#404040"
+                            Layout.fillWidth: true
+                            Layout.rightMargin: 12
+                            Layout.alignment: Qt.AlignRight
+                            horizontalAlignment: Text.AlignRight
+                        }
                     }
 
-                    Text {
-                        text: qsTr("Unlocked")
-                        font.pointSize: 12
-                        color: "#3d4757"
-                    }
-                }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 10
 
-                Text {
-                    text: amountUnlockGraftCost
-                    font.pointSize: 20
-                    color: "#404040"
-                    Layout.fillWidth: true
-                    Layout.rightMargin: 12
-                    Layout.alignment: Qt.AlignRight
-                    horizontalAlignment: Text.AlignRight
+                        Text {
+                            text: qsTr("Unlocked")
+                            font.pointSize: 12
+                            color: "#3d4757"
+                        }
+
+                        Text {
+                            id: updateLabel
+                            font.pointSize: 12
+                            color: "#3d4757"
+
+                            Timer {
+                                id: timer
+                                repeat: true
+                                onTriggered: dots()
+                            }
+                        }
+                    }
                 }
 
                 Image {
@@ -128,10 +152,25 @@ Rectangle {
                     Layout.leftMargin: 14
                     Layout.alignment: Qt.AlignLeft
 
-                    Text {
-                        text: qsTr("Main Balance")
-                        font.pointSize: 20
-                        color: "#233146"
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 10
+
+                        Text {
+                            text: qsTr("Main Balance")
+                            font.pointSize: 20
+                            color: "#233146"
+                        }
+
+                        Text {
+                            text: amountLockGraftCost
+                            font.pointSize: 20
+                            color: "#d1cfc8"
+                            Layout.fillWidth: true
+                            Layout.rightMargin: 12
+                            Layout.alignment: Qt.AlignRight
+                            horizontalAlignment: Text.AlignRight
+                        }
                     }
 
                     Text {
@@ -139,16 +178,6 @@ Rectangle {
                         font.pointSize: 12
                         color: "#3d4757"
                     }
-                }
-
-                Text {
-                    text: amountLockGraftCost
-                    font.pointSize: 20
-                    color: "#d1cfc8"
-                    Layout.fillWidth: true
-                    Layout.rightMargin: 12
-                    Layout.alignment: Qt.AlignRight
-                    horizontalAlignment: Text.AlignRight
                 }
 
                 Image {
@@ -160,6 +189,41 @@ Rectangle {
                     Layout.alignment: Qt.AlignRight
                 }
             }
+        }
+    }
+
+    states: [
+        State {
+            name: "beforeUpdate"
+
+            PropertyChanges {
+                target: updateLabel
+                text: qsTr("Waiting for update")
+            }
+            PropertyChanges {
+                target: timer
+                running: true
+            }
+        },
+        State {
+            name: "afterUpdate"
+
+            PropertyChanges {
+                target: updateLabel
+                text: qsTr("Updated!")
+            }
+            PropertyChanges {
+                target: timer
+                running: false
+            }
+        }
+    ]
+
+    function dots() {
+        if (updateLabel.text.length >= 21) {
+            updateLabel.text = updateLabel.text.replace(/[\.]{3}/g, '')
+        } else {
+            updateLabel.text += '.'
         }
     }
 }

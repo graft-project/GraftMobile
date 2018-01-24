@@ -64,6 +64,7 @@ public:
     QStringList seedSupernodes() const;
 
     Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
+    Q_INVOKABLE bool isBalanceUpdate() const;
 
 signals:
     void errorReceived(const QString &message);
@@ -96,6 +97,7 @@ private slots:
                                const QString &address, const QString &viewKey,
                                const QString &seed);
     void receiveBalance(double balance, double unlockedBalance);
+    void updateBalanceStatusChanged();
 
 private:
     void initSettings();
@@ -117,6 +119,7 @@ protected:
 
 private:
     int mBalanceTimer;
+    bool mIsBalanceUpdated;
 };
 
 #endif // GRAFTBASECLIENT_H
