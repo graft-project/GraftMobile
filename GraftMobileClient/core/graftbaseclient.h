@@ -29,6 +29,7 @@ public:
 
     virtual void createAccount(const QString &password) = 0;
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;
+    virtual void transfer(const QString &address, const QString &amount) = 0;
 
     Q_INVOKABLE QString getSeed() const;
     Q_INVOKABLE QString address() const;
@@ -68,6 +69,7 @@ signals:
     void balanceUpdated();
     void createAccountReceived(bool isAccountCreated);
     void restoreAccountReceived(bool isAccountRestored);
+    void transferReceived(bool result);
     void networkTypeChanged();
 
 public slots:
@@ -82,6 +84,7 @@ protected:
     QStringList getServiceAddresses() const;
     void requestAccount(GraftGenericAPI *api, const QString &password);
     void requestRestoreAccount(GraftGenericAPI *api, const QString &seed, const QString &password);
+    void requestTransfer(GraftGenericAPI *api, const QString &address, const QString &amount);
 
     void registerBalanceTimer(GraftGenericAPI *api);
     virtual void updateBalance() = 0;
@@ -94,6 +97,7 @@ private slots:
                                const QString &address, const QString &viewKey,
                                const QString &seed);
     void receiveBalance(double balance, double unlockedBalance);
+    void receiveTransfer(int result);
 
 private:
     void initSettings();

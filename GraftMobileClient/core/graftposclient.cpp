@@ -79,6 +79,11 @@ void GraftPOSClient::restoreAccount(const QString &seed, const QString &password
     GraftBaseClient::requestRestoreAccount(mApi, seed, password);
 }
 
+void GraftPOSClient::transfer(const QString &address, const QString &amount)
+{
+    GraftBaseClient::requestTransfer(mApi, address, amount);
+}
+
 void GraftPOSClient::saveProducts() const
 {
     saveModel(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));

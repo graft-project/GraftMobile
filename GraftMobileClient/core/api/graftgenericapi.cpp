@@ -123,6 +123,29 @@ void GraftGenericAPI::restoreAccount(const QString &seed, const QString &passwor
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveRestoreAccountResponse);
 }
 
+void GraftGenericAPI::transfer(const QString &address, const QString &amount)
+{
+    mRetries = 0;
+    if (mAccountData.isEmpty())
+    {
+        qDebug() << "GraftGenericAPI: Account Data is empty.";
+        emit error(QStringLiteral("Couldn't find account data."));
+        return;
+    }
+    QJsonObject params;
+    params.insert(QStringLiteral("Password"), mPassword);
+    params.insert(QStringLiteral("Account"), accountPlaceholder());
+    params.insert(QStringLiteral("Address"), address);
+    params.insert(QStringLiteral("Amount"), amount);
+    QJsonObject data = buildMessage(QStringLiteral("Transfer"), params);
+    QByteArray array = QJsonDocument(data).toJson();
+    array.replace(accountPlaceholder(), mAccountData);
+    mTimer.start();
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveTransferResponse);
+}
+
 double GraftGenericAPI::toCoins(double atomic)
 {
     return (1.0 * atomic) / 10000000000.0;
@@ -386,6 +409,27 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
         else
         {
             emit restoreAccountReceived(mAccountData, mPassword, "", "", "");
+        }
+    }
+}
+
+void GraftGenericAPI::receiveTransferResponse()
+{
+    mLastError.clear();
+    qDebug() << "Transfer Response Received:\nTime: " << mTimer.elapsed();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
+    if (!object.isEmpty())
+    {
+        emit transferReceived(object.value(QLatin1String("Result")).toInt());
+    }
+    else
+    {
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished,
+                    this, &GraftGenericAPI::receiveTransferResponse);
         }
     }
 }
