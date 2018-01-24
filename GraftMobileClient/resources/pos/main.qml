@@ -8,18 +8,9 @@ import "../components"
 
 GraftApplicationWindow {
     id: root
-
-    property bool allowClose: false
-    signal animationCompleted()
-
     title: qsTr("POS")
 
-    Shortcut {
-        sequences: ["Esc", "Back"]
-        onActivated: {
-            mainLayout.backButtonHandler()
-        }
-    }
+    handleBackEvent: mainLayout.backButtonHandler
 
     Loader {
         id: drawerLoader
@@ -78,22 +69,6 @@ GraftApplicationWindow {
         }
     }
 
-    PopupMessageLabel {
-        id: closeLabel
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            leftMargin: 80
-            rightMargin: 80
-            bottomMargin: 80
-        }
-        labelText: qsTr("Please, click again to close \nthe application.")
-        opacityAnimator.onStopped: animationCompleted()
-    }
-
-    onAnimationCompleted: allowClose = false
-
     SwipeView {
         id: mainLayout
         anchors.fill: parent
@@ -139,7 +114,7 @@ GraftApplicationWindow {
         }
 
         function backButtonHandler() {
-            if (!currentItem.backButtonhandler()) {
+            if (!currentItem.backButtonHandler()) {
                 if (!allowClose) {
                     showCloseLabel()
                 } else {
@@ -205,10 +180,5 @@ GraftApplicationWindow {
         if (Qt.platform.os === "ios") {
             footerLoader.item.seclectedButtonChanged(name)
         }
-    }
-
-    function showCloseLabel() {
-        closeLabel.opacity = 1.0
-        closeLabel.timer.start()
     }
 }

@@ -19,7 +19,7 @@ StackView {
         pop()
     }
 
-    function backButtonhandler() {
+    function backButtonHandler() {
         var back = false
         if (!busy && currentItem.isMenuActive === false) {
                 goBack()
