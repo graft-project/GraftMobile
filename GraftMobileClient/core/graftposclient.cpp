@@ -17,7 +17,7 @@ static const QString scProductModelDataFile("productList.dat");
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mApi = new GraftPOSAPI(getServiceUrl(), dapiVersion(), this);
+    mApi = new GraftPOSAPI(getServiceAddresses(), dapiVersion(), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
             this, &GraftPOSClient::receiveRejectSale);
@@ -28,6 +28,7 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
     if (isAccountExists())
     {
         mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+        updateBalance();
     }
     registerBalanceTimer(mApi);
 }
@@ -40,7 +41,7 @@ void GraftPOSClient::setNetworkType(int networkType)
 {
     GraftBaseClient::setNetworkType(networkType);
     mApi->setDAPIVersion(dapiVersion());
-    mApi->setUrl(getServiceUrl());
+    mApi->changeAddresses(getServiceAddresses());
 }
 
 ProductModel *GraftPOSClient::productModel() const
@@ -62,7 +63,7 @@ bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
 {
     if (GraftBaseClient::resetUrl(ip, port))
     {
-        mApi->setUrl(QUrl(scUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+        mApi->changeAddresses(getServiceAddresses());
         return true;
     }
     return false;
@@ -76,6 +77,11 @@ void GraftPOSClient::createAccount(const QString &password)
 void GraftPOSClient::restoreAccount(const QString &seed, const QString &password)
 {
     GraftBaseClient::requestRestoreAccount(mApi, seed, password);
+}
+
+void GraftPOSClient::transfer(const QString &address, const QString &amount)
+{
+    GraftBaseClient::requestTransfer(mApi, address, amount);
 }
 
 void GraftPOSClient::saveProducts() const

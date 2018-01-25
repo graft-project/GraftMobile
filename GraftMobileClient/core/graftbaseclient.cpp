@@ -29,6 +29,12 @@ static const QString scCoinAddressQRCodeImageID("coin_address_qrcode");
 static const QString scProviderScheme("image://%1/%2");
 static const QString scAccountModelDataFile("accountList.dat");
 static const QString scSettingsDataFile("Settings.ini");
+static const QString scIp("ip");
+static const QString scPort("port");
+static const QString scLockedBalance("lockedBalance");
+static const QString scUnlockedBalancee("unlockedBalance");
+static const QString scLocalBalance("localBalance");
+static const QString scUseOwnServiceAddress("useOwnServiceAddress");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
@@ -75,9 +81,12 @@ bool GraftBaseClient::isAccountExists() const
     return !mAccountManager->account().isEmpty();
 }
 
-void GraftBaseClient::resetData() const
+void GraftBaseClient::resetData()
 {
     mAccountManager->clearData();
+    mBalances.clear();
+    saveBalance();
+    emit balanceUpdated();
 }
 
 QString GraftBaseClient::getSeed() const
@@ -197,21 +206,20 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
     return QByteArray();
 }
 
-QUrl GraftBaseClient::getServiceUrl() const
+QStringList GraftBaseClient::getServiceAddresses() const
 {
-    QString finalUrl;
+    QStringList addressList;
     if (useOwnServiceAddress())
     {
-        QString ip(settings("ip").toString());
-        QString port(settings("port").toString());
-        finalUrl = QString("%1:%2").arg(ip).arg(port);
+        QString ip(settings(scIp).toString());
+        QString port(settings(scPort).toString());
+        addressList.append(QString("%1:%2").arg(ip).arg(port));
     }
     else
     {
-        QStringList seedNodes = seedSupernodes();
-        finalUrl = seedNodes.value(qrand() % seedNodes.count());
+        addressList = seedSupernodes();
     }
-    return QUrl(scUrl.arg(finalUrl));
+    return addressList;
 }
 
 void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &password)
@@ -244,6 +252,17 @@ void GraftBaseClient::requestRestoreAccount(GraftGenericAPI *api, const QString 
     }
 }
 
+void GraftBaseClient::requestTransfer(GraftGenericAPI *api, const QString &address,
+                                      const QString &amount)
+{
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::transferReceived,
+                this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
+        api->transfer(address, amount);
+    }
+}
+
 void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
 {
     if (api)
@@ -266,6 +285,7 @@ void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QStrin
         mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
         updateAddressQRCode();
+        updateBalance();
         isAccountCreated = true;
     }
     emit createAccountReceived(isAccountCreated);
@@ -283,6 +303,7 @@ void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const
         mAccountManager->setViewKey(viewKey);
         mAccountManager->setSeed(seed);
         updateAddressQRCode();
+        updateBalance();
         isAccountRestored = true;
     }
     emit restoreAccountReceived(isAccountRestored);
@@ -295,8 +316,14 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mBalances.insert(GraftClientTools::LockedBalance, balance - unlockedBalance);
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
+        saveBalance();
         emit balanceUpdated();
     }
+}
+
+void GraftBaseClient::receiveTransfer(int result)
+{
+    emit transferReceived(result == 0);
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
@@ -348,14 +375,19 @@ void GraftBaseClient::updateAddressQRCode() const
     mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
 }
 
-void GraftBaseClient::setSettings(const QString &key, const QVariant &value)
+QVariant GraftBaseClient::settings(const QString &key) const
+{
+    return mClientSettings->value(key);
+}
+
+void GraftBaseClient::setSettings(const QString &key, const QVariant &value) const
 {
     mClientSettings->setValue(key, value);
 }
 
 bool GraftBaseClient::useOwnServiceAddress() const
 {
-    return mClientSettings->value(QStringLiteral("useOwnServiceAddress")).toBool();
+    return mClientSettings->value(scUseOwnServiceAddress).toBool();
 }
 
 bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
@@ -363,8 +395,8 @@ bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
     bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !ip.isEmpty());
     if (lIsResetUrl)
     {
-        setSettings(QStringLiteral("ip"), ip);
-        setSettings(QStringLiteral("port"), port);
+        setSettings(scIp, ip);
+        setSettings(scPort, port);
     }
     return lIsResetUrl;
 }
@@ -379,6 +411,14 @@ double GraftBaseClient::balance(int type) const
 {
     QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
     return rValue.toDouble();
+}
+
+void GraftBaseClient::saveBalance() const
+{
+    setSettings(scLockedBalance, mBalances.value(GraftClientTools::LockedBalance));
+    setSettings(scUnlockedBalancee, mBalances.value(GraftClientTools::UnlockedBalance));
+    setSettings(scLocalBalance, mBalances.value(GraftClientTools::LocalBalance));
+    saveSettings();
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)
@@ -400,10 +440,10 @@ bool GraftBaseClient::checkPassword(const QString &password) const
     return mAccountManager->passsword() == password;
 }
 
-void GraftBaseClient::copyWalletNumber(const QString &walletNumber) const
+void GraftBaseClient::copyToClipboard(const QString &data) const
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
-    clipboard->setText(walletNumber);
+    clipboard->setText(data);
 }
 
 QString GraftBaseClient::networkName() const
@@ -451,9 +491,9 @@ QStringList GraftBaseClient::seedSupernodes() const
     }
 }
 
-QVariant GraftBaseClient::settings(const QString &key) const
+QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
 {
-    return mClientSettings->value(key);
+    return seed.simplified();
 }
 
 void GraftBaseClient::saveSettings() const
@@ -470,4 +510,8 @@ void GraftBaseClient::initSettings()
     }
     QDir lDir(dataPath);
     mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
+    mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
+    mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
+    mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
+    emit balanceUpdated();
 }

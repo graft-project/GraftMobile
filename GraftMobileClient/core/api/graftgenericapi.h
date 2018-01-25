@@ -23,11 +23,11 @@ public:
         StatusPOSRejected = 5
     };
 
-    explicit GraftGenericAPI(const QUrl &url, const QString &dapiVersion,
+    explicit GraftGenericAPI(const QStringList &addresses, const QString &dapiVersion,
                              QObject *parent = nullptr);
     virtual ~GraftGenericAPI();
 
-    void setUrl(const QUrl &url);
+    void changeAddresses(const QStringList &addresses);
     void setDAPIVersion(const QString &version);
 
     void setAccountData(const QByteArray &accountData, const QString &password);
@@ -38,6 +38,7 @@ public:
     void getBalance();
     void getSeed();
     void restoreAccount(const QString &seed, const QString &password);
+    void transfer(const QString &address, const QString &amount);
 
     static double toCoins(double atomic);
     static double toAtomic(double coins);
@@ -51,6 +52,7 @@ signals:
     void restoreAccountReceived(const QByteArray &accountData, const QString &password,
                                 const QString &address, const QString &viewKey,
                                 const QString &seed);
+    void transferReceived(int result);
     void test(int v);
 
 protected:
@@ -58,22 +60,31 @@ protected:
     QByteArray serializeAmount(double amount) const;
     QJsonObject buildMessage(const QString &key, const QJsonObject &params = QJsonObject()) const;
     QJsonObject processReply(QNetworkReply *reply);
+    QUrl nextAddress();
+    QNetworkReply *retry();
 
 private slots:
     void receiveCreateAccountResponse();
     void receiveGetBalanceResponse();
     void receiveGetSeedResponse();
     void receiveRestoreAccountResponse();
+    void receiveTransferResponse();
 
 protected:
     QNetworkAccessManager *mManager;
     QNetworkRequest mRequest;
     QElapsedTimer mTimer;
+    QStringList mAddresses;
+    int mCurrentAddress;
 
     QByteArray mAccountData;
     QString mPassword;
 
     QString mDAPIVersion;
+
+    QString mLastError;
+    int mRetries;
+    QByteArray mLastRequest;
 };
 
 #endif // GRAFTGENERICAPI_H

@@ -10,7 +10,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
 {
     mBlockNum = 0;
-    mApi = new GraftWalletAPI(getServiceUrl(), dapiVersion(), this);
+    mApi = new GraftWalletAPI(getServiceAddresses(), dapiVersion(), this);
     connect(mApi, &GraftWalletAPI::getPOSDataReceived,
             this, &GraftWalletClient::receiveGetPOSData);
     connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
@@ -23,6 +23,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     if (isAccountExists())
     {
         mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+        updateBalance();
     }
     registerBalanceTimer(mApi);
 }
@@ -31,7 +32,7 @@ void GraftWalletClient::setNetworkType(int networkType)
 {
     GraftBaseClient::setNetworkType(networkType);
     mApi->setDAPIVersion(dapiVersion());
-    mApi->setUrl(getServiceUrl());
+    mApi->changeAddresses(getServiceAddresses());
 }
 
 double GraftWalletClient::totalCost() const
@@ -48,7 +49,7 @@ bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
 {
     if (GraftBaseClient::resetUrl(ip, port))
     {
-        mApi->setUrl(QUrl(scUrl.arg(QString("%1:%2").arg(ip).arg(port))));
+        mApi->changeAddresses(getServiceAddresses());
         return true;
     }
     return false;
@@ -62,6 +63,11 @@ void GraftWalletClient::createAccount(const QString &password)
 void GraftWalletClient::restoreAccount(const QString &seed, const QString &password)
 {
     GraftBaseClient::requestRestoreAccount(mApi, seed, password);
+}
+
+void GraftWalletClient::transfer(const QString &address, const QString &amount)
+{
+    GraftBaseClient::requestTransfer(mApi, address, amount);
 }
 
 void GraftWalletClient::getPOSData(const QString &data)

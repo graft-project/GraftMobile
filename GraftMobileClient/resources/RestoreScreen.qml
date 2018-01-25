@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.detector 1.0
 import "components"
 
 BaseScreen {
@@ -34,20 +35,23 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            margins: 15
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
         }
 
         LinearEditItem {
             id: seedTextField
             Layout.fillWidth: true
-            Layout.maximumHeight: 130
+            Layout.maximumHeight: Qt.platform.os === "ios" ? 160 : 130
             Layout.alignment: Qt.AlignTop
             title: qsTr("Mnemonic Phrase")
             wrapMode: TextInput.WordWrap
             letterCountingMode: false
             maximumLength: 25
             validator: RegExpValidator {
-                regExp: /^([^\s]([a-z]+\s){24}([a-z]+){1})/g
+                regExp: /([a-z]+\s+){24}([a-z]+){1}/g
             }
             inputMethodHints: Qt.ImhNoPredictiveText
         }
@@ -108,36 +112,15 @@ BaseScreen {
         }
     ]
 
-    Dialog {
-        id: dialog
-        visible: false
-        modal: true
-        width: errorLabel.width + 20
-        topMargin: (parent.height - dialog.height) / 2
-        leftMargin: (parent.width - dialog.width) / 2
-        standardButtons: Dialog.Ok
-
-        Label {
-            id: errorLabel
-            anchors.centerIn: parent
-            font {
-                bold: true
-                pointSize: 16
-            }
-        }
-
-        onAccepted: dialog.close()
-    }
-
     function restoreWallet() {
-        if (seedTextField.text.split(' ').length < 25) {
-            dialog.open()
-            errorLabel.text = seedTextField.text.length === 0 ?
+        if (GraftClient.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
+            screenDialog.text = seedTextField.text.length === 0 ?
                         qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
-                        qsTr("The mnemonic phrase must contain 25 words.\nPlease, enter the correct mnemonic phrase.")
+                        qsTr("The mnemonic phrase must contain 25 words. Please, enter the correct mnemonic phrase.")
+            screenDialog.open()
         } else {
             root.state = "restoreWalletPressed"
-            GraftClient.restoreAccount(seedTextField.text, passwordTextField.text)
+            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text), passwordTextField.text)
         }
     }
 }

@@ -57,37 +57,17 @@ BaseScreen {
             Image {
                 id: qrCodeImage
                 cache: false
-                height: parent.height - 20
+                height: (parent.height > parent.width ? parent.width : parent.height) - 20
                 width: height
                 anchors {
                     centerIn: parent
                     margins: 10
                 }
 
-                Rectangle {
-                    id: temporaryLabel
+                PopupMessageLabel {
+                    id: walletAddressLabel
                     anchors.centerIn: parent
-                    height: messageLabel.height + 20
-                    width: messageLabel.width + 20
-                    radius: height
-                    color: "#353535"
-                    opacity: 0.0
-
-                    Label {
-                        id: messageLabel
-                        anchors.centerIn: parent
-                        color: "#FFFFFF"
-                        font.pointSize: 16
-                        text: qsTr("Wallet address is copied!")
-                    }
-
-                    OpacityAnimator {
-                        id: opacityAnimator
-                        target: temporaryLabel
-                        from: 1.0
-                        to: 0.0
-                        duration: 1000
-                    }
+                    labelText: qsTr("Wallet address is copied!")
                 }
             }
         }
@@ -124,20 +104,14 @@ BaseScreen {
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        GraftClient.copyWalletNumber(balanceState === "mainAddress" ?
+                        GraftClient.copyToClipboard(balanceState === "mainAddress" ?
                                                          GraftClient.address() : accountNumber)
-                        temporaryLabel.opacity = 1.0
-                        timer.start()
+                        walletAddressLabel.opacity = 1.0
+                        walletAddressLabel.timer.start()
                     }
                 }
             }
         }
-    }
-
-    Timer {
-        id: timer
-        interval: 4000
-        onTriggered: opacityAnimator.running = true
     }
 
     states: [

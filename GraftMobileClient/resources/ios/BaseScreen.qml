@@ -11,6 +11,7 @@ Page {
     property alias screenDialog: attentionDialog
 
     signal attentionAccepted()
+    signal animationCompleted()
 
     header: Header {
         id: appHeader

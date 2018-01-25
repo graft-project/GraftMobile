@@ -26,6 +26,7 @@ BaseBalanceScreen {
             Layout.bottomMargin: 15
             topLine: true
             bottomLine: true
+            visible: false
             onClicked: pushScreen.openAddAccountScreen()
         }
 
