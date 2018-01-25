@@ -32,6 +32,7 @@ BaseScreen {
     }
 
     ColumnLayout {
+        spacing: 0
         anchors {
             fill: parent
             margins: 15
@@ -64,7 +65,7 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            Layout.topMargin: 25
+            Layout.topMargin: 15
             text: qsTr("Restore")
             onClicked: {
                 if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {

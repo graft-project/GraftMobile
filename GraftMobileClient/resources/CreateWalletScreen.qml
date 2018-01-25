@@ -32,7 +32,7 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
-            Layout.topMargin: 25
+            Layout.topMargin: 15
             Layout.bottomMargin: 15
             text: qsTr("Create New Wallet")
             onClicked: {

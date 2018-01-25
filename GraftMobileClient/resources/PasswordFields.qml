@@ -12,10 +12,7 @@ ColumnLayout {
         id: password
         maximumLength: 50
         title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
-        echoMode: passMode ? TextInput.Password : TextInput.Normal
-        passwordCharacter: '•'
         passMode: true
-        visibilityIcon: true
         onTextChanged: comparePassword(password.text, confirmPassword.text)
     }
 
@@ -23,17 +20,20 @@ ColumnLayout {
         id: confirmPassword
         maximumLength: 50
         title: Qt.platform.os === "android" ? qsTr("Confirm password") : qsTr("Confirm password:")
-        echoMode: passMode ? TextInput.Password : TextInput.Normal
-        passwordCharacter: '•'
         passMode: true
-        visibilityIcon: true
+        matchPassText.text: qsTr("")
         onTextChanged: comparePassword(password.text, confirmPassword.text)
     }
 
     function comparePassword(pass, confirmPass) {
         var compare = false
         if (pass !== confirmPass) {
+            confirmPassword.matchPassText.text = qsTr("Your passwords don't match!")
+            confirmPassword.matchPassText.color = "#f33939"
             compare = true
+        } else {
+            confirmPassword.matchPassText.text = qsTr("Your passwords are the same!")
+            confirmPassword.matchPassText.color = "#3F3F3F"
         }
         confirmPassword.confirmPass = compare
         return compare

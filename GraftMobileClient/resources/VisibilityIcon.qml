@@ -4,8 +4,8 @@ import QtQuick.Controls 2.2
 CheckBox {
     id: visibilityControl
     checked: false
-    indicator.width: 1
-    indicator.height: 1
+    indicator.width: 2
+    indicator.height: 2
 
     Image {
         anchors {

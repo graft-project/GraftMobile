@@ -20,6 +20,17 @@ ColumnLayout {
     property bool passMode: false
     property bool confirmPass: false
     property bool visibilityIcon: false
+    property alias matchPassText: matchText
+
+    onPassModeChanged: {
+        visibilityIcon = true
+        if (passMode) {
+            passwordCharacter = '•'
+            editItem.echoMode = TextInput.Password
+        } else {
+            editItem.echoMode = TextInput.Normal
+        }
+    }
 
     spacing: 0
 
@@ -36,9 +47,8 @@ ColumnLayout {
         verticalAlignment: Qt.AlignTop
         color: "#404040"
         rightPadding: visibilityIcon ? 44 : 0
-        Material.accent: confirmPass ? "#f33939" : "#9E9E9E"
         maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
-
+        Material.accent: confirmPass ? "#f33939" : "#9E9E9E"
         onWrapModeChanged: {
             if (wrapMode === TextField.NoWrap) {
                 Layout.fillHeight = false
@@ -49,6 +59,7 @@ ColumnLayout {
         }
 
         VisibilityIcon {
+            z: 1
             visible: visibilityIcon
             anchors {
                 right: parent.right
@@ -59,15 +70,27 @@ ColumnLayout {
             Material.accent: "#9E9E9E"
             onClicked: passMode =! passMode
         }
+
+        Item {
+            height: 20
+            width: 40
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+
+            MouseArea {
+                anchors.fill: parent
+            }
+        }
     }
 
     RowLayout {
         spacing: 0
 
         Text {
-            text: confirmPass ? qsTr("Your password doesn't match!") : qsTr("")
+            id: matchText
             font.pointSize: 12
-            color: "#f33939"
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft
         }
