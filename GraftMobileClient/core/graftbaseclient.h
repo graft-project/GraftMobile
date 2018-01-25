@@ -97,7 +97,7 @@ private slots:
                                const QString &address, const QString &viewKey,
                                const QString &seed);
     void receiveBalance(double balance, double unlockedBalance);
-    void updateBalanceStatusChanged();
+    void updateBalanceStatusChange();
 
 private:
     void initSettings();

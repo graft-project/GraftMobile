@@ -311,7 +311,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
     }
 }
 
-void GraftBaseClient::updateBalanceStatusChanged()
+void GraftBaseClient::updateBalanceStatusChange()
 {
     mIsBalanceUpdated = true;
 }
@@ -509,5 +509,5 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
     emit balanceUpdated();
-    connect(this, &GraftBaseClient::balanceUpdated, this, &GraftBaseClient::updateBalanceStatusChanged);
+    connect(this, &GraftBaseClient::balanceUpdated, this, &GraftBaseClient::updateBalanceStatusChange);
 }
