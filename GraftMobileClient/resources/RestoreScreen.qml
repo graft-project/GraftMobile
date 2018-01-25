@@ -52,9 +52,8 @@ BaseScreen {
             inputMethodHints: Qt.ImhNoPredictiveText
         }
 
-//qweqwe
         PasswordFields {
-            Layout.alignment: Qt.AlignTop
+            id: passwordTextField
         }
 
         Item {
@@ -65,8 +64,13 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
+            Layout.topMargin: 25
             text: qsTr("Restore")
-            onClicked: restoreWallet()
+            onClicked: {
+                if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {
+                    restoreWallet()
+                }
+            }
         }
     }
 

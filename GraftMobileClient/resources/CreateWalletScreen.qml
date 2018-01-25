@@ -26,19 +26,20 @@ BaseScreen {
             margins: 15
         }
 
-//qweqwe
         PasswordFields {
-            Layout.alignment: Qt.AlignTop
-            Layout.fillWidth: true
+            id: passwordTextField
         }
 
         WideActionButton {
             id: createWalletButton
+            Layout.topMargin: 25
             Layout.bottomMargin: 15
             text: qsTr("Create New Wallet")
             onClicked: {
-                root.state = "createWalletPressed"
-                GraftClient.createAccount(passwordTextField.text)
+                if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {
+                    root.state = "createWalletPressed"
+                    GraftClient.createAccount(passwordTextField.passwordText)
+                }
             }
         }
 
@@ -72,7 +73,6 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            Layout.bottomMargin: 15
             text: qsTr("Restore Wallet")
             onClicked: pushScreen.openRestoreWalletScreen()
         }

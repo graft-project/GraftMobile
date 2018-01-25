@@ -36,6 +36,7 @@
         <file alias="PopupMessageLabel.qml">PopupMessageLabel.qml</file>
         <file alias="LicenseAgreementScreen.qml">LicenseAgreementScreen.qml</file>
         <file>PasswordFields.qml</file>
+        <file>VisibilityIcon.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
