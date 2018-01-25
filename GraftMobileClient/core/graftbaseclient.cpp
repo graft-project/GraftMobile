@@ -483,7 +483,7 @@ QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
     return seed.simplified();
 }
 
-bool GraftBaseClient::isBalanceUpdate() const
+bool GraftBaseClient::isBalanceUpdated() const
 {
     return mIsBalanceUpdated;
 }

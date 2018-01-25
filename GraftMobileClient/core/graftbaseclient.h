@@ -64,7 +64,7 @@ public:
     QStringList seedSupernodes() const;
 
     Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
-    Q_INVOKABLE bool isBalanceUpdate() const;
+    Q_INVOKABLE bool isBalanceUpdated() const;
 
 signals:
     void errorReceived(const QString &message);

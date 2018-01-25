@@ -13,12 +13,12 @@ Rectangle {
 
     height: 120
     color: "#FCF9F1"
-    state: GraftClient.isBalanceUpdate() ? "afterUpdate" : "beforeUpdate"
+    state: GraftClient.isBalanceUpdated() ? "afterUpdate" : "beforeUpdate"
 
     Connections {
         target: GraftClient
         onBalanceUpdated: {
-            balance.state = GraftClient.isBalanceUpdate() ? "afterUpdate" : "beforeUpdate"
+            balance.state = GraftClient.isBalanceUpdated() ? "afterUpdate" : "beforeUpdate"
             amountUnlockGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
             amountLockGraftCost = GraftClient.balance(GraftClientTools.LockedBalance)
         }
