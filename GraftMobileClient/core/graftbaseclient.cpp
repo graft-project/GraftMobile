@@ -259,7 +259,7 @@ void GraftBaseClient::requestTransfer(GraftGenericAPI *api, const QString &addre
     {
         connect(api, &GraftGenericAPI::transferReceived,
                 this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
-        QString customAmount = QString::number(GraftGenericAPI::toAtomic(amount.toDouble()), 'f');
+        QString customAmount = QString::number(GraftGenericAPI::toAtomic(amount.toDouble()), 'f', 0);
         api->transfer(address, customAmount);
     }
 }
