@@ -9,6 +9,7 @@ Rectangle {
     property real amountUnlockGraftCost: 0.0
     property real amountLockGraftCost: 0.0
     property bool balanceVisible: true
+    property int dotsCount: 0
 
     height: 120
     color: "#FCF9F1"
@@ -17,7 +18,7 @@ Rectangle {
     Connections {
         target: GraftClient
         onBalanceUpdated: {
-            balance.state = "afterUpdate"
+            balance.state = GraftClient.isBalanceUpdate() ? "afterUpdate" : "beforeUpdate"
             amountUnlockGraftCost = GraftClient.balance(GraftClientTools.UnlockedBalance)
             amountLockGraftCost = GraftClient.balance(GraftClientTools.LockedBalance)
         }
@@ -220,10 +221,12 @@ Rectangle {
     ]
 
     function dots() {
-        if (updateLabel.text.length >= 21) {
+        if (dotsCount >= 3) {
             updateLabel.text = updateLabel.text.replace(/[\.]{3}/g, '')
+            dotsCount = 0;
         } else {
             updateLabel.text += '.'
+            dotsCount++
         }
     }
 }

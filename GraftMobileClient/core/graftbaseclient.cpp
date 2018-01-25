@@ -87,6 +87,7 @@ void GraftBaseClient::resetData()
     mAccountManager->clearData();
     mBalances.clear();
     saveBalance();
+    mIsBalanceUpdated = false;
     emit balanceUpdated();
 }
 
@@ -307,13 +308,9 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         saveBalance();
+        mIsBalanceUpdated = true;
         emit balanceUpdated();
     }
-}
-
-void GraftBaseClient::updateBalanceStatusChange()
-{
-    mIsBalanceUpdated = true;
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
@@ -509,5 +506,4 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
     emit balanceUpdated();
-    connect(this, &GraftBaseClient::balanceUpdated, this, &GraftBaseClient::updateBalanceStatusChange);
 }
