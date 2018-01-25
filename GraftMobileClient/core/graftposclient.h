@@ -25,6 +25,7 @@ public:
 
     Q_INVOKABLE void createAccount(const QString &password) override;
     Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password) override;
+    Q_INVOKABLE void transfer(const QString &address, const QString &amount) override;
 
 signals:
     void saleReceived(bool result);
