@@ -20,6 +20,14 @@ BaseScreen {
         }
     }
 
+    Connections {
+        target: GraftClient
+
+        onTransferReceived: {
+            pushScreen.openPaymentScreen(result)
+        }
+    }
+
     StackLayout {
         id: stackLayout
         anchors.fill: parent
@@ -159,8 +167,8 @@ BaseScreen {
             screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value")
             screenDialog.open()
         } else {
+            GraftClient.transfer(receiversAddress.text, coinsAmountTextField.text)
             sendCoinScreen.state = "afterSend"
-            pushScreen.openPaymentScreen()
         }
     }
 }
