@@ -7,8 +7,6 @@ ApplicationWindow {
     property bool allowClose: false
     property var handleBackEvent: null
 
-    signal animationCompleted()
-
     visible: true
     width: 320
     height: 480
@@ -29,10 +27,9 @@ ApplicationWindow {
             bottomMargin: 35
         }
         labelText: qsTr("Please, click again to close \nthe application.")
-        opacityAnimator.onStopped: animationCompleted()
+        opacityAnimator.onStopped: allowClose = false
     }
 
-    onAnimationCompleted: allowClose = false
     Component.onCompleted: init()
 
     function init() {
