@@ -30,6 +30,7 @@ ColumnLayout {
             editItem.echoMode = TextInput.Password
         } else {
             editItem.echoMode = TextInput.Normal
+            editItem.font.capitalization = Font.AllLowercase
         }
     }
 
@@ -71,8 +72,9 @@ ColumnLayout {
         }
 
         Item {
-            height: 20
-            width: height * 2
+            visible: visibilityIcon
+            height: 55
+            width: 42
             anchors {
                 right: parent.right
                 bottom: parent.bottom
@@ -80,6 +82,7 @@ ColumnLayout {
 
             MouseArea {
                 anchors.fill: parent
+                onClicked: {}
             }
         }
     }
