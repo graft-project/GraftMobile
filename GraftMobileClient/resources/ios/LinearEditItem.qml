@@ -31,7 +31,7 @@ ColumnLayout {
             editItem.echoMode = TextInput.Password
         } else {
             editItem.echoMode = TextInput.Normal
-            editItem.font.capitalization = Font.AllLowercase
+            editItem.inputMethodHints = Qt.ImhHiddenText
         }
     }
 
