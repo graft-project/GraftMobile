@@ -44,14 +44,16 @@ BaseScreen {
                     id: price
                     Layout.fillWidth: true
                     showLengthIndicator: false
+                    Layout.alignment: Qt.AlignBottom
                     inputMethodHints: Qt.ImhDigitsOnly
                     title: Qt.platform.os === "android" ? qsTr("Price") : qsTr("Price:")
                 }
 
                 CurrencyComboBox {
                     id: currencyCBox
+                    Layout.alignment: Qt.AlignBottom
+                    Layout.bottomMargin: Qt.platform.os === "android" ? 8 : 3
                     Layout.preferredWidth: Qt.platform.os === "android" ? 50 : 130
-                    Layout.alignment: Qt.AlignTop
                     dropdownTitle: Qt.platform.os === "android" ? qsTr("Currency") : qsTr("Currency:")
                 }
             }
