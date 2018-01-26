@@ -89,7 +89,6 @@ ColumnLayout {
 
         Text {
             id: attentionText
-            text: qsTr(" ")
             font.pointSize: 12
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft

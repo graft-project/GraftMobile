@@ -81,7 +81,7 @@ ColumnLayout {
                 right: parent.right
                 bottom: parent.bottom
                 rightMargin: 6
-                bottomMargin: 6
+                bottomMargin: 12
             }
             Material.accent: "#9E9E9E"
             onClicked: passwordMode =! passwordMode
@@ -106,7 +106,6 @@ ColumnLayout {
 
         Text {
             id: attentionText
-            text: qsTr("")
             font.pointSize: 12
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft
