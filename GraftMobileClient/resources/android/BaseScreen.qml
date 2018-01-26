@@ -5,15 +5,16 @@ import "../"
 
 Page {
     id: basePage
-    property var pushScreen
-    property var action
-    property alias screenHeader: appHeader
+
+    property var pushScreen: null
+    property var action: null
     property var specialBackMode: null
+    property alias screenHeader: appHeader
     property alias isMenuActive: appHeader.navigationButtonState
+    property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property alias screenDialog: attentionDialog
 
     signal attentionAccepted()
-    signal animationCompleted()
 
     header: Header {
         id: appHeader
@@ -36,18 +37,6 @@ Page {
         }
     }
 
-    PopupMessageLabel {
-        id: closeLabel
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            margins: 33
-        }
-        labelText: qsTr("Are you sure to close the application? \n Please, click again.")
-        opacityAnimator.onStopped: animationCompleted()
-    }
-
     MessageDialog {
         id: attentionDialog
         title: qsTr("Attention")
@@ -55,8 +44,7 @@ Page {
         onAccepted: attentionAccepted()
     }
 
-    function showCloseLabel() {
-        closeLabel.opacity = 1.0
-        closeLabel.timer.start()
+    function backButtonHandler() {
+        return isMenuActive
     }
 }

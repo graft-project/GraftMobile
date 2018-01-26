@@ -4,14 +4,15 @@ import QtQuick.Dialogs 1.2
 
 Page {
     id: basePage
-    property var pushScreen
-    property var action
-    property alias screenHeader: appHeader
+
+    property var pushScreen: null
+    property var action: null
     property var specialBackMode: null
+    property alias screenHeader: appHeader
     property alias screenDialog: attentionDialog
+    property alias isMenuVisible: appHeader.isNavigationButtonVisible
 
     signal attentionAccepted()
-    signal animationCompleted()
 
     header: Header {
         id: appHeader
@@ -35,5 +36,9 @@ Page {
         title: qsTr("Attention")
         icon: StandardIcon.Warning
         onAccepted: attentionAccepted()
+    }
+
+    function backButtonHandler() {
+        return isMenuActive
     }
 }
