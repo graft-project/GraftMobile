@@ -46,6 +46,7 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mQuickExchangeModel(nullptr)
     ,mBalanceTimer(-1)
     ,mAccountManager(new AccountManager())
+    ,mIsBalanceUpdated(false)
 {
     initSettings();
 }
@@ -86,6 +87,7 @@ void GraftBaseClient::resetData()
     mAccountManager->clearData();
     mBalances.clear();
     saveBalance();
+    mIsBalanceUpdated = false;
     emit balanceUpdated();
 }
 
@@ -317,6 +319,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         saveBalance();
+        mIsBalanceUpdated = true;
         emit balanceUpdated();
     }
 }
@@ -494,6 +497,11 @@ QStringList GraftBaseClient::seedSupernodes() const
 QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
 {
     return seed.simplified();
+}
+
+bool GraftBaseClient::isBalanceUpdated() const
+{
+    return mIsBalanceUpdated;
 }
 
 void GraftBaseClient::saveSettings() const
