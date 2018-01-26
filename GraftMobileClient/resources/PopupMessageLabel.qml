@@ -33,7 +33,7 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: 4000
+        interval: 2000
         onTriggered: opacityAnimator.running = true
     }
 }

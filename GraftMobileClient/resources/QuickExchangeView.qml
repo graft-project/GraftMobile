@@ -18,6 +18,7 @@ Pane {
             pathItemCount: 3
             offset: 1.5
             model: QuickExchangeModel
+            interactive: false
 
             delegate: QuickExchangeDelegate {
                 id: quickExchangeDelegate
