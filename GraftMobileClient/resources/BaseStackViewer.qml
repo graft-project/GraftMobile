@@ -11,7 +11,7 @@ StackView {
     focus: true
     onCurrentItemChanged: {
         if (isActive && menuLoader && menuLoader.status === Loader.Ready) {
-            menuLoader.item.interactive = currentItem.isMenuActive
+            menuLoader.item.interactive = currentItem.isMenuActive && currentItem.isMenuVisible
         }
     }
 
@@ -22,10 +22,13 @@ StackView {
     function backButtonHandler() {
         var back = false
         if (!busy && currentItem.isMenuActive === false) {
-                goBack()
-                currentItem.isMenuActive = true
-                back = true
+            if (currentItem.specialBackMode === null) {
+                pop()
+            } else {
+                currentItem.specialBackMode()
             }
+            back = true
+        }
         return back
     }
 }

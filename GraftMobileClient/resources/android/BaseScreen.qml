@@ -11,6 +11,7 @@ Page {
     property var specialBackMode: null
     property alias screenHeader: appHeader
     property alias isMenuActive: appHeader.navigationButtonState
+    property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property alias screenDialog: attentionDialog
 
     signal attentionAccepted()
@@ -41,5 +42,9 @@ Page {
         title: qsTr("Attention")
         icon: StandardIcon.Warning
         onAccepted: attentionAccepted()
+    }
+
+    function backButtonHandler() {
+        return isMenuActive
     }
 }

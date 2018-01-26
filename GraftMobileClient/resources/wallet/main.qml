@@ -109,6 +109,7 @@ GraftApplicationWindow {
             id: settingsStackViewer
             pushScreen: generalTransitions()
             appType: "wallet"
+            menuLoader: drawerLoader
             isActive: SwipeView.isCurrentItem
         }
 
