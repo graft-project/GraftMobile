@@ -17,22 +17,21 @@ ColumnLayout {
     property bool letterCountingMode: true
     property int maximumLength: 32767
     property alias passwordCharacter: editItem.passwordCharacter
-    property bool passMode: false
-    property bool confirmPass: false
+    property bool passwordMode: false
+    property bool wrongFieldColor: false
     property bool visibilityIcon: false
-    property alias matchPassText: matchText
+    property alias attentionText: attentionText
 
-    onPassModeChanged: {
+    spacing: 0
+    onPasswordModeChanged: {
         visibilityIcon = true
-        if (passMode) {
+        if (passwordMode) {
             passwordCharacter = '•'
             editItem.echoMode = TextInput.Password
         } else {
             editItem.echoMode = TextInput.Normal
         }
     }
-
-    spacing: 0
 
     Text {
         id: titleItem
@@ -44,11 +43,11 @@ ColumnLayout {
     TextField {
         id: editItem
         Layout.fillWidth: true
+        rightPadding: visibilityIcon ? 44 : 0
         verticalAlignment: Qt.AlignTop
         color: "#404040"
-        rightPadding: visibilityIcon ? 44 : 0
         maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
-        Material.accent: confirmPass ? "#f33939" : "#9E9E9E"
+        Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
         onWrapModeChanged: {
             if (wrapMode === TextField.NoWrap) {
                 Layout.fillHeight = false
@@ -68,12 +67,12 @@ ColumnLayout {
                 bottomMargin: 6
             }
             Material.accent: "#9E9E9E"
-            onClicked: passMode =! passMode
+            onClicked: passwordMode =! passwordMode
         }
 
         Item {
             height: 20
-            width: 40
+            width: height * 2
             anchors {
                 right: parent.right
                 bottom: parent.bottom
@@ -89,7 +88,8 @@ ColumnLayout {
         spacing: 0
 
         Text {
-            id: matchText
+            id: attentionText
+            text: qsTr(" ")
             font.pointSize: 12
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft

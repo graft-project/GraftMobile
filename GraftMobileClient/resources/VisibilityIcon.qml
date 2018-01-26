@@ -14,6 +14,7 @@ CheckBox {
             leftMargin: 1
         }
         fillMode: Image.PreserveAspectFit
-        source: visibilityControl.checked ? "qrc:/imgs/visibility_on.png" : "qrc:/imgs/visibility_off.png"
+        source: visibilityControl.checked ? "qrc:/imgs/visibility_on.png" :
+                                            "qrc:/imgs/visibility_off.png"
     }
 }

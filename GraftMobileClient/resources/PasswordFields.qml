@@ -3,39 +3,38 @@ import QtQuick.Layouts 1.3
 import "components"
 
 ColumnLayout {
-    property alias passwordText: password.text
-    property alias confirmPasswordText: confirmPassword.text
+    property alias passwordText: passwordField.text
+    property alias confirmPasswordText: confirmPasswordField.text
 
     spacing: 0
 
     LinearEditItem {
-        id: password
+        id: passwordField
         maximumLength: 50
         title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
-        passMode: true
-        onTextChanged: comparePassword(password.text, confirmPassword.text)
+        passwordMode: true
+        onTextChanged: comparePassword(passwordField.text, confirmPasswordField.text)
     }
 
     LinearEditItem {
-        id: confirmPassword
+        id: confirmPasswordField
         maximumLength: 50
         title: Qt.platform.os === "android" ? qsTr("Confirm password") : qsTr("Confirm password:")
-        passMode: true
-        matchPassText.text: qsTr("")
-        onTextChanged: comparePassword(password.text, confirmPassword.text)
+        passwordMode: true
+        onTextChanged: comparePassword(passwordField.text, confirmPasswordField.text)
     }
 
-    function comparePassword(pass, confirmPass) {
-        var compare = false
-        if (pass !== confirmPass) {
-            confirmPassword.matchPassText.text = qsTr("Your passwords don't match!")
-            confirmPassword.matchPassText.color = "#f33939"
-            compare = true
+    function comparePassword(password, confirmPassword) {
+        var unequal = false
+        if (password !== confirmPassword) {
+            confirmPasswordField.attentionText.text = qsTr("Your passwords don't match!")
+            confirmPasswordField.attentionText.color = "#F33939"
+            unequal = true
         } else {
-            confirmPassword.matchPassText.text = qsTr("Your passwords are the same!")
-            confirmPassword.matchPassText.color = "#3F3F3F"
+            confirmPasswordField.attentionText.text = qsTr("Your passwords are the same!")
+            confirmPasswordField.attentionText.color = "#3F3F3F"
         }
-        confirmPassword.confirmPass = compare
-        return compare
+        confirmPasswordField.wrongFieldColor = unequal
+        return unequal
     }
 }

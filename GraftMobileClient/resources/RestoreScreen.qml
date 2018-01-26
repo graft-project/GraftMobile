@@ -65,7 +65,6 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            Layout.topMargin: 15
             text: qsTr("Restore")
             onClicked: {
                 if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {
@@ -112,11 +111,13 @@ BaseScreen {
         if (GraftClient.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
             screenDialog.text = seedTextField.text.length === 0 ?
                         qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
-                        qsTr("The mnemonic phrase must contain 25 words. Please, enter the correct mnemonic phrase.")
+                        qsTr("The mnemonic phrase must contain 25 words. Please, enter " +
+                             "the correct mnemonic phrase.")
             screenDialog.open()
         } else {
             root.state = "restoreWalletPressed"
-            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text), passwordTextField.text)
+            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text),
+                                       passwordTextField.text)
         }
     }
 }

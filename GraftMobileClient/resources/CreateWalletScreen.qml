@@ -21,6 +21,7 @@ BaseScreen {
     }
 
     ColumnLayout {
+        spacing: 15
         anchors {
             fill: parent
             margins: 15
@@ -32,8 +33,6 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
-            Layout.topMargin: 15
-            Layout.bottomMargin: 15
             text: qsTr("Create New Wallet")
             onClicked: {
                 if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {
@@ -45,6 +44,7 @@ BaseScreen {
 
         Item {
             Layout.fillHeight: true
+            Layout.fillWidth: true
         }
 
         ColumnLayout {
