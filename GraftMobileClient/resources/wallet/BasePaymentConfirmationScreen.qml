@@ -17,7 +17,7 @@ BaseScreen {
 
         onPayReceived: {
             if (result !== true) {
-                pushScreen.openMainScreen()
+                pushScreen.openBalanceScreen()
             }
         }
 
@@ -34,6 +34,6 @@ BaseScreen {
 
     function cancelPay() {
         GraftClient.rejectPay()
-        pushScreen.openMainScreen()
+        pushScreen.openBalanceScreen()
     }
 }
