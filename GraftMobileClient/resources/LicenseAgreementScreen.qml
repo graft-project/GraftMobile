@@ -64,13 +64,11 @@ BaseScreen {
                     width: 5
                 }
                 clip: true
-
-                contentHeight: licenseText.height
+                contentHeight: mainText.height + additionalText.height
 
                 Item {
                     id: licenseText
                     width: root.width - 45
-                    height: Qt.platform.os === "ios" ? 750 : 710
 
                     Label {
                         id: mainText
@@ -108,11 +106,11 @@ BaseScreen {
                     }
 
                     Label {
+                        id: additionalText
                         anchors {
                             left: parent.left
                             right: parent.right
                             top: mainText.bottom
-                            bottom: parent.bottom
                         }
 
                         wrapMode: Label.WordWrap
