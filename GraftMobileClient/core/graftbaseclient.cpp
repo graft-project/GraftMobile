@@ -364,10 +364,6 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
         mQuickExchangeModel = new QuickExchangeModel(this);
         mQuickExchangeModel->add(QStringLiteral("US Dollar"), QStringLiteral("USD"),
                                  QString(), true);
-        for (CurrencyItem *item : mCurrencyModel->currencies())
-        {
-            mQuickExchangeModel->add(item->name(), item->code());
-        }
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
     }
@@ -429,12 +425,7 @@ void GraftBaseClient::updateQuickExchange(double cost)
     QStringList codes = mQuickExchangeModel->codeList();
     for (int i = 0; i < codes.count(); ++i)
     {
-        double course = 1.0;
-        if (codes.value(i) != QLatin1String("USD"))
-        {
-            course = (double)qrand() / RAND_MAX;
-        }
-        mQuickExchangeModel->updatePrice(codes.value(i), QString::number(course * cost));
+        mQuickExchangeModel->updatePrice(codes.value(i), QString::number(cost));
     }
 }
 
