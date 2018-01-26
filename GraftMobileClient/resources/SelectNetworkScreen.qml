@@ -10,7 +10,7 @@ BaseScreen {
     title: qsTr("Select Network")
     screenHeader {
         isNavigationButtonVisible: false
-        navigationButtonState: true
+        navigationButtonState: Qt.platform.os !== "ios"
     }
 
     Component.onCompleted: mainNet.checked = true
