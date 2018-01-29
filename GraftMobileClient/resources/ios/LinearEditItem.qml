@@ -42,13 +42,15 @@ ColumnLayout {
 
         TextField {
             id: editItem
-            anchors.fill: parent
-//            Layout.bottomMargin: -12
+            anchors {
+                fill: parent
+                bottomMargin: -12
+            }
+            leftPadding: titleItem.width
             rightPadding: visibilityIcon ? 42 : 0
+            bottomPadding: 30
             verticalAlignment: Qt.AlignTop
             color: "#404040"
-            leftPadding: titleItem.width
-            bottomPadding: 30
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
             onWrapModeChanged: field.resizeField()
@@ -62,13 +64,12 @@ ColumnLayout {
                 bottom: parent.bottom
                 topMargin: 8
             }
-            font.pointSize: 10
             rightPadding: 5
+            font.pointSize: editItem.font.pointSize
             color: "#8E8E93"
         }
 
         VisibilityIcon {
-            z: 1
             visible: visibilityIcon
             anchors {
                 right: parent.right
@@ -76,7 +77,6 @@ ColumnLayout {
                 rightMargin: 6
                 bottomMargin: 14
             }
-            Material.accent: "#9E9E9E"
             onClicked: passwordMode =! passwordMode
         }
 
@@ -101,19 +101,22 @@ ColumnLayout {
 
         Text {
             id: attentionText
-            font.pointSize: 12
-            Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft
+            visible: visibilityIcon
+            font.pointSize: 12
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Text {
             id: textCount
+            Layout.alignment: Qt.AlignRight
             text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
                                                          wordCounting()).arg(maximumLength)
             color: "#8E8E93"
             font.pointSize: 12
-            Layout.topMargin: 0
-            Layout.alignment: Qt.AlignRight
         }
     }
 

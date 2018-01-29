@@ -37,14 +37,14 @@ ColumnLayout {
     Text {
         id: titleItem
         Layout.fillWidth: true
-        color: "#BBBBBB"
         font.pointSize: 12
+        color: "#BBBBBB"
     }
 
     Item {
         id: field
         Layout.fillWidth: true
-        Layout.preferredHeight: 44
+        Layout.preferredHeight: 43
 
         TextField {
             id: editItem
@@ -58,7 +58,6 @@ ColumnLayout {
         }
 
         VisibilityIcon {
-            z: 1
             visible: visibilityIcon
             anchors {
                 right: parent.right
@@ -84,9 +83,9 @@ ColumnLayout {
 
         Text {
             id: attentionText
+            Layout.alignment: Qt.AlignLeft
             visible: visibilityIcon
             font.pointSize: 12
-            Layout.alignment: Qt.AlignLeft
         }
 
         Item {
@@ -95,11 +94,11 @@ ColumnLayout {
 
         Text {
             id: textCount
+            Layout.alignment: Qt.AlignRight
             text: qsTr("%1 / %2").arg(letterCountingMode ? editItem.displayText.length :
                                                            wordCounting()).arg(maximumLength)
             color: "#BBBBBB"
             font.pointSize: 12
-            Layout.alignment: Qt.AlignRight
         }
     }
 
