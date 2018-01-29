@@ -21,7 +21,6 @@ ColumnLayout {
     property bool wrongFieldColor: false
     property bool visibilityIcon: false
     property alias attentionText: attentionText
-    property bool inlineTitle: false
 
     spacing: 0
     onPasswordModeChanged: {
@@ -38,7 +37,7 @@ ColumnLayout {
     Item {
         id: field
         Layout.fillWidth: true
-        Layout.preferredHeight: 44
+        Layout.preferredHeight: 46
 
         TextField {
             id: editItem
@@ -75,7 +74,6 @@ ColumnLayout {
                 right: parent.right
                 bottom: parent.bottom
                 rightMargin: 6
-                bottomMargin: 14
             }
             onClicked: passwordMode =! passwordMode
         }
@@ -83,15 +81,11 @@ ColumnLayout {
         function resizeField() {
             if (editItem.wrapMode === TextField.NoWrap) {
                 Layout.fillHeight = false
-                leftPadding = titleItem.width
-                topPadding = 0
             } else {
+                editItem.topPadding = 30
+                editItem.leftPadding = 0
                 Layout.fillHeight = true
-                if (!inlineTitle) {
-                    leftPadding = 0
-                    topPadding = 30
-                    Layout.maximumHeight = 200
-                }
+                Layout.maximumHeight = 200
             }
         }
     }
