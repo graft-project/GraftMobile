@@ -15,7 +15,7 @@ Text {
         target: button
         from: 1.0
         to: 0.2
-        duration: 1000
+        duration: 300
     }
 
     MouseArea {

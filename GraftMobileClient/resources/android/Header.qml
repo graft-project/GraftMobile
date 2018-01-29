@@ -38,28 +38,9 @@ BaseHeader {
             onButtonClicked: navigationButtonClicked()
         }
 
-//        RoundButton {
-//            id: navigationButton
-//            Layout.preferredHeight: parent.height - 10
-//            Layout.preferredWidth: height
-//            Layout.alignment: Qt.AlignLeft
-//            visible: isNavigationButtonVisible
-//            flat: true
-
-//            Image {
-//                id: menuIcon
-//                width: 20
-//                height: 18
-//                anchors.centerIn: parent
-//                source: "qrc:/imgs/back_icon.png"
-//            }
-
-//            onClicked: navigationButtonClicked()
-//        }
-
         Text {
             Layout.fillWidth: true
-            Layout.leftMargin: isNavigationButtonVisible ? 25 : 5
+            Layout.leftMargin: isNavigationButtonVisible ? 25 : 15
             Layout.alignment: Qt.AlignLeft
             text: rootItem.headerText
             font {
@@ -73,6 +54,7 @@ BaseHeader {
             visible: rootItem.cartEnable
             Layout.preferredHeight: 30
             Layout.preferredWidth: 30
+            Layout.rightMargin: rootItem.actionButtonState ? 0 : 15
             Layout.alignment: Qt.AlignRight
             productCount: rootItem.selectedProductCount
         }
@@ -88,22 +70,5 @@ BaseHeader {
             image.source: "qrc:/imgs/done.png"
             onButtonClicked: actionButtonClicked()
         }
-
-//        RoundButton {
-//            Layout.preferredHeight: parent.height - 10
-//            Layout.preferredWidth: height
-//            Layout.alignment: Qt.AlignRight
-//            visible: rootItem.actionButtonState
-//            flat: true
-
-//            Image {
-//                height: 15
-//                width: 23
-//                anchors.centerIn: parent
-//                source: "qrc:/imgs/done.png"
-//            }
-
-//            onClicked: actionButtonClicked()
-//        }
     }
 }
