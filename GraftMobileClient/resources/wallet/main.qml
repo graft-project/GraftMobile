@@ -3,12 +3,15 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import org.graft 1.0
+import com.device.detector 1.0
 import "../"
 import "../components"
 
 GraftApplicationWindow {
     id: root
     title: qsTr("WALLET")
+
+    handleBackEvent: mainLayout.backButtonHandler
 
     Loader {
         id: drawerLoader
@@ -21,7 +24,7 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: Qt.platform.os === "ios" ? 49 : 0
+        height: Qt.platform.os === "ios" ? Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -69,10 +72,10 @@ GraftApplicationWindow {
 
     SwipeView {
         id: mainLayout
+        focus: true
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
-
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
                 graftApplicationFooter.visible = currentIndex > 1
@@ -107,7 +110,19 @@ GraftApplicationWindow {
             id: settingsStackViewer
             pushScreen: generalTransitions()
             appType: "wallet"
+            menuLoader: drawerLoader
             isActive: SwipeView.isCurrentItem
+        }
+
+        function backButtonHandler() {
+            if (!currentItem.backButtonHandler()) {
+                if (!allowClose) {
+                    showCloseLabel()
+                } else {
+                    Qt.quit()
+                }
+                allowClose = !allowClose
+            }
         }
     }
 

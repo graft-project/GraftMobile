@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.device.detector 1.0
 import "../components"
 
 BaseGraftToolBar {
@@ -15,7 +16,11 @@ BaseGraftToolBar {
 
     RowLayout {
         spacing: 18
-        anchors.centerIn: parent
+        anchors {
+            topMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 3 : 0
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+        }
 
         ToolBarButton  {
             id: walletButton

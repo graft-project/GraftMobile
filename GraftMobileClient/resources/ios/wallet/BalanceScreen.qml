@@ -30,6 +30,7 @@ BaseBalanceScreen {
             Layout.fillWidth: true
             Layout.preferredHeight: 60
             Layout.bottomMargin: 15
+            visible: false
             onClicked: pushScreen.openAddAccountScreen()
         }
 

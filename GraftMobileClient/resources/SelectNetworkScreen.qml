@@ -2,12 +2,16 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import com.device.detector 1.0
 import com.graft.design 1.0
 import "components"
 
 BaseScreen {
     title: qsTr("Select Network")
-    screenHeader.isNavigationButtonVisible: false
+    screenHeader {
+        isNavigationButtonVisible: false
+        navigationButtonState: Qt.platform.os !== "ios"
+    }
 
     Component.onCompleted: mainNet.checked = true
 
@@ -15,7 +19,10 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            margins: 15
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
         }
 
         RadioButton {

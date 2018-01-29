@@ -46,6 +46,7 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mQuickExchangeModel(nullptr)
     ,mBalanceTimer(-1)
     ,mAccountManager(new AccountManager())
+    ,mIsBalanceUpdated(false)
 {
     initSettings();
 }
@@ -86,6 +87,7 @@ void GraftBaseClient::resetData()
     mAccountManager->clearData();
     mBalances.clear();
     saveBalance();
+    mIsBalanceUpdated = false;
     emit balanceUpdated();
 }
 
@@ -252,6 +254,17 @@ void GraftBaseClient::requestRestoreAccount(GraftGenericAPI *api, const QString 
     }
 }
 
+void GraftBaseClient::requestTransfer(GraftGenericAPI *api, const QString &address,
+                                      const QString &amount)
+{
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::transferReceived,
+                this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
+        api->transfer(address, amount);
+    }
+}
+
 void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
 {
     if (api)
@@ -306,8 +319,14 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         saveBalance();
+        mIsBalanceUpdated = true;
         emit balanceUpdated();
     }
+}
+
+void GraftBaseClient::receiveTransfer(int result)
+{
+    emit transferReceived(result == 0);
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
@@ -345,10 +364,6 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
         mQuickExchangeModel = new QuickExchangeModel(this);
         mQuickExchangeModel->add(QStringLiteral("US Dollar"), QStringLiteral("USD"),
                                  QString(), true);
-        for (CurrencyItem *item : mCurrencyModel->currencies())
-        {
-            mQuickExchangeModel->add(item->name(), item->code());
-        }
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
     }
@@ -410,12 +425,7 @@ void GraftBaseClient::updateQuickExchange(double cost)
     QStringList codes = mQuickExchangeModel->codeList();
     for (int i = 0; i < codes.count(); ++i)
     {
-        double course = 1.0;
-        if (codes.value(i) != QLatin1String("USD"))
-        {
-            course = (double)qrand() / RAND_MAX;
-        }
-        mQuickExchangeModel->updatePrice(codes.value(i), QString::number(course * cost));
+        mQuickExchangeModel->updatePrice(codes.value(i), QString::number(cost));
     }
 }
 
@@ -478,6 +488,11 @@ QStringList GraftBaseClient::seedSupernodes() const
 QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
 {
     return seed.simplified();
+}
+
+bool GraftBaseClient::isBalanceUpdated() const
+{
+    return mIsBalanceUpdated;
 }
 
 void GraftBaseClient::saveSettings() const

@@ -65,6 +65,11 @@ void GraftWalletClient::restoreAccount(const QString &seed, const QString &passw
     GraftBaseClient::requestRestoreAccount(mApi, seed, password);
 }
 
+void GraftWalletClient::transfer(const QString &address, const QString &amount)
+{
+    GraftBaseClient::requestTransfer(mApi, address, amount);
+}
+
 void GraftWalletClient::getPOSData(const QString &data)
 {
     if (!data.isEmpty())

@@ -38,6 +38,7 @@ public:
     void getBalance();
     void getSeed();
     void restoreAccount(const QString &seed, const QString &password);
+    void transfer(const QString &address, const QString &amount);
 
     static double toCoins(double atomic);
     static double toAtomic(double coins);
@@ -51,7 +52,7 @@ signals:
     void restoreAccountReceived(const QByteArray &accountData, const QString &password,
                                 const QString &address, const QString &viewKey,
                                 const QString &seed);
-    void test(int v);
+    void transferReceived(int result);
 
 protected:
     QString accountPlaceholder() const;
@@ -66,6 +67,7 @@ private slots:
     void receiveGetBalanceResponse();
     void receiveGetSeedResponse();
     void receiveRestoreAccountResponse();
+    void receiveTransferResponse();
 
 protected:
     QNetworkAccessManager *mManager;

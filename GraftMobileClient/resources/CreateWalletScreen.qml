@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.detector 1.0
 import "components"
 
 BaseScreen {
@@ -24,7 +25,10 @@ BaseScreen {
         spacing: 15
         anchors {
             fill: parent
-            margins: 15
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
         }
 
         PasswordFields {
