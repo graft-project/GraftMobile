@@ -27,19 +27,38 @@ BaseHeader {
             Layout.preferredWidth: 30
             Layout.alignment: Qt.AlignLeft
 
-            Text {
+            HeaderButton {
                 id: navigationButton
                 anchors.centerIn: parent
                 visible: rootItem.navigationButtonState
                 text: qsTr("Back")
-                font.pointSize: 17
-                color: ColorFactory.color(DesignFactory.LightText)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: navigationButtonClicked()
-                }
+                onButtonClicked: navigationButtonClicked()
             }
+
+//            Text {
+//                id: navigationButton
+//                anchors.centerIn: parent
+//                visible: rootItem.navigationButtonState
+//                text: qsTr("Back")
+//                font.pointSize: 17
+//                color: ColorFactory.color(DesignFactory.LightText)
+
+//                OpacityAnimator {
+//                    id: opacityAnimator
+//                    target: navigationButton
+//                    from: 1.0
+//                    to: 0.2
+//                    duration: 1000
+//                }
+
+//                MouseArea {
+//                    id: mouseArea
+//                    anchors.fill: parent
+//                    onClicked: navigationButtonClicked()
+//                    onPressed: opacityAnimator.running = true
+//                    onReleased: navigationButton.opacity = 1.0
+//                }
+//            }
         }
 
         Item {
@@ -69,19 +88,27 @@ BaseHeader {
                 anchors.centerIn: parent
             }
 
-            Text {
+            HeaderButton {
                 id: actionButton
                 anchors.centerIn: parent
                 visible: rootItem.actionButtonState
                 text: qsTr("Done")
-                font.pointSize: 17
-                color: ColorFactory.color(DesignFactory.LightText)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: actionButtonClicked()
-                }
+                onButtonClicked: actionButtonClicked()
             }
+
+//            Text {
+//                id: actionButton
+//                anchors.centerIn: parent
+//                visible: rootItem.actionButtonState
+//                text: qsTr("Done")
+//                font.pointSize: 17
+//                color: ColorFactory.color(DesignFactory.LightText)
+
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: actionButtonClicked()
+//                }
+//            }
         }
     }
 }
