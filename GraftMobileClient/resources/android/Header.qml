@@ -52,7 +52,7 @@ BaseHeader {
             text: rootItem.headerText
             font {
                 bold: true
-                pointSize: 17
+                pixelSize: 17
             }
             color: ColorFactory.color(DesignFactory.LightText)
         }
