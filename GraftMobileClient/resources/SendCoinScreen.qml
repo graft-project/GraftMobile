@@ -7,7 +7,7 @@ import "components"
 BaseScreen {
     id: sendCoinScreen
 
-    title: qsTr("Send Coins")
+    title: qsTr("Send")
     screenHeader {
         actionButtonState: true
         navigationButtonState: Qt.platform.os !== "android"
@@ -62,6 +62,7 @@ BaseScreen {
                         Layout.maximumHeight: 130
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
+                        inputMethodHints: Qt.ImhNoPredictiveText
                         title: Qt.platform.os === "ios" ? qsTr("Receivers address:") : qsTr("Receivers address")
                     }
 
@@ -159,8 +160,7 @@ BaseScreen {
 
     function checkingData() {
         if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 100)) {
-            screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("You entered the wrong account number!\nPlease input correct account number")
+            screenDialog.text = qsTr("You entered the wrong account number! Please input correct account number")
             screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")

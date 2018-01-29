@@ -12,6 +12,7 @@ BaseBalanceScreen {
 
         onNetworkTypeChanged: {
             payButton.enabled = GraftClient.networkType()
+            sendCoinsButton.enabled = GraftClient.networkType()
         }
     }
 
@@ -40,6 +41,7 @@ BaseBalanceScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             text: qsTr("Send")
+            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
             onClicked: pushScreen.openSendCoinScreen()
         }
 
