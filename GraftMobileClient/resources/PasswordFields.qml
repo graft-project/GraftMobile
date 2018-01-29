@@ -34,7 +34,7 @@ ColumnLayout {
             confirmPasswordField.attentionText.text = qsTr("Your passwords are the same!")
             confirmPasswordField.attentionText.color = "#3F3F3F"
             if (confirmPasswordField.text.length === 0) {
-                confirmPasswordField.attentionText.text = qsTr("")
+                confirmPasswordField.attentionText.visible = false
             }
         }
         confirmPasswordField.wrongFieldColor = unequal

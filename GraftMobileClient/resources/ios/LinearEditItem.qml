@@ -35,31 +35,23 @@ ColumnLayout {
         }
     }
 
-    TextField {
-        id: editItem
+    Item {
+        id: field
         Layout.fillWidth: true
-        Layout.bottomMargin: -12
-        rightPadding: visibilityIcon ? 42 : 0
-        verticalAlignment: Qt.AlignTop
-        color: "#404040"
-        leftPadding: titleItem.width
-        bottomPadding: 30
-        maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
-        Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+        Layout.preferredHeight: 44
 
-        onWrapModeChanged: {
-            if (wrapMode === TextField.NoWrap) {
-                Layout.fillHeight = false
-                leftPadding = titleItem.width
-                topPadding = 0
-            } else {
-                Layout.fillHeight = true
-                if (!inlineTitle) {
-                    leftPadding = 0
-                    topPadding = 30
-                    Layout.maximumHeight = 200
-                }
-            }
+        TextField {
+            id: editItem
+            anchors.fill: parent
+//            Layout.bottomMargin: -12
+            rightPadding: visibilityIcon ? 42 : 0
+            verticalAlignment: Qt.AlignTop
+            color: "#404040"
+            leftPadding: titleItem.width
+            bottomPadding: 30
+            maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
+            Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+            onWrapModeChanged: field.resizeField()
         }
 
         Text {
@@ -70,7 +62,7 @@ ColumnLayout {
                 bottom: parent.bottom
                 topMargin: 8
             }
-            font.pointSize: parent.font.pointSize
+            font.pointSize: 10
             rightPadding: 5
             color: "#8E8E93"
         }
@@ -88,18 +80,18 @@ ColumnLayout {
             onClicked: passwordMode =! passwordMode
         }
 
-        Item {
-            visible: visibilityIcon
-            height: 55
-            width: 42
-            anchors {
-                right: parent.right
-                bottom: parent.bottom
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {}
+        function resizeField() {
+            if (editItem.wrapMode === TextField.NoWrap) {
+                Layout.fillHeight = false
+                leftPadding = titleItem.width
+                topPadding = 0
+            } else {
+                Layout.fillHeight = true
+                if (!inlineTitle) {
+                    leftPadding = 0
+                    topPadding = 30
+                    Layout.maximumHeight = 200
+                }
             }
         }
     }

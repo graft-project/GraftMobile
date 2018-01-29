@@ -8,6 +8,7 @@ CheckBox {
     indicator.height: 2
 
     Image {
+        z: 1
         anchors {
             fill: parent
             bottomMargin: 1

@@ -41,21 +41,20 @@ ColumnLayout {
         font.pointSize: 12
     }
 
-    TextField {
-        id: editItem
+    Item {
+        id: field
         Layout.fillWidth: true
-        rightPadding: visibilityIcon ? 44 : 0
-        verticalAlignment: Qt.AlignTop
-        color: "#404040"
-        maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
-        Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
-        onWrapModeChanged: {
-            if (wrapMode === TextField.NoWrap) {
-                Layout.fillHeight = false
-            } else {
-                Layout.fillHeight = true
-                Layout.maximumHeight = 200
-            }
+        Layout.preferredHeight: 44
+
+        TextField {
+            id: editItem
+            anchors.fill: parent
+            rightPadding: visibilityIcon ? 44 : 0
+            verticalAlignment: Qt.AlignTop
+            color: "#404040"
+            maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
+            Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+            onWrapModeChanged: field.resizeField()
         }
 
         VisibilityIcon {
@@ -67,22 +66,15 @@ ColumnLayout {
                 rightMargin: 6
                 bottomMargin: 6
             }
-            Material.accent: "#9E9E9E"
             onClicked: passwordMode =! passwordMode
         }
 
-        Item {
-            visible: visibilityIcon
-            height: 55
-            width: 42
-            anchors {
-                right: parent.right
-                bottom: parent.bottom
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {}
+        function resizeField() {
+            if (editItem.wrapMode === TextField.NoWrap) {
+                Layout.fillHeight = false
+            } else {
+                Layout.fillHeight = true
+                Layout.maximumHeight = 200
             }
         }
     }
@@ -92,9 +84,13 @@ ColumnLayout {
 
         Text {
             id: attentionText
+            visible: visibilityIcon
             font.pointSize: 12
-            Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Text {

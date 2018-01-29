@@ -93,7 +93,6 @@ BaseScreen {
 
                 LinearEditItem {
                     id: portTextField
-                    Layout.preferredWidth: root.width / 4
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
