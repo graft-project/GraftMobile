@@ -26,17 +26,10 @@ ColumnLayout {
 
     function comparePassword(password, confirmPassword) {
         var unequal = false
-        if (password !== confirmPassword) {
-            confirmPasswordField.attentionText.text = qsTr("Your passwords don't match!")
-            confirmPasswordField.attentionText.color = "#F33939"
-            unequal = true
-        } else {
-            confirmPasswordField.attentionText.text = qsTr("Your passwords are the same!")
-            confirmPasswordField.attentionText.color = "#3F3F3F"
-            if (confirmPasswordField.text.length === 0) {
-                confirmPasswordField.attentionText.text = qsTr("")
-            }
-        }
+        confirmPasswordField.attentionText = password !== confirmPassword ?
+                    qsTr("Your passwords don't match!") : confirmPasswordField.text.length === 0 ?
+                    qsTr("") : qsTr("Your passwords are the same!")
+        unequal = password !== confirmPassword
         confirmPasswordField.wrongFieldColor = unequal
         return unequal
     }

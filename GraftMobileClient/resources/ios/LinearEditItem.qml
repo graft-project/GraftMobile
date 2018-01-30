@@ -20,7 +20,7 @@ ColumnLayout {
     property bool passwordMode: false
     property bool wrongFieldColor: false
     property bool visibilityIcon: false
-    property alias attentionText: attentionText
+    property alias attentionText: attentionText.text
 
     spacing: 0
     onPasswordModeChanged: {
@@ -98,6 +98,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignLeft
             visible: visibilityIcon
             font.pointSize: 12
+            color: wrongFieldColor ? "#F33939" : "#3F3F3F"
         }
 
         Item {
