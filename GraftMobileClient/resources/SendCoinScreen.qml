@@ -11,6 +11,7 @@ BaseScreen {
     screenHeader {
         actionButtonState: true
         navigationButtonState: Qt.platform.os !== "android"
+        actionText:  Qt.platform.os === "ios" ? qsTr("Send") : qsTr("")
     }
     action: checkingData
 
@@ -45,10 +46,7 @@ BaseScreen {
             ColumnLayout {
                 anchors {
                     fill: parent
-                    topMargin: 15
-                    leftMargin: 15
-                    rightMargin: 15
-                    bottomMargin: 15
+                    margins: 15
                 }
                 spacing: 0
 
@@ -88,7 +86,7 @@ BaseScreen {
                             pointSize: 16
                             bold: true
                         }
-                        text: "GRF"
+                        text: qsTr("GRF")
                     }
                 }
 
