@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
 import com.graft.design 1.0
 import "../"
 
@@ -35,7 +34,7 @@ BaseHeader {
             image.width: 20
             image.height: 18
             image.source: "qrc:/imgs/back_icon.png"
-            onButtonClicked: navigationButtonClicked()
+            onClicked: navigationButtonClicked()
         }
 
         Text {
@@ -68,7 +67,7 @@ BaseHeader {
             image.width: 23
             image.height: 15
             image.source: "qrc:/imgs/done.png"
-            onButtonClicked: actionButtonClicked()
+            onClicked: actionButtonClicked()
         }
     }
 }

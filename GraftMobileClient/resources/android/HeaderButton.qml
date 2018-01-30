@@ -5,7 +5,6 @@ RoundButton {
     id: button
 
     property alias image: buttonImage
-    signal buttonClicked()
 
     flat: true
 
@@ -13,6 +12,4 @@ RoundButton {
         id: buttonImage
         anchors.centerIn: parent
     }
-
-    onClicked: buttonClicked()
 }
