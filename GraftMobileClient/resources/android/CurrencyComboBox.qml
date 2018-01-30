@@ -14,7 +14,7 @@ ColumnLayout {
     Text {
         id: dropdownTitle
         color: "#BBBBBB"
-        font.pointSize: 12
+        font.pixelSize: 12
         Layout.fillWidth: true
     }
 

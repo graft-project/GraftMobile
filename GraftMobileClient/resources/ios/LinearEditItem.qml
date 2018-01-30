@@ -52,7 +52,7 @@ ColumnLayout {
                 bottom: parent.bottom
                 topMargin: 8
             }
-            font.pointSize: parent.font.pointSize
+            font.pixelSize: parent.font.pixelSize
             rightPadding: 5
             color: "#8e8e93"
         }
@@ -62,7 +62,7 @@ ColumnLayout {
         id: textCount
         Layout.topMargin: 0
         Layout.alignment: Qt.AlignRight
-        font.pointSize: 12
+        font.pixelSize: 12
         text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
                                                        wordCounting()).arg(maximumLength)
         color: "#8e8e93"

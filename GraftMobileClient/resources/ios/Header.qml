@@ -32,7 +32,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 visible: rootItem.navigationButtonState
                 text: qsTr("Back")
-                font.pointSize: 17
+                font.pixelSize: 17
                 color: ColorFactory.color(DesignFactory.LightText)
 
                 MouseArea {
@@ -51,7 +51,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 font {
                     bold: true
-                    pointSize: 17
+                    pixelSize: 17
                 }
                 color: ColorFactory.color(DesignFactory.LightText)
             }
@@ -74,7 +74,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 visible: rootItem.actionButtonState
                 text: qsTr("Done")
-                font.pointSize: 17
+                font.pixelSize: 17
                 color: ColorFactory.color(DesignFactory.LightText)
 
                 MouseArea {

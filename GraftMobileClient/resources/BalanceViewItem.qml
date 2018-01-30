@@ -66,13 +66,13 @@ Rectangle {
 
                         Text {
                             text: qsTr("Main Balance")
-                            font.pointSize: 20
+                            font.pixelSize: 20
                             color: "#233146"
                         }
 
                         Text {
                             text: amountUnlockGraftCost
-                            font.pointSize: 20
+                            font.pixelSize: 20
                             color: "#404040"
                             Layout.fillWidth: true
                             Layout.rightMargin: 12
@@ -87,13 +87,13 @@ Rectangle {
 
                         Text {
                             text: qsTr("Unlocked")
-                            font.pointSize: 12
+                            font.pixelSize: 12
                             color: "#3d4757"
                         }
 
                         Text {
                             id: updateLabel
-                            font.pointSize: 12
+                            font.pixelSize: 12
                             color: "#3d4757"
 
                             Timer {
@@ -159,13 +159,13 @@ Rectangle {
 
                         Text {
                             text: qsTr("Main Balance")
-                            font.pointSize: 20
+                            font.pixelSize: 20
                             color: "#233146"
                         }
 
                         Text {
                             text: amountLockGraftCost
-                            font.pointSize: 20
+                            font.pixelSize: 20
                             color: "#d1cfc8"
                             Layout.fillWidth: true
                             Layout.rightMargin: 12
@@ -176,7 +176,7 @@ Rectangle {
 
                     Text {
                         text: qsTr("Locked")
-                        font.pointSize: 12
+                        font.pixelSize: 12
                         color: "#3d4757"
                     }
                 }

@@ -33,7 +33,7 @@ Image {
             id: counterText
             anchors.centerIn: parent
             font {
-                pointSize: 10
+                pixelSize: 10
                 bold: true
             }
             color: ColorFactory.color(DesignFactory.LightText)
