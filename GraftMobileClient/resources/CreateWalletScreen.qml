@@ -39,7 +39,7 @@ BaseScreen {
             id: createWalletButton
             text: qsTr("Create New Wallet")
             onClicked: {
-                if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {
+                if (!passwordTextField.comparePassword(passwordTextField.passwordText, passwordTextField.confirmPasswordText)) {
                     root.state = "createWalletPressed"
                     GraftClient.createAccount(passwordTextField.passwordText)
                 }

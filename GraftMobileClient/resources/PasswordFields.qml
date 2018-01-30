@@ -26,10 +26,13 @@ ColumnLayout {
 
     function comparePassword(password, confirmPassword) {
         var unequal = false
-        confirmPasswordField.attentionText = password !== confirmPassword ?
-                    qsTr("Your passwords don't match!") : confirmPasswordField.text.length === 0 ?
-                    qsTr("") : qsTr("Your passwords are the same!")
-        unequal = password !== confirmPassword
+        if (password !== confirmPassword) {
+            confirmPasswordField.attentionText = qsTr("Your passwords don't match!")
+            unequal = true
+        } else {
+            confirmPasswordField.attentionText = confirmPasswordField.text.length === 0 ?
+                        qsTr("") : qsTr("Your passwords are the same!")
+        }
         confirmPasswordField.wrongFieldColor = unequal
         return unequal
     }
