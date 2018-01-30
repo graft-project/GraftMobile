@@ -19,7 +19,7 @@ RowLayout {
         id: label
         color: "#ffffff"
         font {
-            pointSize: isBold ? 20 : 18
+            pixelSize: isBold ? 20 : 18
             bold: isBold
         }
     }

@@ -33,7 +33,7 @@ Button {
             Text {
                 id: selectText
                 Layout.alignment: Qt.AlignLeft
-                font.pointSize: 20
+                font.pixelSize: 20
                 color: "#3A3E3C"
             }
         }

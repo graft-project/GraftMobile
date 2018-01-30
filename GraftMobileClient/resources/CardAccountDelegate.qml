@@ -16,7 +16,7 @@ Item {
 
         Text {
             id: walletName
-            font.pointSize: 14
+            font.pixelSize: 14
             Layout.alignment: Qt.AlignLeft
             color: ColorFactory.color(DesignFactory.MainText)
         }
@@ -34,7 +34,7 @@ Item {
 
             Text {
                 id: walletNumber
-                font.pointSize: 14
+                font.pixelSize: 14
                 Layout.alignment: Qt.AlignRight
                 color: ColorFactory.color(DesignFactory.MainText)
             }

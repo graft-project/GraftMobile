@@ -35,7 +35,7 @@ MenuItem {
                 font {
                     bold: true
                     family: "Liberation Sans"
-                    pointSize: 15
+                    pixelSize: 15
                 }
             }
 

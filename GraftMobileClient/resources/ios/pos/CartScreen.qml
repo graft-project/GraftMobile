@@ -40,7 +40,7 @@ BaseCartScreen {
                 text: qsTr("SCAN WITH WALLET")
                 font {
                     bold: true
-                    pointSize: 16
+                    pixelSize: 16
                 }
                 Layout.alignment: Qt.AlignCenter
             }

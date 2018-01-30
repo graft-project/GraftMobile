@@ -22,7 +22,7 @@ ColumnLayout {
         id: titleItem
         Layout.fillWidth: true
         color: "#BBBBBB"
-        font.pointSize: 12
+        font.pixelSize: 12
     }
 
     TextField {
@@ -47,7 +47,7 @@ ColumnLayout {
         text: qsTr("%1 / %2").arg(letterCountingMode ? editItem.displayText.length :
                                                        wordCounting()).arg(maximumLength)
         color: "#BBBBBB"
-        font.pointSize: 12
+        font.pixelSize: 12
     }
 
     function wordCounting() {
