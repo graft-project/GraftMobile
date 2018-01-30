@@ -46,3 +46,34 @@ int DeviceDetector::detectDevice()
     }
     return currentDevice;
 }
+
+bool DeviceDetector::isDesktop()
+{
+#ifdef Q_OS_WIN
+    return true;
+#endif
+#ifdef Q_OS_MAC
+    return true;
+#endif
+#ifdef Q_OS_LINUX
+    return true;
+#endif
+    return false;
+}
+
+bool DeviceDetector::isMobile()
+{
+#ifdef Q_OS_IOS
+    return true;
+#endif
+#ifdef Q_OS_ANDROID
+    return true;
+#endif
+    return false;
+}
+
+bool DeviceDetector::isPlatform(DeviceDetector::PlatformFlags platform)
+{
+
+}
+
