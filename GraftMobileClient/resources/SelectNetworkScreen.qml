@@ -8,7 +8,10 @@ import "components"
 
 BaseScreen {
     title: qsTr("Select Network")
-    screenHeader.isNavigationButtonVisible: false
+    screenHeader {
+        isNavigationButtonVisible: false
+        navigationButtonState: Qt.platform.os !== "ios"
+    }
 
     Component.onCompleted: mainNet.checked = true
 

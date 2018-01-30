@@ -57,7 +57,7 @@ Item {
                 title: qsTr("Price")
                 Layout.fillWidth: true
                 Layout.preferredHeight: 40
-                Layout.alignment: Qt.AlignTop
+                Layout.alignment: Qt.AlignBottom
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
@@ -69,7 +69,8 @@ Item {
                 id: graftComboBox
                 Layout.preferredWidth: 50
                 Layout.preferredHeight: 40
-                Layout.alignment: Qt.AlignTop
+                Layout.bottomMargin: Qt.platform.os === "android" ? 8 : 3
+                Layout.alignment: Qt.AlignBottom
                 dropdownTitle: qsTr("Currency")
             }
         }

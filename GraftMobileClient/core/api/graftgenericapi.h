@@ -53,7 +53,6 @@ signals:
                                 const QString &address, const QString &viewKey,
                                 const QString &seed);
     void transferReceived(int result);
-    void test(int v);
 
 protected:
     QString accountPlaceholder() const;

@@ -11,6 +11,8 @@ GraftApplicationWindow {
     id: root
     title: qsTr("POS")
 
+    handleBackEvent: mainLayout.backButtonHandler
+
     Loader {
         id: drawerLoader
         onLoaded: {
@@ -70,10 +72,10 @@ GraftApplicationWindow {
 
     SwipeView {
         id: mainLayout
+        focus: true
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
-
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
                 graftApplicationFooter.visible = currentIndex !== 0
@@ -110,6 +112,17 @@ GraftApplicationWindow {
             pushScreen: generalTransitions()
             appType: "pos"
             isActive: SwipeView.isCurrentItem
+        }
+
+        function backButtonHandler() {
+            if (!currentItem.backButtonHandler()) {
+                if (!allowClose) {
+                    showCloseLabel()
+                } else {
+                    Qt.quit()
+                }
+                allowClose = !allowClose
+            }
         }
     }
 

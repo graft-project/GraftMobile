@@ -11,6 +11,8 @@ GraftApplicationWindow {
     id: root
     title: qsTr("WALLET")
 
+    handleBackEvent: mainLayout.backButtonHandler
+
     Loader {
         id: drawerLoader
         onLoaded: {
@@ -70,10 +72,10 @@ GraftApplicationWindow {
 
     SwipeView {
         id: mainLayout
+        focus: true
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
-
         onCurrentIndexChanged: {
             if (Qt.platform.os === "ios") {
                 graftApplicationFooter.visible = currentIndex > 1
@@ -108,7 +110,19 @@ GraftApplicationWindow {
             id: settingsStackViewer
             pushScreen: generalTransitions()
             appType: "wallet"
+            menuLoader: drawerLoader
             isActive: SwipeView.isCurrentItem
+        }
+
+        function backButtonHandler() {
+            if (!currentItem.backButtonHandler()) {
+                if (!allowClose) {
+                    showCloseLabel()
+                } else {
+                    Qt.quit()
+                }
+                allowClose = !allowClose
+            }
         }
     }
 

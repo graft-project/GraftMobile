@@ -33,8 +33,8 @@ BaseScreen {
                 accountScreen.screenHeader.actionButtonState = false
                 accountScreen.specialBackMode = changeBehaviorButton
             } else {
-                accountScreen.specialBackMode = null
                 accountScreen.screenHeader.actionButtonState = true
+                accountScreen.specialBackMode = null
             }
         }
 

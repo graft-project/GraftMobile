@@ -120,7 +120,7 @@ BaseScreen {
         WideActionButton {
             id: mnemonicButton
             text: qsTr("Show Mnemonic Password")
-            onClicked:  {
+            onClicked: {
                 confirmPasswordAction = openMnemonicScreen
                 passwordDialog.open()
             }
