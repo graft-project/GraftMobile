@@ -22,6 +22,7 @@ BaseStackViewer {
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
         transitionsMap["openMainAddressScreen"] = openMainAddressScreen
         transitionsMap["openAddressScreen"] = openAddressScreen
+        transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -40,12 +41,12 @@ BaseStackViewer {
                    "productModel": PaymentProductModel})
     }
 
-    function openMainScreen() {
+    function openBalanceScreen() {
         stack.pop(balanceScreen)
     }
 
     function openPaymentScreen(state) {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openMainScreen, "title": qsTr("Pay"),
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen, "title": qsTr("Pay"),
                    "isSpacing": true, "completeText": qsTr("Paid complete!"), "screenState": state})
     }
 

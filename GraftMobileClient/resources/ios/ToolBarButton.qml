@@ -31,7 +31,7 @@ Rectangle {
     Text {
         id: toolButtonText
         color: ColorFactory.color(DesignFactory.LightText)
-        font.pointSize: 10
+        font.pixelSize: 10
         anchors {
             top: toolButtonIcon.bottom
             bottom: parent.bottom
