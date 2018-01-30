@@ -18,6 +18,7 @@ Rectangle {
             leftMargin: 18
         }
         text: GraftClient.networkName()
+        font.pixelSize: 16
         color: "#FFFFFF"
     }
 }

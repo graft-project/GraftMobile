@@ -23,7 +23,7 @@ GridLayout {
         model: mnemonicPhrase.split(' ', mnemonicPhraseSize)
 
         Label {
-            font.pointSize: 14
+            font.pixelSize: 14
             Layout.alignment: Qt.AlignHCenter
             text: modelData
         }

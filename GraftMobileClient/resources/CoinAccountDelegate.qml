@@ -62,7 +62,7 @@ BorderlessButton {
             Text {
                 id: accountName
                 color: "#000000"
-                font.pointSize: 20
+                font.pixelSize: 20
                 Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.alignment: Qt.AlignLeft
@@ -71,7 +71,7 @@ BorderlessButton {
             Text {
                 id: accountBalance
                 color: "#404040"
-                font.pointSize: 20
+                font.pixelSize: 20
                 Layout.rightMargin: 12
                 Layout.alignment: Qt.AlignRight
             }

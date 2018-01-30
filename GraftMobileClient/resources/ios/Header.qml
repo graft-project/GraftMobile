@@ -32,7 +32,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 visible: rootItem.navigationButtonState
                 text: qsTr("Back")
-                onButtonClicked: navigationButtonClicked()
+                onClicked: navigationButtonClicked()
             }
         }
 
@@ -45,7 +45,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 font {
                     bold: true
-                    pointSize: 17
+                    pixelSize: 17
                 }
                 color: ColorFactory.color(DesignFactory.LightText)
             }
@@ -68,7 +68,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 visible: rootItem.actionButtonState
                 text: qsTr("Done")
-                onButtonClicked: actionButtonClicked()
+                onClicked: actionButtonClicked()
             }
         }
     }

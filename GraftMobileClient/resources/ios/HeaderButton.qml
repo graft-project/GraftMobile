@@ -5,9 +5,9 @@ Text {
     id: button
 
     property alias name: button.text
-    signal buttonClicked()
+    signal clicked()
 
-    font.pointSize: 17
+    font.pixelSize: 17
     color: ColorFactory.color(DesignFactory.LightText)
 
     OpacityAnimator {
@@ -21,7 +21,7 @@ Text {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: buttonClicked()
+        onClicked: clicked()
         onPressed: opacityAnimator.running = true
         onReleased: button.opacity = 1.0
     }

@@ -110,7 +110,7 @@ Item {
                     Text {
                         id: buttonText
                         Layout.alignment: Qt.AlignRight
-                        font.pointSize: 14
+                        font.pixelSize: 14
                         text: previewImage.visible ? qsTr("Change Photo") : qsTr("Add Photo")
                         color: "#3A3E3C"
                     }

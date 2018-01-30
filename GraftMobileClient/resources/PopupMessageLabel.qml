@@ -19,7 +19,7 @@ Rectangle {
         id: messageLabel
         anchors.centerIn: parent
         color: "#FFFFFF"
-        font.pointSize: 16
+        font.pixelSize: 16
         horizontalAlignment: Text.AlignHCenter
     }
 
