@@ -94,7 +94,7 @@ BaseScreen {
                     color: "#010101"
                     font {
                         bold: true
-                        pointSize: 16
+                        pixelSize: 16
                     }
                 }
 
