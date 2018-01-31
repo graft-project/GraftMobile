@@ -9,6 +9,7 @@
         <file alias="WideActionButton.qml">android/WideActionButton.qml</file>
         <file alias="LinearEditItem.qml">android/LinearEditItem.qml</file>
         <file alias="CurrencyComboBox.qml">android/CurrencyComboBox.qml</file>
+        <file alias="HeaderButton.qml">android/HeaderButton.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="ProductScreen.qml">android/pos/ProductScreen.qml</file>
