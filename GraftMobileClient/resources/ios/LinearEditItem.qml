@@ -21,6 +21,7 @@ ColumnLayout {
     property bool wrongFieldColor: false
     property bool visibilityIcon: false
     property alias attentionText: attentionText.text
+    property bool inlineTitle: false
 
     spacing: 0
     onPasswordModeChanged: {
@@ -82,10 +83,12 @@ ColumnLayout {
             if (editItem.wrapMode === TextField.NoWrap) {
                 Layout.fillHeight = false
             } else {
-                editItem.topPadding = 30
-                editItem.leftPadding = 0
                 Layout.fillHeight = true
-                Layout.maximumHeight = 200
+                if (!inlineTitle) {
+                    editItem.topPadding = 30
+                    editItem.leftPadding = 0
+                    Layout.maximumHeight = 200
+                }
             }
         }
     }

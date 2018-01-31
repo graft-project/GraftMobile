@@ -71,7 +71,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
             onClicked: {
-                if (passwordTextField.passwordText === passwordTextField.confirmPasswordText) {
+                if (!passwordTextField.wrongPassword) {
                     restoreWallet()
                 }
             }

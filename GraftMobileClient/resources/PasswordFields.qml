@@ -5,6 +5,7 @@ import "components"
 ColumnLayout {
     property alias passwordText: passwordField.text
     property alias confirmPasswordText: confirmPasswordField.text
+    property bool wrongPassword: false
 
     spacing: 0
 
@@ -33,6 +34,7 @@ ColumnLayout {
             confirmPasswordField.attentionText = confirmPasswordField.text.length === 0 ?
                         qsTr("") : qsTr("Your passwords are the same!")
         }
+        wrongPassword = unequal
         confirmPasswordField.wrongFieldColor = unequal
         return unequal
     }
