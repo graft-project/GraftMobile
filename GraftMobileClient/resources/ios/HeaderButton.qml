@@ -21,7 +21,7 @@ Text {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: clicked()
+        onClicked: button.clicked()
         onPressed: opacityAnimator.running = true
         onReleased: button.opacity = 1.0
     }
