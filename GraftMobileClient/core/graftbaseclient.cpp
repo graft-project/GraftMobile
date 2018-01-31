@@ -179,6 +179,8 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
 
 void GraftBaseClient::saveModel(const QString &fileName, const QByteArray &data) const
 {
+    // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
+    // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!QFileInfo(dataPath).exists())
     {
@@ -195,6 +197,8 @@ void GraftBaseClient::saveModel(const QString &fileName, const QByteArray &data)
 
 QByteArray GraftBaseClient::loadModel(const QString &fileName) const
 {
+    // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
+    // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
     QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
                                               fileName);
     if (!dataPath.isEmpty())
@@ -502,6 +506,8 @@ void GraftBaseClient::saveSettings() const
 
 void GraftBaseClient::initSettings()
 {
+    // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
+    // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!QFileInfo(dataPath).exists())
     {

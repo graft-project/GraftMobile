@@ -100,6 +100,8 @@ QString AccountManager::seed() const
 
 void AccountManager::save() const
 {
+    // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
+    // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!QFileInfo(dataPath).exists())
     {
@@ -127,6 +129,8 @@ void AccountManager::clearData()
 
 void AccountManager::read()
 {
+    // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
+    // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
     QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
                                               scAccountDataFile);
     if (!dataPath.isEmpty())
