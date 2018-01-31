@@ -88,14 +88,15 @@ BaseScreen {
                     inputMask: "000.000.000.000; "
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
+                    Layout.preferredWidth: 130
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("ip") : ""
                 }
 
                 LinearEditItem {
                     id: portTextField
-                    Layout.preferredWidth: root.width / 4
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
+                    Layout.preferredWidth: 100
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
                         regExp: /\d{1,5}/
