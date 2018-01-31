@@ -60,7 +60,7 @@ BaseScreen {
                 horizontalAlignment: Label.AlignHCenter
                 font {
                     bold: true
-                    pointSize: 18
+                    pixelSize: 18
                 }
                 color: "#BBBBBB"
                 text: qsTr("If you have one")

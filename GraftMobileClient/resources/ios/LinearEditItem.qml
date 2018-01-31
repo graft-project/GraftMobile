@@ -64,8 +64,8 @@ ColumnLayout {
                 bottom: parent.bottom
                 topMargin: 8
             }
+            font.pixelSize: editItem.font.pixelSize
             rightPadding: 5
-            font.pointSize: editItem.font.pointSize
             color: "#8E8E93"
         }
 
@@ -114,7 +114,7 @@ ColumnLayout {
             text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
                                                          wordCounting()).arg(maximumLength)
             color: "#8E8E93"
-            font.pointSize: 12
+            font.pixelSize: 12
         }
     }
 

@@ -10,49 +10,41 @@ BaseHeader {
 
     onNavigationButtonStateChanged: {
         if (navigationButtonState) {
-            menuIcon.source = "qrc:/imgs/menu_icon.png"
-            menuIcon.width = 24
+            navigationButton.image.source = "qrc:/imgs/menu_icon.png"
+            navigationButton.image.width = 20
         } else {
-            menuIcon.source = "qrc:/imgs/back_icon.png"
-            menuIcon.width = 20
+            navigationButton.image.source = "qrc:/imgs/back_icon.png"
+            navigationButton.image.width = 20
         }
     }
 
     RowLayout {
         anchors {
             fill: parent
-            leftMargin: 15
-            rightMargin: 15
+            leftMargin: 5
+            rightMargin: 5
         }
 
-        Item {
-            Layout.fillHeight: true
-            Layout.preferredWidth: 24
+        HeaderButton {
+            id: navigationButton
+            Layout.preferredHeight: parent.height - 10
+            Layout.preferredWidth: height
             Layout.alignment: Qt.AlignLeft
             visible: isNavigationButtonVisible
-
-            Image {
-                id: menuIcon
-                width: 20
-                height: 18
-                anchors.centerIn: parent
-                source: "qrc:/imgs/back_icon.png"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: navigationButtonClicked()
-            }
+            image.width: 20
+            image.height: 18
+            image.source: "qrc:/imgs/back_icon.png"
+            onClicked: navigationButtonClicked()
         }
 
         Text {
             Layout.fillWidth: true
-            Layout.leftMargin: isNavigationButtonVisible ? 25 : 5
+            Layout.leftMargin: isNavigationButtonVisible ? 25 : 15
             Layout.alignment: Qt.AlignLeft
             text: rootItem.headerText
             font {
                 bold: true
-                pointSize: 17
+                pixelSize: 17
             }
             color: ColorFactory.color(DesignFactory.LightText)
         }
@@ -61,27 +53,21 @@ BaseHeader {
             visible: rootItem.cartEnable
             Layout.preferredHeight: 30
             Layout.preferredWidth: 30
+            Layout.rightMargin: rootItem.actionButtonState ? 0 : 15
             Layout.alignment: Qt.AlignRight
             productCount: rootItem.selectedProductCount
         }
 
-        Item {
-            Layout.fillHeight: true
-            Layout.preferredWidth: 24
+        HeaderButton {
+            id: actionButton
+            Layout.preferredHeight: parent.height - 10
+            Layout.preferredWidth: height
             Layout.alignment: Qt.AlignRight
             visible: rootItem.actionButtonState
-
-            Image {
-                height: 15
-                width: 23
-                anchors.centerIn: parent
-                source: "qrc:/imgs/done.png"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: actionButtonClicked()
-            }
+            image.width: 23
+            image.height: 15
+            image.source: "qrc:/imgs/done.png"
+            onClicked: actionButtonClicked()
         }
     }
 }

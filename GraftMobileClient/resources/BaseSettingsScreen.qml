@@ -57,7 +57,7 @@ BaseScreen {
 
             Label {
                 text: qsTr("Service")
-                font.pointSize: Qt.platform.os === "ios" ? 16 : switchLabel.font.pointSize
+                font.pixelSize: Qt.platform.os === "ios" ? 16 : switchLabel.font.pixelSize
                 color: "#8e8e93"
             }
 
@@ -149,7 +149,7 @@ BaseScreen {
             width: parent.width
             echoMode: TextInput.Password
             passwordCharacter: '•'
-            font.pointSize: 24
+            font.pixelSize: 24
         }
         onAccepted: checkingPassword(passwordTextField.text)
         onRejected: passwordTextField.clear()

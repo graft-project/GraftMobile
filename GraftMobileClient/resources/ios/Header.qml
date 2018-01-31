@@ -27,18 +27,12 @@ BaseHeader {
             Layout.preferredWidth: 30
             Layout.alignment: Qt.AlignLeft
 
-            Text {
+            HeaderButton {
                 id: navigationButton
                 anchors.centerIn: parent
                 visible: rootItem.navigationButtonState
                 text: qsTr("Back")
-                font.pointSize: 17
-                color: ColorFactory.color(DesignFactory.LightText)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: navigationButtonClicked()
-                }
+                onClicked: navigationButtonClicked()
             }
         }
 
@@ -51,7 +45,7 @@ BaseHeader {
                 anchors.centerIn: parent
                 font {
                     bold: true
-                    pointSize: 17
+                    pixelSize: 17
                 }
                 color: ColorFactory.color(DesignFactory.LightText)
             }
@@ -69,18 +63,12 @@ BaseHeader {
                 anchors.centerIn: parent
             }
 
-            Text {
+            HeaderButton {
                 id: actionButton
                 anchors.centerIn: parent
                 visible: rootItem.actionButtonState
                 text: qsTr("Done")
-                font.pointSize: 17
-                color: ColorFactory.color(DesignFactory.LightText)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: actionButtonClicked()
-                }
+                onClicked: actionButtonClicked()
             }
         }
     }

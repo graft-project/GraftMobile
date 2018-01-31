@@ -37,8 +37,8 @@ ColumnLayout {
     Text {
         id: titleItem
         Layout.fillWidth: true
-        font.pointSize: 12
         color: "#BBBBBB"
+        font.pixelSize: 12
     }
 
     Item {
@@ -99,7 +99,7 @@ ColumnLayout {
             text: qsTr("%1 / %2").arg(letterCountingMode ? editItem.displayText.length :
                                                            wordCounting()).arg(maximumLength)
             color: "#BBBBBB"
-            font.pointSize: 12
+            font.pixelSize: 12
         }
     }
 
