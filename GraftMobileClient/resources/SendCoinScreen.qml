@@ -11,7 +11,6 @@ BaseScreen {
     screenHeader {
         actionButtonState: true
         navigationButtonState: Qt.platform.os !== "android"
-        actionText:  Qt.platform.os === "ios" ? qsTr("Send") : qsTr("")
     }
     action: checkingData
 
@@ -83,7 +82,7 @@ BaseScreen {
                         }
                         color: "#BBBBBB"
                         font {
-                            pointSize: 16
+                            pixelSize: 16
                             bold: true
                         }
                         text: qsTr("GRF")
