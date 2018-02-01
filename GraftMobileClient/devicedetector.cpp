@@ -24,6 +24,7 @@ void DeviceDetector::registerTypes(QQmlEngine *engine)
 {
     engine->rootContext()->setContextProperty(QStringLiteral("Device"), this);
     qmlRegisterType<DeviceDetector>("com.device.detector", 1, 0, "DeviceDetector");
+    qmlRegisterType<DeviceDetector>("com.device.platforms", 1, 0, "PlatformsDetector");
 }
 
 int DeviceDetector::detectDevice()
@@ -47,33 +48,33 @@ int DeviceDetector::detectDevice()
     return currentDevice;
 }
 
-bool DeviceDetector::isDesktop()
+bool DeviceDetector::isPlatform(DeviceDetector::Platforms platform)
 {
+    DeviceDetector::Platforms currentPlatform;
 #ifdef Q_OS_WIN
-    return true;
+    currentPlatform = DeviceDetector::Windows;
 #endif
 #ifdef Q_OS_MAC
-    return true;
+    currentPlatform = DeviceDetector::MacOS;
 #endif
 #ifdef Q_OS_LINUX
-    return true;
+    currentPlatform = DeviceDetector::Linux;
 #endif
-    return false;
+#ifdef Q_OS_IOS
+    currentPlatform = DeviceDetector::IOS;
+#endif
+#ifdef Q_OS_ANDROID
+    currentPlatform = DeviceDetector::Android;
+#endif
+    return currentPlatform & platform;
+}
+
+bool DeviceDetector::isDesktop()
+{
+    return isPlatform(DeviceDetector::Desktop);
 }
 
 bool DeviceDetector::isMobile()
 {
-#ifdef Q_OS_IOS
-    return true;
-#endif
-#ifdef Q_OS_ANDROID
-    return true;
-#endif
-    return false;
+    return isPlatform(DeviceDetector::Mobile);
 }
-
-bool DeviceDetector::isPlatform(DeviceDetector::PlatformFlags platform)
-{
-
-}
-

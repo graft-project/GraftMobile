@@ -8,11 +8,9 @@ class QQmlEngine;
 class DeviceDetector : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(iOSDeviceModels)
-    Q_ENUMS(AndroidDeviceModels)
 
 public:
-    enum iOSDeviceModels {
+    enum DeviceModels {
         IPhoneNormal = 0,
         IPhonePlus,
         IPhoneSE,
@@ -29,44 +27,31 @@ public:
         IPad9_7 = IPad,
         IPad7_9 = IPad
     };
-    Q_ENUM(iOSDeviceModels)
+    Q_ENUM(DeviceModels)
 
-    enum AndroidDeviceModels {
-        Oreo = 0,
-        Nougat,
-        Marshmallow,
-        Lollipop,
-        KitKat,
-        JellyBean,
-        IceCream,
-        Sandwich
-    };
-    Q_ENUM(AndroidDeviceModels)
-
-    enum PlatformFlags {
-        iOS = 1 << iOSDeviceModels,
-        Android = 1 << AndroidDeviceModels,
-        Windows,
-        Linux,
-        MacOS,
-        Mobile = iOS | Android,
+    enum PlatformFlag {
+        IOS = 0x01,
+        Android = 0x02,
+        Windows = 0x04,
+        Linux = 0x08,
+        MacOS = 0x10,
+        Mobile = IOS | Android,
         Desktop = Windows | Linux | MacOS,
         Any = Mobile | Desktop
     };
-    Q_FLAG(PlatformFlags)
-    Q_DECLARE_FLAGS(PlatformFlags, PlatformFlags)
-
+    Q_DECLARE_FLAGS(Platforms, PlatformFlag)
+    Q_FLAG(Platforms)
 
     DeviceDetector(QObject *parent = nullptr);
 
     void registerTypes(QQmlEngine *engine);
+
     Q_INVOKABLE static int detectDevice();
+    Q_INVOKABLE bool isPlatform(Platforms platform);
 
     bool isDesktop();
     bool isMobile();
-    bool isPlatform(PlatformFlags platform);
 };
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::PlatformFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::Platforms)
 
 #endif // DEVICEDETECTOR_H
