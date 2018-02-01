@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
+import com.device.detector 1.0
 import "../components"
 
 BaseScreen {
@@ -53,7 +54,7 @@ BaseScreen {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignBottom
                     Layout.bottomMargin: Qt.platform.os === "android" ? 8 : 3
-                    Layout.preferredWidth: Qt.platform.os === "android" ? 50 : 130
+                    Layout.preferredWidth: Qt.platform.os === "android" ? 50 : Device.detectDevice() === DeviceDetector.IPhoneSE ? 165 : 130
                     dropdownTitle: Qt.platform.os === "android" ? qsTr("Currency") : qsTr("Currency:")
                 }
             }
