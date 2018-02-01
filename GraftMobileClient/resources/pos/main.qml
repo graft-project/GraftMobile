@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import org.graft 1.0
 import com.device.detector 1.0
+import com.device.platform 1.0
 import "../"
 import "../components"
 
@@ -24,7 +25,7 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: Qt.platform.os === "ios" ? Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 49 : 0
+        height: Detector.isPlatform(Platform.IOS) ? Detector.detectDevice() === Device.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -35,7 +36,7 @@ GraftApplicationWindow {
     }
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             footerLoader.source = "qrc:/pos/GraftToolBar.qml"
         } else {
             drawerLoader.source = "qrc:/pos/GraftMenu.qml"
@@ -77,7 +78,7 @@ GraftApplicationWindow {
         interactive: false
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
         onCurrentIndexChanged: {
-            if (Qt.platform.os === "ios") {
+            if (Detector.isPlatform(Platform.IOS)) {
                 graftApplicationFooter.visible = currentIndex !== 0
             } else {
                 if (drawerLoader && drawerLoader.status === Loader.Ready) {
@@ -178,7 +179,7 @@ GraftApplicationWindow {
     }
 
     function selectButton(name) {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             footerLoader.item.seclectedButtonChanged(name)
         }
     }

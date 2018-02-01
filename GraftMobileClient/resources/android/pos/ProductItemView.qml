@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -69,7 +70,7 @@ Item {
                 id: graftComboBox
                 Layout.preferredWidth: 50
                 Layout.preferredHeight: 40
-                Layout.bottomMargin: Qt.platform.os === "android" ? 8 : 3
+                Layout.bottomMargin: Detector.isPlatform(Platform.Android) ? 8 : 3
                 Layout.alignment: Qt.AlignBottom
                 dropdownTitle: qsTr("Currency")
             }

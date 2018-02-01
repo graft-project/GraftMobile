@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.detector 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -9,12 +10,12 @@ BaseScreen {
     title: qsTr("Restore wallet")
     action: restoreWallet
     screenHeader {
-        navigationButtonState: Qt.platform.os === "ios"
+        navigationButtonState: Detector.isPlatform(Platform.IOS)
         actionButtonState: true
     }
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Restore")
         }
@@ -38,13 +39,13 @@ BaseScreen {
             topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
+            bottomMargin: Detector.detectDevice() === Device.IPhoneX ? 30 : 15
         }
 
         LinearEditItem {
             id: seedTextField
             Layout.fillWidth: true
-            Layout.maximumHeight: Qt.platform.os === "ios" ? 160 : 130
+            Layout.maximumHeight: Detector.isPlatform(Platform.IOS) ? 160 : 130
             Layout.alignment: Qt.AlignTop
             title: qsTr("Mnemonic Phrase")
             wrapMode: TextInput.WordWrap
@@ -60,7 +61,7 @@ BaseScreen {
             id: passwordTextField
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
-            title: Qt.platform.os === "ios" ? qsTr("Password:") : qsTr("Password")
+            title: Detector.isPlatform(Platform.IOS) ? qsTr("Password:") : qsTr("Password")
             maximumLength: 50
             echoMode: TextInput.Password
             passwordCharacter: '•'

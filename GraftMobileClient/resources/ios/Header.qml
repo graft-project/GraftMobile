@@ -6,7 +6,7 @@ import "../"
 
 BaseHeader {
     id: rootItem
-    height: Device.detectDevice() === DeviceDetector.IPhoneX ? 88 : 64
+    height: Detector.detectDevice() === Device.IPhoneX ? 88 : 64
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
     property alias navigationText: navigationButton.text
@@ -17,7 +17,7 @@ BaseHeader {
         anchors {
             leftMargin: 15
             rightMargin: 15
-            topMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 25 : 10
+            topMargin: Detector.detectDevice() === Device.IPhoneX ? 25 : 10
             left: parent.left
             right: parent.right
             top: parent.top

@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Dialogs 1.2
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -7,7 +8,7 @@ BaseScreen {
     id: qrScanning
     title: qsTr("Pay")
     screenHeader {
-        navigationButtonState: Qt.platform.os !== "android"
+        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
     }
 
     Connections {

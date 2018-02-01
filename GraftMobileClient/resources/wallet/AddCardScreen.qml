@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "../"
 import "../components"
 
@@ -10,7 +11,7 @@ BaseScreen {
     id: root
     title: qsTr("Add Card")
     screenHeader {
-        navigationButtonState: Qt.platform.os !== "android"
+        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
         actionButtonState: true
     }
     action: done
@@ -43,13 +44,13 @@ BaseScreen {
 
         LinearEditItem {
             id: title
-            title: Qt.platform.os === "android" ? qsTr("Card Title") : qsTr("Card Title:")
+            title: Detector.isPlatform(Platform.Android) ? qsTr("Card Title") : qsTr("Card Title:")
             maximumLength: 50
         }
 
         LinearEditItem {
             id: number
-            title: Qt.platform.os === "android" ? qsTr("Card Number") : qsTr("Card Number:")
+            title: Detector.isPlatform(Platform.Android) ? qsTr("Card Number") : qsTr("Card Number:")
             inputMethodHints: Qt.ImhDigitsOnly
             validator: RegExpValidator {
                 regExp: /(5\d{15}|4\d{15}|30\d{14})/
@@ -58,12 +59,12 @@ BaseScreen {
         }
 
         RowLayout {
-            spacing: Qt.platform.os === "android" ? parent.width / 2 : 30
+            spacing: Detector.isPlatform(Platform.Android) ? parent.width / 2 : 30
 
             LinearEditItem {
                 id: expired
                 Layout.alignment: Qt.AlignTop
-                title: Qt.platform.os === "android" ? qsTr("Expiration Date") : qsTr("Expired:")
+                title: Detector.isPlatform(Platform.Android) ? qsTr("Expiration Date") : qsTr("Expired:")
                 inputMask: "99/99;_"
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
@@ -74,12 +75,12 @@ BaseScreen {
 
             LinearEditItem {
                 id: cv2Code
-                title: Qt.platform.os === "android" ? qsTr("CVC/CVV2") : qsTr("CVC/CVV2:")
+                title: Detector.isPlatform(Platform.Android) ? qsTr("CVC/CVV2") : qsTr("CVC/CVV2:")
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
                     regExp: /\d{3}/
                 }
-                showLengthIndicator: Qt.platform.os !== "android"
+                showLengthIndicator: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
                 maximumLength: 3
             }
         }

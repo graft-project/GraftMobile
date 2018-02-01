@@ -48,9 +48,8 @@ public:
 
     Q_INVOKABLE static int detectDevice();
     Q_INVOKABLE bool isPlatform(Platforms platform);
-
-    bool isDesktop();
-    bool isMobile();
+    Q_INVOKABLE bool isDesktop();
+    Q_INVOKABLE bool isMobile();
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::Platforms)
 

@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import com.device.platform 1.0
 import "../"
 import "../components"
 
@@ -9,7 +10,7 @@ BaseScreen {
 
     title: qsTr("Pay")
     screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
+        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     Connections {
