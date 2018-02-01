@@ -28,7 +28,7 @@ public:
     };
     Q_ENUM(DeviceModels)
 
-    enum PlatformFlag {
+    enum PlatformFlags {
         IOS = 0x01,
         Android = 0x02,
         Windows = 0x04,
@@ -38,7 +38,7 @@ public:
         Desktop = Windows | Linux | MacOS,
         Any = Mobile | Desktop
     };
-    Q_DECLARE_FLAGS(Platforms, PlatformFlag)
+    Q_DECLARE_FLAGS(Platforms, PlatformFlags)
     Q_FLAG(Platforms)
 
     DeviceDetector(QObject *parent = nullptr);
@@ -46,9 +46,9 @@ public:
     void registerTypes(QQmlEngine *engine);
 
     Q_INVOKABLE static int detectDevice();
-    Q_INVOKABLE bool isPlatform(Platforms platform);
-    Q_INVOKABLE bool isDesktop();
-    Q_INVOKABLE bool isMobile();
+    Q_INVOKABLE static bool isPlatform(Platforms platform);
+    Q_INVOKABLE static bool isDesktop();
+    Q_INVOKABLE static bool isMobile();
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::Platforms)
 
