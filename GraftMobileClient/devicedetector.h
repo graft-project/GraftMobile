@@ -8,7 +8,6 @@ class QQmlEngine;
 class DeviceDetector : public QObject
 {
     Q_OBJECT
-
 public:
     enum DeviceModels {
         IPhoneNormal = 0,
