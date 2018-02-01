@@ -18,14 +18,16 @@
 #include "devicedetector.h"
 #include "designfactory.h"
 
+// TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
+// For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
+#if defined(Q_OS_ANDROID) && defined(QT_DEBUG)
+static_assert(false, "QTBUG-65820 in Android Debug builds");
+#endif
+
 #ifdef POS_BUILD
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 #include "imagepicker.h"
 #endif
-#endif
-
-#ifdef Q_OS_IOS
-#include <QFont>
 #endif
 
 #ifdef Q_OS_ANDROID
@@ -88,10 +90,6 @@ int main(int argc, char *argv[])
 #endif
     if (engine.rootObjects().isEmpty())
         return -1;
-
-#ifdef Q_OS_IOS
-    app.setFont(QFont ("Arial", 15));
-#endif
 
 #ifdef Q_OS_ANDROID
     QtAndroid::hideSplashScreen();
