@@ -18,9 +18,9 @@
 #include "devicedetector.h"
 #include "designfactory.h"
 
-#if defined (Q_OS_ANDROID) && defined (QT_DEBUG)
 // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
 // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
+#if defined(Q_OS_ANDROID) && defined(QT_DEBUG)
 static_assert(false, "QTBUG-65820 in Android Debug builds");
 #endif
 
