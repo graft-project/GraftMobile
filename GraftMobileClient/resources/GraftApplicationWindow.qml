@@ -8,8 +8,10 @@ ApplicationWindow {
     property var handleBackEvent: null
 
     visible: true
-    width: 320
-    height: 480
+    maximumHeight: 680
+    maximumWidth: 404
+    minimumHeight: 680
+    minimumWidth: 404
 
     Shortcut {
         sequences: ["Esc", "Back"]
