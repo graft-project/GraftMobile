@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.detector 1.0
 
 GridLayout {
     id: gridLayout
@@ -10,13 +11,13 @@ GridLayout {
 
     anchors {
         verticalCenter: parent.verticalCenter
-        leftMargin: 10
-        rightMargin: 10
+        leftMargin: Device.detectDevice() === DeviceDetector.IPhoneSE ? 0 : 10
+        rightMargin: Device.detectDevice() === DeviceDetector.IPhoneSE ? 0 : 10
     }
     columns: 5
     rows: 5
     columnSpacing: 5
-    rowSpacing: 45
+    rowSpacing: Device.detectDevice() === DeviceDetector.IPhoneSE ? 25 : 45
 
     Repeater {
         id: repeater
