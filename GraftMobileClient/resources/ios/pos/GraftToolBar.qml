@@ -14,7 +14,7 @@ BaseGraftToolBar {
     }
 
     RowLayout {
-        spacing: 40
+        spacing: Device.detectDevice() === DeviceDetector.IPhoneSE ? 25 : 40
         anchors {
             topMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 3 : 0
             top: parent.top
