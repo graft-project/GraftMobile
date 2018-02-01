@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.2
 import "../"
 
-ColumnLayout {
+BaseLinearEditItem {
     id: linearEditItem
     property alias title: titleItem.text
     property alias text: editItem.text
@@ -14,15 +14,9 @@ ColumnLayout {
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
-    property bool letterCountingMode: true
-    property int maximumLength: 32767
     property alias passwordCharacter: editItem.passwordCharacter
-    property bool passwordMode: false
-    property bool wrongFieldColor: false
-    property bool visibilityIcon: false
     property alias attentionText: attentionText.text
 
-    spacing: 0
     onPasswordModeChanged: {
         visibilityIcon = true
         if (passwordMode) {
