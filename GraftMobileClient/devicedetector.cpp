@@ -51,7 +51,7 @@ int DeviceDetector::detectDevice()
 bool DeviceDetector::isPlatform(DeviceDetector::Platforms platform)
 {
     DeviceDetector::Platforms currentPlatform;
-#if defined(Q_OS_IOS) && !defined(Q_OS_MAC)
+#if defined(Q_OS_IOS)
     currentPlatform = DeviceDetector::IOS;
 #elif defined(Q_OS_ANDROID)
     currentPlatform = DeviceDetector::Android;
