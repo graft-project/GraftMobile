@@ -11,98 +11,62 @@ BaseLinearEditItem {
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
     property alias validator: editItem.validator
-    property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
-    property alias attentionText: attentionText.text
 
-    onPasswordModeChanged: {
-        visibilityIcon = true
-        if (passwordMode) {
-            passwordCharacter = '•'
-            editItem.echoMode = TextInput.Password
-        } else {
-            editItem.echoMode = TextInput.Normal
-            editItem.inputMethodHints = Qt.ImhHiddenText
-        }
-    }
-
-    Text {
+    titleTextField: Text {
         id: titleItem
-        Layout.fillWidth: true
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
         color: "#BBBBBB"
         font.pixelSize: 12
-    }
-
-    Item {
-        id: field
-        Layout.fillWidth: true
-        Layout.preferredHeight: 43
-
-        TextField {
-            id: editItem
+        Rectangle {
             anchors.fill: parent
-            rightPadding: visibilityIcon ? 44 : 0
-            verticalAlignment: Qt.AlignTop
-            color: "#404040"
-            maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
-            Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
-            onWrapModeChanged: field.resizeField()
+            color: "#60ff0000"
         }
+    }
 
-        VisibilityIcon {
-            visible: visibilityIcon
+    baseTextField: Item {
+            id: field
+            height: 47
             anchors {
+                left: parent.left
                 right: parent.right
-                bottom: parent.bottom
-                rightMargin: 6
-                bottomMargin: 6
             }
-            onClicked: passwordMode =! passwordMode
-        }
 
-        function resizeField() {
-            if (editItem.wrapMode === TextField.NoWrap) {
-                Layout.fillHeight = false
-            } else {
-                Layout.fillHeight = true
-                Layout.maximumHeight = 200
+            TextField {
+                id: editItem
+                anchors.fill: parent
+                rightPadding: visibilityIcon ? 44 : 0
+                verticalAlignment: Qt.AlignTop
+                color: "#404040"
+                maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
+                Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+                onWrapModeChanged: field.resizeField()
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#60fff000"
+                }
+            }
+
+            VisibilityIcon {
+                visible: visibilityIcon
+                anchors {
+                    right: parent.right
+                    bottom: parent.bottom
+                    rightMargin: 6
+                    bottomMargin: 6
+                }
+                onClicked: passwordMode =! passwordMode
+            }
+
+            function resizeField() {
+                if (editItem.wrapMode !== TextField.NoWrap) {
+                    field.height = 100
+                }
             }
         }
-    }
-
-    RowLayout {
-        spacing: 0
-
-        Text {
-            id: attentionText
-            Layout.alignment: Qt.AlignLeft
-            visible: visibilityIcon
-            font.pixelSize: 12
-            color: wrongFieldColor ? "#F33939" : "#3F3F3F"
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
-        Text {
-            id: textCount
-            Layout.alignment: Qt.AlignRight
-            text: qsTr("%1 / %2").arg(letterCountingMode ? editItem.displayText.length :
-                                                           wordCounting()).arg(maximumLength)
-            color: "#BBBBBB"
-            font.pixelSize: 12
-        }
-    }
-
-    function wordCounting() {
-        if (editItem.displayText.length !== 0) {
-            var wordList = GraftClient.wideSpacingSimplify(editItem.displayText).split(' ')
-            return wordList.length
-        } else {
-            return 0
-        }
-    }
 }

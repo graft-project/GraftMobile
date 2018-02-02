@@ -11,28 +11,20 @@ BaseLinearEditItem {
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
     property alias validator: editItem.validator
-    property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
-    property alias attentionText: attentionText.text
     property bool inlineTitle: false
 
-    onPasswordModeChanged: {
-        visibilityIcon = true
-        if (passwordMode) {
-            passwordCharacter = '•'
-            editItem.echoMode = TextInput.Password
-        } else {
-            editItem.echoMode = TextInput.Normal
-            editItem.inputMethodHints = Qt.ImhHiddenText
-        }
-    }
-
-    Item {
+    baseTextField : Item {
         id: field
-        Layout.fillWidth: true
-        Layout.preferredHeight: 46
+        height: 46
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+//        Layout.fillWidth: true
+//        Layout.preferredHeight: 46
 
         TextField {
             id: editItem
@@ -48,6 +40,10 @@ BaseLinearEditItem {
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
             onWrapModeChanged: field.resizeField()
+            Rectangle {
+                anchors.fill: parent
+                color: "#60fff000"
+            }
         }
 
         Text {
@@ -58,7 +54,7 @@ BaseLinearEditItem {
                 bottom: parent.bottom
                 topMargin: 8
             }
-            font.pixelSize: editItem.font.pixelSize
+            font.pointSize: editItem.font.pointSize
             rightPadding: 5
             color: "#8E8E93"
         }
@@ -74,50 +70,19 @@ BaseLinearEditItem {
         }
 
         function resizeField() {
-            if (editItem.wrapMode === TextField.NoWrap) {
-                Layout.fillHeight = false
+            if (editItem.wrapMode == TextField.NoWrap) {
+//                Layout.fillHeight = false
             } else {
-                Layout.fillHeight = true
+                Layout.fillHeight = truevisibilityIcon
                 if (!inlineTitle) {
-                    editItem.topPadding = 30
-                    editItem.leftPadding = 0
-                    Layout.maximumHeight = 200
+                    console.log("ddddd")
+                    field.height =150
+                    field.anchors.bottomMargin = 12
+//                    editItem.topPadding = 30
+//                    editItem.leftPadding = 0
+//                    Layout.maximumHeight = 200
                 }
             }
-        }
-    }
-
-    RowLayout {
-        spacing: 0
-
-        Text {
-            id: attentionText
-            Layout.alignment: Qt.AlignLeft
-            visible: visibilityIcon
-            font.pixelSize: 12
-            color: wrongFieldColor ? "#F33939" : "#3F3F3F"
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
-        Text {
-            id: textCount
-            Layout.alignment: Qt.AlignRight
-            text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
-                                                         wordCounting()).arg(maximumLength)
-            color: "#8E8E93"
-            font.pixelSize: 12
-        }
-    }
-
-    function wordCounting() {
-        if (editItem.displayText.length !== 0) {
-            var wordList = GraftClient.wideSpacingSimplify(editItem.displayText).split(' ')
-            return wordList.length
-        } else {
-            return 0
         }
     }
 }
