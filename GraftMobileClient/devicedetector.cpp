@@ -56,7 +56,7 @@ bool DeviceDetector::isPlatform(DeviceDetector::Platforms platform)
     currentPlatform = DeviceDetector::Android;
 #elif defined(Q_OS_WIN)
     currentPlatform = DeviceDetector::Windows;
-#elif defined(Q_OS_MAC) && !defined(Q_OS_IOS)
+#elif defined(Q_OS_MAC)
     currentPlatform = DeviceDetector::MacOS;
 #elif defined(Q_OS_LINUX)
     currentPlatform = DeviceDetector::Linux;
