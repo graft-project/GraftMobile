@@ -32,10 +32,10 @@ public:
         IOS = 0x01,
         Android = 0x02,
         Windows = 0x04,
-        Linux = 0x08,
-        MacOS = 0x10,
+        MacOS = 0x08,
+        Linux = 0x10,
         Mobile = IOS | Android,
-        Desktop = Windows | Linux | MacOS,
+        Desktop = Windows | MacOS | Linux,
         Any = Mobile | Desktop
     };
     Q_DECLARE_FLAGS(Platforms, PlatformFlags)
