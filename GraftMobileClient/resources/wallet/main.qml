@@ -3,7 +3,6 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import org.graft 1.0
-import com.device.detector 1.0
 import com.device.platform 1.0
 import "../"
 import "../components"
@@ -25,7 +24,7 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: Detector.isPlatform(Platform.IOS) ? Detector.detectDevice() === Device.IPhoneX ? 85 : 49 : 0
+        height: Detector.isPlatform(Platform.IOS) ? Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {

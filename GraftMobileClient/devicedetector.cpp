@@ -23,7 +23,6 @@ DeviceDetector::DeviceDetector(QObject *parent) : QObject(parent)
 void DeviceDetector::registerTypes(QQmlEngine *engine)
 {
     engine->rootContext()->setContextProperty(QStringLiteral("Detector"), this);
-    qmlRegisterType<DeviceDetector>("com.device.detector", 1, 0, "Device");
     qmlRegisterType<DeviceDetector>("com.device.platform", 1, 0, "Platform");
 }
 

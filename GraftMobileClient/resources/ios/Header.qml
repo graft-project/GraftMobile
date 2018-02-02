@@ -1,7 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "../"
 
 BaseHeader {
@@ -17,7 +17,7 @@ BaseHeader {
         anchors {
             leftMargin: 15
             rightMargin: 15
-            topMargin: Detector.detectDevice() === Device.IPhoneX ? 25 : 10
+            topMargin: Detector.detectDevice() === Platform.IPhoneX ? 25 : 10
             left: parent.left
             right: parent.right
             top: parent.top
