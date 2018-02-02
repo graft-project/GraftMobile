@@ -8,8 +8,13 @@ ApplicationWindow {
     property var handleBackEvent: null
 
     visible: true
-    width: 320
-    height: 480
+    height: 683
+    width: 384
+    maximumHeight: 683
+    maximumWidth: 384
+    minimumHeight: 683
+    minimumWidth: 384
+    Component.onCompleted: init()
 
     Shortcut {
         sequences: ["Esc", "Back"]
@@ -30,7 +35,6 @@ ApplicationWindow {
         opacityAnimator.onStopped: allowClose = false
     }
 
-    Component.onCompleted: init()
 
     function init() {
         if (Qt.platform.os === "ios") {
