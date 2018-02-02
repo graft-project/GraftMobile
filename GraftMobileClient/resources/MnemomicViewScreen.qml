@@ -15,8 +15,8 @@ BaseScreen {
         anchors {
             fill: parent
             topMargin: 15
-            leftMargin: 15
-            rightMargin: 15
+            leftMargin: Device.detectDevice() === DeviceDetector.IPhoneSE ? 5 : 15
+            rightMargin: Device.detectDevice() === DeviceDetector.IPhoneSE ? 5 : 15
             bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? screenState ? 15 : 30 : 15
         }
 

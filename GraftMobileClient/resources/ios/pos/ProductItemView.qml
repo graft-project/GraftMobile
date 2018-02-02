@@ -76,7 +76,7 @@ Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.maximumHeight: 250
-            Layout.minimumHeight: 100
+            Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
             source: ""
             visible: previewImage.status === Image.Ready
