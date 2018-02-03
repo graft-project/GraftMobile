@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 import "../components"
 import "../"
 
@@ -103,12 +104,26 @@ Item {
                     color: "#007AFF"
                 }
             }
-            onClicked: popUp.open()
+            onClicked: {
+                if (Qt.platform.os === "ios") {
+                    popUp.open()
+                } else {
+                    fileDialog.open()
+                }
+            }
         }
 
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a picture"
+        folder: shortcuts.pictures
+        nameFilters: "Image files (*.jpg, *.png)"
+        onAccepted: previewImage.source = fileDialog.fileUrls.toString()
     }
 }
