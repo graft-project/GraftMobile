@@ -33,6 +33,7 @@ BaseScreen {
     }
 
     ColumnLayout {
+        spacing: 0
         anchors {
             fill: parent
             topMargin: 15
@@ -56,14 +57,8 @@ BaseScreen {
             inputMethodHints: Qt.ImhNoPredictiveText
         }
 
-        LinearEditItem {
+        PasswordFields {
             id: passwordTextField
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            title: Detector.isPlatform(Platform.IOS) ? qsTr("Password:") : qsTr("Password")
-            maximumLength: 50
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
         }
 
         Item {
@@ -75,7 +70,11 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
-            onClicked: restoreWallet()
+            onClicked: {
+                if (!passwordTextField.wrongPassword) {
+                    restoreWallet()
+                }
+            }
         }
     }
 
@@ -116,11 +115,13 @@ BaseScreen {
         if (GraftClient.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
             screenDialog.text = seedTextField.text.length === 0 ?
                         qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
-                        qsTr("The mnemonic phrase must contain 25 words. Please, enter the correct mnemonic phrase.")
+                        qsTr("The mnemonic phrase must contain 25 words. Please, enter " +
+                             "the correct mnemonic phrase.")
             screenDialog.open()
         } else {
             root.state = "restoreWalletPressed"
-            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text), passwordTextField.text)
+            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text),
+                                       passwordTextField.text)
         }
     }
 }

@@ -16,10 +16,6 @@ BaseScreen {
         navigationButtonState: true
     }
 
-    Component.onCompleted: {
-        console.log(GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet, GraftClient.networkType(), GraftClientTools.PublicExperimentalTestnet)
-    }
-
     Connections {
         target: ProductModel
         onSelectedProductCountChanged: {

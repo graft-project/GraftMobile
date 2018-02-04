@@ -83,7 +83,7 @@ Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.maximumHeight: 250
-            Layout.minimumHeight: 100
+            Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
             source: ""
             visible: previewImage.status === Image.Ready
@@ -111,7 +111,7 @@ Item {
                     Text {
                         id: buttonText
                         Layout.alignment: Qt.AlignRight
-                        font.pointSize: 14
+                        font.pixelSize: 14
                         text: previewImage.visible ? qsTr("Change Photo") : qsTr("Add Photo")
                         color: "#3A3E3C"
                     }

@@ -12,7 +12,7 @@ RoundButton {
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true
     font {
-        pointSize: 14
+        pixelSize: 14
         bold: true
         capitalization: Font.MixedCase
     }

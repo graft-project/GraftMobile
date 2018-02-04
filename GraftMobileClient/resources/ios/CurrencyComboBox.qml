@@ -28,7 +28,7 @@ ColumnLayout {
                 left: parent.left
                 topMargin: 14
             }
-            font.pointSize: parent.font.pointSize
+            font.pixelSize: parent.font.pixelSize
             color: "#8e8e93"
         }
     }

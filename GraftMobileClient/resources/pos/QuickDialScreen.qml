@@ -54,7 +54,7 @@ BaseScreen {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignBottom
                     Layout.bottomMargin: Detector.isPlatform(Platform.Android) ? 8 : 3
-                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 50 : 130
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 50 : Detector.detectDevice() === Platform.IPhoneSE ? 165 : 130
                     dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") : qsTr("Currency:")
                 }
             }

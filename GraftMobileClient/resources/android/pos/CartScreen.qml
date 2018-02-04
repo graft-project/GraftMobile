@@ -34,7 +34,7 @@ BaseCartScreen {
                 text: qsTr("SCAN WITH WALLET")
                 font {
                     bold: true
-                    pointSize: 16
+                    pixelSize: 16
                 }
                 color: ColorFactory.color(DesignFactory.Foreground)
                 Layout.alignment: Qt.AlignCenter

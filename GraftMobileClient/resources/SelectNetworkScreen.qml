@@ -32,7 +32,7 @@ BaseScreen {
             Material.foreground: ColorFactory.color(DesignFactory.Foreground)
             text: qsTr("Mainnet")
             font {
-                pointSize: 16
+                pixelSize: 16
                 bold: true
             }
         }
@@ -42,7 +42,7 @@ BaseScreen {
             Layout.leftMargin: 35
             Layout.rightMargin: 20
             color: "#BBBBBB"
-            font.pointSize: 14
+            font.pixelSize: 14
             wrapMode: Label.WordWrap
             text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
                        "that carry real GRF transactions.")
@@ -59,7 +59,7 @@ BaseScreen {
             Material.foreground: ColorFactory.color(DesignFactory.Foreground)
             text: qsTr("Public Testnet")
             font {
-                pointSize: 16
+                pixelSize: 16
                 bold: true
             }
         }
@@ -69,7 +69,7 @@ BaseScreen {
             Layout.leftMargin: 35
             Layout.rightMargin: 20
             color: "#BBBBBB"
-            font.pointSize: 14
+            font.pixelSize: 14
             wrapMode: Label.WordWrap
             text: qsTr("Exact functional copy of mainnet for public testing of mining, " +
                        "supernodes, wallet apps, and other features of GRAFT ecosystem.")
@@ -86,7 +86,7 @@ BaseScreen {
             Material.foreground: ColorFactory.color(DesignFactory.Foreground)
             text: qsTr("Public RTA Testnet")
             font {
-                pointSize: 16
+                pixelSize: 16
                 bold: true
             }
         }
@@ -97,7 +97,7 @@ BaseScreen {
             Layout.rightMargin: 20
             Layout.minimumHeight: 35
             color: "#BBBBBB"
-            font.pointSize: 14
+            font.pixelSize: 14
             wrapMode: Label.WordWrap
             text: qsTr("Blockchain and test network running on the code branch that contains " +
                        "Real Time Authorization and other future features that are not yet " +
@@ -110,6 +110,7 @@ BaseScreen {
 
         Item {
             Layout.fillHeight: true
+            Layout.maximumHeight: 150
         }
 
         WideActionButton {

@@ -22,6 +22,7 @@ BaseScreen {
     }
 
     ColumnLayout {
+        spacing: 15
         anchors {
             fill: parent
             topMargin: 15
@@ -30,26 +31,24 @@ BaseScreen {
             bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
         }
 
-        LinearEditItem {
+        PasswordFields {
             id: passwordTextField
-            Layout.alignment: Qt.AlignTop
-            maximumLength: 50
-            title: Detector.isPlatform(Platform.Android) ? qsTr("Password") : qsTr("Password:")
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
         }
 
         WideActionButton {
             id: createWalletButton
             text: qsTr("Create New Wallet")
             onClicked: {
-                root.state = "createWalletPressed"
-                GraftClient.createAccount(passwordTextField.text)
+                if (!passwordTextField.wrongPassword) {
+                    root.state = "createWalletPressed"
+                    GraftClient.createAccount(passwordTextField.passwordText)
+                }
             }
         }
 
         Item {
             Layout.fillHeight: true
+            Layout.fillWidth: true
         }
 
         ColumnLayout {
@@ -61,7 +60,7 @@ BaseScreen {
                 horizontalAlignment: Label.AlignHCenter
                 font {
                     bold: true
-                    pointSize: 18
+                    pixelSize: 18
                 }
                 color: "#BBBBBB"
                 text: qsTr("If you have one")
