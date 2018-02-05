@@ -5,41 +5,27 @@ import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import "../"
 
-ColumnLayout {
+BaseLinearEditItem {
     id: linearEditItem
     property alias title: titleItem.text
     property alias text: editItem.text
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
     property alias validator: editItem.validator
-    property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
-    property bool letterCountingMode: true
-    property int maximumLength: 32767
     property alias passwordCharacter: editItem.passwordCharacter
-    property bool passwordMode: false
-    property bool wrongFieldColor: false
-    property bool visibilityIcon: false
-    property alias attentionText: attentionText.text
     property bool inlineTitle: false
 
-    spacing: 0
-    onPasswordModeChanged: {
-        visibilityIcon = true
-        if (passwordMode) {
-            passwordCharacter = '•'
-            editItem.echoMode = TextInput.Password
-        } else {
-            editItem.echoMode = TextInput.Normal
-            editItem.inputMethodHints = Qt.ImhHiddenText
-        }
-    }
+    actionTextField: editItem
 
     Item {
         id: field
-        Layout.fillWidth: true
-        Layout.preferredHeight: 46
+        height: 46
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
 
         TextField {
             id: editItem
@@ -65,7 +51,7 @@ ColumnLayout {
                 bottom: parent.bottom
                 topMargin: 8
             }
-            font.pixelSize: editItem.font.pixelSize
+            font.pointSize: editItem.font.pointSize
             rightPadding: 5
             color: "#8E8E93"
         }
@@ -86,45 +72,11 @@ ColumnLayout {
             } else {
                 Layout.fillHeight = true
                 if (!inlineTitle) {
+                    field.height = 104
                     editItem.topPadding = 30
                     editItem.leftPadding = 0
-                    Layout.maximumHeight = 200
                 }
             }
-        }
-    }
-
-    RowLayout {
-        spacing: 0
-
-        Text {
-            id: attentionText
-            Layout.alignment: Qt.AlignLeft
-            visible: visibilityIcon
-            font.pixelSize: Detector.isPlatform(Platform.Desktop) ? 14 : 12
-            color: wrongFieldColor ? "#F33939" : "#3F3F3F"
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
-        Text {
-            id: textCount
-            Layout.alignment: Qt.AlignRight
-            text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
-                                                         wordCounting()).arg(maximumLength)
-            color: "#8E8E93"
-            font.pixelSize: Detector.isPlatform(Platform.Desktop) ? 14 : 12
-        }
-    }
-
-    function wordCounting() {
-        if (editItem.displayText.length !== 0) {
-            var wordList = GraftClient.wideSpacingSimplify(editItem.displayText).split(' ')
-            return wordList.length
-        } else {
-            return 0
         }
     }
 }

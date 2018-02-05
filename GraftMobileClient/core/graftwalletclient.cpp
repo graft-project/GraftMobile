@@ -70,6 +70,11 @@ void GraftWalletClient::transfer(const QString &address, const QString &amount)
     GraftBaseClient::requestTransfer(mApi, address, amount);
 }
 
+void GraftWalletClient::transferFee(const QString &address, const QString &amount)
+{
+    GraftBaseClient::requestTransferFee(mApi, address, amount);
+}
+
 void GraftWalletClient::getPOSData(const QString &data)
 {
     if (!data.isEmpty())
