@@ -53,7 +53,7 @@ Item {
                 id: price
                 title: qsTr("Price:")
                 Layout.fillWidth: true
-                Layout.preferredWidth: 75
+                Layout.preferredWidth: 50
                 Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false

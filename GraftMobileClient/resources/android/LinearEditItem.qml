@@ -17,7 +17,6 @@ BaseLinearEditItem {
 
     actionTextField: editItem
 
-
     ColumnLayout {
         spacing: 0
         anchors {
@@ -35,11 +34,8 @@ BaseLinearEditItem {
 
         Item {
             id: field
-            height: 43
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            Layout.fillWidth: true
+            Layout.preferredHeight: 43
 
             TextField {
                 id: editItem
@@ -64,8 +60,11 @@ BaseLinearEditItem {
             }
 
             function resizeField() {
-                if (editItem.wrapMode !== TextField.NoWrap) {
-                    field.height = 83
+                if (editItem.wrapMode === TextField.NoWrap) {
+                    Layout.fillHeight = false
+                } else {
+                    Layout.fillHeight = true
+                    Layout.preferredHeight = 83
                 }
             }
         }
