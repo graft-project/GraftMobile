@@ -24,7 +24,7 @@ BaseScreen {
 
     Rectangle {
         anchors.fill: parent
-        color: Detector.isPlatform(Platform.IOS) ? "#FFFFFF" : "#E9E9E9"
+        color: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? "#FFFFFF" : "#E9E9E9"
 
         Item {
             anchors {
@@ -116,7 +116,7 @@ BaseScreen {
 
                 specialBackMode: pushScreen
                 screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+                    navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
                     actionButtonState: false
                 }
             }
