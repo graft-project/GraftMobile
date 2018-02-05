@@ -1,4 +1,5 @@
 #include "productitem.h"
+#include "devicedetector.h"
 #include "defines.h"
 
 #include <QUrl>
@@ -20,13 +21,21 @@ ProductItem::ProductItem(const QString &imagePath, const QString &name, double c
 
 QString ProductItem::imagePath() const
 {
-    QString imageDataLocation = callImageDataPath();
-    if (!mImagePath.isEmpty())
+    if (DeviceDetector::isDesktop())
     {
-        QDir lDir(imageDataLocation);
-        return QUrl::fromLocalFile(lDir.filePath(mImagePath)).toString();
+        return mImagePath;
     }
-    return QString();
+    else if (DeviceDetector::isMobile())
+    {
+        QString imageDataLocation = callImageDataPath();
+        if (!mImagePath.isEmpty())
+        {
+            QDir lDir(imageDataLocation);
+            return QUrl::fromLocalFile(lDir.filePath(mImagePath)).toString();
+        }
+    } else {
+        return QString();
+    }
 }
 
 QString ProductItem::name() const
@@ -56,16 +65,23 @@ QString ProductItem::description() const
 
 void ProductItem::setImagePath(const QString &imagePath)
 {
-    QString imageDataLocation = callImageDataPath();
-    QFileInfo newImagePath(imagePath);
-    if (mImagePath != newImagePath.fileName())
+    if (DeviceDetector::isDesktop())
     {
-        if (!mImagePath.isEmpty())
+        mImagePath = imagePath;
+    }
+    else if (DeviceDetector::isMobile())
+    {
+        QString imageDataLocation = callImageDataPath();
+        QFileInfo newImagePath(imagePath);
+        if (mImagePath != newImagePath.fileName())
         {
-            QDir lDir(imageDataLocation);
-            QFile::remove(lDir.filePath(mImagePath));
+            if (!mImagePath.isEmpty())
+            {
+                QDir lDir(imageDataLocation);
+                QFile::remove(lDir.filePath(mImagePath));
+            }
+            mImagePath = newImagePath.fileName();
         }
-        mImagePath = newImagePath.fileName();
     }
 }
 
