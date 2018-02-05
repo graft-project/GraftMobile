@@ -32,6 +32,7 @@ Item {
         LinearEditItem {
             id: title
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item title:")
             maximumLength: 50
         }
@@ -39,8 +40,7 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.maximumHeight: 150
-            Layout.minimumHeight: 120
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item description:")
             wrapMode: TextInput.WordWrap
             maximumLength: 150
@@ -53,7 +53,7 @@ Item {
                 id: price
                 title: qsTr("Price:")
                 Layout.fillWidth: true
-                Layout.preferredWidth: 130
+                Layout.preferredWidth: 50
                 Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
@@ -64,7 +64,8 @@ Item {
 
             CurrencyComboBox {
                 id: graftComboBox
-                Layout.preferredWidth: 100
+                Layout.fillWidth: true
+                Layout.preferredWidth: 50
                 Layout.alignment: Qt.AlignTop
                 dropdownTitle: qsTr("Currency:")
             }
