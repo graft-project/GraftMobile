@@ -41,8 +41,6 @@ Item {
             id: description
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
-//            Layout.maximumHeight: 150
-//            Layout.minimumHeight: 120
             title: qsTr("Item description:")
             wrapMode: TextInput.WordWrap
             maximumLength: 150
@@ -70,10 +68,6 @@ Item {
                 Layout.preferredWidth: 50
                 Layout.alignment: Qt.AlignTop
                 dropdownTitle: qsTr("Currency:")
-                Rectangle {
-                    anchors.fill: parent
-                    color: "#60f506b2"
-                }
             }
         }
 

@@ -16,15 +16,15 @@ BaseLinearEditItem {
     property alias passwordCharacter: editItem.passwordCharacter
     property bool inlineTitle: false
 
-    baseTextField : Item {
+     actionTextField: editItem
+
+    Item {
         id: field
         height: 46
         anchors {
             left: parent.left
             right: parent.right
         }
-//        Layout.fillWidth: true
-//        Layout.preferredHeight: 46
 
         TextField {
             id: editItem
@@ -40,10 +40,6 @@ BaseLinearEditItem {
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
             onWrapModeChanged: field.resizeField()
-            Rectangle {
-                anchors.fill: parent
-                color: "#60fff000"
-            }
         }
 
         Text {
@@ -70,17 +66,14 @@ BaseLinearEditItem {
         }
 
         function resizeField() {
-            if (editItem.wrapMode == TextField.NoWrap) {
-//                Layout.fillHeight = false
+            if (editItem.wrapMode === TextField.NoWrap) {
+                Layout.fillHeight = false
             } else {
-                Layout.fillHeight = truevisibilityIcon
+                Layout.fillHeight = true
                 if (!inlineTitle) {
-                    console.log("ddddd")
-                    field.height =150
-                    field.anchors.bottomMargin = 12
-//                    editItem.topPadding = 30
-//                    editItem.leftPadding = 0
-//                    Layout.maximumHeight = 200
+                    field.height = 104
+                    editItem.topPadding = 30
+                    editItem.leftPadding = 0
                 }
             }
         }

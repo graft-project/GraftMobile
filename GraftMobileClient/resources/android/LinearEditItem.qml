@@ -15,23 +15,27 @@ BaseLinearEditItem {
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
 
-    titleTextField: Text {
-        id: titleItem
+    actionTextField: editItem
+
+
+    ColumnLayout {
+        spacing: 0
         anchors {
+            top: parent.top
             left: parent.left
             right: parent.right
         }
-        color: "#BBBBBB"
-        font.pixelSize: 12
-        Rectangle {
-            anchors.fill: parent
-            color: "#60ff0000"
-        }
-    }
 
-    baseTextField: Item {
+        Text {
+            id: titleItem
+            Layout.fillWidth: true
+            color: "#BBBBBB"
+            font.pixelSize: 12
+        }
+
+        Item {
             id: field
-            height: 47
+            height: 43
             anchors {
                 left: parent.left
                 right: parent.right
@@ -46,10 +50,6 @@ BaseLinearEditItem {
                 maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
                 Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
                 onWrapModeChanged: field.resizeField()
-                Rectangle {
-                    anchors.fill: parent
-                    color: "#60fff000"
-                }
             }
 
             VisibilityIcon {
@@ -65,8 +65,9 @@ BaseLinearEditItem {
 
             function resizeField() {
                 if (editItem.wrapMode !== TextField.NoWrap) {
-                    field.height = 100
+                    field.height = 83
                 }
             }
         }
+    }
 }
