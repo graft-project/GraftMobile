@@ -263,6 +263,17 @@ void GraftBaseClient::requestTransfer(GraftGenericAPI *api, const QString &addre
     }
 }
 
+void GraftBaseClient::requestTransferFee(GraftGenericAPI *api, const QString &address,
+                                         const QString &amount)
+{
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::transferFeeReceived,
+                this, &GraftBaseClient::receiveTransferFee, Qt::UniqueConnection);
+        api->transferFee(address, amount);
+    }
+}
+
 void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
 {
     if (api)
@@ -324,6 +335,17 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
 void GraftBaseClient::receiveTransfer(int result)
 {
     emit transferReceived(result == 0);
+}
+
+void GraftBaseClient::receiveTransferFee(int result, int fee)
+{
+    bool status = result == 0;
+    double lFee = 0;
+    if (status)
+    {
+        lFee = GraftGenericAPI::toCoins(fee);
+    }
+    emit transferFeeReceived(status, lFee);
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)

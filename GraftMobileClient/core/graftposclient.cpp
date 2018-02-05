@@ -84,6 +84,11 @@ void GraftPOSClient::transfer(const QString &address, const QString &amount)
     GraftBaseClient::requestTransfer(mApi, address, amount);
 }
 
+void GraftPOSClient::transferFee(const QString &address, const QString &amount)
+{
+    GraftBaseClient::requestTransferFee(mApi, address, amount);
+}
+
 void GraftPOSClient::saveProducts() const
 {
     saveModel(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
