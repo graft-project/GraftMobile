@@ -3,6 +3,7 @@ import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -17,6 +18,7 @@ Item {
 
     Connections {
         target: ImagePicker
+        enabled: Detector.isPlatform(Platform.IOS)
         onImageSelected: {
             previewImage.source = path
         }
