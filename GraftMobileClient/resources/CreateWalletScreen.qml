@@ -1,13 +1,13 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
-    screenHeader.navigationButtonState: Qt.platform.os === "ios"
+    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS)
 
     Connections {
         target: GraftClient
@@ -28,7 +28,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 30 : 15
+            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
         }
 
         PasswordFields {

@@ -28,10 +28,28 @@ public:
     };
     Q_ENUM(DeviceModels)
 
+    enum PlatformFlags {
+        IOS = 0x01,
+        Android = 0x02,
+        Windows = 0x04,
+        MacOS = 0x08,
+        Linux = 0x10,
+        Mobile = IOS | Android,
+        Desktop = Windows | MacOS | Linux,
+        Any = Mobile | Desktop
+    };
+    Q_DECLARE_FLAGS(Platforms, PlatformFlags)
+    Q_FLAG(Platforms)
+
     DeviceDetector(QObject *parent = nullptr);
 
     void registerTypes(QQmlEngine *engine);
+
     Q_INVOKABLE static int detectDevice();
+    Q_INVOKABLE static bool isPlatform(Platforms platform);
+    Q_INVOKABLE static bool isDesktop();
+    Q_INVOKABLE static bool isMobile();
 };
+Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::Platforms)
 
 #endif // DEVICEDETECTOR_H

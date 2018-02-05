@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -10,12 +11,12 @@ BaseScreen {
     title: qsTr("Send")
     screenHeader {
         actionButtonState: true
-        navigationButtonState: Qt.platform.os !== "android"
+        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
     }
     action: checkingData
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             screenHeader.actionText = qsTr("Send")
         }
     }
@@ -60,13 +61,13 @@ BaseScreen {
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
-                        title: Qt.platform.os === "ios" ? qsTr("Receivers address:") : qsTr("Receivers address")
+                        title: Detector.isPlatform(Platform.IOS) ? qsTr("Receivers address:") : qsTr("Receivers address")
                     }
 
                     LinearEditItem {
                         id: coinsAmountTextField
                         Layout.fillWidth: true
-                        title: Qt.platform.os === "ios" ? qsTr("Amount:") : qsTr("Amount")
+                        title: Detector.isPlatform(Platform.IOS) ? qsTr("Amount:") : qsTr("Amount")
                         showLengthIndicator: false
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: RegExpValidator {
@@ -78,7 +79,7 @@ BaseScreen {
                         anchors {
                             right: coinsAmountTextField.right
                             verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Qt.platform.os === "ios" ? -5 : 3
+                            verticalCenterOffset: Detector.isPlatform(Platform.IOS) ? -5 : 3
                         }
                         color: "#BBBBBB"
                         font {

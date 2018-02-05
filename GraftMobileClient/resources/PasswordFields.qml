@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.device.platform 1.0
 import "components"
 
 ColumnLayout {
@@ -12,7 +13,7 @@ ColumnLayout {
     LinearEditItem {
         id: passwordField
         maximumLength: 50
-        title: Qt.platform.os === "android" ? qsTr("Password") : qsTr("Password:")
+        title: Detector.isPlatform(Platform.Android) ? qsTr("Password") : qsTr("Password:")
         passwordMode: true
         onTextChanged: comparePassword(passwordField.text, confirmPasswordField.text)
     }
@@ -20,7 +21,7 @@ ColumnLayout {
     LinearEditItem {
         id: confirmPasswordField
         maximumLength: 50
-        title: Qt.platform.os === "android" ? qsTr("Confirm password") : qsTr("Confirm password:")
+        title: Detector.isPlatform(Platform.Android) ? qsTr("Confirm password") : qsTr("Confirm password:")
         passwordMode: true
         onTextChanged: comparePassword(passwordField.text, confirmPasswordField.text)
     }
