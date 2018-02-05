@@ -109,8 +109,10 @@ void AccountManager::save() const
     QFile lFile(lDir.filePath(scAccountDataFile));
     if (lFile.open(QFile::WriteOnly))
     {
-        QDataStream in(&lFile);
+        QByteArray data;
+        QDataStream in(&data, QIODevice::WriteOnly);
         in << mPassword << mAccountData << mAddress << mSeed << mViewKey << mNetworkType;
+        lFile.write(qCompress(data));
     }
 }
 
@@ -134,7 +136,8 @@ void AccountManager::read()
         QFile lFile(dataPath);
         if (lFile.open(QFile::ReadOnly))
         {
-            QDataStream in(&lFile);
+            QByteArray data = qUncompress(lFile.readAll());
+            QDataStream in(data);
             in >> mPassword >> mAccountData >> mAddress >> mSeed >> mViewKey >> mNetworkType;
         }
     }
