@@ -58,7 +58,8 @@ BaseScreen {
 
             Label {
                 text: qsTr("Service")
-                font.pixelSize: Detector.isPlatform(Platform.IOS) ? 16 : switchLabel.font.pixelSize
+                font.pixelSize: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                    16 : switchLabel.font.pixelSize
                 color: "#8e8e93"
             }
 
