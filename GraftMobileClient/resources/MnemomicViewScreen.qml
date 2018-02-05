@@ -1,7 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -15,9 +15,9 @@ BaseScreen {
         anchors {
             fill: parent
             topMargin: 15
-            leftMargin: Device.detectDevice() === DeviceDetector.IPhoneSE ? 5 : 15
-            rightMargin: Device.detectDevice() === DeviceDetector.IPhoneSE ? 5 : 15
-            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? screenState ? 15 : 30 : 15
+            leftMargin: Detector.detectDevice() === Platform.IPhoneSE ? 5 : 15
+            rightMargin: Detector.detectDevice() === Platform.IPhoneSE ? 5 : 15
+            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? screenState ? 15 : 30 : 15
         }
 
         Label {
@@ -91,7 +91,7 @@ BaseScreen {
                 title: qsTr("Create wallet")
                 action: save
                 screenHeader {
-                    navigationButtonState: Qt.platform.os === "android"
+                    navigationButtonState: Detector.isPlatform(Platform.Android)
                     isNavigationButtonVisible: false
                     actionButtonState: true
                 }
@@ -113,7 +113,7 @@ BaseScreen {
                 title: qsTr("Mnemonic phrase")
                 action: save
                 screenHeader {
-                    navigationButtonState: Qt.platform.os !== "android"
+                    navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
                 }
             }
         }

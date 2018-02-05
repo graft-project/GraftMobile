@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import org.graft 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -16,11 +17,11 @@ BaseScreen {
 
     state: balanceState
     screenHeader {
-        navigationButtonState: Qt.platform.os === "ios"
+        navigationButtonState: Detector.isPlatform(Platform.IOS)
     }
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             navigationText: qsTr("Cancel")
             background.color = "#ffffff"
         }

@@ -1,12 +1,12 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "../"
 
 BaseHeader {
     id: rootItem
-    height: Device.detectDevice() === DeviceDetector.IPhoneX ? 88 : 64
+    height: Detector.detectDevice() === Platform.IPhoneX ? 88 : 64
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
     property alias navigationText: navigationButton.text
@@ -17,7 +17,7 @@ BaseHeader {
         anchors {
             leftMargin: 15
             rightMargin: 15
-            topMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 25 : 10
+            topMargin: Detector.detectDevice() === Platform.IPhoneX ? 25 : 10
             left: parent.left
             right: parent.right
             top: parent.top

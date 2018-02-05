@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "../components"
 
 BaseScreen {
@@ -13,7 +13,7 @@ BaseScreen {
 
     title: qsTr("Quick Deal")
     screenHeader {
-        navigationButtonState: Qt.platform.os !== "android"
+        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
         actionButtonState: true
     }
     action: checkout
@@ -32,7 +32,7 @@ BaseScreen {
                 id: title
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
-                title: Qt.platform.os === "android" ? qsTr("Item title") : qsTr("Item title:")
+                title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") : qsTr("Item title:")
                 showLengthIndicator: true
                 maximumLength: 50
             }
@@ -47,15 +47,15 @@ BaseScreen {
                     showLengthIndicator: false
                     Layout.alignment: Qt.AlignBottom
                     inputMethodHints: Qt.ImhDigitsOnly
-                    title: Qt.platform.os === "android" ? qsTr("Price") : qsTr("Price:")
+                    title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                 }
 
                 CurrencyComboBox {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignBottom
-                    Layout.bottomMargin: Qt.platform.os === "android" ? 8 : 3
-                    Layout.preferredWidth: Qt.platform.os === "android" ? 50 : Device.detectDevice() === DeviceDetector.IPhoneSE ? 165 : 130
-                    dropdownTitle: Qt.platform.os === "android" ? qsTr("Currency") : qsTr("Currency:")
+                    Layout.bottomMargin: Detector.isPlatform(Platform.Android) ? 8 : 3
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 50 : Detector.detectDevice() === Platform.IPhoneSE ? 165 : 130
+                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") : qsTr("Currency:")
                 }
             }
         }
@@ -63,7 +63,7 @@ BaseScreen {
         WideActionButton {
             id: confirmButton
             Layout.alignment: Qt.AlignBottom
-            text: Qt.platform.os === "android" ? qsTr("CHECKOUT") : qsTr("Checkout")
+            text: Detector.isPlatform(Platform.Android) ? qsTr("CHECKOUT") : qsTr("Checkout")
             onClicked: checkout()
         }
     }

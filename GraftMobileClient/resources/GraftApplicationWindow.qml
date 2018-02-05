@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import com.device.platform 1.0
 
 ApplicationWindow {
     id: root
@@ -37,7 +38,7 @@ ApplicationWindow {
 
 
     function init() {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             root.visibility = ApplicationWindow.FullScreen
         }
     }
