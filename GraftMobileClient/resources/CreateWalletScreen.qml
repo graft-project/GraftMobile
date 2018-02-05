@@ -22,7 +22,7 @@ BaseScreen {
     }
 
     ColumnLayout {
-        spacing: Detector.isPlatform(Platform.Desktop) ? 10 : 15
+        spacing: Detector.isPlatform(Platform.Desktop) ? 5 : 15
         anchors {
             fill: parent
             topMargin: 15
@@ -37,6 +37,7 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
+            Layout.topMargin: 15
             text: qsTr("Create New Wallet")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {

@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.2
+import com.device.platform 1.0
 import "../"
 
 ColumnLayout {
@@ -100,7 +101,7 @@ ColumnLayout {
             id: attentionText
             Layout.alignment: Qt.AlignLeft
             visible: visibilityIcon
-            font.pixelSize: 12
+            font.pixelSize: Detector.isPlatform(Platform.Desktop) ? 14 : 12
             color: wrongFieldColor ? "#F33939" : "#3F3F3F"
         }
 
@@ -114,7 +115,7 @@ ColumnLayout {
             text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
                                                          wordCounting()).arg(maximumLength)
             color: "#8E8E93"
-            font.pixelSize: 12
+            font.pixelSize: Detector.isPlatform(Platform.Desktop) ? 14 : 12
         }
     }
 
