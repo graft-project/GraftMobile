@@ -20,7 +20,6 @@ BaseLinearEditItem {
     ColumnLayout {
         spacing: 0
         anchors {
-            top: parent.top
             left: parent.left
             right: parent.right
         }

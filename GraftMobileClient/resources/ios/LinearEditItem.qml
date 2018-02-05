@@ -16,7 +16,7 @@ BaseLinearEditItem {
     property alias passwordCharacter: editItem.passwordCharacter
     property bool inlineTitle: false
 
-     actionTextField: editItem
+    actionTextField: editItem
 
     Item {
         id: field

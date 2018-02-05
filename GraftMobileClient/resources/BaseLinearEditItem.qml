@@ -10,8 +10,8 @@ ColumnLayout {
     property bool wrongFieldColor: false
     property bool letterCountingMode: true
     property int maximumLength: 32767
-    default property alias baseTextField: baseTextField.data
     property var actionTextField: null
+    default property alias baseTextField: baseTextField.data
 
     spacing: 0
     onPasswordModeChanged: {
