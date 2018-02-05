@@ -7,7 +7,7 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
-    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS)
+    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.Desktop)
 
     Connections {
         target: GraftClient
@@ -22,7 +22,7 @@ BaseScreen {
     }
 
     ColumnLayout {
-        spacing: 15
+        spacing: Detector.isPlatform(Platform.Desktop) ? 10 : 15
         anchors {
             fill: parent
             topMargin: 15

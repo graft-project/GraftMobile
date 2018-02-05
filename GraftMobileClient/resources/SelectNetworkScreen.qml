@@ -35,11 +35,6 @@ BaseScreen {
                 pixelSize: 16
                 bold: true
             }
-            Rectangle {
-                anchors.fill: parent
-                color: "#60ff0000"
-            }
-
         }
 
         Label {
@@ -51,10 +46,6 @@ BaseScreen {
             wrapMode: Label.WordWrap
             text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
                        "that carry real GRF transactions.")
-            Rectangle {
-                anchors.fill: parent
-                color: "#60fff000"
-            }
             MouseArea {
                 anchors.fill: parent
                 onClicked: mainNet.checked = true
@@ -119,7 +110,7 @@ BaseScreen {
 
         Item {
             Layout.fillHeight: true
-            Layout.maximumHeight: 150
+            Layout.maximumHeight: Detector.isPlatform(Platform.Desktop) ? 250 : 150
         }
 
         WideActionButton {

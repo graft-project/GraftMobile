@@ -9,7 +9,7 @@ BaseScreen {
     title: qsTr("Restore wallet")
     action: restoreWallet
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS)
+        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.Desktop)
         actionButtonState: true
     }
 

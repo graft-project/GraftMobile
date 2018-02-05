@@ -85,7 +85,7 @@ ColumnLayout {
             id: attentionText
             Layout.alignment: Qt.AlignLeft
             visible: visibilityIcon
-            font.pointSize: 12
+            font.pixelSize: 12
             color: wrongFieldColor ? "#F33939" : "#3F3F3F"
         }
 
