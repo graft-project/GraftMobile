@@ -25,11 +25,10 @@ BaseLinearEditItem {
         }
 
         Text {
-            id: attentionText
-            Layout.alignment: Qt.AlignLeft
-            visible: visibilityIcon
+            id: titleItem
+            Layout.fillWidth: true
+            color: "#BBBBBB"
             font.pixelSize: 12
-            color: wrongFieldColor ? "#F33939" : "#3F3F3F"
         }
 
         Item {
