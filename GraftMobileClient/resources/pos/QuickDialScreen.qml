@@ -33,7 +33,7 @@ BaseScreen {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
                 title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") : qsTr("Item title:")
-                showLengthIndicator: tru
+                showLengthIndicator: true
                 maximumLength: 50
             }
 
@@ -45,8 +45,8 @@ BaseScreen {
                     id: price
                     Layout.fillWidth: true
                     showLengthIndicator: false
-                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 75 : 50
                     Layout.alignment: Qt.AlignTop
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 75 : 50
                     inputMethodHints: Qt.ImhDigitsOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                 }
