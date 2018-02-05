@@ -8,7 +8,7 @@ BaseScreen {
     id: qrScanning
     title: qsTr("Pay")
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     }
 
     Connections {
