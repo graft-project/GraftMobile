@@ -37,7 +37,7 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
-            Layout.topMargin: 15
+            Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
