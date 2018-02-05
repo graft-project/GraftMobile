@@ -18,11 +18,6 @@ public:
     Q_INVOKABLE ProductModel *paymentProductModel() const;
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
-    Q_INVOKABLE void createAccount(const QString &password) override;
-    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password) override;
-    Q_INVOKABLE void transfer(const QString &address, const QString &amount) override;
-    Q_INVOKABLE void transferFee(const QString &address, const QString &amount) override;
-
 signals:
     void getPOSDataReceived(bool result);
     void rejectPayReceived(bool result);
@@ -42,6 +37,7 @@ private slots:
     void receivePayStatus(int result, int payStatus);
 
 private:
+    GraftGenericAPI *graftAPI() const override;
     void updateBalance() override;
 
     GraftWalletAPI *mApi;

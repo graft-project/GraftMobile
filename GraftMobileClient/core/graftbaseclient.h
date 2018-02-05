@@ -27,10 +27,10 @@ public:
     Q_INVOKABLE bool isAccountExists() const;
     Q_INVOKABLE void resetData();
 
-    virtual void createAccount(const QString &password) = 0;
-    virtual void restoreAccount(const QString &seed, const QString &password) = 0;
-    virtual void transfer(const QString &address, const QString &amount) = 0;
-    virtual void transferFee(const QString &address, const QString &amount) = 0;
+    Q_INVOKABLE void createAccount(const QString &password);
+    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password);
+    Q_INVOKABLE void transfer(const QString &address, const QString &amount);
+    Q_INVOKABLE void transferFee(const QString &address, const QString &amount);
 
     Q_INVOKABLE QString getSeed() const;
     Q_INVOKABLE QString address() const;
@@ -83,14 +83,12 @@ public slots:
 protected:
     void timerEvent(QTimerEvent *event) override;
 
+    virtual GraftGenericAPI *graftAPI() const = 0;
+
     void registerImageProvider(QQmlEngine *engine);
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
     QStringList getServiceAddresses() const;
-    void requestAccount(GraftGenericAPI *api, const QString &password);
-    void requestRestoreAccount(GraftGenericAPI *api, const QString &seed, const QString &password);
-    void requestTransfer(GraftGenericAPI *api, const QString &address, const QString &amount);
-    void requestTransferFee(GraftGenericAPI *api, const QString &address, const QString &amount);
 
     void registerBalanceTimer(GraftGenericAPI *api);
     virtual void updateBalance() = 0;

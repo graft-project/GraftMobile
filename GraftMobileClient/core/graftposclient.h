@@ -23,11 +23,6 @@ public:
     void registerTypes(QQmlEngine *engine) override;
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
-    Q_INVOKABLE void createAccount(const QString &password) override;
-    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password) override;
-    Q_INVOKABLE void transfer(const QString &address, const QString &amount) override;
-    Q_INVOKABLE void transferFee(const QString &address, const QString &amount) override;
-
 signals:
     void saleReceived(bool result);
     void rejectSaleReceived(bool result);
@@ -46,6 +41,7 @@ private slots:
 
 private:
     void initProductModels();
+    GraftGenericAPI *graftAPI() const override;
     void updateBalance() override;
 
     GraftPOSAPI *mApi;

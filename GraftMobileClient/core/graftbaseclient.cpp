@@ -60,6 +60,8 @@ GraftBaseClient::~GraftBaseClient()
 void GraftBaseClient::setNetworkType(int networkType)
 {
     mAccountManager->setNetworkType(networkType);
+    graftAPI()->setDAPIVersion(dapiVersion());
+    graftAPI()->changeAddresses(getServiceAddresses());
     emit networkTypeChanged();
 }
 
@@ -89,6 +91,60 @@ void GraftBaseClient::resetData()
     saveBalance();
     mIsBalanceUpdated = false;
     emit balanceUpdated();
+}
+
+void GraftBaseClient::createAccount(const QString &password)
+{
+    GraftGenericAPI *api = graftAPI();
+    if (api)
+    {
+        if (mAccountManager->account().isEmpty())
+        {
+            connect(api, &GraftGenericAPI::createAccountReceived,
+                    this, &GraftBaseClient::receiveAccount, Qt::UniqueConnection);
+            mAccountManager->setPassword(password);
+            api->createAccount(password);
+        }
+        else
+        {
+            api->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+        }
+    }
+}
+
+void GraftBaseClient::restoreAccount(const QString &seed, const QString &password)
+{
+    GraftGenericAPI *api = graftAPI();
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::restoreAccountReceived,
+                this, &GraftBaseClient::receiveRestoreAccount, Qt::UniqueConnection);
+        mAccountManager->setPassword(password);
+        api->restoreAccount(seed, password);
+    }
+}
+
+void GraftBaseClient::transfer(const QString &address, const QString &amount)
+{
+    GraftGenericAPI *api = graftAPI();
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::transferReceived,
+                this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
+        QString customAmount = QString::number(GraftGenericAPI::toAtomic(amount.toDouble()), 'f', 0);
+        api->transfer(address, customAmount);
+    }
+}
+
+void GraftBaseClient::transferFee(const QString &address, const QString &amount)
+{
+    GraftGenericAPI *api = graftAPI();
+    if (api)
+    {
+        connect(api, &GraftGenericAPI::transferFeeReceived,
+                this, &GraftBaseClient::receiveTransferFee, Qt::UniqueConnection);
+        api->transferFee(address, amount);
+    }
 }
 
 QString GraftBaseClient::getSeed() const
@@ -222,59 +278,6 @@ QStringList GraftBaseClient::getServiceAddresses() const
         addressList = seedSupernodes();
     }
     return addressList;
-}
-
-void GraftBaseClient::requestAccount(GraftGenericAPI *api, const QString &password)
-{
-    if (api)
-    {
-        if (mAccountManager->account().isEmpty())
-        {
-            connect(api, &GraftGenericAPI::createAccountReceived,
-                    this, &GraftBaseClient::receiveAccount, Qt::UniqueConnection);
-            mAccountManager->setPassword(password);
-            api->createAccount(password);
-        }
-        else
-        {
-            api->setAccountData(mAccountManager->account(), mAccountManager->passsword());
-        }
-    }
-}
-
-void GraftBaseClient::requestRestoreAccount(GraftGenericAPI *api, const QString &seed,
-                                            const QString &password)
-{
-    if (api)
-    {
-        connect(api, &GraftGenericAPI::restoreAccountReceived,
-                this, &GraftBaseClient::receiveRestoreAccount, Qt::UniqueConnection);
-        mAccountManager->setPassword(password);
-        api->restoreAccount(seed, password);
-    }
-}
-
-void GraftBaseClient::requestTransfer(GraftGenericAPI *api, const QString &address,
-                                      const QString &amount)
-{
-    if (api)
-    {
-        connect(api, &GraftGenericAPI::transferReceived,
-                this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
-        QString customAmount = QString::number(GraftGenericAPI::toAtomic(amount.toDouble()), 'f', 0);
-        api->transfer(address, customAmount);
-    }
-}
-
-void GraftBaseClient::requestTransferFee(GraftGenericAPI *api, const QString &address,
-                                         const QString &amount)
-{
-    if (api)
-    {
-        connect(api, &GraftGenericAPI::transferFeeReceived,
-                this, &GraftBaseClient::receiveTransferFee, Qt::UniqueConnection);
-        api->transferFee(address, amount);
-    }
 }
 
 void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)

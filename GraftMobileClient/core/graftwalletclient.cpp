@@ -33,6 +33,7 @@ void GraftWalletClient::setNetworkType(int networkType)
     GraftBaseClient::setNetworkType(networkType);
     mApi->setDAPIVersion(dapiVersion());
     mApi->changeAddresses(getServiceAddresses());
+
 }
 
 double GraftWalletClient::totalCost() const
@@ -53,26 +54,6 @@ bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
         return true;
     }
     return false;
-}
-
-void GraftWalletClient::createAccount(const QString &password)
-{
-    GraftBaseClient::requestAccount(mApi, password);
-}
-
-void GraftWalletClient::restoreAccount(const QString &seed, const QString &password)
-{
-    GraftBaseClient::requestRestoreAccount(mApi, seed, password);
-}
-
-void GraftWalletClient::transfer(const QString &address, const QString &amount)
-{
-    GraftBaseClient::requestTransfer(mApi, address, amount);
-}
-
-void GraftWalletClient::transferFee(const QString &address, const QString &amount)
-{
-    GraftBaseClient::requestTransferFee(mApi, address, amount);
 }
 
 void GraftWalletClient::getPOSData(const QString &data)
@@ -159,6 +140,12 @@ void GraftWalletClient::receivePayStatus(int result, int payStatus)
     {
         emit payStatusReceived(false);
     }
+}
+
+GraftGenericAPI *GraftWalletClient::graftAPI() const
+{
+    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
+    return mApi;
 }
 
 void GraftWalletClient::updateBalance()

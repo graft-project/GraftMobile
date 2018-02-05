@@ -69,26 +69,6 @@ bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
     return false;
 }
 
-void GraftPOSClient::createAccount(const QString &password)
-{
-    GraftBaseClient::requestAccount(mApi, password);
-}
-
-void GraftPOSClient::restoreAccount(const QString &seed, const QString &password)
-{
-    GraftBaseClient::requestRestoreAccount(mApi, seed, password);
-}
-
-void GraftPOSClient::transfer(const QString &address, const QString &amount)
-{
-    GraftBaseClient::requestTransfer(mApi, address, amount);
-}
-
-void GraftPOSClient::transferFee(const QString &address, const QString &amount)
-{
-    GraftBaseClient::requestTransferFee(mApi, address, amount);
-}
-
 void GraftPOSClient::saveProducts() const
 {
     saveModel(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
@@ -170,6 +150,12 @@ void GraftPOSClient::initProductModels()
     ProductModelSerializator::deserialize(loadModel(scProductModelDataFile), mProductModel);
     mSelectedProductModel = new SelectedProductProxyModel(this);
     mSelectedProductModel->setSourceModel(mProductModel);
+}
+
+GraftGenericAPI *GraftPOSClient::graftAPI() const
+{
+    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
+    return mApi;
 }
 
 void GraftPOSClient::updateBalance()
