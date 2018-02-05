@@ -10,7 +10,7 @@ BaseScreen {
     title: qsTr("Select Network")
     screenHeader {
         isNavigationButtonVisible: false
-        navigationButtonState: Detector.isPlatform(Platform.Android) || Detector.isDesktop()
+        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     Component.onCompleted: mainNet.checked = true
@@ -35,6 +35,11 @@ BaseScreen {
                 pixelSize: 16
                 bold: true
             }
+            Rectangle {
+                anchors.fill: parent
+                color: "#60ff0000"
+            }
+
         }
 
         Label {
@@ -46,6 +51,10 @@ BaseScreen {
             wrapMode: Label.WordWrap
             text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
                        "that carry real GRF transactions.")
+            Rectangle {
+                anchors.fill: parent
+                color: "#60fff000"
+            }
             MouseArea {
                 anchors.fill: parent
                 onClicked: mainNet.checked = true
