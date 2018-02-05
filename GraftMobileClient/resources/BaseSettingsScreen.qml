@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -57,7 +58,7 @@ BaseScreen {
 
             Label {
                 text: qsTr("Service")
-                font.pixelSize: Qt.platform.os === "ios" ? 16 : switchLabel.font.pixelSize
+                font.pixelSize: Detector.isPlatform(Platform.IOS) ? 16 : switchLabel.font.pixelSize
                 color: "#8e8e93"
             }
 
@@ -88,14 +89,15 @@ BaseScreen {
                     inputMask: "000.000.000.000; "
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
+                    Layout.preferredWidth: 130
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("ip") : ""
                 }
 
                 LinearEditItem {
                     id: portTextField
-                    Layout.preferredWidth: root.width / 4
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
+                    Layout.preferredWidth: 100
                     text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
                         regExp: /\d{1,5}/

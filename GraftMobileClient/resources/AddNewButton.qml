@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.platform 1.0
 
 Button {
     property alias buttonTitle: buttonTitle.text
@@ -25,7 +26,7 @@ Button {
                 leftMargin: 15
                 rightMargin: 15
             }
-            visible: Qt.platform.os === "ios"
+            visible: Detector.isPlatform(Platform.IOS)
             color: "#E6E6E8"
         }
 
@@ -61,7 +62,7 @@ Button {
                 leftMargin: 15
                 rightMargin: 15
             }
-            visible: Qt.platform.os === "ios"
+            visible: Detector.isPlatform(Platform.IOS)
             color: "#E6E6E8"
         }
     }

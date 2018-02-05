@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -23,7 +24,7 @@ BaseScreen {
 
     Rectangle {
         anchors.fill: parent
-        color: Qt.platform.os === "ios" ? "#FFFFFF" : "#E9E9E9"
+        color: Detector.isPlatform(Platform.IOS) ? "#FFFFFF" : "#E9E9E9"
 
         Item {
             anchors {
@@ -52,7 +53,7 @@ BaseScreen {
                 bottom: button.top
                 bottomMargin: addBottomMargin()
             }
-            Material.elevation: Qt.platform.os === "android" ? 6 : 0
+            Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
             padding: 0
 
             contentItem: Rectangle {
@@ -90,7 +91,7 @@ BaseScreen {
 
                 action: pushScreen
                 screenHeader {
-                    navigationButtonState: Qt.platform.os === "android"
+                    navigationButtonState: Detector.isPlatform(Platform.Android)
                     actionButtonState: true
                 }
             }
@@ -115,7 +116,7 @@ BaseScreen {
 
                 specialBackMode: pushScreen
                 screenHeader {
-                    navigationButtonState: Qt.platform.os !== "android"
+                    navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
                     actionButtonState: false
                 }
             }
@@ -141,7 +142,7 @@ BaseScreen {
     function addBottomMargin() {
         var addBottomMargin = 0;
         if (isSpacing === true) {
-            return addBottomMargin = Qt.platform.os === "android" ? 15 : button.height + 15
+            return addBottomMargin = Detector.isPlatform(Platform.Android) ? 15 : button.height + 15
         } else {
             return addBottomMargin = 15
         }

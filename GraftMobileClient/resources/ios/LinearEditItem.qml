@@ -1,6 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.2
+import "../"
 
 ColumnLayout {
     id: linearEditItem
@@ -9,39 +11,49 @@ ColumnLayout {
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
     property alias validator: editItem.validator
-    property bool inlineTitle: false
     property alias showLengthIndicator: textCount.visible
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property bool letterCountingMode: true
     property int maximumLength: 32767
     property alias passwordCharacter: editItem.passwordCharacter
+    property bool passwordMode: false
+    property bool wrongFieldColor: false
+    property bool visibilityIcon: false
+    property alias attentionText: attentionText.text
+    property bool inlineTitle: false
 
     spacing: 0
+    onPasswordModeChanged: {
+        visibilityIcon = true
+        if (passwordMode) {
+            passwordCharacter = '•'
+            editItem.echoMode = TextInput.Password
+        } else {
+            editItem.echoMode = TextInput.Normal
+            editItem.inputMethodHints = Qt.ImhHiddenText
+        }
+    }
 
-    TextField {
-        id: editItem
+    Item {
+        id: field
         Layout.fillWidth: true
-        Layout.bottomMargin: -12
-        verticalAlignment: Qt.AlignTop
-        color: "#404040"
-        leftPadding: titleItem.width
-        bottomPadding: 30
-        maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
+        Layout.preferredHeight: 46
 
-        onWrapModeChanged: {
-            if (wrapMode === TextField.NoWrap) {
-                Layout.fillHeight = false
-                leftPadding = titleItem.width
-                topPadding = 0
-            } else {
-                Layout.fillHeight = true
-                if (!inlineTitle) {
-                    leftPadding = 0
-                    topPadding = 30
-                    Layout.maximumHeight = 200
-                }
+        TextField {
+            id: editItem
+            anchors {
+                fill: parent
+                bottomMargin: -12
             }
+            leftPadding: titleItem.width
+            rightPadding: visibilityIcon ? 42 : 0
+            bottomPadding: 30
+            verticalAlignment: Qt.AlignTop
+            color: "#404040"
+            maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
+            Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+            onWrapModeChanged: field.resizeField()
         }
 
         Text {
@@ -52,20 +64,58 @@ ColumnLayout {
                 bottom: parent.bottom
                 topMargin: 8
             }
-            font.pixelSize: parent.font.pixelSize
+            font.pixelSize: editItem.font.pixelSize
             rightPadding: 5
-            color: "#8e8e93"
+            color: "#8E8E93"
+        }
+
+        VisibilityIcon {
+            visible: visibilityIcon
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                rightMargin: 6
+            }
+            onClicked: passwordMode =! passwordMode
+        }
+
+        function resizeField() {
+            if (editItem.wrapMode === TextField.NoWrap) {
+                Layout.fillHeight = false
+            } else {
+                Layout.fillHeight = true
+                if (!inlineTitle) {
+                    editItem.topPadding = 30
+                    editItem.leftPadding = 0
+                    Layout.maximumHeight = 200
+                }
+            }
         }
     }
 
-    Text {
-        id: textCount
-        Layout.topMargin: 0
-        Layout.alignment: Qt.AlignRight
-        font.pixelSize: 12
-        text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
-                                                       wordCounting()).arg(maximumLength)
-        color: "#8e8e93"
+    RowLayout {
+        spacing: 0
+
+        Text {
+            id: attentionText
+            Layout.alignment: Qt.AlignLeft
+            visible: visibilityIcon
+            font.pointSize: 12
+            color: wrongFieldColor ? "#F33939" : "#3F3F3F"
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
+
+        Text {
+            id: textCount
+            Layout.alignment: Qt.AlignRight
+            text: qsTr("%1/%2").arg(letterCountingMode ? editItem.length :
+                                                         wordCounting()).arg(maximumLength)
+            color: "#8E8E93"
+            font.pixelSize: 12
+        }
     }
 
     function wordCounting() {

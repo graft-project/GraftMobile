@@ -1,6 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "../components"
 
 BaseGraftToolBar {
@@ -15,9 +15,9 @@ BaseGraftToolBar {
     }
 
     RowLayout {
-        spacing: 18
+        spacing: Detector.detectDevice() === Platform.IPhoneSE ? 6 : 18
         anchors {
-            topMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? 3 : 0
+            topMargin: Detector.detectDevice() === Platform.IPhoneX ? 3 : 0
             top: parent.top
             horizontalCenter: parent.horizontalCenter
         }

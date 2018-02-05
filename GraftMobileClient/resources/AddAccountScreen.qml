@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -12,7 +13,7 @@ BaseScreen {
     action: addAccount
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
             accountName.title = qsTr("Account name:")

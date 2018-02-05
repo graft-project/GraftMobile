@@ -13,6 +13,7 @@ BaseBalanceScreen {
 
         onNetworkTypeChanged: {
             payButton.enabled = GraftClient.networkType()
+            sendCoinsButton.enabled = GraftClient.networkType()
         }
     }
 
@@ -32,6 +33,15 @@ BaseBalanceScreen {
             Layout.bottomMargin: 15
             visible: false
             onClicked: pushScreen.openAddAccountScreen()
+        }
+
+        WideActionButton {
+            id: sendCoinsButton
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            text: qsTr("Send")
+            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            onClicked: pushScreen.openSendCoinScreen()
         }
 
         WideActionButton {

@@ -2,6 +2,10 @@ QT += qml quick network
 
 CONFIG += c++11
 
+win32|macx|unix {
+DEFINES += RES_IOS
+}
+
 ios {
 include(ios/ios.pri)
 }
