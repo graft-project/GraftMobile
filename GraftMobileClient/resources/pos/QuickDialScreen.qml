@@ -13,7 +13,7 @@ BaseScreen {
 
     title: qsTr("Quick Deal")
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
         actionButtonState: true
     }
     action: checkout
@@ -54,8 +54,10 @@ BaseScreen {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignBottom
                     Layout.bottomMargin: Detector.isPlatform(Platform.Android) ? 8 : 3
-                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 50 : Detector.detectDevice() === Platform.IPhoneSE ? 165 : 130
-                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") : qsTr("Currency:")
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 50 :
+                                           Detector.detectDevice() === Platform.IPhoneSE ? 165 : 130
+                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") :
+                                                                           qsTr("Currency:")
                 }
             }
         }
@@ -63,7 +65,7 @@ BaseScreen {
         WideActionButton {
             id: confirmButton
             Layout.alignment: Qt.AlignBottom
-            text: Detector.isPlatform(Platform.Android) ? qsTr("CHECKOUT") : qsTr("Checkout")
+            text: qsTr("Checkout")
             onClicked: checkout()
         }
     }
