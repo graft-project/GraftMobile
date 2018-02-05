@@ -3,11 +3,12 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import com.device.platform 1.0
 
 Pane {
     id: root
 
-    Material.elevation: Qt.platform.os === "android" ? 6 : 0
+    Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
     padding: 0
     contentItem: Rectangle {
         color: ColorFactory.color(DesignFactory.CircleBackground)

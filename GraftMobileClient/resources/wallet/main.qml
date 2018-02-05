@@ -3,7 +3,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import org.graft 1.0
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "../"
 import "../components"
 
@@ -24,7 +24,8 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: Qt.platform.os === "ios" ? Device.detectDevice() === DeviceDetector.IPhoneX ? 85 : 49 : 0
+        height: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                        Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -35,7 +36,7 @@ GraftApplicationWindow {
     }
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             footerLoader.source = "qrc:/wallet/GraftToolBar.qml"
         } else {
             drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
@@ -77,7 +78,7 @@ GraftApplicationWindow {
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
         onCurrentIndexChanged: {
-            if (Qt.platform.os === "ios") {
+            if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
                 graftApplicationFooter.visible = currentIndex > 1
             } else {
                 if (drawerLoader && drawerLoader.status === Loader.Ready) {
@@ -166,7 +167,7 @@ GraftApplicationWindow {
     }
 
     function selectButton(name) {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             footerLoader.item.seclectedButtonChanged(name)
         }
     }

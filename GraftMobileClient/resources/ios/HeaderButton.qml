@@ -16,13 +16,13 @@ Text {
         from: 1.0
         to: 0.2
         duration: 300
+        running: mouseArea.containsMouse
     }
 
     MouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: button.clicked()
-        onPressed: opacityAnimator.running = true
-        onReleased: button.opacity = 1.0
+        onExited: button.opacity = 1.0
     }
 }

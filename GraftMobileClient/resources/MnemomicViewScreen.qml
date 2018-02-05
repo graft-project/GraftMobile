@@ -1,7 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import com.device.detector 1.0
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -15,9 +15,9 @@ BaseScreen {
         anchors {
             fill: parent
             topMargin: 15
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: Device.detectDevice() === DeviceDetector.IPhoneX ? screenState ? 15 : 30 : 15
+            leftMargin: 5
+            rightMargin: 5
+            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? screenState ? 15 : 30 : 15
         }
 
         Label {
@@ -57,6 +57,8 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
                 bottom: screenState ? parent.bottom : saveButton.top
+                leftMargin: 10
+                rightMargin: 10
             }
             text: qsTr("Copy to clipboard")
             onClicked: {
@@ -72,6 +74,8 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
+                leftMargin: 10
+                rightMargin: 10
             }
             text: qsTr("I saved it!")
             onClicked: save()
@@ -91,7 +95,7 @@ BaseScreen {
                 title: qsTr("Create wallet")
                 action: save
                 screenHeader {
-                    navigationButtonState: Qt.platform.os === "android"
+                    navigationButtonState: Detector.isPlatform(Platform.Android)
                     isNavigationButtonVisible: false
                     actionButtonState: true
                 }
@@ -113,7 +117,7 @@ BaseScreen {
                 title: qsTr("Mnemonic phrase")
                 action: save
                 screenHeader {
-                    navigationButtonState: Qt.platform.os !== "android"
+                    navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
                 }
             }
         }

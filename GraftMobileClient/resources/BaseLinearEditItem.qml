@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.platform 1.0
 
 ColumnLayout {
     property alias attentionText: attentionText.text
@@ -53,7 +54,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
             text: qsTr("%1 / %2").arg(letterCountingMode ? actionTextField.displayText.length :
                                                            wordCounting(actionTextField.displayText)).arg(maximumLength)
-            color: Qt.platform.os === "ios" ? "#8E8E93" : "#BBBBBB"
+            color: Detector.isPlatform(Platform.IOS) ? "#8E8E93" : "#BBBBBB"
             font.pixelSize: 12
         }
     }
@@ -69,7 +70,7 @@ ColumnLayout {
 
     function heightTextField() {
         var size
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             size = actionTextField.wrapMode === TextField.NoWrap ? 45 : 102
         } else {
             size = actionTextField.wrapMode === TextField.NoWrap ? 50 : 90

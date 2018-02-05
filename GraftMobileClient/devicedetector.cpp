@@ -22,8 +22,8 @@ DeviceDetector::DeviceDetector(QObject *parent) : QObject(parent)
 
 void DeviceDetector::registerTypes(QQmlEngine *engine)
 {
-    engine->rootContext()->setContextProperty(QStringLiteral("Device"), this);
-    qmlRegisterType<DeviceDetector>("com.device.detector", 1, 0, "DeviceDetector");
+    engine->rootContext()->setContextProperty(QStringLiteral("Detector"), this);
+    qmlRegisterType<DeviceDetector>("com.device.platform", 1, 0, "Platform");
 }
 
 int DeviceDetector::detectDevice()
@@ -45,4 +45,31 @@ int DeviceDetector::detectDevice()
         }
     }
     return currentDevice;
+}
+
+bool DeviceDetector::isPlatform(DeviceDetector::Platforms platform)
+{
+    DeviceDetector::Platforms currentPlatform;
+#if defined(Q_OS_IOS)
+    currentPlatform = DeviceDetector::IOS;
+#elif defined(Q_OS_ANDROID)
+    currentPlatform = DeviceDetector::Android;
+#elif defined(Q_OS_WIN)
+    currentPlatform = DeviceDetector::Windows;
+#elif defined(Q_OS_MAC)
+    currentPlatform = DeviceDetector::MacOS;
+#elif defined(Q_OS_LINUX)
+    currentPlatform = DeviceDetector::Linux;
+#endif
+    return currentPlatform & platform;
+}
+
+bool DeviceDetector::isDesktop()
+{
+    return isPlatform(DeviceDetector::Desktop);
+}
+
+bool DeviceDetector::isMobile()
+{
+    return isPlatform(DeviceDetector::Mobile);
 }

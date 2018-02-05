@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import org.graft.models 1.0
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -13,7 +14,7 @@ BaseScreen {
     action: confirmProductParameters
 
     screenHeader {
-        navigationButtonState: Qt.platform.os === "ios"
+        navigationButtonState: Detector.isPlatform(Platform.IOS)
         actionButtonState: true
     }
 
@@ -21,7 +22,7 @@ BaseScreen {
     property int index: -1
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS)) {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
         }

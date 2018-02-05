@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -8,7 +9,7 @@ BaseScreen {
 
     title: qsTr("Cart")
     screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
+        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     Connections {

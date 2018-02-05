@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.device.platform 1.0
 import "../"
 import "../components"
 
@@ -7,7 +8,7 @@ BaseBalanceScreen {
     id: infoWallet
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
     screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
+        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     ColumnLayout {

@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -81,7 +82,7 @@ Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.maximumHeight: 250
-            Layout.minimumHeight: 100
+            Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
             source: ""
             visible: previewImage.status === Image.Ready
