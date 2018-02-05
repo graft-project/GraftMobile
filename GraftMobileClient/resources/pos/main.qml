@@ -24,7 +24,8 @@ GraftApplicationWindow {
 
     footer: Item {
         id: graftApplicationFooter
-        height: Detector.isPlatform(Platform.IOS) ? Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
+        height: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                        Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -35,7 +36,7 @@ GraftApplicationWindow {
     }
 
     Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             footerLoader.source = "qrc:/pos/GraftToolBar.qml"
         } else {
             drawerLoader.source = "qrc:/pos/GraftMenu.qml"
@@ -77,7 +78,7 @@ GraftApplicationWindow {
         interactive: false
         currentIndex: GraftClient.isAccountExists() ? 1 : 0
         onCurrentIndexChanged: {
-            if (Detector.isPlatform(Platform.IOS)) {
+            if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
                 graftApplicationFooter.visible = currentIndex !== 0
             } else {
                 if (drawerLoader && drawerLoader.status === Loader.Ready) {
@@ -178,7 +179,7 @@ GraftApplicationWindow {
     }
 
     function selectButton(name) {
-        if (Detector.isPlatform(Platform.IOS)) {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             footerLoader.item.seclectedButtonChanged(name)
         }
     }
