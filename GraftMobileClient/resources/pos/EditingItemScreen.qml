@@ -14,7 +14,7 @@ BaseScreen {
     action: confirmProductParameters
 
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS)
+        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
         actionButtonState: true
     }
 
@@ -22,7 +22,7 @@ BaseScreen {
     property int index: -1
 
     Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
         }
