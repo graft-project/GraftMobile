@@ -25,7 +25,7 @@ BaseScreen {
         target: GraftClient
 
         onTransferReceived: {
-            pushScreen.openPaymentScreen(result)
+            pushScreen.openPaymentScreen(result, true)
         }
     }
 
@@ -81,7 +81,7 @@ BaseScreen {
                         anchors {
                             right: coinsAmountTextField.right
                             verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? -5 : 3
+                            verticalCenterOffset: Detector.isDesktop() ? -15 : Detector.isPlatform(Platform.IOS) ? -5 : 3
                         }
                         color: "#BBBBBB"
                         font {

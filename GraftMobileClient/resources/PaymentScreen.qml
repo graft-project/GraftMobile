@@ -63,6 +63,7 @@ BaseScreen {
                     id: completeLabelText
                     anchors.centerIn: parent
                     color: "#FFFFFF"
+                    font.pixelSize: 17
                     text: completeText
                 }
             }
