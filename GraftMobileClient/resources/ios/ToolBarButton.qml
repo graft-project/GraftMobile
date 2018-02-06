@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "../"
 
 Rectangle {
@@ -31,7 +32,7 @@ Rectangle {
     Text {
         id: toolButtonText
         color: ColorFactory.color(DesignFactory.LightText)
-        font.pixelSize: 10
+        font.pixelSize: Detector.isDesktop() ? 12 : 10
         anchors {
             top: toolButtonIcon.bottom
             bottom: parent.bottom

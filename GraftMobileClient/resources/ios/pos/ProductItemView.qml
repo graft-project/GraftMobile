@@ -2,6 +2,8 @@ import QtQuick 2.9
 import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -14,10 +16,9 @@ Item {
     property alias price: price.text
     property alias productImage: previewImage.source
 
-    Connections {
-        target: ImagePicker
-        onImageSelected: {
-            previewImage.source = path
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS)) {
+            ImagePicker.imageSelected.connect(selectedImege)
         }
     }
 
@@ -104,12 +105,30 @@ Item {
                     color: "#007AFF"
                 }
             }
-            onClicked: popUp.open()
+            onClicked: {
+                if (Detector.isPlatform(Platform.IOS)) {
+                    popUp.open()
+                } else {
+                    fileDialog.open()
+                }
+            }
         }
 
         Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a picture"
+        folder: shortcuts.pictures
+        nameFilters: "Image files (*.jpg *.png)"
+        onAccepted: previewImage.source = fileDialog.fileUrls.toString()
+    }
+
+    function selectedImege(path) {
+        previewImage.source = path
     }
 }

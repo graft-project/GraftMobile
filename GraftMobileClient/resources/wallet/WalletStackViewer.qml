@@ -50,9 +50,9 @@ BaseStackViewer {
         stack.pop(balanceScreen)
     }
 
-    function openPaymentScreen(state) {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen, "title": qsTr("Pay"),
-                   "isSpacing": true, "completeText": qsTr("Paid complete!"), "screenState": state})
+    function openPaymentScreen(state, isSendFlow) {
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen, "title": isSendFlow ? qsTr("Send") : qsTr("Pay"),
+                   "isSpacing": true, "completeText": isSendFlow ? qsTr("Send complete!") : qsTr("Paid complete!"), "screenState": state})
     }
 
     function openAddAccountScreen() {

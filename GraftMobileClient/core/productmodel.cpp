@@ -139,8 +139,10 @@ bool ProductModel::setProductData(int index, const QVariant &value, int role)
 void ProductModel::removeProduct(int index)
 {
     beginRemoveRows(QModelIndex(), index, index);
+    mProducts.at(index)->removeImage();
     delete mProducts.takeAt(index);
     endRemoveRows();
+    emit selectedProductCountChanged(selectedProductCount());
 }
 
 void ProductModel::clearSelections()
