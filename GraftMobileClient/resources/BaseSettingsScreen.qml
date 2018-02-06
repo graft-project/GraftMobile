@@ -140,23 +140,48 @@ BaseScreen {
 
     Dialog {
         id: passwordDialog
-        visible: false
+        padding: 5
         modal: true
         width: 300
+        visible: false
         topMargin: (parent.height - passwordDialog.height) / 2
         leftMargin: (parent.width - passwordDialog.width) / 2
         title: qsTr("Enter password:")
-        standardButtons: StandardButton.Ok | StandardButton.Close
+        contentItem: ColumnLayout {
+            spacing: 0
 
-        TextField {
-            id: passwordTextField
-            width: parent.width
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
-            font.pixelSize: 24
+            TextField {
+                id: passwordTextField
+                Layout.fillWidth: true
+                Layout.leftMargin: 20
+                Layout.rightMargin: 20
+                echoMode: TextInput.Password
+                passwordCharacter: '•'
+                font.pixelSize: 24
+            }
+
+            Row {
+                spacing: 5
+                Layout.alignment: Qt.AlignRight | Qt.AlignBottom
+                Layout.rightMargin: 20
+
+                Button {
+                    flat: true
+                    text: qsTr("Close")
+                    onClicked: {
+                        passwordTextField.clear()
+                        passwordDialog.close()
+                    }
+                }
+
+                Button {
+                    flat: true
+                    text: qsTr("Ok")
+                    onClicked: passwordDialog.accept()
+                }
+            }
         }
         onAccepted: checkingPassword(passwordTextField.text)
-        onRejected: passwordTextField.clear()
     }
 
     function resetWalletAccount() {
@@ -168,8 +193,7 @@ BaseScreen {
         pushScreen.openMnemonicViewScreen(true)
     }
 
-    function checkingPassword(password)
-    {
+    function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
             passwordTextField.clear()
             confirmPasswordAction()
