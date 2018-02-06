@@ -14,6 +14,10 @@ android {
 include(android/android.pri)
 }
 
+win32 {
+include(windows/windows.pri)
+}
+
 include(QZXing.pri)
 include(QRCodeGenerator.pri)
 
