@@ -1,4 +1,6 @@
 #include "productitem.h"
+#include "devicedetector.h"
+#include "keygenerator.h"
 #include "defines.h"
 
 #include <QUrl>
@@ -65,7 +67,16 @@ void ProductItem::setImagePath(const QString &imagePath)
             QDir lDir(imageDataLocation);
             QFile::remove(lDir.filePath(mImagePath));
         }
-        mImagePath = newImagePath.fileName();
+        QString lCopiedImage(imageDataLocation + newImagePath.fileName());
+        if (DeviceDetector::isDesktop())
+        {
+            if (!QFileInfo::exists(lCopiedImage))
+            {
+                lCopiedImage.insert(lCopiedImage.lastIndexOf("."), KeyGenerator::generateUUID(4));
+            }
+            QFile::copy(QUrl(imagePath).toLocalFile(), lCopiedImage);
+        }
+        mImagePath = QFile(lCopiedImage).fileName();
     }
 }
 
@@ -97,4 +108,10 @@ void ProductItem::setDescription(const QString &description)
 void ProductItem::changeSelection()
 {
     mSelected = !mSelected;
+}
+
+void ProductItem::removeImage()
+{
+    QFile lImage(mImagePath);
+    lImage.remove();
 }
