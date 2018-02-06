@@ -12,8 +12,8 @@ BaseBalanceScreen {
         target: GraftClient
 
         onNetworkTypeChanged: {
-            payButton.enabled = GraftClient.networkType()
-            sendCoinsButton.enabled = GraftClient.networkType()
+            payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            sendCoinsButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
         }
     }
 
