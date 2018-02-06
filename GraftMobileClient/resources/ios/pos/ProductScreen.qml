@@ -32,8 +32,8 @@ BaseScreen {
             }
         }
         onNetworkTypeChanged: {
-            addButton.enabled = GraftClient.networkType()
-            quickDealButton.enabled = GraftClient.networkType()
+            addButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            quickDealButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
         }
     }
 
