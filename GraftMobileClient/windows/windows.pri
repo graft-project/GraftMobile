@@ -6,4 +6,4 @@ contains(DEFINES, WALLET_BUILD) {
 RESOURCE_DIR = $$PWD/wallet
 }
 
-RC_FILE = $$RESOURCE_DIR/predator.rc
+RC_FILE = $$RESOURCE_DIR/resource.rc
