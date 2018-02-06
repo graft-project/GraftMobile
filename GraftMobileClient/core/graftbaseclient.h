@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QVariant>
-#include "graftclienttools.h"
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
@@ -22,7 +21,7 @@ public:
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
-    virtual void setNetworkType(int networkType);
+    Q_INVOKABLE void setNetworkType(int networkType);
     Q_INVOKABLE int networkType() const;
     Q_INVOKABLE bool isAccountExists() const;
     Q_INVOKABLE void resetData();
@@ -50,7 +49,7 @@ public:
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
     Q_INVOKABLE bool useOwnServiceAddress() const;
-    virtual bool resetUrl(const QString &ip, const QString &port);
+    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port);
     bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE double balance(int type) const;
@@ -91,7 +90,7 @@ protected:
     QStringList getServiceAddresses() const;
 
     void registerBalanceTimer(GraftGenericAPI *api);
-    virtual void updateBalance() = 0;
+    void updateBalance();
 
 private slots:
     void receiveAccount(const QByteArray &accountData, const QString &password,

@@ -290,6 +290,11 @@ void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
     }
 }
 
+void GraftBaseClient::updateBalance()
+{
+    graftAPI()->getBalance();
+}
+
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
                                      const QString &address, const QString &viewKey,
                                      const QString &seed)
@@ -422,6 +427,7 @@ bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
     {
         setSettings(scIp, ip);
         setSettings(scPort, port);
+        graftAPI()->changeAddresses(getServiceAddresses());
     }
     return lIsResetUrl;
 }

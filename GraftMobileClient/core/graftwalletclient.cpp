@@ -28,14 +28,6 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     registerBalanceTimer(mApi);
 }
 
-void GraftWalletClient::setNetworkType(int networkType)
-{
-    GraftBaseClient::setNetworkType(networkType);
-    mApi->setDAPIVersion(dapiVersion());
-    mApi->changeAddresses(getServiceAddresses());
-
-}
-
 double GraftWalletClient::totalCost() const
 {
     return mTotalCost;
@@ -44,16 +36,6 @@ double GraftWalletClient::totalCost() const
 ProductModel *GraftWalletClient::paymentProductModel() const
 {
     return mPaymentProductModel;
-}
-
-bool GraftWalletClient::resetUrl(const QString &ip, const QString &port)
-{
-    if (GraftBaseClient::resetUrl(ip, port))
-    {
-        mApi->changeAddresses(getServiceAddresses());
-        return true;
-    }
-    return false;
 }
 
 void GraftWalletClient::getPOSData(const QString &data)
@@ -146,9 +128,4 @@ GraftGenericAPI *GraftWalletClient::graftAPI() const
 {
     Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
     return mApi;
-}
-
-void GraftWalletClient::updateBalance()
-{
-    mApi->getBalance();
 }

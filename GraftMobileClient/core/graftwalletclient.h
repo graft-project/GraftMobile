@@ -12,11 +12,8 @@ class GraftWalletClient : public GraftBaseClient
 public:
     explicit GraftWalletClient(QObject *parent = nullptr);
 
-    Q_INVOKABLE void setNetworkType(int networkType) override;
-
     Q_INVOKABLE double totalCost() const;
     Q_INVOKABLE ProductModel *paymentProductModel() const;
-    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
 
 signals:
     void getPOSDataReceived(bool result);
@@ -38,7 +35,6 @@ private slots:
 
 private:
     GraftGenericAPI *graftAPI() const override;
-    void updateBalance() override;
 
     GraftWalletAPI *mApi;
     QString mPID;
