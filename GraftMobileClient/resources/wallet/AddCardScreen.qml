@@ -11,7 +11,7 @@ BaseScreen {
     id: root
     title: qsTr("Add Card")
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
         actionButtonState: true
     }
     action: done
@@ -80,7 +80,7 @@ BaseScreen {
                 validator: RegExpValidator {
                     regExp: /\d{3}/
                 }
-                showLengthIndicator: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+                showLengthIndicator: Detector.isPlatform(Platform.IOS | Platform.Desktop)
                 maximumLength: 3
             }
         }
