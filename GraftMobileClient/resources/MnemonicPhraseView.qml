@@ -11,8 +11,8 @@ GridLayout {
 
     anchors {
         verticalCenter: parent.verticalCenter
-        leftMargin: Detector.detectDevice() === Platform.IPhoneSE ? 0 : 10
-        rightMargin: Detector.detectDevice() === Platform.IPhoneSE ? 0 : 10
+        leftMargin: 0
+        rightMargin: 0
     }
     columns: 5
     rows: 5

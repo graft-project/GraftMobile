@@ -2,7 +2,6 @@ import QtQuick 2.9
 import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -42,8 +41,6 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.maximumHeight: 150
-            Layout.minimumHeight: 120
             Layout.alignment: Qt.AlignTop
             title: qsTr("Item description")
             wrapMode: TextInput.WordWrap
@@ -57,8 +54,9 @@ Item {
                 id: price
                 title: qsTr("Price")
                 Layout.fillWidth: true
+                Layout.preferredWidth: 70
                 Layout.preferredHeight: 40
-                Layout.alignment: Qt.AlignBottom
+                Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
@@ -68,10 +66,10 @@ Item {
 
             CurrencyComboBox {
                 id: graftComboBox
-                Layout.preferredWidth: 50
+                Layout.fillWidth: true
+                Layout.preferredWidth: 30
                 Layout.preferredHeight: 40
-                Layout.bottomMargin: Detector.isPlatform(Platform.Android) ? 8 : 3
-                Layout.alignment: Qt.AlignBottom
+                Layout.alignment: Qt.AlignTop
                 dropdownTitle: qsTr("Currency")
             }
         }

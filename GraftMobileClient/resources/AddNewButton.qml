@@ -26,7 +26,7 @@ Button {
                 leftMargin: 15
                 rightMargin: 15
             }
-            visible: Detector.isPlatform(Platform.IOS)
+            visible: Detector.isPlatform(Platform.IOS | Platform.Desktop)
             color: "#E6E6E8"
         }
 
@@ -62,7 +62,7 @@ Button {
                 leftMargin: 15
                 rightMargin: 15
             }
-            visible: Detector.isPlatform(Platform.IOS)
+            visible: Detector.isPlatform(Platform.IOS | Platform.Desktop)
             color: "#E6E6E8"
         }
     }

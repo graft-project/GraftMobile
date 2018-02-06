@@ -19,9 +19,9 @@ static const QString scDAPIVersion("1.0G");
 namespace TestnetConfiguration {
 static const QString scConfigTitle("Public Testnet");
 
-static const QStringList scSeedSupernodes{"34.239.34.92:28900",
-                                          "35.153.242.98:28900",
-                                          "35.169.204.213:28900"
+static const QStringList scSeedSupernodes{"34.204.170.120:28900",
+                                          "54.88.58.35:28900",
+                                          "34.228.64.99:28900"
                                          };
 
 static const QString scDAPIVersion("1.0F");

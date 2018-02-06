@@ -7,7 +7,7 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
-    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS)
+    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
 
     Connections {
         target: GraftClient
@@ -22,7 +22,7 @@ BaseScreen {
     }
 
     ColumnLayout {
-        spacing: 15
+        spacing: Detector.isPlatform(Platform.Desktop) ? 5 : 15
         anchors {
             fill: parent
             topMargin: 15
@@ -37,6 +37,7 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
+            Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {

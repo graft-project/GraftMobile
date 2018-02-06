@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QVariant>
-#include "graftclienttools.h"
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
@@ -22,14 +21,15 @@ public:
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient();
 
-    virtual void setNetworkType(int networkType);
+    Q_INVOKABLE void setNetworkType(int networkType);
     Q_INVOKABLE int networkType() const;
     Q_INVOKABLE bool isAccountExists() const;
     Q_INVOKABLE void resetData();
 
-    virtual void createAccount(const QString &password) = 0;
-    virtual void restoreAccount(const QString &seed, const QString &password) = 0;
-    virtual void transfer(const QString &address, const QString &amount) = 0;
+    Q_INVOKABLE void createAccount(const QString &password);
+    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password);
+    Q_INVOKABLE void transfer(const QString &address, const QString &amount);
+    Q_INVOKABLE void transferFee(const QString &address, const QString &amount);
 
     Q_INVOKABLE QString getSeed() const;
     Q_INVOKABLE QString address() const;
@@ -49,7 +49,7 @@ public:
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
     Q_INVOKABLE bool useOwnServiceAddress() const;
-    virtual bool resetUrl(const QString &ip, const QString &port);
+    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port);
     bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE double balance(int type) const;
@@ -73,6 +73,7 @@ signals:
     void createAccountReceived(bool isAccountCreated);
     void restoreAccountReceived(bool isAccountRestored);
     void transferReceived(bool result);
+    void transferFeeReceived(bool result, double fee);
     void networkTypeChanged();
 
 public slots:
@@ -81,16 +82,15 @@ public slots:
 protected:
     void timerEvent(QTimerEvent *event) override;
 
+    virtual GraftGenericAPI *graftAPI() const = 0;
+
     void registerImageProvider(QQmlEngine *engine);
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
     QStringList getServiceAddresses() const;
-    void requestAccount(GraftGenericAPI *api, const QString &password);
-    void requestRestoreAccount(GraftGenericAPI *api, const QString &seed, const QString &password);
-    void requestTransfer(GraftGenericAPI *api, const QString &address, const QString &amount);
 
     void registerBalanceTimer(GraftGenericAPI *api);
-    virtual void updateBalance() = 0;
+    void updateBalance();
 
 private slots:
     void receiveAccount(const QByteArray &accountData, const QString &password,
@@ -101,6 +101,7 @@ private slots:
                                const QString &seed);
     void receiveBalance(double balance, double unlockedBalance);
     void receiveTransfer(int result);
+    void receiveTransferFee(int result, int fee);
 
 private:
     void initSettings();

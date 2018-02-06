@@ -40,13 +40,15 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            margins: 15
+            topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 5 : 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: 15
         }
 
         LinearEditItem {
             id: companyNameTextField
             maximumLength: 50
-            Layout.topMargin: 10
             Layout.alignment: Qt.AlignTop
             text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
         }
@@ -58,7 +60,8 @@ BaseScreen {
 
             Label {
                 text: qsTr("Service")
-                font.pixelSize: Detector.isPlatform(Platform.IOS) ? 16 : switchLabel.font.pixelSize
+                font.pixelSize: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                    16 : switchLabel.font.pixelSize
                 color: "#8e8e93"
             }
 

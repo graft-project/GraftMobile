@@ -9,7 +9,7 @@ BaseScreen {
     title: qsTr("Restore wallet")
     action: restoreWallet
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS)
+        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
         actionButtonState: true
     }
 
@@ -36,7 +36,7 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            topMargin: 15
+            topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 5 : 15
             leftMargin: 15
             rightMargin: 15
             bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15

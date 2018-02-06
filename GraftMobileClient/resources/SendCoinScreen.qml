@@ -11,12 +11,12 @@ BaseScreen {
     title: qsTr("Send")
     screenHeader {
         actionButtonState: true
-        navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     }
     action: checkingData
 
     Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             screenHeader.actionText = qsTr("Send")
         }
     }
@@ -61,13 +61,15 @@ BaseScreen {
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
-                        title: Detector.isPlatform(Platform.IOS) ? qsTr("Receivers address:") : qsTr("Receivers address")
+                        title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                            qsTr("Receivers address:") : qsTr("Receivers address")
                     }
 
                     LinearEditItem {
                         id: coinsAmountTextField
                         Layout.fillWidth: true
-                        title: Detector.isPlatform(Platform.IOS) ? qsTr("Amount:") : qsTr("Amount")
+                        title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                                                    qsTr("Amount:") : qsTr("Amount")
                         showLengthIndicator: false
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: RegExpValidator {
@@ -79,7 +81,7 @@ BaseScreen {
                         anchors {
                             right: coinsAmountTextField.right
                             verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isPlatform(Platform.IOS) ? -5 : 3
+                            verticalCenterOffset: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? -5 : 3
                         }
                         color: "#BBBBBB"
                         font {

@@ -38,6 +38,7 @@
         <file alias="LicenseAgreementScreen.qml">LicenseAgreementScreen.qml</file>
         <file alias="PasswordFields.qml">PasswordFields.qml</file>
         <file alias="VisibilityIcon.qml">VisibilityIcon.qml</file>
+        <file alias="BaseLinearEditItem.qml">BaseLinearEditItem.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

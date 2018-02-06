@@ -10,7 +10,7 @@ BaseScreen {
     title: qsTr("Select Network")
     screenHeader {
         isNavigationButtonVisible: false
-        navigationButtonState: Detector.isPlatform(Platform.Android) || Detector.isDesktop()
+        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     Component.onCompleted: mainNet.checked = true
@@ -110,7 +110,7 @@ BaseScreen {
 
         Item {
             Layout.fillHeight: true
-            Layout.maximumHeight: 150
+            Layout.maximumHeight: Detector.isPlatform(Platform.Desktop) ? 250 : 150
         }
 
         WideActionButton {

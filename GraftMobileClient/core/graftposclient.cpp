@@ -37,13 +37,6 @@ GraftPOSClient::~GraftPOSClient()
 {
 }
 
-void GraftPOSClient::setNetworkType(int networkType)
-{
-    GraftBaseClient::setNetworkType(networkType);
-    mApi->setDAPIVersion(dapiVersion());
-    mApi->changeAddresses(getServiceAddresses());
-}
-
 ProductModel *GraftPOSClient::productModel() const
 {
     return mProductModel;
@@ -57,31 +50,6 @@ SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
 void GraftPOSClient::registerTypes(QQmlEngine *engine)
 {
     GraftBaseClient::registerTypes(engine);
-}
-
-bool GraftPOSClient::resetUrl(const QString &ip, const QString &port)
-{
-    if (GraftBaseClient::resetUrl(ip, port))
-    {
-        mApi->changeAddresses(getServiceAddresses());
-        return true;
-    }
-    return false;
-}
-
-void GraftPOSClient::createAccount(const QString &password)
-{
-    GraftBaseClient::requestAccount(mApi, password);
-}
-
-void GraftPOSClient::restoreAccount(const QString &seed, const QString &password)
-{
-    GraftBaseClient::requestRestoreAccount(mApi, seed, password);
-}
-
-void GraftPOSClient::transfer(const QString &address, const QString &amount)
-{
-    GraftBaseClient::requestTransfer(mApi, address, amount);
 }
 
 void GraftPOSClient::saveProducts() const
@@ -167,7 +135,8 @@ void GraftPOSClient::initProductModels()
     mSelectedProductModel->setSourceModel(mProductModel);
 }
 
-void GraftPOSClient::updateBalance()
+GraftGenericAPI *GraftPOSClient::graftAPI() const
 {
-    mApi->getBalance();
+    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
+    return mApi;
 }

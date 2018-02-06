@@ -2,7 +2,6 @@
 #define GRAFTPOSCLIENT_H
 
 #include "graftbaseclient.h"
-#include <QVariant>
 
 class SelectedProductProxyModel;
 class ProductModel;
@@ -15,17 +14,10 @@ public:
     explicit GraftPOSClient(QObject *parent = nullptr);
     ~GraftPOSClient();
 
-    Q_INVOKABLE void setNetworkType(int networkType) override;
-
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;
 
     void registerTypes(QQmlEngine *engine) override;
-    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port) override;
-
-    Q_INVOKABLE void createAccount(const QString &password) override;
-    Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password) override;
-    Q_INVOKABLE void transfer(const QString &address, const QString &amount) override;
 
 signals:
     void saleReceived(bool result);
@@ -45,7 +37,7 @@ private slots:
 
 private:
     void initProductModels();
-    void updateBalance() override;
+    GraftGenericAPI *graftAPI() const override;
 
     GraftPOSAPI *mApi;
     QString mPID;

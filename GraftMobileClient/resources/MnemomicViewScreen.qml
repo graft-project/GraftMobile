@@ -15,8 +15,8 @@ BaseScreen {
         anchors {
             fill: parent
             topMargin: 15
-            leftMargin: Detector.detectDevice() === Platform.IPhoneSE ? 5 : 15
-            rightMargin: Detector.detectDevice() === Platform.IPhoneSE ? 5 : 15
+            leftMargin: 5
+            rightMargin: 5
             bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? screenState ? 15 : 30 : 15
         }
 
@@ -57,6 +57,8 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
                 bottom: screenState ? parent.bottom : saveButton.top
+                leftMargin: 10
+                rightMargin: 10
             }
             text: qsTr("Copy to clipboard")
             onClicked: {
@@ -72,6 +74,8 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
+                leftMargin: 10
+                rightMargin: 10
             }
             text: qsTr("I saved it!")
             onClicked: save()
