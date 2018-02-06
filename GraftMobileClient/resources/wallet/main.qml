@@ -9,7 +9,7 @@ import "../components"
 
 GraftApplicationWindow {
     id: root
-    title: qsTr("WALLET")
+    title: qsTr("Graft Wallet")
 
     handleBackEvent: mainLayout.backButtonHandler
 

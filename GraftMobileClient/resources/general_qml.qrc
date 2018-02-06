@@ -96,6 +96,8 @@
         <file alias="arrow.png">imgs/arrow.png</file>
         <file alias="visibility_off.png">imgs/visibility_off.png</file>
         <file alias="visibility_on.png">imgs/visibility_on.png</file>
+        <file alias="icon-pos.png">imgs/icon-pos.png</file>
+        <file alias="icon-wallet.png">imgs/icon-wallet.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

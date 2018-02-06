@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
     DeviceDetector detector;
     detector.registerTypes(&engine);
 #ifdef POS_BUILD
+    app.setWindowIcon(QIcon(":/imgs/icon-pos.png"));
+
     qmlRegisterType<ProductModel>("org.graft.models", 1, 0, "ProductModelEnum");
 
     GraftPOSClient client;
@@ -79,6 +81,8 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/pos/main.qml")));
 #endif
 #ifdef WALLET_BUILD
+    app.setWindowIcon(QIcon(":/imgs/icon-wallet.png"));
+
     GraftWalletClient client;
     client.registerTypes(&engine);
 
