@@ -23,6 +23,7 @@ public:
     void setDescription(const QString &description);
 
     void changeSelection();
+    void removeImage();
 
 private:
     QString mImagePath;

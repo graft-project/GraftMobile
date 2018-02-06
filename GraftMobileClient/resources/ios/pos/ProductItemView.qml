@@ -16,11 +16,9 @@ Item {
     property alias price: price.text
     property alias productImage: previewImage.source
 
-    Connections {
-        target: ImagePicker
-        enabled: Detector.isPlatform(Platform.IOS)
-        onImageSelected: {
-            previewImage.source = path
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS)) {
+            ImagePicker.imageSelected.connect(selectedImege)
         }
     }
 
@@ -108,7 +106,7 @@ Item {
                 }
             }
             onClicked: {
-                if (Qt.platform.os === "ios") {
+                if (Detector.isPlatform(Platform.IOS)) {
                     popUp.open()
                 } else {
                     fileDialog.open()
@@ -126,7 +124,11 @@ Item {
         id: fileDialog
         title: "Please choose a picture"
         folder: shortcuts.pictures
-        nameFilters: "Image files (*.jpg, *.png)"
+        nameFilters: "Image files (*.jpg *.png)"
         onAccepted: previewImage.source = fileDialog.fileUrls.toString()
+    }
+
+    function selectedImege(path) {
+        previewImage.source = path
     }
 }
