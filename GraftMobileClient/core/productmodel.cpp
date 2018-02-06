@@ -142,6 +142,7 @@ void ProductModel::removeProduct(int index)
     mProducts.at(index)->removeImage();
     delete mProducts.takeAt(index);
     endRemoveRows();
+    emit selectedProductCountChanged(selectedProductCount());
 }
 
 void ProductModel::clearSelections()
