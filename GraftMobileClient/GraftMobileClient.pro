@@ -4,6 +4,8 @@ CONFIG += c++11
 
 win32|macx|unix {
 DEFINES += RES_IOS
+
+DESTDIR = ./bin
 }
 
 ios {
@@ -14,9 +16,6 @@ android {
 include(android/android.pri)
 }
 
-win32 {
-include(windows/windows.pri)
-}
 
 include(QZXing.pri)
 include(QRCodeGenerator.pri)
@@ -48,6 +47,10 @@ SOURCES += \
 HEADERS += \
     core/api/graftwalletapi.h \
     core/graftwalletclient.h
+}
+
+win32 {
+include(windows/windows.pri)
 }
 
 SOURCES += main.cpp \
