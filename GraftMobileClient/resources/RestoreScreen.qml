@@ -69,7 +69,7 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            text: qsTr("Import wallet")
+            text: qsTr("Restore")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
                     restoreWallet()
