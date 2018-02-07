@@ -57,8 +57,7 @@ BaseScreen {
                     LinearEditItem {
                         id: receiversAddress
                         Layout.fillWidth: true
-                        Layout.maximumHeight: 130
-                        Layout.minimumHeight: 130
+                        Layout.preferredHeight: 130
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
