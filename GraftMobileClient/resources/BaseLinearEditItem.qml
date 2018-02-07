@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import com.device.platform 1.0
 
 ColumnLayout {
+    id: root
     property alias attentionText: attentionText.text
     property alias showLengthIndicator: textCount.visible
     property bool visibilityIcon: false
@@ -14,7 +15,7 @@ ColumnLayout {
     property var actionTextField: null
     default property alias baseTextField: baseTextField.data
 
-    spacing: 0
+    spacing: -6
     onPasswordModeChanged: {
         visibilityIcon = true
         if (passwordMode) {
@@ -33,13 +34,14 @@ ColumnLayout {
     }
 
     RowLayout {
+        id: tipsLayout
         spacing: 0
         Layout.fillWidth: true
-        Layout.preferredHeight: 15
+        Layout.maximumHeight: 12
 
         Text {
             id: attentionText
-            Layout.alignment: Qt.AlignLeft
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             visible: visibilityIcon
             font.pixelSize: 12
             color: wrongFieldColor ? "#F33939" : "#3F3F3F"
@@ -51,7 +53,7 @@ ColumnLayout {
 
         Text {
             id: textCount
-            Layout.alignment: Qt.AlignRight
+            Layout.alignment: Qt.AlignRight | Qt.AlignTop
             text: qsTr("%1 / %2").arg(letterCountingMode ? actionTextField.displayText.length :
                                                            wordCounting(actionTextField.displayText)).arg(maximumLength)
             color: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? "#8E8E93" : "#BBBBBB"
@@ -71,9 +73,9 @@ ColumnLayout {
     function heightTextField() {
         var size
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
-            size = actionTextField.wrapMode === TextField.NoWrap ? 45 : 102
+            size = actionTextField.wrapMode === TextField.NoWrap ? 45 : root.height - (tipsLayout.height + root.spacing)
         } else {
-            size = actionTextField.wrapMode === TextField.NoWrap ? 50 : 90
+            size = actionTextField.wrapMode === TextField.NoWrap ? 50 : root.height - (tipsLayout.height + root.spacing)
         }
         return size
     }

@@ -20,21 +20,14 @@ BaseLinearEditItem {
 
     Item {
         id: field
-        height: 46
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
+        anchors.fill: parent
 
         TextField {
             id: editItem
-            anchors {
-                fill: parent
-                bottomMargin: -12
-            }
+            anchors.fill: parent
             leftPadding: titleItem.width
             rightPadding: visibilityIcon ? 42 : 0
-            bottomPadding: 30
+            bottomPadding: 15
             verticalAlignment: Qt.AlignTop
             color: "#404040"
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
@@ -60,21 +53,16 @@ BaseLinearEditItem {
             anchors {
                 right: parent.right
                 bottom: parent.bottom
+                bottomMargin: 2
                 rightMargin: 6
             }
             onClicked: passwordMode =! passwordMode
         }
 
         function resizeField() {
-            if (editItem.wrapMode === TextField.NoWrap) {
-                Layout.fillHeight = false
-            } else {
-                Layout.fillHeight = true
-                if (!inlineTitle) {
-                    field.height = 104
-                    editItem.topPadding = 30
-                    editItem.leftPadding = 0
-                }
+            if (editItem.wrapMode !== TextField.NoWrap && !inlineTitle) {
+                editItem.topPadding = 30
+                editItem.leftPadding = 0
             }
         }
     }
