@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.2
 import QtQuick.Dialogs 1.2
 import org.graft 1.0
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -72,7 +73,7 @@ BaseScreen {
                         }
 
                         MessageDialog {
-                            id: messageDialog
+                            id: mobileMessageDialog
                             title: qsTr("Delete item")
                             icon: StandardIcon.Warning
                             text: qsTr("Are you sure that you want to remove this item?")
@@ -83,7 +84,27 @@ BaseScreen {
                             }
                         }
 
-                        onRemoveItemClicked: messageDialog.open()
+                        ChooserDialog {
+                            id: desktopMessageDialog
+                            topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
+                            leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
+                            dialogMode: true
+                            title: qsTr("Delete item")
+                            dialogMessage: qsTr("Are you sure that you want to remove this item?")
+                            denyButton {
+                                text: qsTr("No")
+                                onClicked: desktopMessageDialog.close()
+                            }
+                            confirmButton {
+                                text: qsTr("Yes")
+                                onClicked: {
+                                    ProductModel.removeProduct(index)
+                                    GraftClient.saveProducts()
+                                }
+                            }
+                        }
+
+                        onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() : mobileMessageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
                 }

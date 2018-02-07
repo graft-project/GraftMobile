@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
@@ -138,48 +137,21 @@ BaseScreen {
         }
     }
 
-    Dialog {
+    ChooserDialog {
         id: passwordDialog
-        padding: 5
-        modal: true
-        width: 300
-        visible: false
+        title: qsTr("Enter password:")
         topMargin: (parent.height - passwordDialog.height) / 2
         leftMargin: (parent.width - passwordDialog.width) / 2
-        title: qsTr("Enter password:")
-        contentItem: ColumnLayout {
-            spacing: 0
-
-            TextField {
-                id: passwordTextField
-                Layout.fillWidth: true
-                Layout.leftMargin: 20
-                Layout.rightMargin: 20
-                echoMode: TextInput.Password
-                passwordCharacter: '•'
-                font.pixelSize: 24
+        denyButton {
+            text: qsTr("Close")
+            onClicked: {
+                passwordTextField.clear()
+                passwordDialog.close()
             }
-
-            Row {
-                spacing: 5
-                Layout.alignment: Qt.AlignRight | Qt.AlignBottom
-                Layout.rightMargin: 20
-
-                Button {
-                    flat: true
-                    text: qsTr("Close")
-                    onClicked: {
-                        passwordTextField.clear()
-                        passwordDialog.close()
-                    }
-                }
-
-                Button {
-                    flat: true
-                    text: qsTr("Ok")
-                    onClicked: passwordDialog.accept()
-                }
-            }
+        }
+        confirmButton {
+            text: qsTr("Ok")
+            onClicked: passwordDialog.accept()
         }
         onAccepted: checkingPassword(passwordTextField.text)
     }
@@ -195,13 +167,12 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            passwordTextField.clear()
             confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
-            passwordTextField.clear()
         }
+        passwordDialog.passwordTextField.clear()
     }
 }
