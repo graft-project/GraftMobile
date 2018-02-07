@@ -12,7 +12,7 @@ Page {
     property var specialBackMode: null
     property alias screenHeader: appHeader
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
-    property var screenDialog: Detector.isDesktop ? desktopDialog : mobileDialog
+    property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 
     signal attentionAccepted()
 
