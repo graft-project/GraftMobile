@@ -158,6 +158,7 @@ GraftApplicationWindow {
     }
 
     function openCreateWalletStackViewer() {
+        clearStackViewers()
         mainLayout.currentIndex = 1
     }
 
@@ -180,5 +181,9 @@ GraftApplicationWindow {
         } else {
             openCreateWalletStackViewer()
         }
+    }
+
+    function clearStackViewers() {
+        walletViewer.pushScreen.openBalanceScreen()
     }
 }
