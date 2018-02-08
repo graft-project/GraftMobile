@@ -31,18 +31,6 @@ ColumnLayout {
         id: baseTextField
         Layout.fillWidth: true
         Layout.preferredHeight: heightTextField()
-
-        VisibilityIcon {
-            z: 1
-            visible: visibilityIcon
-            anchors {
-                right: parent.right
-                bottom: parent.bottom
-                rightMargin: 6
-                bottomMargin: 2
-            }
-            onClicked: passwordMode =! passwordMode
-        }
     }
 
     RowLayout {

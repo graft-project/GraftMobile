@@ -35,6 +35,17 @@ BaseLinearEditItem {
                 editItem.leftPadding = 0
             }
         }
+
+        VisibilityIcon {
+            visible: visibilityIcon
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                rightMargin: 6
+                bottomMargin: 2
+            }
+            onClicked: passwordMode =! passwordMode
+        }
     }
 
     Text {

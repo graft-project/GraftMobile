@@ -38,6 +38,17 @@ BaseLinearEditItem {
             color: "#404040"
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+
+            VisibilityIcon {
+                visible: visibilityIcon
+                anchors {
+                    right: parent.right
+                    bottom: parent.bottom
+                    rightMargin: 6
+                    bottomMargin: 2
+                }
+                onClicked: passwordMode =! passwordMode
+            }
         }
     }
 }
