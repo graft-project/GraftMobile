@@ -186,7 +186,8 @@ GraftApplicationWindow {
     }
 
     function clearStackViewers() {
-        infoWalletViewer.pushScreen.openInfoWalletScreen()
-        productViewer.pushScreen.clearChecked()
+        for (var i = 0; i < mainLayout.count; ++i) {
+            mainLayout.itemAt(i).clearStackViewer()
+        }
     }
 }

@@ -5,6 +5,7 @@ import "../"
 BaseStackViewer {
     id: stack
     initialItem: walletScreen
+    clearStackViewer: openInfoWalletScreen
 
     InfoWalletScreen {
         id: walletScreen

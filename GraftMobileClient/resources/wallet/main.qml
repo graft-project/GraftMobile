@@ -184,6 +184,8 @@ GraftApplicationWindow {
     }
 
     function clearStackViewers() {
-        walletViewer.pushScreen.openBalanceScreen()
+        for (var i = 1; i < mainLayout.count; ++i) {
+            mainLayout.itemAt(i).clearStackViewer()
+        }
     }
 }

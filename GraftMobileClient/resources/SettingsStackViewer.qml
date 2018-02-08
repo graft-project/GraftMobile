@@ -7,6 +7,7 @@ BaseStackViewer {
     property string appType: "pos"
 
     initialItem: openSettingsScreen()
+    clearStackViewer: backToSettingsScreen
 
     function settingsTransitions() {
         var transitionsMap = pushScreen
@@ -27,5 +28,9 @@ BaseStackViewer {
     function openMnemonicViewScreen(isAccountExists) {
         stack.push("qrc:/MnemomicViewScreen.qml", {"pushScreen": settingsTransitions(),
                    "screenState": isAccountExists})
+    }
+
+    function backToSettingsScreen() {
+        stack.pop(0)
     }
 }
