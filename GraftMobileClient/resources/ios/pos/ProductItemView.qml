@@ -41,6 +41,7 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
+            Layout.preferredHeight: 190
             Layout.alignment: Qt.AlignTop
             title: qsTr("Item description:")
             wrapMode: TextInput.WordWrap

@@ -57,7 +57,7 @@ BaseScreen {
                     LinearEditItem {
                         id: receiversAddress
                         Layout.fillWidth: true
-                        Layout.maximumHeight: 130
+                        Layout.preferredHeight: 130
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
@@ -81,7 +81,7 @@ BaseScreen {
                         anchors {
                             right: coinsAmountTextField.right
                             verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isDesktop() ? -15 : Detector.isPlatform(Platform.IOS) ? -5 : 3
+                            verticalCenterOffset: Detector.isDesktop() ? -8 : Detector.isPlatform(Platform.IOS) ? -5 : 3
                         }
                         color: "#BBBBBB"
                         font {
