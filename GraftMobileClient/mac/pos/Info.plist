@@ -3,19 +3,19 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>GraftPointOfSale</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Created by Qt/QMake</string>
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
-    <string>org.graft.pos</string>
+        <string>org.graft.pos</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-    <key>CFBundleDisplayName</key>
-    <string>Graft Point-of-Sale</string>
-    <key>CFBundleName</key>
-    <string>${PRODUCT_NAME}</string>
+        <key>CFBundleDisplayName</key>
+        <string>Graft Point-of-Sale</string>
+        <key>CFBundleName</key>
+        <string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
