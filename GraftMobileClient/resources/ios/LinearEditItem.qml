@@ -6,6 +6,7 @@ import "../"
 
 BaseLinearEditItem {
     id: linearEditItem
+
     property alias title: titleItem.text
     property alias text: editItem.text
     property alias wrapMode: editItem.wrapMode
@@ -18,52 +19,33 @@ BaseLinearEditItem {
 
     actionTextField: editItem
 
-    Item {
-        id: field
+    TextField {
+        id: editItem
         anchors.fill: parent
-
-        TextField {
-            id: editItem
-            anchors.fill: parent
-            leftPadding: titleItem.width
-            rightPadding: visibilityIcon ? 42 : 0
-            bottomPadding: 15
-            verticalAlignment: Qt.AlignTop
-            color: "#404040"
-            maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
-            Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
-            onWrapModeChanged: field.resizeField()
-        }
-
-        Text {
-            id: titleItem
-            anchors {
-                top: parent.top
-                left: parent.left
-                bottom: parent.bottom
-                topMargin: 8
-            }
-            font.pointSize: editItem.font.pointSize
-            rightPadding: 5
-            color: "#8E8E93"
-        }
-
-        VisibilityIcon {
-            visible: visibilityIcon
-            anchors {
-                right: parent.right
-                bottom: parent.bottom
-                bottomMargin: 2
-                rightMargin: 6
-            }
-            onClicked: passwordMode =! passwordMode
-        }
-
-        function resizeField() {
+        leftPadding: titleItem.width
+        rightPadding: visibilityIcon ? 42 : 0
+        bottomPadding: 15
+        verticalAlignment: Qt.AlignTop
+        color: "#404040"
+        maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
+        Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+        onWrapModeChanged: {
             if (editItem.wrapMode !== TextField.NoWrap && !inlineTitle) {
                 editItem.topPadding = 30
                 editItem.leftPadding = 0
             }
         }
+    }
+
+    Text {
+        id: titleItem
+        anchors {
+            top: parent.top
+            left: parent.left
+            topMargin: 8
+        }
+        font.pointSize: editItem.font.pointSize
+        rightPadding: 5
+        color: "#8E8E93"
     }
 }

@@ -31,6 +31,18 @@ ColumnLayout {
         id: baseTextField
         Layout.fillWidth: true
         Layout.preferredHeight: heightTextField()
+
+        VisibilityIcon {
+            z: 1
+            visible: visibilityIcon
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                rightMargin: 6
+                bottomMargin: 2
+            }
+            onClicked: passwordMode =! passwordMode
+        }
     }
 
     RowLayout {
@@ -75,7 +87,7 @@ ColumnLayout {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             size = actionTextField.wrapMode === TextField.NoWrap ? 45 : root.height - (tipsLayout.height + root.spacing)
         } else {
-            size = actionTextField.wrapMode === TextField.NoWrap ? 50 : root.height - (tipsLayout.height + root.spacing)
+            size = actionTextField.wrapMode === TextField.NoWrap ? 55 : root.height - (tipsLayout.height + root.spacing)
         }
         return size
     }
