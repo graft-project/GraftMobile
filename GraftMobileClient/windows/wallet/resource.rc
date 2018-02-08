@@ -19,7 +19,7 @@ FILETYPE VFT_APP
             VALUE "LegalCopyright", " 2018 GRAFT Payments, LLC"
             VALUE "OriginalFilename", "GraftWallet.exe"
             VALUE "ProductName", "Graft Wallet"
-            VALUE "ProductVersion", "1.6.0 alpha"
+            VALUE "ProductVersion", "1.6.0"
         }
     }
 
