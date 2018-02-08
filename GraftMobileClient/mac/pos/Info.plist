@@ -15,7 +15,7 @@
         <key>CFBundleDisplayName</key>
         <string>Graft Point-of-Sale</string>
         <key>CFBundleName</key>
-        <string>${PRODUCT_NAME}</string>
+        <string>Graft Point-of-Sale</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
