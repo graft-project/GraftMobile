@@ -101,7 +101,7 @@ private slots:
                                const QString &seed);
     void receiveBalance(double balance, double unlockedBalance);
     void receiveTransfer(int result);
-    void receiveTransferFee(int result, int fee);
+    void receiveTransferFee(int result, double fee);
 
 private:
     void initSettings();

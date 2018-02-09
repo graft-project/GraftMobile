@@ -143,7 +143,8 @@ void GraftBaseClient::transferFee(const QString &address, const QString &amount)
     {
         connect(api, &GraftGenericAPI::transferFeeReceived,
                 this, &GraftBaseClient::receiveTransferFee, Qt::UniqueConnection);
-        api->transferFee(address, amount);
+        QString customAmount = QString::number(GraftGenericAPI::toAtomic(amount.toDouble()), 'f', 0);
+        api->transferFee(address, customAmount);
     }
 }
 
@@ -349,7 +350,7 @@ void GraftBaseClient::receiveTransfer(int result)
     emit transferReceived(result == 0);
 }
 
-void GraftBaseClient::receiveTransferFee(int result, int fee)
+void GraftBaseClient::receiveTransferFee(int result, double fee)
 {
     bool status = result == 0;
     double lFee = 0;

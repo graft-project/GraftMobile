@@ -445,7 +445,7 @@ void GraftGenericAPI::receiveTransferFeeResponse()
     if (!object.isEmpty())
     {
         emit transferFeeReceived(object.value(QLatin1String("Result")).toInt(),
-                                 object.value(QLatin1String("Fee")).toInt());
+                                 object.value(QLatin1String("Fee")).toDouble());
     }
     else
     {

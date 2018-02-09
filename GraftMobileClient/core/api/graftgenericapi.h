@@ -53,7 +53,7 @@ signals:
     void restoreAccountReceived(const QByteArray &accountData, const QString &password,
                                 const QString &address, const QString &viewKey,
                                 const QString &seed);
-    void transferFeeReceived(int result, int fee);
+    void transferFeeReceived(int result, double fee);
     void transferReceived(int result);
 
 protected:
