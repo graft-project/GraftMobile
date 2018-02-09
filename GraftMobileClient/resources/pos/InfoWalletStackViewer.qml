@@ -5,6 +5,7 @@ import "../"
 BaseStackViewer {
     id: stack
     initialItem: walletScreen
+    clearStackViewer: openInfoWalletScreen
 
     InfoWalletScreen {
         id: walletScreen
@@ -17,6 +18,7 @@ BaseStackViewer {
         var transitionsMap = pushScreen
         transitionsMap["openAddAccountScreen"] = openAddAccountScreen
         transitionsMap["openMainAddressScreen"] = openMainAddressScreen
+        transitionsMap["openInfoWalletScreen"] = openInfoWalletScreen
         transitionsMap["openAddressScreen"] = openAddressScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
@@ -35,5 +37,9 @@ BaseStackViewer {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletTransitions(),
                    "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
                    "balanceState": "coinsAddress", "accountNumber": accountNumber, "accountType": type})
+    }
+
+    function openInfoWalletScreen() {
+        stack.pop(walletScreen)
     }
 }

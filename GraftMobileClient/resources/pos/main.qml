@@ -149,7 +149,7 @@ GraftApplicationWindow {
         var transitionsMap = {}
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openMainScreen"] = openMainScreen
-        transitionsMap["openWalletScreen"] = openInfoWalletScreen
+        transitionsMap["openWalletScreen"] = openWalletScreen
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         return transitionsMap
     }
@@ -167,7 +167,7 @@ GraftApplicationWindow {
         selectButton("Store")
     }
 
-    function openInfoWalletScreen() {
+    function openWalletScreen() {
         mainLayout.currentIndex = 2
         selectButton("Wallet")
     }
@@ -183,12 +183,19 @@ GraftApplicationWindow {
     }
 
     function openCreateWalletStackViewer() {
+        clearStackViewers()
         mainLayout.currentIndex = 0
     }
 
     function selectButton(name) {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             footerLoader.item.seclectedButtonChanged(name)
+        }
+    }
+
+    function clearStackViewers() {
+        for (var i = 0; i < mainLayout.count; ++i) {
+            mainLayout.itemAt(i).clearStackViewer()
         }
     }
 

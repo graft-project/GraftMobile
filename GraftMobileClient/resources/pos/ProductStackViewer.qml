@@ -4,6 +4,7 @@ import "../"
 BaseStackViewer {
     id: stack
     initialItem: productScreen
+    clearStackViewer: clearChecked
 
     ProductScreen {
         id: productScreen

@@ -7,6 +7,7 @@ StackView {
     property var menuLoader
     property var pushScreen: ({})
     property bool isActive: false
+    property var clearStackViewer: ({})
 
     focus: true
     onCurrentItemChanged: {

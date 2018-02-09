@@ -5,6 +5,7 @@ import "../"
 BaseStackViewer {
     id: stack
     initialItem: balanceScreen
+    clearStackViewer: openBalanceScreen
 
     BalanceScreen {
         id: balanceScreen

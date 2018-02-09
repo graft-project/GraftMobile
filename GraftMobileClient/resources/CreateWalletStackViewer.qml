@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 BaseStackViewer {
     id: stack
     initialItem: selectNetworkScreen
+    clearStackViewer: backToSelectNetworkScreen
 
     SelectNetworkScreen {
         id: selectNetworkScreen
@@ -15,6 +16,7 @@ BaseStackViewer {
         transitionsMap["openRestoreWalletScreen"] = openRestoreWalletScreen
         transitionsMap["openMnemonicViewScreen"] = openMnemonicViewScreen
         transitionsMap["openCreateWalletScreen"] = openCreateWalletScreen
+        transitionsMap["backToSelectNetworkScreen"] = backToSelectNetworkScreen
         transitionsMap["openBaseScreen"] = openBaseScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
@@ -34,7 +36,10 @@ BaseStackViewer {
     }
 
     function openBaseScreen() {
-        stack.pop(selectNetworkScreen)
         pushScreen.openMainScreen()
+    }
+
+    function backToSelectNetworkScreen() {
+        stack.pop(selectNetworkScreen)
     }
 }
