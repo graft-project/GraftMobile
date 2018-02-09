@@ -57,7 +57,7 @@ BaseScreen {
                     LinearEditItem {
                         id: receiversAddress
                         Layout.fillWidth: true
-                        Layout.maximumHeight: 130
+                        Layout.preferredHeight: 130
                         maximumLength: 100
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
@@ -81,7 +81,7 @@ BaseScreen {
                         anchors {
                             right: coinsAmountTextField.right
                             verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isDesktop() ? -15 : Detector.isPlatform(Platform.IOS) ? -5 : 3
+                            verticalCenterOffset: Detector.isDesktop() ? -8 : Detector.isPlatform(Platform.IOS) ? -5 : 3
                         }
                         color: "#BBBBBB"
                         font {
@@ -160,11 +160,11 @@ BaseScreen {
 
     function checkingData() {
         if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 100)) {
-            screenDialog.text = qsTr("You entered the wrong account number! Please input correct account number")
+            screenDialog.text = qsTr("You entered the wrong account number! Please input correct account number.")
             screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value")
+            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
             screenDialog.open()
         } else {
             GraftClient.transfer(receiversAddress.text, coinsAmountTextField.text)

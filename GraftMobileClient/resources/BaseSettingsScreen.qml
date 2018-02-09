@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
@@ -138,25 +137,23 @@ BaseScreen {
         }
     }
 
-    Dialog {
+    ChooserDialog {
         id: passwordDialog
-        visible: false
-        modal: true
-        width: 300
+        title: qsTr("Enter password:")
         topMargin: (parent.height - passwordDialog.height) / 2
         leftMargin: (parent.width - passwordDialog.width) / 2
-        title: qsTr("Enter password:")
-        standardButtons: StandardButton.Ok | StandardButton.Close
-
-        TextField {
-            id: passwordTextField
-            width: parent.width
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
-            font.pixelSize: 24
+        denyButton {
+            text: qsTr("Close")
+            onClicked: {
+                passwordTextField.clear()
+                passwordDialog.close()
+            }
+        }
+        confirmButton {
+            text: qsTr("Ok")
+            onClicked: passwordDialog.accept()
         }
         onAccepted: checkingPassword(passwordTextField.text)
-        onRejected: passwordTextField.clear()
     }
 
     function resetWalletAccount() {
@@ -168,16 +165,14 @@ BaseScreen {
         pushScreen.openMnemonicViewScreen(true)
     }
 
-    function checkingPassword(password)
-    {
+    function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            passwordTextField.clear()
             confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
-            passwordTextField.clear()
         }
+        passwordDialog.passwordTextField.clear()
     }
 }

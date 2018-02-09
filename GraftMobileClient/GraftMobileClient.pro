@@ -16,7 +16,6 @@ android {
 include(android/android.pri)
 }
 
-
 include(QZXing.pri)
 include(QRCodeGenerator.pri)
 
@@ -51,6 +50,10 @@ HEADERS += \
 
 win32 {
 include(windows/windows.pri)
+}
+
+macx {
+include(mac/mac.pri)
 }
 
 SOURCES += main.cpp \

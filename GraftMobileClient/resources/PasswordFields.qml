@@ -8,7 +8,7 @@ ColumnLayout {
     property alias confirmPasswordText: confirmPasswordField.text
     property bool wrongPassword: false
 
-    spacing: 0
+    spacing: 3
 
     LinearEditItem {
         id: passwordField

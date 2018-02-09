@@ -78,7 +78,7 @@ BaseScreen {
         WideActionButton {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
-            text: qsTr("Restore Wallet")
+            text: qsTr("Restore/Import Wallet")
             onClicked: pushScreen.openRestoreWalletScreen()
         }
     }

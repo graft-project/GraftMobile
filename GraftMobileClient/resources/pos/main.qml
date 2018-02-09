@@ -25,7 +25,7 @@ GraftApplicationWindow {
     footer: Item {
         id: graftApplicationFooter
         height: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                        Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
+                    Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -45,29 +45,39 @@ GraftApplicationWindow {
 
     Connections {
         target: GraftClient
-
         onErrorReceived: {
+            var checkDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
             if (message !== "") {
-                messageDialog.title = qsTr("Network Error")
-                messageDialog.text = message
+                checkDialog.title = qsTr("Network Error")
+                checkDialog.text = message
             } else {
-                messageDialog.title = qsTr("Sale failed!")
-                messageDialog.text = qsTr("Sale request failed.\nPlease try again.")
+                checkDialog.title = qsTr("Sale failed!")
+                checkDialog.text = qsTr("Sale request failed.\nPlease try again.")
             }
-            messageDialog.open()
+            checkDialog.open()
+        }
+    }
+
+    DesktopDialog {
+        id: desktopMessageDialog
+        topMargin: (parent.height - desktopMessageDialog.height) / 2
+        leftMargin: (parent.width - desktopMessageDialog.width) / 2
+        title: qsTr("Sale failed!")
+        text: qsTr("Sale request failed.\nPlease try again.")
+        confirmButton.onClicked: {
+            checkAccountExists()
+            desktopMessageDialog.close()
         }
     }
 
     MessageDialog {
-        id: messageDialog
-        title: qsTr("Sale failed!")
+        id: mobileMessageDialog
         icon: StandardIcon.Warning
+        title: qsTr("Sale failed!")
         text: qsTr("Sale request failed.\nPlease try again.")
-        standardButtons: MessageDialog.Ok
         onAccepted: {
-            if (GraftClient.isAccountExists()) {
-                productViewer.clearChecked()
-            }
+            checkAccountExists()
+            mobileMessageDialog.close()
         }
     }
 
@@ -80,10 +90,8 @@ GraftApplicationWindow {
         onCurrentIndexChanged: {
             if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
                 graftApplicationFooter.visible = currentIndex !== 0
-            } else {
-                if (drawerLoader && drawerLoader.status === Loader.Ready) {
-                    drawerLoader.item.interactive = currentIndex !== 0
-                }
+            } else if (drawerLoader && drawerLoader.status === Loader.Ready) {
+                drawerLoader.item.interactive = currentIndex !== 0
             }
         }
 
@@ -188,6 +196,12 @@ GraftApplicationWindow {
     function clearStackViewers() {
         for (var i = 0; i < mainLayout.count; ++i) {
             mainLayout.itemAt(i).clearStackViewer()
+        }
+    }
+
+    function checkAccountExists() {
+        if (GraftClient.isAccountExists()) {
+            productViewer.clearChecked()
         }
     }
 }

@@ -45,29 +45,39 @@ GraftApplicationWindow {
 
     Connections {
         target: GraftClient
-
         onErrorReceived: {
+            var checkDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
             if (message !== "") {
-                messageDialog.title = qsTr("Network Error")
-                messageDialog.text = message
+                checkDialog.title = qsTr("Network Error")
+                checkDialog.text = message
             } else {
-                messageDialog.title = qsTr("Pay failed!")
-                messageDialog.text = qsTr("Pay request failed.\nPlease try again.")
+                checkDialog.title = qsTr("Pay failed!")
+                checkDialog.text = qsTr("Pay request failed.\nPlease try again.")
             }
-            messageDialog.open()
+            checkDialog.open()
+        }
+    }
+
+    DesktopDialog {
+        id: desktopMessageDialog
+        topMargin: (parent.height - desktopMessageDialog.height) / 2
+        leftMargin: (parent.width - desktopMessageDialog.width) / 2
+        title: qsTr("Pay failed!")
+        text: qsTr("Pay request failed.\nPlease try again.")
+        confirmButton.onClicked: {
+            checkAccountExists()
+            desktopMessageDialog.close()
         }
     }
 
     MessageDialog {
-        id: messageDialog
+        id: mobileMessageDialog
         title: qsTr("Pay failed!")
         icon: StandardIcon.Warning
         text: qsTr("Pay request failed.\nPlease try again.")
-        standardButtons: MessageDialog.Ok
         onAccepted: {
-            if (GraftClient.isAccountExists()) {
-                openMainScreen()
-            }
+            checkAccountExists()
+            mobileMessageDialog.close()
         }
     }
 
@@ -80,10 +90,8 @@ GraftApplicationWindow {
         onCurrentIndexChanged: {
             if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
                 graftApplicationFooter.visible = currentIndex > 1
-            } else {
-                if (drawerLoader && drawerLoader.status === Loader.Ready) {
-                    drawerLoader.item.interactive = currentIndex > 1
-                }
+            } else if (drawerLoader && drawerLoader.status === Loader.Ready) {
+                drawerLoader.item.interactive = currentIndex > 1
             }
         }
 
@@ -186,6 +194,12 @@ GraftApplicationWindow {
     function clearStackViewers() {
         for (var i = 1; i < mainLayout.count; ++i) {
             mainLayout.itemAt(i).clearStackViewer()
+        }
+    }
+
+    function checkAccountExists() {
+        if (GraftClient.isAccountExists()) {
+            openMainScreen()
         }
     }
 }
