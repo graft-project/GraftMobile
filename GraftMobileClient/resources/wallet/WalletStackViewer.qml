@@ -24,6 +24,7 @@ BaseStackViewer {
         transitionsMap["openAddressScreen"] = openAddressScreen
         transitionsMap["openSendCoinScreen"] = openSendCoinScreen
         transitionsMap["openBalanceScreen"] = openBalanceScreen
+        transitionsMap["openSendConfirmationScreen"] = openSendConfirmationScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
     }
@@ -68,5 +69,10 @@ BaseStackViewer {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
                    "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
                    "balanceState": "coinsAddress", "accountNumber": accountNumber, "accountType": type})
+    }
+
+    function openSendConfirmationScreen(receiversAddress, coinsAmount, fee) {
+        stack.push("qrc:/SendConfirmationScreen.qml", {"pushScreen": walletsTransitions(),
+                   "address": receiversAddress, "amount": coinsAmount, "fee": fee})
     }
 }

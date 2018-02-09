@@ -16,8 +16,8 @@ Pane {
         PathView {
             id: pathView
             anchors.fill: parent
-            pathItemCount: 3
-            offset: 1.5
+            pathItemCount: count < 2 ? 1 : 3
+            offset: count < 2 ? 0.5 : 1.5
             model: QuickExchangeModel
             interactive: false
 

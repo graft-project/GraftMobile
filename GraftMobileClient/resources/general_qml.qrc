@@ -41,6 +41,7 @@
         <file alias="BaseLinearEditItem.qml">BaseLinearEditItem.qml</file>
         <file alias="DesktopDialog.qml">DesktopDialog.qml</file>
         <file alias="ChooserDialog.qml">ChooserDialog.qml</file>
+        <file alias="SendConfirmationScreen.qml">SendConfirmationScreen.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -119,6 +120,7 @@
         <file alias="bth.png">imgs/coins/exchange/bth.png</file>
         <file alias="dash.png">imgs/coins/exchange/dash.png</file>
         <file alias="eth.png">imgs/coins/exchange/eth.png</file>
+        <file alias="grf.png">imgs/coins/exchange/grf.png</file>
         <file alias="ltc.png">imgs/coins/exchange/ltc.png</file>
         <file alias="nem.png">imgs/coins/exchange/nem.png</file>
         <file alias="neo.png">imgs/coins/exchange/neo.png</file>
