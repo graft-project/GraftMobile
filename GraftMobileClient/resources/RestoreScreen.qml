@@ -121,7 +121,7 @@ BaseScreen {
         } else {
             root.state = "restoreWalletPressed"
             GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text),
-                                       passwordTextField.text)
+                                       passwordTextField.passwordText)
         }
     }
 }
