@@ -39,7 +39,7 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 5 : 15
+            topMargin: Detector.isPlatform(Platform.IOS) ? 5 : 15
             leftMargin: 15
             rightMargin: 15
             bottomMargin: 15
@@ -53,7 +53,7 @@ BaseScreen {
         }
 
         ColumnLayout {
-            Layout.topMargin: 10
+            Layout.topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 9 : 0
             Layout.fillWidth: true
             spacing: 2
 

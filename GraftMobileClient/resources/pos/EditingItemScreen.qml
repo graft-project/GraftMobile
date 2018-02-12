@@ -41,7 +41,7 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            topMargin: 10
+            topMargin: 15
             leftMargin: 15
             rightMargin: 15
             bottomMargin: 15
