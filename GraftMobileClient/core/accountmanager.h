@@ -6,6 +6,12 @@
 class AccountManager
 {
 public:
+    enum AccountVersion
+    {
+        Version0 = 0,
+        Version1 = 1
+    };
+
     AccountManager();
 
     void setNetworkType(int network);
@@ -31,6 +37,8 @@ public:
 
 private:
     void read();
+    QString accountDataFile() const;
+    AccountVersion versionOf(const QString &filename) const;
 
     QString mPassword;
     QByteArray mAccountData;
@@ -38,6 +46,7 @@ private:
     QString mViewKey;
     QString mSeed;
     int mNetworkType;
+    AccountVersion mLastVersion;
 };
 
 #endif // ACCOUNTMANAGER_H

@@ -6,11 +6,12 @@
 #include <QFile>
 #include <QDir>
 
-static const QString scAccountDataFile("account.dat");
+static const QString scAccountDataFile("account.dat%1");
 
 AccountManager::AccountManager()
 {
     mNetworkType = 0;
+    mLastVersion = Version1;
     read();
 }
 
@@ -106,7 +107,7 @@ void AccountManager::save() const
         QDir().mkpath(dataPath);
     }
     QDir lDir(dataPath);
-    QFile lFile(lDir.filePath(scAccountDataFile));
+    QFile lFile(lDir.filePath(scAccountDataFile.arg(mLastVersion)));
     if (lFile.open(QFile::WriteOnly))
     {
         QByteArray data;
@@ -129,16 +130,54 @@ void AccountManager::clearData()
 
 void AccountManager::read()
 {
-    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                              scAccountDataFile);
+    QString dataPath = accountDataFile();
     if (!dataPath.isEmpty())
     {
+        AccountVersion currentVersion = versionOf(dataPath);
         QFile lFile(dataPath);
         if (lFile.open(QFile::ReadOnly))
         {
-            QByteArray data = qUncompress(lFile.readAll());
+            QByteArray fileData = lFile.readAll();
+            QByteArray data = currentVersion == Version0 ? fileData : qUncompress(fileData);
             QDataStream in(data);
             in >> mPassword >> mAccountData >> mAddress >> mSeed >> mViewKey >> mNetworkType;
         }
+        if (currentVersion != mLastVersion)
+        {
+            lFile.remove();
+            save();
+        }
     }
+}
+
+QString AccountManager::accountDataFile() const
+{
+    static QStringList versions{QString::number(Version1), ""};
+    QString dataPath;
+    for (QString version : versions)
+    {
+        dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                          scAccountDataFile.arg(version));
+        if (!dataPath.isEmpty())
+        {
+            break;
+        }
+    }
+    return dataPath;
+}
+
+AccountManager::AccountVersion AccountManager::versionOf(const QString &filename) const
+{
+    QFileInfo info(filename);
+    QString extension = info.suffix();
+    extension.replace(QLatin1String("dat"), QLatin1String());
+    if (extension.isEmpty())
+    {
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+        return Version0;
+#elif defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+        return Version1;
+#endif
+    }
+    return static_cast<AccountVersion>(extension.toInt());
 }
