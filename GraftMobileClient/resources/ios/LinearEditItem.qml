@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.2
+import com.device.platform 1.0
 import "../"
 
 BaseLinearEditItem {
@@ -43,6 +44,11 @@ BaseLinearEditItem {
                 bottom: parent.bottom
                 rightMargin: 6
                 bottomMargin: 2
+            }
+            onPressed: {
+                if (Detector.isPlatform(Platform.IOS)) {
+                    focus = editItem.activeFocus
+                }
             }
             onClicked: passwordMode =! passwordMode
         }
