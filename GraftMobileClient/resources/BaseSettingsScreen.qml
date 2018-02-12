@@ -39,10 +39,7 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            topMargin: Detector.isPlatform(Platform.IOS) ? 5 : 15
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: 15
+            margins: 15
         }
 
         LinearEditItem {
