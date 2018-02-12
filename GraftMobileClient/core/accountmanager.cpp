@@ -173,10 +173,11 @@ AccountManager::AccountVersion AccountManager::versionOf(const QString &filename
     extension.replace(QLatin1String("dat"), QLatin1String());
     if (extension.isEmpty())
     {
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+        return Version0;
+#elif defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_LINUX)
         return Version1;
 #endif
-        return Version0;
     }
     return static_cast<AccountVersion>(extension.toInt());
 }
