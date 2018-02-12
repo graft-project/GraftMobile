@@ -47,7 +47,7 @@ BaseBalanceScreen {
 
         WideActionButton {
             id: payButton
-            text: qsTr("PAY")
+            text: qsTr("Pay")
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
