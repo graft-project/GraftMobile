@@ -252,7 +252,7 @@ QUrl GraftGenericAPI::nextAddress()
 
 QNetworkReply *GraftGenericAPI::retry()
 {
-    if (mRetries < mAddresses.count())
+    if (mRetries < mAddresses.count() - 1)
     {
         mRetries++;
         mRequest.setUrl(nextAddress());
