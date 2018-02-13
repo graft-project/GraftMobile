@@ -29,8 +29,8 @@ ColumnLayout {
     }
 
     Rectangle {
-        height: 1
         color: "#acacac"
         Layout.fillWidth: true
+        Layout.preferredHeight: 1
     }
 }
