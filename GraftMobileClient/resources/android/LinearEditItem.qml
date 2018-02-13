@@ -40,6 +40,7 @@ BaseLinearEditItem {
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
 
             VisibilityIcon {
+                Material.accent: "#9E9E9E"
                 visible: visibilityIcon
                 anchors {
                     right: parent.right
