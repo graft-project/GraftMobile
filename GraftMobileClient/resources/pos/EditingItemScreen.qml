@@ -41,10 +41,7 @@ BaseScreen {
     ColumnLayout {
         anchors {
             fill: parent
-            topMargin: 10
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: 15
+            margins: 15
         }
 
         ProductItemView {

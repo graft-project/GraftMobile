@@ -36,7 +36,7 @@ BaseScreen {
         spacing: 3
         anchors {
             fill: parent
-            topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 5 : 15
+            topMargin: 15
             leftMargin: 15
             rightMargin: 15
             bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
