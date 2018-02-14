@@ -95,8 +95,9 @@ BaseScreen {
                 title: qsTr("Create wallet")
                 action: save
                 screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.Android)
+//                    navigationButtonState: Detector.isPlatform(Platform.Android)
                     isNavigationButtonVisible: false
+                    navigationButtonState: true
                     actionButtonState: true
                 }
             }
@@ -116,9 +117,11 @@ BaseScreen {
                 target: root
                 title: qsTr("Mnemonic phrase")
                 action: save
-                screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
-                }
+//                screenHeader {
+//                    isNavigationButtonVisible: false
+//                    navigationButtonState: true
+//                    navigationButtonState: Detector.isPlatform(Platform.IOS) || Detector.isDesktop()
+//                }
             }
         }
     ]

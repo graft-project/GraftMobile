@@ -13,10 +13,8 @@ BaseScreen {
     title: qsTr("Add item")
     action: confirmProductParameters
 
-    screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-        actionButtonState: true
-    }
+    screenHeader.actionButtonState: true
+//        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
 
     property alias currencyModel: productItem.currencyModel
     property int index: -1

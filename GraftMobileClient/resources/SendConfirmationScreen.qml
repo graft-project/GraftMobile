@@ -13,7 +13,7 @@ BaseScreen {
     property string fee: ""
 
     title: qsTr("Send")
-    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
+//    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
 
     Connections {
         target: GraftClient

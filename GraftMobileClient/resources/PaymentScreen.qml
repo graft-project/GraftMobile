@@ -116,10 +116,8 @@ BaseScreen {
                 target: root
 
                 specialBackMode: pushScreen
-                screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-                    actionButtonState: false
-                }
+                screenHeader.actionButtonState: false
+//                    navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
             }
             PropertyChanges {
                 target: image

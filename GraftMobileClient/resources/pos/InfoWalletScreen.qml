@@ -8,7 +8,9 @@ BaseBalanceScreen {
     id: infoWallet
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
     screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.Android)
+        isNavigationButtonVisible: false
+        navigationButtonState: true
+//        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     ColumnLayout {

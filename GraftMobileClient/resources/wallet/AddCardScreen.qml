@@ -10,10 +10,8 @@ import "../components"
 BaseScreen {
     id: root
     title: qsTr("Add Card")
-    screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-        actionButtonState: true
-    }
+    screenHeader.actionButtonState: true
+//        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     action: done
 
     ColumnLayout {

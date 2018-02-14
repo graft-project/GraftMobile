@@ -9,7 +9,11 @@ BaseScreen {
     property alias coinModel: coinsComboBox.currencyModel
 
     title: qsTr("Add new account")
-    screenHeader.actionButtonState: true
+    screenHeader {
+        isNavigationButtonVisible: false
+        navigationButtonState: true
+        actionButtonState: true
+    }
     action: addAccount
 
     Component.onCompleted: {

@@ -10,7 +10,8 @@ BaseScreen {
     title: qsTr("Select Network")
     screenHeader {
         isNavigationButtonVisible: false
-        navigationButtonState: Detector.isPlatform(Platform.Android)
+        navigationButtonState: true
+//        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     Component.onCompleted: mainNet.checked = true

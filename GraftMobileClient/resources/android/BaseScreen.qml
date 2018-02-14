@@ -21,7 +21,7 @@ Page {
         headerText: basePage.title
 
         onNavigationButtonClicked: {
-            if(navigationButtonState) {
+            if (navigationButtonState) {
                 basePage.pushScreen.showMenu()
             } else {
                 if (specialBackMode) {

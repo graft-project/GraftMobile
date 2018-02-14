@@ -18,7 +18,7 @@ ApplicationWindow {
     Component.onCompleted: init()
 
     Shortcut {
-        sequences: ["Esc", "Back"]
+        sequences: ["Esc", "Backspace"]
         onActivated: handleBackEvent()
     }
 
@@ -39,6 +39,7 @@ ApplicationWindow {
 
     function init() {
         if (Detector.isPlatform(Platform.IOS)) {
+            root.flags = Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
             root.visibility = ApplicationWindow.FullScreen
         }
     }

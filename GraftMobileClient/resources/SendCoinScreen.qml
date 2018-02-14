@@ -7,12 +7,9 @@ import "components"
 
 BaseScreen {
     id: sendCoinScreen
-
     title: qsTr("Send")
-    screenHeader {
-        actionButtonState: true
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-    }
+    screenHeader.actionButtonState: true
+//        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     action: checkingData
 
     Component.onCompleted: {

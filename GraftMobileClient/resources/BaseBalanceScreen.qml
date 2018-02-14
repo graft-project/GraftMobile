@@ -10,6 +10,7 @@ BaseScreen {
 
     title: qsTr("Wallet")
     screenHeader {
+        isNavigationButtonVisible: false
         navigationButtonState: true
     }
 

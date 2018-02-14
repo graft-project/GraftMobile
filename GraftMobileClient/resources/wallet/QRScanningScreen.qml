@@ -7,9 +7,7 @@ import "../"
 BaseScreen {
     id: qrScanning
     title: qsTr("Pay")
-    screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-    }
+//    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
 
     Connections {
         target: GraftClient

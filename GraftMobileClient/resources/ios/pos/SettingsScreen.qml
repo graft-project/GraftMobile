@@ -10,6 +10,8 @@ BaseSettingsScreen {
     saveButtonText: qsTr("Done")
 
     screenHeader {
+        isNavigationButtonVisible: false
+        navigationButtonState: true
         actionButtonState: true
         actionText: qsTr("Save")
     }

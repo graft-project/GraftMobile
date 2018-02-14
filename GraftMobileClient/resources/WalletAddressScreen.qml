@@ -16,9 +16,7 @@ BaseScreen {
     property string accountType: ""
 
     state: balanceState
-    screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-    }
+//    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {

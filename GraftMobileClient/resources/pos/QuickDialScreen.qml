@@ -12,10 +12,8 @@ BaseScreen {
     property alias currencyModel: currencyCBox.currencyModel
 
     title: qsTr("Quick Deal")
-    screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-        actionButtonState: true
-    }
+    screenHeader.actionButtonState: true
+//        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     action: checkout
 
     ColumnLayout {
