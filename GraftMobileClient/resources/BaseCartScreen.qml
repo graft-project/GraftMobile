@@ -8,7 +8,7 @@ BaseScreen {
 
     title: qsTr("Cart")
     screenHeader {
-        isNavigationButtonVisible: false
+        isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
         navigationButtonState: true
     }
 

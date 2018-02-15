@@ -10,6 +10,7 @@ BaseScreen {
 
     title: qsTr("Pay")
     screenHeader {
+        isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
         navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 

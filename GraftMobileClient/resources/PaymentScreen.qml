@@ -90,6 +90,7 @@ BaseScreen {
                 target: root
                 action: pushScreen
                 screenHeader {
+                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
                     navigationButtonState: true
                     actionButtonState: true
                 }
@@ -113,7 +114,11 @@ BaseScreen {
             PropertyChanges {
                 target: root
                 specialBackMode: pushScreen
-                screenHeader.actionButtonState: true
+                screenHeader {
+                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                    navigationButtonState: true
+                    actionButtonState: true
+                }
             }
             PropertyChanges {
                 target: image
