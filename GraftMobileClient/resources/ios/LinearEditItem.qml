@@ -38,6 +38,7 @@ BaseLinearEditItem {
         }
 
         VisibilityIcon {
+            Material.accent: "#9E9E9E"
             visible: visibilityIcon
             anchors {
                 right: parent.right
