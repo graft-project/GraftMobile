@@ -18,7 +18,7 @@ ApplicationWindow {
     Component.onCompleted: init()
 
     Shortcut {
-        sequences: ["Esc", "Backspace"]
+        sequences: Detector.isPlatform(Platform.Mobile) ? ["Esc", "Back"] : ["Esc", "Backspace"]
         onActivated: handleBackEvent()
     }
 
@@ -40,7 +40,8 @@ ApplicationWindow {
     function init() {
         if (Detector.isPlatform(Platform.IOS)) {
             root.visibility = ApplicationWindow.FullScreen
-        } else if (Detector.isPlatform(Platform.MacOS)) {
+        }
+        else if (Detector.isPlatform(Platform.MacOS)) {
             root.flags = Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
         }
     }

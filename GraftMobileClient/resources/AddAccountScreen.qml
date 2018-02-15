@@ -18,7 +18,6 @@ BaseScreen {
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
-            screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
             accountName.title = qsTr("Account name:")
             coinsComboBox.dropdownTitle = qsTr("Type:")

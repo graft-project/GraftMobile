@@ -11,9 +11,7 @@ BaseScreen {
     screenHeader {
         isNavigationButtonVisible: false
         navigationButtonState: true
-//        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
-
     Component.onCompleted: mainNet.checked = true
 
     ColumnLayout {

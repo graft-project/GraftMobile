@@ -1,5 +1,4 @@
 import QtQuick 2.9
-import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -11,7 +10,6 @@ BaseScreen {
     screenHeader {
         isNavigationButtonVisible: false
         navigationButtonState: true
-//        navigationButtonState: Detector.isPlatform(Platform.Android)
     }
 
     Connections {

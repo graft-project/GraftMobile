@@ -13,7 +13,6 @@ BaseScreen {
 
     title: qsTr("Quick Deal")
     screenHeader.actionButtonState: true
-//        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     action: checkout
 
     ColumnLayout {
