@@ -2,7 +2,7 @@
 	!include "WinVer.nsh"
 
 	!define APPNAME "GraftWallet"
-	!define COMPANYNAME "GRAFT Payments, LLC"
+	!define COMPANYNAME "GRAFT Payments"
 	!define DESCRIPTION "Graft Wallet"
 	!define VERSIONMAJOR 1
 	!define VERSIONMINOR 6
