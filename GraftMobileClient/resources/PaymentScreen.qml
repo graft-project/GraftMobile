@@ -14,8 +14,7 @@ BaseScreen {
     property int screenState: 0
 
     Component.onCompleted: {
-        if (screenState)
-        {
+        if (screenState) {
             root.state = "successfulPaid"
         } else {
             root.state = "failPaid"
@@ -89,10 +88,10 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-
                 action: pushScreen
                 screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.Android)
+                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                    navigationButtonState: true
                     actionButtonState: true
                 }
             }
@@ -114,11 +113,11 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-
                 specialBackMode: pushScreen
                 screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-                    actionButtonState: false
+                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                    navigationButtonState: true
+                    actionButtonState: true
                 }
             }
             PropertyChanges {

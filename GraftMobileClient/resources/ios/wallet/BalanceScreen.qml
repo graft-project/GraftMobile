@@ -6,7 +6,6 @@ import org.graft 1.0
 
 BaseBalanceScreen {
     id: balanceScreen
-    screenHeader.navigationButtonState: false
 
     Connections {
         target: GraftClient

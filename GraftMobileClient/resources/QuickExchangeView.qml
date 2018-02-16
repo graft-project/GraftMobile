@@ -7,9 +7,8 @@ import com.device.platform 1.0
 
 Pane {
     id: root
-
-    Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
     padding: 0
+    Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
     contentItem: Rectangle {
         color: ColorFactory.color(DesignFactory.CircleBackground)
 

@@ -11,6 +11,7 @@ Page {
     property var action: null
     property var specialBackMode: null
     property alias screenHeader: appHeader
+    property alias isMenuActive: appHeader.navigationButtonState
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 

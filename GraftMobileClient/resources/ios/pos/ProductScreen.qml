@@ -14,6 +14,8 @@ BaseScreen {
     title: qsTr("Store")
     screenHeader {
         cartEnable: true
+        isNavigationButtonVisible: false
+        navigationButtonState: true
     }
 
     Connections {

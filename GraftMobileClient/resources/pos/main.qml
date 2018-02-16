@@ -10,7 +10,6 @@ import "../components"
 GraftApplicationWindow {
     id: root
     title: qsTr("Graft Point-of-Sale")
-
     handleBackEvent: mainLayout.backButtonHandler
 
     Loader {

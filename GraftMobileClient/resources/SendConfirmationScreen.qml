@@ -13,7 +13,6 @@ BaseScreen {
     property string fee: ""
 
     title: qsTr("Send")
-    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
 
     Connections {
         target: GraftClient
@@ -114,7 +113,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
             onClicked: {
-                GraftClient.transfer(receiversAddress.text, coinsAmount.text)
+                GraftClient.transfer(receiversAddress.text, amount)
                 sendCoinScreen.state = "afterSend"
             }
         }
