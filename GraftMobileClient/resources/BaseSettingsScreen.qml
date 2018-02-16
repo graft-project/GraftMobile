@@ -148,9 +148,17 @@ BaseScreen {
         }
         confirmButton {
             text: qsTr("Ok")
-            onClicked: passwordDialog.accept()
+            checkable: true
+            onClicked: {
+                if (confirmButton.checkable) {
+                    passwordDialog.accept()
+                }
+                confirmButton.checkable = !confirmButton.checkable
+            }
         }
-        onAccepted: checkingPassword(passwordTextField.text)
+        onAccepted: {
+            checkingPassword(passwordTextField.text)
+        }
     }
 
     function resetWalletAccount() {
