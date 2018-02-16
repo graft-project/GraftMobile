@@ -40,8 +40,7 @@ ApplicationWindow {
     function init() {
         if (Detector.isPlatform(Platform.IOS)) {
             root.visibility = ApplicationWindow.FullScreen
-        }
-        else if (Detector.isPlatform(Platform.MacOS)) {
+        } else if (Detector.isPlatform(Platform.MacOS)) {
             root.flags = Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
         }
     }

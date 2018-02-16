@@ -113,7 +113,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
             onClicked: {
-                GraftClient.transfer(receiversAddress.text, parseFloat(amount))
+                GraftClient.transfer(receiversAddress.text, amount)
                 sendCoinScreen.state = "afterSend"
             }
         }
