@@ -41,6 +41,7 @@ BaseScreen {
             text: qsTr("Create New Wallet")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
+                    disableScreen()
                     root.state = "createWalletPressed"
                     GraftClient.createAccount(passwordTextField.passwordText)
                 }
@@ -79,7 +80,10 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore/Import Wallet")
-            onClicked: pushScreen.openRestoreWalletScreen()
+            onClicked: {
+                disableScreen()
+                pushScreen.openRestoreWalletScreen()
+            }
         }
     }
 

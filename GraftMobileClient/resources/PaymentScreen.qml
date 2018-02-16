@@ -79,7 +79,10 @@ BaseScreen {
                 rightMargin:15
                 bottomMargin: 15
             }
-            onClicked: pushScreen()
+            onClicked: {
+                disableScreen()
+                pushScreen()
+            }
         }
     }
 

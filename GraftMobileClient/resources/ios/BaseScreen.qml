@@ -16,6 +16,8 @@ Page {
 
     signal attentionAccepted()
 
+    onVisibleChanged: basePage.enabled = true
+
     header: Header {
         id: appHeader
         headerText: basePage.title
@@ -50,5 +52,9 @@ Page {
 
     function backButtonHandler() {
         return isMenuActive
+    }
+
+    function disableScreen() {
+        basePage.enabled = false
     }
 }

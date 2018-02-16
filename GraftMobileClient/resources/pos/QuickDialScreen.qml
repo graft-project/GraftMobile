@@ -65,7 +65,10 @@ BaseScreen {
             id: confirmButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Checkout")
-            onClicked: checkout()
+            onClicked: {
+                disableScreen()
+                checkout()
+            }
         }
     }
 

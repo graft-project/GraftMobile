@@ -117,6 +117,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
             onClicked: {
+                disableScreen()
                 setNetworkType()
                 pushScreen.openCreateWalletScreen()
             }

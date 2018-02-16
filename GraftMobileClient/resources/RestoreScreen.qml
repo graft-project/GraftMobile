@@ -72,6 +72,7 @@ BaseScreen {
             text: qsTr("Restore")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
+                    disableScreen()
                     restoreWallet()
                 }
             }

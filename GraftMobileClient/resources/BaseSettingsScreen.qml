@@ -130,7 +130,10 @@ BaseScreen {
         WideActionButton {
             id: saveButton
             Layout.alignment: Qt.AlignBottom
-            onClicked: saveChanges()
+            onClicked: {
+                disableScreen()
+                saveChanges()
+            }
         }
     }
 
@@ -148,17 +151,13 @@ BaseScreen {
         }
         confirmButton {
             text: qsTr("Ok")
-            checkable: true
             onClicked: {
-                if (confirmButton.checkable) {
-                    passwordDialog.accept()
-                }
-                confirmButton.checkable = !confirmButton.checkable
+                passwordDialog.confirmButton.enabled = false
+                passwordDialog.accept()
             }
         }
-        onAccepted: {
-            checkingPassword(passwordTextField.text)
-        }
+        onAccepted: checkingPassword(passwordTextField.text)
+        onVisibleChanged: confirmButton.enabled = true
     }
 
     function resetWalletAccount() {
