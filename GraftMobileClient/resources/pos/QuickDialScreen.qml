@@ -42,6 +42,7 @@ BaseScreen {
                     id: price
                     Layout.fillWidth: true
                     showLengthIndicator: false
+                    Layout.topMargin: 2
                     Layout.alignment: Qt.AlignTop
                     Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 75 : 50
                     inputMethodHints: Qt.ImhDigitsOnly
