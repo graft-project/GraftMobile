@@ -2,7 +2,7 @@
 	!include "WinVer.nsh"
 
 	!define APPNAME "GraftWallet"
-	!define COMPANYNAME "GRAFT Payments"
+	!define COMPANYNAME "GRAFT Payments, LLC"
 	!define DESCRIPTION "Graft Wallet"
 	!define VERSIONMAJOR 1
 	!define VERSIONMINOR 6
@@ -20,7 +20,17 @@
 
 	BrandingText "${APPNAME}"
 
-    InstallDir "$PROGRAMFILES"
+	VIProductVersion "${VERSION}.0"
+    VIAddVersionKey ProductName "${DESCRIPTION}"
+    VIAddVersionKey CompanyName "${COMPANYNAME}"
+    VIAddVersionKey LegalCopyright "2018 ${COMPANYNAME}"
+    VIAddVersionKey FileDescription "${DESCRIPTION}"
+    VIAddVersionKey FileVersion "${VERSION}"
+    VIAddVersionKey ProductVersion "${VERSION}"
+    VIAddVersionKey InternalName "${APPNAME}"
+    VIAddVersionKey OriginalFilename "${APPNAME} ${VERSION}.exe"
+
+    InstallDir "$PROGRAMFILES\${APPNAME}"
 
     RequestExecutionLevel none
 	SetCompress force
@@ -72,9 +82,9 @@ IntFmt $0 "0x%08X" $0
 
 SectionEnd
 
-Section "!${APPNAME} ${VERSION}" SecGraftWAllet
+!include "nsProcess.nsh"
 
-    !include "nsProcess.nsh"
+Section "!${APPNAME} ${VERSION}" SecGraftWallet
 
 	nsProcess::FindProcess "${APPNAME}.exe" $R0
 	StrCmp $R0 "1" Finded ContinueInstall
@@ -89,13 +99,26 @@ Section "!${APPNAME} ${VERSION}" SecGraftWAllet
 	ContinueInstall:
 	SectionIn 1 2
 	AddSize 1024
-	SetOutPath "$INSTDIR\${APPNAME}"
+	SetOutPath "$INSTDIR"
 	File "${APPNAME}.exe"
     File "vcredist_x64.exe"
-	File "${LIC_NAME}"
-	File "*.dll"
-    File "*.ico"
-    File "*.bmp"
+	File "d3dcompiler_47.dll"
+	File "libeay32.dll"
+	File "libEGL.dll"
+	File "libGLESV2.dll"
+	File "opengl32sw.dll"
+	File "Qt5Core.dll"
+	File "Qt5Gui.dll"
+	File "Qt5Multimedia.dll"
+	File "Qt5MultimediaQuick_p.dll"
+	File "Qt5Network.dll"
+	File "Qt5Qml.dll"
+	File "Qt5Quick.dll"
+	File "Qt5QuickControls2.dll"
+	File "Qt5QuickTemplates2.dll"
+	File "Qt5Svg.dll"
+	File "Qt5Widgets.dll"
+	File "ssleay32.dll"
 
     File /r "bearer"
     File /r "iconengines"
@@ -111,9 +134,9 @@ Section "!${APPNAME} ${VERSION}" SecGraftWAllet
     File /r "scenegraph"
 	
 	WriteRegStr HKLM "${ARPPATH}" "DisplayName" "${APPNAME}"
-	WriteRegStr HKLM "${ARPPATH}" "UninstallString" "$INSTDIR\${APPNAME}\uninstall.exe"
-	WriteRegStr HKLM "${ARPPATH}" "QuietUninstallString" "$INSTDIR\${APPNAME}\uninstall.exe"
-	WriteRegStr HKLM "${ARPPATH}" "DisplayIcon" "$INSTDIR\${APPNAME}\${APPICON}.ico"
+	WriteRegStr HKLM "${ARPPATH}" "UninstallString" "$INSTDIR\uninstall.exe"
+	WriteRegStr HKLM "${ARPPATH}" "QuietUninstallString" "$INSTDIR\uninstall.exe"
+	WriteRegStr HKLM "${ARPPATH}" "DisplayIcon" "$INSTDIR\${APPICON}.ico"
 	WriteRegStr HKLM "${ARPPATH}" "Publisher" "${COMPANYNAME}"
 	WriteRegDWORD HKLM "${ARPPATH}" "EstimatedSize" ${INSTALLSIZE}
 	WriteRegStr HKLM "${ARPPATH}" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
@@ -123,20 +146,20 @@ Section "!${APPNAME} ${VERSION}" SecGraftWAllet
 	SetShellVarContext all
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME}.lnk" "$INSTDIR\${APPNAME}\${APPNAME}.exe"
-    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall ${APPNAME}.lnk" "$INSTDIR\${APPNAME}\Uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${APPNAME}.lnk" "$INSTDIR\${APPNAME}.exe"
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall ${APPNAME}.lnk" "$INSTDIR\Uninstall.exe"
 	!insertmacro MUI_STARTMENU_WRITE_END
 	
-	WriteUninstaller "$INSTDIR\${APPNAME}\uninstall.exe"
+	WriteUninstaller "$INSTDIR\uninstall.exe"
 
 SectionEnd
 
 Function LaunchLink
-  ExecShell "" "$INSTDIR\${APPNAME}\${APPNAME}.exe"
+  ExecShell "" "$INSTDIR\${APPNAME}.exe"
 FunctionEnd
 
 Function CreateShortcutIcon
-  CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\${APPNAME}\${APPNAME}.exe"
+  CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\${APPNAME}.exe"
 FunctionEnd
 
 ;--------------------------------
