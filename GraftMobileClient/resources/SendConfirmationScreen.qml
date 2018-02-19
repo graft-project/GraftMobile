@@ -113,7 +113,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
             onClicked: {
-                GraftClient.transfer(receiversAddress.text, amount)
+                passwordDialog.open()
                 sendCoinScreen.state = "afterSend"
             }
         }
@@ -123,6 +123,25 @@ BaseScreen {
         id: busyIndicator
         anchors.centerIn: parent
         running: false
+    }
+
+    ChooserDialog {
+        id: passwordDialog
+        title: qsTr("Enter password:")
+        topMargin: (parent.height - passwordDialog.height) / 2
+        leftMargin: (parent.width - passwordDialog.width) / 2
+        denyButton {
+            text: qsTr("Close")
+            onClicked: {
+                passwordTextField.clear()
+                passwordDialog.close()
+            }
+        }
+        confirmButton {
+            text: qsTr("Ok")
+            onClicked: passwordDialog.accept()
+        }
+        onAccepted: checkingPassword(passwordTextField.text)
     }
 
     states: [
@@ -151,5 +170,17 @@ BaseScreen {
             }
         }
     ]
+
+    function checkingPassword(password) {
+        if (GraftClient.checkPassword(password)) {
+            GraftClient.transfer(receiversAddress.text, amount)
+        } else {
+            screenDialog.title = qsTr("Error")
+            screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
+            screenDialog.open()
+            sendCoinScreen.state = "beforeSend"
+        }
+        passwordDialog.passwordTextField.clear()
+    }
 }
 
