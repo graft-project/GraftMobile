@@ -14,12 +14,14 @@ BaseScreen {
 
     title: qsTr("Send")
     screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
+    onErrorMessage: busyIndicator.running = false
 
     Connections {
         target: GraftClient
 
         onTransferReceived: {
-            sendCoinScreen.state = "beforeSend"
+            busyIndicator.running = false
+            enableScreen()
             pushScreen.openPaymentScreen(result, true)
         }
     }
@@ -114,8 +116,9 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
             onClicked: {
-                GraftClient.transfer(receiversAddress.text, coinsAmount.text)
-                sendCoinScreen.state = "afterSend"
+                disableScreen()
+                busyIndicator.running = true
+                GraftClient.transfer(receiversAddress.text, amount)
             }
         }
     }
@@ -125,32 +128,5 @@ BaseScreen {
         anchors.centerIn: parent
         running: false
     }
-
-    states: [
-        State {
-            name: "afterSend"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: true
-            }
-            PropertyChanges {
-                target: sendCoinScreen
-                enabled: false
-            }
-        },
-        State {
-            name: "beforeSend"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: false
-            }
-            PropertyChanges {
-                target: sendCoinScreen
-                enabled: true
-            }
-        }
-    ]
 }
 

@@ -8,6 +8,7 @@ BaseScreen {
     id: root
     title: qsTr("Create wallet")
     screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
+    onErrorMessage: busyIndicator.running = false
 
     Connections {
         target: GraftClient
@@ -16,7 +17,8 @@ BaseScreen {
             if (isAccountCreated) {
                 pushScreen.openMnemonicViewScreen(false)
             } else {
-                root.state = "accountNotExist"
+                busyIndicator.running = false
+                enableScreen()
             }
         }
     }
@@ -42,7 +44,7 @@ BaseScreen {
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
                     disableScreen()
-                    root.state = "createWalletPressed"
+                    busyIndicator.running = true
                     GraftClient.createAccount(passwordTextField.passwordText)
                 }
             }
@@ -92,31 +94,4 @@ BaseScreen {
         anchors.centerIn: parent
         running: false
     }
-
-    states: [
-        State {
-            name: "createWalletPressed"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        },
-        State {
-            name: "accountNotExist"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: false
-            }
-            PropertyChanges {
-                target: root
-                enabled: true
-            }
-        }
-    ]
 }

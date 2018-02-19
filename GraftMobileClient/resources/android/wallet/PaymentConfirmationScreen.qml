@@ -8,6 +8,7 @@ import "../"
 
 BasePaymentConfirmationScreen {
     id: root
+    onErrorMessage: busyIndicator.running = false
 
     Rectangle {
         id: background
@@ -65,14 +66,17 @@ BasePaymentConfirmationScreen {
                 Layout.preferredWidth: productList.width / 2.75
                 flat: true
                 text: qsTr("CANCEL")
-                onClicked: cancelPay()
+                onClicked: {
+                    root.disableScreen()
+                    cancelPay()
+                }
             }
 
             WideActionButton {
                 text: qsTr("CONFIRM")
                 Layout.alignment: Qt.AlignRight
                 onClicked: {
-                    root.state = "beforePaid"
+                    busyIndicator.running = true
                     confirmPay()
                 }
             }
@@ -81,25 +85,7 @@ BasePaymentConfirmationScreen {
 
     BusyIndicator {
         id: busyIndicator
-        visible: false
+        anchors.centerIn: parent
         running: false
-        anchors {
-            centerIn: parent
-        }
     }
-
-    states: [
-        State {
-            name: "beforePaid"
-            PropertyChanges {
-                target: busyIndicator
-                visible: true
-                running: true
-            }
-            PropertyChanges {
-                target: background
-                enabled: false
-            }
-        }
-    ]
 }

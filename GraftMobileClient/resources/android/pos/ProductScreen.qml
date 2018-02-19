@@ -110,6 +110,7 @@ BaseScreen {
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
+                        disableScreen()
                         GraftClient.sale()
                     } else {
                         screenDialog.text = qsTr("Please, select one or more products to continue.")
@@ -127,7 +128,10 @@ BaseScreen {
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
-                onClicked: pushScreen.openQuickDealScreen()
+                onClicked: {
+                    disableScreen()
+                    pushScreen.openQuickDealScreen()
+                }
             }
         }
     }

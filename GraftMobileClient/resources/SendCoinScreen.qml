@@ -14,6 +14,7 @@ BaseScreen {
         navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     }
     action: checkingData
+    onErrorMessage: busyIndicator.running = false
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
@@ -25,7 +26,8 @@ BaseScreen {
         target: GraftClient
 
         onTransferFeeReceived: {
-            sendCoinScreen.state = "beforeSend"
+            busyIndicator.running = false
+            enableScreen()
             if (result) {
                 pushScreen.openSendConfirmationScreen(receiversAddress.text, coinsAmountTextField.text, fee)
             }
@@ -37,11 +39,12 @@ BaseScreen {
         anchors.fill: parent
         onCurrentIndexChanged: {
             if (currentIndex === 1) {
+                sendCoinScreen.enabled = true
                 sendCoinScreen.screenHeader.actionButtonState = false
                 sendCoinScreen.specialBackMode = changeBehaviorButton
             } else {
-                sendCoinScreen.specialBackMode = null
                 sendCoinScreen.screenHeader.actionButtonState = true
+                sendCoinScreen.specialBackMode = null
             }
         }
 
@@ -103,7 +106,10 @@ BaseScreen {
                     id: scanQRcodeButton
                     Layout.fillWidth: true
                     text: qsTr("Scan QR Code")
-                    onClicked: stackLayout.currentIndex = 1
+                    onClicked: {
+                        sendCoinScreen.enabled = false
+                        stackLayout.currentIndex = 1
+                    }
                 }
 
                 WideActionButton {
@@ -130,33 +136,6 @@ BaseScreen {
         running: false
     }
 
-    states: [
-        State {
-            name: "afterSend"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: true
-            }
-            PropertyChanges {
-                target: sendCoinScreen
-                enabled: false
-            }
-        },
-        State {
-            name: "beforeSend"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: false
-            }
-            PropertyChanges {
-                target: sendCoinScreen
-                enabled: true
-            }
-        }
-    ]
-
     function changeBehaviorButton() {
         stackLayout.currentIndex = 0
     }
@@ -170,8 +149,9 @@ BaseScreen {
             screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
             screenDialog.open()
         } else {
+            disableScreen()
+            busyIndicator.running = true
             GraftClient.transferFee(receiversAddress.text, coinsAmountTextField.text)
-            sendCoinScreen.state = "afterSend"
         }
     }
 }

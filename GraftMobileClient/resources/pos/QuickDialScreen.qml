@@ -65,15 +65,13 @@ BaseScreen {
             id: confirmButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Checkout")
-            onClicked: {
-                disableScreen()
-                checkout()
-            }
+            onClicked: checkout()
         }
     }
 
     function checkout() {
         if (price.text !== "") {
+            disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
                              currencyModel.codeOf(currencyCBox.currencyText), "")

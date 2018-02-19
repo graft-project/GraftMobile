@@ -12,6 +12,7 @@ BaseScreen {
         navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
         actionButtonState: true
     }
+    onErrorMessage: busyIndicator.running = false
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS)) {
@@ -27,7 +28,8 @@ BaseScreen {
             if (isAccountRestored) {
                 pushScreen.openBaseScreen()
             } else {
-                root.state = "accountNotRestored"
+                busyIndicator.running = false
+                enableScreen()
             }
         }
     }
@@ -72,7 +74,6 @@ BaseScreen {
             text: qsTr("Restore")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
-                    disableScreen()
                     restoreWallet()
                 }
             }
@@ -85,33 +86,6 @@ BaseScreen {
         running: false
     }
 
-    states: [
-        State {
-            name: "restoreWalletPressed"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        },
-        State {
-            name: "accountNotRestored"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: false
-            }
-            PropertyChanges {
-                target: root
-                enabled: true
-            }
-        }
-    ]
-
     function restoreWallet() {
         if (GraftClient.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
             screenDialog.text = seedTextField.text.length === 0 ?
@@ -120,7 +94,8 @@ BaseScreen {
                              "the correct mnemonic phrase.")
             screenDialog.open()
         } else {
-            root.state = "restoreWalletPressed"
+            disableScreen()
+            busyIndicator.running = true
             GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text),
                                        passwordTextField.passwordText)
         }

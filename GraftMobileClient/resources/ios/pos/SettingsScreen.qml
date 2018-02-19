@@ -4,10 +4,10 @@ import QtQuick.Controls 2.2
 import "../"
 
 BaseSettingsScreen {
-    companyTitle: qsTr("Company:")
     ipTitle: qsTr("IP:")
     portTitle: qsTr("Port:")
     saveButtonText: qsTr("Done")
+    companyTitle: qsTr("Company:")
 
     screenHeader {
         actionButtonState: true
