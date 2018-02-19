@@ -65,6 +65,7 @@ GraftApplicationWindow {
         title: qsTr("Pay failed!")
         text: qsTr("Pay request failed.\nPlease try again.")
         confirmButton.onClicked: {
+            mainLayout.permitScreen()
             checkAccountExists()
             desktopMessageDialog.close()
         }
@@ -76,6 +77,7 @@ GraftApplicationWindow {
         icon: StandardIcon.Warning
         text: qsTr("Pay request failed.\nPlease try again.")
         onAccepted: {
+            mainLayout.permitScreen()
             checkAccountExists()
             mobileMessageDialog.close()
         }
@@ -132,6 +134,10 @@ GraftApplicationWindow {
                 }
                 allowClose = !allowClose
             }
+        }
+
+        function permitScreen() {
+            currentItem.turnOnScreen()
         }
     }
 
