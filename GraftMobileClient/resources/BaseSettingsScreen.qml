@@ -1,6 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Dialogs 1.2
-import Qt.labs.platform 1.0
+//import Qt.labs.platform 1.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
@@ -157,85 +157,46 @@ BaseScreen {
 
     MessageDialog {
         id: mobileMessageDialog
-        title: qsTr("Attention")
-        buttons: MessageDialog.Yes | MessageDialog.No
-        text: qsTr("Do you want to reset the service settings?")
-        detailedText: qsTr("Service settings are network-specific, if you keep them, you will " +
+        standardButtons: StandardButton.Yes | StandardButton.No
+        title: qsTr("Do you want to reset the service settings?")
+        text: qsTr("Service settings are network-specific, if you keep them, you will " +
                            "can to create or restore account only on the same network.")
-
-        onYesClicked: {
+        onYes: {
             resetOwnServiceSettings()
             confirmPasswordAction()
             mobileMessageDialog.close()
         }
-        onNoClicked: {
+        onNo: {
             confirmPasswordAction()
             mobileMessageDialog.close()
         }
     }
 
-    Dialog {
+    DesktopMessageDialog {
         id: desktopMessageDialog
         topMargin: (parent.height - desktopMessageDialog.height) / 2
-        leftMargin: 25
-        rightMargin: 25
-        visible: false
+        leftMargin: 20
+        rightMargin: 20
         modal: true
         padding: 5
-        contentItem: ColumnLayout {
-            spacing: 10
-
-            Label {
-                id: message
-                Layout.fillWidth: true
-                Layout.minimumWidth: 200
-                Layout.rightMargin: 20
-                Layout.leftMargin: 20
-                wrapMode: Text.WordWrap
-                font.pixelSize: 15
-                text: qsTr("Do you want to reset the service settings?")
+        messageTitle: qsTr("Do you want to reset the service settings?")
+        text: qsTr("Service settings are network-specific, if you keep them, you will " +
+                   "can to create or restore account only on the same network.")
+        firstButton {
+            flat: true
+            text: qsTr("No")
+            onClicked: {
+                confirmPasswordAction()
+                desktopMessageDialog.close()
             }
-
-            Label {
-                id: additionalMessage
-                Layout.fillWidth: true
-                Layout.minimumWidth: 200
-                Layout.rightMargin: 20
-                Layout.leftMargin: 28
-                wrapMode: Text.WordWrap
-                font.pixelSize: 12
-                color: "#8e8e93"
-                text: qsTr("Service settings are network-specific, if you keep them, you will " +
-                           "can to create or restore account only on the same network.")
-            }
-
-            RowLayout {
-                Layout.alignment: Qt.AlignBottom
-
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    id: cancelButton
-                    flat: true
-                    text: qsTr("No")
-                    onClicked: {
-                        confirmPasswordAction()
-                        desktopMessageDialog.close()
-                    }
-                }
-
-                Button {
-                    id: okButton
-                    flat: true
-                    text: qsTr("Yes")
-                    onClicked: {
-                        resetOwnServiceSettings()
-                        confirmPasswordAction()
-                        desktopMessageDialog.close()
-                    }
-                }
+        }
+        secondButton {
+            flat: true
+            text: qsTr("Yes")
+            onClicked: {
+                resetOwnServiceSettings()
+                confirmPasswordAction()
+                desktopMessageDialog.close()
             }
         }
     }
