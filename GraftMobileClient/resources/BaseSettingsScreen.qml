@@ -19,23 +19,6 @@ BaseScreen {
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
 
-    function saveChanges() {
-        if (companyNameTextField.visible) {
-            GraftClient.setSettings("companyName", companyNameTextField.text)
-        }
-        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
-        if (serviceAddr.checked) {
-            if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
-                                         "correct service address.")
-                screenDialog.open()
-                return
-            }
-        }
-        GraftClient.saveSettings()
-        pushScreen.openMainScreen()
-    }
-
     ColumnLayout {
         spacing: 0
         anchors {
@@ -131,7 +114,10 @@ BaseScreen {
         WideActionButton {
             id: saveButton
             Layout.alignment: Qt.AlignBottom
-            onClicked: saveChanges()
+            onClicked: {
+                disableScreen()
+                saveChanges()
+            }
         }
     }
 
@@ -149,9 +135,13 @@ BaseScreen {
         }
         confirmButton {
             text: qsTr("Ok")
-            onClicked: passwordDialog.accept()
+            onClicked: {
+                passwordDialog.confirmButton.enabled = false
+                passwordDialog.accept()
+            }
         }
         onAccepted: checkingPassword(passwordTextField.text)
+        onVisibleChanged: confirmButton.enabled = true
     }
 
     MessageDialog {
@@ -227,5 +217,24 @@ BaseScreen {
         companyNameTextField.actionTextField.clear()
         serviceAddr.checked = false
         GraftClient.removeSettings()
+    }
+
+    function saveChanges() {
+        if (companyNameTextField.visible) {
+            GraftClient.setSettings("companyName", companyNameTextField.text)
+        }
+        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        if (serviceAddr.checked) {
+            if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
+                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
+                                         "correct service address.")
+                screenDialog.open()
+                enableScreen()
+                return
+            }
+        }
+        GraftClient.saveSettings()
+        pushScreen.openMainScreen()
+        enableScreen()
     }
 }

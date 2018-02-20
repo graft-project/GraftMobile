@@ -32,4 +32,8 @@ StackView {
         }
         return back
     }
+
+    function enableScreen() {
+        currentItem.enableScreen()
+    }
 }

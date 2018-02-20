@@ -78,7 +78,10 @@ BaseScreen {
                 rightMargin: 10
             }
             text: qsTr("I saved it!")
-            onClicked: save()
+            onClicked: {
+                disableScreen()
+                save()
+            }
         }
     }
 

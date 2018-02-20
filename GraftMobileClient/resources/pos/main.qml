@@ -64,6 +64,7 @@ GraftApplicationWindow {
         title: qsTr("Sale failed!")
         text: qsTr("Sale request failed.\nPlease try again.")
         confirmButton.onClicked: {
+            mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()
         }
@@ -75,6 +76,7 @@ GraftApplicationWindow {
         title: qsTr("Sale failed!")
         text: qsTr("Sale request failed.\nPlease try again.")
         onAccepted: {
+            mainLayout.enableScreen()
             checkAccountExists()
             mobileMessageDialog.close()
         }
@@ -131,6 +133,10 @@ GraftApplicationWindow {
                 }
                 allowClose = !allowClose
             }
+        }
+
+        function enableScreen() {
+            currentItem.enableScreen()
         }
     }
 
