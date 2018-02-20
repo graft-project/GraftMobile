@@ -1,4 +1,6 @@
 import QtQuick 2.9
+import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
@@ -153,9 +155,28 @@ BaseScreen {
         onAccepted: checkingPassword(passwordTextField.text)
     }
 
+    MessageDialog {
+        id: mobileMessageDialog
+        title: qsTr("Attention")
+        buttons: MessageDialog.Yes | MessageDialog.No
+        text: qsTr("Do you want to reset the service settings?")
+        detailedText: qsTr("Service settings are network-specific, if you keep them, you will " +
+                           "can to create or restore account only on the same network.")
+
+        onYesClicked: {
+            resetOwnServiceSettings()
+            confirmPasswordAction()
+            mobileMessageDialog.close()
+        }
+        onNoClicked: {
+            confirmPasswordAction()
+            mobileMessageDialog.close()
+        }
+    }
+
     Dialog {
-        id: clearSettingsDialog
-        topMargin: (parent.height - clearSettingsDialog.height) / 2
+        id: desktopMessageDialog
+        topMargin: (parent.height - desktopMessageDialog.height) / 2
         leftMargin: 25
         rightMargin: 25
         visible: false
@@ -201,7 +222,7 @@ BaseScreen {
                     text: qsTr("No")
                     onClicked: {
                         confirmPasswordAction()
-                        clearSettingsDialog.close()
+                        desktopMessageDialog.close()
                     }
                 }
 
@@ -212,7 +233,7 @@ BaseScreen {
                     onClicked: {
                         resetOwnServiceSettings()
                         confirmPasswordAction()
-                        clearSettingsDialog.close()
+                        desktopMessageDialog.close()
                     }
                 }
             }
@@ -230,7 +251,8 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            clearSettingsDialog.open()
+            var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+            messageDialog.open()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
