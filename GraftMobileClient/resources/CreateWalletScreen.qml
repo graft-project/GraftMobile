@@ -7,7 +7,6 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
-    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     onErrorMessage: busyIndicator.running = false
 
     Connections {

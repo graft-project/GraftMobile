@@ -91,10 +91,10 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-
                 action: pushScreen
                 screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.Android)
+                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                    navigationButtonState: true
                     actionButtonState: true
                 }
             }
@@ -116,11 +116,11 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-
                 specialBackMode: pushScreen
                 screenHeader {
-                    navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-                    actionButtonState: false
+                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                    navigationButtonState: true
+                    actionButtonState: true
                 }
             }
             PropertyChanges {

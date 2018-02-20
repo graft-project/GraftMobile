@@ -9,12 +9,15 @@ BaseScreen {
     property alias coinModel: coinsComboBox.currencyModel
 
     title: qsTr("Add new account")
-    screenHeader.actionButtonState: true
+    screenHeader {
+        isNavigationButtonVisible: false
+        navigationButtonState: true
+        actionButtonState: true
+    }
     action: addAccount
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
-            screenHeader.navigationButtonState = true
             screenHeader.actionText = qsTr("Save")
             accountName.title = qsTr("Account name:")
             coinsComboBox.dropdownTitle = qsTr("Type:")

@@ -8,10 +8,7 @@ BaseScreen {
     id: root
     title: qsTr("Restore wallet")
     action: restoreWallet
-    screenHeader {
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
-        actionButtonState: true
-    }
+    screenHeader.actionButtonState: true
     onErrorMessage: busyIndicator.running = false
 
     Component.onCompleted: {

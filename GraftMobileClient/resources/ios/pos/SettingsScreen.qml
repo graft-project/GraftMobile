@@ -10,6 +10,8 @@ BaseSettingsScreen {
     companyTitle: qsTr("Company:")
 
     screenHeader {
+        isNavigationButtonVisible: false
+        navigationButtonState: true
         actionButtonState: true
         actionText: qsTr("Save")
     }

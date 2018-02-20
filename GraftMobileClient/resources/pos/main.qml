@@ -10,7 +10,6 @@ import "../components"
 GraftApplicationWindow {
     id: root
     title: qsTr("Graft Point-of-Sale")
-
     handleBackEvent: mainLayout.backButtonHandler
 
     Loader {
@@ -65,7 +64,7 @@ GraftApplicationWindow {
         title: qsTr("Sale failed!")
         text: qsTr("Sale request failed.\nPlease try again.")
         confirmButton.onClicked: {
-            mainLayout.permitScreen()
+            mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()
         }
@@ -77,7 +76,7 @@ GraftApplicationWindow {
         title: qsTr("Sale failed!")
         text: qsTr("Sale request failed.\nPlease try again.")
         onAccepted: {
-            mainLayout.permitScreen()
+            mainLayout.enableScreen()
             checkAccountExists()
             mobileMessageDialog.close()
         }
@@ -136,8 +135,8 @@ GraftApplicationWindow {
             }
         }
 
-        function permitScreen() {
-            currentItem.turnOnScreen()
+        function enableScreen() {
+            currentItem.enableScreen()
         }
     }
 

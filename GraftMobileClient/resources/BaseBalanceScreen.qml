@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import com.device.platform 1.0
 import "components"
 
 BaseScreen {
@@ -10,6 +11,7 @@ BaseScreen {
 
     title: qsTr("Wallet")
     screenHeader {
+        isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
         navigationButtonState: true
     }
 

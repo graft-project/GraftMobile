@@ -13,7 +13,6 @@ BaseScreen {
     property string fee: ""
 
     title: qsTr("Send")
-    screenHeader.navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     onErrorMessage: busyIndicator.running = false
 
     Connections {
@@ -115,11 +114,7 @@ BaseScreen {
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
-            onClicked: {
-                disableScreen()
-                busyIndicator.running = true
-                GraftClient.transfer(receiversAddress.text, amount)
-            }
+            onClicked: passwordDialog.open()
         }
     }
 
@@ -127,6 +122,40 @@ BaseScreen {
         id: busyIndicator
         anchors.centerIn: parent
         running: false
+    }
+
+    ChooserDialog {
+        id: passwordDialog
+        title: qsTr("Enter password:")
+        topMargin: (parent.height - passwordDialog.height) / 2
+        leftMargin: (parent.width - passwordDialog.width) / 2
+        denyButton {
+            text: qsTr("Close")
+            onClicked: {
+                passwordTextField.clear()
+                passwordDialog.close()
+            }
+        }
+        confirmButton {
+            text: qsTr("Ok")
+            onClicked: passwordDialog.accept()
+        }
+        onAccepted: checkingPassword(passwordTextField.text)
+    }
+
+    function checkingPassword(password) {
+        if (GraftClient.checkPassword(password)) {
+            disableScreen()
+            busyIndicator.running = true
+            GraftClient.transfer(receiversAddress.text, amount)
+        } else {
+            screenDialog.title = qsTr("Error")
+            screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
+            screenDialog.open()
+            busyIndicator.running = false
+            enableScreen()
+        }
+        passwordDialog.passwordTextField.clear()
     }
 }
 

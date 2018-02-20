@@ -33,7 +33,7 @@ StackView {
         return back
     }
 
-    function turnOnScreen() {
+    function enableScreen() {
         currentItem.enableScreen()
     }
 }

@@ -31,7 +31,7 @@ BaseHeader {
             HeaderButton {
                 id: navigationButton
                 anchors.centerIn: parent
-                visible: rootItem.navigationButtonState
+                visible: rootItem.isNavigationButtonVisible
                 text: qsTr("Back")
                 onClicked: navigationButtonClicked()
             }
