@@ -7,6 +7,7 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
+    onErrorMessage: busyIndicator.running = false
 
     Connections {
         target: GraftClient
@@ -15,7 +16,8 @@ BaseScreen {
             if (isAccountCreated) {
                 pushScreen.openMnemonicViewScreen(false)
             } else {
-                root.state = "accountNotExist"
+                busyIndicator.running = false
+                enableScreen()
             }
         }
     }
@@ -40,7 +42,8 @@ BaseScreen {
             text: qsTr("Create New Wallet")
             onClicked: {
                 if (!passwordTextField.wrongPassword) {
-                    root.state = "createWalletPressed"
+                    disableScreen()
+                    busyIndicator.running = true
                     GraftClient.createAccount(passwordTextField.passwordText)
                 }
             }
@@ -78,7 +81,10 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore/Import Wallet")
-            onClicked: pushScreen.openRestoreWalletScreen()
+            onClicked: {
+                disableScreen()
+                pushScreen.openRestoreWalletScreen()
+            }
         }
     }
 
@@ -87,31 +93,4 @@ BaseScreen {
         anchors.centerIn: parent
         running: false
     }
-
-    states: [
-        State {
-            name: "createWalletPressed"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: true
-            }
-            PropertyChanges {
-                target: root
-                enabled: false
-            }
-        },
-        State {
-            name: "accountNotExist"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: false
-            }
-            PropertyChanges {
-                target: root
-                enabled: true
-            }
-        }
-    ]
 }

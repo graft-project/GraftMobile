@@ -68,6 +68,7 @@ BaseScreen {
 
     function checkout() {
         if (price.text !== "") {
+            disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
                              currencyModel.codeOf(currencyCBox.currencyText), "")

@@ -40,7 +40,10 @@ BaseBalanceScreen {
             Layout.rightMargin: 15
             text: qsTr("Send")
             enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
-            onClicked: pushScreen.openSendCoinScreen()
+            onClicked: {
+                disableScreen()
+                pushScreen.openSendCoinScreen()
+            }
         }
 
         WideActionButton {
@@ -50,7 +53,10 @@ BaseBalanceScreen {
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
             enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
-            onClicked: pushScreen.openQRCodeScanner()
+            onClicked: {
+                disableScreen()
+                pushScreen.openQRCodeScanner()
+            }
         }
     }
 }

@@ -30,12 +30,13 @@ BaseScreen {
         }
     }
 
-    function confirmPay() {
-        GraftClient.pay()
-    }
-
     function cancelPay() {
         GraftClient.rejectPay()
         pushScreen.openBalanceScreen()
+    }
+
+    function confirmPay() {
+        disableScreen()
+        GraftClient.pay()
     }
 }

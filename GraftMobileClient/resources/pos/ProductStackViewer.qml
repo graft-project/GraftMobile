@@ -37,14 +37,14 @@ BaseStackViewer {
                    "price": ProductModel.totalCost()})
     }
 
-    function clearChecked() {
-        stack.pushScreen.privateClearChecked()
-        stack.pop(productScreen)
-    }
-
     function openPaymentScreen(state) {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
                    "title": qsTr("Cart"), "isSpacing": false, "completeText": qsTr("Checkout complete!"),
                    "screenState": state})
+    }
+
+    function clearChecked() {
+        stack.pushScreen.privateClearChecked()
+        stack.pop(productScreen)
     }
 }

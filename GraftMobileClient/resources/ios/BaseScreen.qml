@@ -16,6 +16,9 @@ Page {
     property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 
     signal attentionAccepted()
+    signal errorMessage()
+
+    onVisibleChanged: enableScreen()
 
     header: Header {
         id: appHeader
@@ -51,5 +54,14 @@ Page {
 
     function backButtonHandler() {
         return isMenuActive
+    }
+
+    function disableScreen() {
+        basePage.enabled = false
+    }
+
+    function enableScreen() {
+        basePage.enabled = true
+        errorMessage()
     }
 }

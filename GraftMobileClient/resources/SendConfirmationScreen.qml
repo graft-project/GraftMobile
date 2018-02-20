@@ -13,12 +13,14 @@ BaseScreen {
     property string fee: ""
 
     title: qsTr("Send")
+    onErrorMessage: busyIndicator.running = false
 
     Connections {
         target: GraftClient
 
         onTransferReceived: {
-            sendCoinScreen.state = "beforeSend"
+            busyIndicator.running = false
+            enableScreen()
             pushScreen.openPaymentScreen(result, true)
         }
     }
@@ -112,10 +114,7 @@ BaseScreen {
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
-            onClicked: {
-                passwordDialog.open()
-                sendCoinScreen.state = "afterSend"
-            }
+            onClicked: passwordDialog.open()
         }
     }
 
@@ -144,41 +143,17 @@ BaseScreen {
         onAccepted: checkingPassword(passwordTextField.text)
     }
 
-    states: [
-        State {
-            name: "afterSend"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: true
-            }
-            PropertyChanges {
-                target: sendCoinScreen
-                enabled: false
-            }
-        },
-        State {
-            name: "beforeSend"
-
-            PropertyChanges {
-                target: busyIndicator
-                running: false
-            }
-            PropertyChanges {
-                target: sendCoinScreen
-                enabled: true
-            }
-        }
-    ]
-
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
+            disableScreen()
+            busyIndicator.running = true
             GraftClient.transfer(receiversAddress.text, amount)
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
-            sendCoinScreen.state = "beforeSend"
+            busyIndicator.running = false
+            enableScreen()
         }
         passwordDialog.passwordTextField.clear()
     }

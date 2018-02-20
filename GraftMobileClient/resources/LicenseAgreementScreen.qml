@@ -7,9 +7,11 @@ import "components"
 
 BaseScreen {
     id: root
-    screenHeader.visible: false
+
     property string logoImage
     property var acceptAction: null
+
+    screenHeader.visible: false
 
     Rectangle {
         anchors.fill: parent
@@ -133,7 +135,10 @@ BaseScreen {
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
-                onClicked: acceptAction()
+                onClicked: {
+                    disableScreen()
+                    acceptAction()
+                }
             }
         }
     }

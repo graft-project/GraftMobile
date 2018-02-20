@@ -8,6 +8,7 @@ import "../"
 
 BasePaymentConfirmationScreen {
     id: root
+    onErrorMessage: busyIndicator.running = false
 
     Rectangle {
         id: background
@@ -62,13 +63,16 @@ BasePaymentConfirmationScreen {
             WideActionButton {
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
-                onClicked: cancelPay()
+                onClicked: {
+                    root.disableScreen()
+                    cancelPay()
+                }
             }
 
             WideActionButton {
                 text: qsTr("Pay")
                 onClicked: {
-                    root.state = "beforePaid"
+                    busyIndicator.running = true
                     confirmPay()
                 }
             }
@@ -77,25 +81,7 @@ BasePaymentConfirmationScreen {
 
     BusyIndicator {
         id: busyIndicator
-        visible: false
+        anchors.centerIn: parent
         running: false
-        anchors {
-            centerIn: parent
-        }
     }
-
-    states: [
-        State {
-            name: "beforePaid"
-            PropertyChanges {
-                target: busyIndicator
-                visible: true
-                running: true
-            }
-            PropertyChanges {
-                target: background
-                enabled: false
-            }
-        }
-    ]
 }

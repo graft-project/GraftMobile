@@ -15,6 +15,9 @@ Page {
     property alias screenDialog: attentionDialog
 
     signal attentionAccepted()
+    signal errorMessage()
+
+    onVisibleChanged: enableScreen()
 
     header: Header {
         id: appHeader
@@ -46,5 +49,14 @@ Page {
 
     function backButtonHandler() {
         return isMenuActive
+    }
+
+    function disableScreen() {
+        basePage.enabled = false
+    }
+
+    function enableScreen() {
+        basePage.enabled = true
+        errorMessage()
     }
 }
