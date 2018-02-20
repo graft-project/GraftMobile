@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import com.device.platform 1.0
 import "components"
 
@@ -41,10 +42,13 @@ BaseScreen {
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
+                var checkDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
-                    disableScreen()
-                    busyIndicator.running = true
-                    GraftClient.createAccount(passwordTextField.passwordText)
+                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                        checkDialog.open()
+                        return
+                    }
+                    createAccount()
                 }
             }
         }
@@ -92,5 +96,42 @@ BaseScreen {
         id: busyIndicator
         anchors.centerIn: parent
         running: false
+    }
+
+    MessageDialog {
+        id: mobileMessageDialog
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("Are you sure you don't want to create a password for your wallet? You will " +
+                   "not be able to create a password later!")
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: createAccount()
+    }
+
+    ChooserDialog {
+        id: desktopMessageDialog
+        topMargin: (parent.height - desktopMessageDialog.height) / 2
+        leftMargin: (parent.width - desktopMessageDialog.width) / 2
+        dialogMode: true
+        title: qsTr("Attention")
+        dialogMessage: qsTr("Are you sure you don't want to create a password for your wallet? " +
+                            "You will not be able to create a password later!")
+        denyButton {
+            text: qsTr("No")
+            onClicked: desktopMessageDialog.close()
+        }
+        confirmButton {
+            text: qsTr("Yes")
+            onClicked: {
+                createAccount()
+                desktopMessageDialog.close()
+            }
+        }
+    }
+
+    function createAccount() {
+        disableScreen()
+        busyIndicator.running = true
+        GraftClient.createAccount(passwordTextField.passwordText)
     }
 }
