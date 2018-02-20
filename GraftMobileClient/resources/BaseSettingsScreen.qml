@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
@@ -143,6 +144,52 @@ BaseScreen {
         onVisibleChanged: confirmButton.enabled = true
     }
 
+    MessageDialog {
+        id: mobileMessageDialog
+        standardButtons: StandardButton.Yes | StandardButton.No
+        title: qsTr("Do you want to reset the service settings?")
+        text: qsTr("Service settings are network-specific, if you keep them, you will " +
+                           "can to create or restore account only on the same network.")
+        onYes: {
+            resetOwnServiceSettings()
+            confirmPasswordAction()
+            mobileMessageDialog.close()
+        }
+        onNo: {
+            confirmPasswordAction()
+            mobileMessageDialog.close()
+        }
+    }
+
+    DesktopMessageDialog {
+        id: desktopMessageDialog
+        topMargin: (parent.height - desktopMessageDialog.height) / 2
+        leftMargin: 20
+        rightMargin: 20
+        modal: true
+        padding: 5
+        messageTitle: qsTr("Do you want to reset the service settings?")
+        text: qsTr("Service settings are network-specific, if you keep them, you will " +
+                   "can to create or restore account only on the same network.")
+        firstButton {
+            flat: true
+            text: qsTr("No")
+            onClicked: {
+                confirmPasswordAction()
+                desktopMessageDialog.close()
+            }
+        }
+        secondButton {
+            flat: true
+            text: qsTr("Yes")
+            onClicked: {
+                resetOwnServiceSettings()
+                confirmPasswordAction()
+                desktopMessageDialog.close()
+            }
+        }
+    }
+
     function resetWalletAccount() {
         GraftClient.resetData()
         pushScreen.openCreateWalletStackViewer()
@@ -154,13 +201,22 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            confirmPasswordAction()
+            var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+            messageDialog.open()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
         }
         passwordDialog.passwordTextField.clear()
+    }
+
+    function resetOwnServiceSettings() {
+        ipTextField.actionTextField.clear()
+        portTextField.actionTextField.clear()
+        companyNameTextField.actionTextField.clear()
+        serviceAddr.checked = false
+        GraftClient.removeSettings()
     }
 
     function saveChanges() {

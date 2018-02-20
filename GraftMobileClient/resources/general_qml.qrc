@@ -42,6 +42,7 @@
         <file alias="DesktopDialog.qml">DesktopDialog.qml</file>
         <file alias="ChooserDialog.qml">ChooserDialog.qml</file>
         <file alias="SendConfirmationScreen.qml">SendConfirmationScreen.qml</file>
+        <file alias="DesktopMessageDialog.qml">DesktopMessageDialog.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
