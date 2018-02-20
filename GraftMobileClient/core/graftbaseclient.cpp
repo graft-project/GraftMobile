@@ -533,6 +533,18 @@ void GraftBaseClient::saveSettings() const
     mClientSettings->sync();
 }
 
+void GraftBaseClient::removeSettings() const
+{
+    mClientSettings->remove(QStringLiteral("companyName"));
+    mClientSettings->remove(QStringLiteral("useOwnServiceAddress"));
+    mClientSettings->remove(QStringLiteral("ip"));
+    mClientSettings->remove(QStringLiteral("port"));
+    mClientSettings->remove(QStringLiteral("localBalance"));
+    mClientSettings->remove(QStringLiteral("unlockedBalance"));
+    mClientSettings->remove(QStringLiteral("lockedBalance"));
+    mClientSettings->sync();
+}
+
 void GraftBaseClient::initSettings()
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);

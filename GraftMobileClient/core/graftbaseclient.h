@@ -46,6 +46,7 @@ public:
     Q_INVOKABLE QString coinAddressQRCodeImage(const QString &address) const;
 
     Q_INVOKABLE void saveSettings() const;
+    Q_INVOKABLE void removeSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
     Q_INVOKABLE bool useOwnServiceAddress() const;

@@ -153,6 +153,72 @@ BaseScreen {
         onAccepted: checkingPassword(passwordTextField.text)
     }
 
+    Dialog {
+        id: clearSettingsDialog
+        topMargin: (parent.height - clearSettingsDialog.height) / 2
+        leftMargin: 25
+        rightMargin: 25
+        visible: false
+        modal: true
+        padding: 5
+        contentItem: ColumnLayout {
+            spacing: 10
+
+            Label {
+                id: message
+                Layout.fillWidth: true
+                Layout.minimumWidth: 200
+                Layout.rightMargin: 20
+                Layout.leftMargin: 20
+                wrapMode: Text.WordWrap
+                font.pixelSize: 15
+                text: qsTr("Do you want to reset the service settings?")
+            }
+
+            Label {
+                id: additionalMessage
+                Layout.fillWidth: true
+                Layout.minimumWidth: 200
+                Layout.rightMargin: 20
+                Layout.leftMargin: 28
+                wrapMode: Text.WordWrap
+                font.pixelSize: 12
+                color: "#8e8e93"
+                text: qsTr("Service settings are network-specific, if you keep them, you will " +
+                           "can to create or restore account only on the same network.")
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignBottom
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    id: cancelButton
+                    flat: true
+                    text: qsTr("No")
+                    onClicked: {
+                        confirmPasswordAction()
+                        clearSettingsDialog.close()
+                    }
+                }
+
+                Button {
+                    id: okButton
+                    flat: true
+                    text: qsTr("Yes")
+                    onClicked: {
+                        resetOwnServiceSettings()
+                        confirmPasswordAction()
+                        clearSettingsDialog.close()
+                    }
+                }
+            }
+        }
+    }
+
     function resetWalletAccount() {
         GraftClient.resetData()
         pushScreen.openCreateWalletStackViewer()
@@ -164,12 +230,20 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            confirmPasswordAction()
+            clearSettingsDialog.open()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
         }
         passwordDialog.passwordTextField.clear()
+    }
+
+    function resetOwnServiceSettings() {
+        ipTextField.actionTextField.clear()
+        portTextField.actionTextField.clear()
+        companyNameTextField.actionTextField.clear()
+        serviceAddr.checked = false
+        GraftClient.removeSettings()
     }
 }
