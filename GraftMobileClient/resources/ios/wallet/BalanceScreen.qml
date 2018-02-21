@@ -10,10 +10,7 @@ BaseBalanceScreen {
     Connections {
         target: GraftClient
 
-        onNetworkTypeChanged: {
-            payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
-            sendCoinsButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
-        }
+        onNetworkTypeChanged: payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
     }
 
     ColumnLayout {
@@ -39,7 +36,6 @@ BaseBalanceScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             text: qsTr("Send")
-            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
             onClicked: {
                 disableScreen()
                 pushScreen.openSendCoinScreen()
