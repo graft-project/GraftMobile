@@ -4,8 +4,8 @@ IDI_ICON1	ICON	DISCARDABLE	"icon.ico"
 #define VFT_APP             0x00000001L
 
 1 VERSIONINFO
-FILEVERSION 1,6,0
-PRODUCTVERSION 1,6,0
+FILEVERSION 1,6,1
+PRODUCTVERSION 1,6,1
 FILETYPE VFT_APP
 {
     BLOCK "StringFileInfo"
@@ -13,13 +13,13 @@ FILETYPE VFT_APP
         BLOCK "040904E4"
         {
             VALUE "CompanyName", "GRAFT Payments, LLC"
-            VALUE "FileVersion", "1.6.0"
+            VALUE "FileVersion", "1.6.1"
             VALUE "FileDescription", "Graft Wallet"
             VALUE "InternalName", "Graft Wallet"
             VALUE "LegalCopyright", " 2018 GRAFT Payments, LLC"
             VALUE "OriginalFilename", "GraftWallet.exe"
             VALUE "ProductName", "Graft Wallet"
-            VALUE "ProductVersion", "1.6.0"
+            VALUE "ProductVersion", "1.6.1"
         }
     }
 
