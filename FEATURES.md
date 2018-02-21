@@ -43,7 +43,7 @@ client.
 **Note**: Please, copy or remember the mnemonic phrase, if you a lost it, 
 you cannot restore your Graft wallet.
 
-**Note**: The password need only for security reason, if you don't worry about 
+**Note**: The password is needed only for security reason, if you don't worry about 
 the privacy of your data, you can leave the password field empty.
 
 ### Restore Wallet
@@ -53,7 +53,7 @@ mnemonic phrase. For this press "Restore Wallet" button, enter the mnemonic
 phrase and password. Then press "Restore" button, if everything is OK, the 
 application restores account and open the main screen.
 
-**Note**: The password need only for security reason, if you don't worry about 
+**Note**: The password is needed only for security reason, if you don't worry about 
 the privacy of your data, you can leave the password field empty.
 
 ### View Mnemonic Phrase
