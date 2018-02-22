@@ -64,7 +64,7 @@ BaseScreen {
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                            qsTr("Receivers address:") : qsTr("Receivers address")
+                                            qsTr("Receiver's address:") : qsTr("Receiver's address")
                     }
 
                     LinearEditItem {

@@ -47,7 +47,7 @@ BaseScreen {
                     bold: true
                 }
                 text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                              qsTr("Receivers address:") : qsTr("Receivers address")
+                                              qsTr("Receiver's address:") : qsTr("Receiver's address")
             }
 
             Label {
