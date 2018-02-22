@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
     CurrencyModel model;
     model.add(QStringLiteral("USD"), QStringLiteral("USD"));
-    model.add(QStringLiteral("GRAFT"), QStringLiteral("GRAFT"));
+    model.add(QStringLiteral("GRFT"), QStringLiteral("GRAFT"));
     engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
 
     QString imageDataLocation = callImageDataPath();
