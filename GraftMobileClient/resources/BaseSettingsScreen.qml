@@ -18,6 +18,7 @@ BaseScreen {
     property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
+    property bool okMode: false
 
     ColumnLayout {
         spacing: 0
@@ -97,6 +98,7 @@ BaseScreen {
             id: resetWalletButton
             text: qsTr("Reset Account")
             onClicked: {
+                okMode = true
                 confirmPasswordAction = resetWalletAccount
                 passwordDialog.open()
             }
@@ -106,6 +108,7 @@ BaseScreen {
             id: mnemonicButton
             text: qsTr("Show Mnemonic Password")
             onClicked: {
+                okMode = false
                 confirmPasswordAction = openMnemonicScreen
                 passwordDialog.open()
             }
@@ -201,8 +204,12 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
-            messageDialog.open()
+            if (okMode) {
+                var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+                messageDialog.open()
+            } else {
+                confirmPasswordAction()
+            }
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
