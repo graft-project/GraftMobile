@@ -90,7 +90,7 @@ BaseScreen {
                             pixelSize: 16
                             bold: true
                         }
-                        text: qsTr("GRF")
+                        text: qsTr("GRFT")
                     }
                 }
 

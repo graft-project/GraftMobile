@@ -27,7 +27,7 @@ BaseScreen {
 
     Component.onCompleted: {
         QuickExchangeModel.clear()
-        QuickExchangeModel.add("Fee", "GRF", parseFloat(fee) + parseFloat(amount), true)
+        QuickExchangeModel.add("Fee", "GRFT", parseFloat(fee) + parseFloat(amount), true)
     }
 
     ColumnLayout {
@@ -72,7 +72,7 @@ BaseScreen {
 
                 Label {
                     font.pixelSize: 16
-                    text: qsTr("%1\t<b>%2</b>").arg(amount).arg("GRF")
+                    text: qsTr("%1\t<b>%2</b>").arg(amount).arg("GRFT")
                 }
             }
 
@@ -90,7 +90,7 @@ BaseScreen {
 
                 Label {
                     font.pixelSize: 16
-                    text: qsTr("%1\t<b>%2</b>").arg(fee).arg("GRF")
+                    text: qsTr("%1\t<b>%2</b>").arg(fee).arg("GRFT")
                 }
             }
         }

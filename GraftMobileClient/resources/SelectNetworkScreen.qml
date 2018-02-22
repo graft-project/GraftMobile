@@ -44,7 +44,7 @@ BaseScreen {
             font.pixelSize: 14
             wrapMode: Label.WordWrap
             text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
-                       "that carry real GRF transactions.")
+                       "that carry real GRFT transactions.")
             MouseArea {
                 anchors.fill: parent
                 onClicked: mainNet.checked = true
