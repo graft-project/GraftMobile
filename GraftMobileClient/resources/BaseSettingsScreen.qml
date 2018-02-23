@@ -18,6 +18,7 @@ BaseScreen {
     property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
+    property bool okMode: false
 
     ColumnLayout {
         spacing: 0
@@ -97,6 +98,7 @@ BaseScreen {
             id: resetWalletButton
             text: qsTr("Reset Account")
             onClicked: {
+                okMode = true
                 confirmPasswordAction = resetWalletAccount
                 passwordDialog.open()
             }
@@ -106,6 +108,7 @@ BaseScreen {
             id: mnemonicButton
             text: qsTr("Show Mnemonic Password")
             onClicked: {
+                okMode = false
                 confirmPasswordAction = openMnemonicScreen
                 passwordDialog.open()
             }
@@ -147,9 +150,9 @@ BaseScreen {
     MessageDialog {
         id: mobileMessageDialog
         standardButtons: StandardButton.Yes | StandardButton.No
-        title: qsTr("Do you want to reset the service settings?")
-        text: qsTr("Service settings are network-specific, if you keep them, you will " +
-                           "can to create or restore account only on the same network.")
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
         onYes: {
             resetOwnServiceSettings()
             confirmPasswordAction()
@@ -168,9 +171,7 @@ BaseScreen {
         rightMargin: 20
         modal: true
         padding: 5
-        messageTitle: qsTr("Do you want to reset the service settings?")
-        text: qsTr("Service settings are network-specific, if you keep them, you will " +
-                   "can to create or restore account only on the same network.")
+        messageTitle: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
         firstButton {
             flat: true
             text: qsTr("No")
@@ -201,8 +202,12 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
-            messageDialog.open()
+            if (okMode && serviceAddr.checked) {
+                var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+                messageDialog.open()
+            } else {
+                confirmPasswordAction()
+            }
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")

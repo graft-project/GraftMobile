@@ -4,10 +4,19 @@ LIBS += -framework Foundation \
 
 contains(DEFINES, POS_BUILD) {
 BUILD_DIR = $$PWD/pos
+
+DISTFILES += \
+    $$BUILD_DIR/Info.plist \
+    $$BUILD_DIR/icon.icns
 }
 contains(DEFINES, WALLET_BUILD) {
 BUILD_DIR = $$PWD/wallet
+
+DISTFILES += \
+    $$BUILD_DIR/Info.plist \
+    $$BUILD_DIR/icon.icns
 }
+
 QMAKE_INFO_PLIST = $${BUILD_DIR}/Info.plist
 ICON = $${BUILD_DIR}/icon.icns
 
