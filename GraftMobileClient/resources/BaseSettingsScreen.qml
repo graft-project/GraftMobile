@@ -150,9 +150,9 @@ BaseScreen {
     MessageDialog {
         id: mobileMessageDialog
         standardButtons: StandardButton.Yes | StandardButton.No
-        title: qsTr("Do you want to reset the service settings?")
-        text: qsTr("Service settings are network-specific, if you keep them, you will " +
-                           "can to create or restore account only on the same network.")
+        title: qsTr("Attention")
+        icon: StandardIcon.Warning
+        text: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
         onYes: {
             resetOwnServiceSettings()
             confirmPasswordAction()
@@ -171,9 +171,7 @@ BaseScreen {
         rightMargin: 20
         modal: true
         padding: 5
-        messageTitle: qsTr("Do you want to reset the service settings?")
-        text: qsTr("Service settings are network-specific, if you keep them, you will " +
-                   "can to create or restore account only on the same network.")
+        messageTitle: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
         firstButton {
             flat: true
             text: qsTr("No")
@@ -204,7 +202,7 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            if (okMode) {
+            if (okMode && serviceAddr.checked) {
                 var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
                 messageDialog.open()
             } else {
