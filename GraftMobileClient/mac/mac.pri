@@ -4,10 +4,19 @@ LIBS += -framework Foundation \
 
 contains(DEFINES, POS_BUILD) {
 BUILD_DIR = $$PWD/pos
+
+DISTFILES += \
+    $$BUILD_DIR/Info.plist \
+    $$BUILD_DIR/icon.icns
 }
 contains(DEFINES, WALLET_BUILD) {
 BUILD_DIR = $$PWD/wallet
+
+DISTFILES += \
+    $$BUILD_DIR/Info.plist \
+    $$BUILD_DIR/icon.icns
 }
+
 
 QMAKE_INFO_PLIST = $${BUILD_DIR}/Info.plist
 
@@ -27,3 +36,4 @@ APP_FILE = $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app
 
 QMAKE_POST_LINK += $${QT_DEPLOY} $$APP_FILE -qmldir=$${QML_DIR} -dmg $${ESCAPE_COMMAND}
 }
+

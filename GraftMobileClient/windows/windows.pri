@@ -1,9 +1,24 @@
 contains(DEFINES, POS_BUILD) {
 RESOURCE_DIR = $$PWD/pos
+
+DISTFILES += \
+    $$RESOURCE_DIR/header.bmp \
+    $$RESOURCE_DIR/welcome.bmp \
+    $$RESOURCE_DIR/icon.ico \
+    $$RESOURCE_DIR/install.nsi \
+    $$RESOURCE_DIR/resource.rc
 }
 
 contains(DEFINES, WALLET_BUILD) {
 RESOURCE_DIR = $$PWD/wallet
+
+DISTFILES += \
+    $$RESOURCE_DIR/license.rtf \
+    $$RESOURCE_DIR/header.bmp \
+    $$RESOURCE_DIR/welcome.bmp \
+    $$RESOURCE_DIR/icon.ico \
+    $$RESOURCE_DIR/install.nsi \
+    $$RESOURCE_DIR/resource.rc
 }
 
 RC_FILE = $$RESOURCE_DIR/resource.rc
