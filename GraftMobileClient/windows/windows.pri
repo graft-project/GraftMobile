@@ -17,10 +17,17 @@ OPENSSL_DIR ~= s,/,\\,g
 EXE_DIR = $${OUT_PWD}/$$DESTDIR
 EXE_DIR ~= s,/,\\,g
 
+RES_DIR = $${RESOURCE_DIR}/*
+RES_DIR ~= s,/,\\,g
+
 ESCAPE_COMMAND = $$escape_expand(\\n\\t)
 
 openssl_target = $$quote(cmd /c $(COPY_DIR) $${OPENSSL_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
-QMAKE_POST_LINK += $${openssl_target}
+nsis_target = $$quote(cmd /c $(COPY_DIR) $${RES_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
+QMAKE_POST_LINK += $${openssl_target} $${nsis_target}
+
+NSIS_PATH = "C:\Program Files (x86)\NSIS\makensis.exe"
+INSTALL_SCRIPT = $${EXE_DIR}/install.nsi
 
 QT_DEPLOY = $$QMAKE_QMAKE
 QT_DEPLOY ~= s,qmake.exe,windeployqt.exe,g
@@ -34,4 +41,5 @@ EXE_FILE = $${OUT_PWD}/$${DESTDIR}/$${TARGET}.exe
 EXE_FILE ~= s,/,\\,g
 
 QMAKE_POST_LINK += $${QT_DEPLOY} -qmldir $${QML_DIR} $$EXE_FILE $${ESCAPE_COMMAND}
+QMAKE_POST_LINK += $${NSIS_PATH} $${INSTALL_SCRIPT} $${ESCAPE_COMMAND}
 }
