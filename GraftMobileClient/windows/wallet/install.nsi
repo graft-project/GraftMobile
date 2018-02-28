@@ -209,7 +209,7 @@ ${EndIf}
 MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ 2017 Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
 
 InstallRedistributablePackage:
-	ExecWait "vc_redist.x64.exe"
+        ExecWait "vcredist_x64.exe"
 
 installed:
 	WriteUninstaller "$INSTDIR\uninstall.exe"
