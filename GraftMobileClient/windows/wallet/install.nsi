@@ -150,7 +150,7 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
     CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall ${APPNAME}.lnk" "$INSTDIR\Uninstall.exe"
 	!insertmacro MUI_STARTMENU_WRITE_END
 	
-	WriteUninstaller "$INSTDIR\uninstall.exe"
+	Call check_Visual_C++_Redistributable
 
 SectionEnd
 
@@ -196,3 +196,22 @@ Section "Uninstall"
 	RMDir /r "$APPDATA\${APPNAME}"
 	
 SectionEnd
+
+Function check_Visual_C++_Redistributable
+    
+!include x64.nsh
+
+${If} ${RunningX64}
+        ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" "Installed"
+        StrCmp $1 1 installed
+${EndIf}
+
+MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ 2017 Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
+
+InstallRedistributablePackage:
+	ExecWait "vc_redist.x64.exe"
+
+installed:
+	WriteUninstaller "$INSTDIR\uninstall.exe"
+
+FunctionEnd
