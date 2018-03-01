@@ -1,18 +1,24 @@
     !include "MUI2.nsh"
 	!include "WinVer.nsh"
+    !include "FileFunc.nsh"
+	!include "nsProcess.nsh"
+	!include WinMessages.nsh
+	!include x64.nsh
 
 	!define APPNAME "GraftWallet"
 	!define COMPANYNAME "GRAFT Payments, LLC"
 	!define DESCRIPTION "Graft Wallet"
 	!define VERSIONMAJOR 1
 	!define VERSIONMINOR 6
-        !define VERSIONBUILD 2
-        !define VERSION "1.6.2"
+    !define VERSIONBUILD 2
+    !define VERSION "1.6.2"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
 	!define LIC_NAME "license.rtf"
 	!define ARPPATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
     !define INSTALLSIZE 33727070
+
+    Var REDISRTIBUTABLE_PACKAGE
 
     Name "${DESCRIPTION}"
 	Caption "${APPNAME} ${VERSION}"
@@ -69,11 +75,7 @@
 	!insertmacro MUI_LANGUAGE "English"
 	!insertmacro MUI_RESERVEFILE_LANGDLL
 
-	!include WinMessages.nsh
-
 InstType "Standart"
-
-!include "FileFunc.nsh"
  
 Section "Install"
  
@@ -81,8 +83,6 @@ ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
 IntFmt $0 "0x%08X" $0
 
 SectionEnd
-
-!include "nsProcess.nsh"
 
 Section "!${APPNAME} ${VERSION}" SecGraftWallet
 
@@ -198,20 +198,31 @@ Section "Uninstall"
 SectionEnd
 
 Function check_Visual_C++_Redistributable
-    
-!include x64.nsh
 
 ${If} ${RunningX64}
-        ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" "Installed"
-        StrCmp $1 1 installed
+    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" "Installed"
+    StrCmp $1 1 installed
+${Else}
+    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x86" "Installed"
+    StrCmp $1 1 installed
 ${EndIf}
 
 MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ 2017 Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
 
 InstallRedistributablePackage:
-        ExecWait "vcredist_x64.exe"
+    ExecWait "$REDISRTIBUTABLE_PACKAGE"
 
 installed:
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 
+FunctionEnd
+
+Function .onInit
+${If} ${RunningX64}
+    StrCpy $REDISRTIBUTABLE_PACKAGE "vcredist_x64.exe"
+	StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
+${Else}
+	StrCpy $REDISRTIBUTABLE_PACKAGE "vcredist_x86.exe"
+	StrCpy $INSTDIR "$PROGRAMFILES\${APPNAME}" 
+${EndIf}
 FunctionEnd
