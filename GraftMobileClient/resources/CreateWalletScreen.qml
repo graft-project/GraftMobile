@@ -130,6 +130,7 @@ BaseScreen {
     }
 
     function createAccount() {
+        desktopMessageDialog.confirmButton.enabled = false
         disableScreen()
         busyIndicator.running = true
         GraftClient.createAccount(passwordTextField.passwordText)
