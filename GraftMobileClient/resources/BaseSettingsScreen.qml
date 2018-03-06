@@ -59,7 +59,7 @@ BaseScreen {
                 Switch {
                     id: serviceAddr
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
-                    checked: GraftClient.useOwnServiceAddress("useOwnServiceAddress")
+                    checked: GraftClient.useOwnServiceAddress()
                 }
             }
 
@@ -74,7 +74,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 130
-                    text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("ip") : ""
+                    text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("ip") : ""
                 }
 
                 LinearEditItem {
@@ -82,7 +82,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 100
-                    text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
+                    text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
                         regExp: /\d{1,5}/
                     }
@@ -228,13 +228,16 @@ BaseScreen {
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        if (portTextField.text !== "") {
+            GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        }
         if (serviceAddr.checked) {
             if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
                 screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
                 enableScreen()
+                serviceAddr.checked = false
                 return
             }
         }
