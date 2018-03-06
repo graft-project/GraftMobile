@@ -159,6 +159,9 @@ BaseScreen {
             mobileMessageDialog.close()
         }
         onNo: {
+            if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
+                resetOwnServiceSettings()
+            }
             confirmPasswordAction()
             mobileMessageDialog.close()
         }
@@ -176,6 +179,9 @@ BaseScreen {
             flat: true
             text: qsTr("No")
             onClicked: {
+                if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
+                    resetOwnServiceSettings()
+                }
                 confirmPasswordAction()
                 desktopMessageDialog.close()
             }
@@ -228,7 +234,7 @@ BaseScreen {
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        if (portTextField.text !== "") {
+        if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }
         if (serviceAddr.checked) {
@@ -237,7 +243,6 @@ BaseScreen {
                                          "correct service address.")
                 screenDialog.open()
                 enableScreen()
-                serviceAddr.checked = false
                 return
             }
         }
