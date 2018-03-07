@@ -2,6 +2,10 @@ QT += qml quick network
 
 CONFIG += c++11
 
+DEFINES += "MAJOR_VERSION=1"
+DEFINES += "MINOR_VERSION=6"
+DEFINES += "BUILD_VERSION=2"
+
 win32|macx|unix {
 DEFINES += RES_IOS
 

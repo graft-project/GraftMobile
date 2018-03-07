@@ -68,6 +68,8 @@ public:
     Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
     Q_INVOKABLE bool isBalanceUpdated() const;
 
+    Q_INVOKABLE QString versionNumber() const;
+
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();

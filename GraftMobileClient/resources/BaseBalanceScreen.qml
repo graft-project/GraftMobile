@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import com.device.platform 1.0
+import com.graft.design 1.0
 import "components"
 
 BaseScreen {
@@ -33,9 +34,23 @@ BaseScreen {
                     id: graftWalletLogo
                     anchors.centerIn: parent
                     height: parent.height / 2
-                    width: parent.width / 2
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/imgs/graft-wallet-logo.png"
+
+                    Text {
+                        anchors{
+                            rightMargin: Detector.isDesktop() ? -10 : 0
+                            right: parent.right
+                            baseline: parent.bottom
+                        }
+                        font {
+                            pixelSize: 18
+                            italic: true
+                            bold: true
+                        }
+                        color: ColorFactory.color(DesignFactory.AndroidStatusBar)
+                        text: qsTr("Ver. %1").arg(GraftClient.versionNumber())
+                    }
                 }
             }
 
