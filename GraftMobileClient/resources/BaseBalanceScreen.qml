@@ -39,7 +39,8 @@ BaseScreen {
 
                     Text {
                         anchors{
-                            rightMargin: Detector.isDesktop() ? -10 : 0
+                            rightMargin: Detector.isDesktop() ? -10 :
+                                         Detector.isPlatform(Platform.IOS) ? -10 : 0
                             right: parent.right
                             baseline: parent.bottom
                         }
