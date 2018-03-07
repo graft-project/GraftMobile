@@ -49,6 +49,7 @@ BaseScreen {
                             italic: true
                             bold: true
                         }
+                        visible: graftWalletLogo.source == "qrc:/imgs/graft-wallet-logo.png"
                         color: ColorFactory.color(DesignFactory.AndroidStatusBar)
                         text: qsTr("Ver. %1").arg(GraftClient.versionNumber())
                     }
@@ -57,6 +58,18 @@ BaseScreen {
 
             NetworkIndicator {
                 Layout.fillWidth: true
+
+                Text {
+                    anchors{
+                        verticalCenter: parent.verticalCenter
+                        right: parent.right
+                        rightMargin: 18
+                    }
+                    visible: graftWalletLogo.source != "qrc:/imgs/graft-wallet-logo.png"
+                    text: qsTr("Version %1").arg(GraftClient.versionNumber())
+                    font.pixelSize: 16
+                    color: "#FFFFFF"
+                }
             }
 
             BalanceViewItem {
