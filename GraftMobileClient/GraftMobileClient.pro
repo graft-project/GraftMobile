@@ -12,6 +12,13 @@ DEFINES += RES_IOS
 DESTDIR = ./bin
 }
 
+contains(DEFINES, POS_BUILD) {
+TARGET = GraftPointOfSale
+}
+contains(DEFINES, WALLET_BUILD) {
+TARGET = GraftWallet
+}
+
 ios {
 include(ios/ios.pri)
 }
@@ -28,8 +35,6 @@ ios|android {
 include(imagepicker/ImagePickerLibrary.pri)
 }
 
-TARGET = GraftPointOfSale
-
 SOURCES += \
     core/api/graftposapi.cpp \
     core/graftposclient.cpp
@@ -41,8 +46,6 @@ HEADERS += \
 }
 
 contains(DEFINES, WALLET_BUILD) {
-TARGET = GraftWallet
-
 SOURCES += \
     core/api/graftwalletapi.cpp \
     core/graftwalletclient.cpp
