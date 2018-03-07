@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import com.device.platform 1.0
 import "components"
 
@@ -70,7 +71,12 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
             onClicked: {
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
+                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                        checkDialog.open()
+                        return
+                    }
                     restoreWallet()
                 }
             }
@@ -81,6 +87,12 @@ BaseScreen {
         id: busyIndicator
         anchors.centerIn: parent
         running: false
+    }
+
+    PlatformsAttentionDialogs {
+        id: dialogs
+        mobileMessageDialog.onYes: restoreWallet()
+        desktopConfirmButton.onClicked: restoreWallet()
     }
 
     function restoreWallet() {

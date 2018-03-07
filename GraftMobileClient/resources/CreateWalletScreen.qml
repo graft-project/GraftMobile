@@ -42,7 +42,7 @@ BaseScreen {
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
-                var checkDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
                     if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
                         checkDialog.open()
@@ -98,35 +98,10 @@ BaseScreen {
         running: false
     }
 
-    MessageDialog {
-        id: mobileMessageDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("Are you sure you don't want to create a password for your wallet? You will " +
-                   "not be able to create a password later!")
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: createAccount()
-    }
-
-    ChooserDialog {
-        id: desktopMessageDialog
-        topMargin: (parent.height - desktopMessageDialog.height) / 2
-        leftMargin: (parent.width - desktopMessageDialog.width) / 2
-        dialogMode: true
-        title: qsTr("Attention")
-        dialogMessage: qsTr("Are you sure you don't want to create a password for your wallet? " +
-                            "You will not be able to create a password later!")
-        denyButton {
-            text: qsTr("No")
-            onClicked: desktopMessageDialog.close()
-        }
-        confirmButton {
-            text: qsTr("Yes")
-            onClicked: {
-                createAccount()
-                desktopMessageDialog.close()
-            }
-        }
+    PlatformsAttentionDialogs {
+        id: dialogs
+        mobileMessageDialog.onYes: createAccount()
+        desktopConfirmButton.onClicked: createAccount()
     }
 
     function createAccount() {
