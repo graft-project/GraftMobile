@@ -9,6 +9,7 @@ BaseScreen {
     property alias amountLockGraft: balanceItem.amountLockGraftCost
     property alias graftWalletLogo: graftWalletLogo.source
     default property alias content: placeholder.data
+    property bool appType: false
 
     title: qsTr("Wallet")
     screenHeader {
@@ -49,7 +50,7 @@ BaseScreen {
                             italic: true
                             bold: true
                         }
-                        visible: graftWalletLogo.source == "qrc:/imgs/graft-wallet-logo.png"
+                        visible: appType
                         color: ColorFactory.color(DesignFactory.AndroidStatusBar)
                         text: qsTr("Ver. %1").arg(GraftClient.versionNumber())
                     }
@@ -65,7 +66,7 @@ BaseScreen {
                         right: parent.right
                         rightMargin: 18
                     }
-                    visible: graftWalletLogo.source != "qrc:/imgs/graft-wallet-logo.png"
+                    visible: !appType
                     text: qsTr("Version %1").arg(GraftClient.versionNumber())
                     font.pixelSize: 16
                     color: "#FFFFFF"
