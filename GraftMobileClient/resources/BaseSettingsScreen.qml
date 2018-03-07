@@ -159,7 +159,7 @@ BaseScreen {
             mobileMessageDialog.close()
         }
         onNo: {
-            settingValid()
+            validateSettings()
             mobileMessageDialog.close()
         }
     }
@@ -176,7 +176,7 @@ BaseScreen {
             flat: true
             text: qsTr("No")
             onClicked: {
-                settingValid()
+                validateSettings()
                 desktopMessageDialog.close()
             }
         }
@@ -191,7 +191,7 @@ BaseScreen {
         }
     }
 
-    function settingValid() {
+    function validateSettings() {
         if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
             if (serviceAddr.checked) {
                 ipTextField.text = GraftClient.settings("ip")
