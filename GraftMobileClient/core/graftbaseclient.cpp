@@ -423,7 +423,7 @@ bool GraftBaseClient::useOwnServiceAddress() const
 
 bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
 {
-    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !ip.isEmpty());
+    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !port.isEmpty());
     if (lIsResetUrl)
     {
         setSettings(scIp, ip);

@@ -51,7 +51,7 @@ public:
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
     Q_INVOKABLE bool useOwnServiceAddress() const;
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port);
-    bool isValidIp(const QString &ip) const;
+    Q_INVOKABLE bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE double balance(int type) const;
     void saveBalance() const;
