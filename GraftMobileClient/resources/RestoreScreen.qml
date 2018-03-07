@@ -88,7 +88,7 @@ BaseScreen {
         running: false
     }
 
-    PlatformsAttentionDialogs {
+    ValidPasswordMessageDialog {
         id: dialogs
         mobileMessageDialog.onYes: restoreWallet()
         desktopConfirmButton.onClicked: restoreWallet()

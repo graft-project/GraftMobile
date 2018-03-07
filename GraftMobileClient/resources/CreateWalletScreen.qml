@@ -98,7 +98,7 @@ BaseScreen {
         running: false
     }
 
-    PlatformsAttentionDialogs {
+    ValidPasswordMessageDialog {
         id: dialogs
         mobileMessageDialog.onYes: createAccount()
         desktopConfirmButton.onClicked: createAccount()
