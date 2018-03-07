@@ -1,5 +1,6 @@
 #include <QQmlApplicationEngine>
 #include <QGuiApplication>
+#include <QNetworkProxyFactory>
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFileInfo>
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
     qputenv("QML_DISABLE_DISK_CACHE", "1");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QNetworkProxyFactory::setUseSystemConfiguration(true);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     DesignFactory factory;
