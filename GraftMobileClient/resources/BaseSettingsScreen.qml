@@ -159,10 +159,7 @@ BaseScreen {
             mobileMessageDialog.close()
         }
         onNo: {
-            if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
-                resetOwnServiceSettings()
-            }
-            confirmPasswordAction()
+            settingValid()
             mobileMessageDialog.close()
         }
     }
@@ -179,10 +176,7 @@ BaseScreen {
             flat: true
             text: qsTr("No")
             onClicked: {
-                if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
-                    resetOwnServiceSettings()
-                }
-                confirmPasswordAction()
+                settingValid()
                 desktopMessageDialog.close()
             }
         }
@@ -195,6 +189,18 @@ BaseScreen {
                 desktopMessageDialog.close()
             }
         }
+    }
+
+    function settingValid() {
+        if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
+            if (serviceAddr.checked) {
+                ipTextField.text = GraftClient.settings("ip")
+                portTextField.text = GraftClient.settings("port")
+            } else {
+                resetOwnServiceSettings()
+            }
+        }
+        confirmPasswordAction()
     }
 
     function resetWalletAccount() {
