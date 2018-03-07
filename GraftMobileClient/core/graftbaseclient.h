@@ -79,19 +79,18 @@ signals:
 
 public slots:
     void saveAccounts() const;
+    void updateBalance();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
 
     virtual GraftGenericAPI *graftAPI() const = 0;
 
+    void initAccountSettings();
     void registerImageProvider(QQmlEngine *engine);
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
     QStringList getServiceAddresses() const;
-
-    void registerBalanceTimer(GraftGenericAPI *api);
-    void updateBalance();
 
 private slots:
     void receiveAccount(const QByteArray &accountData, const QString &password,

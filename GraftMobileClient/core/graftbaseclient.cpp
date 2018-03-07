@@ -20,6 +20,7 @@
 #include <QQmlEngine>
 #include <QSettings>
 #include <QFileInfo>
+#include <QTimer>
 #include <QDir>
 
 static const QString scBarcodeImageProviderID("barcodes");
@@ -40,12 +41,12 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
     ,mQRCodeEncoder(new QRCodeGenerator())
-    ,mClientSettings(nullptr)
     ,mAccountModel(nullptr)
     ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
-    ,mBalanceTimer(-1)
     ,mAccountManager(new AccountManager())
+    ,mClientSettings(nullptr)
+    ,mBalanceTimer(-1)
     ,mIsBalanceUpdated(false)
 {
     initSettings();
@@ -217,11 +218,31 @@ void GraftBaseClient::saveAccounts() const
     saveModel(scAccountModelDataFile, AccountModelSerializator::serialize(mAccountModel));
 }
 
+void GraftBaseClient::updateBalance()
+{
+    graftAPI()->getBalance();
+}
+
 void GraftBaseClient::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == mBalanceTimer && !mAccountManager->account().isEmpty())
     {
         updateBalance();
+    }
+}
+
+void GraftBaseClient::initAccountSettings()
+{
+    if (graftAPI())
+    {
+        connect(graftAPI(), &GraftGenericAPI::getBalanceReceived, this,
+                &GraftBaseClient::receiveBalance, Qt::UniqueConnection);
+        if (isAccountExists())
+        {
+            graftAPI()->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+            updateBalance();
+        }
+//        mBalanceTimer = startTimer(20000);
     }
 }
 
@@ -281,21 +302,6 @@ QStringList GraftBaseClient::getServiceAddresses() const
     return addressList;
 }
 
-void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
-{
-    if (api)
-    {
-        connect(api, &GraftGenericAPI::getBalanceReceived, this, &GraftBaseClient::receiveBalance,
-                Qt::UniqueConnection);
-        mBalanceTimer = startTimer(20000);
-    }
-}
-
-void GraftBaseClient::updateBalance()
-{
-    graftAPI()->getBalance();
-}
-
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
                                      const QString &address, const QString &viewKey,
                                      const QString &seed)
@@ -342,6 +348,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         saveBalance();
         mIsBalanceUpdated = true;
         emit balanceUpdated();
+        QTimer::singleShot(20000, this, &GraftBaseClient::updateBalance);
     }
 }
 
