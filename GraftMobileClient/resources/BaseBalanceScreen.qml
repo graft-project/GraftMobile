@@ -39,7 +39,7 @@ BaseScreen {
                     source: "qrc:/imgs/graft-wallet-logo.png"
 
                     Text {
-                        anchors{
+                        anchors {
                             rightMargin: Detector.isDesktop() ? -10 :
                                          Detector.isPlatform(Platform.IOS) ? -10 : 0
                             right: parent.right
