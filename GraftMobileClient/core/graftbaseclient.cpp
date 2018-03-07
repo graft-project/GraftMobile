@@ -13,6 +13,7 @@
 
 #include <QGuiApplication>
 #include <QStandardPaths>
+#include <QVersionNumber>
 #include <QHostAddress>
 #include <QQmlContext>
 #include <QTimerEvent>
@@ -23,6 +24,7 @@
 #include <QTimer>
 #include <QDir>
 
+static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
 static const QString scBarcodeImageProviderID("barcodes");
 static const QString scQRCodeImageID("qrcode");
 static const QString scAddressQRCodeImageID("address_qrcode");
@@ -411,6 +413,11 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
 void GraftBaseClient::updateAddressQRCode() const
 {
     mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
+}
+
+QString GraftBaseClient::versionNumber() const
+{
+    return scVersionNumber.toString();
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const
