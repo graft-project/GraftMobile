@@ -101,7 +101,8 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
 	AddSize 1024
 	SetOutPath "$INSTDIR"
 	File "${APPNAME}.exe"
-    File "vcredist_x64.exe"
+    File /nonfatal "vcredist_x64.exe"
+    File /nonfatal "vcredist_x86.exe"
 	File "d3dcompiler_47.dll"
 	File "libeay32.dll"
 	File "libEGL.dll"
