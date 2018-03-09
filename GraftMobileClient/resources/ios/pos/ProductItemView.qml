@@ -2,29 +2,38 @@ import QtQuick 2.9
 import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
+import com.device.platform 1.0
 import "../components"
 import "../"
 
 Item {
-    readonly property alias currencyText: graftCBox.currentText
-    property alias currencyModel: graftCBox.model
-    property alias currencyIndex: graftCBox.currentIndex
+    property alias currencyText: graftComboBox.currentText
+    property alias currencyModel: graftComboBox.currencyModel
+    property alias currencyIndex: graftComboBox.currencyIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
-    property alias previewImage: previewImage.source
+    property alias productImage: previewImage.source
+
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS)) {
+            ImagePicker.imageSelected.connect(selectedImege)
+        }
+    }
+
+    SelectImageDialog {
+        id: popUp
+    }
 
     ColumnLayout {
         spacing: 5
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-        }
+        anchors.fill: parent
 
         LinearEditItem {
             id: title
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item title:")
             maximumLength: 50
         }
@@ -32,7 +41,8 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.preferredHeight: 180
+            Layout.preferredHeight: 170
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item description:")
             wrapMode: TextInput.WordWrap
             maximumLength: 150
@@ -45,56 +55,35 @@ Item {
                 id: price
                 title: qsTr("Price:")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftCBox.height
+                Layout.preferredWidth: 50
+                Layout.topMargin: 2
+                Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                      regExp: /\d+[.]\d{10}/
+                    regExp: /\d+[.]\d{10}/
                 }
             }
 
-            ColumnLayout {
-                spacing: 0
+            CurrencyComboBox {
+                id: graftComboBox
                 Layout.fillWidth: true
-                Layout.preferredWidth: 130
-
-                ComboBox {
-                    id: graftCBox
-                    Layout.fillWidth: true
-                    Material.background: "#00707070"
-                    Material.foreground: "#404040"
-                    leftPadding: dropdownTitle.width -8
-                    Layout.topMargin: -8
-                    Layout.bottomMargin: -2
-                    textRole: "name"
-
-                    Text {
-                        id: dropdownTitle
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            topMargin: 13
-                        }
-                        font.pointSize: parent.font.pointSize
-                        color: "#8e8e93"
-                        text: qsTr("Currency:")
-                    }
-                }
-
-                Rectangle {
-                    height: 1
-                    color: "#acacac"
-                    Layout.fillWidth: true
-                }
+                Layout.preferredWidth: 50
+                Layout.alignment: Qt.AlignTop
+                dropdownTitle: qsTr("Currency:")
             }
         }
 
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 100
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.maximumHeight: 250
+            Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
-            visible: false
+            source: ""
+            visible: previewImage.status === Image.Ready
         }
 
         Button {
@@ -118,8 +107,30 @@ Item {
                     color: "#007AFF"
                 }
             }
-
-            onClicked: previewImage.visible = !previewImage.visible
+            onClicked: {
+                if (Detector.isPlatform(Platform.IOS)) {
+                    popUp.open()
+                } else {
+                    fileDialog.open()
+                }
+            }
         }
+
+        Item {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a picture"
+        folder: shortcuts.pictures
+        nameFilters: "Image files (*.jpg *.png)"
+        onAccepted: previewImage.source = fileDialog.fileUrls.toString()
+    }
+
+    function selectedImege(path) {
+        previewImage.source = path
     }
 }

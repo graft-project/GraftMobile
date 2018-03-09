@@ -1,40 +1,46 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import com.graft.design 1.0
+import com.device.platform 1.0
 import "../components"
 
-Rectangle {
-    property var pushScreen
-
-    height: 49
-    color: ColorFactory.color(DesignFactory.IosNavigationBar)
+BaseGraftToolBar {
+    onSeclectedButtonChanged: {
+        clearSelection()
+        switch (buttonName) {
+            case "Store": storeButton.buttonColor = highlight; break;
+            case "Wallet": walletButton.buttonColor = highlight; break;
+            case "Settings": settingsButton.buttonColor = highlight; break;
+        }
+    }
 
     RowLayout {
-        spacing: 35
-        anchors.centerIn: parent
+        spacing: Detector.detectDevice() === Platform.IPhoneSE ? 25 : 40
+        anchors {
+            topMargin: Detector.detectDevice() === Platform.IPhoneX ? 3 : 0
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+        }
 
         ToolBarButton  {
+            id: storeButton
             text: qsTr("Store")
             source: "qrc:/imgs/storeIos.png"
-            onClicked: {
-                pushScreen.openProductScreen()
-            }
+            buttonColor: highlight
+            onClicked: pushScreen.openMainScreen()
         }
 
         ToolBarButton {
+            id: walletButton
             text: qsTr("Wallet")
             source: "qrc:/imgs/walletIos.png"
-            onClicked: {
-                pushScreen.openWalletScreen()
-            }
+            onClicked: pushScreen.openWalletScreen()
         }
 
         ToolBarButton {
+            id: settingsButton
             text: qsTr("Settings")
             source: "qrc:/imgs/configIos.png"
-            onClicked: {
-                pushScreen.openSettingsScreen()
-            }
+            onClicked: pushScreen.openSettingsScreen()
         }
 
         ToolBarButton {
@@ -42,5 +48,12 @@ Rectangle {
             source: "qrc:/imgs/infoIos.png"
             onClicked: Qt.openUrlExternally("https://www.graft.network/")
         }
+    }
+
+    function clearSelection() {
+        var dafaultColor = "transparent"
+        storeButton.buttonColor = dafaultColor
+        walletButton.buttonColor = dafaultColor
+        settingsButton.buttonColor = dafaultColor
     }
 }

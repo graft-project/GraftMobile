@@ -1,31 +1,64 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
-        <file alias="QRScanningScreen.qml">QRScanningScreen.qml</file>
+        <file alias="QRScanningView.qml">QRScanningView.qml</file>
         <file alias="BaseHeader.qml">BaseHeader.qml</file>
         <file alias="CartItem.qml">CartItem.qml</file>
         <file alias="GraftApplicationWindow.qml">GraftApplicationWindow.qml</file>
         <file alias="SelectedProductDelegate.qml">SelectedProductDelegate.qml</file>
         <file alias="BalanceViewItem.qml">BalanceViewItem.qml</file>
-        <file alias="AccountDelegate.qml">AccountDelegate.qml</file>
+        <file alias="CardAccountDelegate.qml">CardAccountDelegate.qml</file>
         <file alias="AddCardButton.qml">AddCardButton.qml</file>
         <file alias="ProductSwipeDelegate.qml">ProductSwipeDelegate.qml</file>
         <file alias="PaymentScreen.qml">PaymentScreen.qml</file>
         <file alias="BaseSettingsScreen.qml">BaseSettingsScreen.qml</file>
         <file alias="BaseCartScreen.qml">BaseCartScreen.qml</file>
         <file alias="BaseBalanceScreen.qml">BaseBalanceScreen.qml</file>
+        <file alias="SelectImageDialog.qml">SelectImageDialog.qml</file>
+        <file alias="SelectImageButton.qml">SelectImageButton.qml</file>
+        <file alias="AddNewButton.qml">AddNewButton.qml</file>
+        <file alias="AddAccountScreen.qml">AddAccountScreen.qml</file>
+        <file alias="CoinAccountDelegate.qml">CoinAccountDelegate.qml</file>
+        <file alias="QuickExchangeView.qml">QuickExchangeView.qml</file>
+        <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
+        <file alias="CoinListView.qml">CoinListView.qml</file>
+        <file alias="BaseStackViewer.qml">BaseStackViewer.qml</file>
+        <file alias="MnemonicPhraseView.qml">MnemonicPhraseView.qml</file>
+        <file alias="RestoreScreen.qml">RestoreScreen.qml</file>
+        <file alias="MnemomicViewScreen.qml">MnemomicViewScreen.qml</file>
+        <file alias="CreateWalletScreen.qml">CreateWalletScreen.qml</file>
+        <file alias="WalletAddressScreen.qml">WalletAddressScreen.qml</file>
+        <file alias="CreateWalletStackViewer.qml">CreateWalletStackViewer.qml</file>
+        <file alias="SettingsStackViewer.qml">SettingsStackViewer.qml</file>
+        <file alias="BorderlessButton.qml">BorderlessButton.qml</file>
+        <file alias="SelectNetworkScreen.qml">SelectNetworkScreen.qml</file>
+        <file alias="NetworkIndicator.qml">NetworkIndicator.qml</file>
+        <file alias="SendCoinScreen.qml">SendCoinScreen.qml</file>
+        <file alias="PopupMessageLabel.qml">PopupMessageLabel.qml</file>
+        <file alias="LicenseAgreementScreen.qml">LicenseAgreementScreen.qml</file>
+        <file alias="PasswordFields.qml">PasswordFields.qml</file>
+        <file alias="VisibilityIcon.qml">VisibilityIcon.qml</file>
+        <file alias="BaseLinearEditItem.qml">BaseLinearEditItem.qml</file>
+        <file alias="DesktopDialog.qml">DesktopDialog.qml</file>
+        <file alias="ChooserDialog.qml">ChooserDialog.qml</file>
+        <file alias="SendConfirmationScreen.qml">SendConfirmationScreen.qml</file>
+        <file alias="DesktopMessageDialog.qml">DesktopMessageDialog.qml</file>
+        <file alias="ValidPasswordMessageDialog.qml">ValidPasswordMessageDialog.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
         <file alias="EditingItemScreen.qml">pos/EditingItemScreen.qml</file>
         <file alias="InfoWalletScreen.qml">pos/InfoWalletScreen.qml</file>
-        <file alias="AddNewProductButton.qml">pos/AddNewProductButton.qml</file>
+        <file alias="QuickDialScreen.qml">pos/QuickDialScreen.qml</file>
+        <file alias="ProductStackViewer.qml">pos/ProductStackViewer.qml</file>
+        <file alias="InfoWalletStackViewer.qml">pos/InfoWalletStackViewer.qml</file>
     </qresource>
     <qresource prefix="/wallet">
         <file alias="main.qml">wallet/main.qml</file>
         <file alias="BasePaymentConfirmationScreen.qml">wallet/BasePaymentConfirmationScreen.qml</file>
-        <file alias="CurrencySelectionItem.qml">wallet/CurrencySelectionItem.qml</file>
         <file alias="AddCardScreen.qml">wallet/AddCardScreen.qml</file>
+        <file alias="QRScanningScreen.qml">wallet/QRScanningScreen.qml</file>
+        <file alias="WalletStackViewer.qml">wallet/WalletStackViewer.qml</file>
     </qresource>
     <qresource prefix="/imgs">
         <file alias="card_icon.png">imgs/card_icon.png</file>
@@ -61,5 +94,40 @@
         <file alias="Visa_Inc_logo.png">imgs/Visa_Inc_logo.png</file>
         <file alias="graft-wallet-logo.png">imgs/graft-wallet-logo.png</file>
         <file alias="graft-pos-logo.png">imgs/graft-pos-logo.png</file>
+        <file alias="gallery.png">imgs/gallery.png</file>
+        <file alias="photo.png">imgs/photo.png</file>
+        <file alias="lock.png">imgs/lock.png</file>
+        <file alias="Error.png">imgs/Error.png</file>
+        <file alias="arrow.png">imgs/arrow.png</file>
+        <file alias="visibility_off.png">imgs/visibility_off.png</file>
+        <file alias="visibility_on.png">imgs/visibility_on.png</file>
+        <file alias="icon-pos.png">imgs/icon-pos.png</file>
+        <file alias="icon-wallet.png">imgs/icon-wallet.png</file>
+    </qresource>
+    <qresource prefix="/coins">
+        <file alias="bcc.png">imgs/coins/bcc.png</file>
+        <file alias="btc.png">imgs/coins/btc.png</file>
+        <file alias="dash.png">imgs/coins/dash.png</file>
+        <file alias="eth.png">imgs/coins/eth.png</file>
+        <file alias="ltc.png">imgs/coins/ltc.png</file>
+        <file alias="nem.png">imgs/coins/nem.png</file>
+        <file alias="neo.png">imgs/coins/neo.png</file>
+        <file alias="xmr.png">imgs/coins/xmr.png</file>
+        <file alias="xrp.png">imgs/coins/xrp.png</file>
+        <file alias="bth.png">imgs/coins/bth.png</file>
+    </qresource>
+    <qresource prefix="/exchange">
+        <file alias="bcc.png">imgs/coins/exchange/bcc.png</file>
+        <file alias="btc.png">imgs/coins/exchange/btc.png</file>
+        <file alias="bth.png">imgs/coins/exchange/bth.png</file>
+        <file alias="dash.png">imgs/coins/exchange/dash.png</file>
+        <file alias="eth.png">imgs/coins/exchange/eth.png</file>
+        <file alias="grft.png">imgs/coins/exchange/grft.png</file>
+        <file alias="ltc.png">imgs/coins/exchange/ltc.png</file>
+        <file alias="nem.png">imgs/coins/exchange/nem.png</file>
+        <file alias="neo.png">imgs/coins/exchange/neo.png</file>
+        <file alias="xmr.png">imgs/coins/exchange/xmr.png</file>
+        <file alias="xrp.png">imgs/coins/exchange/xrp.png</file>
+        <file alias="usd.png">imgs/coins/exchange/usd.png</file>
     </qresource>
 </RCC>

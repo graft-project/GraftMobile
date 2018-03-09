@@ -6,26 +6,34 @@ import "../components"
 import "../"
 
 Item {
-    readonly property alias currencyText: graftCBox.currentText
-    property alias currencyModel: graftCBox.model
-    property alias currencyIndex: graftCBox.currentIndex
+    property alias currencyText: graftComboBox.currentText
+    property alias currencyModel: graftComboBox.currencyModel
+    property alias currencyIndex: graftComboBox.currencyIndex
     property alias titleText: title.text
     property alias descriptionText: description.text
     property alias price: price.text
-    property alias previewImage: previewImage.source
+    property alias productImage: previewImage.source
+
+    Connections {
+        target: ImagePicker
+        onImageSelected: {
+            previewImage.source = path
+        }
+    }
+
+    SelectImageDialog {
+        id: popUp
+    }
 
     ColumnLayout {
         id: mainLayout
         spacing: 5
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-        }
+        anchors.fill: parent
 
         LinearEditItem {
             id: title
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item title")
             maximumLength: 50
         }
@@ -33,7 +41,8 @@ Item {
         LinearEditItem {
             id: description
             Layout.fillWidth: true
-            Layout.preferredHeight: 120
+            Layout.preferredHeight: 140
+            Layout.alignment: Qt.AlignTop
             title: qsTr("Item description")
             wrapMode: TextInput.WordWrap
             maximumLength: 120
@@ -46,51 +55,38 @@ Item {
                 id: price
                 title: qsTr("Price")
                 Layout.fillWidth: true
-                Layout.preferredHeight: graftCBox.height
+                Layout.preferredWidth: 70
+                Layout.preferredHeight: 40
+                Layout.topMargin: 2
+                Layout.alignment: Qt.AlignTop
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                      regExp: /\d+[.]\d{10}/
+                    regExp: /\d+[.]\d{1,10}|\d{1,10}/
                 }
             }
 
-            ColumnLayout {
-                spacing: 4
-                Layout.preferredWidth: 50
-
-                Text {
-                    id: dropdownTitle
-                    Layout.fillWidth: true
-                    color: "#BBBBBB"
-                    font.pointSize: 12
-                    text: qsTr("Currency")
-                }
-
-                ComboBox {
-                    id: graftCBox
-                    Layout.fillWidth: true
-                    Material.background: "#00707070"
-                    Material.foreground: "#585858"
-                    leftPadding: -12
-                    Layout.topMargin: -12
-                    Layout.bottomMargin: -10
-                    textRole: "name"
-                }
-
-                Rectangle {
-                    height: 1
-                    color: "#acacac"
-                    Layout.fillWidth: true
-                }
+            CurrencyComboBox {
+                id: graftComboBox
+                Layout.fillWidth: true
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 40
+                Layout.alignment: Qt.AlignTop
+                dropdownTitle: qsTr("Currency")
             }
         }
 
         Image {
             id: previewImage
             Layout.alignment: Qt.AlignCenter
-            Layout.preferredHeight: 100
+            Layout.topMargin: 12
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.maximumHeight: 250
+            Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
-            visible: false
+            source: ""
+            visible: previewImage.status === Image.Ready
         }
 
         Button {
@@ -98,7 +94,7 @@ Item {
             Layout.fillWidth: true
             Material.elevation: 0
             Material.background: "#EAF6EF"
-            padding: 35
+            padding: 32
             contentItem: Item {
                 RowLayout {
                     spacing: 10
@@ -115,14 +111,18 @@ Item {
                     Text {
                         id: buttonText
                         Layout.alignment: Qt.AlignRight
-                        font.pointSize: 14
+                        font.pixelSize: 14
                         text: previewImage.visible ? qsTr("Change Photo") : qsTr("Add Photo")
                         color: "#3A3E3C"
                     }
                 }
             }
+            onClicked: popUp.open()
+        }
 
-            onClicked: previewImage.visible = !previewImage.visible
+        Item {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
         }
     }
 }

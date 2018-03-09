@@ -3,40 +3,23 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
-import "../"
 import "../components"
+import "../"
 
 BasePaymentConfirmationScreen {
     id: root
+    onErrorMessage: busyIndicator.running = false
 
     Rectangle {
         id: background
         anchors.fill: parent
         color: "#FFFFFF"
 
-        Pane {
-            id: totalPriceLabel
-            height: 50
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-            }
-            Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-            Material.elevation: 0
-
-            Text {
-                anchors.centerIn: parent
-                color: "#FFFFFF"
-                text: qsTr("Total Checkout: %1$").arg(totalAmount)
-            }
-        }
-
         ListView {
             id: productList
             anchors {
-                top: totalPriceLabel.bottom
-                bottom: bottomButtons.top
+                top: parent.top
+                bottom: quickExchangeView.top
                 left: parent.left
                 right: parent.right
             }
@@ -54,26 +37,42 @@ BasePaymentConfirmationScreen {
             }
         }
 
+        QuickExchangeView {
+            id: quickExchangeView
+            height: 50
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: bottomButtons.top
+                bottomMargin: 15
+            }
+        }
+
         ColumnLayout {
             id: bottomButtons
             anchors {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: 10
+                leftMargin: 15
+                rightMargin: 15
+                bottomMargin: 15
             }
             spacing: 0
 
             WideActionButton {
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
-                onClicked: cancelPay()
+                onClicked: {
+                    root.disableScreen()
+                    cancelPay()
+                }
             }
 
             WideActionButton {
                 text: qsTr("Pay")
                 onClicked: {
-                    root.state = "beforePaid"
+                    busyIndicator.running = true
                     confirmPay()
                 }
             }
@@ -82,25 +81,7 @@ BasePaymentConfirmationScreen {
 
     BusyIndicator {
         id: busyIndicator
-        visible: false
+        anchors.centerIn: parent
         running: false
-        anchors {
-            centerIn: parent
-        }
     }
-
-    states: [
-        State {
-            name: "beforePaid"
-            PropertyChanges {
-                target: busyIndicator
-                visible: true
-                running: true
-            }
-            PropertyChanges {
-                target: background
-                enabled: false
-            }
-        }
-    ]
 }

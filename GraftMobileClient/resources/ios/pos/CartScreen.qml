@@ -27,19 +27,6 @@ BaseCartScreen {
             anchors.fill: parent
             spacing: 0
 
-            Pane {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                Material.background: ColorFactory.color(DesignFactory.CircleBackground)
-
-                Label {
-                    anchors.centerIn: parent
-                    text: qsTr("Total checkout: %1$").arg(price)
-                    font.pointSize: 18
-                    color: "#ffffff"
-                }
-            }
-
             Image {
                 cache: false
                 source: GraftClient.qrCodeImage()
@@ -53,7 +40,7 @@ BaseCartScreen {
                 text: qsTr("SCAN WITH WALLET")
                 font {
                     bold: true
-                    pointSize: 16
+                    pixelSize: 16
                 }
                 Layout.alignment: Qt.AlignCenter
             }
@@ -77,7 +64,8 @@ BaseCartScreen {
                         bottomLineVisible: index === (productList.count - 1)
                         productImage: imagePath
                         productPrice: cost
-                        productPriceTextColor: ColorFactory.color(DesignFactory.ItemText)
+                        productPriceTextColor: ColorFactory.color(
+                                                   DesignFactory.ItemText)
                         productText {
                             font.bold: true
                             text: name
@@ -93,11 +81,22 @@ BaseCartScreen {
                 }
             }
 
+            QuickExchangeView {
+                Layout.preferredHeight: 50
+                Layout.fillWidth: true
+                Layout.bottomMargin: 15
+            }
+
             WideActionButton {
                 text: qsTr("Cancel")
                 Material.accent: ColorFactory.color(DesignFactory.LightButton)
-                Layout.bottomMargin: 5
-                onClicked: cartScreen.rejectSale()
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
+                Layout.bottomMargin: 15
+                onClicked: {
+                    cartScreen.disableScreen()
+                    cartScreen.rejectSale()
+                }
             }
         }
     }

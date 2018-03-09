@@ -3,53 +3,24 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
-import "../"
 import "../components"
+import "../"
 
 BasePaymentConfirmationScreen {
     id: root
+    onErrorMessage: busyIndicator.running = false
 
     Rectangle {
         id: background
         anchors.fill: parent
         color: "#FFFFFF"
 
-        Pane {
-            id: totalPriceLabel
-
-            height: 50
-            anchors {
-                right: parent.right
-                left: parent.left
-                top: parent.top
-            }
-            Material.elevation: 5
-            padding: 0
-
-            contentItem: Rectangle {
-                color: ColorFactory.color(DesignFactory.CircleBackground)
-
-                Text {
-                    id: completeLabelText
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                        leftMargin: 12
-                    }
-                    horizontalAlignment: Text.AlignLeft
-                    color: "#FFFFFF"
-                    text: qsTr("Total Checkout: %1$").arg(totalAmount)
-                }
-            }
-        }
-
         ListView {
             id: productList
             anchors {
-                top: totalPriceLabel.bottom
+                top: parent.top
                 topMargin: 10
-                bottom: bottomButtons.top
+                bottom: quickExchangeView.top
                 left: parent.left
                 right: parent.right
             }
@@ -67,27 +38,45 @@ BasePaymentConfirmationScreen {
             }
         }
 
+        QuickExchangeView {
+            id: quickExchangeView
+            height: 50
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: bottomButtons.top
+                bottomMargin: 15
+            }
+        }
+
         RowLayout {
             id: bottomButtons
+            spacing: 10
             anchors {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                bottomMargin: 10
+                leftMargin: 15
+                rightMargin: 15
+                bottomMargin: 15
             }
-            spacing: 0
 
             Button {
+                Layout.alignment: Qt.AlignLeft
                 Layout.preferredWidth: productList.width / 2.75
                 flat: true
                 text: qsTr("CANCEL")
-                onClicked: cancelPay()
+                onClicked: {
+                    root.disableScreen()
+                    cancelPay()
+                }
             }
 
             WideActionButton {
                 text: qsTr("CONFIRM")
+                Layout.alignment: Qt.AlignRight
                 onClicked: {
-                    root.state = "beforePaid"
+                    busyIndicator.running = true
                     confirmPay()
                 }
             }
@@ -96,25 +85,7 @@ BasePaymentConfirmationScreen {
 
     BusyIndicator {
         id: busyIndicator
-        visible: false
+        anchors.centerIn: parent
         running: false
-        anchors {
-            centerIn: parent
-        }
     }
-
-    states: [
-        State {
-            name: "beforePaid"
-            PropertyChanges {
-                target: busyIndicator
-                visible: true
-                running: true
-            }
-            PropertyChanges {
-                target: background
-                enabled: false
-            }
-        }
-    ]
 }

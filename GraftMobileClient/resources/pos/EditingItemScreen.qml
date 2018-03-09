@@ -4,46 +4,23 @@ import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import org.graft.models 1.0
+import com.device.platform 1.0
 import "../components"
 import "../"
 
 BaseScreen {
     id: editingItem
     title: qsTr("Add item")
-    action: editingItem.confirmProductParameters
-
-    screenHeader {
-        navigationButtonState: Qt.platform.os === "ios"
-        actionButtonState: true
-    }
+    action: confirmProductParameters
+    screenHeader.actionButtonState: true
 
     property alias currencyModel: productItem.currencyModel
     property int index: -1
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             navigationText: qsTr("Cancel")
             actionText: qsTr("Done")
-        }
-    }
-
-    function confirmProductParameters() {
-        var currencyCode = currencyModel.codeOf(productItem.currencyText)
-        if (productItem.titleText !== "" && productItem.price !== "") {
-            if (index >= 0) {
-                ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
-                ProductModel.setProductData(index, productItem.previewImage, ProductModelEnum.ImageRole)
-                ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
-                ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
-                ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
-            } else {
-                ProductModel.add(productItem.previewImage, productItem.titleText, productItem.price,
-                                 currencyCode, productItem.descriptionText)
-            }
-            editingItem.pushScreen.openProductScreen()
-            GraftClient.save()
-        } else {
-            messageDialog.open()
         }
     }
 
@@ -51,38 +28,50 @@ BaseScreen {
         title = qsTr("Edit item")
         multiTaskingButton.text = qsTr("Save")
         productItem.titleText = ProductModel.productData(index, ProductModelEnum.TitleRole)
-        productItem.previewImage = ProductModel.productData(index, ProductModelEnum.ImageRole)
+        productItem.productImage = ProductModel.productData(index, ProductModelEnum.ImageRole)
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
         productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index, ProductModelEnum.CurrencyRole))
     }
 
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Attention")
-        icon: StandardIcon.Warning
-        text: qsTr("Don't leave blank fields as it isn't correct! You must enter the item title and price.")
-    }
-
     ColumnLayout {
         anchors {
             fill: parent
-            topMargin: 10
-            bottomMargin: 20
+            margins: 15
         }
 
         ProductItemView {
             id: productItem
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.leftMargin: 15
-            Layout.rightMargin: 15
         }
 
         WideActionButton {
             id: multiTaskingButton
             text: qsTr("Confirm")
             onClicked: confirmProductParameters()
+        }
+    }
+
+    function confirmProductParameters() {
+        var currencyCode = currencyModel.codeOf(productItem.currencyText)
+        if (productItem.titleText !== "" && productItem.price !== "") {
+            disableScreen()
+            if (index >= 0) {
+                ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
+                ProductModel.setProductData(index, productItem.productImage, ProductModelEnum.ImageRole)
+                ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
+                ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
+                ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
+            } else {
+                ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
+                                 currencyCode, productItem.descriptionText)
+            }
+            editingItem.pushScreen.goBack()
+            GraftClient.saveProducts()
+        } else {
+            screenDialog.text = qsTr("Please, enter the item title and price.")
+            screenDialog.open()
         }
     }
 }

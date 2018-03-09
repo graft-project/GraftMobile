@@ -7,7 +7,7 @@ class SelectedProductProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    SelectedProductProxyModel(QObject *parent = 0);
+    SelectedProductProxyModel(QObject *parent = nullptr);
 
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 

@@ -7,21 +7,22 @@ class GraftWalletAPI : public GraftGenericAPI
 {
     Q_OBJECT
 public:
-    explicit GraftWalletAPI(const QUrl &url, QObject *parent = nullptr);
+    explicit GraftWalletAPI(const QStringList &addresses, const QString &dapiVersion,
+                            QObject *parent = nullptr);
 
-    void readyToPay(const QString &pid, const QString &keyImage);
-    void rejectPay(const QString &pid);
-    void pay(const QString &pid, const QString &transaction);
+    void getPOSData(const QString &pid, int blockNum);
+    void rejectPay(const QString &pid, int blockNum);
+    void pay(const QString &pid, const QString &address, double amount, int blockNum);
     void getPayStatus(const QString &pid);
 
 signals:
-    void readyToPayReceived(int result, const QString &transaction);
+    void getPOSDataReceived(int result, const QString &payDetails);
     void rejectPayReceived(int result);
     void payReceived(int result);
-    void getPayStatusReceived(int result, int payStatus);
+    void getPayStatusReceived(int result, int status);
 
 private slots:
-    void receiveReadyToPayResponse();
+    void receiveGetPOSDataResponse();
     void receiveRejectPayResponse();
     void receivePayResponse();
     void receivePayStatusResponse();

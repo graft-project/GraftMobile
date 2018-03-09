@@ -8,14 +8,16 @@ RoundButton {
     radius: 2
     highlighted: true
     Material.elevation: 1
-    Material.accent: ColorFactory.color(DesignFactory.Foreground)
+    Material.accent: pressed ? ColorFactory.color(DesignFactory.AndroidStatusBar) : ColorFactory.color(DesignFactory.Foreground)
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true
-    Layout.leftMargin: 10
-    Layout.rightMargin: 10
     font {
-        pointSize: 14
+        pixelSize: 14
         bold: true
         capitalization: Font.AllUppercase
+    }
+    background {
+        x: 0
+        width: background.parent.width
     }
 }

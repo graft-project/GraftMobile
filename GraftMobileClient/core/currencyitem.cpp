@@ -1,7 +1,8 @@
 #include "currencyitem.h"
 
 CurrencyItem::CurrencyItem(const QString &name, const QString &code)
-    : mName(name), mCode(code)
+    : mName(name)
+    ,mCode(code)
 {}
 
 QString CurrencyItem::name() const

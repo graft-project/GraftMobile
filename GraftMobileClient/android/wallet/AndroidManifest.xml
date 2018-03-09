@@ -1,19 +1,16 @@
 <?xml version="1.0"?>
-<manifest package="org.graft.wallet" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1" android:versionCode="3" android:installLocation="auto">
+<manifest package="org.graft.wallet" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.6.3" android:versionCode="10603" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Graft Wallet" android:icon="@drawable/icon">
-        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:label="Graft Wallet" android:launchMode="singleTask">
+        <activity android:theme="@style/SplashTheme" android:label="Graft Wallet" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:screenOrientation="portrait" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
-        </activity>
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:label="Graft Wallet" android:screenOrientation="portrait" android:launchMode="singleTop">
 
+            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
             <!-- Application arguments -->
             <!-- meta-data android:name="android.app.arguments" android:value="arg1 arg2 arg3"/ -->
             <!-- Application arguments -->
-
             <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
             <meta-data android:name="android.app.qt_sources_resource_id" android:resource="@array/qt_sources"/>
             <meta-data android:name="android.app.repository" android:value="default"/>
@@ -37,7 +34,7 @@
 
             <!-- Splash screen -->
             <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splash"/>
-            <!-- meta-data android:name="android.app.splash_screen_sticky" android:value="true"/ -->
+            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
             <!-- Splash screen -->
 
             <!-- Background running -->
@@ -60,10 +57,8 @@
                 -->
             <meta-data android:name="android.app.extract_android_style" android:value="full"/>
             <!-- extract android style -->
-    </activity>
-
+        </activity>
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
-
     </application>
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16"/>
@@ -71,10 +66,10 @@
 
     <!-- The following comment will be replaced upon deployment with default permissions based on the dependencies of the application.
          Remove the comment if you do not require these default permissions. -->
-    <!-- %%INSERT_PERMISSIONS -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.
          Remove the comment if you do not require these default features. -->
-    <!-- %%INSERT_FEATURES -->
-
 </manifest>

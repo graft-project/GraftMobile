@@ -1,49 +1,35 @@
 #include "selectedproductproxymodel.h"
 #include "productmodelserializator.h"
-#include "patrickqrcodeencoder.h"
+#include "qrcodegenerator.h"
 #include "api/graftposapi.h"
 #include "graftposclient.h"
+#include "accountmanager.h"
 #include "keygenerator.h"
 #include "productmodel.h"
 #include "config.h"
+
 #include <QStandardPaths>
+#include <QSettings>
 #include <QFileInfo>
-#include <QFile>
-#include <QDir>
 
 static const QString scProductModelDataFile("productList.dat");
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mQRCodeEncoder = new PatrickQRCodeEncoder();
-    mApi = new GraftPOSAPI(QUrl(cUrl.arg(cSeedSupernodes.value(qrand() % cSeedSupernodes.count()))),
-                           this);
+    mApi = new GraftPOSAPI(getServiceAddresses(), dapiVersion(), this);
     connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
     connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
             this, &GraftPOSClient::receiveRejectSale);
     connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
-
-    mProductModel = new ProductModel(this);
-    QString dataPath = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-                                              scProductModelDataFile);
-    if (!dataPath.isEmpty())
-    {
-        QFile lFile(dataPath);
-        if (lFile.open(QFile::ReadOnly))
-        {
-            ProductModelSerializator::deserialize(lFile.readAll(), mProductModel);
-        }
-    }
-    mSelectedProductModel = new SelectedProductProxyModel(this);
-    mSelectedProductModel->setSourceModel(mProductModel);
+    initProductModels();
+    initAccountSettings();
 }
 
 GraftPOSClient::~GraftPOSClient()
 {
-    delete mQRCodeEncoder;
 }
 
 ProductModel *GraftPOSClient::productModel() const
@@ -56,41 +42,28 @@ SelectedProductProxyModel *GraftPOSClient::selectedProductModel() const
     return mSelectedProductModel;
 }
 
-void GraftPOSClient::save()
+void GraftPOSClient::registerTypes(QQmlEngine *engine)
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!dataPath.isEmpty())
-    {
-        if (!QFileInfo(dataPath).exists())
-        {
-            QDir().mkpath(dataPath);
-        }
-        QDir lDir(dataPath);
-        QFile lFile(lDir.filePath(scProductModelDataFile));
-        if (lFile.open(QFile::WriteOnly))
-        {
-            lFile.write(ProductModelSerializator::serialize(mProductModel));
-            lFile.close();
-        }
-    }
+    GraftBaseClient::registerTypes(engine);
+}
+
+void GraftPOSClient::saveProducts() const
+{
+    saveModel(scProductModelDataFile, ProductModelSerializator::serialize(mProductModel));
 }
 
 void GraftPOSClient::sale()
 {
     if (mProductModel->totalCost() > 0)
     {
-        mPID = KeyGenerator::generatePID();
-        QString address = QString("%1%2").arg(KeyGenerator::generateSpendingKey())
-                .arg(KeyGenerator::generateViewKey());
-        QString qrText = QString("%1;%2;%3").arg(mPID).arg(address)
-                .arg(mProductModel->totalCost());
-        setQRCodeImage(mQRCodeEncoder->encode(qrText));
+        updateQuickExchange(mProductModel->totalCost());
         QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
-        mApi->sale(mPID, selectedProducts.toHex());
+        mApi->sale(mAccountManager->address(), mAccountManager->viewKey(),
+                   mProductModel->totalCost(), selectedProducts.toHex());
     }
     else
     {
-        emit saleStatusReceived(false);
+        emit saleReceived(false);
     }
 }
 
@@ -104,9 +77,13 @@ void GraftPOSClient::getSaleStatus()
     mApi->getSaleStatus(mPID);
 }
 
-void GraftPOSClient::receiveSale(int result)
+void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNum)
 {
     const bool isStatusOk = (result == 0);
+    mPID = pid;
+    QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
+            .arg(mProductModel->totalCost()).arg(blockNum);
+    setQRCodeImage(mQRCodeEncoder->encode(qrText));
     emit saleReceived(isStatusOk);
     if (isStatusOk)
     {
@@ -123,21 +100,38 @@ void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
 {
     if (result == 0)
     {
-        if (saleStatus == GraftPOSAPI::StatusProcessing)
-        {
+        switch (saleStatus) {
+        case GraftPOSAPI::StatusProcessing:
             getSaleStatus();
-        }
-        else if (saleStatus == GraftPOSAPI::StatusApproved)
-        {
+            break;
+        case GraftPOSAPI::StatusApproved:
             emit saleStatusReceived(true);
-        }
-        else if (saleStatus == GraftPOSAPI::StatusRejected)
-        {
+            break;
+        case GraftPOSAPI::StatusNone:
+        case GraftPOSAPI::StatusFailed:
+        case GraftPOSAPI::StatusPOSRejected:
+        case GraftPOSAPI::StatusWalletRejected:
+        default:
             emit saleStatusReceived(false);
+            break;
         }
     }
     else
     {
         emit saleStatusReceived(false);
     }
+}
+
+void GraftPOSClient::initProductModels()
+{
+    mProductModel = new ProductModel(this);
+    ProductModelSerializator::deserialize(loadModel(scProductModelDataFile), mProductModel);
+    mSelectedProductModel = new SelectedProductProxyModel(this);
+    mSelectedProductModel->setSourceModel(mProductModel);
+}
+
+GraftGenericAPI *GraftPOSClient::graftAPI() const
+{
+    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
+    return mApi;
 }

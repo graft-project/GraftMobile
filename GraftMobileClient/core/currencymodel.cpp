@@ -22,12 +22,15 @@ QVariant CurrencyModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     CurrencyItem *currency = mCurrency[index.row()];
+    Q_ASSERT(currency);
     switch (role)
     {
     case TitleRole:
         return currency->name();
     case CodeRole:
         return currency->code();
+    case ImagePathRole:
+        return imagePath(currency->code());
     default:
         return QVariant();
     }
@@ -44,6 +47,8 @@ bool CurrencyModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         case CodeRole:
             mCurrency[index.row()]->setCode(value.toString());
+            break;
+        case ImagePathRole:
             break;
         default:
             break;
@@ -78,11 +83,25 @@ QString CurrencyModel::codeOf(const QString &name) const
     return QString();
 }
 
+QString CurrencyModel::imagePath(const QString &code) const
+{
+    static QString path("qrc:/coins/%1.png");
+    return path.arg(code.toLower());
+}
+
+QVector<CurrencyItem *> CurrencyModel::currencies() const
+{
+    return mCurrency;
+}
+
 void CurrencyModel::add(const QString &name, const QString &code)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mCurrency << new CurrencyItem(name, code);
-    endInsertRows();
+    if((!name.isEmpty() || !code.isEmpty()) && (code != codeOf(name)))
+    {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        mCurrency << new CurrencyItem(name, code);
+        endInsertRows();
+    }
 }
 
 QHash<int, QByteArray> CurrencyModel::roleNames() const
@@ -90,5 +109,6 @@ QHash<int, QByteArray> CurrencyModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[TitleRole] = "name";
     roles[CodeRole] = "code";
+    roles[ImagePathRole] = "imagePath";
     return roles;
 }

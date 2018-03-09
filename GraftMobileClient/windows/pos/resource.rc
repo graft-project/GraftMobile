@@ -1,0 +1,30 @@
+IDI_ICON1	ICON	DISCARDABLE	"icon.ico"
+
+#define VOS_NT_WINDOWS32    0x00040004L
+#define VFT_APP             0x00000001L
+
+1 VERSIONINFO
+FILEVERSION 1,6,3
+PRODUCTVERSION 1,6,3
+FILETYPE VFT_APP
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040904E4"
+        {
+            VALUE "CompanyName", "GRAFT Payments, LLC"
+            VALUE "FileVersion", "1.6.3"
+            VALUE "FileDescription", "Graft Point-of-Sale"
+            VALUE "InternalName", "Graft POS"
+            VALUE "LegalCopyright", " 2018 GRAFT Payments, LLC"
+            VALUE "OriginalFilename", "GraftPointOfSale.exe"
+            VALUE "ProductName", "Graft Point-of-Sale"
+            VALUE "ProductVersion", "1.6.3"
+        }
+    }
+
+    BLOCK "VarFileInfo"
+    {
+        VALUE "Translation", 0x0409, 1252 //language codes
+    }
+}

@@ -3,7 +3,9 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Dialogs 1.2
+import org.graft 1.0
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "../components"
 import "../"
 
@@ -12,21 +14,29 @@ BaseScreen {
     title: qsTr("Store")
     screenHeader {
         cartEnable: true
-    }
-
-    Connections {
-        target: GraftClient
-        onSaleReceived: {
-            if (result === true) {
-                pushScreen.initializingCheckout()
-            }
-        }
+        isNavigationButtonVisible: false
+        navigationButtonState: true
     }
 
     Connections {
         target: ProductModel
         onSelectedProductCountChanged: {
             mainScreen.screenHeader.selectedProductCount = count
+        }
+    }
+
+    Connections {
+        target: GraftClient
+        onSaleReceived: {
+            if (result) {
+                pushScreen.initializingCheckout()
+            } else {
+//                TODO: Add error handling
+            }
+        }
+        onNetworkTypeChanged: {
+            addButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            quickDealButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
         }
     }
 
@@ -65,50 +75,86 @@ BaseScreen {
                         }
 
                         MessageDialog {
-                            id: messageDialog
+                            id: mobileMessageDialog
                             title: qsTr("Delete item")
                             icon: StandardIcon.Warning
-                            text: qsTr("Are you sure that you want to remove this particular item?")
+                            text: qsTr("Are you sure that you want to remove this item?")
                             standardButtons: StandardButton.Yes | StandardButton.No
                             onYes: {
                                 ProductModel.removeProduct(index)
-                                GraftClient.save()
+                                GraftClient.saveProducts()
                             }
                         }
 
-                        onRemoveItemClicked: messageDialog.open()
-                        onEditItemClicked: pushScreen.openEditingItemScreen(index)
+                        ChooserDialog {
+                            id: desktopMessageDialog
+                            topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
+                            leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
+                            dialogMode: true
+                            title: qsTr("Delete item")
+                            dialogMessage: qsTr("Are you sure that you want to remove this item?")
+                            denyButton {
+                                text: qsTr("No")
+                                onClicked: desktopMessageDialog.close()
+                            }
+                            confirmButton {
+                                text: qsTr("Yes")
+                                onClicked: {
+                                    ProductModel.removeProduct(index)
+                                    GraftClient.saveProducts()
+                                }
+                            }
+                        }
 
+                        onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() : mobileMessageDialog.open()
+                        onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
                 }
             }
 
-            AddNewProductButton {
+            AddNewButton {
+                id: addNewProduct
+                buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
+                onClicked: {
+                    disableScreen()
+                    pushScreen.openEditingItemScreen(-1)
+                }
             }
 
             WideActionButton {
                 id: addButton
                 text: qsTr("Checkout")
-                Layout.bottomMargin: 90
-                Layout.topMargin: 10
-                onClicked: GraftClient.sale()
+                Layout.alignment: Qt.AlignBottom
+                Layout.topMargin: 15
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
+                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+                onClicked: {
+                    if (ProductModel.totalCost() > 0) {
+                        disableScreen()
+                        GraftClient.sale()
+                    } else {
+                        screenDialog.text = qsTr("Please, select one or more products to continue.")
+                        screenDialog.open()
+                    }
+                }
             }
 
-            RoundButton {
-                padding: 25
-                highlighted: true
+            WideActionButton {
+                id: quickDealButton
+                text: qsTr("Quick Deal")
                 Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                Layout.preferredHeight: addButton.height * 1.4
-                Layout.preferredWidth: height
-                Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 10
-                Layout.bottomMargin: 10
-                contentItem: Image {
-                    source:  "qrc:/imgs/plus_icon.png"
+                Layout.alignment: Qt.AlignBottom
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
+                Layout.bottomMargin: 15
+                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+                onClicked: {
+                    disableScreen()
+                    pushScreen.openQuickDealScreen()
                 }
-                onClicked: pushScreen.openEditingItemScreen(-1)
             }
         }
     }

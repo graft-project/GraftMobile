@@ -1,7 +1,9 @@
 #include "productmodel.h"
 #include "productitem.h"
 
-ProductModel::ProductModel(QObject *parent) : QAbstractListModel(parent)
+ProductModel::ProductModel(QObject *parent)
+    : QAbstractListModel(parent)
+    ,mQuickDealMode(false)
 {}
 
 ProductModel::~ProductModel()
@@ -17,7 +19,7 @@ QVariant ProductModel::data(const QModelIndex &index, int role) const
     }
 
     ProductItem *productItem = mProducts[index.row()];
-
+    Q_ASSERT(productItem);
     switch (role) {
     case TitleRole:
         return productItem->name();
@@ -137,22 +139,31 @@ bool ProductModel::setProductData(int index, const QVariant &value, int role)
 void ProductModel::removeProduct(int index)
 {
     beginRemoveRows(QModelIndex(), index, index);
+    mProducts.at(index)->removeImage();
     delete mProducts.takeAt(index);
     endRemoveRows();
+    emit selectedProductCountChanged(selectedProductCount());
 }
 
 void ProductModel::clearSelections()
 {
-    for (int i = 0; i < mProducts.count(); ++i)
+    if (quickDealMode())
     {
-        ProductItem *item = mProducts.value(i);
-        if (item->isSelected())
+        removeSelectedProducts();
+    }
+    else
+    {
+        for (int i = 0; i < mProducts.count(); ++i)
         {
-            item->setSelected(false);
-            QVector<int> changeRole;
-            changeRole.append(SelectedRole);
-            QModelIndex modelIndex = this->index(i);
-            emit dataChanged(modelIndex, modelIndex, changeRole);
+            ProductItem *item = mProducts.value(i);
+            if (item->isSelected())
+            {
+                item->setSelected(false);
+                QVector<int> changeRole;
+                changeRole.append(SelectedRole);
+                QModelIndex modelIndex = this->index(i);
+                emit dataChanged(modelIndex, modelIndex, changeRole);
+            }
         }
     }
     emit selectedProductCountChanged(0);
@@ -184,4 +195,38 @@ QHash<int, QByteArray> ProductModel::roleNames() const
     roles[CurrencyRole] = "currency";
     roles[DescriptionRole] = "description";
     return roles;
+}
+
+bool ProductModel::quickDealMode() const
+{
+    return mQuickDealMode;
+}
+
+void ProductModel::setQuickDealMode(bool quickDealMode)
+{
+    clearSelections();
+    mQuickDealMode = quickDealMode;
+}
+
+int ProductModel::totalProductsCount() const
+{
+    return rowCount();
+}
+
+void ProductModel::removeSelectedProducts()
+{
+    if (quickDealMode())
+    {
+        for (int i = 0; i < mProducts.count(); ++i)
+        {
+            if (mProducts.at(i)->isSelected())
+            {
+                beginRemoveRows(QModelIndex(), i, i);
+                delete mProducts.takeAt(i);
+                endRemoveRows();
+                i--;
+            }
+        }
+        mQuickDealMode = false;
+    }
 }

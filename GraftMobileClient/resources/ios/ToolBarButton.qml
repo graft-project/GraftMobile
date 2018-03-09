@@ -1,16 +1,20 @@
 import QtQuick 2.9
 import com.graft.design 1.0
+import com.device.platform 1.0
 import "../"
 
 Rectangle {
+    id: toolBarButton
+
     signal clicked()
     property alias source: toolButtonIcon.source
     property alias text: toolButtonText.text
+    property alias buttonColor: toolBarButton.color
 
     width: 58
     height: 46
     radius: 6
-    color: mouseArea.pressed ? "#25FFFFFF" : "transparent"
+    color: "transparent"
 
     MouseArea {
         id: mouseArea
@@ -28,7 +32,7 @@ Rectangle {
     Text {
         id: toolButtonText
         color: ColorFactory.color(DesignFactory.LightText)
-        font.pointSize: 10
+        font.pixelSize: Detector.isDesktop() ? 12 : 10
         anchors {
             top: toolButtonIcon.bottom
             bottom: parent.bottom

@@ -1,0 +1,44 @@
+import QtQuick 2.9
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
+import com.graft.design 1.0
+import com.device.platform 1.0
+
+Pane {
+    id: root
+    padding: 0
+    Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
+    contentItem: Rectangle {
+        color: ColorFactory.color(DesignFactory.CircleBackground)
+
+        PathView {
+            id: pathView
+            anchors.fill: parent
+            pathItemCount: count < 2 ? 1 : 3
+            offset: count < 2 ? 0.5 : 1.5
+            model: QuickExchangeModel
+            interactive: false
+
+            delegate: QuickExchangeDelegate {
+                id: quickExchangeDelegate
+                height: pathView.height / 2
+                icon: iconPath
+                text: price
+                isBold: primary
+            }
+
+            highlightRangeMode: PathView.StrictlyEnforceRange
+            snapMode: PathView.NoSnap
+            clip: true
+            path: Path {
+                startX: -50
+                startY: root.height / 2
+                PathLine {
+                    x: pathView.width + 50
+                    y: root.height / 2
+                }
+            }
+        }
+    }
+}

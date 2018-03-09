@@ -2,45 +2,61 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import "../"
 import "../components"
+import org.graft 1.0
 
 BaseBalanceScreen {
-    splitterVisible: true
+    id: balanceScreen
+
+    Connections {
+        target: GraftClient
+
+        onNetworkTypeChanged: payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+    }
+
+    appType: true
 
     ColumnLayout {
-        anchors.fill: parent
         spacing: 0
+        anchors.fill: parent
 
-        ListView {
-            id: accountListView
+        CoinListView {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.leftMargin: 8
-            Layout.rightMargin: 8
-            Layout.topMargin: 5
-            model: CardModel
-            clip: true
-            spacing: 15
-            delegate: AccountDelegate {
-                width: accountListView.width
-                height: 30
-                nameItem.text: cardName
-                cardIcon: "qrc:/imgs/MasterCard_Logo.png"
-                number: cardHideNumber
-            }
         }
 
-        AddCardButton {
-            Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: 20
-            textItem.text: qsTr("+  Add Card")
-            imageVisible: false
-            onClicked: pushScreen.addCardScreen()
+        AddNewButton {
+            buttonTitle: qsTr("Add new account")
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            Layout.bottomMargin: 15
+            topLine: true
+            bottomLine: true
+            visible: false
+            onClicked: pushScreen.openAddAccountScreen()
         }
 
         WideActionButton {
-            text: qsTr("PAY")
+            id: sendCoinsButton
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            text: qsTr("Send")
+            onClicked: {
+                disableScreen()
+                pushScreen.openSendCoinScreen()
+            }
+        }
+
+        WideActionButton {
+            id: payButton
+            text: qsTr("Pay")
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
             Layout.bottomMargin: 15
-            onClicked: pushScreen.openQRCodeScanner()
+            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            onClicked: {
+                disableScreen()
+                pushScreen.openQRCodeScanner()
+            }
         }
     }
 }

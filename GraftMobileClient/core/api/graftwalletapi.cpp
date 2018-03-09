@@ -5,95 +5,142 @@
 #include <QJsonObject>
 #include <QDebug>
 
-GraftWalletAPI::GraftWalletAPI(const QUrl &url, QObject *parent)
-    : GraftGenericAPI(url, parent)
+GraftWalletAPI::GraftWalletAPI(const QStringList &addresses, const QString &dapiVersion, QObject *parent)
+    : GraftGenericAPI(addresses, dapiVersion, parent)
 {
 }
 
-void GraftWalletAPI::readyToPay(const QString &pid, const QString &keyImage)
+void GraftWalletAPI::getPOSData(const QString &pid, int blockNum)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("ReadyToPay"));
-    data.insert(QStringLiteral("PID"), pid);
-    data.insert(QStringLiteral("KeyImage"), keyImage);
+    mRetries = 0;
+    QJsonObject params;
+    params.insert(QStringLiteral("PaymentID"), pid);
+    params.insert(QStringLiteral("BlockNum"), blockNum);
+    QJsonObject data = buildMessage(QStringLiteral("WalletGetPosData"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveReadyToPayResponse);
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveGetPOSDataResponse);
 }
 
-void GraftWalletAPI::rejectPay(const QString &pid)
+void GraftWalletAPI::rejectPay(const QString &pid, int blockNum)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("RejectPay"));
-    data.insert(QStringLiteral("PID"), pid);
+    mRetries = 0;
+    QJsonObject params;
+    params.insert(QStringLiteral("PaymentID"), pid);
+    params.insert(QStringLiteral("BlockNum"), blockNum);
+    QJsonObject data = buildMessage(QStringLiteral("WalletRejectPay"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveRejectPayResponse);
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receiveRejectPayResponse);
 }
 
-void GraftWalletAPI::pay(const QString &pid, const QString &transaction)
+void GraftWalletAPI::pay(const QString &pid, const QString &address, double amount, int blockNum)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("Pay"));
-    data.insert(QStringLiteral("PID"), pid);
-    data.insert(QStringLiteral("Transaction"), transaction);
+    mRetries = 0;
+    QJsonObject params;
+    params.insert(QStringLiteral("Account"), accountPlaceholder());
+    params.insert(QStringLiteral("Password"), mPassword);
+    params.insert(QStringLiteral("PaymentID"), pid);
+    params.insert(QStringLiteral("POSAddress"), address);
+    params.insert(QStringLiteral("Amount"), -666);
+    params.insert(QStringLiteral("BlockNum"), blockNum);
+    QJsonObject data = buildMessage(QStringLiteral("Pay"), params);
     QByteArray array = QJsonDocument(data).toJson();
+    array.replace("????", mAccountData);
+    array.replace("-666", serializeAmount(amount));
+    qDebug() << array;
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
 }
 
 void GraftWalletAPI::getPayStatus(const QString &pid)
 {
-    QJsonObject data;
-    data.insert(QStringLiteral("Call"), QStringLiteral("GetPayStatus"));
-    data.insert(QStringLiteral("PID"), pid);
+    QJsonObject params;
+    params.insert(QStringLiteral("PaymentID"), pid);
+    QJsonObject data = buildMessage(QStringLiteral("GetPayStatus"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
-    mReply = mManager->post(mRequest, array);
-    connect(mReply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayStatusResponse);
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayStatusResponse);
 }
 
-void GraftWalletAPI::receiveReadyToPayResponse()
+void GraftWalletAPI::receiveGetPOSDataResponse()
 {
-    qDebug() << "ReadyToPay Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    mLastError.clear();
+    qDebug() << "GetPOSData Response Received:\nTime: " << mTimer.elapsed();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
-        emit readyToPayReceived(object.value(QLatin1String("Result")).toInt(),
-                                object.value(QLatin1String("Transaction")).toString());
+        emit getPOSDataReceived(object.value(QLatin1String("Result")).toInt(),
+                                object.value(QLatin1String("POSSaleDetails")).toString());
+    }
+    else
+    {
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished, this,
+                    &GraftWalletAPI::receiveGetPOSDataResponse);
+        }
     }
 }
 
 void GraftWalletAPI::receiveRejectPayResponse()
 {
+    mLastError.clear();
     qDebug() << "RejectPay Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit rejectPayReceived(object.value(QLatin1String("Result")).toInt());
+    }
+    else
+    {
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished, this,
+                    &GraftWalletAPI::receiveRejectPayResponse);
+        }
     }
 }
 
 void GraftWalletAPI::receivePayResponse()
 {
+    mLastError.clear();
     qDebug() << "Pay Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit payReceived(object.value(QLatin1String("Result")).toInt());
+    }
+    else
+    {
+        QNetworkReply *reply = retry();
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished, this, &GraftWalletAPI::receivePayResponse);
+        }
     }
 }
 
 void GraftWalletAPI::receivePayStatusResponse()
 {
     qDebug() << "GetPayStatus Response Received:\nTime: " << mTimer.elapsed();
-    QJsonObject object = processReply();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
         emit getPayStatusReceived(object.value(QLatin1String("Result")).toInt(),
-                                  object.value(QLatin1String("PayStatus")).toInt());
+                                  object.value(QLatin1String("Status")).toInt());
     }
 }

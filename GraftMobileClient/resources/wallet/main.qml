@@ -1,109 +1,211 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
+import org.graft 1.0
+import com.device.platform 1.0
 import "../"
 import "../components"
 
 GraftApplicationWindow {
     id: root
-    title: qsTr("WALLET")
+    title: qsTr("Graft Wallet")
 
-    property real totalAmount: 100
-    property var currencyModel: ["Graft", "USD"]
-    property real balanceInGraft: 1
-    property real balanceInUSD: 200
-    property var drawer
+    handleBackEvent: mainLayout.backButtonHandler
 
     Loader {
         id: drawerLoader
         onLoaded: {
-            drawer = drawerLoader.item
-            drawerLoader.item.pushScreen = transitionsBetweenScreens()
-            drawerLoader.item.balanceInGraft = "1.14"
+            drawerLoader.item.pushScreen = menuTransitions()
+            drawerLoader.item.balanceInGraft = GraftClient.balance(GraftClientTools.UnlockedBalance)
+            drawerLoader.item.interactive = mainLayout.currentIndex > 1
         }
     }
 
-    footer: Loader {
-        id: footerLoader
-        onLoaded: footerLoader.item.pushScreen = transitionsBetweenScreens()
+    footer: Item {
+        id: graftApplicationFooter
+        height: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                        Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
+        visible: !createWalletStackViewer.visible
+
+        Loader {
+            id: footerLoader
+            anchors.fill: parent
+            onLoaded: footerLoader.item.pushScreen = menuTransitions()
+        }
     }
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             footerLoader.source = "qrc:/wallet/GraftToolBar.qml"
         } else {
             drawerLoader.source = "qrc:/wallet/GraftMenu.qml"
         }
     }
 
-    StackView {
-        id: stack
-        anchors.fill: parent
-        initialItem: initialScreen
-        focus: true
-        Keys.onReleased: {
-            if (!busy && (event.key === Qt.Key_Back || event.key === Qt.Key_Escape)) {
-                pop()
-                event.accepted = true
+    Connections {
+        target: GraftClient
+        onErrorReceived: {
+            var checkDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+            if (message !== "") {
+                checkDialog.title = qsTr("Network Error")
+                checkDialog.text = message
+            } else {
+                checkDialog.title = qsTr("Pay failed!")
+                checkDialog.text = qsTr("Pay request failed.\nPlease try again.")
             }
+            checkDialog.open()
         }
     }
 
-    BalanceScreen {
-        id: initialScreen
-        amountGraft: 1.14
-        amountMoney: 145
-        pushScreen: transitionsBetweenScreens()
+    DesktopDialog {
+        id: desktopMessageDialog
+        topMargin: (parent.height - desktopMessageDialog.height) / 2
+        leftMargin: (parent.width - desktopMessageDialog.width) / 2
+        title: qsTr("Pay failed!")
+        text: qsTr("Pay request failed.\nPlease try again.")
+        confirmButton.onClicked: {
+            mainLayout.enableScreen()
+            checkAccountExists()
+            desktopMessageDialog.close()
+        }
     }
 
-    function transitionsBetweenScreens() {
+    MessageDialog {
+        id: mobileMessageDialog
+        title: qsTr("Pay failed!")
+        icon: StandardIcon.Warning
+        text: qsTr("Pay request failed.\nPlease try again.")
+        onAccepted: {
+            mainLayout.enableScreen()
+            checkAccountExists()
+            mobileMessageDialog.close()
+        }
+    }
+
+    SwipeView {
+        id: mainLayout
+        focus: true
+        anchors.fill: parent
+        interactive: false
+        currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0
+        onCurrentIndexChanged: {
+            if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
+                graftApplicationFooter.visible = currentIndex > 1
+            } else if (drawerLoader && drawerLoader.status === Loader.Ready) {
+                drawerLoader.item.interactive = currentIndex > 1
+            }
+        }
+
+        LicenseAgreementScreen {
+            id: licenseScreen
+            logoImage: "qrc:/imgs/graft-wallet-logo.png"
+            acceptAction: acceptLicense
+        }
+
+        CreateWalletStackViewer {
+            id: createWalletStackViewer
+            pushScreen: generalTransitions()
+            menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
+        }
+
+        WalletStackViewer {
+            id: walletViewer
+            pushScreen: generalTransitions()
+            menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
+        }
+
+        SettingsStackViewer {
+            id: settingsStackViewer
+            pushScreen: generalTransitions()
+            appType: "wallet"
+            menuLoader: drawerLoader
+            isActive: SwipeView.isCurrentItem
+        }
+
+        function backButtonHandler() {
+            if (!currentItem.backButtonHandler()) {
+                if (!allowClose) {
+                    showCloseLabel()
+                } else {
+                    Qt.quit()
+                }
+                allowClose = !allowClose
+            }
+        }
+
+        function enableScreen() {
+            currentItem.enableScreen()
+        }
+    }
+
+    function generalTransitions() {
         var transitionsMap = {}
         transitionsMap["showMenu"] = showMenu
         transitionsMap["hideMenu"] = hideMenu
-        transitionsMap["goBack"] = goBack
-        transitionsMap["addCardScreen"] = openAddCardScreen
-        transitionsMap["openBalanceScreen"] = openBalanceScreen
-        transitionsMap["openQRCodeScanner"] = openQRScanningScreen
-        transitionsMap["openPaymentConfirmationScreen"] = openPaymentConfirmationScreen
-        transitionsMap["openPaymentScreen"] = openPaymentScreen
+        transitionsMap["openMainScreen"] = openMainScreen
+        transitionsMap["openCreateWalletStackViewer"] = openCreateWalletStackViewer
         return transitionsMap
     }
 
-    function openQRScanningScreen() {
-        stack.push("qrc:/QRScanningScreen.qml", {"pushScreen": transitionsBetweenScreens()})
-    }
-
-    function openAddCardScreen() {
-        stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": transitionsBetweenScreens()})
-    }
-
-    function openPaymentConfirmationScreen() {
-        stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {"pushScreen": transitionsBetweenScreens(),
-                       "totalAmount": GraftClient.totalCost(),
-                       "currencyModel": currencyModel,
-                       "balanceInGraft": balanceInGraft,
-                       "balanceInUSD": balanceInUSD,
-                       "productModel": PaymentProductModel})
-    }
-
-    function openPaymentScreen() {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": openBalanceScreen,
-                       "title": qsTr("Pay"), "textLabel": qsTr("Paid complete!")})
+    function menuTransitions() {
+        var transitionsMap = {}
+        transitionsMap["hideMenu"] = hideMenu
+        transitionsMap["openSettingsScreen"] = openSettingsScreen
+        transitionsMap["openMainScreen"] = openMainScreen
+        return transitionsMap
     }
 
     function showMenu() {
-        drawer.open()
+        drawerLoader.item.open()
     }
 
     function hideMenu() {
-        drawer.close()
+        drawerLoader.item.close()
     }
 
-    function goBack() {
-        stack.pop()
+    function openMainScreen() {
+        mainLayout.currentIndex = 2
+        selectButton("Wallet")
     }
 
-    function openBalanceScreen() {
-        stack.pop(initialScreen)
+    function openCreateWalletStackViewer() {
+        clearStackViewers()
+        mainLayout.currentIndex = 1
+    }
+
+    function openSettingsScreen() {
+        mainLayout.currentIndex = 3
+        selectButton("Settings")
+    }
+
+    function selectButton(name) {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
+            footerLoader.item.seclectedButtonChanged(name)
+        }
+    }
+
+    function acceptLicense() {
+        GraftClient.setSettings("license", true)
+        GraftClient.saveSettings()
+        if (GraftClient.isAccountExists()) {
+            openMainScreen()
+        } else {
+            openCreateWalletStackViewer()
+        }
+    }
+
+    function clearStackViewers() {
+        for (var i = 1; i < mainLayout.count; ++i) {
+            mainLayout.itemAt(i).clearStackViewer()
+        }
+    }
+
+    function checkAccountExists() {
+        if (GraftClient.isAccountExists()) {
+            openMainScreen()
+        }
     }
 }

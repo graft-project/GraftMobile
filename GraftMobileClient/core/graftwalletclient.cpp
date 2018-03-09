@@ -1,16 +1,18 @@
 #include "productmodelserializator.h"
-#include "graftwalletclient.h"
 #include "api/graftwalletapi.h"
+#include "graftwalletclient.h"
+#include "accountmanager.h"
 #include "productmodel.h"
+#include "keygenerator.h"
 #include "config.h"
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
 {
-    mApi = new GraftWalletAPI(QUrl(cUrl.arg(cSeedSupernodes.value(
-                                                qrand() % cSeedSupernodes.count()))), this);
-    connect(mApi, &GraftWalletAPI::readyToPayReceived,
-            this, &GraftWalletClient::receiveReadyToPay);
+    mBlockNum = 0;
+    mApi = new GraftWalletAPI(getServiceAddresses(), dapiVersion(), this);
+    connect(mApi, &GraftWalletAPI::getPOSDataReceived,
+            this, &GraftWalletClient::receiveGetPOSData);
     connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
     connect(mApi, &GraftWalletAPI::payReceived, this, &GraftWalletClient::receivePay);
     connect(mApi, &GraftWalletAPI::getPayStatusReceived,
@@ -18,6 +20,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
 
     mPaymentProductModel = new ProductModel(this);
+    initAccountSettings();
 }
 
 double GraftWalletClient::totalCost() const
@@ -30,29 +33,35 @@ ProductModel *GraftWalletClient::paymentProductModel() const
     return mPaymentProductModel;
 }
 
-void GraftWalletClient::readyToPay(const QString &data)
+void GraftWalletClient::getPOSData(const QString &data)
 {
     if (!data.isEmpty())
     {
         QStringList dataList = data.split(';');
-        if (dataList.count() == 3)
+        if (dataList.count() == 4)
         {
             mPID = dataList.value(0);
             mPrivateKey = dataList.value(1);
             mTotalCost = dataList.value(2).toDouble();
-            mApi->readyToPay(mPID, QString());
+            mBlockNum = dataList.value(3).toInt();
+            updateQuickExchange(mTotalCost);
+            mApi->getPOSData(mPID, mBlockNum);
+        }
+        else
+        {
+            emit getPOSDataReceived(false);
         }
     }
 }
 
 void GraftWalletClient::rejectPay()
 {
-    mApi->rejectPay(mPID);
+    mApi->rejectPay(mPID, mBlockNum);
 }
 
 void GraftWalletClient::pay()
 {
-    mApi->pay(mPID, QString(""));
+    mApi->pay(mPID, mPrivateKey, mTotalCost, mBlockNum);
 }
 
 void GraftWalletClient::getPayStatus()
@@ -60,13 +69,13 @@ void GraftWalletClient::getPayStatus()
     mApi->getPayStatus(mPID);
 }
 
-void GraftWalletClient::receiveReadyToPay(int result, const QString &transaction)
+void GraftWalletClient::receiveGetPOSData(int result, const QString &payDetails)
 {
     const bool isStatusOk = (result == 0);
     mPaymentProductModel->clear();
-    QByteArray data = QByteArray::fromHex(transaction.toLatin1());
+    QByteArray data = QByteArray::fromHex(payDetails.toLatin1());
     ProductModelSerializator::deserialize(data, mPaymentProductModel);
-    emit readyToPayReceived(isStatusOk);
+    emit getPOSDataReceived(isStatusOk);
 }
 
 void GraftWalletClient::receiveRejectPay(int result)
@@ -88,21 +97,30 @@ void GraftWalletClient::receivePayStatus(int result, int payStatus)
 {
     if (result == 0)
     {
-        if (payStatus == GraftWalletAPI::StatusProcessing)
-        {
+        switch (payStatus) {
+        case GraftWalletAPI::StatusProcessing:
             getPayStatus();
-        }
-        else if (payStatus == GraftWalletAPI::StatusApproved)
-        {
+            break;
+        case GraftWalletAPI::StatusApproved:
             emit payStatusReceived(true);
-        }
-        else if (payStatus == GraftWalletAPI::StatusRejected)
-        {
+            break;
+        case GraftWalletAPI::StatusNone:
+        case GraftWalletAPI::StatusFailed:
+        case GraftWalletAPI::StatusPOSRejected:
+        case GraftWalletAPI::StatusWalletRejected:
+        default:
             emit payStatusReceived(false);
+            break;
         }
     }
     else
     {
         emit payStatusReceived(false);
     }
+}
+
+GraftGenericAPI *GraftWalletClient::graftAPI() const
+{
+    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
+    return mApi;
 }

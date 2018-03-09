@@ -4,27 +4,43 @@ import "../"
 import "../components"
 
 BaseBalanceScreen {
-    splitterVisible: false
+    id: infoWallet
     graftWalletLogo: "qrc:/imgs/graft-pos-logo.png"
-    screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
-    }
 
     ColumnLayout {
-        anchors.fill: parent
         spacing: 0
+        anchors.fill: parent
 
-        Rectangle {
-            Layout.fillHeight: true
+        CoinListView {
             Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
+
+        AddNewButton {
+            buttonTitle: qsTr("Add new account")
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            Layout.bottomMargin: 15
+            topLine: true
+            bottomLine: true
+            visible: false
+            onClicked: pushScreen.openAddAccountScreen()
         }
 
         WideActionButton {
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
+            Layout.alignment: Qt.AlignBottom
+            enabled: false
             text: qsTr("Transfer to Paypal")
         }
 
         WideActionButton {
+            Layout.leftMargin: 15
+            Layout.rightMargin: 15
             Layout.bottomMargin: 15
+            Layout.alignment: Qt.AlignBottom
+            enabled: false
             text: qsTr("Chase XXX929")
         }
     }

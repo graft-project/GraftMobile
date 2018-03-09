@@ -8,7 +8,8 @@ BaseScreen {
 
     title: qsTr("Cart")
     screenHeader {
-        navigationButtonState: Qt.platform.os === "android"
+        isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+        navigationButtonState: true
     }
 
     Connections {
@@ -16,12 +17,7 @@ BaseScreen {
 
         onSaleStatusReceived: {
             screenClosed()
-
-            if (result === true) {
-                pushScreen.openPaymentScreen()
-            } else {
-                pushScreen.clearChecked()
-            }
+            pushScreen.openPaymentScreen(result)
         }
     }
 

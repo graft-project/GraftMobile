@@ -1,7 +1,12 @@
 #include "productitem.h"
+#include "devicedetector.h"
+#include "keygenerator.h"
+#include "defines.h"
 
-ProductItem::ProductItem()
-{}
+#include <QUrl>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 
 ProductItem::ProductItem(const QString &imagePath, const QString &name, double cost,
                          const QString &currency, const QString &description)
@@ -11,11 +16,19 @@ ProductItem::ProductItem(const QString &imagePath, const QString &name, double c
       mSelected(false),
       mCurrency(currency),
       mDescription(description)
-{}
+{
+    setImagePath(imagePath);
+}
 
 QString ProductItem::imagePath() const
 {
-    return mImagePath;
+    QString imageDataLocation = callImageDataPath();
+    if (!mImagePath.isEmpty())
+    {
+        QDir lDir(imageDataLocation);
+        return QUrl::fromLocalFile(lDir.filePath(mImagePath)).toString();
+    }
+    return QString();
 }
 
 QString ProductItem::name() const
@@ -45,7 +58,26 @@ QString ProductItem::description() const
 
 void ProductItem::setImagePath(const QString &imagePath)
 {
-    mImagePath = imagePath;
+    QString imageDataLocation = callImageDataPath();
+    QFileInfo newImagePath(imagePath);
+    if (mImagePath != newImagePath.fileName())
+    {
+        if (!mImagePath.isEmpty())
+        {
+            QDir lDir(imageDataLocation);
+            QFile::remove(lDir.filePath(mImagePath));
+        }
+        QString lCopiedImage(imageDataLocation + newImagePath.fileName());
+        if (DeviceDetector::isDesktop())
+        {
+            if (!QFileInfo::exists(lCopiedImage))
+            {
+                lCopiedImage.insert(lCopiedImage.lastIndexOf("."), KeyGenerator::generateUUID(4));
+            }
+            QFile::copy(QUrl(imagePath).toLocalFile(), lCopiedImage);
+        }
+        mImagePath = QFile(lCopiedImage).fileName();
+    }
 }
 
 void ProductItem::setName(const QString &name)
@@ -76,4 +108,10 @@ void ProductItem::setDescription(const QString &description)
 void ProductItem::changeSelection()
 {
     mSelected = !mSelected;
+}
+
+void ProductItem::removeImage()
+{
+    QFile lImage(mImagePath);
+    lImage.remove();
 }
