@@ -27,15 +27,12 @@ CONFIG(release, debug|release) {
 BUILD_DIR = release
 
 contains(QMAKE_TARGET.arch, x86) {
-    ## Windows x86 (32bit) specific build here
-    message("Windows x86")
-    OPENSSL_DIR = $$PWD/../3rdparty/openssl/msvc2015_x86/$$BUILD_DIR/*.dll
+    COMPILER_VERSION = msvc2015_x86
 } else {
-    ## Windows x64 (64bit) specific build here
-    message("Windows x64")
-    OPENSSL_DIR = $$PWD/../3rdparty/openssl/msvc2017_x64/$$BUILD_DIR/*.dll
+    COMPILER_VERSION = msvc2017_x64
 }
 
+OPENSSL_DIR = $$PWD/../3rdparty/openssl/$$COMPILER_VERSION/$$BUILD_DIR/*.dll
 OPENSSL_DIR ~= s,/,\\,g
 
 EXE_DIR = $${OUT_PWD}/$$DESTDIR
