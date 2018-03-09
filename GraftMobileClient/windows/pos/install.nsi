@@ -18,7 +18,7 @@
 	!define ARPPATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
     !define INSTALLSIZE 33727070
 
-    Var REDISRTIBUTABLE_PACKAGE
+    Var REDIST_PACKAGE
 
     Name "${DESCRIPTION}"
 	Caption "${APPNAME} ${VERSION}"
@@ -199,7 +199,7 @@ Section "Uninstall"
 	
 SectionEnd
 
-Var REDISRTIBUTABLE_PACKAGE_VERSION
+Var REDIST_PACKAGE_VERSION
 
 Function check_Visual_C++_Redistributable
 
@@ -211,10 +211,10 @@ ${Else}
     StrCmp $1 1 installed
 ${EndIf}
 
-MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ $REDISRTIBUTABLE_PACKAGE_VERSION Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
+MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ $REDIST_PACKAGE_VERSION Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
 
 InstallRedistributablePackage:
-    ExecWait "$REDISRTIBUTABLE_PACKAGE"
+    ExecWait "$REDIST_PACKAGE"
 
 installed:
 	WriteUninstaller "$INSTDIR\uninstall.exe"
@@ -223,12 +223,12 @@ FunctionEnd
 
 Function .onInit
 ${If} ${RunningX64}
-    StrCpy $REDISRTIBUTABLE_PACKAGE "vcredist_x64.exe"
-    StrCpy $REDISRTIBUTABLE_PACKAGE_VERSION "2017"
+    StrCpy $REDIST_PACKAGE "vcredist_x64.exe"
+    StrCpy $REDIST_PACKAGE_VERSION "2017"
     StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
 ${Else}
-    StrCpy $REDISRTIBUTABLE_PACKAGE "vcredist_x86.exe"
-    StrCpy $REDISRTIBUTABLE_PACKAGE_VERSION "2015"
+    StrCpy $REDIST_PACKAGE "vcredist_x86.exe"
+    StrCpy $REDIST_PACKAGE_VERSION "2015"
     StrCpy $INSTDIR "$PROGRAMFILES\${APPNAME}"
 ${EndIf}
 FunctionEnd
