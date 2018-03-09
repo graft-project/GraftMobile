@@ -14,7 +14,7 @@ Item {
         id: mobileMessageDialog
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: messageText
+        text: qsTr(messageText)
         standardButtons: StandardButton.Yes | StandardButton.No
     }
 
@@ -24,7 +24,7 @@ Item {
         leftMargin: (parent.width - desktopMessageDialog.width) / 2
         dialogMode: true
         title: qsTr("Attention")
-        dialogMessage: messageText
+        dialogMessage: qsTr(messageText)
         denyButton {
             text: qsTr("No")
             onClicked: desktopMessageDialog.close()
