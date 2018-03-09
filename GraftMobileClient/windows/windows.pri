@@ -26,7 +26,13 @@ RC_FILE = $$RESOURCE_DIR/resource.rc
 CONFIG(release, debug|release) {
 BUILD_DIR = release
 
-OPENSSL_DIR = $$PWD/../3rdparty/openssl/msvc2017/$$BUILD_DIR/*.dll
+contains(QMAKE_TARGET.arch, x86) {
+    COMPILER_VERSION = msvc2015_x86
+} else {
+    COMPILER_VERSION = msvc2017_x64
+}
+
+OPENSSL_DIR = $$PWD/../3rdparty/openssl/$$COMPILER_VERSION/$$BUILD_DIR/*.dll
 OPENSSL_DIR ~= s,/,\\,g
 
 EXE_DIR = $${OUT_PWD}/$$DESTDIR
