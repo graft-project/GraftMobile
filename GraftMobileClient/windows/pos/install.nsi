@@ -199,6 +199,8 @@ Section "Uninstall"
 	
 SectionEnd
 
+Var REDISRTIBUTABLE_PACKAGE_VERSION
+
 Function check_Visual_C++_Redistributable
 
 ${If} ${RunningX64}
@@ -209,7 +211,7 @@ ${Else}
     StrCmp $1 1 installed
 ${EndIf}
 
-MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ 2017 Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
+MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ $REDISRTIBUTABLE_PACKAGE_VERSION Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
 
 InstallRedistributablePackage:
     ExecWait "$REDISRTIBUTABLE_PACKAGE"
@@ -222,9 +224,11 @@ FunctionEnd
 Function .onInit
 ${If} ${RunningX64}
     StrCpy $REDISRTIBUTABLE_PACKAGE "vcredist_x64.exe"
+    StrCpy $REDISRTIBUTABLE_PACKAGE_VERSION "2017"
     StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
 ${Else}
     StrCpy $REDISRTIBUTABLE_PACKAGE "vcredist_x86.exe"
+    StrCpy $REDISRTIBUTABLE_PACKAGE_VERSION "2015"
     StrCpy $INSTDIR "$PROGRAMFILES\${APPNAME}"
 ${EndIf}
 FunctionEnd
