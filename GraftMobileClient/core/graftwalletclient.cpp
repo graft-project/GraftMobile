@@ -20,12 +20,7 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
 
     mPaymentProductModel = new ProductModel(this);
-    if (isAccountExists())
-    {
-        mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
-        updateBalance();
-    }
-    registerBalanceTimer(mApi);
+    initAccountSettings();
 }
 
 double GraftWalletClient::totalCost() const

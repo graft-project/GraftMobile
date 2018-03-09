@@ -44,7 +44,7 @@ BaseScreen {
         LinearEditItem {
             id: seedTextField
             Layout.fillWidth: true
-            Layout.maximumHeight: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 160 : 130
+            Layout.maximumHeight: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 160 : 135
             Layout.alignment: Qt.AlignTop
             title: qsTr("Mnemonic Phrase")
             wrapMode: TextInput.WordWrap
@@ -70,7 +70,12 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
             onClicked: {
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
+                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                        checkDialog.open()
+                        return
+                    }
                     restoreWallet()
                 }
             }
@@ -81,6 +86,12 @@ BaseScreen {
         id: busyIndicator
         anchors.centerIn: parent
         running: false
+    }
+
+    ValidPasswordMessageDialog {
+        id: dialogs
+        mobileMessageDialog.onYes: restoreWallet()
+        desktopConfirmButton.onClicked: restoreWallet()
     }
 
     function restoreWallet() {

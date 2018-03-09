@@ -13,6 +13,7 @@
 
 #include <QGuiApplication>
 #include <QStandardPaths>
+#include <QVersionNumber>
 #include <QHostAddress>
 #include <QQmlContext>
 #include <QTimerEvent>
@@ -20,8 +21,10 @@
 #include <QQmlEngine>
 #include <QSettings>
 #include <QFileInfo>
+#include <QTimer>
 #include <QDir>
 
+static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
 static const QString scBarcodeImageProviderID("barcodes");
 static const QString scQRCodeImageID("qrcode");
 static const QString scAddressQRCodeImageID("address_qrcode");
@@ -40,12 +43,12 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
     ,mQRCodeEncoder(new QRCodeGenerator())
-    ,mClientSettings(nullptr)
     ,mAccountModel(nullptr)
     ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
-    ,mBalanceTimer(-1)
     ,mAccountManager(new AccountManager())
+    ,mClientSettings(nullptr)
+    ,mBalanceTimer(-1)
     ,mIsBalanceUpdated(false)
 {
     initSettings();
@@ -217,11 +220,31 @@ void GraftBaseClient::saveAccounts() const
     saveModel(scAccountModelDataFile, AccountModelSerializator::serialize(mAccountModel));
 }
 
+void GraftBaseClient::updateBalance()
+{
+    graftAPI()->getBalance();
+}
+
 void GraftBaseClient::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == mBalanceTimer && !mAccountManager->account().isEmpty())
     {
         updateBalance();
+    }
+}
+
+void GraftBaseClient::initAccountSettings()
+{
+    if (graftAPI())
+    {
+        connect(graftAPI(), &GraftGenericAPI::getBalanceReceived, this,
+                &GraftBaseClient::receiveBalance, Qt::UniqueConnection);
+        if (isAccountExists())
+        {
+            graftAPI()->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+            updateBalance();
+        }
+//        mBalanceTimer = startTimer(20000);
     }
 }
 
@@ -281,21 +304,6 @@ QStringList GraftBaseClient::getServiceAddresses() const
     return addressList;
 }
 
-void GraftBaseClient::registerBalanceTimer(GraftGenericAPI *api)
-{
-    if (api)
-    {
-        connect(api, &GraftGenericAPI::getBalanceReceived, this, &GraftBaseClient::receiveBalance,
-                Qt::UniqueConnection);
-        mBalanceTimer = startTimer(20000);
-    }
-}
-
-void GraftBaseClient::updateBalance()
-{
-    graftAPI()->getBalance();
-}
-
 void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QString &password,
                                      const QString &address, const QString &viewKey,
                                      const QString &seed)
@@ -342,6 +350,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         saveBalance();
         mIsBalanceUpdated = true;
         emit balanceUpdated();
+        QTimer::singleShot(20000, this, &GraftBaseClient::updateBalance);
     }
 }
 
@@ -406,6 +415,11 @@ void GraftBaseClient::updateAddressQRCode() const
     mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
 }
 
+QString GraftBaseClient::versionNumber() const
+{
+    return scVersionNumber.toString();
+}
+
 QVariant GraftBaseClient::settings(const QString &key) const
 {
     return mClientSettings->value(key);
@@ -423,7 +437,7 @@ bool GraftBaseClient::useOwnServiceAddress() const
 
 bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
 {
-    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !ip.isEmpty());
+    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !port.isEmpty());
     if (lIsResetUrl)
     {
         setSettings(scIp, ip);

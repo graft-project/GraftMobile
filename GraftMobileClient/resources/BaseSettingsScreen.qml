@@ -59,7 +59,7 @@ BaseScreen {
                 Switch {
                     id: serviceAddr
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
-                    checked: GraftClient.useOwnServiceAddress("useOwnServiceAddress")
+                    checked: GraftClient.useOwnServiceAddress()
                 }
             }
 
@@ -74,7 +74,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 130
-                    text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("ip") : ""
+                    text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("ip") : ""
                 }
 
                 LinearEditItem {
@@ -82,7 +82,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 100
-                    text: GraftClient.useOwnServiceAddress("useOwnServiceAddress") ? GraftClient.settings("port") : ""
+                    text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
                         regExp: /\d{1,5}/
                     }
@@ -159,7 +159,7 @@ BaseScreen {
             mobileMessageDialog.close()
         }
         onNo: {
-            confirmPasswordAction()
+            validateSettings()
             mobileMessageDialog.close()
         }
     }
@@ -176,7 +176,7 @@ BaseScreen {
             flat: true
             text: qsTr("No")
             onClicked: {
-                confirmPasswordAction()
+                validateSettings()
                 desktopMessageDialog.close()
             }
         }
@@ -189,6 +189,18 @@ BaseScreen {
                 desktopMessageDialog.close()
             }
         }
+    }
+
+    function validateSettings() {
+        if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
+            if (serviceAddr.checked) {
+                ipTextField.text = GraftClient.settings("ip")
+                portTextField.text = GraftClient.settings("port")
+            } else {
+                resetOwnServiceSettings()
+            }
+        }
+        confirmPasswordAction()
     }
 
     function resetWalletAccount() {
@@ -228,7 +240,9 @@ BaseScreen {
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
+            GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        }
         if (serviceAddr.checked) {
             if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
                 screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +

@@ -25,12 +25,7 @@ GraftPOSClient::GraftPOSClient(QObject *parent)
             this, &GraftPOSClient::receiveSaleStatus);
     connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
     initProductModels();
-    if (isAccountExists())
-    {
-        mApi->setAccountData(mAccountManager->account(), mAccountManager->passsword());
-        updateBalance();
-    }
-    registerBalanceTimer(mApi);
+    initAccountSettings();
 }
 
 GraftPOSClient::~GraftPOSClient()

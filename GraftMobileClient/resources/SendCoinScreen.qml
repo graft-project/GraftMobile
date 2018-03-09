@@ -60,7 +60,7 @@ BaseScreen {
                         id: receiversAddress
                         Layout.fillWidth: true
                         Layout.preferredHeight: 130
-                        maximumLength: 100
+                        maximumLength: 110
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
@@ -137,7 +137,7 @@ BaseScreen {
     }
 
     function checkingData() {
-        if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 100)) {
+        if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 110)) {
             screenDialog.text = qsTr("You entered the wrong account number! Please input correct account number.")
             screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {

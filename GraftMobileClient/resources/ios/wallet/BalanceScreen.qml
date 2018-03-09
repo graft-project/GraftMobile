@@ -13,6 +13,8 @@ BaseBalanceScreen {
         onNetworkTypeChanged: payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
     }
 
+    appType: true
+
     ColumnLayout {
         spacing: 0
         anchors.fill: parent
