@@ -1,5 +1,8 @@
 #include <QQmlApplicationEngine>
-#include <QGuiApplication>
+#include <QApplication>
+#include <QSplashScreen>
+#include <QPixmap>
+
 #include <QNetworkProxyFactory>
 #include <QQmlContext>
 #include <QQuickView>
@@ -45,7 +48,11 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QNetworkProxyFactory::setUseSystemConfiguration(true);
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
+    QPixmap background(":/SplashScreen.bmp");
+    QSplashScreen *splashScreen = new QSplashScreen(background.scaled(386, 715));
+    splashScreen->show();
+
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
@@ -102,5 +109,7 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_ANDROID
     QtAndroid::hideSplashScreen();
 #endif
+
+    splashScreen->deleteLater();
     return app.exec();
 }

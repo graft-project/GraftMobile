@@ -3,6 +3,7 @@ LIBS += -framework Foundation \
         -framework IOKit
 
 contains(DEFINES, POS_BUILD) {
+RESOURCES += $$PWD/pos.qrc
 BUILD_DIR = $$PWD/pos
 
 DISTFILES += \
@@ -10,6 +11,7 @@ DISTFILES += \
     $$BUILD_DIR/icon.icns
 }
 contains(DEFINES, WALLET_BUILD) {
+RESOURCES += $$PWD/wallet.qrc
 BUILD_DIR = $$PWD/wallet
 
 DISTFILES += \

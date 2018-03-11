@@ -1,4 +1,5 @@
 contains(DEFINES, POS_BUILD) {
+RESOURCES += $$PWD/pos.qrc
 RESOURCE_DIR = $$PWD/pos
 
 DISTFILES += \
@@ -10,6 +11,7 @@ DISTFILES += \
 }
 
 contains(DEFINES, WALLET_BUILD) {
+RESOURCES += $$PWD/wallet.qrc
 RESOURCE_DIR = $$PWD/wallet
 
 DISTFILES += \
