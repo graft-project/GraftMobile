@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="SplashScreen.bmp">pos/SplashScreen.bmp</file>
-    </qresource>
-</RCC>

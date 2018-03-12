@@ -1,9 +1,6 @@
 #include <QQmlApplicationEngine>
-#include <QApplication>
-#include <QSplashScreen>
-#include <QPixmap>
-
 #include <QNetworkProxyFactory>
+#include <QApplication>
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFileInfo>
@@ -30,6 +27,11 @@ static_assert(false, "QTBUG-65820 in Android Debug builds");
 #endif
 #endif
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+#include <QSplashScreen>
+#include <QPixmap>
+#endif
+
 #ifdef POS_BUILD
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 #include "imagepicker.h"
@@ -49,11 +51,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QNetworkProxyFactory::setUseSystemConfiguration(true);
     QApplication app(argc, argv);
-    QPixmap background(":/SplashScreen.bmp");
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    QPixmap background(":/imgs/SplashScreen.png");
     QSplashScreen *splashScreen = new QSplashScreen(background.scaled(386, 715));
-    splashScreen->move(766,148);
+    splashScreen->move(766, 148);
     splashScreen->show();
-
+#endif
     QQmlApplicationEngine engine;
     DesignFactory factory;
     factory.registrate(engine.rootContext());
@@ -111,6 +114,8 @@ int main(int argc, char *argv[])
     QtAndroid::hideSplashScreen();
 #endif
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     splashScreen->deleteLater();
+#endif
     return app.exec();
 }
