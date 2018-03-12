@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="SplashScreen.bmp">wallet/SplashScreen.bmp</file>
+    </qresource>
+</RCC>

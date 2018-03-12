@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QPixmap background(":/SplashScreen.bmp");
     QSplashScreen *splashScreen = new QSplashScreen(background.scaled(386, 715));
+    splashScreen->move(766,148);
     splashScreen->show();
 
     QQmlApplicationEngine engine;
