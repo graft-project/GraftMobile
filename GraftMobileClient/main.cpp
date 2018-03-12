@@ -32,14 +32,14 @@ static_assert(false, "QTBUG-65820 in Android Debug builds");
 #include <QPixmap>
 #endif
 
+#ifdef Q_OS_ANDROID
+#include <QtAndroid>
+#endif
+
 #ifdef POS_BUILD
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 #include "imagepicker.h"
 #endif
-#endif
-
-#ifdef Q_OS_ANDROID
-#include <QtAndroid>
 #endif
 
 int main(int argc, char *argv[])
