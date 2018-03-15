@@ -1,0 +1,4 @@
+Gaft-app:
+    only:
+    - dev
+
