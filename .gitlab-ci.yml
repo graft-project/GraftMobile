@@ -19,6 +19,7 @@ Gaft-app:
     - "set /p APP_VER=<version.txt"
     - "qmake GraftMobileClient.pro DEFINES+=POS_BUILD"
     - "jom"
+    - "cd bin"
     - C:\\gdrive\\gdrive-windows-x64.exe upload "GraftPointOfSale %APP_VER%.exe" -p %UPLOAD_DESTINATION_ID_WIN%
 
     tags:
