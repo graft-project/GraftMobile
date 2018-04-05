@@ -2,3 +2,13 @@ Gaft-app:
     only:
     - dev
 
+    script:
+    - "C:\\gdrive\\gdrive-windows-x64.exe list -q \"trashed = false and name = 'Graft-mobile'\" | grep Graft-mobile | gawk '{ print $1 }' > temp.txt"
+    - "set /p UPLOAD_DESTINATION_ID_WIN=<temp.txt"
+    - "set INST_DIR=graft_build"
+    - "rm -f graft-*"
+    - "mkdir %INST_DIR%"
+    - "CALL \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat\" x86_amd64"
+    - "set PATH=C:\\Qt\\Tools\\QtCreator\\bin;C:\\Qt\\5.9.4\\msvc2015_64\\bin;C:\\Program Files\\7-Zip;C:\\Program Files (x86)\\NSIS;%PATH%"
+    - "cd GraftMobileClient"
+    - "qmake GraftMobileClient.pro"
