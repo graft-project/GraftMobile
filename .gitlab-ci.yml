@@ -15,8 +15,11 @@ Gaft-app:
     - "CALL \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat\" x86_amd64"
     - "set PATH=C:\\Qt\\Tools\\QtCreator\\bin;C:\\Qt\\5.9.4\\msvc2015_64\\bin;C:\\Program Files\\7-Zip;C:\\Program Files (x86)\\NSIS;%PATH%"
     - "cd GraftMobileClient"
+    - "mintty -w hide -e sh build-version.sh"
+    - "set /p APP_VER=<version.txt"
     - "qmake GraftMobileClient.pro DEFINES+=POS_BUILD"
     - "jom"
+    - C:\\gdrive\\gdrive-windows-x64.exe upload "GraftPointOfSale %APP_VER%.exe" -p %UPLOAD_DESTINATION_ID_WIN%
 
     tags:
     - Windows
