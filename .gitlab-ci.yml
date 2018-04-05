@@ -16,6 +16,7 @@ Gaft-app:
     - "set PATH=C:\\Qt\\Tools\\QtCreator\\bin;C:\\Qt\\5.9.4\\msvc2015_64\\bin;C:\\Program Files\\7-Zip;C:\\Program Files (x86)\\NSIS;%PATH%"
     - "cd GraftMobileClient"
     - "qmake GraftMobileClient.pro DEFINES+=POS_BUILD"
+    - "jom"
 
     tags:
     - Windows
