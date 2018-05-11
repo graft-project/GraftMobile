@@ -1,6 +1,6 @@
 Graft-app-Windows-x64:
     only:
-    - master
+    - master--
     
     before_script:
     - git submodule sync --recursive
@@ -28,7 +28,7 @@ Graft-app-Windows-x64:
 
 Graft-wallet-Windows-x64:
     only:
-    - master
+    - master--
     
     before_script:
     - git submodule sync --recursive
@@ -84,7 +84,7 @@ Graft-app-Android-arm:
 
 Graft-wallet-Android-arm:
     only:
-    - master
+    - master--
     
     before_script:
     - git submodule sync --recursive
