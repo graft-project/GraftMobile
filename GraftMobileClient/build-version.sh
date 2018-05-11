@@ -8,3 +8,4 @@ a=$a+1
 done
 B_VERSION="${v1[0]}.${v1[1]}.${v1[2]}"
 echo $B_VERSION > version.txt
+echo $B_VERSION
