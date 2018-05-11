@@ -1,10 +1,10 @@
-QT += qml quick network
+QT += qml quick network widgets
 
 CONFIG += c++11
 
 DEFINES += MAJOR_VERSION=1
 DEFINES += MINOR_VERSION=6
-DEFINES += BUILD_VERSION=3
+DEFINES += BUILD_VERSION=4
 
 win32|macx|unix {
 DEFINES += RES_IOS
