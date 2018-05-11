@@ -78,7 +78,7 @@ Graft-app-Android-arm:
     - "cd ../android-build-x86/build/outputs/apk/"
 #    - "mv -f android-build-x86-release-signed.apk PHD-x86-`echo $COMMIT_TAG`-`echo $BUILD_V`.apk"
     - /usr/local/bin/drive upload -f "GraftWallet `echo $BUILD_V`.apk" -p `echo $UPLOAD_DESTINATION_ID`
-  tags:
+    tags:
     - Android
     - Qt
 
@@ -106,7 +106,7 @@ Graft-wallet-Android-arm:
     - "cd ../android-build-x86/build/outputs/apk/"
 #    - "mv -f android-build-x86-release-signed.apk PHD-x86-`echo $COMMIT_TAG`-`echo $BUILD_V`.apk"
     - /usr/local/bin/drive upload -f "GraftPointOfSale `echo $BUILD_V`.apk" -p `echo $UPLOAD_DESTINATION_ID`
-  tags:
+    tags:
     - Android
     - Qt
 
