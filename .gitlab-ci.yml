@@ -74,10 +74,10 @@ Graft-app-Android-arm:
     - "make"
     - "rm -rf ../android-build-armv7"
     - "make INSTALL_ROOT=../android-build-armv7 install"
-    - "/opt/Qt/5.9.4/android_armv7/bin/androiddeployqt --release --input android-libGraftPointOfSale.so-deployment-settings.json --output ../android-build-armv7 --deployment bundled --android-platform android-26 --jdk /usr/lib/jvm/default-java/ --gradle --sign android/graft_pos_android_release.keystore graft.pos --storepass qwerty"
+    - "/opt/Qt/5.9.4/android_armv7/bin/androiddeployqt --release --input android-libGraftPointOfSale.so-deployment-settings.json --output ../android-build-armv7 --deployment bundled --android-platform android-23 --jdk /usr/lib/jvm/default-java/ --gradle --sign android/graft_pos_android_release.keystore graft.pos --storepass qwerty"
     - "cd ../android-build-armv7/build/outputs/apk/"
-#    - "mv -f android-build-x86-release-signed.apk PHD-x86-`echo $COMMIT_TAG`-`echo $BUILD_V`.apk"
-    - /usr/local/bin/drive upload -f "GraftWallet `echo $BUILD_V`.apk" -p `echo $UPLOAD_DESTINATION_ID`
+    - "mv -f android-build-x86-release-signed.apk GraftWallet-`echo $BUILD_V`.apk"
+    - /usr/local/bin/drive upload -f GraftWallet-`echo $BUILD_V`.apk -p `echo $UPLOAD_DESTINATION_ID`
     tags:
     - Android
     - Qt
