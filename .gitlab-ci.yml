@@ -1,6 +1,6 @@
-Gaft-app:
+Graft-app-Windows-x64:
     only:
-    - master
+    - master--
     
     before_script:
     - git submodule sync --recursive
@@ -26,9 +26,9 @@ Gaft-app:
     - Windows
     - Qt
 
-Gaft-wallet:
+Graft-wallet-Windows-x64:
     only:
-    - master
+    - master--
     
     before_script:
     - git submodule sync --recursive
@@ -53,3 +53,61 @@ Gaft-wallet:
     tags:
     - Windows
     - Qt
+
+Graft-app-Android-arm:
+    only:
+    - master
+    
+    before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+
+    script:
+    - "export ANDROID_HOME=/opt/android-sdk-linux/"
+    - "export ANDROID_NDK_ROOT=/opt/android-ndk-r10e/"
+    - "export ANDROID_SDK_ROOT=/opt/android-sdk-linux/"
+    - "export UPLOAD_DESTINATION_ID=$(/usr/local/bin/drive list -q \"trashed = false and title = 'Graft-mobile'\" | grep Graft-mobile | awk '{ print $1 }')"
+    - "cd GraftMobileClient"
+    - "chmod +x build-version.sh"
+    - "export BUILD_V=$(./build-version.sh)"
+    - "/opt/Qt/5.9.4/android_x86/bin/qmake GraftMobileClient.pro DEFINES+=POS_BUILD"
+    - "make"
+    - "rm -rf ../android-build-x86"
+    - "make INSTALL_ROOT=../android-build-x86 install"
+#    - "/opt/Qt/5.9.2/android_x86/bin/androiddeployqt --release --input android-libPHD.so-deployment-settings.json --output ../android-build-x86 --deployment bundled --android-platform android-26 --jdk /usr/lib/jvm/default-java/ --gradle --sign PHDAndroidDebug.keystore PHDAndroid --storepass PHDAndroid"
+    - "cd ../android-build-x86/build/outputs/apk/"
+#    - "mv -f android-build-x86-release-signed.apk PHD-x86-`echo $COMMIT_TAG`-`echo $BUILD_V`.apk"
+    - /usr/local/bin/drive upload -f "GraftWallet `echo $BUILD_V`.apk" -p `echo $UPLOAD_DESTINATION_ID`
+  tags:
+    - Android
+    - Qt
+
+Graft-wallet-Android-arm:
+    only:
+    - master
+    
+    before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+
+    script:
+    - "export ANDROID_HOME=/opt/android-sdk-linux/"
+    - "export ANDROID_NDK_ROOT=/opt/android-ndk-r10e/"
+    - "export ANDROID_SDK_ROOT=/opt/android-sdk-linux/"
+    - "export UPLOAD_DESTINATION_ID=$(/usr/local/bin/drive list -q \"trashed = false and title = 'Graft-mobile'\" | grep Graft-mobile | awk '{ print $1 }')"
+    - "cd GraftMobileClient"
+    - "chmod +x build-version.sh"
+    - "export BUILD_V=$(./build-version.sh)"
+    - "/opt/Qt/5.9.4/android_x86/bin/qmake GraftMobileClient.pro DEFINES+=WALLET_BUILD"
+    - "make"
+    - "rm -rf ../android-build-x86"
+    - "make INSTALL_ROOT=../android-build-x86 install"
+#    - "/opt/Qt/5.9.2/android_x86/bin/androiddeployqt --release --input android-libPHD.so-deployment-settings.json --output ../android-build-x86 --deployment bundled --android-platform android-26 --jdk /usr/lib/jvm/default-java/ --gradle --sign PHDAndroidDebug.keystore PHDAndroid --storepass PHDAndroid"
+    - "cd ../android-build-x86/build/outputs/apk/"
+#    - "mv -f android-build-x86-release-signed.apk PHD-x86-`echo $COMMIT_TAG`-`echo $BUILD_V`.apk"
+    - /usr/local/bin/drive upload -f "GraftPointOfSale `echo $BUILD_V`.apk" -p `echo $UPLOAD_DESTINATION_ID`
+  tags:
+    - Android
+    - Qt
+
+
