@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/imgs">
+        <file alias="SplashScreen.png">imgs/desktop/SplashScreenWallet.png</file>
+    </qresource>
+</RCC>

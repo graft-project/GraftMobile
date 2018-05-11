@@ -28,16 +28,16 @@ BaseScreen {
                 right: parent.right
             }
             horizontalAlignment: Label.AlignHCenter
-            color: "#BBBBBB"
+            color: "#ce2121"
             wrapMode: Label.WordWrap
-            text: qsTr("Your wallet is created! Copy and store in the safe place this " +
-                       "mnemonic password")
+            text: qsTr("Your wallet is created! Your mnemonic phrase is the only way to restore " + 
+                       "your wallet!\nCopy and store in the safe place this mnemonic password.")
         }
 
         MnemonicPhraseView {
             id: mnemonicPhraseView
             anchors {
-                verticalCenterOffset: -30
+                verticalCenterOffset: Detector.isMobile() ? -15 : -20
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right

@@ -1,18 +1,24 @@
     !include "MUI2.nsh"
 	!include "WinVer.nsh"
+    !include "FileFunc.nsh"
+    !include "nsProcess.nsh"
+    !include WinMessages.nsh
+    !include x64.nsh
 
 	!define APPNAME "GraftPointOfSale"
 	!define COMPANYNAME "GRAFT Payments, LLC"
 	!define DESCRIPTION "Graft Point-of-Sale"
 	!define VERSIONMAJOR 1
 	!define VERSIONMINOR 6
-        !define VERSIONBUILD 3
-        !define VERSION "1.6.3"
+    !define VERSIONBUILD 4
+    !define VERSION "1.6.4"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
 	; !define LIC_NAME "license.rtf"
 	!define ARPPATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
     !define INSTALLSIZE 33727070
+
+    Var REDIST_PACKAGE
 
     Name "${DESCRIPTION}"
 	Caption "${APPNAME} ${VERSION}"
@@ -69,11 +75,7 @@
 	!insertmacro MUI_LANGUAGE "English"
 	!insertmacro MUI_RESERVEFILE_LANGDLL
 
-	!include WinMessages.nsh
-
 InstType "Standart"
-
-!include "FileFunc.nsh"
  
 Section "Install"
  
@@ -81,8 +83,6 @@ ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
 IntFmt $0 "0x%08X" $0
 
 SectionEnd
-
-!include "nsProcess.nsh"
 
 Section "!${APPNAME} ${VERSION}" SecGraftPOS
 
@@ -101,7 +101,8 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
 	AddSize 1024
 	SetOutPath "$INSTDIR"
 	File "${APPNAME}.exe"
-    File "vcredist_x64.exe"
+    File /nonfatal "vcredist_x64.exe"
+    File /nonfatal "vcredist_x86.exe"
 	File "d3dcompiler_47.dll"
 	File "libeay32.dll"
 	File "libEGL.dll"
@@ -156,11 +157,11 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
 SectionEnd
 
 Function LaunchLink
-  ExecShell "" "$INSTDIR\${APPNAME}.exe"
+    ExecShell "" "$INSTDIR\${APPNAME}.exe"
 FunctionEnd
 
 Function CreateShortcutIcon
-  CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\${APPNAME}.exe"
+    CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\${APPNAME}.exe"
 FunctionEnd
 
 ;--------------------------------
@@ -198,21 +199,36 @@ Section "Uninstall"
 	
 SectionEnd
 
+Var REDIST_PACKAGE_VERSION
+
 Function check_Visual_C++_Redistributable
-    
-!include x64.nsh
 
 ${If} ${RunningX64}
-        ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" "Installed"
-        StrCmp $1 1 installed
+    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" "Installed"
+    StrCmp $1 1 installed
+${Else}
+    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x86" "Installed"
+    StrCmp $1 1 installed
 ${EndIf}
 
-MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ 2017 Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
+MessageBox MB_YESNO "Couldn't find a Microsoft Visual C++ $REDIST_PACKAGE_VERSION Redistributable package.$\nDo you want to install it now?" IDYES InstallRedistributablePackage IDNO installed
 
 InstallRedistributablePackage:
-        ExecWait "vcredist_x64.exe"
+    ExecWait "$REDIST_PACKAGE"
 
 installed:
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 
+FunctionEnd
+
+Function .onInit
+${If} ${RunningX64}
+    StrCpy $REDIST_PACKAGE "vcredist_x64.exe"
+    StrCpy $REDIST_PACKAGE_VERSION "2017"
+    StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
+${Else}
+    StrCpy $REDIST_PACKAGE "vcredist_x86.exe"
+    StrCpy $REDIST_PACKAGE_VERSION "2015"
+    StrCpy $INSTDIR "$PROGRAMFILES\${APPNAME}"
+${EndIf}
 FunctionEnd
