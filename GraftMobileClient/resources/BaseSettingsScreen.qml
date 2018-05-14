@@ -66,6 +66,10 @@ BaseScreen {
             RowLayout {
                 id: serviceAddrLayout
                 enabled: serviceAddr.checked
+                anchors {
+                    right: parent.right
+                    left: parent.left
+                }
                 spacing: 20
 
                 LinearEditItem {
@@ -74,6 +78,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 130
+                    inFocus: serviceAddr.checked
                     text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("ip") : ""
                 }
 
@@ -82,6 +87,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 100
+                    inFocus: serviceAddr.checked
                     text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
                         regExp: /\d{1,5}/
