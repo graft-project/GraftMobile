@@ -3,6 +3,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -65,6 +66,11 @@ BaseScreen {
                         inputMethodHints: Qt.ImhNoPredictiveText
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
                                             qsTr("Receiver's address:") : qsTr("Receiver's address")
+                        validator: RegExpValidator {
+                            regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
+                          /(^G[0-9AB][1-9A-HJ-NP-Za-km-z]{104}|^F[0-9AB][1-9A-HJ-NP-Za-km-z]{93})/ :
+                          /(^F[0-9AB][1-9A-HJ-NP-Za-km-z]{104}|^F[0-9AB][1-9A-HJ-NP-Za-km-z]{93})/
+                        }
                     }
 
                     LinearEditItem {
@@ -137,8 +143,12 @@ BaseScreen {
     }
 
     function checkingData() {
-        if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 110)) {
-            screenDialog.text = qsTr("You entered the wrong account number! Please input correct account number.")
+        if (receiversAddress.text.length === 0) {
+            screenDialog.text = qsTr("Receiver's address is empty! Please input correct account address.")
+            screenDialog.open()
+        } else if (receiversAddress.text.length !== 106 && receiversAddress.text.length !== 95) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("Receiver's address is invalid! Please input correct account address.")
             screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")
