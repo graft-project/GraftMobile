@@ -68,7 +68,7 @@ BaseScreen {
                                             qsTr("Receiver's address:") : qsTr("Receiver's address")
                         validator: RegExpValidator {
                             regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
-                          /(^G[0-9AB][1-9A-HJ-NP-Za-km-z]{104}|^F[0-9AB][1-9A-HJ-NP-Za-km-z]{93})/ :
+                          /(^G[0-9AB][1-9A-HJ-NP-Za-km-z]{104}|^G[0-9AB][1-9A-HJ-NP-Za-km-z]{93})/ :
                           /(^F[0-9AB][1-9A-HJ-NP-Za-km-z]{104}|^F[0-9AB][1-9A-HJ-NP-Za-km-z]{93})/
                         }
                     }
