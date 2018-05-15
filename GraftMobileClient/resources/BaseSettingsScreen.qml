@@ -60,12 +60,26 @@ BaseScreen {
                     id: serviceAddr
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     checked: GraftClient.useOwnServiceAddress()
+                    onCheckedChanged: {
+                        if (ipTextField.text.length === 3) {
+                            ipTextField.inFocus = serviceAddr.checked
+                        } else if (portTextField.text.length === 0) {
+                            portTextField.inFocus = serviceAddr.checked
+                        } else {
+                            ipTextField.inFocus = false
+                            portTextField.inFocus = false
+                        }
+                    }
                 }
             }
 
             RowLayout {
                 id: serviceAddrLayout
                 enabled: serviceAddr.checked
+                anchors {
+                    right: parent.right
+                    left: parent.left
+                }
                 spacing: 20
 
                 LinearEditItem {
