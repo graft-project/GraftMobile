@@ -10,8 +10,8 @@ BaseHeader {
                                         Detector.isDesktop() ? 49 : 64
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
-    property alias navigationText: navigationButton.text
-    property alias actionText: actionButton.text
+    property alias navigationText: navigationButton.name
+    property alias actionText: actionButton.name
 
     RowLayout {
         height: parent.height
@@ -32,7 +32,7 @@ BaseHeader {
                 id: navigationButton
                 anchors.centerIn: parent
                 visible: rootItem.isNavigationButtonVisible
-                text: qsTr("Back")
+                name: qsTr("Back")
                 onClicked: navigationButtonClicked()
             }
         }
@@ -68,8 +68,10 @@ BaseHeader {
                 id: actionButton
                 anchors.centerIn: parent
                 visible: rootItem.actionButtonState
-                text: qsTr("Done")
+                name: qsTr("Done")
                 onClicked: actionButtonClicked()
+                onPressed: actionButton.focus = true
+                onReleased: actionButton.focus = false
             }
         }
     }
