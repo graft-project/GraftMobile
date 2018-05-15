@@ -60,6 +60,16 @@ BaseScreen {
                     id: serviceAddr
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     checked: GraftClient.useOwnServiceAddress()
+                    onCheckedChanged: {
+                        if (ipTextField.text.length === 3) {
+                            ipTextField.inFocus = serviceAddr.checked
+                        } else if (portTextField.text.length === 0) {
+                            portTextField.inFocus = serviceAddr.checked
+                        } else {
+                            ipTextField.inFocus = false
+                            portTextField.inFocus = false
+                        }
+                    }
                 }
             }
 
@@ -78,7 +88,6 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 130
-                    inFocus: serviceAddr.checked
                     text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("ip") : ""
                 }
 
@@ -87,7 +96,6 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 100
-                    inFocus: serviceAddr.checked
                     text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("port") : ""
                     validator: RegExpValidator {
                         regExp: /\d{1,5}/
