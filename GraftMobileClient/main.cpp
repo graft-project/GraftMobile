@@ -4,20 +4,21 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFileInfo>
-#include <QZXing.h>
 #include <QDir>
 
-#include "core/cardmodel.h"
+#include "core/selectedproductproxymodel.h"
+#include "core/quickexchangemodel.h"
+#include "core/graftwalletclient.h"
+#include "core/graftposclient.h"
+#include "core/currencymodel.h"
 #include "core/accountmodel.h"
 #include "core/productmodel.h"
-#include "core/currencymodel.h"
-#include "core/graftposclient.h"
-#include "core/graftwalletclient.h"
-#include "core/quickexchangemodel.h"
-#include "core/selectedproductproxymodel.h"
+#include "core/cardmodel.h"
 #include "core/defines.h"
+
 #include "devicedetector.h"
 #include "designfactory.h"
+#include "QZXing.h"
 
 // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
 // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
