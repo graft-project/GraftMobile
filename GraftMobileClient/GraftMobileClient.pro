@@ -27,7 +27,7 @@ android {
 include(android/android.pri)
 }
 
-include(QZXing.pri)
+include(qzxing/QZXing.pri)
 include(QRCodeGenerator.pri)
 
 contains(DEFINES, POS_BUILD) {
