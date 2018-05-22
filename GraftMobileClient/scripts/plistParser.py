@@ -1,12 +1,12 @@
 import plistlib
 import os
 
-def changeBuildApplePlist(pathToFile, majorV = 0, minorV = 0, buildV = 0):
+def changeVersion(pathToFile, majorVersion = 0, minorVersion = 0, buildVersion = 0):
     if os.path.isfile(pathToFile):
         plist = plistlib.readPlist(pathToFile)
         
-        bundleShortVersion = str(majorV) + '.' + str(minorV)
-        bundleVersion = str(majorV) + '.' + str(minorV) + '.' + str(buildV)
+        bundleShortVersion = "{}.{}".format(majorVersion, minorVersion)
+        bundleVersion = "{}.{}.{}".format(majorVersion, minorVersion, buildVersion)
         
         plist["CFBundleShortVersionString"] = bundleShortVersion
         plist["CFBundleVersion"] = bundleVersion
@@ -14,3 +14,4 @@ def changeBuildApplePlist(pathToFile, majorV = 0, minorV = 0, buildV = 0):
         plistlib.writePlist(plist, pathToFile)
     else:
         print("You have specified a bad path to the *.plist file!")
+        
