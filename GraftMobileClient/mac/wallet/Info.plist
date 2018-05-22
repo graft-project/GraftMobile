@@ -21,9 +21,9 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6</string>
+        <string>1.7</string>
 	<key>CFBundleVersion</key>
-        <string>1.6.5</string>
+        <string>1.7.0</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
