@@ -21,7 +21,7 @@
 #include "QZXing.h"
 
 #if !defined(POS_BUILD) && !defined(WALLET_BUILD)
-static_assert(false, "You don't added additional arguments for qmake in \'Build Settings->Build Steps\'");
+static_assert(false, "You didn't add additional argument POS_BUILD or WALLET_BUILD for qmake in \'Build Settings->Build Steps\'");
 #endif
 
 // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
