@@ -14,4 +14,3 @@ def changeVersion(pathToFile, majorVersion = 0, minorVersion = 0, buildVersion =
         plistlib.writePlist(plist, pathToFile)
     else:
         print("You have specified a bad path to the *.plist file!")
-        
