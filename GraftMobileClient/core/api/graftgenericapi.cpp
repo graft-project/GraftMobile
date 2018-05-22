@@ -55,7 +55,6 @@ void GraftGenericAPI::createAccount(const QString &password)
     mRetries = 0;
     mPassword = password;
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Language"), QStringLiteral("English"));
     QJsonObject data = buildMessage(QStringLiteral("CreateAccount"), params);
     QByteArray array = QJsonDocument(data).toJson();
@@ -75,7 +74,6 @@ void GraftGenericAPI::getBalance()
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     QJsonObject data = buildMessage(QStringLiteral("GetWalletBalance"), params);
     QByteArray array = QJsonDocument(data).toJson();
@@ -96,7 +94,6 @@ void GraftGenericAPI::getSeed()
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Language"), QStringLiteral("English"));
     QJsonObject data = buildMessage(QStringLiteral("GetSeed"), params);
@@ -113,7 +110,6 @@ void GraftGenericAPI::restoreAccount(const QString &seed, const QString &passwor
     mRetries = 0;
     mPassword = password;
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), password);
     params.insert(QStringLiteral("Seed"), seed);
     QJsonObject data = buildMessage(QStringLiteral("RestoreAccount"), params);
     QByteArray array = QJsonDocument(data).toJson();
@@ -133,7 +129,6 @@ void GraftGenericAPI::transferFee(const QString &address, const QString &amount)
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Address"), address);
     params.insert(QStringLiteral("Amount"), amount);
@@ -156,7 +151,6 @@ void GraftGenericAPI::transfer(const QString &address, const QString &amount)
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Address"), address);
     params.insert(QStringLiteral("Amount"), amount);

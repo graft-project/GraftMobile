@@ -4,7 +4,7 @@ CONFIG += c++11
 
 DEFINES += MAJOR_VERSION=1
 DEFINES += MINOR_VERSION=6
-DEFINES += BUILD_VERSION=4
+DEFINES += BUILD_VERSION=5
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -27,7 +27,7 @@ android {
 include(android/android.pri)
 }
 
-include(QZXing.pri)
+include(qzxing/QZXing.pri)
 include(QRCodeGenerator.pri)
 
 contains(DEFINES, POS_BUILD) {

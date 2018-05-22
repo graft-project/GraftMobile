@@ -16,6 +16,7 @@ BaseLinearEditItem {
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
+    property alias inFocus: editItem.focus
     property bool inlineTitle: false
 
     actionTextField: editItem

@@ -1,28 +1,23 @@
 import QtQuick 2.9
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
 
-Text {
+Button {
     id: button
 
-    property alias name: button.text
-    signal clicked()
+    property alias name: label.text
 
-    font.pixelSize: 17
-    color: ColorFactory.color(DesignFactory.LightText)
-
-    OpacityAnimator {
-        id: opacityAnimator
-        target: button
-        from: 1.0
-        to: 0.2
-        duration: 300
-        running: mouseArea.containsMouse
-    }
-
-    MouseArea {
-        id: mouseArea
+    flat: true
+    Material.foreground: pressed ? "#616A78" : ColorFactory.color(DesignFactory.LightText)
+    background: Rectangle {
         anchors.fill: parent
-        onClicked: button.clicked()
-        onExited: button.opacity = 1.0
+        color: "transparent"
+
+        Label {
+            id: label
+            anchors.centerIn: parent
+            font.pixelSize: 17
+        }
     }
 }
