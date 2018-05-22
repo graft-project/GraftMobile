@@ -43,7 +43,6 @@ void GraftWalletAPI::pay(const QString &pid, const QString &address, double amou
     mRetries = 0;
     QJsonObject params;
     params.insert(QStringLiteral("Account"), accountPlaceholder());
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("PaymentID"), pid);
     params.insert(QStringLiteral("POSAddress"), address);
     params.insert(QStringLiteral("Amount"), -666);

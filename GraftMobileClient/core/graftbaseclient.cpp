@@ -110,7 +110,7 @@ void GraftBaseClient::createAccount(const QString &password)
         }
         else
         {
-            api->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+            api->setAccountData(mAccountManager->account(), mAccountManager->password());
         }
     }
 }
@@ -241,7 +241,7 @@ void GraftBaseClient::initAccountSettings()
                 &GraftBaseClient::receiveBalance, Qt::UniqueConnection);
         if (isAccountExists())
         {
-            graftAPI()->setAccountData(mAccountManager->account(), mAccountManager->passsword());
+            graftAPI()->setAccountData(mAccountManager->account(), mAccountManager->password());
             updateBalance();
         }
 //        mBalanceTimer = startTimer(20000);
@@ -309,7 +309,7 @@ void GraftBaseClient::receiveAccount(const QByteArray &accountData, const QStrin
                                      const QString &seed)
 {
     bool isAccountCreated = false;
-    if (mAccountManager->passsword() == password && !accountData.isEmpty() && !address.isEmpty())
+    if (mAccountManager->password() == password && !accountData.isEmpty() && !address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
         mAccountManager->setAddress(address);
@@ -327,7 +327,7 @@ void GraftBaseClient::receiveRestoreAccount(const QByteArray &accountData, const
                                             const QString &seed)
 {
     bool isAccountRestored = false;
-    if (mAccountManager->passsword() == password && !accountData.isEmpty() &&!address.isEmpty())
+    if (mAccountManager->password() == password && !accountData.isEmpty() &&!address.isEmpty())
     {
         mAccountManager->setAccount(accountData);
         mAccountManager->setAddress(address);
@@ -478,7 +478,7 @@ void GraftBaseClient::updateQuickExchange(double cost)
 
 bool GraftBaseClient::checkPassword(const QString &password) const
 {
-    return mAccountManager->passsword() == password;
+    return mAccountManager->password() == password;
 }
 
 void GraftBaseClient::copyToClipboard(const QString &data) const
