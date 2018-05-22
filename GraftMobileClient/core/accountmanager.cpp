@@ -29,16 +29,16 @@ int AccountManager::networkType() const
     return mNetworkType;
 }
 
-void AccountManager::setPassword(const QString &passsword)
+void AccountManager::setPassword(const QString &password)
 {
-    if (mPassword != passsword)
+    if (mPassword != password)
     {
-        mPassword = passsword;
+        mPassword = password;
         save();
     }
 }
 
-QString AccountManager::passsword() const
+QString AccountManager::password() const
 {
     return mPassword;
 }

@@ -3,7 +3,7 @@
 
 #include <QStringList>
 
-static const QString scUrl("http://%1/dapi");
+static const QString scUrl("https://%1/dapi");
 
 namespace MainnetConfiguration {
 static const QString scConfigTitle("Mainnet");

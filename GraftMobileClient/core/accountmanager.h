@@ -17,8 +17,8 @@ public:
     void setNetworkType(int network);
     int networkType() const;
 
-    void setPassword(const QString &passsword);
-    QString passsword() const;
+    void setPassword(const QString &password);
+    QString password() const;
 
     void setAccount(const QByteArray &data);
     QByteArray account() const;
