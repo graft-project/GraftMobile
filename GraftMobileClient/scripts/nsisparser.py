@@ -9,10 +9,10 @@ def changeVersion(pathToFile, majorVersion = 0, minorVersion = 0, buildVersion =
         VERSIONBUILD = "!define VERSIONBUILD {}".format(buildVersion)
         VERSION = "!define VERSION \"{}.{}.{}\"".format(majorVersion, minorVersion, buildVersion)
     
-        data = data.replace(re.search(r'!define VERSIONMAJOR \d', data)[0], VERSIONMAJOR, 1)
-        data = data.replace(re.search(r'!define VERSIONMINOR \d', data)[0], VERSIONMINOR, 1)
-        data = data.replace(re.search(r'!define VERSIONBUILD \d', data)[0], VERSIONBUILD, 1)
-        data = data.replace(re.search(r'!define VERSION \"\d\.\d\.\d\"', data)[0], VERSION, 1)
+        data = data.replace(re.search(r'!define VERSIONMAJOR \d{1,2}', data)[0], VERSIONMAJOR, 1)
+        data = data.replace(re.search(r'!define VERSIONMINOR \d{1,2}', data)[0], VERSIONMINOR, 1)
+        data = data.replace(re.search(r'!define VERSIONBUILD \d{1,2}', data)[0], VERSIONBUILD, 1)
+        data = data.replace(re.search(r'!define VERSION \"\d{1,2}\.\d{1,2}\.\d{1,2}\"', data)[0], VERSION, 1)
         
         file.seek(0)
         file.write(data)
