@@ -16,5 +16,4 @@ def changeVersion(pathToFile, majorVersion = 0, minorVersion = 0, buildVersion =
         
         file.seek(0)
         file.write(data)
-    
-    file.close()
+        file.close()
