@@ -83,7 +83,7 @@ void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNum)
     mPID = pid;
     QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
             .arg(mProductModel->totalCost()).arg(blockNum);
-    setQRCodeImage(mQRCodeEncoder->encode(qrText));
+    setQRCodeImage(QRCodeGenerator::encode(qrText));
     emit saleReceived(isStatusOk);
     if (isStatusOk)
     {

@@ -42,7 +42,6 @@ static const QString scUseOwnServiceAddress("useOwnServiceAddress");
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mImageProvider(nullptr)
-    ,mQRCodeEncoder(new QRCodeGenerator())
     ,mAccountModel(nullptr)
     ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
@@ -56,7 +55,6 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
 
 GraftBaseClient::~GraftBaseClient()
 {
-    delete mQRCodeEncoder;
     delete mAccountManager;
 }
 
@@ -211,7 +209,7 @@ QString GraftBaseClient::addressQRCodeImage() const
 
 QString GraftBaseClient::coinAddressQRCodeImage(const QString &address) const
 {
-    mImageProvider->setBarcodeImage(scCoinAddressQRCodeImageID, mQRCodeEncoder->encode(address));
+    mImageProvider->setBarcodeImage(scCoinAddressQRCodeImageID, QRCodeGenerator::encode(address));
     return scProviderScheme.arg(scBarcodeImageProviderID).arg(scCoinAddressQRCodeImageID);
 }
 
@@ -412,7 +410,7 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
 
 void GraftBaseClient::updateAddressQRCode() const
 {
-    mImageProvider->setBarcodeImage(scAddressQRCodeImageID, mQRCodeEncoder->encode(address()));
+    mImageProvider->setBarcodeImage(scAddressQRCodeImageID, QRCodeGenerator::encode(address()));
 }
 
 QString GraftBaseClient::versionNumber() const

@@ -7,7 +7,6 @@
 class BarcodeImageProvider;
 class QuickExchangeModel;
 class GraftGenericAPI;
-class QRCodeGenerator;
 class AccountManager;
 class CurrencyModel;
 class AccountModel;
@@ -114,7 +113,6 @@ private:
 
 protected:
     BarcodeImageProvider *mImageProvider;
-    QRCodeGenerator *mQRCodeEncoder;
     AccountModel *mAccountModel;
     CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;

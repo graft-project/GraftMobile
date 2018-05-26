@@ -7,8 +7,7 @@
 class QRCodeGenerator
 {
 public:
-    QRCodeGenerator();
-    QImage encode(const QString &message);
+    static QImage encode(const QString &message);
 };
 
 #endif // QRCODEGENERATOR_H
