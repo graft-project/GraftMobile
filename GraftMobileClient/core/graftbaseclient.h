@@ -7,7 +7,6 @@
 class BarcodeImageProvider;
 class QuickExchangeModel;
 class GraftGenericAPI;
-class QRCodeGenerator;
 class AccountManager;
 class CurrencyModel;
 class AccountModel;
@@ -70,6 +69,8 @@ public:
 
     Q_INVOKABLE QString versionNumber() const;
 
+    Q_INVOKABLE bool isDevMode() const;
+
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();
@@ -114,7 +115,6 @@ private:
 
 protected:
     BarcodeImageProvider *mImageProvider;
-    QRCodeGenerator *mQRCodeEncoder;
     AccountModel *mAccountModel;
     CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;
