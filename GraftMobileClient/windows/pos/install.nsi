@@ -9,9 +9,9 @@
 	!define COMPANYNAME "GRAFT Payments, LLC"
 	!define DESCRIPTION "Graft Point-of-Sale"
 	!define VERSIONMAJOR 1
-        !define VERSIONMINOR 7
-    !define VERSIONBUILD 1
-    !define VERSION "1.7.1"
+        !define VERSIONMINOR 8
+    !define VERSIONBUILD 0
+    !define VERSION "1.8.0"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
 	; !define LIC_NAME "license.rtf"
