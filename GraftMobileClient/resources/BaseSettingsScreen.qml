@@ -15,10 +15,14 @@ BaseScreen {
     property alias companyTitle: companyNameTextField.title
     property alias ipTitle: ipTextField.title
     property alias portTitle: portTextField.title
+    property alias addressTitle: addressTextField.title
+
     property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
     property bool okMode: false
+
+    property string networkType: ("http%1://")
 
     ColumnLayout {
         spacing: 0
@@ -50,6 +54,34 @@ BaseScreen {
                 spacing: 0
 
                 Label {
+                    Layout.fillWidth: true
+                    Layout.alignment: Label.AlignLeft | Label.AlignVCenter
+                    text: qsTr("Enable HTTPS")
+                }
+
+                Switch {
+                    id: httpsSwitch
+                    Layout.topMargin: 5
+                    Layout.preferredHeight: 25
+                    Material.accent: ColorFactory.color(DesignFactory.Foreground)
+                    onCheckedChanged: {
+                        if (!serviceURLSwitch.checked) {
+//                            addressTextField.text = qsTr("")
+                        } else if (httpsSwitch.checked) {
+//                            addressTextField.text = networkType.arg("s")
+                            addressTextField.inFocus = serviceURLSwitch.checked
+                        } else if (!httpsSwitch.checked) {
+//                            addressTextField.text = networkType.arg("")
+                            addressTextField.inFocus = serviceURLSwitch.checked
+                        }
+                    }
+                }
+            }
+
+            RowLayout {
+                spacing: 0
+
+                Label {
                     id: switchLabel
                     Layout.fillWidth: true
                     Layout.alignment: Label.AlignLeft | Label.AlignVCenter
@@ -61,6 +93,9 @@ BaseScreen {
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     checked: GraftClient.useOwnServiceAddress()
                     onCheckedChanged: {
+                        if (serviceAddr.checked) {
+                            serviceURLSwitch.checked = false
+                        }
                         if (ipTextField.text.length === 3) {
                             ipTextField.inFocus = serviceAddr.checked
                         } else if (portTextField.text.length === 0) {
@@ -75,6 +110,7 @@ BaseScreen {
 
             RowLayout {
                 id: serviceAddrLayout
+//                visible: serviceAddr.checked
                 enabled: serviceAddr.checked
                 anchors {
                     right: parent.right
@@ -88,6 +124,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     showLengthIndicator: false
                     Layout.preferredWidth: 130
+                    fieldCursorPosition: 0
                     text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("ip") : ""
                 }
 
@@ -101,6 +138,47 @@ BaseScreen {
                         regExp: /\d{1,5}/
                     }
                 }
+            }
+
+            RowLayout {
+                spacing: 0
+
+                Label {
+                    id: serviceURLLabel
+                    Layout.fillWidth: true
+                    Layout.alignment: Label.AlignLeft | Label.AlignVCenter
+                    text: qsTr("Use own service URL")
+                }
+
+                Switch {
+                    id: serviceURLSwitch
+                    Material.accent: ColorFactory.color(DesignFactory.Foreground)
+                    checked: GraftClient.urlAddress()
+                    onCheckedChanged: {
+                        if (!serviceURLSwitch.checked) {
+//                            addressTextField.text = qsTr("")
+                        } else if (httpsSwitch.checked) {
+//                            addressTextField.text = networkType.arg("s")
+                            serviceAddr.checked = false
+                        } else if (!httpsSwitch.checked) {
+//                            addressTextField.text = networkType.arg("")
+                            serviceAddr.checked = false
+                        } else {
+                            serviceAddr.checked = false
+                        }
+                        addressTextField.inFocus = addressTextField.text.length >= 7
+                    }
+                }
+            }
+
+            LinearEditItem {
+                id: addressTextField
+//                visible: serviceURLSwitch.checked
+                enabled: serviceURLSwitch.checked
+                inputMethodHints: Qt.ImhHiddenText
+                Layout.alignment: Qt.AlignTop
+                text: GraftClient.urlAddress() ? GraftClient.settings("address") : ""
+                maximumLength: 50
             }
         }
 
@@ -214,6 +292,13 @@ BaseScreen {
                 resetOwnServiceSettings()
             }
         }
+        if (GraftClient.isValidUrl(addressTextField.text)) {
+            if (serviceURLSwitch.checked) {
+                addressTextField.text = GraftClient.settings("address")
+            } else {
+                resetOwnServiceSettings()
+            }
+        }
         confirmPasswordAction()
     }
 
@@ -245,8 +330,11 @@ BaseScreen {
     function resetOwnServiceSettings() {
         ipTextField.actionTextField.clear()
         portTextField.actionTextField.clear()
+        addressTextField.actionTextField.clear()
         companyNameTextField.actionTextField.clear()
         serviceAddr.checked = false
+        httpsSwitch.checked = false
+        serviceURLSwitch.checked =false
         GraftClient.removeSettings()
     }
 
@@ -257,7 +345,18 @@ BaseScreen {
         if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }
-        if (serviceAddr.checked) {
+        if (addressTextField.text !== "" && GraftClient.isValidUrl(addressTextField.text)) {
+            GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
+        }
+        if (serviceURLSwitch.checked) {
+            if (!GraftClient.setUrl(addressTextField.text, httpsSwitch.checked)) {
+                screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
+                                         "correct service address.")
+                screenDialog.open()
+                enableScreen()
+                return
+            }
+        } else if (serviceAddr.checked) {
             if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
                 screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
                                          "correct service address.")
@@ -269,5 +368,9 @@ BaseScreen {
         GraftClient.saveSettings()
         pushScreen.openMainScreen()
         enableScreen()
+    }
+
+    function aaa() {
+        return GraftClient.isHttps(httpsSwitch.checked)
     }
 }

@@ -52,6 +52,12 @@ public:
     Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port);
     Q_INVOKABLE bool isValidIp(const QString &ip) const;
 
+    Q_INVOKABLE bool urlAddress() const;
+    Q_INVOKABLE bool setUrl(const QString &url, bool type);
+    Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
+
+    Q_INVOKABLE QString isHttps(bool type) const;
+
     Q_INVOKABLE double balance(int type) const;
     void saveBalance() const;
 

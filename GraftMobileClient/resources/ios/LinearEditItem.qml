@@ -18,6 +18,7 @@ BaseLinearEditItem {
     property alias passwordCharacter: editItem.passwordCharacter
     property alias inFocus: editItem.focus
     property bool inlineTitle: false
+    property int fieldCursorPosition: 0
 
     actionTextField: editItem
 
@@ -27,6 +28,7 @@ BaseLinearEditItem {
         leftPadding: titleItem.width
         rightPadding: visibilityIcon ? 42 : 0
         bottomPadding: 15
+        cursorPosition: fieldCursorPosition
         verticalAlignment: Qt.AlignTop
         color: "#404040"
         maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767

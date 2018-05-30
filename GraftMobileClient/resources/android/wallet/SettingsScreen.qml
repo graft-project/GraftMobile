@@ -9,6 +9,7 @@ BaseSettingsScreen {
     portTitle: qsTr("Port")
     saveButtonText: qsTr("Save changes")
     displayCompanyName: false
+    addressTitle: qsTr("Address")
 
     screenHeader {
         navigationButtonState: true

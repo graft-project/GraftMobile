@@ -8,6 +8,7 @@ BaseSettingsScreen {
     portTitle: qsTr("Port:")
     saveButtonText: qsTr("Done")
     companyTitle: qsTr("Company:")
+    addressTitle: qsTr("Address:")
 
     screenHeader {
         isNavigationButtonVisible: false

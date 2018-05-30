@@ -16,6 +16,7 @@ BaseLinearEditItem {
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
     property alias inFocus: editItem.focus
+    property int fieldCursorPosition: 0
 
     actionTextField: editItem
 
@@ -34,6 +35,7 @@ BaseLinearEditItem {
             id: editItem
             Layout.fillWidth: true
             Layout.fillHeight: true
+            cursorPosition: fieldCursorPosition
             rightPadding: visibilityIcon ? 44 : 0
             verticalAlignment: Qt.AlignTop
             color: "#404040"

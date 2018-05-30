@@ -7,6 +7,7 @@ BaseSettingsScreen {
     ipTitle: qsTr("IP:")
     portTitle: qsTr("Port:")
     saveButtonText: qsTr("Done")
+    addressTitle: qsTr("Address:")
     displayCompanyName: false
 
     screenHeader {
