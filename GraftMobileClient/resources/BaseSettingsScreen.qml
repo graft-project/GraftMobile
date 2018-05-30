@@ -65,6 +65,8 @@ BaseScreen {
                     Layout.preferredHeight: 25
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     onCheckedChanged: {
+                        aaa(addressTextField.text);
+
                         if (!serviceURLSwitch.checked) {
 //                            addressTextField.text = qsTr("")
                         } else if (httpsSwitch.checked) {
@@ -370,7 +372,11 @@ BaseScreen {
         enableScreen()
     }
 
-    function aaa() {
-        return GraftClient.isHttps(httpsSwitch.checked)
+    function aaa(text) {
+        var result
+        var res
+        result = text.match(RegExp(/^https?/)).toString()
+        console.log("--", result)
+//        return GraftClient.isHttps(httpsSwitch.checked)
     }
 }
