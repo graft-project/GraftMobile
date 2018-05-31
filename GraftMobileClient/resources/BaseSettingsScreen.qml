@@ -65,15 +65,15 @@ BaseScreen {
                     Layout.preferredHeight: 25
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     onCheckedChanged: {
-                        aaa(addressTextField.text);
+                        addressTextField.text = aaa(addressTextField.text)
 
                         if (!serviceURLSwitch.checked) {
-//                            addressTextField.text = qsTr("")
+                            //                            addressTextField.text = qsTr("")
                         } else if (httpsSwitch.checked) {
-//                            addressTextField.text = networkType.arg("s")
+                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("s")
                             addressTextField.inFocus = serviceURLSwitch.checked
                         } else if (!httpsSwitch.checked) {
-//                            addressTextField.text = networkType.arg("")
+                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("")
                             addressTextField.inFocus = serviceURLSwitch.checked
                         }
                     }
@@ -112,13 +112,48 @@ BaseScreen {
 
             RowLayout {
                 id: serviceAddrLayout
-//                visible: serviceAddr.checked
+                //                visible: serviceAddr.checked
                 enabled: serviceAddr.checked
                 anchors {
                     right: parent.right
                     left: parent.left
                 }
+                height: 200
                 spacing: 20
+                state: "show"
+                states: [
+                    State {
+                        name: "shown"
+                        when: !serviceAddr.checked
+                        PropertyChanges {
+                            target: serviceAddrLayout
+                            visible: false
+                        }
+                        PropertyChanges {
+                            target: ipTextField
+                            visible: false
+                        }
+                        PropertyChanges {
+                            target: portTextField
+                            visible: false
+                        }
+                    },
+                    State {
+                        name: "hidden"
+                        when: serviceAddr.checked
+                        PropertyChanges {
+                            target: serviceAddrLayout
+                            height: 20
+                        }
+                    }
+                ]
+                transitions: Transition {
+                    PropertyAnimation {
+                        property: "height"
+                        duration: 1000
+                        easing.type: Easing.OutQuad//Easing.OutCirc
+                    }
+                }
 
                 LinearEditItem {
                     id: ipTextField
@@ -157,13 +192,15 @@ BaseScreen {
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     checked: GraftClient.urlAddress()
                     onCheckedChanged: {
+                        addressTextField.text = aaa(addressTextField.text)
+
                         if (!serviceURLSwitch.checked) {
-//                            addressTextField.text = qsTr("")
+                            //                            addressTextField.text = qsTr("")
                         } else if (httpsSwitch.checked) {
-//                            addressTextField.text = networkType.arg("s")
+                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("s")
                             serviceAddr.checked = false
                         } else if (!httpsSwitch.checked) {
-//                            addressTextField.text = networkType.arg("")
+                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("")
                             serviceAddr.checked = false
                         } else {
                             serviceAddr.checked = false
@@ -175,12 +212,38 @@ BaseScreen {
 
             LinearEditItem {
                 id: addressTextField
-//                visible: serviceURLSwitch.checked
+                //                visible: serviceURLSwitch.checked
                 enabled: serviceURLSwitch.checked
                 inputMethodHints: Qt.ImhHiddenText
                 Layout.alignment: Qt.AlignTop
                 text: GraftClient.urlAddress() ? GraftClient.settings("address") : ""
                 maximumLength: 50
+                state: "show"
+                states: [
+                    State {
+                        name: "shown"
+                        when: !serviceURLSwitch.checked
+                        PropertyChanges {
+                            target: addressTextField
+                            visible: false
+                        }
+                    },
+                    State {
+                        name: "hidden"
+                        when: serviceURLSwitch.checked
+                        PropertyChanges {
+                            target: addressTextField
+                            height: 20
+                        }
+                    }
+                ]
+                transitions: Transition {
+                    PropertyAnimation {
+                        property: "height"
+                        duration: 1000
+                        easing.type: Easing.OutQuad//Easing.OutCirc
+                    }
+                }
             }
         }
 
@@ -374,9 +437,12 @@ BaseScreen {
 
     function aaa(text) {
         var result
-        var res
         result = text.match(RegExp(/^https?/)).toString()
-        console.log("--", result)
-//        return GraftClient.isHttps(httpsSwitch.checked)
+        if (result === "https" && !httpsSwitch.checked) {
+            return text.replace(/https/i, 'http')
+        } else if (result === "http" && httpsSwitch.checked) {
+            return text.replace(/http/i, 'https')
+        }
+        //        return GraftClient.isHttps(httpsSwitch.checked)
     }
 }

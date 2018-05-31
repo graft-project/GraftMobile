@@ -463,7 +463,7 @@ bool GraftBaseClient::setUrl(const QString &url, bool type)
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
     if (lIsResetUrl)
     {
-        setSettings(scAddress, (isHttps(type).append(url)));
+        setSettings(scAddress, (url));
         graftAPI()->changeAddresses(QStringList() << url);
     }
     return lIsResetUrl;
