@@ -16,13 +16,10 @@ BaseScreen {
     property alias ipTitle: ipTextField.title
     property alias portTitle: portTextField.title
     property alias addressTitle: addressTextField.title
-
     property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
     property bool okMode: false
-
-    property string networkType: ("http%1://")
 
     ColumnLayout {
         spacing: 0
@@ -62,18 +59,14 @@ BaseScreen {
                 Switch {
                     id: httpsSwitch
                     Layout.topMargin: 5
-                    Layout.preferredHeight: 25
+                    checked: true
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     onCheckedChanged: {
-                        addressTextField.text = aaa(addressTextField.text)
-
-                        if (!serviceURLSwitch.checked) {
-                            //                            addressTextField.text = qsTr("")
-                        } else if (httpsSwitch.checked) {
-                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("s")
-                            addressTextField.inFocus = serviceURLSwitch.checked
-                        } else if (!httpsSwitch.checked) {
-                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("")
+                        GraftClient.setSettings("httpsType", httpsSwitch.checked)
+                        replaceNetworkType(addressTextField.text)
+                        if (serviceAddr.checked) {
+                            addresFieldFocus()
+                        } else if (serviceURLSwitch.checked) {
                             addressTextField.inFocus = serviceURLSwitch.checked
                         }
                     }
@@ -97,14 +90,7 @@ BaseScreen {
                     onCheckedChanged: {
                         if (serviceAddr.checked) {
                             serviceURLSwitch.checked = false
-                        }
-                        if (ipTextField.text.length === 3) {
-                            ipTextField.inFocus = serviceAddr.checked
-                        } else if (portTextField.text.length === 0) {
-                            portTextField.inFocus = serviceAddr.checked
-                        } else {
-                            ipTextField.inFocus = false
-                            portTextField.inFocus = false
+                            addresFieldFocus()
                         }
                     }
                 }
@@ -112,46 +98,28 @@ BaseScreen {
 
             RowLayout {
                 id: serviceAddrLayout
-                //                visible: serviceAddr.checked
                 enabled: serviceAddr.checked
                 anchors {
                     right: parent.right
                     left: parent.left
                 }
-                height: 200
                 spacing: 20
-                state: "show"
+                state: "hidden"
                 states: [
                     State {
-                        name: "shown"
+                        name: "hidden"
                         when: !serviceAddr.checked
                         PropertyChanges {
                             target: serviceAddrLayout
                             visible: false
-                        }
-                        PropertyChanges {
-                            target: ipTextField
-                            visible: false
-                        }
-                        PropertyChanges {
-                            target: portTextField
-                            visible: false
-                        }
-                    },
-                    State {
-                        name: "hidden"
-                        when: serviceAddr.checked
-                        PropertyChanges {
-                            target: serviceAddrLayout
-                            height: 20
+                            opacity: 0
                         }
                     }
                 ]
                 transitions: Transition {
                     PropertyAnimation {
-                        property: "height"
-                        duration: 1000
-                        easing.type: Easing.OutQuad//Easing.OutCirc
+                        property: "opacity"
+                        duration: 800
                     }
                 }
 
@@ -192,56 +160,38 @@ BaseScreen {
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     checked: GraftClient.urlAddress()
                     onCheckedChanged: {
-                        addressTextField.text = aaa(addressTextField.text)
-
-                        if (!serviceURLSwitch.checked) {
-                            //                            addressTextField.text = qsTr("")
-                        } else if (httpsSwitch.checked) {
-                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("s")
+                        replaceNetworkType(addressTextField.text)
+                        if (serviceURLSwitch.checked) {
                             serviceAddr.checked = false
-                        } else if (!httpsSwitch.checked) {
-                            //                            addressTextField.text = aaa(addressTextField.text)//networkType.arg("")
-                            serviceAddr.checked = false
-                        } else {
-                            serviceAddr.checked = false
+                            addressTextField.inFocus = serviceURLSwitch.checked
                         }
-                        addressTextField.inFocus = addressTextField.text.length >= 7
                     }
                 }
             }
 
             LinearEditItem {
                 id: addressTextField
-                //                visible: serviceURLSwitch.checked
                 enabled: serviceURLSwitch.checked
                 inputMethodHints: Qt.ImhHiddenText
                 Layout.alignment: Qt.AlignTop
-                text: GraftClient.urlAddress() ? GraftClient.settings("address") : ""
+                text: GraftClient.urlAddress() ? GraftClient.settings("address") : "http://"
                 maximumLength: 50
-                state: "show"
+                state: "hidden"
                 states: [
                     State {
-                        name: "shown"
+                        name: "hidden"
                         when: !serviceURLSwitch.checked
                         PropertyChanges {
                             target: addressTextField
                             visible: false
-                        }
-                    },
-                    State {
-                        name: "hidden"
-                        when: serviceURLSwitch.checked
-                        PropertyChanges {
-                            target: addressTextField
-                            height: 20
+                            opacity: 0
                         }
                     }
                 ]
                 transitions: Transition {
                     PropertyAnimation {
-                        property: "height"
-                        duration: 1000
-                        easing.type: Easing.OutQuad//Easing.OutCirc
+                        property: "opacity"
+                        duration: 800
                     }
                 }
             }
@@ -357,7 +307,7 @@ BaseScreen {
                 resetOwnServiceSettings()
             }
         }
-        if (GraftClient.isValidUrl(addressTextField.text)) {
+        if (!GraftClient.isValidUrl(addressTextField.text)) {
             if (serviceURLSwitch.checked) {
                 addressTextField.text = GraftClient.settings("address")
             } else {
@@ -410,11 +360,11 @@ BaseScreen {
         if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }
-        if (addressTextField.text !== "" && GraftClient.isValidUrl(addressTextField.text)) {
+        if (GraftClient.isValidUrl(addressTextField.text)) {
             GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
         }
         if (serviceURLSwitch.checked) {
-            if (!GraftClient.setUrl(addressTextField.text, httpsSwitch.checked)) {
+            if (!GraftClient.setUrl(addressTextField.text)) {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
@@ -435,14 +385,22 @@ BaseScreen {
         enableScreen()
     }
 
-    function aaa(text) {
-        var result
-        result = text.match(RegExp(/^https?/)).toString()
-        if (result === "https" && !httpsSwitch.checked) {
-            return text.replace(/https/i, 'http')
-        } else if (result === "http" && httpsSwitch.checked) {
-            return text.replace(/http/i, 'https')
+    function replaceNetworkType(text) {
+        if (text.match(new RegExp(/^https?/)).toString() === "https" && !httpsSwitch.checked) {
+            addressTextField.text = text.replace(/https/i, 'http').toString()
+        } else if (text.match(new RegExp(/^https?/)).toString() === "http" && httpsSwitch.checked) {
+            addressTextField.text = text.replace(/http/i, 'https').toString()
         }
-        //        return GraftClient.isHttps(httpsSwitch.checked)
+    }
+
+    function addresFieldFocus() {
+        if (ipTextField.text.length === 3) {
+            ipTextField.inFocus = serviceAddr.checked
+        } else if (portTextField.text.length === 0) {
+            portTextField.inFocus = serviceAddr.checked
+        } else {
+            ipTextField.inFocus = false
+            portTextField.inFocus = false
+        }
     }
 }

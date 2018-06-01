@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #include <QTimer>
 #include <QDir>
+#include <QRegularExpression>
 
 static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
 static const QString scBarcodeImageProviderID("barcodes");
@@ -40,6 +41,7 @@ static const QString scLocalBalance("localBalance");
 static const QString scUseOwnServiceAddress("useOwnServiceAddress");
 static const QString scURLAddress("urlAddress");
 static const QString scAddress("address");
+static const QString scNetworkType("httpsType");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
@@ -297,6 +299,11 @@ QStringList GraftBaseClient::getServiceAddresses() const
         QString port(settings(scPort).toString());
         addressList.append(QString("%1:%2").arg(ip).arg(port));
     }
+    else if (urlAddress())
+    {
+        QString url(settings(scAddress).toString());
+        addressList.append(url);
+    }
     else
     {
         addressList = seedSupernodes();
@@ -452,35 +459,38 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
     QHostAddress validateIp;
     return validateIp.setAddress(ip);
 }
-#include <QDebug>
+
 bool GraftBaseClient::urlAddress() const
 {
     return mClientSettings->value(scURLAddress).toBool();
 }
 
-bool GraftBaseClient::setUrl(const QString &url, bool type)
+bool GraftBaseClient::setUrl(const QString &url)
 {
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
     if (lIsResetUrl)
     {
-        setSettings(scAddress, (url));
-        graftAPI()->changeAddresses(QStringList() << url);
+        setSettings(scAddress, url);
+        graftAPI()->changeAddresses(getServiceAddresses());
     }
     return lIsResetUrl;
 }
 
-bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
+bool GraftBaseClient::isValidUrl(QString urlAddress)
 {
-    return QUrl(urlAddress, QUrl::StrictMode).isValid();
-}
-
-QString GraftBaseClient::isHttps(bool type) const
-{
-    if (type)
+    if (mClientSettings->value(scNetworkType).toBool())
     {
-        return QString("https://");
+        QRegularExpression reg("^https");
+        QRegularExpressionMatch match = reg.match(urlAddress);
+        if (match.hasMatch())
+        {
+            return QUrl(urlAddress, QUrl::StrictMode).isValid();
+        }
+        QRegularExpression regular("^http");
+        urlAddress.replace(regular, QString("https"));
+        setSettings(scAddress, urlAddress);
     }
-    return QString("http://");
+    return QUrl(urlAddress, QUrl::StrictMode).isValid();
 }
 
 double GraftBaseClient::balance(int type) const
@@ -587,6 +597,8 @@ void GraftBaseClient::removeSettings() const
     mClientSettings->remove(QStringLiteral("unlockedBalance"));
     mClientSettings->remove(QStringLiteral("lockedBalance"));
     mClientSettings->remove(QStringLiteral("urlAddress"));
+    mClientSettings->remove(QStringLiteral("address"));
+    mClientSettings->remove(QStringLiteral("httpsType"));
     mClientSettings->sync();
 }
 
@@ -602,5 +614,6 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
+    setSettings(scNetworkType, true);
     emit balanceUpdated();
 }
