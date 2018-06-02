@@ -20,7 +20,10 @@ BaseLinearEditItem {
     property bool inlineTitle: false
     property int fieldCursorPosition: 0
 
+    signal updateText()
+
     actionTextField: editItem
+
 
     TextField {
         id: editItem
@@ -39,6 +42,7 @@ BaseLinearEditItem {
                 editItem.leftPadding = 0
             }
         }
+        onTextChanged: updateText()
 
         VisibilityIcon {
             Material.accent: "#9E9E9E"

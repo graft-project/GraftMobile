@@ -289,7 +289,7 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
     }
     return QByteArray();
 }
-
+#include <QDebug>
 QStringList GraftBaseClient::getServiceAddresses() const
 {
     QStringList addressList;
@@ -303,6 +303,7 @@ QStringList GraftBaseClient::getServiceAddresses() const
     {
         QString url(settings(scAddress).toString());
         addressList.append(url);
+        qDebug() << "===>" << addressList;
     }
     else
     {
@@ -465,31 +466,41 @@ bool GraftBaseClient::urlAddress() const
     return mClientSettings->value(scURLAddress).toBool();
 }
 
-bool GraftBaseClient::setUrl(const QString &url)
+bool GraftBaseClient::resetUrlAddress(QString url)
 {
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
     if (lIsResetUrl)
     {
+        if (mClientSettings->value(scNetworkType).toBool())
+        {
+            if (QRegularExpression("^http").match(url).hasMatch())
+            {
+                url.replace(QRegularExpression("^http"), QString("https"));
+            }
+            else if (!QRegularExpression("^https?:///g").match(url).hasMatch())
+            {
+                url = QString("https://").append(url);
+            }
+        }
+        else
+        {
+            if (QRegularExpression("^http").match(url).hasMatch())
+            {
+                url.replace(QRegularExpression("^https"), QString("http"));
+            }
+            else if (!QRegularExpression("^https?:///g").match(url).hasMatch())
+            {
+                url = QString("http://").append(url);
+            }
+        }
         setSettings(scAddress, url);
         graftAPI()->changeAddresses(getServiceAddresses());
     }
     return lIsResetUrl;
 }
 
-bool GraftBaseClient::isValidUrl(QString urlAddress)
+bool GraftBaseClient::isValidUrl(const QString &urlAddress)
 {
-    if (mClientSettings->value(scNetworkType).toBool())
-    {
-        QRegularExpression reg("^https");
-        QRegularExpressionMatch match = reg.match(urlAddress);
-        if (match.hasMatch())
-        {
-            return QUrl(urlAddress, QUrl::StrictMode).isValid();
-        }
-        QRegularExpression regular("^http");
-        urlAddress.replace(regular, QString("https"));
-        setSettings(scAddress, urlAddress);
-    }
     return QUrl(urlAddress, QUrl::StrictMode).isValid();
 }
 

@@ -176,6 +176,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 text: GraftClient.urlAddress() ? GraftClient.settings("address") : "http://"
                 maximumLength: 50
+                onUpdateText: replaceNetworkType(addressTextField.text)
                 state: "hidden"
                 states: [
                     State {
@@ -299,16 +300,12 @@ BaseScreen {
     }
 
     function validateSettings() {
-        if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
+        if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text) ||
+                !GraftClient.isValidUrl(addressTextField.text)) {
             if (serviceAddr.checked) {
                 ipTextField.text = GraftClient.settings("ip")
                 portTextField.text = GraftClient.settings("port")
-            } else {
-                resetOwnServiceSettings()
-            }
-        }
-        if (!GraftClient.isValidUrl(addressTextField.text)) {
-            if (serviceURLSwitch.checked) {
+            } else if (serviceURLSwitch.checked) {
                 addressTextField.text = GraftClient.settings("address")
             } else {
                 resetOwnServiceSettings()
@@ -364,7 +361,7 @@ BaseScreen {
             GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
         }
         if (serviceURLSwitch.checked) {
-            if (!GraftClient.setUrl(addressTextField.text)) {
+            if (!GraftClient.resetUrlAddress(addressTextField.text)) {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
@@ -386,10 +383,14 @@ BaseScreen {
     }
 
     function replaceNetworkType(text) {
-        if (text.match(new RegExp(/^https?/)).toString() === "https" && !httpsSwitch.checked) {
-            addressTextField.text = text.replace(/https/i, 'http').toString()
-        } else if (text.match(new RegExp(/^https?/)).toString() === "http" && httpsSwitch.checked) {
-            addressTextField.text = text.replace(/http/i, 'https').toString()
+        var regExp = text.match(new RegExp(/^https?/g))
+        if (regExp !== null)
+        {
+            if (regExp.toString() === "https" && !httpsSwitch.checked) {
+                addressTextField.text = text.replace(/https/i, 'http').toString()
+            } else if (regExp.toString() === "http" && httpsSwitch.checked) {
+                addressTextField.text = text.replace(/http/i, 'https').toString()
+            }
         }
     }
 
