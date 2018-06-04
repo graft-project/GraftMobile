@@ -433,6 +433,14 @@ QString GraftBaseClient::versionNumber() const
     return scVersionNumber.toString();
 }
 
+bool GraftBaseClient::isDevMode() const
+{
+#ifdef DEV_MODE
+    return true;
+#endif
+    return false;
+}
+
 QVariant GraftBaseClient::settings(const QString &key) const
 {
     return mClientSettings->value(key);

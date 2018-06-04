@@ -73,6 +73,8 @@ public:
 
     Q_INVOKABLE QString versionNumber() const;
 
+    Q_INVOKABLE bool isDevMode() const;
+
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();
