@@ -11,6 +11,7 @@
 #include "accountmodel.h"
 #include "config.h"
 
+#include <QRegularExpression>
 #include <QGuiApplication>
 #include <QStandardPaths>
 #include <QVersionNumber>
@@ -23,7 +24,6 @@
 #include <QFileInfo>
 #include <QTimer>
 #include <QDir>
-#include <QRegularExpression>
 
 static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
 static const QString scBarcodeImageProviderID("barcodes");
@@ -39,9 +39,9 @@ static const QString scLockedBalance("lockedBalance");
 static const QString scUnlockedBalancee("unlockedBalance");
 static const QString scLocalBalance("localBalance");
 static const QString scUseOwnServiceAddress("useOwnServiceAddress");
+static const QString scNetworkType("httpsType");
 static const QString scURLAddress("urlAddress");
 static const QString scAddress("address");
-static const QString scNetworkType("httpsType");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
@@ -246,7 +246,7 @@ void GraftBaseClient::initAccountSettings()
             graftAPI()->setAccountData(mAccountManager->account(), mAccountManager->password());
             updateBalance();
         }
-        //        mBalanceTimer = startTimer(20000);
+//        mBalanceTimer = startTimer(20000);
     }
 }
 
@@ -289,7 +289,7 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
     }
     return QByteArray();
 }
-#include <QDebug>
+
 QStringList GraftBaseClient::getServiceAddresses() const
 {
     QStringList addressList;
@@ -308,7 +308,6 @@ QStringList GraftBaseClient::getServiceAddresses() const
     {
         QString url(settings(scAddress).toString());
         addressList.append(url);
-        qDebug() << "===>" << addressList;
     }
     else
     {
@@ -479,7 +478,7 @@ bool GraftBaseClient::urlAddress() const
     return mClientSettings->value(scURLAddress).toBool();
 }
 
-bool GraftBaseClient::resetUrlAddress(QString url)
+bool GraftBaseClient::resetUrlAddress(const QString &url)
 {
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
     if (lIsResetUrl)
@@ -598,9 +597,9 @@ void GraftBaseClient::removeSettings() const
     mClientSettings->remove(QStringLiteral("localBalance"));
     mClientSettings->remove(QStringLiteral("unlockedBalance"));
     mClientSettings->remove(QStringLiteral("lockedBalance"));
+    mClientSettings->remove(QStringLiteral("httpsType"));
     mClientSettings->remove(QStringLiteral("urlAddress"));
     mClientSettings->remove(QStringLiteral("address"));
-    mClientSettings->remove(QStringLiteral("httpsType"));
     mClientSettings->sync();
 }
 
@@ -616,6 +615,5 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
-    setSettings(scNetworkType, true);
     emit balanceUpdated();
 }

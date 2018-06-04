@@ -53,7 +53,7 @@ public:
     Q_INVOKABLE bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE bool urlAddress() const;
-    Q_INVOKABLE bool resetUrlAddress(QString url);
+    Q_INVOKABLE bool resetUrlAddress(const QString &url);
     Q_INVOKABLE bool isValidUrl(const QString &urlAddress);
 
     Q_INVOKABLE double balance(int type) const;
@@ -98,8 +98,6 @@ protected:
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
     QStringList getServiceAddresses() const;
-
-    QStringList getServiceUrl() const;
 
 private slots:
     void receiveAccount(const QByteArray &accountData, const QString &password,
