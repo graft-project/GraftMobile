@@ -482,6 +482,10 @@ bool GraftBaseClient::urlAddress() const
 
 bool GraftBaseClient::httpsType() const
 {
+    if (mClientSettings->value(scNetworkType).isNull())
+    {
+        setSettings(scNetworkType, true);
+    }
     return mClientSettings->value(scNetworkType).toBool();
 }
 
@@ -622,5 +626,6 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
+    httpsType();
     emit balanceUpdated();
 }
