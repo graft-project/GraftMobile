@@ -59,7 +59,7 @@ BaseScreen {
                 Switch {
                     id: httpsSwitch
                     Layout.topMargin: 5
-                    checked: true
+                    checked: GraftClient.httpsType()
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     onCheckedChanged: {
                         replaceNetworkType(addressTextField.text)

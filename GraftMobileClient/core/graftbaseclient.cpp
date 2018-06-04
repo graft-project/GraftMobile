@@ -294,7 +294,7 @@ QStringList GraftBaseClient::getServiceAddresses() const
 {
     QStringList addressList;
     QString type;
-    if (mClientSettings->value(scNetworkType).toBool())
+    if (httpsType())
     {
         type = "s";
     }
@@ -480,6 +480,11 @@ bool GraftBaseClient::urlAddress() const
     return mClientSettings->value(scURLAddress).toBool();
 }
 
+bool GraftBaseClient::httpsType() const
+{
+    return mClientSettings->value(scNetworkType).toBool();
+}
+
 bool GraftBaseClient::resetUrlAddress(const QString &url)
 {
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
@@ -617,6 +622,5 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
-    setSettings(scNetworkType, true);
     emit balanceUpdated();
 }

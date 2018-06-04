@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE bool isValidIp(const QString &ip) const;
 
     Q_INVOKABLE bool urlAddress() const;
+    Q_INVOKABLE bool httpsType() const;
     Q_INVOKABLE bool resetUrlAddress(const QString &url);
     Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
 
