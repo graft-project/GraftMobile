@@ -54,7 +54,7 @@ public:
 
     Q_INVOKABLE bool urlAddress() const;
     Q_INVOKABLE bool resetUrlAddress(const QString &url);
-    Q_INVOKABLE bool isValidUrl(const QString &urlAddress);
+    Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
 
     Q_INVOKABLE double balance(int type) const;
     void saveBalance() const;

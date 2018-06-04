@@ -293,11 +293,11 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
 QStringList GraftBaseClient::getServiceAddresses() const
 {
     QStringList addressList;
+    QString type;
     if (useOwnServiceAddress())
     {
         QString ip(settings(scIp).toString());
         QString port(settings(scPort).toString());
-        QString type = "";
         if (mClientSettings->value(scNetworkType).toBool())
         {
             type = "s";
@@ -306,12 +306,18 @@ QStringList GraftBaseClient::getServiceAddresses() const
     }
     else if (urlAddress())
     {
-        QString url(settings(scAddress).toString());
-        addressList.append(url);
+        addressList.append(settings(scAddress).toString());
     }
     else
     {
-        addressList = seedSupernodes();
+        if (mClientSettings->value(scNetworkType).toBool())
+        {
+            type = "s";
+        }
+        for (int i = 0; i < seedSupernodes().size(); ++i)
+        {
+            addressList << seedSupernodes().at(i).arg(QString("http%1://").arg(type));
+        }
     }
     return addressList;
 }
@@ -489,7 +495,7 @@ bool GraftBaseClient::resetUrlAddress(const QString &url)
     return lIsResetUrl;
 }
 
-bool GraftBaseClient::isValidUrl(const QString &urlAddress)
+bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
 {
     return QUrl(urlAddress, QUrl::StrictMode).isValid();
 }
@@ -615,5 +621,6 @@ void GraftBaseClient::initSettings()
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());
     mBalances.insert(GraftClientTools::LocalBalance, settings(scLocalBalance).toDouble());
+    setSettings(scNetworkType, true);
     emit balanceUpdated();
 }

@@ -386,9 +386,9 @@ BaseScreen {
         var regExp = text.match(new RegExp(/^https?:\/\//g))
         if (regExp !== null) {
             if (regExp.toString() === "https://" && !httpsSwitch.checked) {
-                addressTextField.text = text.replace(/https/i, "http").toString()
+                addressTextField.text = text.replace(/https/i, "http")
             } else if (regExp.toString() === "http://" && httpsSwitch.checked) {
-                addressTextField.text = text.replace(/http/i, "https").toString()
+                addressTextField.text = text.replace(/http/i, "https")
             }
         } else {
             if (!httpsSwitch.checked) {
