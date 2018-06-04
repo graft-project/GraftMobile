@@ -294,14 +294,14 @@ QStringList GraftBaseClient::getServiceAddresses() const
 {
     QStringList addressList;
     QString type;
+    if (mClientSettings->value(scNetworkType).toBool())
+    {
+        type = "s";
+    }
     if (useOwnServiceAddress())
     {
         QString ip(settings(scIp).toString());
         QString port(settings(scPort).toString());
-        if (mClientSettings->value(scNetworkType).toBool())
-        {
-            type = "s";
-        }
         addressList.append(QString("http%1://%2:%3").arg(type).arg(ip).arg(port));
     }
     else if (urlAddress())
@@ -310,13 +310,9 @@ QStringList GraftBaseClient::getServiceAddresses() const
     }
     else
     {
-        if (mClientSettings->value(scNetworkType).toBool())
-        {
-            type = "s";
-        }
         for (int i = 0; i < seedSupernodes().size(); ++i)
         {
-            addressList << seedSupernodes().at(i).arg(QString("http%1://").arg(type));
+            addressList << QString("http%1://%2").arg(type).arg(seedSupernodes().at(i));
         }
     }
     return addressList;
