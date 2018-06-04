@@ -297,7 +297,12 @@ QStringList GraftBaseClient::getServiceAddresses() const
     {
         QString ip(settings(scIp).toString());
         QString port(settings(scPort).toString());
-        addressList.append(QString("%1:%2").arg(ip).arg(port));
+        QString type = "";
+        if (mClientSettings->value(scNetworkType).toBool())
+        {
+            type = "s";
+        }
+        addressList.append(QString("http%1://%2:%3").arg(type).arg(ip).arg(port));
     }
     else if (urlAddress())
     {
@@ -471,28 +476,6 @@ bool GraftBaseClient::resetUrlAddress(QString url)
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
     if (lIsResetUrl)
     {
-        if (mClientSettings->value(scNetworkType).toBool())
-        {
-            if (QRegularExpression("^http").match(url).hasMatch())
-            {
-                url.replace(QRegularExpression("^http"), QString("https"));
-            }
-            else if (!QRegularExpression("^https?:///g").match(url).hasMatch())
-            {
-                url = QString("https://").append(url);
-            }
-        }
-        else
-        {
-            if (QRegularExpression("^http").match(url).hasMatch())
-            {
-                url.replace(QRegularExpression("^https"), QString("http"));
-            }
-            else if (!QRegularExpression("^https?:///g").match(url).hasMatch())
-            {
-                url = QString("http://").append(url);
-            }
-        }
         setSettings(scAddress, url);
         graftAPI()->changeAddresses(getServiceAddresses());
     }

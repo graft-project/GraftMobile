@@ -241,7 +241,6 @@ QUrl GraftGenericAPI::nextAddress()
         mCurrentAddress = 0;
     }
     return QUrl(scUrl.arg(mAddresses.value(mCurrentAddress)));
-
 }
 
 QNetworkReply *GraftGenericAPI::retry()
