@@ -62,7 +62,6 @@ BaseScreen {
                     checked: true
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
                     onCheckedChanged: {
-                        GraftClient.setSettings("httpsType", httpsSwitch.checked)
                         replaceNetworkType(addressTextField.text)
                         if (serviceAddr.checked) {
                             addresFieldFocus()
@@ -354,6 +353,7 @@ BaseScreen {
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
+        GraftClient.setSettings("httpsType", httpsSwitch.checked)
         if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }

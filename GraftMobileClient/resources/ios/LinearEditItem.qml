@@ -24,7 +24,6 @@ BaseLinearEditItem {
 
     actionTextField: editItem
 
-
     TextField {
         id: editItem
         anchors.fill: parent
