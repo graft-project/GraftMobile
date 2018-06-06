@@ -325,7 +325,8 @@ BaseScreen {
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
             if (okMode) {
-                var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+                var messageDialog = Detector.isDesktop() ? desktopMessageDialog :
+                                                           mobileMessageDialog
                 if (GraftClient.useOwnServiceAddress()) {
                     message = qsTr("(IP address and port of the server)")
                     messageDialog.open()
@@ -372,7 +373,7 @@ BaseScreen {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }
         if (GraftClient.isValidUrl(addressTextField.text) && !(addressTextField.text === "http://"
-                                                               || addressTextField.text === "https://")) {
+        || addressTextField.text === "https://")) {
             GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
         }
         if (serviceURLSwitch.checked) {
@@ -427,9 +428,11 @@ BaseScreen {
 
     function urlFieldFocus() {
         if (httpsSwitch.checked) {
-            addressTextField.inFocus = addressTextField.text.length < 9 ? serviceURLSwitch.checked : false
+            addressTextField.inFocus = addressTextField.text.length < 9 ?
+                                       serviceURLSwitch.checked : false
         } else {
-            addressTextField.inFocus = addressTextField.text.length < 8 ? serviceURLSwitch.checked : false
+            addressTextField.inFocus = addressTextField.text.length < 8 ?
+                                       serviceURLSwitch.checked : false
         }
     }
 }
