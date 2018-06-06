@@ -339,6 +339,7 @@ void GraftGenericAPI::receiveGetBalanceResponse()
     else
     {
         mRequest.setUrl(nextAddress());
+        getBalance();
     }
 }
 

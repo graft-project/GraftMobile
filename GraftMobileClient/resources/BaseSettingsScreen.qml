@@ -335,6 +335,9 @@ BaseScreen {
                 messageDialog.open()
                 return
             }
+            httpsSwitch.checked = true
+            serviceAddr.checked = false
+            serviceURLSwitch.checked =false
             confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
