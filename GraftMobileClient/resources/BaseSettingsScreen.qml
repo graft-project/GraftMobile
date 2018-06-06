@@ -19,7 +19,7 @@ BaseScreen {
     property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
-    property bool okMode: false
+    property string message: ""
 
     ColumnLayout {
         spacing: 0
@@ -205,7 +205,6 @@ BaseScreen {
             id: resetWalletButton
             text: qsTr("Reset Account")
             onClicked: {
-                okMode = true
                 confirmPasswordAction = resetWalletAccount
                 passwordDialog.open()
             }
@@ -215,7 +214,6 @@ BaseScreen {
             id: mnemonicButton
             text: qsTr("Show Mnemonic Password")
             onClicked: {
-                okMode = false
                 confirmPasswordAction = openMnemonicScreen
                 passwordDialog.open()
             }
@@ -259,14 +257,14 @@ BaseScreen {
         standardButtons: StandardButton.Yes | StandardButton.No
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
+        text: qsTr("Would you like to reset the service settings %1?").arg(message)
+        onNo: {
+            restoreSettings()
+            mobileMessageDialog.close()
+        }
         onYes: {
             resetOwnServiceSettings()
             confirmPasswordAction()
-            mobileMessageDialog.close()
-        }
-        onNo: {
-            validateSettings()
             mobileMessageDialog.close()
         }
     }
@@ -278,12 +276,12 @@ BaseScreen {
         rightMargin: 20
         modal: true
         padding: 5
-        messageTitle: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
+        messageTitle: qsTr("Would you like to reset the service settings %1?").arg(message)
         firstButton {
             flat: true
             text: qsTr("No")
             onClicked: {
-                validateSettings()
+                restoreSettings()
                 desktopMessageDialog.close()
             }
         }
@@ -298,19 +296,18 @@ BaseScreen {
         }
     }
 
-    function validateSettings() {
-        if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text) ||
-                !GraftClient.isValidUrl(addressTextField.text)) {
-            if (serviceAddr.checked) {
-                ipTextField.text = GraftClient.settings("ip")
-                portTextField.text = GraftClient.settings("port")
-            } else if (serviceURLSwitch.checked) {
-                addressTextField.text = GraftClient.settings("address")
-            } else {
-                resetOwnServiceSettings()
-            }
+    function restoreSettings() {
+        if (GraftClient.useOwnServiceAddress()) {
+            ipTextField.text = GraftClient.settings("ip")
+            portTextField.text = GraftClient.settings("port")
         }
-        confirmPasswordAction()
+        if (GraftClient.urlAddress()) {
+            addressTextField.text = GraftClient.settings("address")
+        }
+        if (!GraftClient.httpsType()) {
+            httpsSwitch.checked = GraftClient.settings("httpsType")
+        }
+        resetWalletAccount()
     }
 
     function resetWalletAccount() {
@@ -324,12 +321,21 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            if (okMode && serviceAddr.checked) {
-                var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+            var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+            if (GraftClient.useOwnServiceAddress()) {
+                message = qsTr("(IP address and port of the server)")
                 messageDialog.open()
-            } else {
-                confirmPasswordAction()
+                return
+            } else if (GraftClient.urlAddress()) {
+                message = qsTr("(URL address of the server)")
+                messageDialog.open()
+                return
             }
+            if (!GraftClient.httpsType()) {
+                messageDialog.open()
+                return
+            }
+            confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
@@ -343,21 +349,22 @@ BaseScreen {
         portTextField.actionTextField.clear()
         addressTextField.actionTextField.clear()
         companyNameTextField.actionTextField.clear()
+        httpsSwitch.checked = true
         serviceAddr.checked = false
-        httpsSwitch.checked = false
         serviceURLSwitch.checked =false
         GraftClient.removeSettings()
     }
 
     function saveChanges() {
+        GraftClient.setSettings("httpsType", httpsSwitch.checked)
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        GraftClient.setSettings("httpsType", httpsSwitch.checked)
         if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }
-        if (GraftClient.isValidUrl(addressTextField.text)) {
+        if (GraftClient.isValidUrl(addressTextField.text) && !(addressTextField.text === "http://"
+            || addressTextField.text === "https://")) {
             GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
         }
         if (serviceURLSwitch.checked) {
