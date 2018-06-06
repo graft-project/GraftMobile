@@ -176,6 +176,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 text: GraftClient.urlAddress() ? GraftClient.settings("address") : "http://"
                 showLengthIndicator: false
+                fieldCursorPosition: httpsSwitch.checked ? 8 : 7
                 onUpdateText: replaceNetworkType(addressTextField.text)
                 state: "hidden"
                 states: [
