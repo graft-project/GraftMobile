@@ -20,6 +20,7 @@ BaseScreen {
     property alias displayCompanyName: companyNameTextField.visible
     property var confirmPasswordAction: null
     property string message: ""
+    property bool okMode: false
 
     ColumnLayout {
         spacing: 0
@@ -64,9 +65,9 @@ BaseScreen {
                     onCheckedChanged: {
                         replaceNetworkType(addressTextField.text)
                         if (serviceAddr.checked) {
-                            addresFieldFocus()
+                            addressFieldFocus()
                         } else if (serviceURLSwitch.checked) {
-                            addressTextField.inFocus = serviceURLSwitch.checked
+                            urlFieldFocus()
                         }
                     }
                 }
@@ -89,7 +90,7 @@ BaseScreen {
                     onCheckedChanged: {
                         if (serviceAddr.checked) {
                             serviceURLSwitch.checked = false
-                            addresFieldFocus()
+                            addressFieldFocus()
                         }
                     }
                 }
@@ -162,7 +163,7 @@ BaseScreen {
                         replaceNetworkType(addressTextField.text)
                         if (serviceURLSwitch.checked) {
                             serviceAddr.checked = false
-                            addressTextField.inFocus = serviceURLSwitch.checked
+                            urlFieldFocus()
                         }
                     }
                 }
@@ -174,7 +175,7 @@ BaseScreen {
                 inputMethodHints: Qt.ImhHiddenText
                 Layout.alignment: Qt.AlignTop
                 text: GraftClient.urlAddress() ? GraftClient.settings("address") : "http://"
-                maximumLength: 50
+                showLengthIndicator: false
                 onUpdateText: replaceNetworkType(addressTextField.text)
                 state: "hidden"
                 states: [
@@ -205,6 +206,7 @@ BaseScreen {
             id: resetWalletButton
             text: qsTr("Reset Account")
             onClicked: {
+                okMode = true
                 confirmPasswordAction = resetWalletAccount
                 passwordDialog.open()
             }
@@ -214,6 +216,7 @@ BaseScreen {
             id: mnemonicButton
             text: qsTr("Show Mnemonic Password")
             onClicked: {
+                okMode = false
                 confirmPasswordAction = openMnemonicScreen
                 passwordDialog.open()
             }
@@ -297,6 +300,7 @@ BaseScreen {
     }
 
     function restoreSettings() {
+        resetWalletAccount()
         if (GraftClient.useOwnServiceAddress()) {
             ipTextField.text = GraftClient.settings("ip")
             portTextField.text = GraftClient.settings("port")
@@ -307,7 +311,6 @@ BaseScreen {
         if (!GraftClient.httpsType()) {
             httpsSwitch.checked = GraftClient.settings("httpsType")
         }
-        resetWalletAccount()
     }
 
     function resetWalletAccount() {
@@ -321,23 +324,25 @@ BaseScreen {
 
     function checkingPassword(password) {
         if (GraftClient.checkPassword(password)) {
-            var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
-            if (GraftClient.useOwnServiceAddress()) {
-                message = qsTr("(IP address and port of the server)")
-                messageDialog.open()
-                return
-            } else if (GraftClient.urlAddress()) {
-                message = qsTr("(URL address of the server)")
-                messageDialog.open()
-                return
+            if (okMode) {
+                var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
+                if (GraftClient.useOwnServiceAddress()) {
+                    message = qsTr("(IP address and port of the server)")
+                    messageDialog.open()
+                    return
+                } else if (GraftClient.urlAddress()) {
+                    message = qsTr("(URL address of the server)")
+                    messageDialog.open()
+                    return
+                }
+                if (!GraftClient.httpsType()) {
+                    messageDialog.open()
+                    return
+                }
+                httpsSwitch.checked = true
+                serviceAddr.checked = false
+                serviceURLSwitch.checked = false
             }
-            if (!GraftClient.httpsType()) {
-                messageDialog.open()
-                return
-            }
-            httpsSwitch.checked = true
-            serviceAddr.checked = false
-            serviceURLSwitch.checked =false
             confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
@@ -367,7 +372,7 @@ BaseScreen {
             GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         }
         if (GraftClient.isValidUrl(addressTextField.text) && !(addressTextField.text === "http://"
-            || addressTextField.text === "https://")) {
+                                                               || addressTextField.text === "https://")) {
             GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
         }
         if (serviceURLSwitch.checked) {
@@ -409,7 +414,7 @@ BaseScreen {
         }
     }
 
-    function addresFieldFocus() {
+    function addressFieldFocus() {
         if (ipTextField.text.length === 3) {
             ipTextField.inFocus = serviceAddr.checked
         } else if (portTextField.text.length === 0) {
@@ -417,6 +422,14 @@ BaseScreen {
         } else {
             ipTextField.inFocus = false
             portTextField.inFocus = false
+        }
+    }
+
+    function urlFieldFocus() {
+        if (httpsSwitch.checked) {
+            addressTextField.inFocus = addressTextField.text.length < 9 ? serviceURLSwitch.checked : false
+        } else {
+            addressTextField.inFocus = addressTextField.text.length < 8 ? serviceURLSwitch.checked : false
         }
     }
 }
