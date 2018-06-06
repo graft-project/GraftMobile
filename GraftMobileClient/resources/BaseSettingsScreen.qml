@@ -344,6 +344,9 @@ BaseScreen {
                 httpsSwitch.checked = true
                 serviceAddr.checked = false
                 serviceURLSwitch.checked = false
+                ipTextField.actionTextField.clear()
+                portTextField.actionTextField.clear()
+                addressTextField.actionTextField.clear()
             }
             confirmPasswordAction()
         } else {
