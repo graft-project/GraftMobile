@@ -67,7 +67,8 @@ public:
 
     Q_INVOKABLE QString networkName() const;
     Q_INVOKABLE QString dapiVersion() const;
-    QStringList seedSupernodes() const;
+    QStringList httpSeedSupernodes() const;
+    QStringList httpsSeedSupernodes() const;
 
     Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
     Q_INVOKABLE bool isBalanceUpdated() const;

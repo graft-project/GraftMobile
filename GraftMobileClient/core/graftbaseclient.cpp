@@ -310,9 +310,10 @@ QStringList GraftBaseClient::getServiceAddresses() const
     }
     else
     {
-        for (int i = 0; i < seedSupernodes().size(); ++i)
+        QStringList seeds = httpsType() ? httpsSeedSupernodes() : httpSeedSupernodes();
+        for (int i = 0; i < seeds.size(); ++i)
         {
-            addressList << QString("http%1://%2").arg(type).arg(seedSupernodes().at(i));
+            addressList << QString("http%1://%2").arg(type).arg(seeds.at(i));
         }
     }
     return addressList;
@@ -565,16 +566,31 @@ QString GraftBaseClient::dapiVersion() const
     }
 }
 
-QStringList GraftBaseClient::seedSupernodes() const
+QStringList GraftBaseClient::httpSeedSupernodes() const
 {
     switch (mAccountManager->networkType())
     {
     case GraftClientTools::Mainnet:
-        return MainnetConfiguration::scSeedSupernodes;
+        return MainnetConfiguration::scHttpSeedSupernodes;
     case GraftClientTools::PublicTestnet:
-        return TestnetConfiguration::scSeedSupernodes;
+        return TestnetConfiguration::scHttpSeedSupernodes;
     case GraftClientTools::PublicExperimentalTestnet:
-        return ExperimentalTestnetConfiguration::scSeedSupernodes;
+        return ExperimentalTestnetConfiguration::scHttpSeedSupernodes;
+    default:
+        return QStringList();
+    }
+}
+
+QStringList GraftBaseClient::httpsSeedSupernodes() const
+{
+    switch (mAccountManager->networkType())
+    {
+    case GraftClientTools::Mainnet:
+        return MainnetConfiguration::scHttpsSeedSupernodes;
+    case GraftClientTools::PublicTestnet:
+        return TestnetConfiguration::scHttpsSeedSupernodes;
+    case GraftClientTools::PublicExperimentalTestnet:
+        return ExperimentalTestnetConfiguration::scHttpsSeedSupernodes;
     default:
         return QStringList();
     }
