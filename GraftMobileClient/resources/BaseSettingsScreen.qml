@@ -370,6 +370,7 @@ BaseScreen {
 
     function saveChanges() {
         GraftClient.setSettings("httpsType", httpsSwitch.checked)
+        GraftClient.resetType()
         if (companyNameTextField.visible) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }

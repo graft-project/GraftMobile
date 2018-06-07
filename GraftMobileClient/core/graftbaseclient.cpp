@@ -485,6 +485,11 @@ bool GraftBaseClient::httpsType() const
     return mClientSettings->value(scNetworkType, true).toBool();
 }
 
+void GraftBaseClient::resetType() const
+{
+    graftAPI()->changeAddresses(getServiceAddresses());
+}
+
 bool GraftBaseClient::resetUrlAddress(const QString &url)
 {
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
