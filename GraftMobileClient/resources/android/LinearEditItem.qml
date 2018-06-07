@@ -16,6 +16,9 @@ BaseLinearEditItem {
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
     property alias inFocus: editItem.focus
+    property int fieldCursorPosition: 0
+
+    signal updateText()
 
     actionTextField: editItem
 
@@ -34,11 +37,13 @@ BaseLinearEditItem {
             id: editItem
             Layout.fillWidth: true
             Layout.fillHeight: true
+            cursorPosition: fieldCursorPosition
             rightPadding: visibilityIcon ? 44 : 0
             verticalAlignment: Qt.AlignTop
             color: "#404040"
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
+            onTextChanged: updateText()
 
             VisibilityIcon {
                 Material.accent: "#9E9E9E"

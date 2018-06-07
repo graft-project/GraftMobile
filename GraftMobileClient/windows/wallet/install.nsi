@@ -9,9 +9,9 @@
 	!define COMPANYNAME "GRAFT Payments, LLC"
 	!define DESCRIPTION "Graft Wallet"
 	!define VERSIONMAJOR 1
-        !define VERSIONMINOR 8
+        !define VERSIONMINOR 9
         !define VERSIONBUILD 0
-    !define VERSION "1.8.0"
+    !define VERSION "1.9.0"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
 	!define LIC_NAME "license.rtf"

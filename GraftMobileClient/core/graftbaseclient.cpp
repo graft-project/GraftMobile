@@ -11,6 +11,7 @@
 #include "accountmodel.h"
 #include "config.h"
 
+#include <QRegularExpression>
 #include <QGuiApplication>
 #include <QStandardPaths>
 #include <QVersionNumber>
@@ -38,6 +39,9 @@ static const QString scLockedBalance("lockedBalance");
 static const QString scUnlockedBalancee("unlockedBalance");
 static const QString scLocalBalance("localBalance");
 static const QString scUseOwnServiceAddress("useOwnServiceAddress");
+static const QString scNetworkType("httpsType");
+static const QString scURLAddress("urlAddress");
+static const QString scAddress("address");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
@@ -289,15 +293,27 @@ QByteArray GraftBaseClient::loadModel(const QString &fileName) const
 QStringList GraftBaseClient::getServiceAddresses() const
 {
     QStringList addressList;
+    QString type;
+    if (httpsType())
+    {
+        type = "s";
+    }
     if (useOwnServiceAddress())
     {
         QString ip(settings(scIp).toString());
         QString port(settings(scPort).toString());
-        addressList.append(QString("%1:%2").arg(ip).arg(port));
+        addressList.append(QString("http%1://%2:%3").arg(type).arg(ip).arg(port));
+    }
+    else if (urlAddress())
+    {
+        addressList.append(settings(scAddress).toString());
     }
     else
     {
-        addressList = seedSupernodes();
+        for (int i = 0; i < seedSupernodes().size(); ++i)
+        {
+            addressList << QString("http%1://%2").arg(type).arg(seedSupernodes().at(i));
+        }
     }
     return addressList;
 }
@@ -459,6 +475,32 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
     return validateIp.setAddress(ip);
 }
 
+bool GraftBaseClient::urlAddress() const
+{
+    return mClientSettings->value(scURLAddress).toBool();
+}
+
+bool GraftBaseClient::httpsType() const
+{
+    return mClientSettings->value(scNetworkType, true).toBool();
+}
+
+bool GraftBaseClient::resetUrlAddress(const QString &url)
+{
+    bool lIsResetUrl = (urlAddress() && isValidUrl(url));
+    if (lIsResetUrl)
+    {
+        setSettings(scAddress, url);
+        graftAPI()->changeAddresses(getServiceAddresses());
+    }
+    return lIsResetUrl;
+}
+
+bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
+{
+    return QUrl(urlAddress, QUrl::StrictMode).isValid();
+}
+
 double GraftBaseClient::balance(int type) const
 {
     QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
@@ -562,6 +604,9 @@ void GraftBaseClient::removeSettings() const
     mClientSettings->remove(QStringLiteral("localBalance"));
     mClientSettings->remove(QStringLiteral("unlockedBalance"));
     mClientSettings->remove(QStringLiteral("lockedBalance"));
+    mClientSettings->remove(QStringLiteral("httpsType"));
+    mClientSettings->remove(QStringLiteral("urlAddress"));
+    mClientSettings->remove(QStringLiteral("address"));
     mClientSettings->sync();
 }
 

@@ -61,15 +61,15 @@ BaseScreen {
                         id: receiversAddress
                         Layout.fillWidth: true
                         Layout.preferredHeight: 130
-                        maximumLength: 110
+                        maximumLength: 106
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
                                             qsTr("Receiver's address:") : qsTr("Receiver's address")
                         validator: RegExpValidator {
                             regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
-                          /(^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94})/ :
-                          /(^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94})/
+                                        /(^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94})/ :
+                                        /(^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94})/
                         }
                     }
 
