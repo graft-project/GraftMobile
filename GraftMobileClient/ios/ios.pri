@@ -3,10 +3,11 @@ contains(DEFINES, POS_BUILD) {
 
     app_splash_screen.files = $$files($$PWD/pos/SplashScreen/*)
     QMAKE_BUNDLE_DATA += app_splash_screen
-    QMAKE_INFO_PLIST =
+    QMAKE_INFO_PLIST = $$PWD/pos/Info.plist
     QMAKE_ASSET_CATALOGS += $$PWD/pos/Images.xcassets
 
-    DISTFILES +=
+    DISTFILES += \
+        $$PWD/pos/Info.plist
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -14,13 +15,10 @@ contains(DEFINES, WALLET_BUILD) {
 
     app_splash_screen.files = $$files($$PWD/wallet/SplashScreen/*)
     QMAKE_BUNDLE_DATA += app_splash_screen
-    QMAKE_INFO_PLIST =
+    QMAKE_INFO_PLIST = $$PWD/wallet/Info.plist
     QMAKE_ASSET_CATALOGS += $$PWD/wallet/Images.xcassets
 
-    DISTFILES +=
+    DISTFILES += \
+        $$PWD/wallet/Info.plist
 }
-
-DISTFILES += \
-    $$PWD/pos/Info.plist \
-    $$PWD/wallet/Info.plist
 
