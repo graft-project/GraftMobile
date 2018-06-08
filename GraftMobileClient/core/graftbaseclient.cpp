@@ -624,8 +624,8 @@ void GraftBaseClient::saveSettings() const
 {
     if (mClientSettings)
     {
-        updateSettings();
         mClientSettings->sync();
+        updateSettings();
     }
 }
 
