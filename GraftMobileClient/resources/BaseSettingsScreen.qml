@@ -10,7 +10,7 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Settings")
-    action: saveChanges
+    action: save
 
     property alias companyTitle: companyNameTextField.title
     property alias ipTitle: ipTextField.title
@@ -158,7 +158,7 @@ BaseScreen {
                 Switch {
                     id: serviceURLSwitch
                     Material.accent: ColorFactory.color(DesignFactory.Foreground)
-                    checked: GraftClient.urlAddress()
+                    checked: GraftClient.useOwnUrlAddress()
                     onCheckedChanged: {
                         replaceNetworkType(addressTextField.text)
                         if (serviceURLSwitch.checked) {
@@ -174,7 +174,7 @@ BaseScreen {
                 enabled: serviceURLSwitch.checked
                 inputMethodHints: Qt.ImhHiddenText
                 Layout.alignment: Qt.AlignTop
-                text: GraftClient.urlAddress() ? GraftClient.settings("address") : "http://"
+                text: GraftClient.useOwnUrlAddress() ? GraftClient.settings("address") : "http://"
                 showLengthIndicator: false
                 fieldCursorPosition: httpsSwitch.checked ? 8 : 7
                 onUpdateText: replaceNetworkType(addressTextField.text)
@@ -228,7 +228,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             onClicked: {
                 disableScreen()
-                saveChanges()
+                save()
             }
         }
     }
@@ -306,7 +306,7 @@ BaseScreen {
             ipTextField.text = GraftClient.settings("ip")
             portTextField.text = GraftClient.settings("port")
         }
-        if (GraftClient.urlAddress()) {
+        if (GraftClient.useOwnUrlAddress()) {
             addressTextField.text = GraftClient.settings("address")
         }
         if (!GraftClient.httpsType()) {
@@ -332,7 +332,7 @@ BaseScreen {
                     message = qsTr("(IP address and port of the server)")
                     messageDialog.open()
                     return
-                } else if (GraftClient.urlAddress()) {
+                } else if (GraftClient.useOwnUrlAddress()) {
                     message = qsTr("(URL address of the server)")
                     messageDialog.open()
                     return
@@ -368,29 +368,31 @@ BaseScreen {
         GraftClient.removeSettings()
     }
 
-    function saveChanges() {
-        GraftClient.setSettings("httpsType", httpsSwitch.checked)
-        if (companyNameTextField.visible) {
+    function save() {
+        if (companyNameTextField.visible &&  companyNameTextField.text.length !== 0) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
-            GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
-        }
-        if (GraftClient.isValidUrl(addressTextField.text) && !(addressTextField.text === "http://"
-        || addressTextField.text === "https://")) {
-            GraftClient.setSettings("urlAddress", serviceURLSwitch.checked)
-        }
-        if (serviceURLSwitch.checked) {
-            if (!GraftClient.resetUrlAddress(addressTextField.text)) {
-                screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
+        GraftClient.setSettings("httpsType", httpsSwitch.checked)
+        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
+        if (serviceAddr.checked)
+        {
+            if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
+                GraftClient.setSettings("ip", ipTextField.text)
+                GraftClient.setSettings("port", portTextField.text)
+            } else {
+                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
                 enableScreen()
                 return
             }
-        } else if (serviceAddr.checked) {
-            if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
+        } else if (serviceURLSwitch.checked) {
+            if (GraftClient.isValidUrl(addressTextField.text) && !(addressTextField.text === "http://"
+                || addressTextField.text === "https://")) {
+                GraftClient.setSettings("address", addressTextField.text)
+            } else {
+                screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
                 enableScreen()
@@ -411,11 +413,7 @@ BaseScreen {
                 addressTextField.text = text.replace(/http/i, "https")
             }
         } else {
-            if (!httpsSwitch.checked) {
-                addressTextField.text = ("http://")
-            } else {
-                addressTextField.text = ("https://")
-            }
+            addressTextField.text = !httpsSwitch.checked ? "http://" : "https://"
         }
     }
 

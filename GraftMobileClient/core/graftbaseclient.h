@@ -1,8 +1,8 @@
 #ifndef GRAFTBASECLIENT_H
 #define GRAFTBASECLIENT_H
 
-#include <QObject>
 #include <QVariant>
+#include <QObject>
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
@@ -48,13 +48,13 @@ public:
     Q_INVOKABLE void removeSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
-    Q_INVOKABLE bool useOwnServiceAddress() const;
-    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port);
-    Q_INVOKABLE bool isValidIp(const QString &ip) const;
+    Q_INVOKABLE void updateSettings() const;
 
-    Q_INVOKABLE bool urlAddress() const;
     Q_INVOKABLE bool httpsType() const;
-    Q_INVOKABLE bool resetUrlAddress(const QString &url);
+    Q_INVOKABLE bool useOwnServiceAddress() const;
+    Q_INVOKABLE bool useOwnUrlAddress() const;
+
+    Q_INVOKABLE bool isValidIp(const QString &ip) const;
     Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
 
     Q_INVOKABLE double balance(int type) const;
@@ -67,7 +67,8 @@ public:
 
     Q_INVOKABLE QString networkName() const;
     Q_INVOKABLE QString dapiVersion() const;
-    QStringList seedSupernodes() const;
+    QStringList httpSeedSupernodes() const;
+    QStringList httpsSeedSupernodes() const;
 
     Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
     Q_INVOKABLE bool isBalanceUpdated() const;
@@ -119,18 +120,18 @@ private:
     void updateAddressQRCode() const;
 
 protected:
-    BarcodeImageProvider *mImageProvider;
-    AccountModel *mAccountModel;
-    CurrencyModel *mCurrencyModel;
     QuickExchangeModel *mQuickExchangeModel;
+    BarcodeImageProvider *mImageProvider;
     AccountManager *mAccountManager;
+    CurrencyModel *mCurrencyModel;
+    AccountModel *mAccountModel;
     QSettings *mClientSettings;
 
     QMap<int, double> mBalances;
 
 private:
-    int mBalanceTimer;
     bool mIsBalanceUpdated;
+    int mBalanceTimer;
 };
 
 #endif // GRAFTBASECLIENT_H
