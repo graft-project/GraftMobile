@@ -8,6 +8,15 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
+    screenHeader.actionButtonState: true
+    action: pushSettingsScreen()
+
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
+            screenHeader.actionText = qsTr("Settings")
+        }
+    }
+
     onErrorMessage: busyIndicator.running = false
 
     Connections {
@@ -109,5 +118,9 @@ BaseScreen {
         disableScreen()
         busyIndicator.running = true
         GraftClient.createAccount(passwordTextField.passwordText)
+    }
+
+    function pushSettingsScreen() {
+        pushScreen.startSettingsScreen()
     }
 }

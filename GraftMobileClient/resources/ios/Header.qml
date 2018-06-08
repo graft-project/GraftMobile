@@ -54,6 +54,7 @@ BaseHeader {
 
         Item {
             Layout.preferredWidth: 30
+            Layout.rightMargin: actionButton.name.length > 6 ? 10 : 0
             Layout.alignment: Qt.AlignRight
 
             CartItem {
