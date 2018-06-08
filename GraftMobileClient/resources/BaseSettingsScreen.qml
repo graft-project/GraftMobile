@@ -412,7 +412,7 @@ BaseScreen {
                 addressTextField.text = text.replace(/http/i, "https")
             }
         } else {
-            addressTextField.text = !httpsSwitch.checked ? ("http://") : ("https://")
+            addressTextField.text = !httpsSwitch.checked ? "http://" : "https://"
         }
     }
 
