@@ -26,33 +26,33 @@
 #include <QDir>
 
 static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
-static const QString scBarcodeImageProviderID("barcodes");
-static const QString scQRCodeImageID("qrcode");
-static const QString scAddressQRCodeImageID("address_qrcode");
 static const QString scCoinAddressQRCodeImageID("coin_address_qrcode");
-static const QString scProviderScheme("image://%1/%2");
-static const QString scAccountModelDataFile("accountList.dat");
-static const QString scSettingsDataFile("Settings.ini");
-static const QString scIp("ip");
-static const QString scPort("port");
-static const QString scLockedBalance("lockedBalance");
-static const QString scUnlockedBalancee("unlockedBalance");
-static const QString scLocalBalance("localBalance");
 static const QString scUseOwnServiceAddress("useOwnServiceAddress");
+static const QString scAccountModelDataFile("accountList.dat");
+static const QString scAddressQRCodeImageID("address_qrcode");
+static const QString scUnlockedBalancee("unlockedBalance");
+static const QString scBarcodeImageProviderID("barcodes");
+static const QString scSettingsDataFile("Settings.ini");
+static const QString scProviderScheme("image://%1/%2");
+static const QString scLockedBalance("lockedBalance");
+static const QString scLocalBalance("localBalance");
 static const QString scNetworkType("httpsType");
 static const QString scURLAddress("urlAddress");
+static const QString scQRCodeImageID("qrcode");
 static const QString scAddress("address");
+static const QString scPort("port");
+static const QString scIp("ip");
 
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
-    ,mImageProvider(nullptr)
-    ,mAccountModel(nullptr)
-    ,mCurrencyModel(nullptr)
     ,mQuickExchangeModel(nullptr)
+    ,mImageProvider(nullptr)
     ,mAccountManager(new AccountManager())
+    ,mCurrencyModel(nullptr)
+    ,mAccountModel(nullptr)
     ,mClientSettings(nullptr)
-    ,mBalanceTimer(-1)
     ,mIsBalanceUpdated(false)
+    ,mBalanceTimer(-1)
 {
     initSettings();
 }
@@ -64,7 +64,10 @@ GraftBaseClient::~GraftBaseClient()
 
 void GraftBaseClient::setNetworkType(int networkType)
 {
-    mAccountManager->setNetworkType(networkType);
+    if (mAccountManager)
+    {
+        mAccountManager->setNetworkType(networkType);
+    }
     graftAPI()->setDAPIVersion(dapiVersion());
     graftAPI()->changeAddresses(getServiceAddresses());
     emit networkTypeChanged();
@@ -426,7 +429,10 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
 
 void GraftBaseClient::updateAddressQRCode() const
 {
-    mImageProvider->setBarcodeImage(scAddressQRCodeImageID, QRCodeGenerator::encode(address()));
+    if (mImageProvider)
+    {
+        mImageProvider->setBarcodeImage(scAddressQRCodeImageID, QRCodeGenerator::encode(address()));
+    }
 }
 
 QString GraftBaseClient::versionNumber() const
@@ -444,17 +450,62 @@ bool GraftBaseClient::isDevMode() const
 
 QVariant GraftBaseClient::settings(const QString &key) const
 {
-    return mClientSettings->value(key);
+    if (mClientSettings)
+    {
+        return mClientSettings->value(key);
+    }
+    return QVariant();
 }
 
 void GraftBaseClient::setSettings(const QString &key, const QVariant &value) const
 {
-    mClientSettings->setValue(key, value);
+    if (mClientSettings)
+    {
+        mClientSettings->setValue(key, value);
+    }
+}
+
+bool GraftBaseClient::httpsType() const
+{
+    if (mClientSettings)
+    {
+        return mClientSettings->value(scNetworkType, true).toBool();
+    }
+    return false;
 }
 
 bool GraftBaseClient::useOwnServiceAddress() const
 {
-    return mClientSettings->value(scUseOwnServiceAddress).toBool();
+    if (mClientSettings)
+    {
+        return mClientSettings->value(scUseOwnServiceAddress).toBool();
+    }
+    return false;
+}
+
+bool GraftBaseClient::urlAddress() const
+{
+    if (mClientSettings)
+    {
+        return mClientSettings->value(scURLAddress).toBool();
+    }
+    return false;
+}
+
+bool GraftBaseClient::isValidIp(const QString &ip) const
+{
+    QHostAddress validateIp;
+    return validateIp.setAddress(ip);
+}
+
+bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
+{
+    return QUrl(urlAddress, QUrl::StrictMode).isValid();
+}
+
+void GraftBaseClient::resetType() const
+{
+    graftAPI()->changeAddresses(getServiceAddresses());
 }
 
 bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
@@ -469,27 +520,6 @@ bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
     return lIsResetUrl;
 }
 
-bool GraftBaseClient::isValidIp(const QString &ip) const
-{
-    QHostAddress validateIp;
-    return validateIp.setAddress(ip);
-}
-
-bool GraftBaseClient::urlAddress() const
-{
-    return mClientSettings->value(scURLAddress).toBool();
-}
-
-bool GraftBaseClient::httpsType() const
-{
-    return mClientSettings->value(scNetworkType, true).toBool();
-}
-
-void GraftBaseClient::resetType() const
-{
-    graftAPI()->changeAddresses(getServiceAddresses());
-}
-
 bool GraftBaseClient::resetUrlAddress(const QString &url)
 {
     bool lIsResetUrl = (urlAddress() && isValidUrl(url));
@@ -499,11 +529,6 @@ bool GraftBaseClient::resetUrlAddress(const QString &url)
         graftAPI()->changeAddresses(getServiceAddresses());
     }
     return lIsResetUrl;
-}
-
-bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
-{
-    return QUrl(urlAddress, QUrl::StrictMode).isValid();
 }
 
 double GraftBaseClient::balance(int type) const
@@ -523,15 +548,22 @@ void GraftBaseClient::saveBalance() const
 void GraftBaseClient::updateQuickExchange(double cost)
 {
     QStringList codes = mQuickExchangeModel->codeList();
-    for (int i = 0; i < codes.count(); ++i)
+    if (mQuickExchangeModel)
     {
-        mQuickExchangeModel->updatePrice(codes.value(i), QString::number(cost));
+        for (int i = 0; i < codes.count(); ++i)
+        {
+            mQuickExchangeModel->updatePrice(codes.value(i), QString::number(cost));
+        }
     }
 }
 
 bool GraftBaseClient::checkPassword(const QString &password) const
 {
-    return mAccountManager->password() == password;
+    if (mAccountManager)
+    {
+        return mAccountManager->password() == password;
+    }
+    return false;
 }
 
 void GraftBaseClient::copyToClipboard(const QString &data) const
@@ -597,22 +629,28 @@ bool GraftBaseClient::isBalanceUpdated() const
 
 void GraftBaseClient::saveSettings() const
 {
-    mClientSettings->sync();
+    if (mClientSettings)
+    {
+        mClientSettings->sync();
+    }
 }
 
 void GraftBaseClient::removeSettings() const
 {
-    mClientSettings->remove(QStringLiteral("companyName"));
-    mClientSettings->remove(QStringLiteral("useOwnServiceAddress"));
-    mClientSettings->remove(QStringLiteral("ip"));
-    mClientSettings->remove(QStringLiteral("port"));
-    mClientSettings->remove(QStringLiteral("localBalance"));
-    mClientSettings->remove(QStringLiteral("unlockedBalance"));
-    mClientSettings->remove(QStringLiteral("lockedBalance"));
-    mClientSettings->remove(QStringLiteral("httpsType"));
-    mClientSettings->remove(QStringLiteral("urlAddress"));
-    mClientSettings->remove(QStringLiteral("address"));
-    mClientSettings->sync();
+    if (mClientSettings)
+    {
+        mClientSettings->remove(QStringLiteral("companyName"));
+        mClientSettings->remove(QStringLiteral("useOwnServiceAddress"));
+        mClientSettings->remove(QStringLiteral("ip"));
+        mClientSettings->remove(QStringLiteral("port"));
+        mClientSettings->remove(QStringLiteral("localBalance"));
+        mClientSettings->remove(QStringLiteral("unlockedBalance"));
+        mClientSettings->remove(QStringLiteral("lockedBalance"));
+        mClientSettings->remove(QStringLiteral("httpsType"));
+        mClientSettings->remove(QStringLiteral("urlAddress"));
+        mClientSettings->remove(QStringLiteral("address"));
+        mClientSettings->sync();
+    }
 }
 
 void GraftBaseClient::initSettings()
