@@ -48,17 +48,14 @@ public:
     Q_INVOKABLE void removeSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
+    Q_INVOKABLE void updateSettings() const;
 
     Q_INVOKABLE bool httpsType() const;
     Q_INVOKABLE bool useOwnServiceAddress() const;
-    Q_INVOKABLE bool urlAddress() const;
+    Q_INVOKABLE bool useOwnUrlAddress() const;
 
     Q_INVOKABLE bool isValidIp(const QString &ip) const;
     Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
-
-    Q_INVOKABLE void resetType() const;
-    Q_INVOKABLE bool resetUrl(const QString &ip, const QString &port);
-    Q_INVOKABLE bool resetUrlAddress(const QString &url);
 
     Q_INVOKABLE double balance(int type) const;
     void saveBalance() const;

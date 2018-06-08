@@ -30,6 +30,7 @@ static const QString scCoinAddressQRCodeImageID("coin_address_qrcode");
 static const QString scUseOwnServiceAddress("useOwnServiceAddress");
 static const QString scAccountModelDataFile("accountList.dat");
 static const QString scAddressQRCodeImageID("address_qrcode");
+static const QString scUseOwnUrlAddress("useOwnUrlAddress");
 static const QString scUnlockedBalancee("unlockedBalance");
 static const QString scBarcodeImageProviderID("barcodes");
 static const QString scSettingsDataFile("Settings.ini");
@@ -37,7 +38,6 @@ static const QString scProviderScheme("image://%1/%2");
 static const QString scLockedBalance("lockedBalance");
 static const QString scLocalBalance("localBalance");
 static const QString scNetworkType("httpsType");
-static const QString scURLAddress("urlAddress");
 static const QString scQRCodeImageID("qrcode");
 static const QString scAddress("address");
 static const QString scPort("port");
@@ -307,7 +307,7 @@ QStringList GraftBaseClient::getServiceAddresses() const
         QString port(settings(scPort).toString());
         addressList.append(QString("http%1://%2:%3").arg(type).arg(ip).arg(port));
     }
-    else if (urlAddress())
+    else if (useOwnUrlAddress())
     {
         addressList.append(settings(scAddress).toString());
     }
@@ -466,6 +466,11 @@ void GraftBaseClient::setSettings(const QString &key, const QVariant &value) con
     }
 }
 
+void GraftBaseClient::updateSettings() const
+{
+    graftAPI()->changeAddresses(getServiceAddresses());
+}
+
 bool GraftBaseClient::httpsType() const
 {
     if (mClientSettings)
@@ -484,11 +489,11 @@ bool GraftBaseClient::useOwnServiceAddress() const
     return false;
 }
 
-bool GraftBaseClient::urlAddress() const
+bool GraftBaseClient::useOwnUrlAddress() const
 {
     if (mClientSettings)
     {
-        return mClientSettings->value(scURLAddress).toBool();
+        return mClientSettings->value(scUseOwnUrlAddress).toBool();
     }
     return false;
 }
@@ -502,34 +507,6 @@ bool GraftBaseClient::isValidIp(const QString &ip) const
 bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
 {
     return QUrl(urlAddress, QUrl::StrictMode).isValid();
-}
-
-void GraftBaseClient::resetType() const
-{
-    graftAPI()->changeAddresses(getServiceAddresses());
-}
-
-bool GraftBaseClient::resetUrl(const QString &ip, const QString &port)
-{
-    bool lIsResetUrl = (useOwnServiceAddress() && isValidIp(ip) && !port.isEmpty());
-    if (lIsResetUrl)
-    {
-        setSettings(scIp, ip);
-        setSettings(scPort, port);
-        graftAPI()->changeAddresses(getServiceAddresses());
-    }
-    return lIsResetUrl;
-}
-
-bool GraftBaseClient::resetUrlAddress(const QString &url)
-{
-    bool lIsResetUrl = (urlAddress() && isValidUrl(url));
-    if (lIsResetUrl)
-    {
-        setSettings(scAddress, url);
-        graftAPI()->changeAddresses(getServiceAddresses());
-    }
-    return lIsResetUrl;
 }
 
 double GraftBaseClient::balance(int type) const
@@ -648,6 +625,7 @@ void GraftBaseClient::saveSettings() const
     if (mClientSettings)
     {
         mClientSettings->sync();
+        updateSettings();
     }
 }
 
@@ -655,16 +633,7 @@ void GraftBaseClient::removeSettings() const
 {
     if (mClientSettings)
     {
-        mClientSettings->remove(QStringLiteral("companyName"));
-        mClientSettings->remove(QStringLiteral("useOwnServiceAddress"));
-        mClientSettings->remove(QStringLiteral("ip"));
-        mClientSettings->remove(QStringLiteral("port"));
-        mClientSettings->remove(QStringLiteral("localBalance"));
-        mClientSettings->remove(QStringLiteral("unlockedBalance"));
-        mClientSettings->remove(QStringLiteral("lockedBalance"));
-        mClientSettings->remove(QStringLiteral("httpsType"));
-        mClientSettings->remove(QStringLiteral("urlAddress"));
-        mClientSettings->remove(QStringLiteral("address"));
+        mClientSettings->clear();
         mClientSettings->sync();
     }
 }
