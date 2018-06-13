@@ -10,8 +10,8 @@
 	!define DESCRIPTION "Graft Point-of-Sale"
 	!define VERSIONMAJOR 1
         !define VERSIONMINOR 9
-    !define VERSIONBUILD 1
-    !define VERSION "1.9.1"
+    !define VERSIONBUILD 2
+    !define VERSION "1.9.2"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
 	; !define LIC_NAME "license.rtf"
