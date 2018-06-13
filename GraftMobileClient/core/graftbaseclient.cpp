@@ -39,6 +39,7 @@ static const QString scLockedBalance("lockedBalance");
 static const QString scLocalBalance("localBalance");
 static const QString scNetworkType("httpsType");
 static const QString scQRCodeImageID("qrcode");
+static const QString scLicense("license");
 static const QString scAddress("address");
 static const QString scPort("port");
 static const QString scIp("ip");
@@ -633,7 +634,9 @@ void GraftBaseClient::removeSettings() const
 {
     if (mClientSettings)
     {
+        QVariant licenseValue = mClientSettings->value(scLicense);
         mClientSettings->clear();
+        mClientSettings->setValue(scLicense, licenseValue);
         mClientSettings->sync();
     }
 }
