@@ -8,8 +8,11 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
-    screenHeader.actionButtonState: true
-    action: pushSettingsScreen()
+    screenHeader {
+        actionButtonState: true
+        isSettings: true
+    }
+    action: pushSettingsScreen
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
@@ -121,6 +124,6 @@ BaseScreen {
     }
 
     function pushSettingsScreen() {
-        pushScreen.startSettingsScreen()
+        pushScreen.initiallSettingsScreen()
     }
 }
