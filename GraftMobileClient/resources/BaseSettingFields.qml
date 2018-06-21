@@ -8,17 +8,16 @@ import "components"
 
 ColumnLayout {
     property alias displayCompanyName: companyNameTextField.visible
-    property alias companyTitle: companyNameTextField.title
-    property alias addressTitle: addressTextField.title
-    property alias portTitle: portTextField.title
-    property alias ipTitle: ipTextField.title
-
     property alias companyNameText: companyNameTextField.text
     property alias serviceURLSwitch: serviceURLSwitch.checked
+    property alias companyTitle: companyNameTextField.title
+    property alias addressTitle: addressTextField.title
     property alias addressText: addressTextField.text
     property alias serviceAddr: serviceAddr.checked
     property alias httpsSwitch: httpsSwitch.checked
+    property alias portTitle: portTextField.title
     property alias portText: portTextField.text
+    property alias ipTitle: ipTextField.title
     property alias ipText: ipTextField.text
 
     spacing: 0
@@ -229,10 +228,10 @@ ColumnLayout {
     }
 
     function clearField() {
-        ipTextField.actionTextField.clear()
-        portTextField.actionTextField.clear()
-        addressTextField.actionTextField.clear()
         companyNameTextField.actionTextField.clear()
+        addressTextField.actionTextField.clear()
+        portTextField.actionTextField.clear()
+        ipTextField.actionTextField.clear()
     }
 
     function length() {
@@ -240,14 +239,13 @@ ColumnLayout {
     }
 
     function updateSettings() {
-        httpsSwitch.checked = GraftClient.httpsType()
         serviceURLSwitch.checked = GraftClient.useOwnUrlAddress()
         serviceAddr.checked =GraftClient.useOwnServiceAddress()
+        httpsSwitch.checked = GraftClient.httpsType()
         if (GraftClient.useOwnServiceAddress()) {
             ipTextField.text = GraftClient.settings("ip")
             portTextField.text = GraftClient.settings("port")
-        }
-        if (GraftClient.useOwnUrlAddress()) {
+        } else if (GraftClient.useOwnUrlAddress()) {
             addressTextField.text = GraftClient.settings("address")
         }
     }

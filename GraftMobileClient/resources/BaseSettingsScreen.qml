@@ -12,16 +12,15 @@ BaseScreen {
     title: qsTr("Settings")
     action: save
 
-    property alias saveButtonText: saveButton.text
-    property var confirmPasswordAction: null
-    property string message: ""
-    property bool okMode: false
-
     property alias displayCompanyName: fields.displayCompanyName
     property alias companyTitle: fields.companyTitle
     property alias addressTitle: fields.addressTitle
+    property alias saveButtonText: saveButton.text
     property alias portTitle: fields.portTitle
     property alias ipTitle: fields.ipTitle
+    property var confirmPasswordAction: null
+    property string message: ""
+    property bool okMode: false
 
     Connections {
         target: GraftClient

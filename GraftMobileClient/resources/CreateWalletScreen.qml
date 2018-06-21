@@ -14,13 +14,13 @@ BaseScreen {
     }
     action: pushSettingsScreen
 
+    onErrorMessage: busyIndicator.running = false
+
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             screenHeader.actionText = qsTr("Settings")
         }
     }
-
-    onErrorMessage: busyIndicator.running = false
 
     Connections {
         target: GraftClient
@@ -54,9 +54,11 @@ BaseScreen {
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                         dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                    if (passwordTextField.passwordText === "" &&
+                            passwordTextField.confirmPasswordText === "") {
                         checkDialog.open()
                         return
                     }

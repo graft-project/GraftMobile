@@ -58,7 +58,7 @@ public:
     Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
 
     Q_INVOKABLE double balance(int type) const;
-    void saveBalance();
+    void saveBalance() const;
 
     void updateQuickExchange(double cost);
 
