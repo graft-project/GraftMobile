@@ -515,7 +515,7 @@ double GraftBaseClient::balance(int type) const
     return rValue.toDouble();
 }
 
-void GraftBaseClient::saveBalance() const
+void GraftBaseClient::saveBalance()
 {
     setSettings(scLockedBalance, mBalances.value(GraftClientTools::LockedBalance));
     setSettings(scUnlockedBalancee, mBalances.value(GraftClientTools::UnlockedBalance));
@@ -620,12 +620,13 @@ bool GraftBaseClient::isBalanceUpdated() const
     return mIsBalanceUpdated;
 }
 
-void GraftBaseClient::saveSettings() const
+void GraftBaseClient::saveSettings()
 {
     if (mClientSettings)
     {
         mClientSettings->sync();
         updateSettings();
+        emit settingsChanged();
     }
 }
 

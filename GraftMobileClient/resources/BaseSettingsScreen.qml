@@ -23,6 +23,13 @@ BaseScreen {
     property alias portTitle: fields.portTitle
     property alias ipTitle: fields.ipTitle
 
+    Connections {
+        target: GraftClient
+        onSettingsChanged: {
+            fields.updateSettings()
+        }
+    }
+
     ColumnLayout {
         spacing: 0
         anchors {
@@ -138,16 +145,7 @@ BaseScreen {
 
     function restoreSettings() {
         resetWalletAccount()
-        if (GraftClient.useOwnServiceAddress()) {
-            fields.ipText = GraftClient.settings("ip")
-            fields.portText = GraftClient.settings("port")
-        }
-        if (GraftClient.useOwnUrlAddress()) {
-            fields.addressText = GraftClient.settings("address")
-        }
-        if (!GraftClient.httpsType()) {
-            fields.httpsSwitch = GraftClient.settings("httpsType")
-        }
+        fields.updateSettings()
     }
 
     function resetWalletAccount() {
@@ -220,7 +218,7 @@ BaseScreen {
             }
         } else if (fields.serviceURLSwitch) {
             if (GraftClient.isValidUrl(fields.addressText) && !(fields.addressText === "http://"
-                || fields.addressText === "https://")) {
+            || fields.addressText === "https://")) {
                 GraftClient.setSettings("address", fields.addressText)
             } else {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +

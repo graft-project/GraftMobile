@@ -44,7 +44,7 @@ public:
     Q_INVOKABLE QString addressQRCodeImage() const;
     Q_INVOKABLE QString coinAddressQRCodeImage(const QString &address) const;
 
-    Q_INVOKABLE void saveSettings() const;
+    Q_INVOKABLE void saveSettings();
     Q_INVOKABLE void removeSettings() const;
     Q_INVOKABLE QVariant settings(const QString &key) const;
     Q_INVOKABLE void setSettings(const QString &key, const QVariant &value) const;
@@ -58,7 +58,7 @@ public:
     Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
 
     Q_INVOKABLE double balance(int type) const;
-    void saveBalance() const;
+    void saveBalance();
 
     void updateQuickExchange(double cost);
 
@@ -85,6 +85,7 @@ signals:
     void transferReceived(bool result);
     void transferFeeReceived(bool result, double fee);
     void networkTypeChanged();
+    void settingsChanged();
 
 public slots:
     void saveAccounts() const;

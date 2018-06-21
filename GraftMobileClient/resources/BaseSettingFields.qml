@@ -238,4 +238,19 @@ ColumnLayout {
     function length() {
         return companyNameTextField.text.length
     }
+
+    function updateSettings() {
+        if (GraftClient.useOwnServiceAddress()) {
+            serviceAddr.checked = GraftClient.settings("useOwnServiceAddress")
+            ipTextField.text = GraftClient.settings("ip")
+            portTextField.text = GraftClient.settings("port")
+        }
+        if (GraftClient.useOwnUrlAddress()) {
+            serviceURLSwitch.checked = GraftClient.settings("useOwnUrlAddress")
+            addressTextField.text = GraftClient.settings("address")
+        }
+        if (!GraftClient.httpsType()) {
+            httpsSwitch.checked = GraftClient.settings("httpsType")
+        }
+    }
 }

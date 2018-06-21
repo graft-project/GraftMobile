@@ -9,15 +9,16 @@ import "components"
 
 BaseScreen {
     id: root
+
+    property alias addressTitle: fields.addressTitle
+    property alias portTitle: fields.portTitle
+    property alias ipTitle: fields.ipTitle
+
     title: qsTr("Settings")
     screenHeader {
         isNavigationButtonVisible: true
         navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     }
-
-    property alias ipTitle: fields.ipTitle
-    property alias portTitle: fields.portTitle
-    property alias addressTitle: fields.addressTitle
 
     ColumnLayout {
         spacing: 0
@@ -49,6 +50,8 @@ BaseScreen {
 
     function save() {
         GraftClient.setSettings("httpsType", fields.httpsSwitch)
+        GraftClient.setSettings("useOwnServiceAddress", fields.serviceAddr)
+        GraftClient.setSettings("useOwnUrlAddress", fields.serviceURLSwitch)
         if (fields.serviceAddr)
         {
             if (fields.portText !== "" && GraftClient.isValidIp(fields.ipText)) {
