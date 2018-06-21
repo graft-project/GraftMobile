@@ -124,6 +124,6 @@ BaseScreen {
     }
 
     function pushSettingsScreen() {
-        pushScreen.initiallSettingsScreen()
+        pushScreen.serviceSettingsScreen()
     }
 }
