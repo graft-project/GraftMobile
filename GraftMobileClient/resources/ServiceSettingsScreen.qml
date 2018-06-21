@@ -20,6 +20,11 @@ BaseScreen {
         navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
     }
 
+    Connections {
+        target: GraftClient
+        onSettingsChanged: fields.updateSettings()
+    }
+
     ColumnLayout {
         spacing: 0
         anchors {

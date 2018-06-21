@@ -484,7 +484,7 @@ bool GraftBaseClient::useOwnServiceAddress() const
 {
     if (mClientSettings)
     {
-        return mClientSettings->value(scUseOwnServiceAddress).toBool();
+        return mClientSettings->value(scUseOwnServiceAddress, false).toBool();
     }
     return false;
 }
@@ -493,7 +493,7 @@ bool GraftBaseClient::useOwnUrlAddress() const
 {
     if (mClientSettings)
     {
-        return mClientSettings->value(scUseOwnUrlAddress).toBool();
+        return mClientSettings->value(scUseOwnUrlAddress, false).toBool();
     }
     return false;
 }
@@ -520,7 +520,7 @@ void GraftBaseClient::saveBalance()
     setSettings(scLockedBalance, mBalances.value(GraftClientTools::LockedBalance));
     setSettings(scUnlockedBalancee, mBalances.value(GraftClientTools::UnlockedBalance));
     setSettings(scLocalBalance, mBalances.value(GraftClientTools::LocalBalance));
-    saveSettings();
+    mClientSettings->sync();
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)

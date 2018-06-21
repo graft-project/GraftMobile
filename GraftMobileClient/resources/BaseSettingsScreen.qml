@@ -25,9 +25,7 @@ BaseScreen {
 
     Connections {
         target: GraftClient
-        onSettingsChanged: {
-            fields.updateSettings()
-        }
+        onSettingsChanged: fields.updateSettings()
     }
 
     ColumnLayout {

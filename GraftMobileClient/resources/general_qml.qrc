@@ -44,7 +44,7 @@
         <file alias="SendConfirmationScreen.qml">SendConfirmationScreen.qml</file>
         <file alias="DesktopMessageDialog.qml">DesktopMessageDialog.qml</file>
         <file alias="ValidPasswordMessageDialog.qml">ValidPasswordMessageDialog.qml</file>
-        <file alias="InitiallSettingsScreen.qml">InitiallSettingsScreen.qml</file>
+        <file alias="ServiceSettingsScreen.qml">ServiceSettingsScreen.qml</file>
         <file alias="BaseSettingFields.qml">BaseSettingFields.qml</file>
     </qresource>
     <qresource prefix="/pos">

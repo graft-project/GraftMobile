@@ -17,7 +17,7 @@ BaseStackViewer {
         transitionsMap["openMnemonicViewScreen"] = openMnemonicViewScreen
         transitionsMap["openCreateWalletScreen"] = openCreateWalletScreen
         transitionsMap["backToSelectNetworkScreen"] = backToSelectNetworkScreen
-        transitionsMap["initiallSettingsScreen"] = initiallSettingsScreen
+        transitionsMap["serviceSettingsScreen"] = serviceSettingsScreen
         transitionsMap["openBaseScreen"] = openBaseScreen
         transitionsMap["goBack"] = goBack
         return transitionsMap
@@ -40,8 +40,8 @@ BaseStackViewer {
         stack.pop(selectNetworkScreen)
     }
 
-    function initiallSettingsScreen() {
-        stack.push("qrc:/InitiallSettingsScreen.qml", {"pushScreen": createWalletsTransitions()})
+    function serviceSettingsScreen() {
+        stack.push("qrc:/ServiceSettingsScreen.qml", {"pushScreen": createWalletsTransitions()})
     }
 
     function openBaseScreen() {

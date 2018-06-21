@@ -240,17 +240,15 @@ ColumnLayout {
     }
 
     function updateSettings() {
+        httpsSwitch.checked = GraftClient.httpsType()
+        serviceURLSwitch.checked = GraftClient.useOwnUrlAddress()
+        serviceAddr.checked =GraftClient.useOwnServiceAddress()
         if (GraftClient.useOwnServiceAddress()) {
-            serviceAddr.checked = GraftClient.settings("useOwnServiceAddress")
             ipTextField.text = GraftClient.settings("ip")
             portTextField.text = GraftClient.settings("port")
         }
         if (GraftClient.useOwnUrlAddress()) {
-            serviceURLSwitch.checked = GraftClient.settings("useOwnUrlAddress")
             addressTextField.text = GraftClient.settings("address")
-        }
-        if (!GraftClient.httpsType()) {
-            httpsSwitch.checked = GraftClient.settings("httpsType")
         }
     }
 }
