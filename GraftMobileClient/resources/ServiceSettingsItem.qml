@@ -2,33 +2,18 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
-import com.graft.design 1.0
 import com.device.platform 1.0
+import com.graft.design 1.0
 import "components"
 
 ColumnLayout {
-    property alias displayCompanyName: companyNameTextField.visible
-    property alias companyNameText: companyNameTextField.text
-    property alias serviceURLSwitch: serviceURLSwitch.checked
-    property alias companyTitle: companyNameTextField.title
     property alias addressTitle: addressTextField.title
-    property alias addressText: addressTextField.text
-    property alias serviceAddr: serviceAddr.checked
-    property alias httpsSwitch: httpsSwitch.checked
     property alias portTitle: portTextField.title
-    property alias portText: portTextField.text
     property alias ipTitle: ipTextField.title
-    property alias ipText: ipTextField.text
+    property bool isDisableScreen: false
 
     spacing: 0
     anchors.fill: parent
-
-    LinearEditItem {
-        id: companyNameTextField
-        maximumLength: 50
-        Layout.alignment: Qt.AlignTop
-        text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
-    }
 
     ColumnLayout {
         Layout.topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 9 : 0
@@ -228,19 +213,17 @@ ColumnLayout {
     }
 
     function clearField() {
-        companyNameTextField.actionTextField.clear()
         addressTextField.actionTextField.clear()
         portTextField.actionTextField.clear()
         ipTextField.actionTextField.clear()
-    }
-
-    function length() {
-        return companyNameTextField.text.length
+        serviceURLSwitch.checked = false
+        serviceAddr.checked = false
+        httpsSwitch.checked = true
     }
 
     function updateSettings() {
         serviceURLSwitch.checked = GraftClient.useOwnUrlAddress()
-        serviceAddr.checked =GraftClient.useOwnServiceAddress()
+        serviceAddr.checked = GraftClient.useOwnServiceAddress()
         httpsSwitch.checked = GraftClient.httpsType()
         if (GraftClient.useOwnServiceAddress()) {
             ipTextField.text = GraftClient.settings("ip")
@@ -248,5 +231,38 @@ ColumnLayout {
         } else if (GraftClient.useOwnUrlAddress()) {
             addressTextField.text = GraftClient.settings("address")
         }
+    }
+
+    function serviceSave() {
+        GraftClient.setSettings("httpsType", httpsSwitch.checked)
+        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
+        if (serviceAddr.checked)
+        {
+            if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
+                GraftClient.setSettings("ip", ipTextField.text)
+                GraftClient.setSettings("port", portTextField.text)
+            } else {
+                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
+                                         "correct service address.")
+                screenDialog.open()
+                enableScreen()
+                isDisableScreen = true
+                return
+            }
+        } else if (serviceURLSwitch.checked) {
+            if (GraftClient.isValidUrl(addressTextField.text) &&
+              !(addressTextField.text === "http://" || addressTextField.text === "https://")) {
+                GraftClient.setSettings("address", addressTextField.text)
+            } else {
+                screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
+                                         "correct service address.")
+                screenDialog.open()
+                enableScreen()
+                isDisableScreen = true
+                return
+            }
+        }
+        GraftClient.saveSettings()
     }
 }

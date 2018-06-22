@@ -12,15 +12,14 @@ BaseScreen {
     title: qsTr("Settings")
     action: save
 
-    property alias displayCompanyName: fields.displayCompanyName
-    property alias companyTitle: fields.companyTitle
+    property alias displayCompanyName: companyNameTextField.visible
     property alias addressTitle: fields.addressTitle
     property alias saveButtonText: saveButton.text
     property alias portTitle: fields.portTitle
     property alias ipTitle: fields.ipTitle
     property var confirmPasswordAction: null
-    property string message: ""
     property bool okMode: false
+    property string message: ""
 
     Connections {
         target: GraftClient
@@ -34,7 +33,14 @@ BaseScreen {
             margins: 15
         }
 
-        BaseSettingFields {
+        LinearEditItem {
+            id: companyNameTextField
+            maximumLength: 50
+            Layout.alignment: Qt.AlignTop
+            text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
+        }
+
+        ServiceSettingsItem {
             id: fields
             Layout.fillWidth: true
         }
@@ -172,9 +178,7 @@ BaseScreen {
                     messageDialog.open()
                     return
                 }
-                fields.httpsSwitch = true
-                fields.serviceAddr = false
-                fields.serviceURLSwitch = false
+                companyNameTextField.actionTextField.clear()
                 fields.clearField()
             }
             confirmPasswordAction()
@@ -187,46 +191,20 @@ BaseScreen {
     }
 
     function resetOwnServiceSettings() {
+        companyNameTextField.actionTextField.clear()
         fields.clearField()
-        fields.httpsSwitch = true
-        fields.serviceAddr = false
-        fields.serviceURLSwitch =false
         GraftClient.removeSettings()
     }
 
     function save() {
-        if (fields.displayCompanyName && fields.length() !== 0) {
-            GraftClient.setSettings("companyName", fields.companyNameText)
+        if (companyNameTextField.visible && companyNameTextField.text.length() !== 0) {
+            GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        GraftClient.setSettings("httpsType", fields.httpsSwitch)
-        GraftClient.setSettings("useOwnServiceAddress", fields.serviceAddr)
-        GraftClient.setSettings("useOwnUrlAddress", fields.serviceURLSwitch)
-        if (fields.serviceAddr)
+        fields.serviceSave()
+        if (!fields.isDisableScreen)
         {
-            if (fields.portText !== "" && GraftClient.isValidIp(fields.ipText)) {
-                GraftClient.setSettings("ip", fields.ipText)
-                GraftClient.setSettings("port", fields.portText)
-            } else {
-                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
-                                         "correct service address.")
-                screenDialog.open()
-                enableScreen()
-                return
-            }
-        } else if (fields.serviceURLSwitch) {
-            if (GraftClient.isValidUrl(fields.addressText) && !(fields.addressText === "http://"
-            || fields.addressText === "https://")) {
-                GraftClient.setSettings("address", fields.addressText)
-            } else {
-                screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
-                                         "correct service address.")
-                screenDialog.open()
-                enableScreen()
-                return
-            }
+            pushScreen.openMainScreen()
         }
-        GraftClient.saveSettings()
-        pushScreen.openMainScreen()
         enableScreen()
     }
 }

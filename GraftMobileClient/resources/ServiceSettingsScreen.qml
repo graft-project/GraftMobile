@@ -9,11 +9,6 @@ import "components"
 
 BaseScreen {
     id: root
-
-    property alias addressTitle: fields.addressTitle
-    property alias portTitle: fields.portTitle
-    property alias ipTitle: fields.ipTitle
-
     title: qsTr("Settings")
     screenHeader {
         isNavigationButtonVisible: true
@@ -32,9 +27,8 @@ BaseScreen {
             margins: 15
         }
 
-        BaseSettingFields {
+        ServiceSettingsItem {
             id: fields
-            displayCompanyName: false
             Layout.fillWidth: true
         }
 
@@ -44,7 +38,8 @@ BaseScreen {
 
         WideActionButton {
             id: saveButton
-            text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Done") : qsTr("Save changes")
+            text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Done") :
+                                                                         qsTr("Save changes")
             Layout.alignment: Qt.AlignBottom
             onClicked: {
                 disableScreen()
@@ -54,37 +49,11 @@ BaseScreen {
     }
 
     function save() {
-        GraftClient.setSettings("httpsType", fields.httpsSwitch)
-        GraftClient.setSettings("useOwnServiceAddress", fields.serviceAddr)
-        GraftClient.setSettings("useOwnUrlAddress", fields.serviceURLSwitch)
-        if (fields.serviceAddr)
+        fields.serviceSave()
+        if (!fields.isDisableScreen)
         {
-            if (fields.portText !== "" && GraftClient.isValidIp(fields.ipText)) {
-                GraftClient.setSettings("useOwnServiceAddress", fields.serviceAddr)
-                GraftClient.setSettings("ip", fields.ipText)
-                GraftClient.setSettings("port", fields.portText)
-            } else {
-                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
-                                         "correct service address.")
-                screenDialog.open()
-                enableScreen()
-                return
-            }
-        } else if (fields.serviceURLSwitch) {
-            if (GraftClient.isValidUrl(fields.addressText) &&
-                !(fields.addressText === "http://" || fields.addressText === "https://")) {
-                GraftClient.setSettings("useOwnUrlAddress", fields.serviceURLSwitch)
-                GraftClient.setSettings("address", fields.addressText)
-            } else {
-                screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
-                                         "correct service address.")
-                screenDialog.open()
-                enableScreen()
-                return
-            }
+            pop()
         }
-        GraftClient.saveSettings()
-        pop()
         enableScreen()
     }
 }
