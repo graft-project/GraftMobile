@@ -116,7 +116,7 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-                specialBackMode: pushScreen
+                action: pushScreen
                 screenHeader {
                     isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
                     navigationButtonState: true
