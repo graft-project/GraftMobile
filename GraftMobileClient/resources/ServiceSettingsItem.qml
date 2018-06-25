@@ -230,6 +230,10 @@ ColumnLayout {
             portTextField.text = GraftClient.settings("port")
         } else if (GraftClient.useOwnUrlAddress()) {
             addressTextField.text = GraftClient.settings("address")
+        } else {
+            addressTextField.actionTextField.clear()
+            portTextField.actionTextField.clear()
+            ipTextField.actionTextField.clear()
         }
     }
 
@@ -246,8 +250,8 @@ ColumnLayout {
                 screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
-                enableScreen()
                 isDisableScreen = true
+                GraftClient.setSettings("useOwnServiceAddress", false)
                 return
             }
         } else if (serviceURLSwitch.checked) {
@@ -258,11 +262,12 @@ ColumnLayout {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
-                enableScreen()
                 isDisableScreen = true
+                GraftClient.setSettings("useOwnUrlAddress", false)
                 return
             }
         }
         GraftClient.saveSettings()
+        isDisableScreen = false
     }
 }
