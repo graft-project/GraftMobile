@@ -17,7 +17,7 @@ BaseScreen {
 
     Connections {
         target: GraftClient
-        onSettingsChanged: fields.updateSettings()
+        onSettingsChanged: serviceSettingsFields.updateSettings()
     }
 
     ColumnLayout {
@@ -28,7 +28,7 @@ BaseScreen {
         }
 
         ServiceSettingsItem {
-            id: fields
+            id: serviceSettingsFields
             Layout.fillWidth: true
         }
 
@@ -49,8 +49,8 @@ BaseScreen {
     }
 
     function save() {
-        fields.serviceSave()
-        if (!fields.isDisableScreen)
+        serviceSettingsFields.serviceSave()
+        if (!serviceSettingsFields.isDisableScreen)
         {
             pop()
         }

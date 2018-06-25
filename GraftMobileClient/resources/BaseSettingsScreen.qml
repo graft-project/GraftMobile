@@ -13,17 +13,17 @@ BaseScreen {
     action: save
 
     property alias displayCompanyName: companyNameTextField.visible
-    property alias addressTitle: fields.addressTitle
+    property alias addressTitle: serviceSettingsFields.addressTitle
+    property alias portTitle: serviceSettingsFields.portTitle
+    property alias ipTitle: serviceSettingsFields.ipTitle
     property alias saveButtonText: saveButton.text
-    property alias portTitle: fields.portTitle
-    property alias ipTitle: fields.ipTitle
     property var confirmPasswordAction: null
     property bool okMode: false
     property string message: ""
 
     Connections {
         target: GraftClient
-        onSettingsChanged: fields.updateSettings()
+        onSettingsChanged: serviceSettingsFields.updateSettings()
     }
 
     ColumnLayout {
@@ -41,7 +41,7 @@ BaseScreen {
         }
 
         ServiceSettingsItem {
-            id: fields
+            id: serviceSettingsFields
             Layout.fillWidth: true
         }
 
@@ -148,7 +148,7 @@ BaseScreen {
 
     function restoreSettings() {
         resetWalletAccount()
-        fields.updateSettings()
+        serviceSettingsFields.updateSettings()
     }
 
     function resetWalletAccount() {
@@ -179,7 +179,7 @@ BaseScreen {
                     return
                 }
                 companyNameTextField.actionTextField.clear()
-                fields.clearField()
+                serviceSettingsFields.clearField()
             }
             confirmPasswordAction()
         } else {
@@ -192,7 +192,7 @@ BaseScreen {
 
     function resetOwnServiceSettings() {
         companyNameTextField.actionTextField.clear()
-        fields.clearField()
+        serviceSettingsFields.clearField()
         GraftClient.removeSettings()
     }
 
@@ -200,8 +200,8 @@ BaseScreen {
         if (companyNameTextField.visible && companyNameTextField.text.length() !== 0) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        fields.serviceSave()
-        if (!fields.isDisableScreen)
+        serviceSettingsFields.serviceSave()
+        if (!serviceSettingsFields.isDisableScreen)
         {
             pushScreen.openMainScreen()
         }
