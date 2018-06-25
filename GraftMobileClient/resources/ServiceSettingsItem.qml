@@ -236,12 +236,13 @@ ColumnLayout {
         }
     }
 
-    function save() {
-        var useOwnUrlAddress = GraftClient.useOwnUrlAddress()
-        var useOwnServiceAddress = GraftClient.useOwnServiceAddress()
-        GraftClient.setSettings("httpsType", httpsSwitch.checked)
+    function setSettingSwitches() {
         GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+    }
+
+    function save() {
+        GraftClient.setSettings("httpsType", httpsSwitch.checked)
         if (serviceAddr.checked) {
             if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
                 GraftClient.setSettings("ip", ipTextField.text)
@@ -250,7 +251,6 @@ ColumnLayout {
                 screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
-                GraftClient.setSettings("useOwnServiceAddress", useOwnServiceAddress)
                 return false
             }
         } else if (serviceURLSwitch.checked) {
@@ -261,10 +261,10 @@ ColumnLayout {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
-                GraftClient.setSettings("useOwnUrlAddress", useOwnUrlAddress)
                 return false
             }
         }
+        setSettingSwitches()
         GraftClient.saveSettings()
         return true
     }
