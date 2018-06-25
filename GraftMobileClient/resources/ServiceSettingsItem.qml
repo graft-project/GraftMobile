@@ -10,7 +10,6 @@ ColumnLayout {
     property alias addressTitle: addressTextField.title
     property alias portTitle: portTextField.title
     property alias ipTitle: ipTextField.title
-    property bool isDisableScreen: false
 
     spacing: 0
     anchors.fill: parent
@@ -212,7 +211,7 @@ ColumnLayout {
         }
     }
 
-    function clearField() {
+    function clear() {
         addressTextField.actionTextField.clear()
         portTextField.actionTextField.clear()
         ipTextField.actionTextField.clear()
@@ -234,11 +233,11 @@ ColumnLayout {
         } else if (GraftClient.useOwnUrlAddress()) {
             addressTextField.text = GraftClient.settings("address")
         } else {
-            clearField()
+            clear()
         }
     }
 
-    function serviceSave() {
+    function save() {
         GraftClient.setSettings("httpsType", httpsSwitch.checked)
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
@@ -251,9 +250,8 @@ ColumnLayout {
                 screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
-                isDisableScreen = true
                 GraftClient.setSettings("useOwnServiceAddress", false)
-                return
+                return false
             }
         } else if (serviceURLSwitch.checked) {
             if (GraftClient.isValidUrl(addressTextField.text) &&
@@ -263,12 +261,11 @@ ColumnLayout {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
                                          "correct service address.")
                 screenDialog.open()
-                isDisableScreen = true
                 GraftClient.setSettings("useOwnUrlAddress", false)
-                return
+                return false
             }
         }
         GraftClient.saveSettings()
-        isDisableScreen = false
+        return true
     }
 }

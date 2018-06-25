@@ -49,8 +49,7 @@ BaseScreen {
     }
 
     function save() {
-        serviceSettingsFields.serviceSave()
-        if (!serviceSettingsFields.isDisableScreen)
+        if (serviceSettingsFields.save())
         {
             pop()
         }

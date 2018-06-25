@@ -179,7 +179,7 @@ BaseScreen {
                     return
                 }
                 companyNameTextField.actionTextField.clear()
-                serviceSettingsFields.clearField()
+                serviceSettingsFields.clear()
                 serviceSettingsFields.defaultSettings()
             }
             confirmPasswordAction()
@@ -193,7 +193,7 @@ BaseScreen {
 
     function resetOwnServiceSettings() {
         companyNameTextField.actionTextField.clear()
-        serviceSettingsFields.clearField()
+        serviceSettingsFields.clear()
         serviceSettingsFields.defaultSettings()
         GraftClient.removeSettings()
     }
@@ -202,8 +202,7 @@ BaseScreen {
         if (companyNameTextField.visible && companyNameTextField.text.length() !== 0) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        serviceSettingsFields.serviceSave()
-        if (!serviceSettingsFields.isDisableScreen)
+        if (serviceSettingsFields.save())
         {
             pushScreen.openMainScreen()
         }
