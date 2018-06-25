@@ -12,7 +12,6 @@ ColumnLayout {
     property alias ipTitle: ipTextField.title
 
     spacing: 0
-    anchors.fill: parent
 
     ColumnLayout {
         Layout.topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 9 : 0
@@ -241,8 +240,7 @@ ColumnLayout {
         GraftClient.setSettings("httpsType", httpsSwitch.checked)
         GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
-        if (serviceAddr.checked)
-        {
+        if (serviceAddr.checked) {
             if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
                 GraftClient.setSettings("ip", ipTextField.text)
                 GraftClient.setSettings("port", portTextField.text)

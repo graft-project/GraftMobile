@@ -13,6 +13,7 @@ BaseScreen {
     action: save
 
     property alias displayCompanyName: companyNameTextField.visible
+    property alias companyTitle: companyNameTextField.title
     property alias addressTitle: serviceSettingsFields.addressTitle
     property alias portTitle: serviceSettingsFields.portTitle
     property alias ipTitle: serviceSettingsFields.ipTitle
@@ -199,11 +200,10 @@ BaseScreen {
     }
 
     function save() {
-        if (companyNameTextField.visible && companyNameTextField.text.length() !== 0) {
+        if (companyNameTextField.visible && companyNameTextField.text.length !== 0) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        if (serviceSettingsFields.save())
-        {
+        if (serviceSettingsFields.save()) {
             pushScreen.openMainScreen()
         }
         enableScreen()

@@ -49,8 +49,7 @@ BaseScreen {
     }
 
     function save() {
-        if (serviceSettingsFields.save())
-        {
+        if (serviceSettingsFields.save()) {
             pop()
         }
         enableScreen()
