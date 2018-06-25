@@ -216,6 +216,9 @@ ColumnLayout {
         addressTextField.actionTextField.clear()
         portTextField.actionTextField.clear()
         ipTextField.actionTextField.clear()
+    }
+
+    function defaultSettings() {
         serviceURLSwitch.checked = false
         serviceAddr.checked = false
         httpsSwitch.checked = true
@@ -231,9 +234,7 @@ ColumnLayout {
         } else if (GraftClient.useOwnUrlAddress()) {
             addressTextField.text = GraftClient.settings("address")
         } else {
-            addressTextField.actionTextField.clear()
-            portTextField.actionTextField.clear()
-            ipTextField.actionTextField.clear()
+            clearField()
         }
     }
 

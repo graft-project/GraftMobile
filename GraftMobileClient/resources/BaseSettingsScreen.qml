@@ -180,6 +180,7 @@ BaseScreen {
                 }
                 companyNameTextField.actionTextField.clear()
                 serviceSettingsFields.clearField()
+                serviceSettingsFields.defaultSettings()
             }
             confirmPasswordAction()
         } else {
@@ -193,6 +194,7 @@ BaseScreen {
     function resetOwnServiceSettings() {
         companyNameTextField.actionTextField.clear()
         serviceSettingsFields.clearField()
+        serviceSettingsFields.defaultSettings()
         GraftClient.removeSettings()
     }
 
