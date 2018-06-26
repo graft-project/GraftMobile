@@ -236,13 +236,7 @@ ColumnLayout {
         }
     }
 
-    function setSettingSwitches() {
-        GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
-        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
-    }
-
     function save() {
-        GraftClient.setSettings("httpsType", httpsSwitch.checked)
         if (serviceAddr.checked) {
             if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
                 GraftClient.setSettings("ip", ipTextField.text)
@@ -264,7 +258,9 @@ ColumnLayout {
                 return false
             }
         }
-        setSettingSwitches()
+        GraftClient.setSettings("httpsType", httpsSwitch.checked)
+        GraftClient.setSettings("useOwnUrlAddress", serviceURLSwitch.checked)
+        GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
         GraftClient.saveSettings()
         return true
     }
