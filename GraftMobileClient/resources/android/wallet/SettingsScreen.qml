@@ -4,7 +4,6 @@ import QtQuick.Controls 2.2
 import "../"
 
 BaseSettingsScreen {
-    id: root
     ipTitle: qsTr("IP")
     portTitle: qsTr("Port")
     saveButtonText: qsTr("Save changes")

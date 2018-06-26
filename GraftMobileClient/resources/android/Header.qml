@@ -8,6 +8,15 @@ BaseHeader {
     height: 60
     color: ColorFactory.color(DesignFactory.Foreground)
 
+    onActionButtonStateChanged: {
+        if (isSettings) {
+            actionButton.image.source = "qrc:/imgs/whiteSettings.png"
+            actionButton.image.height = 23
+        } else {
+            actionButton.image.source = "qrc:/imgs/done.png"
+        }
+    }
+
     onNavigationButtonStateChanged: {
         if (navigationButtonState) {
             navigationButton.image.source = "qrc:/imgs/menu_icon.png"

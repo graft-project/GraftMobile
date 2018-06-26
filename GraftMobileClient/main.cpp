@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
     client.registerTypes(&engine);
 
     CurrencyModel model;
-    model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRFT"), QStringLiteral("GRAFT"));
     engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
 

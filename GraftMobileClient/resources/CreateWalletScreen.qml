@@ -8,7 +8,19 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
+    screenHeader {
+        actionButtonState: true
+        isSettings: true
+    }
+    action: pushSettingsScreen
+
     onErrorMessage: busyIndicator.running = false
+
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
+            screenHeader.actionText = qsTr("Settings")
+        }
+    }
 
     Connections {
         target: GraftClient
@@ -42,9 +54,11 @@ BaseScreen {
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                         dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                    if (passwordTextField.passwordText === "" &&
+                            passwordTextField.confirmPasswordText === "") {
                         checkDialog.open()
                         return
                     }
@@ -109,5 +123,9 @@ BaseScreen {
         disableScreen()
         busyIndicator.running = true
         GraftClient.createAccount(passwordTextField.passwordText)
+    }
+
+    function pushSettingsScreen() {
+        pushScreen.serviceSettingsScreen()
     }
 }

@@ -422,7 +422,7 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
     if(!mQuickExchangeModel)
     {
         mQuickExchangeModel = new QuickExchangeModel(this);
-        mQuickExchangeModel->add(QStringLiteral("US Dollar"), QStringLiteral("USD"),
+        mQuickExchangeModel->add(QStringLiteral("GRAFT"), QStringLiteral("grft"),
                                  QString(), true);
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
@@ -485,7 +485,7 @@ bool GraftBaseClient::useOwnServiceAddress() const
 {
     if (mClientSettings)
     {
-        return mClientSettings->value(scUseOwnServiceAddress).toBool();
+        return mClientSettings->value(scUseOwnServiceAddress, false).toBool();
     }
     return false;
 }
@@ -494,7 +494,7 @@ bool GraftBaseClient::useOwnUrlAddress() const
 {
     if (mClientSettings)
     {
-        return mClientSettings->value(scUseOwnUrlAddress).toBool();
+        return mClientSettings->value(scUseOwnUrlAddress, false).toBool();
     }
     return false;
 }
@@ -521,7 +521,7 @@ void GraftBaseClient::saveBalance() const
     setSettings(scLockedBalance, mBalances.value(GraftClientTools::LockedBalance));
     setSettings(scUnlockedBalancee, mBalances.value(GraftClientTools::UnlockedBalance));
     setSettings(scLocalBalance, mBalances.value(GraftClientTools::LocalBalance));
-    saveSettings();
+    mClientSettings->sync();
 }
 
 void GraftBaseClient::updateQuickExchange(double cost)
@@ -621,12 +621,13 @@ bool GraftBaseClient::isBalanceUpdated() const
     return mIsBalanceUpdated;
 }
 
-void GraftBaseClient::saveSettings() const
+void GraftBaseClient::saveSettings()
 {
     if (mClientSettings)
     {
         mClientSettings->sync();
         updateSettings();
+        emit settingsChanged();
     }
 }
 
