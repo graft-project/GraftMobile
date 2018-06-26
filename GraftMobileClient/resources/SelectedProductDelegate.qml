@@ -90,7 +90,7 @@ Rectangle {
 
             Text {
                 id: price
-                text: "$" + productPrice
+                text: "GRFT " + productPrice
                 font.pixelSize: 14
             }
         }

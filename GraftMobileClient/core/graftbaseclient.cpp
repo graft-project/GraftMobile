@@ -422,7 +422,7 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
     if(!mQuickExchangeModel)
     {
         mQuickExchangeModel = new QuickExchangeModel(this);
-        mQuickExchangeModel->add(QStringLiteral("US Dollar"), QStringLiteral("USD"),
+        mQuickExchangeModel->add(QStringLiteral("GRAFT"), QStringLiteral("grft"),
                                  QString(), true);
         engine->rootContext()->setContextProperty(QStringLiteral("QuickExchangeModel"),
                                                   mQuickExchangeModel);
