@@ -44,6 +44,8 @@
         <file alias="SendConfirmationScreen.qml">SendConfirmationScreen.qml</file>
         <file alias="DesktopMessageDialog.qml">DesktopMessageDialog.qml</file>
         <file alias="ValidPasswordMessageDialog.qml">ValidPasswordMessageDialog.qml</file>
+        <file alias="ServiceSettingsScreen.qml">ServiceSettingsScreen.qml</file>
+        <file alias="ServiceSettingsItem.qml">ServiceSettingsItem.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -103,6 +105,7 @@
         <file alias="visibility_on.png">imgs/visibility_on.png</file>
         <file alias="icon-pos.png">imgs/icon-pos.png</file>
         <file alias="icon-wallet.png">imgs/icon-wallet.png</file>
+        <file alias="whiteSettings.png">imgs/whiteSettings.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

@@ -12,4 +12,5 @@ Rectangle {
     property bool cartEnable: false
     property int selectedProductCount: 0
     property bool isNavigationButtonVisible: true
+    property bool isSettings: false
 }
