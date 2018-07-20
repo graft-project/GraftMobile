@@ -76,10 +76,7 @@ ColumnLayout {
         RowLayout {
             id: serviceAddrLayout
             enabled: serviceAddr.checked
-            anchors {
-                right: parent.right
-                left: parent.left
-            }
+            Layout.fillWidth: true
             spacing: 20
             state: "hidden"
             states: [
