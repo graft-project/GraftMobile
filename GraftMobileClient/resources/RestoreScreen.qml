@@ -54,6 +54,16 @@ BaseScreen {
                 regExp: /([a-z]+\s+){24}([a-z]+){1}/g
             }
             inputMethodHints: Qt.ImhLowercaseOnly | Qt.ImhNoPredictiveText
+            Component.onCompleted: {
+                if (Detector.isPlatform(Platform.IOS)) {
+                    echoMode = TextInput.Password
+                }
+            }
+            onUpdateText: {
+                if (Detector.isPlatform(Platform.IOS)) {
+                    echoMode = TextInput.Normal
+                }
+            }
         }
 
         PasswordFields {
