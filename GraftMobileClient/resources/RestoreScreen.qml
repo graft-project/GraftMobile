@@ -53,7 +53,7 @@ BaseScreen {
             validator: RegExpValidator {
                 regExp: /([a-z]+\s+){24}([a-z]+){1}/g
             }
-            inputMethodHints: Qt.ImhNoPredictiveText
+            inputMethodHints: Qt.ImhLowercaseOnly | Qt.ImhNoPredictiveText
         }
 
         PasswordFields {
