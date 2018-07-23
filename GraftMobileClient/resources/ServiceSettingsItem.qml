@@ -151,7 +151,7 @@ ColumnLayout {
             text: GraftClient.useOwnUrlAddress() ? GraftClient.settings("address") : "http://"
             showLengthIndicator: false
             fieldCursorPosition: httpsSwitch.checked ? 8 : 7
-            onUpdateText: replaceNetworkType(addressTextField.text)
+            onTextChanged: replaceNetworkType(addressTextField.text)
             state: "hidden"
             states: [
                 State {
