@@ -65,7 +65,7 @@ BaseLinearEditItem {
             left: parent.left
             topMargin: 8
         }
-        font.pointSize: editItem.font.pointSize
+        font.pixelSize: editItem.font.pixelSize
         rightPadding: 5
         color: "#8E8E93"
     }

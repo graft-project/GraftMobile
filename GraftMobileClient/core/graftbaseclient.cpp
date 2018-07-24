@@ -129,7 +129,7 @@ void GraftBaseClient::restoreAccount(const QString &seed, const QString &passwor
         connect(api, &GraftGenericAPI::restoreAccountReceived,
                 this, &GraftBaseClient::receiveRestoreAccount, Qt::UniqueConnection);
         mAccountManager->setPassword(password);
-        api->restoreAccount(seed, password);
+        api->restoreAccount(seed.toLower(), password);
     }
 }
 
