@@ -81,7 +81,7 @@ BaseScreen {
                     margins: 15
                 }
 
-                Text {
+                Label {
                     id: address
                     Layout.fillWidth: true
                     Layout.leftMargin: 20

@@ -36,13 +36,13 @@ BaseCartScreen {
                 Layout.topMargin: 25
             }
 
-            Text {
-                text: qsTr("SCAN WITH WALLET")
+            Label {
+                Layout.alignment: Qt.AlignCenter
                 font {
                     bold: true
                     pixelSize: 16
                 }
-                Layout.alignment: Qt.AlignCenter
+                text: qsTr("SCAN WITH WALLET")
             }
 
             ListView {

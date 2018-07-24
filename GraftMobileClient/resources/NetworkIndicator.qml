@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Controls 2.2
 
 Rectangle {
     id: networkIndicator
@@ -10,15 +11,15 @@ Rectangle {
         onNetworkTypeChanged: nameTypeNetwork.text = GraftClient.networkName()
     }
 
-    Text {
+    Label {
         id: nameTypeNetwork
         anchors {
             verticalCenter: networkIndicator.verticalCenter
             left: networkIndicator.left
             leftMargin: 18
         }
-        text: GraftClient.networkName()
-        font.pixelSize: 16
         color: "#FFFFFF"
+        font.pixelSize: 16
+        text: GraftClient.networkName()
     }
 }

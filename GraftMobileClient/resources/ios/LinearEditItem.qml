@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import "../"
@@ -58,15 +58,15 @@ BaseLinearEditItem {
         }
     }
 
-    Text {
+    Label {
         id: titleItem
         anchors {
             top: parent.top
             left: parent.left
             topMargin: 8
         }
-        font.pixelSize: editItem.font.pixelSize
         rightPadding: 5
         color: "#8E8E93"
+        font.pixelSize: editItem.font.pixelSize
     }
 }

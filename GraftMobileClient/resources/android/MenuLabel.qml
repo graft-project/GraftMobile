@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import com.graft.design 1.0
 
 Rectangle {
@@ -23,11 +24,11 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft
         }
 
-        Text {
+        Label {
             id: textItem
-            color: ColorFactory.color(DesignFactory.MainText)
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft
+            color: ColorFactory.color(DesignFactory.MainText)
             font {
                 bold: true
                 family: "Liberation Sans"

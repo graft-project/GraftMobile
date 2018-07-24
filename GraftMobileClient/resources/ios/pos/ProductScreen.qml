@@ -1,8 +1,8 @@
 import QtQuick 2.9
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
-import QtQuick.Dialogs 1.2
 import org.graft 1.0
 import com.graft.design 1.0
 import com.device.platform 1.0

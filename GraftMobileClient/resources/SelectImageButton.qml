@@ -30,7 +30,7 @@ Button {
                 Layout.alignment: Qt.AlignLeft
             }
 
-            Text {
+            Label {
                 id: selectText
                 Layout.alignment: Qt.AlignLeft
                 font.pixelSize: 20

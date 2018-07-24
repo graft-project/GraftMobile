@@ -30,14 +30,14 @@ BaseCartScreen {
                 Layout.topMargin: 10
             }
 
-            Text {
-                text: qsTr("SCAN WITH WALLET")
+            Label {
+                Layout.alignment: Qt.AlignCenter
+                color: ColorFactory.color(DesignFactory.Foreground)
                 font {
                     bold: true
                     pixelSize: 16
                 }
-                color: ColorFactory.color(DesignFactory.Foreground)
-                Layout.alignment: Qt.AlignCenter
+                text: qsTr("SCAN WITH WALLET")
             }
 
             ColumnLayout {
