@@ -51,7 +51,7 @@ BaseScreen {
             letterCountingMode: false
             maximumLength: 25
             validator: RegExpValidator {
-                regExp: /([a-z]+\s+){24}([a-z]+){1}/g
+                regExp: /([a-zA-Z]+\s+){24}([a-zA-Z]+){1}/g
             }
             inputMethodHints: Qt.ImhLowercaseOnly | Qt.ImhNoPredictiveText
             Component.onCompleted: {
@@ -80,9 +80,11 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
             onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                         dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                    if (passwordTextField.passwordText === "" &&
+                        passwordTextField.confirmPasswordText === "") {
                         checkDialog.open()
                         return
                     }
