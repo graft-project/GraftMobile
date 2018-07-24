@@ -60,7 +60,7 @@ BaseScreen {
                 }
             }
             onUpdateText: {
-                if (Detector.isPlatform(Platform.IOS) && seedTextField.text.length === 1) {
+                if (Detector.isPlatform(Platform.IOS) && seedTextField.echoMode !== TextInput.Normal) {
                     echoMode = TextInput.Normal
                 }
             }
