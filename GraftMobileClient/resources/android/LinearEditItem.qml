@@ -18,8 +18,6 @@ BaseLinearEditItem {
     property alias inFocus: editItem.focus
     property int fieldCursorPosition: 0
 
-    signal updateText()
-
     actionTextField: editItem
 
     ColumnLayout {
@@ -43,7 +41,6 @@ BaseLinearEditItem {
             color: "#404040"
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
-            onTextChanged: updateText()
 
             VisibilityIcon {
                 Material.accent: "#9E9E9E"
