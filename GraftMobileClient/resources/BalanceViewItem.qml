@@ -64,20 +64,20 @@ Rectangle {
                         Layout.fillWidth: true
                         spacing: 10
 
-                        Text {
-                            text: qsTr("Main Balance")
-                            font.pixelSize: 20
+                        Label {
                             color: "#233146"
+                            font.pixelSize: 20
+                            text: qsTr("Main Balance")
                         }
 
-                        Text {
-                            text: amountUnlockGraftCost
-                            font.pixelSize: 20
-                            color: "#404040"
+                        Label {
                             Layout.fillWidth: true
                             Layout.rightMargin: 12
                             Layout.alignment: Qt.AlignRight
                             horizontalAlignment: Text.AlignRight
+                            color: "#404040"
+                            font.pixelSize: 20
+                            text: amountUnlockGraftCost
                         }
                     }
 
@@ -85,16 +85,16 @@ Rectangle {
                         Layout.fillWidth: true
                         spacing: 10
 
-                        Text {
-                            text: qsTr("Unlocked")
-                            font.pixelSize: 12
+                        Label {
                             color: "#3d4757"
+                            font.pixelSize: 12
+                            text: qsTr("Unlocked")
                         }
 
-                        Text {
+                        Label {
                             id: updateLabel
-                            font.pixelSize: 12
                             color: "#3d4757"
+                            font.pixelSize: 12
 
                             Timer {
                                 id: timer
@@ -157,27 +157,27 @@ Rectangle {
                         Layout.fillWidth: true
                         spacing: 10
 
-                        Text {
-                            text: qsTr("Main Balance")
-                            font.pixelSize: 20
+                        Label {
                             color: "#233146"
+                            font.pixelSize: 20
+                            text: qsTr("Main Balance")
                         }
 
-                        Text {
-                            text: amountLockGraftCost
-                            font.pixelSize: 20
-                            color: "#d1cfc8"
+                        Label {
                             Layout.fillWidth: true
                             Layout.rightMargin: 12
                             Layout.alignment: Qt.AlignRight
                             horizontalAlignment: Text.AlignRight
+                            color: "#d1cfc8"
+                            font.pixelSize: 20
+                            text: amountLockGraftCost
                         }
                     }
 
-                    Text {
-                        text: qsTr("Locked")
-                        font.pixelSize: 12
+                    Label {
                         color: "#3d4757"
+                        font.pixelSize: 12
+                        text: qsTr("Locked")
                     }
                 }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import com.graft.design 1.0
 import "../"
 
@@ -46,16 +47,16 @@ BaseHeader {
             onClicked: navigationButtonClicked()
         }
 
-        Text {
+        Label {
             Layout.fillWidth: true
             Layout.leftMargin: isNavigationButtonVisible ? 25 : 15
             Layout.alignment: Qt.AlignLeft
-            text: rootItem.headerText
+            color: ColorFactory.color(DesignFactory.LightText)
             font {
                 bold: true
                 pixelSize: 17
             }
-            color: ColorFactory.color(DesignFactory.LightText)
+            text: rootItem.headerText
         }
 
         CartItem {

@@ -44,7 +44,6 @@ BaseScreen {
 
         Pane {
             id: completeLabel
-
             height: 50
             anchors {
                 right: parent.right
@@ -54,11 +53,10 @@ BaseScreen {
             }
             Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
             padding: 0
-
             contentItem: Rectangle {
                 id: completeLabelBackground
 
-                Text {
+                Label {
                     id: completeLabelText
                     anchors.centerIn: parent
                     color: "#FFFFFF"

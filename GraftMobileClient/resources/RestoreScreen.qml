@@ -59,7 +59,7 @@ BaseScreen {
                     echoMode = TextInput.Password
                 }
             }
-            onUpdateText: {
+            onTextChanged: {
                 if (Detector.isPlatform(Platform.IOS) && seedTextField.echoMode !== TextInput.Normal) {
                     echoMode = TextInput.Normal
                 }
