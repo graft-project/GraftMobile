@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import "../"
 
@@ -18,15 +18,13 @@ BaseLinearEditItem {
     property alias inFocus: editItem.focus
     property int fieldCursorPosition: 0
 
-    signal updateText()
-
     actionTextField: editItem
 
     ColumnLayout {
         spacing: -2
         anchors.fill: parent
 
-        Text {
+        Label {
             id: titleItem
             Layout.fillWidth: true
             color: "#BBBBBB"
@@ -43,7 +41,6 @@ BaseLinearEditItem {
             color: "#404040"
             maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
             Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
-            onTextChanged: updateText()
 
             VisibilityIcon {
                 Material.accent: "#9E9E9E"

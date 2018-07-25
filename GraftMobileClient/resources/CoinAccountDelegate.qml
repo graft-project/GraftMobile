@@ -1,7 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.2
+import QtGraphicalEffects 1.0
 
 BorderlessButton {
     id: coin
@@ -59,21 +59,21 @@ BorderlessButton {
                 }
             }
 
-            Text {
+            Label {
                 id: accountName
-                color: "#000000"
-                font.pixelSize: 20
                 Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.alignment: Qt.AlignLeft
+                color: "#000000"
+                font.pixelSize: 20
             }
 
-            Text {
+            Label {
                 id: accountBalance
-                color: "#404040"
-                font.pixelSize: 20
                 Layout.rightMargin: 12
                 Layout.alignment: Qt.AlignRight
+                color: "#404040"
+                font.pixelSize: 20
             }
 
             Image {

@@ -1,8 +1,8 @@
 import QtQuick 2.9
-import QtQuick.Controls.Material 2.2
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import "../components"
 import "../"
@@ -100,11 +100,11 @@ Item {
                     source: "qrc:/imgs/add_ios.png"
                 }
 
-                Text {
+                Label {
                     id: buttonText
                     Layout.alignment: Qt.AlignRight
-                    text: qsTr("Add photo")
                     color: "#007AFF"
+                    text: qsTr("Add photo")
                 }
             }
             onClicked: {

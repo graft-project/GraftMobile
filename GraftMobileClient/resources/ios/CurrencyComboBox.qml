@@ -21,15 +21,15 @@ ColumnLayout {
         Layout.topMargin: -6
         Layout.bottomMargin: -4
 
-        Text {
+        Label {
             id: dropdownTitle
             anchors {
                 top: parent.top
                 left: parent.left
                 topMargin: 14
             }
-            font.pixelSize: parent.font.pixelSize
             color: "#8e8e93"
+            font.pixelSize: parent.font.pixelSize
         }
     }
 

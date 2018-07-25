@@ -28,10 +28,10 @@ MenuItem {
                 icon: "qrc:/imgs/waller.png"
             }
 
-            Text {
+            Label {
                 id: graftMoney
-                color: ColorFactory.color(DesignFactory.MainText)
                 Layout.alignment: Qt.AlignRight
+                color: ColorFactory.color(DesignFactory.MainText)
                 font {
                     bold: true
                     family: "Liberation Sans"

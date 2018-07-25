@@ -1,7 +1,7 @@
 import QtQuick 2.9
-import QtQuick.Controls.Material 2.2
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import "../components"
 import "../"
 
@@ -108,12 +108,12 @@ Item {
                         source: "qrc:/imgs/add.png"
                     }
 
-                    Text {
+                    Label {
                         id: buttonText
                         Layout.alignment: Qt.AlignRight
+                        color: "#3A3E3C"
                         font.pixelSize: 14
                         text: previewImage.visible ? qsTr("Change Photo") : qsTr("Add Photo")
-                        color: "#3A3E3C"
                     }
                 }
             }

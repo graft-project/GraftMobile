@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import com.graft.design 1.0
 import com.device.platform 1.0
 import "../"
@@ -41,14 +42,14 @@ BaseHeader {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            Text {
-                text: rootItem.headerText
+            Label {
                 anchors.centerIn: parent
+                color: ColorFactory.color(DesignFactory.LightText)
                 font {
                     bold: true
                     pixelSize: 17
                 }
-                color: ColorFactory.color(DesignFactory.LightText)
+                text: rootItem.headerText
             }
         }
 

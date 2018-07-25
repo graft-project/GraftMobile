@@ -4,8 +4,6 @@ import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
 
 Button {
-    id: button
-
     property alias name: label.text
 
     flat: true

@@ -44,7 +44,7 @@ Button {
                 horizontalAlignment: Image.AlignLeft
             }
 
-            Text {
+            Label {
                 id: buttonTitle
                 Layout.fillWidth: true
                 Layout.leftMargin: 15

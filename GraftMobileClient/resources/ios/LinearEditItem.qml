@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import "../"
@@ -19,8 +19,6 @@ BaseLinearEditItem {
     property alias inFocus: editItem.focus
     property bool inlineTitle: false
     property int fieldCursorPosition: 0
-
-    signal updateText()
 
     actionTextField: editItem
 
@@ -41,7 +39,6 @@ BaseLinearEditItem {
                 editItem.leftPadding = 0
             }
         }
-        onTextChanged: updateText()
 
         VisibilityIcon {
             Material.accent: "#9E9E9E"
@@ -61,15 +58,15 @@ BaseLinearEditItem {
         }
     }
 
-    Text {
+    Label {
         id: titleItem
         anchors {
             top: parent.top
             left: parent.left
             topMargin: 8
         }
-        font.pointSize: editItem.font.pointSize
         rightPadding: 5
         color: "#8E8E93"
+        font.pixelSize: editItem.font.pixelSize
     }
 }

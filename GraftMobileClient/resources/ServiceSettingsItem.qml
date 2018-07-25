@@ -76,10 +76,7 @@ ColumnLayout {
         RowLayout {
             id: serviceAddrLayout
             enabled: serviceAddr.checked
-            anchors {
-                right: parent.right
-                left: parent.left
-            }
+            Layout.fillWidth: true
             spacing: 20
             state: "hidden"
             states: [
@@ -154,7 +151,7 @@ ColumnLayout {
             text: GraftClient.useOwnUrlAddress() ? GraftClient.settings("address") : "http://"
             showLengthIndicator: false
             fieldCursorPosition: httpsSwitch.checked ? 8 : 7
-            onUpdateText: replaceNetworkType(addressTextField.text)
+            onTextChanged: replaceNetworkType(addressTextField.text)
             state: "hidden"
             states: [
                 State {
