@@ -9,7 +9,6 @@ BaseScreen {
     property alias amountUnlockGraft: balanceItem.amountUnlockGraftCost
     property alias amountLockGraft: balanceItem.amountLockGraftCost
     property alias graftWalletLogo: graftWalletLogo.source
-    property bool appType: false
     default property alias content: placeholder.data
 
     title: qsTr("Wallet")
@@ -38,23 +37,6 @@ BaseScreen {
                     height: parent.height / 2
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/imgs/graft-wallet-logo.png"
-
-                    Label {
-                        anchors {
-                            rightMargin: Detector.isDesktop() ? -10 :
-                                         Detector.isPlatform(Platform.IOS) ? -10 : 0
-                            right: parent.right
-                            baseline: parent.bottom
-                        }
-                        visible: appType
-                        color: ColorFactory.color(DesignFactory.AndroidStatusBar)
-                        font {
-                            pixelSize: 18
-                            italic: true
-                            bold: true
-                        }
-                        text: qsTr("Ver. %1").arg(GraftClient.versionNumber())
-                    }
                 }
             }
 
@@ -67,7 +49,6 @@ BaseScreen {
                         right: parent.right
                         rightMargin: 18
                     }
-                    visible: !appType
                     color: "#FFFFFF"
                     font.pixelSize: 16
                     text: qsTr("Version %1").arg(GraftClient.versionNumber())
