@@ -47,6 +47,9 @@ BaseScreen {
                     Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 75 : 50
                     inputMethodHints: Qt.ImhDigitsOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
+                    validator: RegExpValidator {
+                         regExp: /^([1-9]{1}[0-9]{9}|[0]{1})[.]{1}\d{10}/
+                     }
                 }
 
                 CurrencyComboBox {

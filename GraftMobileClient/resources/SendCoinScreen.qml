@@ -81,8 +81,8 @@ BaseScreen {
                         showLengthIndicator: false
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: RegExpValidator {
-                            regExp: /^(([0-9]){1,6}|([0-9]){1,6}\.([0-9]){1,4})$/g
-                        }
+                             regExp: /^([1-9]{1}[0-9]{9}|[0]{1})[.]{1}\d{10}/
+                         }
                     }
 
                     Label {
