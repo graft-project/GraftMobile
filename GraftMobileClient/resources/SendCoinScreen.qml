@@ -82,7 +82,7 @@ BaseScreen {
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: RegExpValidator {
                              regExp: /^([1-9]{1}[0-9]{9}|[0]{1})[.]{1}\d{10}/
-                         }
+                        }
                     }
 
                     Label {
