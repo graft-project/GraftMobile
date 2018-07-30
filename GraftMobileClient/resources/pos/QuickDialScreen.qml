@@ -29,7 +29,8 @@ BaseScreen {
                 id: title
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
-                title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") : qsTr("Item title:")
+                title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") :
+                                                               qsTr("Item title:")
                 showLengthIndicator: true
                 maximumLength: 50
             }
@@ -48,15 +49,17 @@ BaseScreen {
                     inputMethodHints: Qt.ImhDigitsOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                     validator: RegExpValidator {
-                         regExp: /^([1-9]{1}[0-9]{9}|[0]{1})[.]{1}\d{10}/
+                        regExp: /^([1-9]{1}[0-9]{9}|[0]{1})[.]{1}\d{10}/
                     }
                 }
 
                 CurrencyComboBox {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignTop
-                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 30 : Detector.detectDevice() === Platform.IPhoneSE ? 165 : 50
-                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") : qsTr("Currency:")
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 30 :
+                                           Detector.detectDevice() === Platform.IPhoneSE ? 165 : 50
+                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") :
+                                                                           qsTr("Currency:")
                 }
             }
         }
