@@ -61,7 +61,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                    regExp: /\d+[.]\d{10}/
+                    regExp: /^([1-9]{1}[0-9]{0,9}|[0]{1})[.]{1}\d{10}/
                 }
             }
 
