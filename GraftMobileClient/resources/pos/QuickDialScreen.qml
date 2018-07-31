@@ -45,7 +45,7 @@ BaseScreen {
                     Layout.topMargin: 2
                     Layout.alignment: Qt.AlignTop
                     Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 75 : 50
-                    inputMethodHints: Qt.ImhDigitsOnly
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                 }
 

@@ -79,7 +79,7 @@ BaseScreen {
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
                                                                     qsTr("Amount:") : qsTr("Amount")
                         showLengthIndicator: false
-                        inputMethodHints: Qt.ImhDigitsOnly
+                        inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: RegExpValidator {
                             regExp: /^(([0-9]){1,6}|([0-9]){1,6}\.([0-9]){1,4})$/g
                         }
