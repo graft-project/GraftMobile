@@ -49,7 +49,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                     validator: RegExpValidator {
-                        regExp: /^([1-9]{1}[0-9]{0,9}|[0]{1})[.]{1}\d{10}/
+                        regExp: /^([1-9]{1}[0-9]{0,9}|[0]{1})[.]{0,1}\d{0,10}/
                     }
                 }
 
