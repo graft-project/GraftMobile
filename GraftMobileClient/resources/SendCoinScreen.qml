@@ -82,7 +82,7 @@ BaseScreen {
                         showLengthIndicator: false
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: RegExpValidator {
-                            regExp: /^([1-9]{1}[0-9]{0,9}|[0]{1})[.]{0,1}\d{0,10}/
+                            regExp: /(([1-9]\d{0,5}\.\d{1,10})|([1-9]\d{0,5}))|([0]\.\d{1,10})|(.){0}/
                         }
                     }
 
