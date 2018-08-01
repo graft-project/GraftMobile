@@ -73,16 +73,14 @@ BaseScreen {
     }
 
     function checkout() {
-        if (price.text !== "") {
+        if (checkFields(title.text, price.text)) {
+        } else {
             disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
                              currencyModel.codeOf(currencyCBox.currencyText), "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
-        } else {
-            screenDialog.text = qsTr("The price cannot be zero. Please, enter the price.")
-            screenDialog.open()
         }
     }
 }

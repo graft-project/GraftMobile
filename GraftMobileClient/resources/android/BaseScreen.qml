@@ -59,4 +59,26 @@ Page {
         basePage.enabled = true
         errorMessage()
     }
+
+    function checkFields(title, price) {
+        if (title === "" && price === "") {
+            screenDialog.text = qsTr("Please, enter the item title and price.")
+            screenDialog.open()
+            return true
+        } else if (title === "") {
+            screenDialog.text = qsTr("Please, enter the item title.")
+            screenDialog.open()
+            return true
+        } else if (price === "") {
+            screenDialog.text = qsTr("Please, enter the item price.")
+            screenDialog.open()
+            return true
+        } else if ((0.0001 > price) || (price > 100000.0)) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
+            screenDialog.open()
+            return true
+        }
+        return false
+    }
 }
