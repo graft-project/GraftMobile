@@ -37,8 +37,8 @@ BaseMenu {
         MenuLabelItem {
             id: transactionItem
             Layout.fillWidth: true
-            icon: "qrc:/imgs/transaction.png"
-            name: qsTr("Transaction")
+            menuIcon: "qrc:/imgs/transaction.png"
+            menuTitle: qsTr("Transaction")
             enabled: false
             opacity: 0.2
             onClicked: {
@@ -50,8 +50,8 @@ BaseMenu {
         MenuLabelItem {
             id: transferItem
             Layout.fillWidth: true
-            icon: "qrc:/imgs/transfer.png"
-            name: qsTr("Transfer")
+            menuIcon: "qrc:/imgs/transfer.png"
+            menuTitle: qsTr("Transfer")
             enabled: false
             opacity: 0.2
             onClicked: {
@@ -71,8 +71,8 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/settings.png"
-            name: qsTr("Settings")
+            menuIcon: "qrc:/imgs/settings.png"
+            menuTitle: qsTr("Settings")
             onClicked: {
                 pushScreen.hideMenu()
                 pushScreen.openSettingsScreen()
@@ -81,8 +81,8 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/info.png"
-            name: qsTr("About")
+            menuIcon: "qrc:/imgs/info.png"
+            menuTitle: qsTr("About")
             onClicked: {
                 pushScreen.hideMenu()
                 Qt.openUrlExternally("https://www.graft.network/")
