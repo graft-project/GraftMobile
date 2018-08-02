@@ -55,8 +55,7 @@ BaseScreen {
 
     function confirmProductParameters() {
         var currencyCode = currencyModel.codeOf(productItem.currencyText)
-        if (checkFields(productItem.titleText, productItem.price)) {
-        } else {
+        if (!openScreenDialog(productItem.titleText, productItem.price)) {
             disableScreen()
             if (index >= 0) {
                 ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)

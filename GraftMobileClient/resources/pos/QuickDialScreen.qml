@@ -49,7 +49,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                     validator: RegExpValidator {
-                        regExp: /(([1-9]\d{0,5}\.\d{1,10})|([1-9]\d{0,5}))|([0]\.\d{1,10})|(.){0}/
+                        regExp: priceRegExp()
                     }
                 }
 
@@ -73,8 +73,7 @@ BaseScreen {
     }
 
     function checkout() {
-        if (checkFields(title.text, price.text)) {
-        } else {
+        if (!openScreenDialog(title.text, price.text)) {
             disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
