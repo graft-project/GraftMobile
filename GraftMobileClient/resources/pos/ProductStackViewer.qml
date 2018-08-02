@@ -38,9 +38,9 @@ BaseStackViewer {
     }
 
     function openPaymentScreen(state) {
-        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": clearChecked,
+        stack.push("qrc:/PaymentScreen.qml", {"pushScreen": posTransitions(),
                    "title": qsTr("Cart"), "isSpacing": false, "completeText": qsTr("Checkout complete!"),
-                   "screenState": state})
+                   "screenState": state, "isPos": true})
     }
 
     function clearChecked() {
