@@ -74,14 +74,10 @@ Page {
         } else if ((0.0001 > price) || (price > 100000.0)) {
             screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
         } else {
-            screenDialog.text = ''
-        }
-        if (screenDialog.text.length !== 0) {
-            screenDialog.title = qsTr("Input error")
-            screenDialog.open()
-            return true
-        } else {
             return false
         }
+        screenDialog.title = qsTr("Input error")
+        screenDialog.open()
+        return true
     }
 }
