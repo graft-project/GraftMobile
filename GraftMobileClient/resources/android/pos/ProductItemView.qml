@@ -16,9 +16,7 @@ Item {
 
     Connections {
         target: ImagePicker
-        onImageSelected: {
-            previewImage.source = path
-        }
+        onImageSelected: previewImage.source = path
     }
 
     SelectImageDialog {

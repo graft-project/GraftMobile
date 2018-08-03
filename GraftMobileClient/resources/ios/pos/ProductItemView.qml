@@ -16,10 +16,10 @@ Item {
     property alias price: price.text
     property alias productImage: previewImage.source
 
-    Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
-            ImagePicker.imageSelected.connect(selectedImege)
-        }
+    Connections {
+        target: ImagePicker
+        ignoreUnknownSignals: !Detector.isPlatform(Platform.IOS)
+        onImageSelected: previewImage.source = path
     }
 
     SelectImageDialog {
@@ -128,9 +128,5 @@ Item {
         folder: shortcuts.pictures
         nameFilters: "Image files (*.jpg *.png)"
         onAccepted: previewImage.source = fileDialog.fileUrls.toString()
-    }
-
-    function selectedImege(path) {
-        previewImage.source = path
     }
 }
