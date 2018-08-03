@@ -49,7 +49,7 @@ BaseScreen {
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
                     validator: RegExpValidator {
-                        regExp: /^([1-9]{1}[0-9]{0,9}|[0]{1})[.]{0,1}\d{0,10}/
+                        regExp: priceRegExp()
                     }
                 }
 
@@ -73,16 +73,13 @@ BaseScreen {
     }
 
     function checkout() {
-        if (price.text !== "") {
+        if (!openScreenDialog(title.text, price.text)) {
             disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
                              currencyModel.codeOf(currencyCBox.currencyText), "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
-        } else {
-            screenDialog.text = qsTr("The price cannot be zero. Please, enter the price.")
-            screenDialog.open()
         }
     }
 }

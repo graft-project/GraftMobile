@@ -62,7 +62,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                    regExp: /^([1-9]{1}[0-9]{0,9}|[0]{1})[.]{0,1}\d{0,10}/
+                    regExp: priceRegExp()
                 }
             }
 
