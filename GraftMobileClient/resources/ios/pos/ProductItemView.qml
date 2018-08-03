@@ -17,7 +17,7 @@ Item {
     property alias productImage: previewImage.source
 
     Connections {
-        target: Platform.Desktop ? null : ImagePicker
+        target: Detector.isPlatform(Platform.Desktop) ? null : ImagePicker
         onImageSelected: previewImage.source = path
     }
 
