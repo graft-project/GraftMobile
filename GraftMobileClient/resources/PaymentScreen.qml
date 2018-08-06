@@ -12,7 +12,7 @@ BaseScreen {
     property bool isSpacing: false
     property string completeText: ""
     property int screenState: 0
-    property bool isPos: false
+    property var pushMainScreen: null
 
     Component.onCompleted: {
         if (screenState) {
@@ -79,11 +79,7 @@ BaseScreen {
             }
             onClicked: {
                 disableScreen()
-                if (isPos) {
-                    pushScreen.clearChecked()
-                } else {
-                    pushScreen.openBalanceScreen()
-                }
+                pushMainScreen()
             }
         }
     }
@@ -94,7 +90,7 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-                action: isPos ? pushScreen.clearChecked : pushScreen.openBalanceScreen
+                action: pushMainScreen
                 screenHeader {
                     isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
                     navigationButtonState: true
