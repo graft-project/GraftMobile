@@ -4,8 +4,8 @@ import QtQuick.Controls 2.2
 import com.graft.design 1.0
 
 Rectangle {
-    property alias icon: iconItem.source
-    property alias name: textItem.text
+    property alias labelIcon: iconItem.source
+    property alias labelName: textItem.text
 
     color: "transparent"
 

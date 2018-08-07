@@ -21,12 +21,11 @@ BaseCartScreen {
             anchors.fill: parent
             spacing: 11
 
-            Image {
-                cache: false
-                source: GraftClient.qrCodeImage()
+            QRCodeImage {
+                id: image
                 Layout.alignment: Qt.AlignCenter
-                Layout.preferredHeight: 160
-                Layout.preferredWidth: height
+                Layout.preferredHeight: image.defaultSize
+                Layout.preferredWidth: image.defaultSize
                 Layout.topMargin: 10
             }
 

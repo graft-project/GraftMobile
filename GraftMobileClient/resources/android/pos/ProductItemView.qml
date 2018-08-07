@@ -16,9 +16,7 @@ Item {
 
     Connections {
         target: ImagePicker
-        onImageSelected: {
-            previewImage.source = path
-        }
+        onImageSelected: previewImage.source = path
     }
 
     SelectImageDialog {
@@ -85,7 +83,6 @@ Item {
             Layout.maximumHeight: 250
             Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
-            source: ""
             visible: previewImage.status === Image.Ready
         }
 

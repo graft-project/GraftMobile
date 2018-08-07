@@ -123,10 +123,10 @@ void QuickExchangeModel::add(const QString &name, const QString &code, const QSt
 
 void QuickExchangeModel::clear()
 {
-    beginRemoveRows(QModelIndex(), 0, mQuickExchangeItems.count());
+    beginResetModel();
     qDeleteAll(mQuickExchangeItems);
     mQuickExchangeItems.clear();
-    endRemoveRows();
+    endResetModel();
 }
 
 QHash<int, QByteArray> QuickExchangeModel::roleNames() const

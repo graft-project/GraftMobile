@@ -84,21 +84,20 @@ BaseScreen {
                         validator: RegExpValidator {
                             regExp: priceRegExp()
                         }
-                    }
 
-                    Label {
-                        anchors {
-                            right: coinsAmountTextField.right
-                            verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isDesktop() ? -8 :
-                                                  Detector.isPlatform(Platform.IOS) ? -5 : 3
+                        Label {
+                            anchors {
+                                right: parent.right
+                                bottom: parent.bottom
+                                bottomMargin: 10
+                            }
+                            color: "#BBBBBB"
+                            font {
+                                pixelSize: 16
+                                bold: true
+                            }
+                            text: qsTr("GRFT")
                         }
-                        color: "#BBBBBB"
-                        font {
-                            pixelSize: 16
-                            bold: true
-                        }
-                        text: qsTr("GRFT")
                     }
                 }
 
