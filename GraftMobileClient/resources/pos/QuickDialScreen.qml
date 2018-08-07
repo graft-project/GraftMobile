@@ -29,7 +29,8 @@ BaseScreen {
                 id: title
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
-                title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") : qsTr("Item title:")
+                title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") :
+                                                               qsTr("Item title:")
                 showLengthIndicator: true
                 maximumLength: 50
             }
@@ -45,15 +46,20 @@ BaseScreen {
                     Layout.topMargin: 2
                     Layout.alignment: Qt.AlignTop
                     Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 75 : 50
-                    inputMethodHints: Qt.ImhDigitsOnly
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
                     title: Detector.isPlatform(Platform.Android) ? qsTr("Price") : qsTr("Price:")
+                    validator: RegExpValidator {
+                        regExp: priceRegExp()
+                    }
                 }
 
                 CurrencyComboBox {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignTop
-                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 30 : Detector.detectDevice() === Platform.IPhoneSE ? 165 : 50
-                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") : qsTr("Currency:")
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 30 :
+                                           Detector.detectDevice() === Platform.IPhoneSE ? 165 : 50
+                    dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") :
+                                                                           qsTr("Currency:")
                 }
             }
         }
@@ -67,16 +73,13 @@ BaseScreen {
     }
 
     function checkout() {
-        if (price.text !== "") {
+        if (!openScreenDialog(title.text, price.text)) {
             disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
                              currencyModel.codeOf(currencyCBox.currencyText), "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
-        } else {
-            screenDialog.text = qsTr("The price cannot be zero. Please, enter the price.")
-            screenDialog.open()
         }
     }
 }

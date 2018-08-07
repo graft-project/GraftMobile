@@ -16,10 +16,9 @@ Item {
     property alias price: price.text
     property alias productImage: previewImage.source
 
-    Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
-            ImagePicker.imageSelected.connect(selectedImege)
-        }
+    Connections {
+        target: Detector.isPlatform(Platform.Desktop) ? null : ImagePicker
+        onImageSelected: previewImage.source = path
     }
 
     SelectImageDialog {
@@ -61,7 +60,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                    regExp: /\d+[.]\d{10}/
+                    regExp: priceRegExp()
                 }
             }
 
@@ -82,7 +81,6 @@ Item {
             Layout.maximumHeight: 250
             Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
-            source: ""
             visible: previewImage.status === Image.Ready
         }
 
@@ -128,9 +126,5 @@ Item {
         folder: shortcuts.pictures
         nameFilters: "Image files (*.jpg *.png)"
         onAccepted: previewImage.source = fileDialog.fileUrls.toString()
-    }
-
-    function selectedImege(path) {
-        previewImage.source = path
     }
 }

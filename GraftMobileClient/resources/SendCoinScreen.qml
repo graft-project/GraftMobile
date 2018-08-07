@@ -26,7 +26,8 @@ BaseScreen {
             busyIndicator.running = false
             enableScreen()
             if (result) {
-                pushScreen.openSendConfirmationScreen(receiversAddress.text, coinsAmountTextField.text, fee)
+                pushScreen.openSendConfirmationScreen(receiversAddress.text,
+                                                      coinsAmountTextField.text, fee)
             }
         }
     }
@@ -65,7 +66,7 @@ BaseScreen {
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                            qsTr("Receiver's address:") : qsTr("Receiver's address")
+                                   qsTr("Receiver's address:") : qsTr("Receiver's address")
                         validator: RegExpValidator {
                             regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
                                         /(^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94})/ :
@@ -77,26 +78,26 @@ BaseScreen {
                         id: coinsAmountTextField
                         Layout.fillWidth: true
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                                                    qsTr("Amount:") : qsTr("Amount")
+                                   qsTr("Amount:") : qsTr("Amount")
                         showLengthIndicator: false
-                        inputMethodHints: Qt.ImhDigitsOnly
+                        inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: RegExpValidator {
-                            regExp: /^(([0-9]){1,6}|([0-9]){1,6}\.([0-9]){1,4})$/g
+                            regExp: priceRegExp()
                         }
-                    }
 
-                    Label {
-                        anchors {
-                            right: coinsAmountTextField.right
-                            verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isDesktop() ? -8 : Detector.isPlatform(Platform.IOS) ? -5 : 3
+                        Label {
+                            anchors {
+                                right: parent.right
+                                bottom: parent.bottom
+                                bottomMargin: 10
+                            }
+                            color: "#BBBBBB"
+                            font {
+                                pixelSize: 16
+                                bold: true
+                            }
+                            text: qsTr("GRFT")
                         }
-                        color: "#BBBBBB"
-                        font {
-                            pixelSize: 16
-                            bold: true
-                        }
-                        text: qsTr("GRFT")
                     }
                 }
 

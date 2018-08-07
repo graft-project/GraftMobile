@@ -27,8 +27,8 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/store.png"
-            name: qsTr("Store")
+            menuIcon: "qrc:/imgs/store.png"
+            menuTitle: qsTr("Store")
             onClicked: {
                 pushScreen.hideMenu()
                 pushScreen.openMainScreen()
@@ -56,8 +56,8 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/settings.png"
-            name: qsTr("Settings")
+            menuIcon: "qrc:/imgs/settings.png"
+            menuTitle: qsTr("Settings")
             onClicked: {
                 pushScreen.hideMenu()
                 pushScreen.openSettingsScreen()
@@ -66,8 +66,8 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
-            icon: "qrc:/imgs/info.png"
-            name: qsTr("About")
+            menuIcon: "qrc:/imgs/info.png"
+            menuTitle: qsTr("About")
             onClicked: {
                 pushScreen.hideMenu()
                 Qt.openUrlExternally("https://www.graft.network/")
