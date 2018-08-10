@@ -228,7 +228,10 @@ void GraftBaseClient::saveAccounts() const
 
 void GraftBaseClient::updateBalance()
 {
-    graftAPI()->getBalance();
+    if (!mAccountManager->account().isEmpty())
+    {
+        graftAPI()->getBalance();
+    }
 }
 
 void GraftBaseClient::timerEvent(QTimerEvent *event)
