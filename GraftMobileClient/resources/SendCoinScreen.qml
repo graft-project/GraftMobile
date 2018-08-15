@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 import com.device.platform 1.0
 import org.graft 1.0
 import "components"
+import "wallet"
 
 BaseScreen {
     id: sendCoinScreen
