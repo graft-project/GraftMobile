@@ -5,7 +5,8 @@
 
 static const QString scUrl("%1/dapi");
 
-namespace MainnetConfiguration {
+namespace MainnetConfiguration
+{
 static const QString scConfigTitle("Mainnet");
 
 static const QStringList scHttpSeedSupernodes{"mainnet-seed.graft.network:18900"
@@ -19,7 +20,8 @@ static const QStringList scHttpsSeedSupernodes{"mainnet-seed.graft.network:18943
 static const QString scDAPIVersion("1.0G");
 }
 
-namespace TestnetConfiguration {
+namespace TestnetConfiguration
+{
 static const QString scConfigTitle("Public Testnet");
 
 static const QStringList scHttpSeedSupernodes{"testnet-pub-seed.graft.network:28900"
@@ -33,7 +35,8 @@ static const QStringList scHttpsSeedSupernodes{"testnet-pub-seed.graft.network:2
 static const QString scDAPIVersion("1.0F");
 }
 
-namespace ExperimentalTestnetConfiguration {
+namespace ExperimentalTestnetConfiguration
+{
 static const QString scConfigTitle("Public RTA Testnet");
 
 static const QStringList scHttpSeedSupernodes{"testnet-rta-seed.graft.network:28900"

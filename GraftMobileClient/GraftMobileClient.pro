@@ -84,7 +84,8 @@ SOURCES += main.cpp \
     core/accountmodelserializator.cpp \
     core/accountmanager.cpp \
     core/qrcodegenerator.cpp \
-    devicedetector.cpp
+    devicedetector.cpp \
+    camerafilter.cpp
 
 HEADERS += \
     core/config.h \
@@ -109,7 +110,8 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    devicedetector.h
+    devicedetector.h \
+    camerafilter.h
 
 include(resources/resources.pri)
 
