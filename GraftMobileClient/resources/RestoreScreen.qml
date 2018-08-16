@@ -103,7 +103,7 @@ BaseScreen {
     ValidPasswordMessageDialog {
         id: dialogs
         mobileMessageDialog.onYes: restoreWallet()
-        desktopConfirmButton.onClicked: restoreWallet()
+        onDesktopDialogApproved: restoreWallet()
     }
 
     function restoreWallet() {

@@ -93,17 +93,13 @@ BaseScreen {
                             dialogMode: true
                             title: qsTr("Delete item")
                             dialogMessage: qsTr("Are you sure that you want to remove this item?")
-                            denyButton {
-                                text: qsTr("No")
-                                onClicked: desktopMessageDialog.close()
+                            confirmButtonText: qsTr("Yes")
+                            denyButtonText: qsTr("No")
+                            onConfirmed: {
+                                ProductModel.removeProduct(index)
+                                GraftClient.saveProducts()
                             }
-                            confirmButton {
-                                text: qsTr("Yes")
-                                onClicked: {
-                                    ProductModel.removeProduct(index)
-                                    GraftClient.saveProducts()
-                                }
-                            }
+                            onDenied: desktopMessageDialog.close()
                         }
 
                         onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() : mobileMessageDialog.open()
