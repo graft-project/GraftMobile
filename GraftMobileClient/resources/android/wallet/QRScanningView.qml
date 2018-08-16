@@ -19,7 +19,7 @@ Item {
 
     Component.onCompleted: {
         state = camera.cameraStatus === Camera.ActiveStatus ||
-                camera.cameraState === Camera.UnloadedState ? "messageScreen" : "scanScreen"
+                camera.cameraState === Camera.UnloadedState ? "messagesScreen" : "scanScreen"
     }
 
     Item {
@@ -101,7 +101,7 @@ Item {
     }
 
     Item {
-        id: messageScreen
+        id: messagesScreen
         implicitHeight: 110
         implicitWidth: parent.width - 60
         anchors.centerIn: parent
@@ -122,13 +122,13 @@ Item {
         State {
             name: "scanScreen"
             PropertyChanges { target: scanScreen; visible: true }
-            PropertyChanges { target: messageScreen; visible: false }
+            PropertyChanges { target: messagesScreen; visible: false }
         },
 
         State {
-            name: "messageScreen"
+            name: "messagesScreen"
             PropertyChanges { target: scanScreen; visible: false }
-            PropertyChanges { target: messageScreen; visible: true }
+            PropertyChanges { target: messagesScreen; visible: true }
         }
     ]
 

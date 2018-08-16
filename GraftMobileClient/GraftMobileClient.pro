@@ -21,6 +21,8 @@ TARGET = GraftWallet
 
 ios {
 include(ios/ios.pri)
+SOURCES += permissiondelegate.mm
+HEADERS += permissiondelegate.h
 }
 
 android {

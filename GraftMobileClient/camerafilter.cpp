@@ -1,12 +1,8 @@
 #include "camerafilter.h"
-#include <QTimer>
 
-CameraFilter::CameraFilter(QObject *parent) : QAbstractVideoFilter(parent)
-{
-    QTimer::singleShot(2000, this, [this]() {
-        this->hasPermission(false);
-    });
-}
+#ifdef Q_OS_IOS
+#include "permissiondelegate.h"
+#endif
 
 QVideoFilterRunnable *CameraFilter::createFilterRunnable()
 {
@@ -23,6 +19,12 @@ QVideoFrame CameraRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
     Q_UNUSED(surfaceFormat);
     Q_UNUSED(flags);
 
-    emit mFilter->hasPermission(!input->size().isEmpty());
+#ifdef Q_OS_IOS
+    if (PermissionDelegate::isCameraAuthorised())
+    {
+        emit mFilter->hasPermission(true);
+    }
+#endif
+
     return *input;
 }

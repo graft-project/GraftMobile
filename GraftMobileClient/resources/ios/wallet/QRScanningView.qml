@@ -8,7 +8,7 @@ import org.cameraPermissionFilter 1.0
 
 Item {
     property string lastTag: ""
-    property bool whichState: false
+    property bool cameraPermissionState: false
 
     signal qrCodeDetected(string message)
 
@@ -20,7 +20,7 @@ Item {
         }
     }
 
-    state: Detector.isDesktop() ? "scanScreen" : "messageScreen"
+    state: "messagesScreen"
 
     Item {
         id: scanScreen
@@ -48,9 +48,7 @@ Item {
 
         CameraFilter {
             id: filter
-            onHasPermission: {
-                whichState = result
-            }
+            onHasPermission: cameraPermissionState = result
         }
 
         Rectangle {
@@ -103,7 +101,7 @@ Item {
     }
 
     Item {
-        id: messageScreen
+        id: messagesScreen
         implicitHeight: 110
         implicitWidth: parent.width - 60
         anchors.centerIn: parent
@@ -116,8 +114,10 @@ Item {
             verticalAlignment: Label.AlignVCenter
             font.pixelSize: 16
             color: "#A8A8A8"
-            text: qsTr("You haven't permission for the camera. Please, turn on camera permission " +
-                       "in settings of the application.")
+            text: camera.deviceId !== '' ? qsTr("You haven't permission for the camera. Please, " +
+                  "turn on camera permission in settings of the application.") : qsTr("The " +
+                  "application can't find camera on this device. To use QR-code scanning option, " +
+                  "please, connect camera to your device.")
         }
     }
 
@@ -125,17 +125,23 @@ Item {
         State {
             name: "scanScreen"
             PropertyChanges { target: scanScreen; visible: true }
-            PropertyChanges { target: messageScreen; visible: false }
-            when: whichState
+            PropertyChanges { target: messagesScreen; visible: false }
+            when: scanning()
         },
 
         State {
-            name: "messageScreen"
+            name: "messagesScreen"
             PropertyChanges { target: scanScreen; visible: false }
-            PropertyChanges { target: messageScreen; visible: true }
-            when: Detector.isMobile()
+            PropertyChanges { target: messagesScreen; visible: true }
         }
     ]
+
+    function scanning() {
+        if (Detector.isDesktop()) {
+            return camera.deviceId !== ''
+        }
+        return cameraPermissionState
+    }
 
     function resetView() {
         camera.start()
