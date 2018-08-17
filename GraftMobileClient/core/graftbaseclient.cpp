@@ -1,4 +1,4 @@
-#include "accountmodelserializator.h"
+﻿#include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
@@ -8,7 +8,6 @@
 #include "accountmanager.h"
 #include "currencymodel.h"
 #include "currencyitem.h"
-#include "camerafilter.h"
 #include "accountmodel.h"
 #include "config.h"
 
@@ -200,8 +199,6 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     qmlRegisterUncreatableType<GraftClientTools>("org.graft", 1, 0,
                                                  "GraftClientTools",
                                                  "You cannot create an instance of GraftClientTools type.");
-
-    qmlRegisterType<CameraFilter>("org.cameraPermissionFilter", 1, 0, "CameraFilter");
 }
 
 QString GraftBaseClient::qrCodeImage() const

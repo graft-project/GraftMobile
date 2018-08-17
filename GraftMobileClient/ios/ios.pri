@@ -20,5 +20,13 @@ contains(DEFINES, WALLET_BUILD) {
 
     DISTFILES += \
         $$PWD/wallet/Info.plist
+
+    HEADERS += \
+        $$PWD/wallet/permissiondelegate.h \
+        $$PWD/wallet/ioscamerapermission.h
+
+    SOURCES += \
+        $$PWD/wallet/permissiondelegate.mm \
+        $$PWD/wallet/ioscamerapermission.cpp
 }
 

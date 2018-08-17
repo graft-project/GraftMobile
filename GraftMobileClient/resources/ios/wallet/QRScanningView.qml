@@ -4,11 +4,9 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QZXing 2.3
 import com.device.platform 1.0
-import org.cameraPermissionFilter 1.0
 
 Item {
     property string lastTag: ""
-    property bool cameraPermissionState: false
 
     signal qrCodeDetected(string message)
 
@@ -18,6 +16,11 @@ Item {
         } else {
             camera.stop()
         }
+    }
+
+    Connections {
+        target: IOSCameraPermission
+        onHasCameraPermission: state = "scanScreen"
     }
 
     state: "messagesScreen"
@@ -43,12 +46,7 @@ Item {
             autoOrientation: true
             focus: visible
             fillMode: VideoOutput.PreserveAspectCrop
-            filters: [ filter, zxingFilter ]
-        }
-
-        CameraFilter {
-            id: filter
-            onHasPermission: cameraPermissionState = result
+            filters: [ zxingFilter ]
         }
 
         Rectangle {
@@ -89,7 +87,7 @@ Item {
                 enabledDecoders: QZXing.DecoderFormat_QR_CODE
                 tryHarder: false
                 onTagFound: {
-                    if (lastTag != tag) {
+                    if (lastTag !== tag) {
                         lastTag = tag
                         console.log(tag + " | " + " | " + decoder.charSet())
                         camera.stop()
@@ -114,10 +112,10 @@ Item {
             verticalAlignment: Label.AlignVCenter
             font.pixelSize: 16
             color: "#A8A8A8"
-            text: camera.deviceId !== '' ? qsTr("You haven't permission for the camera. Please, " +
-                  "turn on camera permission in settings of the application.") : qsTr("The " +
-                  "application can't find camera on this device. To use QR-code scanning option, " +
-                  "please, connect camera to your device.")
+            text: QtMultimedia.availableCameras.length > 0 ? qsTr("You haven't permission " +
+                  "for the camera. Please, turn on camera permission in settings of the " +
+                  "application.") : qsTr("The application can't find camera on this device. To " +
+                  "use QR-code scanning option, please, connect camera to your device.")
         }
     }
 
@@ -138,9 +136,9 @@ Item {
 
     function scanning() {
         if (Detector.isDesktop()) {
-            return camera.deviceId !== ''
+            return QtMultimedia.availableCameras.length > 0
         }
-        return cameraPermissionState
+        return IOSCameraPermission.hasPermission()
     }
 
     function resetView() {

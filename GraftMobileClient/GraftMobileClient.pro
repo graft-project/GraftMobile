@@ -21,8 +21,6 @@ TARGET = GraftWallet
 
 ios {
 include(ios/ios.pri)
-SOURCES += permissiondelegate.mm
-HEADERS += permissiondelegate.h
 }
 
 android {
@@ -86,8 +84,7 @@ SOURCES += main.cpp \
     core/accountmodelserializator.cpp \
     core/accountmanager.cpp \
     core/qrcodegenerator.cpp \
-    devicedetector.cpp \
-    camerafilter.cpp
+    devicedetector.cpp
 
 HEADERS += \
     core/config.h \
@@ -112,8 +109,7 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    devicedetector.h \
-    camerafilter.h
+    devicedetector.h
 
 include(resources/resources.pri)
 

@@ -89,7 +89,7 @@ Item {
                 enabledDecoders: QZXing.DecoderFormat_QR_CODE
                 tryHarder: false
                 onTagFound: {
-                    if (lastTag != tag) {
+                    if (lastTag !== tag) {
                         lastTag = tag
                         console.log(tag + " | " + " | " + decoder.charSet())
                         camera.stop()

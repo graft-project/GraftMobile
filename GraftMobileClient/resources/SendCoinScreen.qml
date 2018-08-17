@@ -142,6 +142,9 @@ BaseScreen {
 
     function changeBehaviorButton() {
         stackLayout.currentIndex = 0
+        if (Detector.isPlatform(Platform.IOS)) {
+            IOSCameraPermission.stopTimer()
+        }
     }
 
     function checkingData() {

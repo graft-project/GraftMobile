@@ -1,11 +1,18 @@
 import QtQuick 2.9
 import QtQuick.Dialogs 1.2
+import com.device.platform 1.0
 import "../components"
 import "../"
 
 BaseScreen {
     id: qrScanning
     title: qsTr("Pay")
+
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS)) {
+            qrScanning.specialBackMode = pop
+        }
+    }
 
     Connections {
         target: GraftClient
@@ -20,6 +27,7 @@ BaseScreen {
         }
     }
 
+
     Connections {
         target: qrScanning
         onAttentionAccepted: qRScanningView.resetView()
@@ -29,5 +37,10 @@ BaseScreen {
         id: qRScanningView
         anchors.fill: parent
         onQrCodeDetected: GraftClient.getPOSData(message)
+    }
+
+    function pop() {
+        IOSCameraPermission.stopTimer()
+        goBack()
     }
 }
