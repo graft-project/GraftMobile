@@ -8,11 +8,12 @@ BaseScreen {
     id: qrScanning
     title: qsTr("Pay")
 
-    Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
-            qrScanning.specialBackMode = pop
-        }
-    }
+    specialBackMode: Detector.isPlatform(Platform.IOS) ? pop : null
+//    Component.onCompleted: {
+//        if (Detector.isPlatform(Platform.IOS)) {
+//            qrScanning.specialBackMode = pop
+//        }
+//    }
 
     Connections {
         target: GraftClient
@@ -40,7 +41,7 @@ BaseScreen {
     }
 
     function pop() {
-        IOSCameraPermission.stopTimer()
+        qRScanningView.stopScanningView()
         goBack()
     }
 }

@@ -17,10 +17,10 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        state = camera.cameraStatus === Camera.ActiveStatus ||
-                camera.cameraState === Camera.UnloadedState ? "messagesScreen" : "scanScreen"
-    }
+//    Component.onCompleted: {
+//        state = camera.cameraStatus === Camera.ActiveStatus ||
+//                camera.cameraState === Camera.UnloadedState ? "messagesScreen" : "scanScreen"
+//    }
 
     Item {
         id: scanScreen
@@ -118,19 +118,36 @@ Item {
         }
     }
 
+    state: "messagesScreen"
+
     states: [
         State {
             name: "scanScreen"
             PropertyChanges { target: scanScreen; visible: true }
             PropertyChanges { target: messagesScreen; visible: false }
+//            when: scanning()
         },
 
         State {
             name: "messagesScreen"
             PropertyChanges { target: scanScreen; visible: false }
             PropertyChanges { target: messagesScreen; visible: true }
+            when: scanning()
         }
     ]
+
+    function scanning() {
+//        console.log(camera.cameraStatus === Camera.ActiveStatus ||
+//                    camera.cameraState === Camera.UnloadedState, "<--")
+
+        if (camera.cameraStatus === Camera.ActiveStatus || camera.cameraState === Camera.UnloadedState) {
+            return true
+        }
+        return false
+
+//        return camera.cameraStatus === Camera.ActiveStatus ||
+//               camera.cameraState === Camera.UnloadedState ? false : true
+    }
 
     function resetView() {
         camera.start()

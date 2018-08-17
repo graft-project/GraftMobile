@@ -15,8 +15,10 @@ public:
 signals:
     void hasCameraPermission(bool result);
 
-private:
+protected:
     void timerEvent(QTimerEvent *event) override;
+
+private:
     int mTimer;
 };
 

@@ -141,6 +141,10 @@ Item {
         return IOSCameraPermission.hasPermission()
     }
 
+    function stopScanningView() {
+        IOSCameraPermission.stopTimer()
+    }
+
     function resetView() {
         camera.start()
         lastTag = ""

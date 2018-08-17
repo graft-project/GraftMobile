@@ -4,8 +4,6 @@
 class PermissionDelegate
 {
 public:
-    explicit PermissionDelegate();
-
     static bool isCameraAuthorised();
 };
 #endif // PERMISSIONDELEGATE_H

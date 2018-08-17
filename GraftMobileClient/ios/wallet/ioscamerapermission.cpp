@@ -1,8 +1,7 @@
 #include "ioscamerapermission.h"
+#include "permissiondelegate.h"
 
 #include <QTimerEvent>
-
-#include "permissiondelegate.h"
 
 IOSCameraPermission::IOSCameraPermission(QObject *parent)
     : QObject(parent)
@@ -12,8 +11,12 @@ IOSCameraPermission::IOSCameraPermission(QObject *parent)
 
 bool IOSCameraPermission::hasPermission()
 {
-    mTimer = startTimer(50);
-    return PermissionDelegate::isCameraAuthorised();
+    if (!PermissionDelegate::isCameraAuthorised())
+    {
+        mTimer = startTimer(50);
+        return false;
+    }
+    return true;
 }
 
 void IOSCameraPermission::stopTimer()
@@ -23,12 +26,9 @@ void IOSCameraPermission::stopTimer()
 
 void IOSCameraPermission::timerEvent(QTimerEvent *event)
 {
-    if (event->timerId() == mTimer)
+    if ((event->timerId() == mTimer) && PermissionDelegate::isCameraAuthorised())
     {
-        if (PermissionDelegate::isCameraAuthorised())
-        {
-            emit hasCameraPermission(true);
-        }
+        emit hasCameraPermission(true);
     }
 }
 
