@@ -19,7 +19,7 @@ Item {
     }
 
     Connections {
-        target: IOSCameraPermission
+        target: Detector.isPlatform(Platform.Desktop) ? null : IOSCameraPermission
         onHasCameraPermission: state = "scanScreen"
     }
 
