@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.3
 
 Dialog {
     property alias text: message.text
-    property alias confirmButton: okButton
+
+    signal confirmed()
 
     visible: false
     modal: true
@@ -24,11 +25,11 @@ Dialog {
         }
 
         Button {
-            id: okButton
             flat: true
             text: qsTr("Ok")
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
+            onClicked: confirmed()
         }
     }
 }

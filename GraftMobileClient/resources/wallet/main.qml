@@ -64,7 +64,7 @@ GraftApplicationWindow {
         leftMargin: (parent.width - desktopMessageDialog.width) / 2
         title: qsTr("Pay failed!")
         text: qsTr("Pay request failed.\nPlease try again.")
-        confirmButton.onClicked: {
+        onConfirmed: {
             mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()
