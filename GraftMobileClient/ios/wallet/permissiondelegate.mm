@@ -6,6 +6,5 @@
 bool PermissionDelegate::isCameraAuthorised()
 {
     NSString *mediaType = AVMediaTypeVideo;
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
-    return authStatus == AVAuthorizationStatusAuthorized;
+    return [AVCaptureDevice authorizationStatusForMediaType:mediaType] == AVAuthorizationStatusAuthorized;
 }
