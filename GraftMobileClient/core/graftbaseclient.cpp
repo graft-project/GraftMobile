@@ -1,4 +1,4 @@
-﻿#include "accountmodelserializator.h"
+#include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "api/graftgenericapi.h"
 #include "quickexchangemodel.h"
