@@ -162,6 +162,7 @@ BaseScreen {
     }
 
     function checkingPassword(password) {
+        passwordDialog.passwordTextField.clear()
         if (GraftClient.checkPassword(password)) {
             if (okMode) {
                 var messageDialog = Detector.isDesktop() ? desktopMessageDialog :
@@ -189,7 +190,6 @@ BaseScreen {
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
         }
-        passwordDialog.passwordTextField.clear()
     }
 
     function resetOwnServiceSettings() {
