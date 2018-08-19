@@ -125,13 +125,9 @@ Item {
             name: "messagesScreen"
             PropertyChanges { target: scanScreen; visible: false }
             PropertyChanges { target: messagesScreen; visible: true }
-            when: scanning()
+            when: camera.cameraStatus === 0 && camera.cameraState === 0
         }
     ]
-
-    function scanning() {
-        return ((camera.cameraStatus === Camera.ActiveStatus) || (camera.cameraState === Camera.UnloadedState))
-    }
 
     function resetView() {
         camera.start()
