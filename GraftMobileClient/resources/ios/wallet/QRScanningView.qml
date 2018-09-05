@@ -10,6 +10,7 @@ Item {
 
     signal qrCodeDetected(string message)
 
+    state: "messagesScreen"
     onVisibleChanged: {
         if (visible) {
             camera.start()
@@ -22,8 +23,6 @@ Item {
         target: Detector.isPlatform(Platform.Desktop) ? null : IOSCameraPermission
         onHasCameraPermission: state = "scanScreen"
     }
-
-    state: "messagesScreen"
 
     Item {
         id: scanScreen

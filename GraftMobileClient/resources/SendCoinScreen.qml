@@ -127,6 +127,7 @@ BaseScreen {
         }
 
         QRScanningView {
+            id: qRScanningView
             onQrCodeDetected: {
                 receiversAddress.text = message
                 changeBehaviorButton()
@@ -142,9 +143,7 @@ BaseScreen {
 
     function changeBehaviorButton() {
         stackLayout.currentIndex = 0
-        if (Detector.isPlatform(Platform.IOS)) {
-            IOSCameraPermission.stopTimer()
-        }
+        qRScanningView.stopScanningView()
     }
 
     function checkingData() {

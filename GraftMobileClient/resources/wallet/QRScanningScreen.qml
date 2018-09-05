@@ -8,12 +8,7 @@ BaseScreen {
     id: qrScanning
     title: qsTr("Pay")
 
-    specialBackMode: Detector.isPlatform(Platform.IOS) ? pop : null
-//    Component.onCompleted: {
-//        if (Detector.isPlatform(Platform.IOS)) {
-//            qrScanning.specialBackMode = pop
-//        }
-//    }
+    specialBackMode: Detector.isPlatform(Platform.IOS) ? pop : goBack
 
     Connections {
         target: GraftClient
@@ -27,7 +22,6 @@ BaseScreen {
             }
         }
     }
-
 
     Connections {
         target: qrScanning
