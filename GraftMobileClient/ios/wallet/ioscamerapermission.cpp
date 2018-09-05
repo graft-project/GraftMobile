@@ -29,6 +29,7 @@ void IOSCameraPermission::timerEvent(QTimerEvent *event)
     if ((event->timerId() == mTimer) && PermissionDelegate::isCameraAuthorised())
     {
         emit hasCameraPermission(true);
+        stopTimer();
     }
 }
 
