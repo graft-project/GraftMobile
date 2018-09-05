@@ -41,6 +41,12 @@ static_assert(false, "QTBUG-65820 in Android Debug builds");
 #include <QtAndroid>
 #endif
 
+#ifdef WALLET_BUILD
+#if defined(Q_OS_IOS)
+#include "ios/wallet/ioscamerapermission.h"
+#endif
+#endif
+
 #ifdef POS_BUILD
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
 #include "imagepicker.h"
@@ -109,6 +115,12 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
+
+#if defined(Q_OS_IOS)
+    IOSCameraPermission cameraPermission;
+    engine.rootContext()->setContextProperty(QStringLiteral("IOSCameraPermission"), &cameraPermission);
+#endif
+
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
 #endif
     if (engine.rootObjects().isEmpty())

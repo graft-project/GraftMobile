@@ -21,5 +21,6 @@
         <file alias="BalanceScreen.qml">ios/wallet/BalanceScreen.qml</file>
         <file alias="PaymentConfirmationScreen.qml">ios/wallet/PaymentConfirmationScreen.qml</file>
         <file alias="SettingsScreen.qml">ios/wallet/SettingsScreen.qml</file>
+        <file alias="QRScanningView.qml">ios/wallet/QRScanningView.qml</file>
     </qresource>
 </RCC>
