@@ -24,6 +24,7 @@ ColumnLayout {
             bold: true
         }
         checkable: false
+
         MouseArea {
             anchors.fill: parent
             onClicked: typeSelected()
@@ -40,6 +41,7 @@ ColumnLayout {
         wrapMode: Text.WordWrap
         text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
                    "that carry real GRFT transactions.")
+
         MouseArea {
             anchors.fill: parent
             onClicked: typeSelected()
