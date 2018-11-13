@@ -16,7 +16,7 @@ BaseScreen {
         anchors.fill: parent
 
         ColumnLayout {
-            spacing: 15
+            spacing: 25
             anchors {
                 fill: parent
                 topMargin: 15
@@ -70,7 +70,6 @@ BaseScreen {
 
             Item {
                 Layout.fillHeight: true
-                Layout.maximumHeight: Detector.isPlatform(Platform.Desktop) ? 250 : 150
             }
 
             WideActionButton {
