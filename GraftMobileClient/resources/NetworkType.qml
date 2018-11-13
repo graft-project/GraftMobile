@@ -15,7 +15,7 @@ ColumnLayout {
 
     RadioButton {
         id: type
-        Layout.preferredHeight: 30
+        Layout.preferredHeight: 34
         Material.accent: ColorFactory.color(DesignFactory.Foreground)
         Material.foreground: ColorFactory.color(DesignFactory.Foreground)
         text: qsTr("Mainnet")
