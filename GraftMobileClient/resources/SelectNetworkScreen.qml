@@ -16,7 +16,6 @@ BaseScreen {
         anchors.fill: parent
 
         ColumnLayout {
-            id: test
             spacing: 15
             anchors {
                 fill: parent
