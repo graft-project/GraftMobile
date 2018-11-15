@@ -1,14 +1,14 @@
-#ifndef GRAFTWALLETAPI_H
-#define GRAFTWALLETAPI_H
+#ifndef GRAFTWALLETAPIV1_H
+#define GRAFTWALLETAPIV1_H
 
-#include "graftgenericapi.h"
+#include "graftgenericapiv1.h"
 
-class GraftWalletAPI : public GraftGenericAPI
+class GraftWalletAPIv1 : public GraftGenericAPIv1
 {
     Q_OBJECT
 public:
-    explicit GraftWalletAPI(const QStringList &addresses, const QString &dapiVersion,
-                            QObject *parent = nullptr);
+    explicit GraftWalletAPIv1(const QStringList &addresses, const QString &dapiVersion,
+                              QObject *parent = nullptr);
 
     void getPOSData(const QString &pid, int blockNum);
     void rejectPay(const QString &pid, int blockNum);
@@ -28,4 +28,4 @@ private slots:
     void receivePayStatusResponse();
 };
 
-#endif // GRAFTWALLETAPI_H
+#endif // GRAFTWALLETAPIV1_H

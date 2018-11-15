@@ -3,8 +3,8 @@ QT += qml quick network widgets
 CONFIG += c++11
 
 DEFINES += MAJOR_VERSION=1
-DEFINES += MINOR_VERSION=11
-DEFINES += BUILD_VERSION=1
+DEFINES += MINOR_VERSION=13
+DEFINES += BUILD_VERSION=0
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -29,6 +29,10 @@ include(android/android.pri)
 
 include(qzxing/QZXing.pri)
 include(QRCodeGenerator.pri)
+include(libwallet/libwallet.pri)
+ios|macx {
+include(core/api/v2/graftapiv2.pri)
+}
 
 contains(DEFINES, POS_BUILD) {
 ios|android {
@@ -36,22 +40,28 @@ include(imagepicker/ImagePickerLibrary.pri)
 }
 
 SOURCES += \
-    core/api/graftposapi.cpp \
+    core/api/v1/graftposapiv1.cpp \
+    core/api/v1/graftposhandlerv1.cpp \
     core/graftposclient.cpp
 
 HEADERS += \
-    core/api/graftposapi.h \
+    core/api/v1/graftposapiv1.h \
+    core/api/v1/graftposhandlerv1.h \
+    core/api/graftposhandler.h \
     core/graftposclient.h \
     core/defines.h
 }
 
 contains(DEFINES, WALLET_BUILD) {
 SOURCES += \
-    core/api/graftwalletapi.cpp \
+    core/api/v1/graftwalletapiv1.cpp \
+    core/api/v1/graftwallethandlerv1.cpp \
     core/graftwalletclient.cpp
 
 HEADERS += \
-    core/api/graftwalletapi.h \
+    core/api/v1/graftwalletapiv1.h \
+    core/api/v1/graftwallethandlerv1.h \
+    core/api/graftwallethandler.h \
     core/graftwalletclient.h
 }
 
@@ -64,7 +74,7 @@ include(mac/mac.pri)
 }
 
 SOURCES += main.cpp \
-    core/api/graftgenericapi.cpp \
+    core/api/v1/graftgenericapiv1.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
     core/productmodelserializator.cpp \
@@ -88,7 +98,8 @@ SOURCES += main.cpp \
 
 HEADERS += \
     core/config.h \
-    core/api/graftgenericapi.h \
+    core/api/v1/graftgenericapiv1.h \
+    core/api/graftbasehandler.h \
     core/productmodel.h \
     core/productitem.h \
     core/productmodelserializator.h \
