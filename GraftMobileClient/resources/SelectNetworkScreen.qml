@@ -83,7 +83,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignTop
             Material.accent: ColorFactory.color(DesignFactory.Foreground)
             Material.foreground: ColorFactory.color(DesignFactory.Foreground)
-            text: qsTr("Public RTA Testnet")
+            text: qsTr("Alpha RTA Testnet")
             font {
                 pixelSize: 16
                 bold: true
@@ -100,7 +100,8 @@ BaseScreen {
             wrapMode: Label.WordWrap
             text: qsTr("Blockchain and test network running on the code branch that contains " +
                        "Real Time Authorization and other future features that are not yet " +
-                       "available on mainnet.")
+                       "available on mainnet.\n\nCurrently available only for iOS and MacOS.\n" +
+                       "Other platforms are coming soon.")
             MouseArea {
                 anchors.fill: parent
                 onClicked: rtaTestNet.checked = true
@@ -115,6 +116,8 @@ BaseScreen {
         WideActionButton {
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Confirm")
+            enabled: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)
+                     ? true : !rtaTestNet.checked
             onClicked: {
                 disableScreen()
                 setNetworkType()

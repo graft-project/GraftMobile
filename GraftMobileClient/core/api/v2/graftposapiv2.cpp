@@ -1,35 +1,35 @@
-#include "graftposapi.h"
+#include "graftposapiv2.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDebug>
 
-GraftPOSAPI::GraftPOSAPI(const QStringList &addresses, const QString &dapiVersion, QObject *parent)
-    : GraftGenericAPI(addresses, dapiVersion, parent)
+GraftPOSAPIv2::GraftPOSAPIv2(const QStringList &addresses, const QString &dapiVersion,
+                             QObject *parent)
+    : GraftGenericAPIv2(addresses, dapiVersion, parent)
 {
 }
 
-void GraftPOSAPI::sale(const QString &address, const QString &viewKey, double amount,
-                       const QString &saleDetails)
+void GraftPOSAPIv2::sale(const QString &address, double amount, const QString &saleDetails)
 {
     mRetries = 0;
+    mRequest.setUrl(nextAddress(QStringLiteral("sale")));
     QJsonObject params;
-    params.insert(QStringLiteral("POSAddress"), address);
-    params.insert(QStringLiteral("POSViewKey"), viewKey);
-    params.insert(QStringLiteral("POSSaleDetails"), saleDetails);
+    params.insert(QStringLiteral("Address"), address);
+    params.insert(QStringLiteral("SaleDetails"), saleDetails);
     params.insert(QStringLiteral("Amount"), -666);
-    QJsonObject data = buildMessage(QStringLiteral("Sale"), params);
+    QJsonObject data = buildMessage(QStringLiteral("sale"), params);
     QByteArray array = QJsonDocument(data).toJson();
     array.replace("-666", serializeAmount(amount));
     mTimer.start();
     qDebug() << array;
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveSaleResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv2::receiveSaleResponse);
 }
 
-void GraftPOSAPI::rejectSale(const QString &pid)
+void GraftPOSAPIv2::rejectSale(const QString &pid)
 {
     mRetries = 0;
     QJsonObject params;
@@ -39,21 +39,23 @@ void GraftPOSAPI::rejectSale(const QString &pid)
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveRejectSaleResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv2::receiveRejectSaleResponse);
 }
 
-void GraftPOSAPI::getSaleStatus(const QString &pid)
+void GraftPOSAPIv2::saleStatus(const QString &pid, int blockNumber)
 {
+    mRequest.setUrl(nextAddress(QStringLiteral("sale_status")));
     QJsonObject params;
     params.insert(QStringLiteral("PaymentID"), pid);
-    QJsonObject data = buildMessage(QStringLiteral("GetSaleStatus"), params);
+    params.insert(QStringLiteral("BlockNumber"), blockNumber);
+    QJsonObject data = buildMessage(QStringLiteral("sale_status"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveSaleStatusResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv2::receiveSaleStatusResponse);
 }
 
-void GraftPOSAPI::receiveSaleResponse()
+void GraftPOSAPIv2::receiveSaleResponse()
 {
     mLastError.clear();
     qDebug() << "Sale Response Received:\nTime: " << mTimer.elapsed();
@@ -61,21 +63,20 @@ void GraftPOSAPI::receiveSaleResponse()
     QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
-        emit saleResponseReceived(object.value(QLatin1String("Result")).toInt(),
-                                  object.value(QLatin1String("PaymentID")).toString(),
-                                  object.value(QLatin1String("BlockNum")).toInt());
+        emit saleResponseReceived(object.value(QLatin1String("PaymentID")).toString(),
+                                  object.value(QLatin1String("BlockNumber")).toInt());
     }
     else
     {
         QNetworkReply *reply = retry();
         if (reply)
         {
-            connect(reply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveSaleResponse);
+            connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv2::receiveSaleResponse);
         }
     }
 }
 
-void GraftPOSAPI::receiveRejectSaleResponse()
+void GraftPOSAPIv2::receiveRejectSaleResponse()
 {
     mLastError.clear();
     qDebug() << "RejectSale Response Received:\nTime: " << mTimer.elapsed();
@@ -90,19 +91,18 @@ void GraftPOSAPI::receiveRejectSaleResponse()
         QNetworkReply *reply = retry();
         if (reply)
         {
-            connect(reply, &QNetworkReply::finished, this, &GraftPOSAPI::receiveRejectSaleResponse);
+            connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv2::receiveRejectSaleResponse);
         }
     }
 }
 
-void GraftPOSAPI::receiveSaleStatusResponse()
+void GraftPOSAPIv2::receiveSaleStatusResponse()
 {
-    qDebug() << "GetSaleStatus Response Received:\nTime: " << mTimer.elapsed();
+    qDebug() << "SaleStatus Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
-        emit getSaleStatusResponseReceived(object.value(QLatin1String("Result")).toInt(),
-                                           object.value(QLatin1String("Status")).toInt());
+        emit saleStatusResponseReceived(object.value(QLatin1String("Status")).toInt());
     }
 }
