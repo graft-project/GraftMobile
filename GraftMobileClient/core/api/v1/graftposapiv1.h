@@ -1,13 +1,14 @@
-#ifndef GRAFTPOSAPI_H
-#define GRAFTPOSAPI_H
+#ifndef GRAFTPOSAPIV1_H
+#define GRAFTPOSAPIV1_H
 
-#include "graftgenericapi.h"
+#include "graftgenericapiv1.h"
 
-class GraftPOSAPI : public GraftGenericAPI
+class GraftPOSAPIv1 : public GraftGenericAPIv1
 {
     Q_OBJECT
 public:
-    explicit GraftPOSAPI(const QStringList &addresses, const QString &dapiVersion, QObject *parent = nullptr);
+    explicit GraftPOSAPIv1(const QStringList &addresses, const QString &dapiVersion,
+                           QObject *parent = nullptr);
 
     void sale(const QString &address, const QString &viewKey, double amount,
               const QString &saleDetails = QString());
@@ -25,4 +26,4 @@ private slots:
     void receiveSaleStatusResponse();
 };
 
-#endif // GRAFTPOSAPI_H
+#endif // GRAFTPOSAPIV1_H

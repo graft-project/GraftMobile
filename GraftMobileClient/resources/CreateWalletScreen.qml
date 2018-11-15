@@ -115,14 +115,15 @@ BaseScreen {
     ValidPasswordMessageDialog {
         id: dialogs
         mobileMessageDialog.onYes: createAccount()
-        desktopConfirmButton.onClicked: createAccount()
+        onDesktopDialogApproved: createAccount()
     }
 
     function createAccount() {
-        desktopMessageDialog.confirmButton.enabled = false
+        dialogs.desktopMessageDialog.confirmButtonEnabled = false
         disableScreen()
         busyIndicator.running = true
         GraftClient.createAccount(passwordTextField.passwordText)
+        dialogs.desktopMessageDialog.confirmButtonEnabled = true
     }
 
     function pushSettingsScreen() {

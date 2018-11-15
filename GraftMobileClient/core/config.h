@@ -4,8 +4,10 @@
 #include <QStringList>
 
 static const QString scUrl("%1/dapi");
+static const QString scDapiUrl("%1/dapi/v2.0/%2");
 
-namespace MainnetConfiguration {
+namespace MainnetConfiguration
+{
 static const QString scConfigTitle("Mainnet");
 
 static const QStringList scHttpSeedSupernodes{"mainnet-seed.graft.network:18900"
@@ -19,7 +21,8 @@ static const QStringList scHttpsSeedSupernodes{"mainnet-seed.graft.network:18943
 static const QString scDAPIVersion("1.0G");
 }
 
-namespace TestnetConfiguration {
+namespace TestnetConfiguration
+{
 static const QString scConfigTitle("Public Testnet");
 
 static const QStringList scHttpSeedSupernodes{"testnet-pub-seed.graft.network:28900"
@@ -33,19 +36,24 @@ static const QStringList scHttpsSeedSupernodes{"testnet-pub-seed.graft.network:2
 static const QString scDAPIVersion("1.0F");
 }
 
-namespace ExperimentalTestnetConfiguration {
-static const QString scConfigTitle("Public RTA Testnet");
+namespace ExperimentalTestnetConfiguration
+{
+static const QString scConfigTitle("Alpha RTA Testnet");
 
-static const QStringList scHttpSeedSupernodes{"testnet-rta-seed.graft.network:28900"
+static const QStringList scHttpSeedSupernodes{
+                                              "testnet-dev-seed.graft.network:28600"
+                                              //"testnet-rta-seed.graft.network:28900"
                                               //"34.200.186.98:28900",
                                               //"34.224.118.182:28900",
                                               //"52.206.105.250:28900"
                                              };
 
-static const QStringList scHttpsSeedSupernodes{"testnet-rta-seed.graft.network:28943"};
+static const QStringList scHttpsSeedSupernodes{
+                                               "testnet-dev-seed.graft.network:28643"
+                                               //"testnet-rta-seed.graft.network:28943"
+                                              };
 
 static const QString scDAPIVersion("1.0R");
 }
-
 
 #endif // CONFIG_H

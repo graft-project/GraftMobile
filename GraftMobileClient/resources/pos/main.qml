@@ -63,7 +63,7 @@ GraftApplicationWindow {
         leftMargin: (parent.width - desktopMessageDialog.width) / 2
         title: qsTr("Sale failed!")
         text: qsTr("Sale request failed.\nPlease try again.")
-        confirmButton.onClicked: {
+        onConfirmed: {
             mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()

@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
-        <file alias="QRScanningView.qml">QRScanningView.qml</file>
         <file alias="BaseHeader.qml">BaseHeader.qml</file>
         <file alias="CartItem.qml">CartItem.qml</file>
         <file alias="GraftApplicationWindow.qml">GraftApplicationWindow.qml</file>

@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 import com.device.platform 1.0
 import org.graft 1.0
 import "components"
+import "wallet"
 
 BaseScreen {
     id: sendCoinScreen
@@ -126,6 +127,7 @@ BaseScreen {
         }
 
         QRScanningView {
+            id: qRScanningView
             onQrCodeDetected: {
                 receiversAddress.text = message
                 changeBehaviorButton()
@@ -141,6 +143,7 @@ BaseScreen {
 
     function changeBehaviorButton() {
         stackLayout.currentIndex = 0
+        qRScanningView.stopScanningView()
     }
 
     function checkingData() {
