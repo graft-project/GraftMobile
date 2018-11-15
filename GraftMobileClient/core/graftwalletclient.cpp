@@ -84,11 +84,6 @@ void GraftWalletClient::receiveSaleDetails(int result, const QString &payDetails
     emit saleDetailsReceived(isStatusOk);
 }
 
-void GraftWalletClient::receiveRejectPay(int result)
-{
-    emit rejectPayReceived(result == 0);
-}
-
 void GraftWalletClient::receivePay(int result)
 {
     const bool isStatusOk = (result == 0);
@@ -96,32 +91,6 @@ void GraftWalletClient::receivePay(int result)
     if (isStatusOk)
     {
         payStatus();
-    }
-}
-
-void GraftWalletClient::receivePayStatus(int result, int status)
-{
-    if (result == 0)
-    {
-        switch (status) {
-        case GraftWalletAPIv1::StatusProcessing:
-            payStatus();
-            break;
-        case GraftWalletAPIv1::StatusApproved:
-            emit payStatusReceived(true);
-            break;
-        case GraftWalletAPIv1::StatusNone:
-        case GraftWalletAPIv1::StatusFailed:
-        case GraftWalletAPIv1::StatusPOSRejected:
-        case GraftWalletAPIv1::StatusWalletRejected:
-        default:
-            emit payStatusReceived(false);
-            break;
-        }
-    }
-    else
-    {
-        emit payStatusReceived(false);
     }
 }
 
@@ -149,8 +118,10 @@ void GraftWalletClient::changeGraftHandler()
     }
     connect(mClientHandler, &GraftWalletHandler::saleDetailsReceived,
             this, &GraftWalletClient::receiveSaleDetails);
+    connect(mClientHandler, &GraftWalletHandler::payReceived,
+            this, &GraftWalletClient::receivePay);
     connect(mClientHandler, &GraftWalletHandler::rejectPayReceived,
-            this, &GraftWalletClient::receiveRejectPay);
+            this, &GraftWalletClient::rejectPayReceived);
     connect(mClientHandler, &GraftWalletHandler::payStatusReceived,
             this, &GraftWalletClient::payStatusReceived);
     connect(mClientHandler, &GraftWalletHandler::errorReceived,

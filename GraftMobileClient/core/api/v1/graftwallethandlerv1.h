@@ -34,10 +34,14 @@ public slots:
     void payStatus(const QString &pid, int blockNumber) override;
 
 private slots:
+    void receiveRejectPay(int result);
+    void receivePayStatus(int result, int status);
     void receiveBalance(double balance, double unlockedBalance);
 
 private:
     GraftWalletAPIv1 *mApi;
+    QString mLastPID;
+    int mBlockNumber;
 };
 
 #endif // GRAFTWALLETHANDLERV1_H
