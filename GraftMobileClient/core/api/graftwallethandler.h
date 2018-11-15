@@ -18,9 +18,9 @@ public slots:
 
 signals:
     void saleDetailsReceived(int result, const QString &details);
-    void rejectPayReceived(int result);
     void payReceived(int result);
-    void payStatusReceived(int result, int status);
+    void rejectPayReceived(bool result);
+    void payStatusReceived(bool result);
 };
 
 #endif // GRAFTWALLETHANDLER_H

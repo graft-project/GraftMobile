@@ -11,7 +11,7 @@ GraftWalletHandlerV2::GraftWalletHandlerV2(const QString &dapiVersion, const QSt
     connect(mApi, &GraftWalletAPIv2::saleDetailsReceived,
             this, &GraftWalletHandlerV2::receiveSaleDetails);
     connect(mApi, &GraftWalletAPIv2::rejectPayReceived,
-            this, &GraftWalletHandlerV2::rejectPayReceived);
+            this, &GraftWalletHandlerV2::receiveRejectPay);
     connect(mApi, &GraftWalletAPIv2::payReceived, this, &GraftWalletHandlerV2::payReceived);
     connect(mApi, &GraftWalletAPIv2::payStatusReceived,
             this, &GraftWalletHandlerV2::receivePayStatus);
@@ -228,6 +228,11 @@ void GraftWalletHandlerV2::sendPay(bool result)
 
 }
 
+void GraftWalletHandlerV2::receiveRejectPay(int result)
+{
+    emit rejectPayReceived(result == 0);
+}
+
 void GraftWalletHandlerV2::receivePayStatus(int status)
 {
     switch (status) {
@@ -261,5 +266,5 @@ void GraftWalletHandlerV2::processPayResult(bool result)
         mLastPID.clear();
         mBlockNumber = 0;
     }
-    emit payStatusReceived(0, result);
+    emit payStatusReceived(result);
 }
