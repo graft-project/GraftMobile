@@ -6,6 +6,7 @@
 GraftWalletHandlerV1::GraftWalletHandlerV1(const QString &dapiVersion, const QStringList addresses,
                                            QObject *parent)
     : GraftWalletHandler(parent)
+    ,mBlockNumber(0)
 {
     mApi = new GraftWalletAPIv1(addresses, dapiVersion, this);
     connect(mApi, &GraftWalletAPIv1::createAccountReceived,
@@ -21,10 +22,10 @@ GraftWalletHandlerV1::GraftWalletHandlerV1(const QString &dapiVersion, const QSt
     connect(mApi, &GraftWalletAPIv1::getPOSDataReceived,
             this, &GraftWalletHandlerV1::saleDetailsReceived);
     connect(mApi, &GraftWalletAPIv1::rejectPayReceived,
-            this, &GraftWalletHandlerV1::rejectPayReceived);
+            this, &GraftWalletHandlerV1::receiveRejectPay);
     connect(mApi, &GraftWalletAPIv1::payReceived, this, &GraftWalletHandlerV1::payReceived);
     connect(mApi, &GraftWalletAPIv1::getPayStatusReceived,
-            this, &GraftWalletHandlerV1::payStatusReceived);
+            this, &GraftWalletHandlerV1::receivePayStatus);
     connect(mApi, &GraftWalletAPIv1::error, this, &GraftWalletHandlerV1::errorReceived);
 }
 
@@ -130,6 +131,8 @@ void GraftWalletHandlerV1::pay(const QString &pid, const QString &address, doubl
 {
     if (mApi)
     {
+        mLastPID = pid;
+        mBlockNumber = blockNumber;
         mApi->pay(pid, address, amount, blockNumber);
     }
 }
@@ -140,6 +143,37 @@ void GraftWalletHandlerV1::payStatus(const QString &pid, int blockNumber)
     if (mApi)
     {
         mApi->getPayStatus(pid);
+    }
+}
+
+void GraftWalletHandlerV1::receiveRejectPay(int result)
+{
+    emit rejectPayReceived(result == 0);
+}
+
+void GraftWalletHandlerV1::receivePayStatus(int result, int status)
+{
+    if (result == 0)
+    {
+        switch (status) {
+        case GraftWalletAPIv1::StatusProcessing:
+            payStatus(mLastPID, mBlockNumber);
+            break;
+        case GraftWalletAPIv1::StatusApproved:
+            emit payStatusReceived(true);
+            break;
+        case GraftWalletAPIv1::StatusNone:
+        case GraftWalletAPIv1::StatusFailed:
+        case GraftWalletAPIv1::StatusPOSRejected:
+        case GraftWalletAPIv1::StatusWalletRejected:
+        default:
+            emit payStatusReceived(false);
+            break;
+        }
+    }
+    else
+    {
+        emit payStatusReceived(false);
     }
 }
 

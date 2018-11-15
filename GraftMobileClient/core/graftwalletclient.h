@@ -29,9 +29,7 @@ public slots:
 
 private slots:
     void receiveSaleDetails(int result, const QString &payDetails);
-    void receiveRejectPay(int result);
     void receivePay(int result);
-    void receivePayStatus(int result, int status);
 
 private:
     void changeGraftHandler() override;
