@@ -43,6 +43,7 @@ private slots:
     void receiveSaleDetails(const QVector<QPair<QString, QString>> &authSample,
                             const QString &saleDetails);
     void sendPay(bool result);
+    void receiveRejectPay(int result);
     void receivePayStatus(int status);
     void processPayResult(bool result);
 

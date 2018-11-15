@@ -10,8 +10,8 @@
 	!define DESCRIPTION "Graft Wallet"
 	!define VERSIONMAJOR 1
         !define VERSIONMINOR 13
-        !define VERSIONBUILD 0
-    !define VERSION "1.13.0"
+        !define VERSIONBUILD 1
+    !define VERSION "1.13.1"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
 	!define LIC_NAME "license.rtf"
