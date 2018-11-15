@@ -118,6 +118,8 @@ void GraftWalletClient::changeGraftHandler()
     }
     connect(mClientHandler, &GraftWalletHandler::saleDetailsReceived,
             this, &GraftWalletClient::receiveSaleDetails);
+    connect(mClientHandler, &GraftWalletHandler::payReceived,
+            this, &GraftWalletClient::receivePay);
     connect(mClientHandler, &GraftWalletHandler::rejectPayReceived,
             this, &GraftWalletClient::rejectPayReceived);
     connect(mClientHandler, &GraftWalletHandler::payStatusReceived,
