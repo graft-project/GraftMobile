@@ -133,4 +133,7 @@ Item {
         camera.start()
         lastTag = ""
     }
+
+    //TODO: Only for don't write check platforms always where used this method
+    function stopScanningView() { }
 }

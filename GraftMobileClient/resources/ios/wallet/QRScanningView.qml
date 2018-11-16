@@ -141,7 +141,9 @@ Item {
     }
 
     function stopScanningView() {
-        IOSCameraPermission.stopTimer()
+        if (!Detector.isPlatform(Platform.Desktop)) {
+            IOSCameraPermission.stopTimer()
+        }
     }
 
     function resetView() {
