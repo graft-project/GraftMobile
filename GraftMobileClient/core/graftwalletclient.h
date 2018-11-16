@@ -3,7 +3,7 @@
 
 #include "graftbaseclient.h"
 
-class GraftWalletAPI;
+class GraftWalletHandler;
 class ProductModel;
 
 class GraftWalletClient : public GraftBaseClient
@@ -16,30 +16,29 @@ public:
     Q_INVOKABLE ProductModel *paymentProductModel() const;
 
 signals:
-    void getPOSDataReceived(bool result);
+    void saleDetailsReceived(bool result);
     void rejectPayReceived(bool result);
     void payReceived(bool result);
     void payStatusReceived(bool result);
 
 public slots:
-    void getPOSData(const QString &data);
+    void saleDetails(const QString &data);
     void rejectPay();
     void pay();
-    void getPayStatus();
+    void payStatus();
 
 private slots:
-    void receiveGetPOSData(int result, const QString &payDetails);
-    void receiveRejectPay(int result);
+    void receiveSaleDetails(int result, const QString &payDetails);
     void receivePay(int result);
-    void receivePayStatus(int result, int payStatus);
 
 private:
-    GraftGenericAPI *graftAPI() const override;
+    void changeGraftHandler() override;
+    GraftBaseHandler *graftHandler() const override;
 
-    GraftWalletAPI *mApi;
+    GraftWalletHandler *mClientHandler;
     QString mPID;
     QString mPrivateKey;
-    int mBlockNum;
+    int mBlockNumber;
 
     double mTotalCost;
     ProductModel *mPaymentProductModel;

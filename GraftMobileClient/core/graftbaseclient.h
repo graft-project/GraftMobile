@@ -6,7 +6,7 @@
 
 class BarcodeImageProvider;
 class QuickExchangeModel;
-class GraftGenericAPI;
+class GraftBaseHandler;
 class AccountManager;
 class CurrencyModel;
 class AccountModel;
@@ -94,18 +94,19 @@ public slots:
 protected:
     void timerEvent(QTimerEvent *event) override;
 
-    virtual GraftGenericAPI *graftAPI() const = 0;
+    virtual void changeGraftHandler() = 0;
+    virtual GraftBaseHandler *graftHandler() const = 0;
 
     void initAccountSettings();
     void registerImageProvider(QQmlEngine *engine);
     void saveModel(const QString &fileName,const QByteArray &data) const;
     QByteArray loadModel(const QString &fileName) const;
-    QStringList getServiceAddresses() const;
+    QStringList getServiceAddresses(bool httpOnly = false) const;
 
 private slots:
-    void receiveAccount(const QByteArray &accountData, const QString &password,
-                        const QString &address, const QString &viewKey,
-                        const QString &seed);
+    void receiveCreateAccount(const QByteArray &accountData, const QString &password,
+                              const QString &address, const QString &viewKey,
+                              const QString &seed);
     void receiveRestoreAccount(const QByteArray &accountData, const QString &password,
                                const QString &address, const QString &viewKey,
                                const QString &seed);

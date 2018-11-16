@@ -1,5 +1,5 @@
-#ifndef GRAFTGENERICAPI_H
-#define GRAFTGENERICAPI_H
+#ifndef GRAFTGENERICAPIV1_H
+#define GRAFTGENERICAPIV1_H
 
 #include <QNetworkRequest>
 #include <QElapsedTimer>
@@ -9,7 +9,7 @@
 class QNetworkAccessManager;
 class QNetworkReply;
 
-class GraftGenericAPI : public QObject
+class GraftGenericAPIv1 : public QObject
 {
     Q_OBJECT
 public:
@@ -23,9 +23,9 @@ public:
         StatusPOSRejected = 5
     };
 
-    explicit GraftGenericAPI(const QStringList &addresses, const QString &dapiVersion,
-                             QObject *parent = nullptr);
-    virtual ~GraftGenericAPI();
+    explicit GraftGenericAPIv1(const QStringList &addresses, const QString &dapiVersion,
+                               QObject *parent = nullptr);
+    virtual ~GraftGenericAPIv1();
 
     void changeAddresses(const QStringList &addresses);
     void setDAPIVersion(const QString &version);
@@ -48,7 +48,7 @@ signals:
     void error(const QString &message);
     void createAccountReceived(const QByteArray &accountData, const QString &password,
                                const QString &address, const QString &viewKey, const QString &seed);
-    void getBalanceReceived(double balance, double unlockedBalance);
+    void balanceReceived(double balance, double unlockedBalance);
     void getSeedReceived(const QString &seed);
     void restoreAccountReceived(const QByteArray &accountData, const QString &password,
                                 const QString &address, const QString &viewKey,
@@ -89,4 +89,4 @@ protected:
     QByteArray mLastRequest;
 };
 
-#endif // GRAFTGENERICAPI_H
+#endif // GRAFTGENERICAPIV1_H
