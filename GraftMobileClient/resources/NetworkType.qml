@@ -18,7 +18,6 @@ ColumnLayout {
         Layout.preferredHeight: 34
         Material.accent: ColorFactory.color(DesignFactory.Foreground)
         Material.foreground: ColorFactory.color(DesignFactory.Foreground)
-        text: qsTr("Mainnet")
         font {
             pixelSize: 16
             bold: true
@@ -39,8 +38,6 @@ ColumnLayout {
         color: "#BBBBBB"
         font.pixelSize: 14
         wrapMode: Text.WordWrap
-        text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
-                   "that carry real GRFT transactions.")
 
         MouseArea {
             anchors.fill: parent
