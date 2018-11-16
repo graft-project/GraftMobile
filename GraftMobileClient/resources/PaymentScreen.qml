@@ -119,7 +119,7 @@ BaseScreen {
                 screenHeader {
                     isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
                     navigationButtonState: true
-                    actionButtonState: true
+                    actionButtonState: !Detector.isPlatform(Platform.iOS | Platform.MacOS)
                 }
             }
             PropertyChanges {
