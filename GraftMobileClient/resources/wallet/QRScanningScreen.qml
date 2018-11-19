@@ -10,7 +10,7 @@ BaseScreen {
 
     specialBackMode: Detector.isPlatform(Platform.IOS) ? pop : goBack
 
-    onShowFailedScreen: pushScreen.openPaymentScreen(false)
+    onShowFailedScreen: pushScreen.openPaymentScreen(false, false)
 
     Connections {
         target: GraftClient
