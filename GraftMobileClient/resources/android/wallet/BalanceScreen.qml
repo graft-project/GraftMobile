@@ -49,7 +49,7 @@ BaseBalanceScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
-            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+//            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
             onClicked: {
                 disableScreen()
                 pushScreen.openQRCodeScanner()
