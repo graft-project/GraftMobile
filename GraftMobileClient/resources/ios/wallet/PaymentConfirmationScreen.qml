@@ -17,16 +17,14 @@ BasePaymentConfirmationScreen {
         if (paymentState) {
             root.state = "processing"
         } else {
-            root.state = "done"
+            root.state = "default"
         }
     }
 
     Connections {
         target: GraftClient
-
         onSaleDetailsReceived: {
             if (result === true) {
-                console.log("=============On the base screen=============")
                 paymentState = false
             }
         }
@@ -105,7 +103,7 @@ BasePaymentConfirmationScreen {
 
     states: [
         State {
-            name: "done"
+            name: "default"
             PropertyChanges {
                 target: payButton
                 enabled: true
@@ -115,11 +113,11 @@ BasePaymentConfirmationScreen {
                 enabled: true
             }
             PropertyChanges {
-                target: labelText
+                target: message
                 visible: false
             }
             PropertyChanges {
-                target: busyInd
+                target: indicator
                 running: false
             }
         },
@@ -134,11 +132,11 @@ BasePaymentConfirmationScreen {
                 enabled: false
             }
             PropertyChanges {
-                target: labelText
+                target: message
                 visible: true
             }
             PropertyChanges {
-                target: busyInd
+                target: indicator
                 running: true
             }
         }
@@ -151,16 +149,16 @@ BasePaymentConfirmationScreen {
     }
 
     Label {
-        id: labelText
+        id: message
         anchors.centerIn: parent
-        color: "#000000"
+        color: "#60000000"
         font.pixelSize: 17
         visible: false
         text: qsTr("Waiting for payment details...")
     }
 
     BusyIndicator {
-        id: busyInd
+        id: indicator
         anchors.centerIn: parent
         running: false
     }

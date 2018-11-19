@@ -10,14 +10,13 @@ BaseScreen {
 
     specialBackMode: Detector.isPlatform(Platform.IOS) ? pop : goBack
 
+    property bool received: false
+
     Connections {
         target: GraftClient
-
         onSaleDetailsReceived: {
-            if (result === true) {
-                console.log("==============Push the base screen=============")
-                pushScreen.openPaymentConfirmationScreen(result)
-            } else {
+            received = result
+            if (received === false) {
                 screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
                 screenDialog.open()
             }
@@ -32,7 +31,10 @@ BaseScreen {
     QRScanningView {
         id: qRScanningView
         anchors.fill: parent
-        onQrCodeDetected: GraftClient.saleDetails(message)
+        onQrCodeDetected: {
+            GraftClient.saleDetails(message)
+            pushScreen.openPaymentConfirmationScreen(received)
+        }
     }
 
     function pop() {
