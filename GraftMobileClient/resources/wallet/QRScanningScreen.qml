@@ -15,7 +15,8 @@ BaseScreen {
 
         onSaleDetailsReceived: {
             if (result === true) {
-                pushScreen.openPaymentConfirmationScreen()
+                console.log("==============Push the base screen=============")
+                pushScreen.openPaymentConfirmationScreen(result)
             } else {
                 screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
                 screenDialog.open()

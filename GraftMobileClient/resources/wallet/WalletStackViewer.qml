@@ -38,10 +38,11 @@ BaseStackViewer {
         stack.push("qrc:/wallet/AddCardScreen.qml", {"pushScreen": walletsTransitions()})
     }
 
-    function openPaymentConfirmationScreen() {
+    function openPaymentConfirmationScreen(paymentStatus) {
         stack.push("qrc:/wallet/PaymentConfirmationScreen.qml", {
                    "pushScreen": walletsTransitions(),
-                   "productModel": PaymentProductModel})
+                   "productModel": PaymentProductModel,
+                   "paymentState": paymentStatus})
     }
 
     function openSendCoinScreen() {

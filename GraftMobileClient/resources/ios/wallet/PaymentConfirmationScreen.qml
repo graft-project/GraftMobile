@@ -8,7 +8,29 @@ import "../"
 
 BasePaymentConfirmationScreen {
     id: root
+
+    property bool paymentState: false
+
     onErrorMessage: busyIndicator.running = false
+
+    Component.onCompleted: {
+        if (paymentState) {
+            root.state = "processing"
+        } else {
+            root.state = "done"
+        }
+    }
+
+    Connections {
+        target: GraftClient
+
+        onSaleDetailsReceived: {
+            if (result === true) {
+                console.log("=============On the base screen=============")
+                paymentState = false
+            }
+        }
+    }
 
     Rectangle {
         id: background
@@ -61,6 +83,7 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             WideActionButton {
+                id: cancelButton
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
                 onClicked: {
@@ -70,6 +93,7 @@ BasePaymentConfirmationScreen {
             }
 
             WideActionButton {
+                id: payButton
                 text: qsTr("Pay")
                 onClicked: {
                     busyIndicator.running = true
@@ -79,8 +103,64 @@ BasePaymentConfirmationScreen {
         }
     }
 
+    states: [
+        State {
+            name: "done"
+            PropertyChanges {
+                target: payButton
+                enabled: true
+            }
+            PropertyChanges {
+                target: cancelButton
+                enabled: true
+            }
+            PropertyChanges {
+                target: labelText
+                visible: false
+            }
+            PropertyChanges {
+                target: busyInd
+                running: false
+            }
+        },
+        State {
+            name: "processing"
+            PropertyChanges {
+                target: payButton
+                enabled: false
+            }
+            PropertyChanges {
+                target: cancelButton
+                enabled: false
+            }
+            PropertyChanges {
+                target: labelText
+                visible: true
+            }
+            PropertyChanges {
+                target: busyInd
+                running: true
+            }
+        }
+    ]
+
     BusyIndicator {
         id: busyIndicator
+        anchors.centerIn: parent
+        running: false
+    }
+
+    Label {
+        id: labelText
+        anchors.centerIn: parent
+        color: "#000000"
+        font.pixelSize: 17
+        visible: false
+        text: qsTr("Waiting for payment details...")
+    }
+
+    BusyIndicator {
+        id: busyInd
         anchors.centerIn: parent
         running: false
     }
