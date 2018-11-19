@@ -40,8 +40,8 @@ namespace ExperimentalTestnetConfiguration
 {
 static const QString scConfigTitle("Alpha RTA Testnet");
 
-static const QStringList scHttpSeedSupernodes{"34.224.118.182:28900"
-//                                              "testnet-dev-seed.graft.network:28600"
+static const QStringList scHttpSeedSupernodes{
+                                              "testnet-dev-seed.graft.network:28600"
                                               //"testnet-rta-seed.graft.network:28900"
                                               //"34.200.186.98:28900",
                                               //"34.224.118.182:28900",

@@ -16,6 +16,7 @@ BaseScreen {
         target: GraftClient
         onSaleDetailsReceived: {
             received = result
+            console.log("===============================0=========================================")
             if (received === false) {
                 screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
                 screenDialog.open()
@@ -33,6 +34,7 @@ BaseScreen {
         anchors.fill: parent
         onQrCodeDetected: {
             GraftClient.saleDetails(message)
+            console.log("==============================1==========================================")
             pushScreen.openPaymentConfirmationScreen(received)
         }
     }

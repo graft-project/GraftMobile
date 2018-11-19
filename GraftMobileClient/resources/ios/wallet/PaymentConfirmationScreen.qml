@@ -14,10 +14,11 @@ BasePaymentConfirmationScreen {
     onErrorMessage: busyIndicator.running = false
 
     Component.onCompleted: {
+        console.log("------IN SCREEN -------->", root.paymentState, "---",  root.height / 4)
         if (paymentState) {
-            root.state = "processing"
-        } else {
             root.state = "default"
+        } else {
+            root.state = "processing"
         }
     }
 
@@ -26,6 +27,7 @@ BasePaymentConfirmationScreen {
         onSaleDetailsReceived: {
             if (result === true) {
                 paymentState = false
+                root.state = "default"
             }
         }
     }
@@ -150,8 +152,9 @@ BasePaymentConfirmationScreen {
 
     Label {
         id: message
-        anchors.centerIn: parent
-        color: "#60000000"
+        anchors.fill: parent
+        anchors.margins: 30
+        color: "#50000000"
         font.pixelSize: 17
         visible: false
         text: qsTr("Waiting for payment details...")
