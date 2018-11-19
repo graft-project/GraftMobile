@@ -123,7 +123,7 @@ void GraftWalletHandlerV2::transfer(const QString &address, const QString &amoun
     if (mWallet)
     {
         bool status = mWallet->sendCurrentTransaction();
-        emit transferReceived(status);
+        emit transferReceived(status); //BUG types is different (int, bool)
     }
 }
 
