@@ -37,6 +37,8 @@ private slots:
     void receiveRejectSale(int result);
     void receiveSaleStatus(int result, int status);
     void receiveBalance(double balance, double unlockedBalance);
+    void receiveTransferFee(int result, double fee);
+    void receiveTransfer(int result);
 
 private:
     GraftPOSAPIv1 *mApi;

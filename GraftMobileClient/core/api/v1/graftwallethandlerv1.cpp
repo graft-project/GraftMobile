@@ -14,9 +14,9 @@ GraftWalletHandlerV1::GraftWalletHandlerV1(const QString &dapiVersion, const QSt
     connect(mApi, &GraftWalletAPIv1::restoreAccountReceived,
             this, &GraftWalletHandlerV1::restoreAccountReceived);
     connect(mApi, &GraftWalletAPIv1::transferFeeReceived,
-            this, &GraftWalletHandlerV1::transferFeeReceived);
+            this, &GraftWalletHandlerV1::receiveTransferFee);
     connect(mApi, &GraftWalletAPIv1::transferReceived,
-            this, &GraftWalletHandlerV1::transferReceived);
+            this, &GraftWalletHandlerV1::receiveTransfer);
     connect(mApi, &GraftWalletAPIv1::balanceReceived, this, &GraftWalletHandlerV1::receiveBalance);
 
     connect(mApi, &GraftWalletAPIv1::getPOSDataReceived,
@@ -181,4 +181,20 @@ void GraftWalletHandlerV1::receiveBalance(double balance, double unlockedBalance
 {
     QTimer::singleShot(20000, this, &GraftWalletHandlerV1::updateBalance);
     emit balanceReceived(balance, unlockedBalance);
+}
+
+void GraftWalletHandlerV1::receiveTransferFee(int result, double fee)
+{
+    bool status = result == 0;
+    double lFee = 0;
+    if (status)
+    {
+        lFee = GraftGenericAPIv1::toCoins(fee);
+    }
+    emit transferFeeReceived(status, lFee);
+}
+
+void GraftWalletHandlerV1::receiveTransfer(int result)
+{
+    emit transferReceived(result == 0);
 }
