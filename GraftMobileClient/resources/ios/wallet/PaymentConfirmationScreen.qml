@@ -8,26 +8,15 @@ import "../"
 
 BasePaymentConfirmationScreen {
     id: root
+    state: "processing"
 
-    property bool paymentState: false
-
-    onErrorMessage: busyIndicator.running = false
-
-    Component.onCompleted: {
-        console.log("------IN SCREEN -------->", root.paymentState, "---",  root.height / 4)
-        if (paymentState) {
-            root.state = "default"
-        } else {
-            root.state = "processing"
-        }
-    }
+    onErrorMessage: errorIndicator.running = false
 
     Connections {
         target: GraftClient
         onSaleDetailsReceived: {
             if (result === true) {
-                paymentState = false
-                root.state = "default"
+                root.state = "done"
             }
         }
     }
@@ -39,6 +28,7 @@ BasePaymentConfirmationScreen {
 
         ListView {
             id: productList
+            visible: false
             anchors {
                 top: parent.top
                 bottom: quickExchangeView.top
@@ -61,6 +51,7 @@ BasePaymentConfirmationScreen {
 
         QuickExchangeView {
             id: quickExchangeView
+            visible: false
             height: 50
             anchors {
                 left: parent.left
@@ -72,6 +63,7 @@ BasePaymentConfirmationScreen {
 
         ColumnLayout {
             id: bottomButtons
+            enabled: false
             anchors {
                 left: parent.left
                 right: parent.right
@@ -83,7 +75,6 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             WideActionButton {
-                id: cancelButton
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
                 onClicked: {
@@ -93,10 +84,9 @@ BasePaymentConfirmationScreen {
             }
 
             WideActionButton {
-                id: payButton
                 text: qsTr("Pay")
                 onClicked: {
-                    busyIndicator.running = true
+                    errorIndicator.running = true
                     confirmPay()
                 }
             }
@@ -105,63 +95,48 @@ BasePaymentConfirmationScreen {
 
     states: [
         State {
-            name: "default"
-            PropertyChanges {
-                target: payButton
-                enabled: true
-            }
-            PropertyChanges {
-                target: cancelButton
-                enabled: true
-            }
-            PropertyChanges {
-                target: message
-                visible: false
-            }
-            PropertyChanges {
-                target: indicator
-                running: false
-            }
+            name: "done"
+
+            PropertyChanges { target: productList; visible: true }
+            PropertyChanges { target: quickExchangeView; visible: true }
+            PropertyChanges { target: bottomButtons; enabled: true }
+            PropertyChanges { target: message; visible: false }
+            PropertyChanges { target: processingIndicator; running: false }
         },
         State {
             name: "processing"
-            PropertyChanges {
-                target: payButton
-                enabled: false
-            }
-            PropertyChanges {
-                target: cancelButton
-                enabled: false
-            }
-            PropertyChanges {
-                target: message
-                visible: true
-            }
-            PropertyChanges {
-                target: indicator
-                running: true
-            }
+
+            PropertyChanges { target: productList; visible: false }
+            PropertyChanges { target: quickExchangeView; visible: false }
+            PropertyChanges { target: bottomButtons; enabled: false }
+            PropertyChanges { target: message; visible: true }
+            PropertyChanges { target: processingIndicator; running: true }
         }
     ]
 
     BusyIndicator {
-        id: busyIndicator
+        id: errorIndicator
         anchors.centerIn: parent
         running: false
     }
 
     Label {
         id: message
-        anchors.fill: parent
-        anchors.margins: 30
+        visible: false
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            margins: 30
+        }
+        horizontalAlignment: Label.AlignHCenter
         color: "#50000000"
         font.pixelSize: 17
-        visible: false
         text: qsTr("Waiting for payment details...")
     }
 
     BusyIndicator {
-        id: indicator
+        id: processingIndicator
         anchors.centerIn: parent
         running: false
     }
