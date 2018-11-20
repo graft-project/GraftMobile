@@ -123,7 +123,7 @@ void GraftWalletHandlerV2::transfer(const QString &address, const QString &amoun
     if (mWallet)
     {
         bool status = mWallet->sendCurrentTransaction();
-        emit transferReceived(status); //BUG types is different (int, bool)
+        emit transferReceived(status);
     }
 }
 
@@ -144,7 +144,7 @@ void GraftWalletHandlerV2::saleDetails(const QString &pid, int blockNumber)
 void GraftWalletHandlerV2::rejectPay(const QString &pid, int blockNumber)
 {
     //TODO: Fix support of rejectPay, unsupported on supernode side
-//    mApi->rejectPay(mPID, mBlockNumber);
+    //mApi->rejectPay(mPID, mBlockNumber);
 }
 
 void GraftWalletHandlerV2::pay(const QString &pid, const QString &address, double amount,
