@@ -16,6 +16,7 @@ BaseScreen {
 
     Connections {
         target: GraftClient
+
         onSaleDetailsReceived: {
             if (result === false) {
                 screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
