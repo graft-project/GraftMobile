@@ -33,8 +33,8 @@ signals:
                                 const QString &address, const QString &viewKey,
                                 const QString &seed);
     void balanceReceived(double balance, double unlockedBalance);
-    void transferFeeReceived(int result, double fee);
-    void transferReceived(int result);
+    void transferFeeReceived(bool result, double fee);
+    void transferReceived(bool result);
 };
 
 #endif // GRAFTBASEHANDLER_H

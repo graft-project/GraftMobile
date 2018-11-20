@@ -68,6 +68,7 @@ GraftApplicationWindow {
             mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()
+            mainLayout.currentItem.showFailedScreen(true)
         }
     }
 
@@ -80,6 +81,7 @@ GraftApplicationWindow {
             mainLayout.enableScreen()
             checkAccountExists()
             mobileMessageDialog.close()
+            mainLayout.currentItem.showFailedScreen(true)
         }
     }
 
@@ -115,6 +117,7 @@ GraftApplicationWindow {
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
             isActive: SwipeView.isCurrentItem
+            onShowFailedScreen: currentItem.showFailedScreen(setFailScreen)
         }
 
         SettingsStackViewer {

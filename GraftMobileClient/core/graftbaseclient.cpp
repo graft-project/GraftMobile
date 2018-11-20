@@ -141,7 +141,7 @@ void GraftBaseClient::transfer(const QString &address, const QString &amount)
     if (handler)
     {
         connect(handler, &GraftBaseHandler::transferReceived,
-                this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
+                this, &GraftBaseClient::transferReceived, Qt::UniqueConnection);
         QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
                                                'f', 0);
         handler->transfer(address, customAmount);
@@ -154,7 +154,7 @@ void GraftBaseClient::transferFee(const QString &address, const QString &amount)
     if (handler)
     {
         connect(handler, &GraftBaseHandler::transferFeeReceived,
-                this, &GraftBaseClient::receiveTransferFee, Qt::UniqueConnection);
+                this, &GraftBaseClient::transferFeeReceived, Qt::UniqueConnection);
         QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
                                                'f', 0);
         handler->transferFee(address, customAmount);
@@ -377,22 +377,6 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         mIsBalanceUpdated = true;
         emit balanceUpdated();
     }
-}
-
-void GraftBaseClient::receiveTransfer(int result)
-{
-    emit transferReceived(result == 0);
-}
-
-void GraftBaseClient::receiveTransferFee(int result, double fee)
-{
-    bool status = result == 0;
-    double lFee = 0;
-    if (status)
-    {
-        lFee = GraftGenericAPIv1::toCoins(fee);
-    }
-    emit transferFeeReceived(status, lFee);
 }
 
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)

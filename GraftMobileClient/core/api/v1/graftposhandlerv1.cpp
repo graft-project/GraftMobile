@@ -13,8 +13,8 @@ GraftPOSHandlerV1::GraftPOSHandlerV1(const QString &dapiVersion, const QStringLi
     connect(mApi, &GraftPOSAPIv1::restoreAccountReceived,
             this, &GraftPOSHandlerV1::restoreAccountReceived);
     connect(mApi, &GraftPOSAPIv1::transferFeeReceived,
-            this, &GraftPOSHandlerV1::transferFeeReceived);
-    connect(mApi, &GraftPOSAPIv1::transferReceived, this, &GraftPOSHandlerV1::transferReceived);
+            this, &GraftPOSHandlerV1::receiveTransferFee);
+    connect(mApi, &GraftPOSAPIv1::transferReceived, this, &GraftPOSHandlerV1::receiveTransfer);
     connect(mApi, &GraftPOSAPIv1::balanceReceived, this, &GraftPOSHandlerV1::receiveBalance);
 
     connect(mApi, &GraftPOSAPIv1::saleResponseReceived, this, &GraftPOSHandlerV1::saleReceived);
@@ -168,4 +168,20 @@ void GraftPOSHandlerV1::receiveBalance(double balance, double unlockedBalance)
 {
     QTimer::singleShot(20000, this, &GraftPOSHandlerV1::updateBalance);
     emit balanceReceived(balance, unlockedBalance);
+}
+
+void GraftPOSHandlerV1::receiveTransferFee(int result, double fee)
+{
+    bool status = result == 0;
+    double lFee = 0;
+    if (status)
+    {
+        lFee = GraftGenericAPIv1::toCoins(fee);
+    }
+    emit transferFeeReceived(status, lFee);
+}
+
+void GraftPOSHandlerV1::receiveTransfer(int result)
+{
+    emit transferReceived(result == 0);
 }
