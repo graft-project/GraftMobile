@@ -100,7 +100,7 @@ BasePaymentConfirmationScreen {
             PropertyChanges { target: productList; visible: true }
             PropertyChanges { target: quickExchangeView; visible: true }
             PropertyChanges { target: bottomButtons; enabled: true }
-            PropertyChanges { target: message; visible: false }
+            PropertyChanges { target: informing; visible: false }
             PropertyChanges { target: processingIndicator; running: false }
         },
         State {
@@ -109,34 +109,13 @@ BasePaymentConfirmationScreen {
             PropertyChanges { target: productList; visible: false }
             PropertyChanges { target: quickExchangeView; visible: false }
             PropertyChanges { target: bottomButtons; enabled: false }
-            PropertyChanges { target: message; visible: true }
+            PropertyChanges { target: informing; visible: true }
             PropertyChanges { target: processingIndicator; running: true }
         }
     ]
 
     BusyIndicator {
         id: errorIndicator
-        anchors.centerIn: parent
-        running: false
-    }
-
-    Label {
-        id: message
-        visible: false
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            margins: 30
-        }
-        horizontalAlignment: Label.AlignHCenter
-        color: "#50000000"
-        font.pixelSize: 17
-        text: qsTr("Waiting for payment details...")
-    }
-
-    BusyIndicator {
-        id: processingIndicator
         anchors.centerIn: parent
         running: false
     }
