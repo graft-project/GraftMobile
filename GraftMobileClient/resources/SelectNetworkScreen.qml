@@ -76,8 +76,8 @@ BaseScreen {
             WideActionButton {
                 Layout.alignment: Qt.AlignBottom
                 text: qsTr("Confirm")
-//                enabled: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)
-//                         ? true : !rtaTestNet.networkChecked
+                enabled: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)
+                         ? true : !rtaTestNet.networkChecked
                 onClicked: {
                     disableScreen()
                     setNetworkType()

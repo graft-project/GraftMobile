@@ -42,7 +42,10 @@ Page {
         topMargin: (parent.height - desktopDialog.height) / 2
         leftMargin: (parent.width - desktopDialog.width) / 2
         title: qsTr("Attention")
-        onConfirmed: desktopDialog.close()
+        onConfirmed: {
+            attentionAccepted()
+            desktopDialog.close()
+        }
     }
 
     MessageDialog {
