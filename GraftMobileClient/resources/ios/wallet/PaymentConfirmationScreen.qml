@@ -12,8 +12,11 @@ BasePaymentConfirmationScreen {
 
     onErrorMessage: errorIndicator.running = false
 
+    onShowFailedScreen: pushScreen.openPaymentScreen(0, false)
+
     Connections {
         target: GraftClient
+
         onSaleDetailsReceived: {
             if (result === true) {
                 root.state = "done"
