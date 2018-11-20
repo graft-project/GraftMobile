@@ -115,11 +115,12 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
+                specialBackMode: pushMainScreen
                 action: pushScreen.clearChecked
                 screenHeader {
-                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
-                    navigationButtonState: true
-                    actionButtonState: true
+                    isNavigationButtonVisible: true
+                    navigationButtonState: false
+                    actionButtonState: false
                 }
             }
             PropertyChanges {
