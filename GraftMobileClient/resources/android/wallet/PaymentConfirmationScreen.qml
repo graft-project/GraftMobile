@@ -20,6 +20,8 @@ BasePaymentConfirmationScreen {
         onSaleDetailsReceived: {
             if (result === true) {
                 root.state = "done"
+            } else {
+                root.state = "processing"
             }
         }
     }

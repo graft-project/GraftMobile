@@ -30,17 +30,25 @@ ProductModel *GraftWalletClient::paymentProductModel() const
     return mPaymentProductModel;
 }
 
-void GraftWalletClient::saleDetails(const QString &data)
+bool GraftWalletClient::detectedSalesDetails(const QString &data) const
 {
     if (!data.isEmpty())
     {
-        QStringList dataList = data.split(';');
-        if (dataList.count() == 4)
+        return productList(data).count() == 4;
+    }
+    return false;
+}
+
+void GraftWalletClient::saleDetails(const QString &data)
+{
+    if (detectedSalesDetails(data))
+    {
+        if (productList(data).count() == 4)
         {
-            mPID = dataList.value(0);
-            mPrivateKey = dataList.value(1);
-            mTotalCost = dataList.value(2).toDouble();
-            mBlockNumber = dataList.value(3).toInt();
+            mPID = productList(data).value(0);
+            mPrivateKey = productList(data).value(1);
+            mTotalCost = productList(data).value(2).toDouble();
+            mBlockNumber = productList(data).value(3).toInt();
             updateQuickExchange(mTotalCost);
             mClientHandler->saleDetails(mPID, mBlockNumber);
         }
@@ -133,4 +141,9 @@ GraftBaseHandler *GraftWalletClient::graftHandler() const
 {
     Q_ASSERT_X(mClientHandler, "GraftWalletClient", "GraftWalletHandler not initialized!");
     return mClientHandler;
+}
+
+QStringList GraftWalletClient::productList(const QString &data) const
+{
+    return QStringList() << data.split(';');
 }
