@@ -7,7 +7,7 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Restore wallet")
-    action: restoreWallet
+    action: validatePassword
     screenHeader.actionButtonState: true
     onErrorMessage: busyIndicator.running = false
 
@@ -79,18 +79,7 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
-            onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
-                                                         dialogs.mobileMessageDialog
-                if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" &&
-                        passwordTextField.confirmPasswordText === "") {
-                        checkDialog.open()
-                        return
-                    }
-                    restoreWallet()
-                }
-            }
+            onClicked: validatePassword()
         }
     }
 
@@ -104,6 +93,19 @@ BaseScreen {
         id: dialogs
         mobileMessageDialog.onYes: restoreWallet()
         onDesktopDialogApproved: restoreWallet()
+    }
+
+    function validatePassword() {
+        var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                 dialogs.mobileMessageDialog
+        if (!passwordTextField.wrongPassword) {
+            if (passwordTextField.passwordText === "" &&
+                passwordTextField.confirmPasswordText === "") {
+                checkDialog.open()
+                return
+            }
+            restoreWallet()
+        }
     }
 
     function restoreWallet() {
