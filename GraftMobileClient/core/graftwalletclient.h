@@ -15,6 +15,8 @@ public:
     Q_INVOKABLE double totalCost() const;
     Q_INVOKABLE ProductModel *paymentProductModel() const;
 
+    Q_INVOKABLE bool isCorrectAddress(const QString &data) const;
+
 signals:
     void saleDetailsReceived(bool result);
     void rejectPayReceived(bool result);

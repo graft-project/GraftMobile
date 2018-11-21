@@ -33,6 +33,11 @@ BaseScreen {
         }
     }
 
+    Connections {
+        target: sendCoinScreen
+        onAttentionAccepted: qRScanningView.resetView()
+    }
+
     StackLayout {
         id: stackLayout
         anchors.fill: parent
@@ -129,8 +134,13 @@ BaseScreen {
         QRScanningView {
             id: qRScanningView
             onQrCodeDetected: {
-                receiversAddress.text = message
-                changeBehaviorButton()
+                if (GraftClient.isCorrectAddress(message)) {
+                    receiversAddress.text = message
+                    changeBehaviorButton()
+                } else {
+                    screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
+                    screenDialog.open()
+                }
             }
         }
     }
