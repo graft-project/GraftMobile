@@ -133,7 +133,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: completeLabelText
-                text: qsTr("Something getting wrong")
+                text: qsTr("Something went wrong")
             }
             PropertyChanges {
                 target: button
