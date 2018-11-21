@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import "../"
@@ -16,7 +16,9 @@ BaseLinearEditItem {
     property alias inputMask: editItem.inputMask
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
+    property alias inFocus: editItem.focus
     property bool inlineTitle: false
+    property int fieldCursorPosition: 0
 
     actionTextField: editItem
 
@@ -26,6 +28,7 @@ BaseLinearEditItem {
         leftPadding: titleItem.width
         rightPadding: visibilityIcon ? 42 : 0
         bottomPadding: 15
+        cursorPosition: fieldCursorPosition
         verticalAlignment: Qt.AlignTop
         color: "#404040"
         maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
@@ -55,15 +58,15 @@ BaseLinearEditItem {
         }
     }
 
-    Text {
+    Label {
         id: titleItem
         anchors {
             top: parent.top
             left: parent.left
             topMargin: 8
         }
-        font.pointSize: editItem.font.pointSize
         rightPadding: 5
         color: "#8E8E93"
+        font.pixelSize: editItem.font.pixelSize
     }
 }

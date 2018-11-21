@@ -171,10 +171,10 @@ void ProductModel::clearSelections()
 
 void ProductModel::clear()
 {
-    beginRemoveRows(QModelIndex(), 0, mProducts.count());
+    beginResetModel();
     qDeleteAll(mProducts);
     mProducts.clear();
-    endRemoveRows();
+    endResetModel();
 }
 
 void ProductModel::add(const QString &imagePath, const QString &name, double cost,

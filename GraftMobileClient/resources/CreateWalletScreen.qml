@@ -8,7 +8,19 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Create wallet")
+    screenHeader {
+        actionButtonState: true
+        isSettings: true
+    }
+    action: pushSettingsScreen
+
     onErrorMessage: busyIndicator.running = false
+
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
+            screenHeader.actionText = qsTr("Settings")
+        }
+    }
 
     Connections {
         target: GraftClient
@@ -42,9 +54,11 @@ BaseScreen {
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
             text: qsTr("Create New Wallet")
             onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
+                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                         dialogs.mobileMessageDialog
                 if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
+                    if (passwordTextField.passwordText === "" &&
+                            passwordTextField.confirmPasswordText === "") {
                         checkDialog.open()
                         return
                     }
@@ -101,13 +115,18 @@ BaseScreen {
     ValidPasswordMessageDialog {
         id: dialogs
         mobileMessageDialog.onYes: createAccount()
-        desktopConfirmButton.onClicked: createAccount()
+        onDesktopDialogApproved: createAccount()
     }
 
     function createAccount() {
-        desktopMessageDialog.confirmButton.enabled = false
+        dialogs.desktopMessageDialog.confirmButtonEnabled = false
         disableScreen()
         busyIndicator.running = true
         GraftClient.createAccount(passwordTextField.passwordText)
+        dialogs.desktopMessageDialog.confirmButtonEnabled = true
+    }
+
+    function pushSettingsScreen() {
+        pushScreen.serviceSettingsScreen()
     }
 }

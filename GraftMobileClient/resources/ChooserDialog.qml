@@ -5,9 +5,13 @@ import QtQuick.Controls 2.2
 Dialog {
     property alias passwordTextField: textField
     property alias dialogMessage: message.text
-    property alias denyButton: leftButton
-    property alias confirmButton: rightButton
+    property alias confirmButtonText: leftButton.text
+    property alias confirmButtonEnabled: leftButton.enabled
+    property alias denyButtonText: rightButton.text
     property bool dialogMode: false
+
+    signal confirmed()
+    signal denied()
 
     visible: false
     modal: true
@@ -47,11 +51,13 @@ Dialog {
             Button {
                 id: leftButton
                 flat: true
+                onClicked: confirmed()
             }
 
             Button {
                 id: rightButton
                 flat: true
+                onClicked: denied()
             }
         }
     }

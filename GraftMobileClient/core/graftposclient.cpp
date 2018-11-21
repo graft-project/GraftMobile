@@ -1,11 +1,16 @@
 #include "selectedproductproxymodel.h"
 #include "productmodelserializator.h"
+#include "graftclienttools.h"
 #include "qrcodegenerator.h"
-#include "api/graftposapi.h"
 #include "graftposclient.h"
 #include "accountmanager.h"
 #include "keygenerator.h"
 #include "productmodel.h"
+#include "api/v1/graftposhandlerv1.h"
+#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+#include "api/v2/graftposhandlerv2.h"
+#endif
+#include "api/graftposhandler.h"
 #include "config.h"
 
 #include <QStandardPaths>
@@ -16,16 +21,10 @@ static const QString scProductModelDataFile("productList.dat");
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
     : GraftBaseClient(parent)
+    ,mClientHandler(nullptr)
 {
-    mApi = new GraftPOSAPI(getServiceAddresses(), dapiVersion(), this);
-    connect(mApi, &GraftPOSAPI::saleResponseReceived, this, &GraftPOSClient::receiveSale);
-    connect(mApi, &GraftPOSAPI::rejectSaleResponseReceived,
-            this, &GraftPOSClient::receiveRejectSale);
-    connect(mApi, &GraftPOSAPI::getSaleStatusResponseReceived,
-            this, &GraftPOSClient::receiveSaleStatus);
-    connect(mApi, &GraftPOSAPI::error, this, &GraftPOSClient::errorReceived);
+    changeGraftHandler();
     initProductModels();
-    initAccountSettings();
 }
 
 GraftPOSClient::~GraftPOSClient()
@@ -58,8 +57,8 @@ void GraftPOSClient::sale()
     {
         updateQuickExchange(mProductModel->totalCost());
         QByteArray selectedProducts = ProductModelSerializator::serialize(mProductModel, true);
-        mApi->sale(mAccountManager->address(), mAccountManager->viewKey(),
-                   mProductModel->totalCost(), selectedProducts.toHex());
+        mClientHandler->sale(mAccountManager->address(), mAccountManager->viewKey(),
+                             mProductModel->totalCost(), selectedProducts.toHex());
     }
     else
     {
@@ -69,56 +68,26 @@ void GraftPOSClient::sale()
 
 void GraftPOSClient::rejectSale()
 {
-    mApi->rejectSale(mPID);
+    mClientHandler->rejectSale(mPID);
 }
 
-void GraftPOSClient::getSaleStatus()
+void GraftPOSClient::saleStatus()
 {
-    mApi->getSaleStatus(mPID);
+    mClientHandler->saleStatus(mPID, mBlockNumber);
 }
 
-void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNum)
+void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNumber)
 {
     const bool isStatusOk = (result == 0);
     mPID = pid;
+    mBlockNumber = blockNumber;
     QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
-            .arg(mProductModel->totalCost()).arg(blockNum);
-    setQRCodeImage(mQRCodeEncoder->encode(qrText));
+            .arg(mProductModel->totalCost()).arg(blockNumber);
+    setQRCodeImage(QRCodeGenerator::encode(qrText));
     emit saleReceived(isStatusOk);
     if (isStatusOk)
     {
-        getSaleStatus();
-    }
-}
-
-void GraftPOSClient::receiveRejectSale(int result)
-{
-    emit rejectSaleReceived(result == 0);
-}
-
-void GraftPOSClient::receiveSaleStatus(int result, int saleStatus)
-{
-    if (result == 0)
-    {
-        switch (saleStatus) {
-        case GraftPOSAPI::StatusProcessing:
-            getSaleStatus();
-            break;
-        case GraftPOSAPI::StatusApproved:
-            emit saleStatusReceived(true);
-            break;
-        case GraftPOSAPI::StatusNone:
-        case GraftPOSAPI::StatusFailed:
-        case GraftPOSAPI::StatusPOSRejected:
-        case GraftPOSAPI::StatusWalletRejected:
-        default:
-            emit saleStatusReceived(false);
-            break;
-        }
-    }
-    else
-    {
-        emit saleStatusReceived(false);
+        saleStatus();
     }
 }
 
@@ -130,8 +99,40 @@ void GraftPOSClient::initProductModels()
     mSelectedProductModel->setSourceModel(mProductModel);
 }
 
-GraftGenericAPI *GraftPOSClient::graftAPI() const
+void GraftPOSClient::changeGraftHandler()
 {
-    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
-    return mApi;
+    if (mClientHandler)
+    {
+        mClientHandler->deleteLater();
+    }
+    switch (networkType())
+    {
+    case GraftClientTools::Mainnet:
+    case GraftClientTools::PublicTestnet:
+        mClientHandler = new GraftPOSHandlerV1(dapiVersion(), getServiceAddresses(), this);
+        break;
+    case GraftClientTools::PublicExperimentalTestnet:
+#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+        mClientHandler = new GraftPOSHandlerV2(dapiVersion(), getServiceAddresses(),
+                                               getServiceAddresses(true),
+                                               networkType() != GraftClientTools::Mainnet, this);
+#else
+        mClientHandler = new GraftPOSHandlerV1(dapiVersion(), getServiceAddresses(), this);
+#endif
+        break;
+    }
+    connect(mClientHandler, &GraftPOSHandler::saleReceived, this, &GraftPOSClient::receiveSale);
+    connect(mClientHandler, &GraftPOSHandler::rejectSaleReceived,
+            this, &GraftPOSClient::rejectSaleReceived);
+    connect(mClientHandler, &GraftPOSHandler::saleStatusReceived,
+            this, &GraftPOSClient::saleStatusReceived);
+    connect(mClientHandler, &GraftPOSHandler::errorReceived,
+            this, &GraftPOSClient::errorReceived);
+    initAccountSettings();
+}
+
+GraftBaseHandler *GraftPOSClient::graftHandler() const
+{
+    Q_ASSERT_X(mClientHandler, "GraftPOSClient", "GraftPOSHandler not initialized!");
+    return mClientHandler;
 }

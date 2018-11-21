@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import com.device.platform 1.0
 import com.graft.design 1.0
 import "components"
@@ -9,7 +10,6 @@ BaseScreen {
     property alias amountLockGraft: balanceItem.amountLockGraftCost
     property alias graftWalletLogo: graftWalletLogo.source
     default property alias content: placeholder.data
-    property bool appType: false
 
     title: qsTr("Wallet")
     screenHeader {
@@ -37,39 +37,21 @@ BaseScreen {
                     height: parent.height / 2
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/imgs/graft-wallet-logo.png"
-
-                    Text {
-                        anchors {
-                            rightMargin: Detector.isDesktop() ? -10 :
-                                         Detector.isPlatform(Platform.IOS) ? -10 : 0
-                            right: parent.right
-                            baseline: parent.bottom
-                        }
-                        font {
-                            pixelSize: 18
-                            italic: true
-                            bold: true
-                        }
-                        visible: appType
-                        color: ColorFactory.color(DesignFactory.AndroidStatusBar)
-                        text: qsTr("Ver. %1").arg(GraftClient.versionNumber())
-                    }
                 }
             }
 
             NetworkIndicator {
                 Layout.fillWidth: true
 
-                Text {
-                    anchors{
+                Label {
+                    anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
                         rightMargin: 18
                     }
-                    visible: !appType
-                    text: qsTr("Version %1").arg(GraftClient.versionNumber())
-                    font.pixelSize: 16
                     color: "#FFFFFF"
+                    font.pixelSize: 16
+                    text: qsTr("Version %1").arg(GraftClient.versionNumber())
                 }
             }
 

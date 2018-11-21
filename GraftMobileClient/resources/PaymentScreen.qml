@@ -12,6 +12,7 @@ BaseScreen {
     property bool isSpacing: false
     property string completeText: ""
     property int screenState: 0
+    property var pushMainScreen: null
 
     Component.onCompleted: {
         if (screenState) {
@@ -44,7 +45,6 @@ BaseScreen {
 
         Pane {
             id: completeLabel
-
             height: 50
             anchors {
                 right: parent.right
@@ -54,11 +54,10 @@ BaseScreen {
             }
             Material.elevation: Detector.isPlatform(Platform.Android) ? 6 : 0
             padding: 0
-
             contentItem: Rectangle {
                 id: completeLabelBackground
 
-                Text {
+                Label {
                     id: completeLabelText
                     anchors.centerIn: parent
                     color: "#FFFFFF"
@@ -80,7 +79,7 @@ BaseScreen {
             }
             onClicked: {
                 disableScreen()
-                pushScreen()
+                pushMainScreen()
             }
         }
     }
@@ -91,7 +90,7 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-                action: pushScreen
+                action: pushMainScreen
                 screenHeader {
                     isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
                     navigationButtonState: true
@@ -116,11 +115,12 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
-                specialBackMode: pushScreen
+                specialBackMode: pushMainScreen
+                action: pushScreen.clearChecked
                 screenHeader {
-                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
-                    navigationButtonState: true
-                    actionButtonState: true
+                    isNavigationButtonVisible: true
+                    navigationButtonState: false
+                    actionButtonState: false
                 }
             }
             PropertyChanges {
@@ -133,7 +133,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: completeLabelText
-                text: qsTr("Something getting wrong")
+                text: qsTr("Something went wrong")
             }
             PropertyChanges {
                 target: button

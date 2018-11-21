@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 import com.device.platform 1.0
 import org.graft 1.0
 import "components"
+import "wallet"
 
 BaseScreen {
     id: sendCoinScreen
@@ -26,7 +27,8 @@ BaseScreen {
             busyIndicator.running = false
             enableScreen()
             if (result) {
-                pushScreen.openSendConfirmationScreen(receiversAddress.text, coinsAmountTextField.text, fee)
+                pushScreen.openSendConfirmationScreen(receiversAddress.text,
+                                                      coinsAmountTextField.text, fee)
             }
         }
     }
@@ -61,37 +63,42 @@ BaseScreen {
                         id: receiversAddress
                         Layout.fillWidth: true
                         Layout.preferredHeight: 130
-                        maximumLength: 110
+                        maximumLength: 106
                         wrapMode: TextField.WrapAnywhere
                         inputMethodHints: Qt.ImhNoPredictiveText
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                               qsTr("Receiver's address:") : qsTr("Receiver's address")
+                                   qsTr("Receiver's address:") : qsTr("Receiver's address")
+                        validator: RegExpValidator {
+                            regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
+                                        /(^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94})/ :
+                                        /(^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94})/
+                        }
                     }
 
                     LinearEditItem {
                         id: coinsAmountTextField
                         Layout.fillWidth: true
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                               qsTr("Amount:") : qsTr("Amount")
+                                   qsTr("Amount:") : qsTr("Amount")
                         showLengthIndicator: false
-                        inputMethodHints: Qt.ImhDigitsOnly
+                        inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: RegExpValidator {
-                            regExp: /^(([0-9]){1,6}|([0-9]){1,6}\.([0-9]){1,4})$/g
+                            regExp: priceRegExp()
                         }
-                    }
 
-                    Label {
-                        anchors {
-                            right: coinsAmountTextField.right
-                            verticalCenter: coinsAmountTextField.verticalCenter
-                            verticalCenterOffset: Detector.isDesktop() ? -8 : Detector.isPlatform(Platform.IOS) ? -5 : 3
+                        Label {
+                            anchors {
+                                right: parent.right
+                                bottom: parent.bottom
+                                bottomMargin: 10
+                            }
+                            color: "#BBBBBB"
+                            font {
+                                pixelSize: 16
+                                bold: true
+                            }
+                            text: qsTr("GRFT")
                         }
-                        color: "#BBBBBB"
-                        font {
-                            pixelSize: 16
-                            bold: true
-                        }
-                        text: qsTr("GRFT")
                     }
                 }
 
@@ -120,6 +127,7 @@ BaseScreen {
         }
 
         QRScanningView {
+            id: qRScanningView
             onQrCodeDetected: {
                 receiversAddress.text = message
                 changeBehaviorButton()
@@ -135,11 +143,16 @@ BaseScreen {
 
     function changeBehaviorButton() {
         stackLayout.currentIndex = 0
+        qRScanningView.stopScanningView()
     }
 
     function checkingData() {
-        if ((1 > receiversAddress.text.length) || (receiversAddress.text.length > 110)) {
-            screenDialog.text = qsTr("You entered the wrong account number! Please input correct account number.")
+        if (receiversAddress.text.length === 0) {
+            screenDialog.text = qsTr("Receiver's address is empty! Please input correct account address.")
+            screenDialog.open()
+        } else if (receiversAddress.text.length !== 106 && receiversAddress.text.length !== 95) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("Receiver's address is invalid! Please input correct account address.")
             screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")

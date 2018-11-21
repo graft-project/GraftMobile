@@ -1,7 +1,7 @@
 import QtQuick 2.9
-import QtQuick.Controls.Material 2.2
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import "../components"
 import "../"
 
@@ -16,9 +16,7 @@ Item {
 
     Connections {
         target: ImagePicker
-        onImageSelected: {
-            previewImage.source = path
-        }
+        onImageSelected: previewImage.source = path
     }
 
     SelectImageDialog {
@@ -62,7 +60,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                    regExp: /\d+[.]\d{1,10}|\d{1,10}/
+                    regExp: priceRegExp()
                 }
             }
 
@@ -85,7 +83,6 @@ Item {
             Layout.maximumHeight: 250
             Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
-            source: ""
             visible: previewImage.status === Image.Ready
         }
 
@@ -108,12 +105,12 @@ Item {
                         source: "qrc:/imgs/add.png"
                     }
 
-                    Text {
+                    Label {
                         id: buttonText
                         Layout.alignment: Qt.AlignRight
+                        color: "#3A3E3C"
                         font.pixelSize: 14
                         text: previewImage.visible ? qsTr("Change Photo") : qsTr("Add Photo")
-                        color: "#3A3E3C"
                     }
                 }
             }

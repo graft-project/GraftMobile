@@ -1,8 +1,8 @@
 import QtQuick 2.9
-import QtQuick.Controls.Material 2.2
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import "../components"
 import "../"
@@ -16,10 +16,9 @@ Item {
     property alias price: price.text
     property alias productImage: previewImage.source
 
-    Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS)) {
-            ImagePicker.imageSelected.connect(selectedImege)
-        }
+    Connections {
+        target: Detector.isPlatform(Platform.Desktop) ? null : ImagePicker
+        onImageSelected: previewImage.source = path
     }
 
     SelectImageDialog {
@@ -61,7 +60,7 @@ Item {
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 showLengthIndicator: false
                 validator: RegExpValidator {
-                    regExp: /\d+[.]\d{10}/
+                    regExp: priceRegExp()
                 }
             }
 
@@ -82,7 +81,6 @@ Item {
             Layout.maximumHeight: 250
             Layout.minimumHeight: 90
             fillMode: Image.PreserveAspectFit
-            source: ""
             visible: previewImage.status === Image.Ready
         }
 
@@ -100,11 +98,11 @@ Item {
                     source: "qrc:/imgs/add_ios.png"
                 }
 
-                Text {
+                Label {
                     id: buttonText
                     Layout.alignment: Qt.AlignRight
-                    text: qsTr("Add photo")
                     color: "#007AFF"
+                    text: qsTr("Add photo")
                 }
             }
             onClicked: {
@@ -128,9 +126,5 @@ Item {
         folder: shortcuts.pictures
         nameFilters: "Image files (*.jpg *.png)"
         onAccepted: previewImage.source = fileDialog.fileUrls.toString()
-    }
-
-    function selectedImege(path) {
-        previewImage.source = path
     }
 }

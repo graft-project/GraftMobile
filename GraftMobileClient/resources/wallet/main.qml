@@ -64,10 +64,11 @@ GraftApplicationWindow {
         leftMargin: (parent.width - desktopMessageDialog.width) / 2
         title: qsTr("Pay failed!")
         text: qsTr("Pay request failed.\nPlease try again.")
-        confirmButton.onClicked: {
+        onConfirmed: {
             mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()
+            mainLayout.currentItem.showFailedScreen(true)
         }
     }
 
@@ -80,6 +81,7 @@ GraftApplicationWindow {
             mainLayout.enableScreen()
             checkAccountExists()
             mobileMessageDialog.close()
+            mainLayout.currentItem.showFailedScreen(true)
         }
     }
 
@@ -115,6 +117,7 @@ GraftApplicationWindow {
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
             isActive: SwipeView.isCurrentItem
+            onShowFailedScreen: currentItem.showFailedScreen(setFailScreen)
         }
 
         SettingsStackViewer {

@@ -4,20 +4,25 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFileInfo>
-#include <QZXing.h>
 #include <QDir>
 
-#include "core/cardmodel.h"
+#include "core/selectedproductproxymodel.h"
+#include "core/quickexchangemodel.h"
+#include "core/graftwalletclient.h"
+#include "core/graftposclient.h"
+#include "core/currencymodel.h"
 #include "core/accountmodel.h"
 #include "core/productmodel.h"
-#include "core/currencymodel.h"
-#include "core/graftposclient.h"
-#include "core/graftwalletclient.h"
-#include "core/quickexchangemodel.h"
-#include "core/selectedproductproxymodel.h"
+#include "core/cardmodel.h"
 #include "core/defines.h"
+
 #include "devicedetector.h"
 #include "designfactory.h"
+#include "QZXing.h"
+
+#if !defined(POS_BUILD) && !defined(WALLET_BUILD)
+static_assert(false, "You didn't add additional argument POS_BUILD or WALLET_BUILD for qmake in \'Build Settings->Build Steps\'");
+#endif
 
 // TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
 // For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
@@ -34,6 +39,12 @@ static_assert(false, "QTBUG-65820 in Android Debug builds");
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
+#endif
+
+#ifdef WALLET_BUILD
+#if defined(Q_OS_IOS)
+#include "ios/wallet/ioscamerapermission.h"
+#endif
 #endif
 
 #ifdef POS_BUILD
@@ -72,7 +83,6 @@ int main(int argc, char *argv[])
     client.registerTypes(&engine);
 
     CurrencyModel model;
-    model.add(QStringLiteral("USD"), QStringLiteral("USD"));
     model.add(QStringLiteral("GRFT"), QStringLiteral("GRAFT"));
     engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
 
@@ -105,6 +115,12 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
+
+#if defined(Q_OS_IOS)
+    IOSCameraPermission cameraPermission;
+    engine.rootContext()->setContextProperty(QStringLiteral("IOSCameraPermission"), &cameraPermission);
+#endif
+
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
 #endif
     if (engine.rootObjects().isEmpty())

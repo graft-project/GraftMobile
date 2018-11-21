@@ -7,7 +7,7 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Restore wallet")
-    action: restoreWallet
+    action: validatePassword
     screenHeader.actionButtonState: true
     onErrorMessage: busyIndicator.running = false
 
@@ -51,9 +51,19 @@ BaseScreen {
             letterCountingMode: false
             maximumLength: 25
             validator: RegExpValidator {
-                regExp: /([a-z]+\s+){24}([a-z]+){1}/g
+                regExp: /([a-zA-Z]+\s+){24}([a-zA-Z]+){1}/g
             }
-            inputMethodHints: Qt.ImhNoPredictiveText
+            inputMethodHints: Qt.ImhLowercaseOnly | Qt.ImhNoPredictiveText
+            Component.onCompleted: {
+                if (Detector.isPlatform(Platform.IOS)) {
+                    echoMode = TextInput.Password
+                }
+            }
+            onTextChanged: {
+                if (Detector.isPlatform(Platform.IOS) && seedTextField.echoMode !== TextInput.Normal) {
+                    echoMode = TextInput.Normal
+                }
+            }
         }
 
         PasswordFields {
@@ -69,16 +79,7 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
-            onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog : dialogs.mobileMessageDialog
-                if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" && passwordTextField.confirmPasswordText === "") {
-                        checkDialog.open()
-                        return
-                    }
-                    restoreWallet()
-                }
-            }
+            onClicked: validatePassword()
         }
     }
 
@@ -91,7 +92,20 @@ BaseScreen {
     ValidPasswordMessageDialog {
         id: dialogs
         mobileMessageDialog.onYes: restoreWallet()
-        desktopConfirmButton.onClicked: restoreWallet()
+        onDesktopDialogApproved: restoreWallet()
+    }
+
+    function validatePassword() {
+        var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                 dialogs.mobileMessageDialog
+        if (!passwordTextField.wrongPassword) {
+            if (passwordTextField.passwordText === "" &&
+                passwordTextField.confirmPasswordText === "") {
+                checkDialog.open()
+                return
+            }
+            restoreWallet()
+        }
     }
 
     function restoreWallet() {

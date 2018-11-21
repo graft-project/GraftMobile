@@ -21,7 +21,7 @@ Button {
             Layout.alignment: Image.AlignLeft
         }
 
-        Text {
+        Label {
             id: text
             Layout.alignment: Text.AlignLeft
         }

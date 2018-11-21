@@ -5,15 +5,12 @@ import "../components"
 import org.graft 1.0
 
 BaseBalanceScreen {
-    id: balanceScreen
 
     Connections {
         target: GraftClient
 
         onNetworkTypeChanged: payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
     }
-
-    appType: true
 
     ColumnLayout {
         spacing: 0

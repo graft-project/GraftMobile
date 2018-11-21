@@ -11,11 +11,11 @@ ColumnLayout {
 
     spacing: 0
 
-    Text {
+    Label {
         id: dropdownTitle
+        Layout.fillWidth: true
         color: "#BBBBBB"
         font.pixelSize: 12
-        Layout.fillWidth: true
     }
 
     ComboBox {

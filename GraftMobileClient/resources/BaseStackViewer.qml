@@ -9,6 +9,8 @@ StackView {
     property bool isActive: false
     property var clearStackViewer: ({})
 
+    signal showFailedScreen(bool setFailScreen)
+
     focus: true
     onCurrentItemChanged: {
         if (isActive && menuLoader && menuLoader.status === Loader.Ready) {

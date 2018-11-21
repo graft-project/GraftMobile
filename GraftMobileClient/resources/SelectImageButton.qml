@@ -1,6 +1,6 @@
 import QtQuick 2.9
-import QtQuick.Controls.Material 2.2
 import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
 
 Button {
@@ -30,7 +30,7 @@ Button {
                 Layout.alignment: Qt.AlignLeft
             }
 
-            Text {
+            Label {
                 id: selectText
                 Layout.alignment: Qt.AlignLeft
                 font.pixelSize: 20

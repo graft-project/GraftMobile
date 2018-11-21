@@ -4,8 +4,8 @@
 #include "graftbaseclient.h"
 
 class SelectedProductProxyModel;
+class GraftPOSHandler;
 class ProductModel;
-class GraftPOSAPI;
 
 class GraftPOSClient : public GraftBaseClient
 {
@@ -28,19 +28,19 @@ public slots:
     void saveProducts() const;
     void sale();
     void rejectSale();
-    void getSaleStatus();
+    void saleStatus();
 
 private slots:
-    void receiveSale(int result, const QString &pid, int blockNum);
-    void receiveRejectSale(int result);
-    void receiveSaleStatus(int result, int saleStatus);
+    void receiveSale(int result, const QString &pid, int blockNumber);
 
 private:
     void initProductModels();
-    GraftGenericAPI *graftAPI() const override;
+    void changeGraftHandler() override;
+    GraftBaseHandler *graftHandler() const override;
 
-    GraftPOSAPI *mApi;
+    GraftPOSHandler *mClientHandler;
     QString mPID;
+    int mBlockNumber;
     ProductModel *mProductModel;
     SelectedProductProxyModel *mSelectedProductModel;
 };

@@ -1,6 +1,11 @@
 #include "productmodelserializator.h"
-#include "api/graftwalletapi.h"
+#include "api/v1/graftwalletapiv1.h"
+#include "api/v1/graftwallethandlerv1.h"
+#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+#include "api/v2/graftwallethandlerv2.h"
+#endif
 #include "graftwalletclient.h"
+#include "graftclienttools.h"
 #include "accountmanager.h"
 #include "productmodel.h"
 #include "keygenerator.h"
@@ -8,19 +13,11 @@
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
+    ,mClientHandler(nullptr)
 {
-    mBlockNum = 0;
-    mApi = new GraftWalletAPI(getServiceAddresses(), dapiVersion(), this);
-    connect(mApi, &GraftWalletAPI::getPOSDataReceived,
-            this, &GraftWalletClient::receiveGetPOSData);
-    connect(mApi, &GraftWalletAPI::rejectPayReceived, this, &GraftWalletClient::receiveRejectPay);
-    connect(mApi, &GraftWalletAPI::payReceived, this, &GraftWalletClient::receivePay);
-    connect(mApi, &GraftWalletAPI::getPayStatusReceived,
-            this, &GraftWalletClient::receivePayStatus);
-    connect(mApi, &GraftWalletAPI::error, this, &GraftWalletClient::errorReceived);
-
+    mBlockNumber = 0;
+    changeGraftHandler();
     mPaymentProductModel = new ProductModel(this);
-    initAccountSettings();
 }
 
 double GraftWalletClient::totalCost() const
@@ -33,7 +30,7 @@ ProductModel *GraftWalletClient::paymentProductModel() const
     return mPaymentProductModel;
 }
 
-void GraftWalletClient::getPOSData(const QString &data)
+void GraftWalletClient::saleDetails(const QString &data)
 {
     if (!data.isEmpty())
     {
@@ -43,44 +40,48 @@ void GraftWalletClient::getPOSData(const QString &data)
             mPID = dataList.value(0);
             mPrivateKey = dataList.value(1);
             mTotalCost = dataList.value(2).toDouble();
-            mBlockNum = dataList.value(3).toInt();
+            mBlockNumber = dataList.value(3).toInt();
             updateQuickExchange(mTotalCost);
-            mApi->getPOSData(mPID, mBlockNum);
+            mClientHandler->saleDetails(mPID, mBlockNumber);
         }
         else
         {
-            emit getPOSDataReceived(false);
+            emit saleDetailsReceived(false);
         }
     }
 }
 
 void GraftWalletClient::rejectPay()
 {
-    mApi->rejectPay(mPID, mBlockNum);
+    if (mClientHandler)
+    {
+        mClientHandler->rejectPay(mPID, mBlockNumber);
+    }
 }
 
 void GraftWalletClient::pay()
 {
-    mApi->pay(mPID, mPrivateKey, mTotalCost, mBlockNum);
+    if (mClientHandler)
+    {
+        mClientHandler->pay(mPID, mPrivateKey, mTotalCost, mBlockNumber);
+    }
 }
 
-void GraftWalletClient::getPayStatus()
+void GraftWalletClient::payStatus()
 {
-    mApi->getPayStatus(mPID);
+    if (mClientHandler)
+    {
+        mClientHandler->payStatus(mPID, mBlockNumber);
+    }
 }
 
-void GraftWalletClient::receiveGetPOSData(int result, const QString &payDetails)
+void GraftWalletClient::receiveSaleDetails(int result, const QString &payDetails)
 {
     const bool isStatusOk = (result == 0);
     mPaymentProductModel->clear();
     QByteArray data = QByteArray::fromHex(payDetails.toLatin1());
     ProductModelSerializator::deserialize(data, mPaymentProductModel);
-    emit getPOSDataReceived(isStatusOk);
-}
-
-void GraftWalletClient::receiveRejectPay(int result)
-{
-    emit rejectPayReceived(result == 0);
+    emit saleDetailsReceived(isStatusOk);
 }
 
 void GraftWalletClient::receivePay(int result)
@@ -89,38 +90,47 @@ void GraftWalletClient::receivePay(int result)
     emit payReceived(isStatusOk);
     if (isStatusOk)
     {
-        getPayStatus();
+        payStatus();
     }
 }
 
-void GraftWalletClient::receivePayStatus(int result, int payStatus)
+void GraftWalletClient::changeGraftHandler()
 {
-    if (result == 0)
+    if (mClientHandler)
     {
-        switch (payStatus) {
-        case GraftWalletAPI::StatusProcessing:
-            getPayStatus();
-            break;
-        case GraftWalletAPI::StatusApproved:
-            emit payStatusReceived(true);
-            break;
-        case GraftWalletAPI::StatusNone:
-        case GraftWalletAPI::StatusFailed:
-        case GraftWalletAPI::StatusPOSRejected:
-        case GraftWalletAPI::StatusWalletRejected:
-        default:
-            emit payStatusReceived(false);
-            break;
-        }
+        mClientHandler->deleteLater();
     }
-    else
+    switch (networkType())
     {
-        emit payStatusReceived(false);
+    case GraftClientTools::Mainnet:
+    case GraftClientTools::PublicTestnet:
+        mClientHandler = new GraftWalletHandlerV1(dapiVersion(), getServiceAddresses(), this);
+        break;
+    case GraftClientTools::PublicExperimentalTestnet:
+#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+        mClientHandler = new GraftWalletHandlerV2(dapiVersion(), getServiceAddresses(),
+                                                  getServiceAddresses(true),
+                                                  networkType() != GraftClientTools::Mainnet, this);
+#else
+        mClientHandler = new GraftWalletHandlerV1(dapiVersion(), getServiceAddresses(), this);
+#endif
+        break;
     }
+    connect(mClientHandler, &GraftWalletHandler::saleDetailsReceived,
+            this, &GraftWalletClient::receiveSaleDetails);
+    connect(mClientHandler, &GraftWalletHandler::payReceived,
+            this, &GraftWalletClient::receivePay);
+    connect(mClientHandler, &GraftWalletHandler::rejectPayReceived,
+            this, &GraftWalletClient::rejectPayReceived);
+    connect(mClientHandler, &GraftWalletHandler::payStatusReceived,
+            this, &GraftWalletClient::payStatusReceived);
+    connect(mClientHandler, &GraftWalletHandler::errorReceived,
+            this, &GraftWalletClient::errorReceived);
+    initAccountSettings();
 }
 
-GraftGenericAPI *GraftWalletClient::graftAPI() const
+GraftBaseHandler *GraftWalletClient::graftHandler() const
 {
-    Q_ASSERT_X(mApi, "GraftWalletClient", "GraftGenericAPI not initialized!");
-    return mApi;
+    Q_ASSERT_X(mClientHandler, "GraftWalletClient", "GraftWalletHandler not initialized!");
+    return mClientHandler;
 }

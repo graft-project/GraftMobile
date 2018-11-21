@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import com.graft.design 1.0
 import "../"
 
@@ -7,6 +8,15 @@ BaseHeader {
     id: rootItem
     height: 60
     color: ColorFactory.color(DesignFactory.Foreground)
+
+    onActionButtonStateChanged: {
+        if (isSettings) {
+            actionButton.image.source = "qrc:/imgs/whiteSettings.png"
+            actionButton.image.height = 23
+        } else {
+            actionButton.image.source = "qrc:/imgs/done.png"
+        }
+    }
 
     onNavigationButtonStateChanged: {
         if (navigationButtonState) {
@@ -37,16 +47,16 @@ BaseHeader {
             onClicked: navigationButtonClicked()
         }
 
-        Text {
+        Label {
             Layout.fillWidth: true
             Layout.leftMargin: isNavigationButtonVisible ? 25 : 15
             Layout.alignment: Qt.AlignLeft
-            text: rootItem.headerText
+            color: ColorFactory.color(DesignFactory.LightText)
             font {
                 bold: true
                 pixelSize: 17
             }
-            color: ColorFactory.color(DesignFactory.LightText)
+            text: rootItem.headerText
         }
 
         CartItem {

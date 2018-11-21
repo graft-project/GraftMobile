@@ -4,9 +4,11 @@ import QtQuick.Dialogs 1.2
 Item {
     property alias mobileMessageDialog: mobileMessageDialog
     property alias desktopMessageDialog: desktopMessageDialog
-    property alias desktopConfirmButton:  desktopMessageDialog.confirmButton
     property string messageText: qsTr("Are you sure you don't want to create a password for your " +
                                       "wallet? You will not be able to create a password later!")
+
+    signal desktopDialogApproved()
+    signal desktopDialogRefused()
 
     anchors.fill: parent
 
@@ -25,13 +27,15 @@ Item {
         dialogMode: true
         title: qsTr("Attention")
         dialogMessage: messageText
-        denyButton {
-            text: qsTr("No")
-            onClicked: desktopMessageDialog.close()
+        confirmButtonText: qsTr("Yes")
+        denyButtonText: qsTr("No")
+        onConfirmed: {
+            desktopDialogApproved()
+            desktopMessageDialog.close()
         }
-        confirmButton {
-            text: qsTr("Yes")
-            onClicked: desktopMessageDialog.close()
+        onDenied: {
+            desktopDialogRefused()
+            desktopMessageDialog.close()
         }
     }
 }

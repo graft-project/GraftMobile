@@ -39,25 +39,25 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.maximumHeight: 12
 
-        Text {
+        Label {
             id: attentionText
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             visible: visibilityIcon
-            font.pixelSize: 12
             color: wrongFieldColor ? "#F33939" : "#3F3F3F"
+            font.pixelSize: 12
         }
 
         Item {
             Layout.fillWidth: true
         }
 
-        Text {
+        Label {
             id: textCount
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            text: qsTr("%1 / %2").arg(letterCountingMode ? actionTextField.displayText.length :
-                                                           wordCounting(actionTextField.displayText)).arg(maximumLength)
             color: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? "#8E8E93" : "#BBBBBB"
             font.pixelSize: 12
+            text: qsTr("%1 / %2").arg(letterCountingMode ? actionTextField.displayText.length :
+                                  wordCounting(actionTextField.displayText)).arg(maximumLength)
         }
     }
 

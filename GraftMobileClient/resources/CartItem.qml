@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import com.graft.design 1.0
 
@@ -29,14 +30,14 @@ Image {
         visible: false
         color: ColorFactory.color(DesignFactory.CartLabel)
 
-        Text {
+        Label {
             id: counterText
             anchors.centerIn: parent
+            color: ColorFactory.color(DesignFactory.LightText)
             font {
                 pixelSize: 10
                 bold: true
             }
-            color: ColorFactory.color(DesignFactory.LightText)
         }
     }
 

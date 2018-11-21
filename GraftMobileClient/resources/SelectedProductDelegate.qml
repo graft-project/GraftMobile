@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -82,15 +83,15 @@ Rectangle {
             Layout.leftMargin: 5
             Layout.alignment: Qt.AlignHCenter
 
-            Text {
+            Label {
                 id: productText
                 Layout.fillWidth: true
                 font.pixelSize: 16
             }
 
-            Text {
+            Label {
                 id: price
-                text: "$" + productPrice
+                text: "GRFT " + productPrice
                 font.pixelSize: 14
             }
         }

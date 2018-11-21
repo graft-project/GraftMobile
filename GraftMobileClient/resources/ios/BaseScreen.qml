@@ -15,6 +15,7 @@ Page {
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 
+    signal showFailedScreen(bool setFailScreen)
     signal attentionAccepted()
     signal errorMessage()
 
@@ -42,7 +43,7 @@ Page {
         topMargin: (parent.height - desktopDialog.height) / 2
         leftMargin: (parent.width - desktopDialog.width) / 2
         title: qsTr("Attention")
-        confirmButton.onClicked: desktopDialog.close()
+        onConfirmed: desktopDialog.close()
     }
 
     MessageDialog {
@@ -63,5 +64,26 @@ Page {
     function enableScreen() {
         basePage.enabled = true
         errorMessage()
+    }
+
+    function priceRegExp() {
+        return /(([1-9]\d{0,5}\.\d{1,10})|([1-9]\d{0,5}))|([0]\.\d{1,10})|(.){0}/
+    }
+
+    function openScreenDialog(title, price) {
+        if (title === "" && price === "") {
+            screenDialog.text = qsTr("Please, enter the item title and price.")
+        } else if (title === "") {
+            screenDialog.text = qsTr("Please, enter the item title.")
+        } else if (price === "") {
+            screenDialog.text = qsTr("Please, enter the item price.")
+        } else if ((0.0001 > price) || (price > 100000.0)) {
+            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
+        } else {
+            return false
+        }
+        screenDialog.title = qsTr("Input error")
+        screenDialog.open()
+        return true
     }
 }

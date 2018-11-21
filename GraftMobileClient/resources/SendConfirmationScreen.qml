@@ -129,16 +129,12 @@ BaseScreen {
         title: qsTr("Enter password:")
         topMargin: (parent.height - passwordDialog.height) / 2
         leftMargin: (parent.width - passwordDialog.width) / 2
-        denyButton {
-            text: qsTr("Close")
-            onClicked: {
-                passwordTextField.clear()
-                passwordDialog.close()
-            }
-        }
-        confirmButton {
-            text: qsTr("Ok")
-            onClicked: passwordDialog.accept()
+        confirmButtonText: qsTr("OK")
+        denyButtonText: qsTr("Close")
+        onConfirmed: passwordDialog.accept()
+        onDenied: {
+            passwordTextField.clear()
+            passwordDialog.close()
         }
         onAccepted: checkingPassword(passwordTextField.text)
     }

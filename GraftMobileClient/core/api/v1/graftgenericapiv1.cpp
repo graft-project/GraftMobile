@@ -1,12 +1,12 @@
-#include "graftgenericapi.h"
+#include "graftgenericapiv1.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "../config.h"
+#include "../../config.h"
 
-GraftGenericAPI::GraftGenericAPI(const QStringList &addresses, const QString &dapiVersion,
-                                 QObject *parent)
+GraftGenericAPIv1::GraftGenericAPIv1(const QStringList &addresses, const QString &dapiVersion,
+                                     QObject *parent)
     : QObject(parent)
     ,mDAPIVersion(dapiVersion)
 {
@@ -18,54 +18,54 @@ GraftGenericAPI::GraftGenericAPI(const QStringList &addresses, const QString &da
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 }
 
-GraftGenericAPI::~GraftGenericAPI()
+GraftGenericAPIv1::~GraftGenericAPIv1()
 {
 }
 
-void GraftGenericAPI::changeAddresses(const QStringList &addresses)
+void GraftGenericAPIv1::changeAddresses(const QStringList &addresses)
 {
     mAddresses = addresses;
     mCurrentAddress = -1;
     mRequest.setUrl(nextAddress());
 }
 
-void GraftGenericAPI::setDAPIVersion(const QString &version)
+void GraftGenericAPIv1::setDAPIVersion(const QString &version)
 {
     mDAPIVersion = version;
 }
 
-void GraftGenericAPI::setAccountData(const QByteArray &accountData, const QString &password)
+void GraftGenericAPIv1::setAccountData(const QByteArray &accountData, const QString &password)
 {
     mAccountData = accountData;
     mPassword = password;
 }
 
-QByteArray GraftGenericAPI::accountData() const
+QByteArray GraftGenericAPIv1::accountData() const
 {
     return mAccountData;
 }
 
-QString GraftGenericAPI::password() const
+QString GraftGenericAPIv1::password() const
 {
     return mPassword;
 }
 
-void GraftGenericAPI::createAccount(const QString &password)
+void GraftGenericAPIv1::createAccount(const QString &password)
 {
     mRetries = 0;
     mPassword = password;
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Language"), QStringLiteral("English"));
     QJsonObject data = buildMessage(QStringLiteral("CreateAccount"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveCreateAccountResponse);
+    connect(reply, &QNetworkReply::finished,
+            this, &GraftGenericAPIv1::receiveCreateAccountResponse);
 }
 
-void GraftGenericAPI::getBalance()
+void GraftGenericAPIv1::getBalance()
 {
     mRetries = 0;
     if (mAccountData.isEmpty())
@@ -75,7 +75,6 @@ void GraftGenericAPI::getBalance()
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     QJsonObject data = buildMessage(QStringLiteral("GetWalletBalance"), params);
     QByteArray array = QJsonDocument(data).toJson();
@@ -83,10 +82,10 @@ void GraftGenericAPI::getBalance()
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveGetBalanceResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveGetBalanceResponse);
 }
 
-void GraftGenericAPI::getSeed()
+void GraftGenericAPIv1::getSeed()
 {
     mRetries = 0;
     if (mAccountData.isEmpty())
@@ -96,7 +95,6 @@ void GraftGenericAPI::getSeed()
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Language"), QStringLiteral("English"));
     QJsonObject data = buildMessage(QStringLiteral("GetSeed"), params);
@@ -105,25 +103,25 @@ void GraftGenericAPI::getSeed()
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveGetSeedResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveGetSeedResponse);
 }
 
-void GraftGenericAPI::restoreAccount(const QString &seed, const QString &password)
+void GraftGenericAPIv1::restoreAccount(const QString &seed, const QString &password)
 {
     mRetries = 0;
     mPassword = password;
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), password);
     params.insert(QStringLiteral("Seed"), seed);
     QJsonObject data = buildMessage(QStringLiteral("RestoreAccount"), params);
     QByteArray array = QJsonDocument(data).toJson();
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveRestoreAccountResponse);
+    connect(reply, &QNetworkReply::finished,
+            this, &GraftGenericAPIv1::receiveRestoreAccountResponse);
 }
 
-void GraftGenericAPI::transferFee(const QString &address, const QString &amount)
+void GraftGenericAPIv1::transferFee(const QString &address, const QString &amount)
 {
     mRetries = 0;
     if (mAccountData.isEmpty())
@@ -133,7 +131,6 @@ void GraftGenericAPI::transferFee(const QString &address, const QString &amount)
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Address"), address);
     params.insert(QStringLiteral("Amount"), amount);
@@ -143,10 +140,10 @@ void GraftGenericAPI::transferFee(const QString &address, const QString &amount)
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveTransferFeeResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveTransferFeeResponse);
 }
 
-void GraftGenericAPI::transfer(const QString &address, const QString &amount)
+void GraftGenericAPIv1::transfer(const QString &address, const QString &amount)
 {
     mRetries = 0;
     if (mAccountData.isEmpty())
@@ -156,7 +153,6 @@ void GraftGenericAPI::transfer(const QString &address, const QString &amount)
         return;
     }
     QJsonObject params;
-    params.insert(QStringLiteral("Password"), mPassword);
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Address"), address);
     params.insert(QStringLiteral("Amount"), amount);
@@ -166,32 +162,32 @@ void GraftGenericAPI::transfer(const QString &address, const QString &amount)
     mTimer.start();
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPI::receiveTransferResponse);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveTransferResponse);
 }
 
-double GraftGenericAPI::toCoins(double atomic)
+double GraftGenericAPIv1::toCoins(double atomic)
 {
     return (1.0 * atomic) / 10000000000.0;
 }
 
-double GraftGenericAPI::toAtomic(double coins)
+double GraftGenericAPIv1::toAtomic(double coins)
 {
     return coins * 10000000000;
 }
 
-QString GraftGenericAPI::accountPlaceholder() const
+QString GraftGenericAPIv1::accountPlaceholder() const
 {
     return QString("????");
 }
 
-QByteArray GraftGenericAPI::serializeAmount(double amount) const
+QByteArray GraftGenericAPIv1::serializeAmount(double amount) const
 {
     QByteArray serializedAmount;
     serializedAmount.setNum(toAtomic(amount), 'f', 0);
     return serializedAmount;
 }
 
-QJsonObject GraftGenericAPI::buildMessage(const QString &key, const QJsonObject &params) const
+QJsonObject GraftGenericAPIv1::buildMessage(const QString &key, const QJsonObject &params) const
 {
     QJsonObject data;
     data.insert(QStringLiteral("jsonrpc"), QStringLiteral("2.0"));
@@ -205,7 +201,7 @@ QJsonObject GraftGenericAPI::buildMessage(const QString &key, const QJsonObject 
     return data;
 }
 
-QJsonObject GraftGenericAPI::processReply(QNetworkReply *reply)
+QJsonObject GraftGenericAPIv1::processReply(QNetworkReply *reply)
 {
     QJsonObject object;
     if (reply->error() == QNetworkReply::NoError)
@@ -239,7 +235,7 @@ QJsonObject GraftGenericAPI::processReply(QNetworkReply *reply)
     return object;
 }
 
-QUrl GraftGenericAPI::nextAddress()
+QUrl GraftGenericAPIv1::nextAddress()
 {
     mCurrentAddress++;
     if (mCurrentAddress >= mAddresses.count())
@@ -247,10 +243,9 @@ QUrl GraftGenericAPI::nextAddress()
         mCurrentAddress = 0;
     }
     return QUrl(scUrl.arg(mAddresses.value(mCurrentAddress)));
-
 }
 
-QNetworkReply *GraftGenericAPI::retry()
+QNetworkReply *GraftGenericAPIv1::retry()
 {
     if (mRetries < mAddresses.count() - 1)
     {
@@ -266,7 +261,7 @@ QNetworkReply *GraftGenericAPI::retry()
     return nullptr;
 }
 
-void GraftGenericAPI::receiveCreateAccountResponse()
+void GraftGenericAPIv1::receiveCreateAccountResponse()
 {
     mLastError.clear();
     qDebug() << "CreateAccount Response Received:\nTime: " << mTimer.elapsed();
@@ -323,7 +318,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
         if (reply)
         {
             connect(reply, &QNetworkReply::finished,
-                    this, &GraftGenericAPI::receiveCreateAccountResponse);
+                    this, &GraftGenericAPIv1::receiveCreateAccountResponse);
         }
         else
         {
@@ -332,7 +327,7 @@ void GraftGenericAPI::receiveCreateAccountResponse()
     }
 }
 
-void GraftGenericAPI::receiveGetBalanceResponse()
+void GraftGenericAPIv1::receiveGetBalanceResponse()
 {
     mLastError.clear();
     qDebug() << "GetBalance Response Received:\nTime: " << mTimer.elapsed();
@@ -340,16 +335,17 @@ void GraftGenericAPI::receiveGetBalanceResponse()
     QJsonObject object = processReply(reply);
     if (!object.isEmpty())
     {
-        emit getBalanceReceived(toCoins(object.value(QLatin1String("Balance")).toDouble()),
-                                toCoins(object.value(QLatin1String("UnlockedBalance")).toDouble()));
+        emit balanceReceived(toCoins(object.value(QLatin1String("Balance")).toDouble()),
+                             toCoins(object.value(QLatin1String("UnlockedBalance")).toDouble()));
     }
     else
     {
         mRequest.setUrl(nextAddress());
+        getBalance();
     }
 }
 
-void GraftGenericAPI::receiveGetSeedResponse()
+void GraftGenericAPIv1::receiveGetSeedResponse()
 {
     mLastError.clear();
     qDebug() << "GetSeed Response Received:\nTime: " << mTimer.elapsed();
@@ -365,12 +361,12 @@ void GraftGenericAPI::receiveGetSeedResponse()
         if (reply)
         {
             connect(reply, &QNetworkReply::finished,
-                    this, &GraftGenericAPI::receiveGetSeedResponse);
+                    this, &GraftGenericAPIv1::receiveGetSeedResponse);
         }
     }
 }
 
-void GraftGenericAPI::receiveRestoreAccountResponse()
+void GraftGenericAPIv1::receiveRestoreAccountResponse()
 {
     mLastError.clear();
     qDebug() << "RestoreAccount Response Received:\nTime: " << mTimer.elapsed();
@@ -427,7 +423,7 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
         if (reply)
         {
             connect(reply, &QNetworkReply::finished,
-                    this, &GraftGenericAPI::receiveRestoreAccountResponse);
+                    this, &GraftGenericAPIv1::receiveRestoreAccountResponse);
         }
         else
         {
@@ -436,7 +432,7 @@ void GraftGenericAPI::receiveRestoreAccountResponse()
     }
 }
 
-void GraftGenericAPI::receiveTransferFeeResponse()
+void GraftGenericAPIv1::receiveTransferFeeResponse()
 {
     mLastError.clear();
     qDebug() << "GetTransferFee Response Received:\nTime: " << mTimer.elapsed();
@@ -453,12 +449,12 @@ void GraftGenericAPI::receiveTransferFeeResponse()
         if (reply)
         {
             connect(reply, &QNetworkReply::finished,
-                    this, &GraftGenericAPI::receiveTransferFeeResponse);
+                    this, &GraftGenericAPIv1::receiveTransferFeeResponse);
         }
     }
 }
 
-void GraftGenericAPI::receiveTransferResponse()
+void GraftGenericAPIv1::receiveTransferResponse()
 {
     mLastError.clear();
     qDebug() << "Transfer Response Received:\nTime: " << mTimer.elapsed();
@@ -474,7 +470,7 @@ void GraftGenericAPI::receiveTransferResponse()
         if (reply)
         {
             connect(reply, &QNetworkReply::finished,
-                    this, &GraftGenericAPI::receiveTransferResponse);
+                    this, &GraftGenericAPIv1::receiveTransferResponse);
         }
     }
 }

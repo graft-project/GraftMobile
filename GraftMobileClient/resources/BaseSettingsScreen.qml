@@ -10,15 +10,22 @@ import "components"
 BaseScreen {
     id: root
     title: qsTr("Settings")
-    action: saveChanges
+    action: save
 
-    property alias companyTitle: companyNameTextField.title
-    property alias ipTitle: ipTextField.title
-    property alias portTitle: portTextField.title
-    property alias saveButtonText: saveButton.text
     property alias displayCompanyName: companyNameTextField.visible
+    property alias companyTitle: companyNameTextField.title
+    property alias addressTitle: serviceSettingsFields.addressTitle
+    property alias portTitle: serviceSettingsFields.portTitle
+    property alias ipTitle: serviceSettingsFields.ipTitle
+    property alias saveButtonText: saveButton.text
     property var confirmPasswordAction: null
     property bool okMode: false
+    property string message: ""
+
+    Connections {
+        target: GraftClient
+        onSettingsChanged: serviceSettingsFields.updateSettings()
+    }
 
     ColumnLayout {
         spacing: 0
@@ -34,60 +41,9 @@ BaseScreen {
             text: GraftClient.settings("companyName") ? GraftClient.settings("companyName") : ""
         }
 
-        ColumnLayout {
-            Layout.topMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 9 : 0
+        ServiceSettingsItem {
+            id: serviceSettingsFields
             Layout.fillWidth: true
-            spacing: 2
-
-            Label {
-                text: qsTr("Service")
-                font.pixelSize: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                    16 : switchLabel.font.pixelSize
-                color: "#8e8e93"
-            }
-
-            RowLayout {
-                spacing: 0
-
-                Label {
-                    id: switchLabel
-                    Layout.fillWidth: true
-                    Layout.alignment: Label.AlignLeft | Label.AlignVCenter
-                    text: qsTr("Use own service address")
-                }
-
-                Switch {
-                    id: serviceAddr
-                    Material.accent: ColorFactory.color(DesignFactory.Foreground)
-                    checked: GraftClient.useOwnServiceAddress()
-                }
-            }
-
-            RowLayout {
-                id: serviceAddrLayout
-                enabled: serviceAddr.checked
-                spacing: 20
-
-                LinearEditItem {
-                    id: ipTextField
-                    inputMask: "000.000.000.000; "
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    showLengthIndicator: false
-                    Layout.preferredWidth: 130
-                    text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("ip") : ""
-                }
-
-                LinearEditItem {
-                    id: portTextField
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    showLengthIndicator: false
-                    Layout.preferredWidth: 100
-                    text: GraftClient.useOwnServiceAddress() ? GraftClient.settings("port") : ""
-                    validator: RegExpValidator {
-                        regExp: /\d{1,5}/
-                    }
-                }
-            }
         }
 
         Item {
@@ -119,7 +75,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom
             onClicked: {
                 disableScreen()
-                saveChanges()
+                save()
             }
         }
     }
@@ -129,22 +85,18 @@ BaseScreen {
         title: qsTr("Enter password:")
         topMargin: (parent.height - passwordDialog.height) / 2
         leftMargin: (parent.width - passwordDialog.width) / 2
-        denyButton {
-            text: qsTr("Close")
-            onClicked: {
-                passwordTextField.clear()
-                passwordDialog.close()
-            }
+        confirmButtonText: qsTr("OK")
+        denyButtonText: qsTr("Close")
+        onConfirmed: {
+            confirmButtonEnabled = false
+            passwordDialog.accept()
         }
-        confirmButton {
-            text: qsTr("Ok")
-            onClicked: {
-                passwordDialog.confirmButton.enabled = false
-                passwordDialog.accept()
-            }
+        onDenied: {
+            passwordTextField.clear()
+            passwordDialog.close()
         }
         onAccepted: checkingPassword(passwordTextField.text)
-        onVisibleChanged: confirmButton.enabled = true
+        onVisibleChanged: confirmButtonEnabled = true
     }
 
     MessageDialog {
@@ -152,14 +104,14 @@ BaseScreen {
         standardButtons: StandardButton.Yes | StandardButton.No
         title: qsTr("Attention")
         icon: StandardIcon.Warning
-        text: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
+        text: qsTr("Would you like to reset the service settings %1?").arg(message)
+        onNo: {
+            restoreSettings()
+            mobileMessageDialog.close()
+        }
         onYes: {
             resetOwnServiceSettings()
             confirmPasswordAction()
-            mobileMessageDialog.close()
-        }
-        onNo: {
-            validateSettings()
             mobileMessageDialog.close()
         }
     }
@@ -171,12 +123,12 @@ BaseScreen {
         rightMargin: 20
         modal: true
         padding: 5
-        messageTitle: qsTr("Would you like to reset the service settings (IP address and port of the server)?")
+        messageTitle: qsTr("Would you like to reset the service settings %1?").arg(message)
         firstButton {
             flat: true
             text: qsTr("No")
             onClicked: {
-                validateSettings()
+                restoreSettings()
                 desktopMessageDialog.close()
             }
         }
@@ -191,16 +143,9 @@ BaseScreen {
         }
     }
 
-    function validateSettings() {
-        if (portTextField.text === "" || !GraftClient.isValidIp(ipTextField.text)) {
-            if (serviceAddr.checked) {
-                ipTextField.text = GraftClient.settings("ip")
-                portTextField.text = GraftClient.settings("port")
-            } else {
-                resetOwnServiceSettings()
-            }
-        }
-        confirmPasswordAction()
+    function restoreSettings() {
+        resetWalletAccount()
+        serviceSettingsFields.updateSettings()
     }
 
     function resetWalletAccount() {
@@ -213,47 +158,50 @@ BaseScreen {
     }
 
     function checkingPassword(password) {
+        passwordDialog.passwordTextField.clear()
         if (GraftClient.checkPassword(password)) {
-            if (okMode && serviceAddr.checked) {
-                var messageDialog = Detector.isDesktop() ? desktopMessageDialog : mobileMessageDialog
-                messageDialog.open()
-            } else {
-                confirmPasswordAction()
+            if (okMode) {
+                var messageDialog = Detector.isDesktop() ? desktopMessageDialog :
+                                                           mobileMessageDialog
+                if (GraftClient.useOwnServiceAddress()) {
+                    message = qsTr("(IP address and port of the server)")
+                    messageDialog.open()
+                    return
+                } else if (GraftClient.useOwnUrlAddress()) {
+                    message = qsTr("(URL address of the server)")
+                    messageDialog.open()
+                    return
+                }
+                if (!GraftClient.httpsType()) {
+                    messageDialog.open()
+                    return
+                }
+                companyNameTextField.actionTextField.clear()
+                serviceSettingsFields.clear()
+                serviceSettingsFields.defaultSettings()
             }
+            confirmPasswordAction()
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
             screenDialog.open()
         }
-        passwordDialog.passwordTextField.clear()
     }
 
     function resetOwnServiceSettings() {
-        ipTextField.actionTextField.clear()
-        portTextField.actionTextField.clear()
         companyNameTextField.actionTextField.clear()
-        serviceAddr.checked = false
+        serviceSettingsFields.clear()
+        serviceSettingsFields.defaultSettings()
         GraftClient.removeSettings()
     }
 
-    function saveChanges() {
-        if (companyNameTextField.visible) {
+    function save() {
+        if (companyNameTextField.visible && companyNameTextField.text.length !== 0) {
             GraftClient.setSettings("companyName", companyNameTextField.text)
         }
-        if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
-            GraftClient.setSettings("useOwnServiceAddress", serviceAddr.checked)
+        if (serviceSettingsFields.save()) {
+            pushScreen.openMainScreen()
         }
-        if (serviceAddr.checked) {
-            if (!GraftClient.resetUrl(ipTextField.text, portTextField.text)) {
-                screenDialog.text = qsTr("The service IP or port is invalid. Please, enter the " +
-                                         "correct service address.")
-                screenDialog.open()
-                enableScreen()
-                return
-            }
-        }
-        GraftClient.saveSettings()
-        pushScreen.openMainScreen()
         enableScreen()
     }
 }

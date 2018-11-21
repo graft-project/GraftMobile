@@ -55,7 +55,7 @@ BaseScreen {
 
     function confirmProductParameters() {
         var currencyCode = currencyModel.codeOf(productItem.currencyText)
-        if (productItem.titleText !== "" && productItem.price !== "") {
+        if (!openScreenDialog(productItem.titleText, productItem.price)) {
             disableScreen()
             if (index >= 0) {
                 ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
@@ -69,9 +69,6 @@ BaseScreen {
             }
             editingItem.pushScreen.goBack()
             GraftClient.saveProducts()
-        } else {
-            screenDialog.text = qsTr("Please, enter the item title and price.")
-            screenDialog.open()
         }
     }
 }

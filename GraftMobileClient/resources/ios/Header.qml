@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import com.graft.design 1.0
 import com.device.platform 1.0
 import "../"
@@ -10,8 +11,8 @@ BaseHeader {
                                         Detector.isDesktop() ? 49 : 64
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 
-    property alias navigationText: navigationButton.text
-    property alias actionText: actionButton.text
+    property alias navigationText: navigationButton.name
+    property alias actionText: actionButton.name
 
     RowLayout {
         height: parent.height
@@ -32,7 +33,7 @@ BaseHeader {
                 id: navigationButton
                 anchors.centerIn: parent
                 visible: rootItem.isNavigationButtonVisible
-                text: qsTr("Back")
+                name: qsTr("Back")
                 onClicked: navigationButtonClicked()
             }
         }
@@ -41,19 +42,20 @@ BaseHeader {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            Text {
-                text: rootItem.headerText
+            Label {
                 anchors.centerIn: parent
+                color: ColorFactory.color(DesignFactory.LightText)
                 font {
                     bold: true
                     pixelSize: 17
                 }
-                color: ColorFactory.color(DesignFactory.LightText)
+                text: rootItem.headerText
             }
         }
 
         Item {
             Layout.preferredWidth: 30
+            Layout.rightMargin: actionButton.name.length > 6 ? 10 : 0
             Layout.alignment: Qt.AlignRight
 
             CartItem {
@@ -68,8 +70,10 @@ BaseHeader {
                 id: actionButton
                 anchors.centerIn: parent
                 visible: rootItem.actionButtonState
-                text: qsTr("Done")
+                name: qsTr("Done")
                 onClicked: actionButtonClicked()
+                onPressed: actionButton.focus = true
+                onReleased: actionButton.focus = false
             }
         }
     }

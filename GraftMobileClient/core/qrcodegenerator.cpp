@@ -1,11 +1,5 @@
 #include "qrcodegenerator.h"
 #include "QrCoder.hpp"
-#include <QImage>
-#include <QDebug>
-
-QRCodeGenerator::QRCodeGenerator()
-{
-}
 
 QImage QRCodeGenerator::encode(const QString &message)
 {
