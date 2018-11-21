@@ -3,8 +3,6 @@
 
 #include "graftbaseclient.h"
 
-#include <QStringList>
-
 class GraftWalletHandler;
 class ProductModel;
 
@@ -16,7 +14,7 @@ public:
 
     Q_INVOKABLE double totalCost() const;
     Q_INVOKABLE ProductModel *paymentProductModel() const;
-    Q_INVOKABLE bool detectedSalesDetails(const QString &data) const;
+    Q_INVOKABLE bool isSaleQrCodeValid(const QString &data) const;
 
 signals:
     void saleDetailsReceived(bool result);
@@ -37,7 +35,6 @@ private slots:
 private:
     void changeGraftHandler() override;
     GraftBaseHandler *graftHandler() const override;
-    QStringList productList(const QString &data) const;
 
     GraftWalletHandler *mClientHandler;
     QString mPID;

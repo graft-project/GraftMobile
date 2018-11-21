@@ -18,7 +18,7 @@ BaseScreen {
         id: qRScanningView
         anchors.fill: parent
         onQrCodeDetected: {
-            if (GraftClient.detectedSalesDetails(message)) {
+            if (GraftClient.isSaleQrCodeValid(message)) {
                 GraftClient.saleDetails(message)
                 pushScreen.openPaymentConfirmationScreen()
             } else {

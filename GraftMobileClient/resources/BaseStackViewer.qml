@@ -9,7 +9,7 @@ StackView {
     property bool isActive: false
     property var clearStackViewer: ({})
 
-    signal showFailedScreen(bool setFailScreen)
+    signal networkReplyError()
 
     focus: true
     onCurrentItemChanged: {

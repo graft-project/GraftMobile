@@ -15,7 +15,7 @@ Page {
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 
-    signal showFailedScreen(bool setFailScreen)
+    signal networkReplyError()
     signal attentionAccepted()
     signal errorMessage()
 

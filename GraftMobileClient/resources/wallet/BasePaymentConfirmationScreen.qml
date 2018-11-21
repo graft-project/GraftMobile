@@ -10,7 +10,12 @@ BaseScreen {
     property var productModel
     property alias informing: message
     property alias processingIndicator: indicator
+    property alias runBusyIndicator: busyIndicator.running
     default property alias content: background.data
+
+    onErrorMessage: {
+        busyIndicator.running = false
+    }
 
     title: qsTr("Pay")
     screenHeader {
@@ -56,6 +61,12 @@ BaseScreen {
 
     BusyIndicator {
         id: indicator
+        anchors.centerIn: parent
+        running: false
+    }
+
+    BusyIndicator {
+        id: busyIndicator
         anchors.centerIn: parent
         running: false
     }

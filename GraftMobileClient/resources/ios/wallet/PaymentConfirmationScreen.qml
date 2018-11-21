@@ -10,9 +10,7 @@ BasePaymentConfirmationScreen {
     id: root
     state: "processing"
 
-    onErrorMessage: errorIndicator.running = false
-
-    onShowFailedScreen: pushScreen.openPaymentScreen(0, false)
+    onNetworkReplyError: pushScreen.openPaymentScreen(0, false)
 
     Connections {
         target: GraftClient
@@ -91,7 +89,7 @@ BasePaymentConfirmationScreen {
             WideActionButton {
                 text: qsTr("Pay")
                 onClicked: {
-                    errorIndicator.running = true
+                    runBusyIndicator = true
                     confirmPay()
                 }
             }
@@ -118,10 +116,4 @@ BasePaymentConfirmationScreen {
             PropertyChanges { target: processingIndicator; running: true }
         }
     ]
-
-    BusyIndicator {
-        id: errorIndicator
-        anchors.centerIn: parent
-        running: false
-    }
 }
