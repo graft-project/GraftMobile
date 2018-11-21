@@ -41,21 +41,18 @@ bool GraftWalletClient::detectedSalesDetails(const QString &data) const
 
 void GraftWalletClient::saleDetails(const QString &data)
 {
-    if (detectedSalesDetails(data))
+    if (productList(data).count() == 4)
     {
-        if (productList(data).count() == 4)
-        {
-            mPID = productList(data).value(0);
-            mPrivateKey = productList(data).value(1);
-            mTotalCost = productList(data).value(2).toDouble();
-            mBlockNumber = productList(data).value(3).toInt();
-            updateQuickExchange(mTotalCost);
-            mClientHandler->saleDetails(mPID, mBlockNumber);
-        }
-        else
-        {
-            emit saleDetailsReceived(false);
-        }
+        mPID = productList(data).value(0);
+        mPrivateKey = productList(data).value(1);
+        mTotalCost = productList(data).value(2).toDouble();
+        mBlockNumber = productList(data).value(3).toInt();
+        updateQuickExchange(mTotalCost);
+        mClientHandler->saleDetails(mPID, mBlockNumber);
+    }
+    else
+    {
+        emit saleDetailsReceived(false);
     }
 }
 
