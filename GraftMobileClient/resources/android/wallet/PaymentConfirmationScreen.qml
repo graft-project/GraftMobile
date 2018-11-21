@@ -91,7 +91,7 @@ BasePaymentConfirmationScreen {
                 text: qsTr("CONFIRM")
                 Layout.alignment: Qt.AlignRight
                 onClicked: {
-                    runBusyIndicator = true
+                    activityBusyIndicator = true
                     confirmPay()
                 }
             }

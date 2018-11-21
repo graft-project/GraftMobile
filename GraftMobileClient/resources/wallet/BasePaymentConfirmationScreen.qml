@@ -9,8 +9,8 @@ BaseScreen {
 
     property var productModel
     property alias informing: message
-    property alias processingIndicator: indicator
-    property alias runBusyIndicator: busyIndicator.running
+    property alias processingIndicator: waitingIndicator
+    property alias activityBusyIndicator: busyIndicator.running
     default property alias content: background.data
 
     onErrorMessage: busyIndicator.running = false
@@ -60,7 +60,7 @@ BaseScreen {
     }
 
     BusyIndicator {
-        id: indicator
+        id: waitingIndicator
         anchors.centerIn: parent
         running: false
     }

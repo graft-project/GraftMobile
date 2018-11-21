@@ -87,7 +87,7 @@ BasePaymentConfirmationScreen {
             WideActionButton {
                 text: qsTr("Pay")
                 onClicked: {
-                    runBusyIndicator = true
+                    activityBusyIndicator = true
                     confirmPay()
                 }
             }
