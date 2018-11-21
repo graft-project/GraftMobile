@@ -13,9 +13,9 @@ BaseScreen {
     property alias runBusyIndicator: busyIndicator.running
     default property alias content: background.data
 
-    onErrorMessage: {
-        busyIndicator.running = false
-    }
+    onErrorMessage: busyIndicator.running = false
+
+    onNetworkReplyError: pushScreen.openPaymentScreen(0, false)
 
     title: qsTr("Pay")
     screenHeader {

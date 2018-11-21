@@ -10,8 +10,6 @@ BasePaymentConfirmationScreen {
     id: root
     state: "processing"
 
-    onNetworkReplyError: pushScreen.openPaymentScreen(0, false)
-
     Connections {
         target: GraftClient
 
