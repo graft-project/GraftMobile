@@ -55,7 +55,7 @@ BaseStackViewer {
     function openPaymentScreen(state, isSendFlow) {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": walletsTransitions(),
                    "title": isSendFlow ? qsTr("Send") : qsTr("Pay"), "isSpacing": true,
-                   "completeText": isSendFlow ? qsTr("Send complete!") : qsTr("Paid complete!"),
+                   "completeText": isSendFlow ? qsTr("Sending completed!") : qsTr("Payment completed!"),
                    "screenState": state, "pushMainScreen": openBalanceScreen})
     }
 

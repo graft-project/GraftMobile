@@ -2,12 +2,13 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
     id: root
     title: qsTr("Restore wallet")
-    action: restoreWallet
+    action: validatePassword
     screenHeader.actionButtonState: true
     onErrorMessage: busyIndicator.running = false
 
@@ -79,18 +80,7 @@ BaseScreen {
             id: restoreWalletButton
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Restore")
-            onClicked: {
-                var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
-                                                         dialogs.mobileMessageDialog
-                if (!passwordTextField.wrongPassword) {
-                    if (passwordTextField.passwordText === "" &&
-                        passwordTextField.confirmPasswordText === "") {
-                        checkDialog.open()
-                        return
-                    }
-                    restoreWallet()
-                }
-            }
+            onClicked: validatePassword()
         }
     }
 
@@ -106,8 +96,21 @@ BaseScreen {
         onDesktopDialogApproved: restoreWallet()
     }
 
+    function validatePassword() {
+        var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
+                                                 dialogs.mobileMessageDialog
+        if (!passwordTextField.wrongPassword) {
+            if (passwordTextField.passwordText === "" &&
+                passwordTextField.confirmPasswordText === "") {
+                checkDialog.open()
+                return
+            }
+            restoreWallet()
+        }
+    }
+
     function restoreWallet() {
-        if (GraftClient.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
+        if (GraftClientTools.wideSpacingSimplify(seedTextField.text).split(' ').length < 25) {
             screenDialog.text = seedTextField.text.length === 0 ?
                         qsTr("The mnemonic phrase is empty.\nPlease, enter the mnemonic phrase.") :
                         qsTr("The mnemonic phrase must contain 25 words. Please, enter " +
@@ -116,7 +119,7 @@ BaseScreen {
         } else {
             disableScreen()
             busyIndicator.running = true
-            GraftClient.restoreAccount(GraftClient.wideSpacingSimplify(seedTextField.text),
+            GraftClient.restoreAccount(GraftClientTools.wideSpacingSimplify(seedTextField.text),
                                        passwordTextField.passwordText)
         }
     }

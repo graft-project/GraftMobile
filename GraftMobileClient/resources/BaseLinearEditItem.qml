@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.graft 1.0
 
 ColumnLayout {
     id: root
@@ -63,7 +64,7 @@ ColumnLayout {
 
     function wordCounting(textField) {
         if (textField.length !== 0) {
-            var wordList = GraftClient.wideSpacingSimplify(textField).split(' ')
+            var wordList = GraftClientTools.wideSpacingSimplify(textField).split(' ')
             return wordList.length
         } else {
             return 0

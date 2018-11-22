@@ -11,6 +11,9 @@
 #include "keygenerator.h"
 #include "config.h"
 
+#include <QRegularExpressionMatch>
+#include <QRegularExpression>
+
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
     ,mClientHandler(nullptr)
@@ -28,6 +31,21 @@ double GraftWalletClient::totalCost() const
 ProductModel *GraftWalletClient::paymentProductModel() const
 {
     return mPaymentProductModel;
+}
+
+bool GraftWalletClient::isCorrectAddress(const QString &data) const
+{
+    QRegularExpression walletAddress;
+    if (networkType() == GraftClientTools::Mainnet)
+    {
+        walletAddress.setPattern("^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94}");
+    }
+    else
+    {
+        walletAddress.setPattern("^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94}");
+    }
+    QRegularExpressionMatch match = walletAddress.match(data, 0, QRegularExpression::PartialPreferFirstMatch);
+    return match.hasPartialMatch();
 }
 
 bool GraftWalletClient::isSaleQrCodeValid(const QString &data) const
