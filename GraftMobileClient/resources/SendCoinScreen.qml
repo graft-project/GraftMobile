@@ -168,6 +168,10 @@ BaseScreen {
             screenDialog.title = qsTr("Input error")
             screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
             screenDialog.open()
+        } else if (GraftClient.balance(GraftClientTools.UnlockedBalance) < coinsAmountTextField.text) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("The amount which you want to send is higher than you have on your wallet. Please, enter a smaller amount.")
+            screenDialog.open()
         } else {
             disableScreen()
             busyIndicator.running = true
