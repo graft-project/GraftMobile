@@ -18,6 +18,8 @@ StackView {
         }
     }
 
+    onNetworkReplyError: currentItem.networkReplyError()
+
     function goBack() {
         pop()
     }

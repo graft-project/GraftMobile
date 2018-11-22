@@ -117,7 +117,6 @@ GraftApplicationWindow {
             pushScreen: generalTransitions()
             menuLoader: drawerLoader
             isActive: SwipeView.isCurrentItem
-            onNetworkReplyError: currentItem.networkReplyError()
         }
 
         SettingsStackViewer {
