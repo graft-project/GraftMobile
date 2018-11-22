@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -62,7 +63,7 @@ BaseScreen {
             }
             text: qsTr("Copy to clipboard")
             onClicked: {
-                GraftClient.copyToClipboard(GraftClient.getSeed())
+                GraftClientTools.copyToClipboard(GraftClient.getSeed())
                 mnemonicPhraseLabel.opacity = 1.0
                 mnemonicPhraseLabel.timer.start()
             }
