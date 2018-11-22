@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.device.platform 1.0
 import com.graft.design 1.0
+import org.graft 1.0
 import "components"
 
 ColumnLayout {
@@ -235,7 +236,7 @@ ColumnLayout {
 
     function save() {
         if (serviceAddr.checked) {
-            if (portTextField.text !== "" && GraftClient.isValidIp(ipTextField.text)) {
+            if (portTextField.text !== "" && GraftClientTools.isValidIp(ipTextField.text)) {
                 GraftClient.setSettings("ip", ipTextField.text)
                 GraftClient.setSettings("port", portTextField.text)
             } else {
@@ -245,7 +246,7 @@ ColumnLayout {
                 return false
             }
         } else if (serviceURLSwitch.checked) {
-            if (GraftClient.isValidUrl(addressTextField.text) &&
+            if (GraftClientTools.isValidUrl(addressTextField.text) &&
               !(addressTextField.text === "http://" || addressTextField.text === "https://")) {
                 GraftClient.setSettings("address", addressTextField.text)
             } else {

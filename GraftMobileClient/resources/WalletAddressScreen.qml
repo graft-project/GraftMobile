@@ -1,8 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import org.graft 1.0
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -101,7 +101,7 @@ BaseScreen {
                     text: qsTr("Copy to clipboard")
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        GraftClient.copyToClipboard(balanceState === "mainAddress" ?
+                        GraftClientTools.copyToClipboard(balanceState === "mainAddress" ?
                                                          GraftClient.address() : accountNumber)
                         walletAddressLabel.opacity = 1.0
                         walletAddressLabel.timer.start()

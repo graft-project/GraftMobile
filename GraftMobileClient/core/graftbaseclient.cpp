@@ -200,9 +200,14 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
-    qmlRegisterUncreatableType<GraftClientTools>("org.graft", 1, 0,
-                                                 "GraftClientTools",
-                                                 "You cannot create an instance of GraftClientTools type.");
+    qmlRegisterSingletonType<GraftClientTools>("org.graft", 1, 0, "GraftClientTools",
+                                      [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+
+        GraftClientTools *tools = new GraftClientTools();
+        return tools;
+    });
 }
 
 QString GraftBaseClient::qrCodeImage() const
@@ -489,17 +494,6 @@ bool GraftBaseClient::useOwnUrlAddress() const
     return false;
 }
 
-bool GraftBaseClient::isValidIp(const QString &ip) const
-{
-    QHostAddress validateIp;
-    return validateIp.setAddress(ip);
-}
-
-bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
-{
-    return QUrl(urlAddress, QUrl::StrictMode).isValid();
-}
-
 double GraftBaseClient::balance(int type) const
 {
     QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
@@ -533,12 +527,6 @@ bool GraftBaseClient::checkPassword(const QString &password) const
         return mAccountManager->password() == password;
     }
     return false;
-}
-
-void GraftBaseClient::copyToClipboard(const QString &data) const
-{
-    QClipboard *clipboard = QGuiApplication::clipboard();
-    clipboard->setText(data);
 }
 
 QString GraftBaseClient::networkName() const
@@ -599,11 +587,6 @@ QStringList GraftBaseClient::httpsSeedSupernodes() const
     default:
         return QStringList();
     }
-}
-
-QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
-{
-    return seed.simplified();
 }
 
 bool GraftBaseClient::isBalanceUpdated() const

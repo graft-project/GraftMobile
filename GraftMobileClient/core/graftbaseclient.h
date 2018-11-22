@@ -54,23 +54,18 @@ public:
     Q_INVOKABLE bool useOwnServiceAddress() const;
     Q_INVOKABLE bool useOwnUrlAddress() const;
 
-    Q_INVOKABLE bool isValidIp(const QString &ip) const;
-    Q_INVOKABLE bool isValidUrl(const QString &urlAddress) const;
-
     Q_INVOKABLE double balance(int type) const;
     void saveBalance() const;
 
     void updateQuickExchange(double cost);
 
     Q_INVOKABLE bool checkPassword(const QString &password) const;
-    Q_INVOKABLE void copyToClipboard(const QString &data) const;
 
     Q_INVOKABLE QString networkName() const;
     Q_INVOKABLE QString dapiVersion() const;
     QStringList httpSeedSupernodes() const;
     QStringList httpsSeedSupernodes() const;
 
-    Q_INVOKABLE QString wideSpacingSimplify(const QString &seed) const;
     Q_INVOKABLE bool isBalanceUpdated() const;
 
     Q_INVOKABLE QString versionNumber() const;
