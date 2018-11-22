@@ -48,24 +48,31 @@ bool GraftWalletClient::isCorrectAddress(const QString &data) const
     return match.hasPartialMatch();
 }
 
-void GraftWalletClient::saleDetails(const QString &data)
+bool GraftWalletClient::isSaleQrCodeValid(const QString &data) const
 {
     if (!data.isEmpty())
     {
         QStringList dataList = data.split(';');
-        if (dataList.count() == 4)
-        {
-            mPID = dataList.value(0);
-            mPrivateKey = dataList.value(1);
-            mTotalCost = dataList.value(2).toDouble();
-            mBlockNumber = dataList.value(3).toInt();
-            updateQuickExchange(mTotalCost);
-            mClientHandler->saleDetails(mPID, mBlockNumber);
-        }
-        else
-        {
-            emit saleDetailsReceived(false);
-        }
+        return dataList.count() == 4;
+    }
+    return false;
+}
+
+void GraftWalletClient::saleDetails(const QString &data)
+{
+    if (isSaleQrCodeValid(data))
+    {
+        QStringList dataList = data.split(';');
+        mPID = dataList.value(0);
+        mPrivateKey = dataList.value(1);
+        mTotalCost = dataList.value(2).toDouble();
+        mBlockNumber = dataList.value(3).toInt();
+        updateQuickExchange(mTotalCost);
+        mClientHandler->saleDetails(mPID, mBlockNumber);
+    }
+    else
+    {
+        emit saleDetailsReceived(false);
     }
 }
 

@@ -9,7 +9,7 @@ StackView {
     property bool isActive: false
     property var clearStackViewer: ({})
 
-    signal showFailedScreen(bool setFailScreen)
+    signal networkReplyError()
 
     focus: true
     onCurrentItemChanged: {
@@ -17,6 +17,8 @@ StackView {
             menuLoader.item.interactive = currentItem.isMenuActive && currentItem.isMenuVisible
         }
     }
+
+    onNetworkReplyError: currentItem.networkReplyError()
 
     function goBack() {
         pop()

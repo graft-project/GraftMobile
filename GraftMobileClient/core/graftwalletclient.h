@@ -14,8 +14,8 @@ public:
 
     Q_INVOKABLE double totalCost() const;
     Q_INVOKABLE ProductModel *paymentProductModel() const;
-
     Q_INVOKABLE bool isCorrectAddress(const QString &data) const;
+    Q_INVOKABLE bool isSaleQrCodeValid(const QString &data) const;
 
 signals:
     void saleDetailsReceived(bool result);

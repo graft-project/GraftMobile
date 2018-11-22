@@ -8,7 +8,19 @@ import "../"
 
 BasePaymentConfirmationScreen {
     id: root
-    onErrorMessage: busyIndicator.running = false
+    state: "processing"
+
+    Connections {
+        target: GraftClient
+
+        onSaleDetailsReceived: {
+            if (result === true) {
+                root.state = "done"
+            } else {
+                root.state = "processing"
+            }
+        }
+    }
 
     Rectangle {
         id: background
@@ -17,6 +29,7 @@ BasePaymentConfirmationScreen {
 
         ListView {
             id: productList
+            visible: false
             anchors {
                 top: parent.top
                 bottom: quickExchangeView.top
@@ -39,6 +52,7 @@ BasePaymentConfirmationScreen {
 
         QuickExchangeView {
             id: quickExchangeView
+            visible: false
             height: 50
             anchors {
                 left: parent.left
@@ -50,6 +64,7 @@ BasePaymentConfirmationScreen {
 
         ColumnLayout {
             id: bottomButtons
+            enabled: false
             anchors {
                 left: parent.left
                 right: parent.right
@@ -72,16 +87,31 @@ BasePaymentConfirmationScreen {
             WideActionButton {
                 text: qsTr("Pay")
                 onClicked: {
-                    busyIndicator.running = true
+                    activityBusyIndicator = true
                     confirmPay()
                 }
             }
         }
     }
 
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        running: false
-    }
+    states: [
+        State {
+            name: "done"
+
+            PropertyChanges { target: productList; visible: true }
+            PropertyChanges { target: quickExchangeView; visible: true }
+            PropertyChanges { target: bottomButtons; enabled: true }
+            PropertyChanges { target: informing; visible: false }
+            PropertyChanges { target: processingIndicator; running: false }
+        },
+        State {
+            name: "processing"
+
+            PropertyChanges { target: productList; visible: false }
+            PropertyChanges { target: quickExchangeView; visible: false }
+            PropertyChanges { target: bottomButtons; enabled: false }
+            PropertyChanges { target: informing; visible: true }
+            PropertyChanges { target: processingIndicator; running: true }
+        }
+    ]
 }
