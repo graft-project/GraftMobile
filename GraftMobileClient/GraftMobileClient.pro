@@ -95,7 +95,8 @@ SOURCES += main.cpp \
     core/accountmanager.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
-    devicedetector.cpp
+    devicedetector.cpp \
+    core/graftclientconstants.cpp
 
 HEADERS += \
     core/config.h \
@@ -121,7 +122,8 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    devicedetector.h
+    devicedetector.h \
+    core/graftclientconstants.h
 
 include(resources/resources.pri)
 
