@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import com.graft.design 1.0
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -82,29 +83,7 @@ BaseScreen {
                         }
 
                         wrapMode: Label.WordWrap
-                        text: qsTr("The Graft Wallet is provided to you free of charge to allow " +
-                                   "you to access the Graft Blockchain. Graft is not responsible " +
-                                   "for any loss of use or loss of funds, and some of the " +
-                                   "technology we use is still under active development and " +
-                                   "testing. Use the Graft Wallet at your own risk, and please " +
-                                   "do not invest more than you are willing to lose.\n\n" +
-                                   "You are responsible for the safety of your wallet and the " +
-                                   "protection of your username and password. Always backup your " +
-                                   "keys: The Graft Wallets are not exchange accounts, and we do " +
-                                   "not hold funds for you. No data leaves your computer or your " +
-                                   "web browser. The Graft Wallet allows you to access and " +
-                                   "interact with the Graft Blockchain directly, but it does not " +
-                                   "copy or retain your information. If you lose your wallet or " +
-                                   "your access key, you will lose any funds associated with " +
-                                   "that wallet.\n\n" +
-                                   "Permission is hereby granted, free of charge, to any person " +
-                                   "obtaining a copy of the Graft Wallet software and associated " +
-                                   "documentation files (the \"Software\"), to deal in the " +
-                                   "Software without restriction, including without limitation " +
-                                   "the rights to use, copy, modify, merge, publish, distribute, " +
-                                   "sublicense, and/or sell copies of the Software, and to " +
-                                   "permit persons to whom the Software is furnished to do so, " +
-                                   "subject to the following conditions:\n")
+                        text: GraftClientConstants.licensingLets()
                     }
 
                     Label {
@@ -116,14 +95,7 @@ BaseScreen {
                         }
 
                         wrapMode: Label.WordWrap
-                        text: qsTr("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY " +
-                                   "KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE " +
-                                   "WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR " +
-                                   "PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS " +
-                                   "OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR " +
-                                   "OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR " +
-                                   "OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE " +
-                                   "SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
+                        text: GraftClientConstants.licenseDescription()
                     }
                 }
             }

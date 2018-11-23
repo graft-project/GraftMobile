@@ -84,6 +84,7 @@ ColumnLayout {
                 State {
                     name: "hidden"
                     when: !serviceAddr.checked
+
                     PropertyChanges {
                         target: serviceAddrLayout
                         visible: false
@@ -158,6 +159,7 @@ ColumnLayout {
                 State {
                     name: "hidden"
                     when: !serviceURLSwitch.checked
+
                     PropertyChanges {
                         target: addressTextField
                         visible: false
@@ -175,11 +177,12 @@ ColumnLayout {
     }
 
     function replaceNetworkType(text) {
-        var regExp = text.match(new RegExp(/^https?:\/\//g))
-        if (regExp !== null) {
-            if (regExp.toString() === "https://" && !httpsSwitch.checked) {
+        if (GraftClientTools.networkType(text) !== GraftClientTools.None) {
+            if ((GraftClientTools.networkType(text) === GraftClientTools.Https) &&
+                !httpsSwitch.checked) {
                 addressTextField.text = text.replace(/https/i, "http")
-            } else if (regExp.toString() === "http://" && httpsSwitch.checked) {
+            } else if ((GraftClientTools.networkType(text) === GraftClientTools.Http) &&
+                       httpsSwitch.checked) {
                 addressTextField.text = text.replace(/http/i, "https")
             }
         } else {
@@ -247,7 +250,7 @@ ColumnLayout {
             }
         } else if (serviceURLSwitch.checked) {
             if (GraftClientTools.isValidUrl(addressTextField.text) &&
-              !(addressTextField.text === "http://" || addressTextField.text === "https://")) {
+                    !(addressTextField.text === "http://" || addressTextField.text === "https://")) {
                 GraftClient.setSettings("address", addressTextField.text)
             } else {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +

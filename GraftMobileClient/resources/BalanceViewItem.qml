@@ -222,8 +222,8 @@ Rectangle {
 
     function dots() {
         if (dotsCount >= 3) {
-            updateLabel.text = updateLabel.text.replace(/[\.]{3}/g, '')
-            dotsCount = 0;
+            updateLabel.text = GraftClientTools.dotsRemove(updateLabel.text)
+            dotsCount = 0
         } else {
             updateLabel.text += '.'
             dotsCount++
