@@ -14,7 +14,7 @@ BasePaymentConfirmationScreen {
         target: GraftClient
 
         onSaleDetailsReceived: {
-            if (result === true) {
+            if (result) {
                 root.state = "done"
             } else {
                 root.state = "processing"
