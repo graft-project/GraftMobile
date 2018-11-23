@@ -31,7 +31,8 @@ BaseScreen {
         productItem.productImage = ProductModel.productData(index, ProductModelEnum.ImageRole)
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
-        productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index, ProductModelEnum.CurrencyRole))
+        productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index,
+        ProductModelEnum.CurrencyRole))
     }
 
     ColumnLayout {
@@ -62,7 +63,8 @@ BaseScreen {
                 ProductModel.setProductData(index, productItem.productImage, ProductModelEnum.ImageRole)
                 ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
                 ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
-                ProductModel.setProductData(index, productItem.descriptionText, ProductModelEnum.DescriptionRole)
+                ProductModel.setProductData(index, productItem.descriptionText,
+                                            ProductModelEnum.DescriptionRole)
             } else {
                 ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
                                  currencyCode, productItem.descriptionText)
