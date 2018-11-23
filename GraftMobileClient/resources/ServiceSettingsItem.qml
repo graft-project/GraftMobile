@@ -250,7 +250,7 @@ ColumnLayout {
             }
         } else if (serviceURLSwitch.checked) {
             if (GraftClientTools.isValidUrl(addressTextField.text) &&
-                    !(addressTextField.text === "http://" || addressTextField.text === "https://")) {
+                !(addressTextField.text === "http://" || addressTextField.text === "https://")) {
                 GraftClient.setSettings("address", addressTextField.text)
             } else {
                 screenDialog.text = qsTr("The service URL is invalid. Please, enter the " +
