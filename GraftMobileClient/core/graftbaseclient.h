@@ -18,7 +18,7 @@ class GraftBaseClient : public QObject
     Q_OBJECT
 public:
     explicit GraftBaseClient(QObject *parent = nullptr);
-    virtual ~GraftBaseClient();
+    virtual ~GraftBaseClient() override;
 
     Q_INVOKABLE void setNetworkType(int networkType);
     Q_INVOKABLE int networkType() const;
