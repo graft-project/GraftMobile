@@ -8,7 +8,7 @@ class GraftClientTools : public QObject
     Q_OBJECT
 public:
     enum BalanceTypes {
-        LockedBalance,
+        LockedBalance = 0,
         UnlockedBalance,
         LocalBalance
     };
@@ -17,10 +17,18 @@ public:
     enum NetworkConfiguration
     {
         Mainnet = 0,
-        PublicTestnet = 1,
-        PublicExperimentalTestnet = 2
+        PublicTestnet,
+        PublicExperimentalTestnet
     };
     Q_ENUM(NetworkConfiguration)
+
+    enum NetworkType
+    {
+        Http = 0,
+        Https,
+        None
+    };
+    Q_ENUM(NetworkType)
 
     explicit GraftClientTools(QObject *parent = nullptr);
 
@@ -30,6 +38,10 @@ public:
     Q_INVOKABLE static QString wideSpacingSimplify(const QString &seed);
 
     Q_INVOKABLE static void copyToClipboard(const QString &data);
+
+    Q_INVOKABLE static QString dotsRemove(const QString &message);
+
+    Q_INVOKABLE static NetworkType networkType(const QString &text);
 };
 
 #endif // GRAFTCLIENTTOOLS_H
