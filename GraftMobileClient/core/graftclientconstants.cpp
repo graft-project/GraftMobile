@@ -10,13 +10,13 @@ QString GraftClientConstants::mainnetDescription()
               "that carry real GRFT transactions.");
 }
 
-QString GraftClientConstants::testnetDescription()
+QString GraftClientConstants::publicTestnetDescription()
 {
     return tr("Exact functional copy of mainnet for public testing of mining, "
               "supernodes, wallet apps, and other features of GRAFT ecosystem.");
 }
 
-QString GraftClientConstants::alphaRTADescription()
+QString GraftClientConstants::alphaRTATestnetDescription()
 {
     return tr("Blockchain and test network running on the code branch that contains "
               "Real Time Authorization and other future features that are not yet "
@@ -24,7 +24,7 @@ QString GraftClientConstants::alphaRTADescription()
               "Other platforms are coming soon.");
 }
 
-QString GraftClientConstants::licensingLets()
+QString GraftClientConstants::licenseIntroduction()
 {
     return tr("The Graft Wallet is provided to you free of charge to allow "
               "you to access the Graft Blockchain. Graft is not responsible "
@@ -51,7 +51,7 @@ QString GraftClientConstants::licensingLets()
               "subject to the following conditions:\n");
 }
 
-QString GraftClientConstants::licenseDescription()
+QString GraftClientConstants::licenseConditions()
 {
     return tr("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY "
               "KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE "
@@ -63,7 +63,7 @@ QString GraftClientConstants::licenseDescription()
               "SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
 }
 
-QString GraftClientConstants::cameraPermission()
+QString GraftClientConstants::invalidCameraPermissionMessage()
 {
     return tr("You haven't permission for the camera. Please, turn on camera permission "
               "in settings of the application.");

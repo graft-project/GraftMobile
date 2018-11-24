@@ -44,7 +44,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredHeight: parent / 3
                 type: qsTr("Public Testnet")
-                networkDescription: GraftClientConstants.testnetDescription()
+                networkDescription: GraftClientConstants.publicTestnetDescription()
                 onTypeSelected: {
                     networkChecked = true
                     mainNet.networkChecked = false
@@ -57,7 +57,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredHeight: parent / 3
                 type: qsTr("Alpha RTA Testnet")
-                networkDescription: GraftClientConstants.alphaRTADescription()
+                networkDescription: GraftClientConstants.alphaRTATestnetDescription()
                 onTypeSelected: {
                     networkChecked = true
                     mainNet.networkChecked = false

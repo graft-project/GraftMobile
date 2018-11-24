@@ -112,9 +112,10 @@ Item {
             verticalAlignment: Label.AlignVCenter
             font.pixelSize: 16
             color: "#A8A8A8"
-            text: QtMultimedia.availableCameras.length > 0 ? GraftClientConstants.cameraPermission()
-                  : qsTr("The application can't find camera on this device. To use QR-code " +
-                         "scanning option, please, connect camera to your device.")
+            text: QtMultimedia.availableCameras.length > 0 ?
+                      GraftClientConstants.invalidCameraPermissionMessage() :
+                      qsTr("The application can't find camera on this device. To use QR-code " +
+                           "scanning option, please, connect camera to your device.")
         }
     }
 

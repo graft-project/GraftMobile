@@ -10,13 +10,13 @@ public:
     explicit GraftClientConstants(QObject *parent = nullptr);
 
     Q_INVOKABLE static QString mainnetDescription();
-    Q_INVOKABLE static QString testnetDescription();
-    Q_INVOKABLE static QString alphaRTADescription();
+    Q_INVOKABLE static QString publicTestnetDescription();
+    Q_INVOKABLE static QString alphaRTATestnetDescription();
 
-    Q_INVOKABLE static QString licensingLets();
-    Q_INVOKABLE static QString licenseDescription();
+    Q_INVOKABLE static QString licenseIntroduction();
+    Q_INVOKABLE static QString licenseConditions();
 
-    Q_INVOKABLE static QString cameraPermission();
+    Q_INVOKABLE static QString invalidCameraPermissionMessage();
 
     Q_INVOKABLE static QString walletCreated();
 };

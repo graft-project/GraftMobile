@@ -83,7 +83,7 @@ BaseScreen {
                         }
 
                         wrapMode: Label.WordWrap
-                        text: GraftClientConstants.licensingLets()
+                        text: GraftClientConstants.licenseIntroduction()
                     }
 
                     Label {
@@ -95,7 +95,7 @@ BaseScreen {
                         }
 
                         wrapMode: Label.WordWrap
-                        text: GraftClientConstants.licenseDescription()
+                        text: GraftClientConstants.licenseConditions()
                     }
                 }
             }

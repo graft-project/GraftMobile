@@ -110,7 +110,7 @@ Item {
             horizontalAlignment: Label.AlignHCenter
             font.pixelSize: 16
             color: "#A8A8A8"
-            text: GraftClientConstants.cameraPermission()
+            text: GraftClientConstants.invalidCameraPermissionMessage()
         }
     }
 
