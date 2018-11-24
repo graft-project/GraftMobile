@@ -32,7 +32,7 @@ BaseScreen {
         productItem.price = ProductModel.productData(index, ProductModelEnum.CostRole)
         productItem.descriptionText = ProductModel.productData(index, ProductModelEnum.DescriptionRole)
         productItem.currencyIndex = currencyModel.indexOf(ProductModel.productData(index,
-        ProductModelEnum.CurrencyRole))
+                                    ProductModelEnum.CurrencyRole))
     }
 
     ColumnLayout {

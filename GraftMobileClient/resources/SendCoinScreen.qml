@@ -173,7 +173,7 @@ BaseScreen {
             screenDialog.open()
         } else if (GraftClient.balance(GraftClientTools.UnlockedBalance) < coinsAmountTextField.text) {
             screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("The amount which you want to send is higher than you have  " +
+            screenDialog.text = qsTr("The amount which you want to send is higher than you have " +
                                      "on your wallet. Please, enter a smaller amount.")
             screenDialog.open()
         } else {
