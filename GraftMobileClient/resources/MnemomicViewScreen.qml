@@ -31,7 +31,7 @@ BaseScreen {
             horizontalAlignment: Label.AlignHCenter
             color: "#ce2121"
             wrapMode: Label.WordWrap
-            text: qsTr("Your wallet is created! Your mnemonic phrase is the only way to restore " + 
+            text: qsTr("Your wallet is created! Your mnemonic phrase is the only way to restore " +
                        "your wallet!\nCopy and store in the safe place this mnemonic password.")
         }
 

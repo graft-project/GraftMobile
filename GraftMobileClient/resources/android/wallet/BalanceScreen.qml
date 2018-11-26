@@ -1,15 +1,17 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
+import org.graft 1.0
 import "../"
 import "../components"
-import org.graft 1.0
 
 BaseBalanceScreen {
 
     Connections {
         target: GraftClient
 
-        onNetworkTypeChanged: payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+        onNetworkTypeChanged: {
+            payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+        }
     }
 
     ColumnLayout {

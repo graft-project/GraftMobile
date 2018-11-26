@@ -27,6 +27,7 @@ GraftPOSHandlerV1::GraftPOSHandlerV1(const QString &dapiVersion, const QStringLi
 
 void GraftPOSHandlerV1::changeAddresses(const QStringList &addresses, const QStringList &internalAddresses)
 {
+    Q_UNUSED(internalAddresses);
     if (mApi)
     {
         mApi->changeAddresses(addresses);

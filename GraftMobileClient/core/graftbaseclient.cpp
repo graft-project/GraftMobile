@@ -2,6 +2,7 @@
 #include "barcodeimageprovider.h"
 #include "api/graftbasehandler.h"
 #include "api/v1/graftgenericapiv1.h"
+#include "graftclientconstants.h"
 #include "quickexchangemodel.h"
 #include "graftclienttools.h"
 #include "graftbaseclient.h"
@@ -201,12 +202,20 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
     qmlRegisterSingletonType<GraftClientTools>("org.graft", 1, 0, "GraftClientTools",
-                                      [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
         Q_UNUSED(engine)
         Q_UNUSED(scriptEngine)
 
         GraftClientTools *tools = new GraftClientTools();
         return tools;
+    });
+    qmlRegisterSingletonType<GraftClientConstants>("org.graft", 1, 0, "GraftClientConstants",
+        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+
+        GraftClientConstants *constants = new GraftClientConstants();
+        return constants;
     });
 }
 

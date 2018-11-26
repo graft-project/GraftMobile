@@ -3,6 +3,7 @@ import QtMultimedia 5.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QZXing 2.3
+import org.graft 1.0
 
 Item {
     property string lastTag: ""
@@ -109,20 +110,21 @@ Item {
             horizontalAlignment: Label.AlignHCenter
             font.pixelSize: 16
             color: "#A8A8A8"
-            text: qsTr("You haven't permission for the camera. Please, turn on camera permission " +
-                       "in settings of the application.")
+            text: GraftClientConstants.invalidCameraPermissionMessage()
         }
     }
 
     states: [
         State {
             name: "scanScreen"
+
             PropertyChanges { target: scanScreen; visible: true }
             PropertyChanges { target: messagesScreen; visible: false }
         },
 
         State {
             name: "messagesScreen"
+
             PropertyChanges { target: scanScreen; visible: false }
             PropertyChanges { target: messagesScreen; visible: true }
             when: camera.cameraStatus === 0 && camera.cameraState === 0

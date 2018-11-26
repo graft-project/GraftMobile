@@ -61,7 +61,8 @@ BaseScreen {
             LinearEditItem {
                 id: expired
                 Layout.alignment: Qt.AlignTop
-                title: Detector.isPlatform(Platform.Android) ? qsTr("Expiration Date") : qsTr("Expired:")
+                title: Detector.isPlatform(Platform.Android) ? qsTr("Expiration Date") :
+                                                               qsTr("Expired:")
                 inputMask: "99/99;_"
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: RegExpValidator {
@@ -91,9 +92,7 @@ BaseScreen {
             WideActionButton {
                 id: scanCardButton
                 text: qsTr("Scan Card")
-                onClicked: {
-                    scanCardButton.text = qsTr("WILL BE SOON")
-                }
+                onClicked: scanCardButton.text = qsTr("WILL BE SOON")
             }
 
             WideActionButton {

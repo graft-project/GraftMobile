@@ -102,7 +102,8 @@ BaseScreen {
                             onDenied: desktopMessageDialog.close()
                         }
 
-                        onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() : mobileMessageDialog.open()
+                        onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() :
+                                                                    mobileMessageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
                 }

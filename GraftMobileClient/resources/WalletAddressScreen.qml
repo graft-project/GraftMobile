@@ -114,6 +114,7 @@ BaseScreen {
     states: [
         State {
             name: "mainAddress"
+
             PropertyChanges {
                 target: balance
                 title: qsTr("Main Account")
@@ -139,6 +140,7 @@ BaseScreen {
 
         State {
             name: "coinsAddress"
+
             PropertyChanges {
                 target: balance
                 title: qsTr("%1 Account").arg(accountType)

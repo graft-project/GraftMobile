@@ -27,13 +27,13 @@ BaseScreen {
         target: GraftClient
 
         onPayReceived: {
-            if (result !== true) {
+            if (!result) {
                 pushScreen.openBalanceScreen()
             }
         }
 
         onPayStatusReceived: {
-            if (result === true) {
+            if (result) {
                 pushScreen.openPaymentScreen(result)
             }
         }

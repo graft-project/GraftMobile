@@ -70,8 +70,9 @@ BaseStackViewer {
 
     function openAddressScreen(balance, accountName, imagePath, accountNumber, type) {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
-                   "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
-                   "balanceState": "coinsAddress", "accountNumber": accountNumber, "accountType": type})
+                   "accountBalance": balance, "accountName": accountName,
+                   "accountImage": imagePath, "balanceState": "coinsAddress",
+                   "accountNumber": accountNumber, "accountType": type})
     }
 
     function openSendConfirmationScreen(receiversAddress, coinsAmount, fee) {

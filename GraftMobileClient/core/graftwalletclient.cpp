@@ -23,6 +23,10 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     mPaymentProductModel = new ProductModel(this);
 }
 
+GraftWalletClient::~GraftWalletClient()
+{
+}
+
 double GraftWalletClient::totalCost() const
 {
     return mTotalCost;
@@ -44,8 +48,7 @@ bool GraftWalletClient::isCorrectAddress(const QString &data) const
     {
         walletAddress.setPattern("^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94}");
     }
-    QRegularExpressionMatch match = walletAddress.match(data, 0, QRegularExpression::PartialPreferFirstMatch);
-    return match.hasPartialMatch();
+    return QRegularExpressionMatch(walletAddress.match(data, 0, QRegularExpression::PartialPreferFirstMatch)).hasPartialMatch();
 }
 
 bool GraftWalletClient::isSaleQrCodeValid(const QString &data) const

@@ -72,12 +72,10 @@ ColumnLayout {
     }
 
     function heightTextField() {
-        var size
-        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
-            size = actionTextField.wrapMode === TextField.NoWrap ? 45 : root.height - (tipsLayout.height + root.spacing)
+        if (actionTextField.wrapMode === TextField.NoWrap) {
+            return Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 45 : 55
         } else {
-            size = actionTextField.wrapMode === TextField.NoWrap ? 55 : root.height - (tipsLayout.height + root.spacing)
+            return root.height - (tipsLayout.height + root.spacing)
         }
-        return size
     }
 }

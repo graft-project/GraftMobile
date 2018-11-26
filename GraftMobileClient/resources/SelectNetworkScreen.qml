@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -30,8 +31,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredHeight: parent / 3
                 type: qsTr("Mainnet")
-                networkDescription: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
-                                         "that carry real GRFT transactions.")
+                networkDescription: GraftClientConstants.mainnetDescription()
                 onTypeSelected: {
                     networkChecked = true
                     testNet.networkChecked = false
@@ -44,8 +44,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredHeight: parent / 3
                 type: qsTr("Public Testnet")
-                networkDescription: qsTr("Exact functional copy of mainnet for public testing of mining, " +
-                                         "supernodes, wallet apps, and other features of GRAFT ecosystem.")
+                networkDescription: GraftClientConstants.publicTestnetDescription()
                 onTypeSelected: {
                     networkChecked = true
                     mainNet.networkChecked = false
@@ -58,10 +57,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredHeight: parent / 3
                 type: qsTr("Alpha RTA Testnet")
-                networkDescription: qsTr("Blockchain and test network running on the code branch that contains " +
-                                         "Real Time Authorization and other future features that are not yet " +
-                                         "available on mainnet.\n\nCurrently available only for iOS and MacOS.\n" +
-                                         "Other platforms are coming soon.")
+                networkDescription: GraftClientConstants.alphaRTATestnetDescription()
                 onTypeSelected: {
                     networkChecked = true
                     mainNet.networkChecked = false
