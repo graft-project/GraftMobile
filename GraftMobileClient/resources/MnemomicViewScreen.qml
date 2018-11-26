@@ -31,7 +31,8 @@ BaseScreen {
             horizontalAlignment: Label.AlignHCenter
             color: "#ce2121"
             wrapMode: Label.WordWrap
-            text: GraftClientConstants.walletCreated()
+            text: qsTr("Your wallet is created! Your mnemonic phrase is the only way to restore " +
+                       "your wallet!\nCopy and store in the safe place this mnemonic password.")
         }
 
         MnemonicPhraseView {

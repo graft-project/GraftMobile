@@ -17,8 +17,6 @@ public:
     Q_INVOKABLE static QString licenseConditions();
 
     Q_INVOKABLE static QString invalidCameraPermissionMessage();
-
-    Q_INVOKABLE static QString walletCreated();
 };
 
 #endif // GRAFTCLIENTCONSTANTS_H

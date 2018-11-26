@@ -68,10 +68,3 @@ QString GraftClientConstants::invalidCameraPermissionMessage()
     return tr("You haven't permission for the camera. Please, turn on camera permission "
               "in settings of the application.");
 }
-
-QString GraftClientConstants::walletCreated()
-{
-    return tr("Your wallet is created! Your mnemonic phrase is the only way to restore "
-              "your wallet!\nCopy and store in the safe place this mnemonic password.");
-}
-
