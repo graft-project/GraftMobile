@@ -225,7 +225,6 @@ void GraftWalletHandlerV2::sendPay(bool result)
     {
         emit errorReceived(tr("Wallet isn't initialized!"));
     }
-
 }
 
 void GraftWalletHandlerV2::receiveRejectPay(int result)

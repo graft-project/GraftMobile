@@ -11,7 +11,7 @@ BaseScreen {
 
     property bool isSpacing: false
     property string completeText: ""
-    property int screenState: 0
+    property bool screenState: false
     property var pushMainScreen: null
 
     Component.onCompleted: {

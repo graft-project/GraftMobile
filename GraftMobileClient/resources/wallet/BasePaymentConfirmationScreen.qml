@@ -15,7 +15,7 @@ BaseScreen {
 
     onErrorMessage: busyIndicator.running = false
 
-    onNetworkReplyError: pushScreen.openPaymentScreen(0, false)
+    onNetworkReplyError: pushScreen.openPaymentScreen(false, false)
 
     title: qsTr("Pay")
     screenHeader {
@@ -33,9 +33,7 @@ BaseScreen {
         }
 
         onPayStatusReceived: {
-            if (result) {
-                pushScreen.openPaymentScreen(result)
-            }
+            pushScreen.openPaymentScreen(result, false)
         }
     }
 
