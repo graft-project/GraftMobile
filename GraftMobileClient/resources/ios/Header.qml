@@ -19,7 +19,8 @@ BaseHeader {
         anchors {
             leftMargin: 15
             rightMargin: 15
-            topMargin: Detector.detectDevice() === Platform.IPhoneX ? 25 : Detector.isDesktop() ? 0 : 10
+            topMargin: Detector.detectDevice() === Platform.IPhoneX ? 25 :
+                                                                      Detector.isDesktop() ? 0 : 10
             left: parent.left
             right: parent.right
             top: parent.top

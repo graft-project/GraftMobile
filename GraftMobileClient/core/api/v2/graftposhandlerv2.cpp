@@ -114,7 +114,7 @@ void GraftPOSHandlerV2::transferFee(const QString &address, const QString &amoun
 {
     if (mWallet)
     {
-        mWallet->prepareTransactionAsync(address, GraftGenericAPIv2::toAtomic(amount));
+        mWallet->prepareTransactionAsync(address, amount.toULongLong());
     }
 }
 
@@ -173,6 +173,10 @@ void GraftPOSHandlerV2::receiveTransaction(bool result)
         if (result)
         {
             lFee = GraftGenericAPIv2::toCoins(mWallet->currentTransactionFee());
+        }
+        else
+        {
+            emit errorReceived(mWallet->lastError());
         }
         emit transferFeeReceived(result, lFee);
     }

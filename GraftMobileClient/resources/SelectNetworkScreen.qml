@@ -1,9 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.2
-import com.graft.design 1.0
 import com.device.platform 1.0
+import org.graft 1.0
 import "components"
 
 BaseScreen {
@@ -12,126 +11,84 @@ BaseScreen {
         isNavigationButtonVisible: false
         navigationButtonState: true
     }
-    Component.onCompleted: mainNet.checked = true
+    Component.onCompleted: mainNet.networkChecked = true
 
-    ColumnLayout {
-        spacing: 0
-        anchors {
-            fill: parent
-            topMargin: 15
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
-        }
+    Item {
+        anchors.fill: parent
 
-        RadioButton {
-            id: mainNet
-            Layout.alignment: Qt.AlignTop
-            Material.accent: ColorFactory.color(DesignFactory.Foreground)
-            Material.foreground: ColorFactory.color(DesignFactory.Foreground)
-            text: qsTr("Mainnet")
-            font {
-                pixelSize: 16
-                bold: true
+        ColumnLayout {
+            spacing: 25
+            anchors {
+                fill: parent
+                topMargin: 15
+                leftMargin: 15
+                rightMargin: 15
+                bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
             }
-        }
 
-        Label {
-            Layout.fillWidth: true
-            Layout.leftMargin: 35
-            Layout.rightMargin: 20
-            color: "#BBBBBB"
-            font.pixelSize: 14
-            wrapMode: Label.WordWrap
-            text: qsTr("Actual GRAFT blockchain, production network. This is the blockchain " +
-                       "that carry real GRFT transactions.")
-            MouseArea {
-                anchors.fill: parent
-                onClicked: mainNet.checked = true
+            NetworkType {
+                id: mainNet
+                Layout.alignment: Qt.AlignTop
+                Layout.preferredHeight: parent / 3
+                type: qsTr("Mainnet")
+                networkDescription: GraftClientConstants.mainnetDescription()
+                onTypeSelected: {
+                    networkChecked = true
+                    testNet.networkChecked = false
+                    rtaTestNet.networkChecked = false
+                }
             }
-        }
 
-        RadioButton {
-            id: testNet
-            Layout.alignment: Qt.AlignTop
-            Material.accent: ColorFactory.color(DesignFactory.Foreground)
-            Material.foreground: ColorFactory.color(DesignFactory.Foreground)
-            text: qsTr("Public Testnet")
-            font {
-                pixelSize: 16
-                bold: true
+            NetworkType {
+                id: testNet
+                Layout.alignment: Qt.AlignTop
+                Layout.preferredHeight: parent / 3
+                type: qsTr("Public Testnet")
+                networkDescription: GraftClientConstants.publicTestnetDescription()
+                onTypeSelected: {
+                    networkChecked = true
+                    mainNet.networkChecked = false
+                    rtaTestNet.networkChecked = false
+                }
             }
-        }
 
-        Label {
-            Layout.fillWidth: true
-            Layout.leftMargin: 35
-            Layout.rightMargin: 20
-            color: "#BBBBBB"
-            font.pixelSize: 14
-            wrapMode: Label.WordWrap
-            text: qsTr("Exact functional copy of mainnet for public testing of mining, " +
-                       "supernodes, wallet apps, and other features of GRAFT ecosystem.")
-            MouseArea {
-                anchors.fill: parent
-                onClicked: testNet.checked = true
+            NetworkType {
+                id: rtaTestNet
+                Layout.alignment: Qt.AlignTop
+                Layout.preferredHeight: parent / 3
+                type: qsTr("Alpha RTA Testnet")
+                networkDescription: GraftClientConstants.alphaRTATestnetDescription()
+                onTypeSelected: {
+                    networkChecked = true
+                    mainNet.networkChecked = false
+                    testNet.networkChecked = false
+                }
             }
-        }
 
-        RadioButton {
-            id: rtaTestNet
-            Layout.alignment: Qt.AlignTop
-            Material.accent: ColorFactory.color(DesignFactory.Foreground)
-            Material.foreground: ColorFactory.color(DesignFactory.Foreground)
-            text: qsTr("Alpha RTA Testnet")
-            font {
-                pixelSize: 16
-                bold: true
+            Item {
+                Layout.fillHeight: true
             }
-        }
 
-        Label {
-            Layout.fillWidth: true
-            Layout.leftMargin: 35
-            Layout.rightMargin: 20
-            Layout.minimumHeight: 35
-            color: "#BBBBBB"
-            font.pixelSize: 14
-            wrapMode: Label.WordWrap
-            text: qsTr("Blockchain and test network running on the code branch that contains " +
-                       "Real Time Authorization and other future features that are not yet " +
-                       "available on mainnet.\n\nCurrently available only for iOS and MacOS.\n" +
-                       "Other platforms are coming soon.")
-            MouseArea {
-                anchors.fill: parent
-                onClicked: rtaTestNet.checked = true
-            }
-        }
-
-        Item {
-            Layout.fillHeight: true
-            Layout.maximumHeight: Detector.isPlatform(Platform.Desktop) ? 250 : 150
-        }
-
-        WideActionButton {
-            Layout.alignment: Qt.AlignBottom
-            text: qsTr("Confirm")
-            enabled: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)
-                     ? true : !rtaTestNet.checked
-            onClicked: {
-                disableScreen()
-                setNetworkType()
-                pushScreen.openCreateWalletScreen()
+            WideActionButton {
+                Layout.alignment: Qt.AlignBottom
+                text: qsTr("Confirm")
+                enabled: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)
+                         ? true : !rtaTestNet.networkChecked
+                onClicked: {
+                    disableScreen()
+                    setNetworkType()
+                    pushScreen.openCreateWalletScreen()
+                }
             }
         }
     }
 
     function setNetworkType() {
-        if (mainNet.checked) {
+        if (mainNet.networkChecked) {
             GraftClient.setNetworkType(0)
-        } else if (testNet.checked) {
+        } else if (testNet.networkChecked) {
             GraftClient.setNetworkType(1)
-        } else if (rtaTestNet.checked) {
+        } else if (rtaTestNet.networkChecked) {
             GraftClient.setNetworkType(2)
         }
     }

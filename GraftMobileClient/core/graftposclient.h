@@ -12,7 +12,7 @@ class GraftPOSClient : public GraftBaseClient
     Q_OBJECT
 public:
     explicit GraftPOSClient(QObject *parent = nullptr);
-    ~GraftPOSClient();
+    ~GraftPOSClient() override;
 
     ProductModel *productModel() const;
     SelectedProductProxyModel *selectedProductModel() const;

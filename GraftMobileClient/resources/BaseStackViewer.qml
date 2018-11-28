@@ -9,12 +9,16 @@ StackView {
     property bool isActive: false
     property var clearStackViewer: ({})
 
+    signal networkReplyError()
+
     focus: true
     onCurrentItemChanged: {
         if (isActive && menuLoader && menuLoader.status === Loader.Ready) {
             menuLoader.item.interactive = currentItem.isMenuActive && currentItem.isMenuVisible
         }
     }
+
+    onNetworkReplyError: currentItem.networkReplyError()
 
     function goBack() {
         pop()

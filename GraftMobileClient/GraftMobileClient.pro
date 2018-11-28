@@ -4,7 +4,7 @@ CONFIG += c++11
 
 DEFINES += MAJOR_VERSION=1
 DEFINES += MINOR_VERSION=13
-DEFINES += BUILD_VERSION=1
+DEFINES += BUILD_VERSION=2
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -93,8 +93,10 @@ SOURCES += main.cpp \
     core/quickexchangemodel.cpp \
     core/accountmodelserializator.cpp \
     core/accountmanager.cpp \
+    core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
-    devicedetector.cpp
+    devicedetector.cpp \
+    core/graftclientconstants.cpp
 
 HEADERS += \
     core/config.h \
@@ -120,7 +122,8 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    devicedetector.h
+    devicedetector.h \
+    core/graftclientconstants.h
 
 include(resources/resources.pri)
 

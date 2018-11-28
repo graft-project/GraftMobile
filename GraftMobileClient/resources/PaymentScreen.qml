@@ -11,7 +11,7 @@ BaseScreen {
 
     property bool isSpacing: false
     property string completeText: ""
-    property int screenState: 0
+    property bool screenState: false
     property var pushMainScreen: null
 
     Component.onCompleted: {
@@ -115,11 +115,12 @@ BaseScreen {
 
             PropertyChanges {
                 target: root
+                specialBackMode: pushMainScreen
                 action: pushScreen.clearChecked
                 screenHeader {
-                    isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
-                    navigationButtonState: true
-                    actionButtonState: true
+                    isNavigationButtonVisible: true
+                    navigationButtonState: false
+                    actionButtonState: false
                 }
             }
             PropertyChanges {
@@ -132,7 +133,7 @@ BaseScreen {
             }
             PropertyChanges {
                 target: completeLabelText
-                text: qsTr("Something getting wrong")
+                text: qsTr("Something went wrong")
             }
             PropertyChanges {
                 target: button

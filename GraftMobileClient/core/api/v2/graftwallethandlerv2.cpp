@@ -114,7 +114,7 @@ void GraftWalletHandlerV2::transferFee(const QString &address, const QString &am
 {
     if (mWallet)
     {
-        mWallet->prepareTransactionAsync(address, GraftGenericAPIv2::toAtomic(amount));
+        mWallet->prepareTransactionAsync(address, amount.toULongLong());
     }
 }
 
@@ -144,7 +144,7 @@ void GraftWalletHandlerV2::saleDetails(const QString &pid, int blockNumber)
 void GraftWalletHandlerV2::rejectPay(const QString &pid, int blockNumber)
 {
     //TODO: Fix support of rejectPay, unsupported on supernode side
-//    mApi->rejectPay(mPID, mBlockNumber);
+    //mApi->rejectPay(mPID, mBlockNumber);
 }
 
 void GraftWalletHandlerV2::pay(const QString &pid, const QString &address, double amount,
@@ -196,6 +196,10 @@ void GraftWalletHandlerV2::receiveTransaction(bool result)
         {
             lFee = GraftGenericAPIv2::toCoins(mWallet->currentTransactionFee());
         }
+        else
+        {
+            emit errorReceived(mWallet->lastError());
+        }
         emit transferFeeReceived(result, lFee);
     }
 }
@@ -225,7 +229,6 @@ void GraftWalletHandlerV2::sendPay(bool result)
     {
         emit errorReceived(tr("Wallet isn't initialized!"));
     }
-
 }
 
 void GraftWalletHandlerV2::receiveRejectPay(int result)

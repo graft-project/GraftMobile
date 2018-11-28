@@ -37,6 +37,8 @@ private slots:
     void receiveRejectPay(int result);
     void receivePayStatus(int result, int status);
     void receiveBalance(double balance, double unlockedBalance);
+    void receiveTransferFee(int result, double fee);
+    void receiveTransfer(int result);
 
 private:
     GraftWalletAPIv1 *mApi;

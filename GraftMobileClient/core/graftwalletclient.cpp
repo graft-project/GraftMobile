@@ -11,6 +11,9 @@
 #include "keygenerator.h"
 #include "config.h"
 
+#include <QRegularExpressionMatch>
+#include <QRegularExpression>
+
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
     ,mClientHandler(nullptr)
@@ -18,6 +21,10 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     mBlockNumber = 0;
     changeGraftHandler();
     mPaymentProductModel = new ProductModel(this);
+}
+
+GraftWalletClient::~GraftWalletClient()
+{
 }
 
 double GraftWalletClient::totalCost() const
@@ -30,24 +37,45 @@ ProductModel *GraftWalletClient::paymentProductModel() const
     return mPaymentProductModel;
 }
 
-void GraftWalletClient::saleDetails(const QString &data)
+bool GraftWalletClient::isCorrectAddress(const QString &data) const
+{
+    QRegularExpression walletAddress;
+    if (networkType() == GraftClientTools::Mainnet)
+    {
+        walletAddress.setPattern("^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94}");
+    }
+    else
+    {
+        walletAddress.setPattern("^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94}");
+    }
+    return QRegularExpressionMatch(walletAddress.match(data, 0, QRegularExpression::PartialPreferFirstMatch)).hasPartialMatch();
+}
+
+bool GraftWalletClient::isSaleQrCodeValid(const QString &data) const
 {
     if (!data.isEmpty())
     {
         QStringList dataList = data.split(';');
-        if (dataList.count() == 4)
-        {
-            mPID = dataList.value(0);
-            mPrivateKey = dataList.value(1);
-            mTotalCost = dataList.value(2).toDouble();
-            mBlockNumber = dataList.value(3).toInt();
-            updateQuickExchange(mTotalCost);
-            mClientHandler->saleDetails(mPID, mBlockNumber);
-        }
-        else
-        {
-            emit saleDetailsReceived(false);
-        }
+        return dataList.count() == 4;
+    }
+    return false;
+}
+
+void GraftWalletClient::saleDetails(const QString &data)
+{
+    if (isSaleQrCodeValid(data))
+    {
+        QStringList dataList = data.split(';');
+        mPID = dataList.value(0);
+        mPrivateKey = dataList.value(1);
+        mTotalCost = dataList.value(2).toDouble();
+        mBlockNumber = dataList.value(3).toInt();
+        updateQuickExchange(mTotalCost);
+        mClientHandler->saleDetails(mPID, mBlockNumber);
+    }
+    else
+    {
+        emit saleDetailsReceived(false);
     }
 }
 

@@ -13,6 +13,7 @@ BaseScreen {
     screenHeader.actionButtonState: true
     action: checkingData
     onErrorMessage: busyIndicator.running = false
+    onNetworkReplyError: pushScreen.openPaymentScreen(false, true)
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
@@ -31,6 +32,11 @@ BaseScreen {
                                                       coinsAmountTextField.text, fee)
             }
         }
+    }
+
+    Connections {
+        target: sendCoinScreen
+        onAttentionAccepted: qRScanningView.resetView()
     }
 
     StackLayout {
@@ -129,8 +135,13 @@ BaseScreen {
         QRScanningView {
             id: qRScanningView
             onQrCodeDetected: {
-                receiversAddress.text = message
-                changeBehaviorButton()
+                if (GraftClient.isCorrectAddress(message)) {
+                    receiversAddress.text = message
+                    changeBehaviorButton()
+                } else {
+                    screenDialog.text = qsTr("QR Code data is wrong. \nPlease, scan correct QR Code.")
+                    screenDialog.open()
+                }
             }
         }
     }
@@ -148,15 +159,23 @@ BaseScreen {
 
     function checkingData() {
         if (receiversAddress.text.length === 0) {
-            screenDialog.text = qsTr("Receiver's address is empty! Please input correct account address.")
+            screenDialog.text = qsTr("Receiver's address is empty! Please input correct account " +
+                                     "address.")
             screenDialog.open()
         } else if (receiversAddress.text.length !== 106 && receiversAddress.text.length !== 95) {
             screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("Receiver's address is invalid! Please input correct account address.")
+            screenDialog.text = qsTr("Receiver's address is invalid! Please input correct " +
+                                     "account address.")
             screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
+            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! " +
+                                     "Please input correct value.")
+            screenDialog.open()
+        } else if (GraftClient.balance(GraftClientTools.UnlockedBalance) < coinsAmountTextField.text) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("The amount which you want to send is higher than you have " +
+                                     "on your wallet. Please, enter a smaller amount.")
             screenDialog.open()
         } else {
             disableScreen()

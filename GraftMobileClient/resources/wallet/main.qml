@@ -68,6 +68,7 @@ GraftApplicationWindow {
             mainLayout.enableScreen()
             checkAccountExists()
             desktopMessageDialog.close()
+            mainLayout.currentItem.networkReplyError()
         }
     }
 
@@ -80,6 +81,7 @@ GraftApplicationWindow {
             mainLayout.enableScreen()
             checkAccountExists()
             mobileMessageDialog.close()
+            mainLayout.currentItem.networkReplyError()
         }
     }
 

@@ -15,6 +15,7 @@ Page {
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 
+    signal networkReplyError()
     signal attentionAccepted()
     signal errorMessage()
 
@@ -42,7 +43,10 @@ Page {
         topMargin: (parent.height - desktopDialog.height) / 2
         leftMargin: (parent.width - desktopDialog.width) / 2
         title: qsTr("Attention")
-        onConfirmed: desktopDialog.close()
+        onConfirmed: {
+            attentionAccepted()
+            desktopDialog.close()
+        }
     }
 
     MessageDialog {
@@ -77,7 +81,8 @@ Page {
         } else if (price === "") {
             screenDialog.text = qsTr("Please, enter the item price.")
         } else if ((0.0001 > price) || (price > 100000.0)) {
-            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! Please input correct value.")
+            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! " +
+                                     "Please input correct value.")
         } else {
             return false
         }

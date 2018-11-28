@@ -21,7 +21,8 @@ ColumnLayout {
     LinearEditItem {
         id: confirmPasswordField
         maximumLength: 50
-        title: Detector.isPlatform(Platform.Android) ? qsTr("Confirm password") : qsTr("Confirm password:")
+        title: Detector.isPlatform(Platform.Android) ? qsTr("Confirm password") :
+                                                       qsTr("Confirm password:")
         passwordMode: true
         onTextChanged: comparePassword(passwordField.text, confirmPasswordField.text)
     }

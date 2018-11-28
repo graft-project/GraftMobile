@@ -2,6 +2,7 @@
 #include "barcodeimageprovider.h"
 #include "api/graftbasehandler.h"
 #include "api/v1/graftgenericapiv1.h"
+#include "graftclientconstants.h"
 #include "quickexchangemodel.h"
 #include "graftclienttools.h"
 #include "graftbaseclient.h"
@@ -141,7 +142,7 @@ void GraftBaseClient::transfer(const QString &address, const QString &amount)
     if (handler)
     {
         connect(handler, &GraftBaseHandler::transferReceived,
-                this, &GraftBaseClient::receiveTransfer, Qt::UniqueConnection);
+                this, &GraftBaseClient::transferReceived, Qt::UniqueConnection);
         QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
                                                'f', 0);
         handler->transfer(address, customAmount);
@@ -154,7 +155,7 @@ void GraftBaseClient::transferFee(const QString &address, const QString &amount)
     if (handler)
     {
         connect(handler, &GraftBaseHandler::transferFeeReceived,
-                this, &GraftBaseClient::receiveTransferFee, Qt::UniqueConnection);
+                this, &GraftBaseClient::transferFeeReceived, Qt::UniqueConnection);
         QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
                                                'f', 0);
         handler->transferFee(address, customAmount);
@@ -200,9 +201,22 @@ void GraftBaseClient::registerTypes(QQmlEngine *engine)
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
-    qmlRegisterUncreatableType<GraftClientTools>("org.graft", 1, 0,
-                                                 "GraftClientTools",
-                                                 "You cannot create an instance of GraftClientTools type.");
+    qmlRegisterSingletonType<GraftClientTools>("org.graft", 1, 0, "GraftClientTools",
+        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+
+        GraftClientTools *tools = new GraftClientTools();
+        return tools;
+    });
+    qmlRegisterSingletonType<GraftClientConstants>("org.graft", 1, 0, "GraftClientConstants",
+        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+
+        GraftClientConstants *constants = new GraftClientConstants();
+        return constants;
+    });
 }
 
 QString GraftBaseClient::qrCodeImage() const
@@ -379,22 +393,6 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
     }
 }
 
-void GraftBaseClient::receiveTransfer(int result)
-{
-    emit transferReceived(result == 0);
-}
-
-void GraftBaseClient::receiveTransferFee(int result, double fee)
-{
-    bool status = result == 0;
-    double lFee = 0;
-    if (status)
-    {
-        lFee = GraftGenericAPIv1::toCoins(fee);
-    }
-    emit transferFeeReceived(status, lFee);
-}
-
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
 {
     if(!mAccountModel)
@@ -505,17 +503,6 @@ bool GraftBaseClient::useOwnUrlAddress() const
     return false;
 }
 
-bool GraftBaseClient::isValidIp(const QString &ip) const
-{
-    QHostAddress validateIp;
-    return validateIp.setAddress(ip);
-}
-
-bool GraftBaseClient::isValidUrl(const QString &urlAddress) const
-{
-    return QUrl(urlAddress, QUrl::StrictMode).isValid();
-}
-
 double GraftBaseClient::balance(int type) const
 {
     QString rValue = QString::number(mBalances.value(type, 0), 'f', 4);
@@ -549,12 +536,6 @@ bool GraftBaseClient::checkPassword(const QString &password) const
         return mAccountManager->password() == password;
     }
     return false;
-}
-
-void GraftBaseClient::copyToClipboard(const QString &data) const
-{
-    QClipboard *clipboard = QGuiApplication::clipboard();
-    clipboard->setText(data);
 }
 
 QString GraftBaseClient::networkName() const
@@ -615,11 +596,6 @@ QStringList GraftBaseClient::httpsSeedSupernodes() const
     default:
         return QStringList();
     }
-}
-
-QString GraftBaseClient::wideSpacingSimplify(const QString &seed) const
-{
-    return seed.simplified();
 }
 
 bool GraftBaseClient::isBalanceUpdated() const

@@ -55,7 +55,7 @@ BaseStackViewer {
     function openPaymentScreen(state, isSendFlow) {
         stack.push("qrc:/PaymentScreen.qml", {"pushScreen": walletsTransitions(),
                    "title": isSendFlow ? qsTr("Send") : qsTr("Pay"), "isSpacing": true,
-                   "completeText": isSendFlow ? qsTr("Send complete!") : qsTr("Paid complete!"),
+                   "completeText": isSendFlow ? qsTr("Sending completed!") : qsTr("Payment completed!"),
                    "screenState": state, "pushMainScreen": openBalanceScreen})
     }
 
@@ -70,8 +70,9 @@ BaseStackViewer {
 
     function openAddressScreen(balance, accountName, imagePath, accountNumber, type) {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions(),
-                   "accountBalance": balance, "accountName": accountName, "accountImage": imagePath,
-                   "balanceState": "coinsAddress", "accountNumber": accountNumber, "accountType": type})
+                   "accountBalance": balance, "accountName": accountName,
+                   "accountImage": imagePath, "balanceState": "coinsAddress",
+                   "accountNumber": accountNumber, "accountType": type})
     }
 
     function openSendConfirmationScreen(receiversAddress, coinsAmount, fee) {

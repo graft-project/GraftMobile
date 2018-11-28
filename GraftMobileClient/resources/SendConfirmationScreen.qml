@@ -67,7 +67,8 @@ BaseScreen {
                         pixelSize: 16
                         bold: true
                     }
-                    text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Amount:") : qsTr("Amount")
+                    text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Amount:") :
+                                                                                 qsTr("Amount")
                 }
 
                 Label {
@@ -85,7 +86,8 @@ BaseScreen {
                         pixelSize: 16
                         bold: true
                     }
-                    text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Fee:") : qsTr("Fee")
+                    text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Fee:") :
+                                                                                 qsTr("Fee")
                 }
 
                 Label {
