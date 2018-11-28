@@ -13,6 +13,7 @@ BaseScreen {
     screenHeader.actionButtonState: true
     action: checkingData
     onErrorMessage: busyIndicator.running = false
+    onNetworkReplyError: pushScreen.openPaymentScreen(false, true)
 
     Component.onCompleted: {
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
