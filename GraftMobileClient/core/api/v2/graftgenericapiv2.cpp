@@ -67,7 +67,7 @@ double GraftGenericAPIv2::toAtomic(double coins)
 
 uint64_t GraftGenericAPIv2::toAtomic(const QString &coins)
 {
-    return coins.toDouble() * 10000000000;
+    return static_cast<uint64_t>(coins.toDouble() * 10000000000);
 }
 
 QString GraftGenericAPIv2::accountPlaceholder() const
