@@ -4,13 +4,17 @@ contains(DEFINES, POS_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/pos
 DISTFILES += \
     $$PWD/pos/AndroidManifest.xml \
-    $$PWD/pos/gradle/wrapper/gradle-wrapper.jar \
     $$PWD/pos/gradlew \
+    $$PWD/pos/gradlew.bat \
+    $$PWD/pos/build.gradle \
+    $$PWD/pos/gradle/wrapper/gradle-wrapper.jar \
+    $$PWD/pos/gradle/wrapper/gradle-wrapper.properties \
     $$PWD/pos/res/values/libs.xml \
     $$PWD/pos/res/values/styles.xml \
-    $$PWD/pos/build.gradle \
-    $$PWD/pos/gradle/wrapper/gradle-wrapper.properties \
-    $$PWD/pos/gradlew.bat
+    $$PWD/pos/res/mipmap-anydpi-v26/ic_launcher.xml \
+    $$PWD/pos/res/mipmap-anydpi-v26/ic_launcher_round.xml \
+    $$PWD/pos/res/drawable/splashscreen.xml \
+    $$PWD/pos/res/layout/splashscreen.xml
 }
 
 contains(DEFINES, WALLET_BUILD) {

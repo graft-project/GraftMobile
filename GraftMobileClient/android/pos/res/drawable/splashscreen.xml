@@ -3,13 +3,13 @@
     <item>
         <bitmap android:src="@mipmap/bg"
                 android:gravity="clip_horizontal|fill_horizontal|center_vertical"/>
-    </item>	
+    </item>
     <item>
         <bitmap android:src="@mipmap/logo"
                 android:gravity="center"
                 android:antialias="true"
                 android:dither="true"
-                android:scaleType = "center"
+                android:scaleType="center"
                 android:filter="true"/>
     </item>
 </layer-list>
