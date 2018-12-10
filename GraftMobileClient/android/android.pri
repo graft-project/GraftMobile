@@ -21,13 +21,17 @@ contains(DEFINES, WALLET_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/wallet
 DISTFILES += \
     $$PWD/wallet/AndroidManifest.xml \
-    $$PWD/wallet/gradle/wrapper/gradle-wrapper.jar \
     $$PWD/wallet/gradlew \
+    $$PWD/wallet/gradlew.bat \
+    $$PWD/wallet/build.gradle \
+    $$PWD/wallet/gradle/wrapper/gradle-wrapper.jar \
+    $$PWD/wallet/gradle/wrapper/gradle-wrapper.properties \
     $$PWD/wallet/res/values/libs.xml \
     $$PWD/wallet/res/values/styles.xml \
-    $$PWD/wallet/build.gradle \
-    $$PWD/wallet/gradle/wrapper/gradle-wrapper.properties \
-    $$PWD/wallet/gradlew.bat
+    $$PWD/wallet/res/mipmap-anydpi-v26/ic_launcher.xml \
+    $$PWD/wallet/res/mipmap-anydpi-v26/ic_launcher_round.xml \
+    $$PWD/wallet/res/drawable/splashscreen.xml\
+    $$PWD/wallet/res/layout/splashscreen.xml
 }
 
 SSL_PWD = $$PWD/3rdparty/openssl
