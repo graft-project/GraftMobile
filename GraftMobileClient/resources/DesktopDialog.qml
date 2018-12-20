@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Dialog {
+    id: root
     property alias text: message.text
 
     signal confirmed()
@@ -11,6 +12,7 @@ Dialog {
     modal: true
     padding: 5
     margins: 30
+    focus: true
     contentItem: ColumnLayout {
         spacing: 0
 
@@ -25,11 +27,18 @@ Dialog {
         }
 
         Button {
+            id: test
             flat: true
+            focus: true
             text: qsTr("Ok")
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             onClicked: confirmed()
+            Keys.onPressed: {
+                if (event.key === Qt.Key_Return) {
+                    clicked()
+                }
+            }
         }
     }
 }
