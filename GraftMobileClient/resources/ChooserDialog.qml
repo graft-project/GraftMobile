@@ -17,11 +17,13 @@ Dialog {
     modal: true
     padding: 5
     margins: 18
+    focus: true
     contentItem: ColumnLayout {
         spacing: 0
 
         TextField {
             id: textField
+            focus: true
             visible: !dialogMode
             Layout.fillWidth: true
             Layout.minimumWidth: 250
@@ -30,6 +32,11 @@ Dialog {
             font.pixelSize: 24
             echoMode: TextInput.Password
             passwordCharacter: '•'
+            Keys.onPressed: {
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    processing(leftButton)
+                }
+            }
         }
 
         Label {
@@ -52,13 +59,22 @@ Dialog {
                 id: leftButton
                 flat: true
                 onClicked: confirmed()
+                Keys.onEnterPressed: processing(leftButton)
+                Keys.onReturnPressed: processing(leftButton)
             }
 
             Button {
                 id: rightButton
                 flat: true
                 onClicked: denied()
+                Keys.onEnterPressed: processing(rightButton)
+                Keys.onReturnPressed: processing(rightButton)
             }
         }
+    }
+
+    function processing(buttonId) {
+        buttonId.clicked()
+        textField.focus = true
     }
 }
