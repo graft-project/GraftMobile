@@ -3,7 +3,6 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Dialog {
-    id: root
     property alias text: message.text
 
     signal confirmed()
@@ -27,18 +26,20 @@ Dialog {
         }
 
         Button {
-            id: test
+            id: confirmButton
             flat: true
             focus: true
             text: qsTr("Ok")
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             onClicked: confirmed()
-            Keys.onPressed: {
-                if (event.key === Qt.Key_Return) {
-                    clicked()
-                }
-            }
+            Keys.onEnterPressed: processing()
+            Keys.onReturnPressed: processing()
         }
+    }
+
+    function processing() {
+        confirmButton.clicked()
+        confirmButton.focus = true
     }
 }

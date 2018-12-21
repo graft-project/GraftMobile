@@ -33,8 +33,8 @@ Dialog {
             echoMode: TextInput.Password
             passwordCharacter: '•'
             Keys.onPressed: {
-                if (event.key === Qt.Key_Return) {
-                    leftButton.clicked()
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    processing(leftButton)
                 }
             }
         }
@@ -59,25 +59,22 @@ Dialog {
                 id: leftButton
                 flat: true
                 onClicked: confirmed()
-                Keys.onPressed: {
-                    if (event.key === Qt.Key_Return) {
-                        clicked()
-                        textField.focus = true
-                    }
-                }
+                Keys.onEnterPressed: processing(leftButton)
+                Keys.onReturnPressed: processing(leftButton)
             }
 
             Button {
                 id: rightButton
                 flat: true
                 onClicked: denied()
-                Keys.onPressed: {
-                    if (event.key === Qt.Key_Return) {
-                        clicked()
-                        textField.focus = true
-                    }
-                }
+                Keys.onEnterPressed: processing(rightButton)
+                Keys.onReturnPressed: processing(rightButton)
             }
         }
+    }
+
+    function processing(buttonId) {
+        buttonId.clicked()
+        textField.focus = true
     }
 }
