@@ -37,17 +37,10 @@ SwipeDelegate {
         swipe.close()
     }
 
-    SelectedProductDelegate {
+    contentItem: SelectedProductDelegate {
         id: selectedProductDelegate
-
-        // TODO: QTBUG-50992. QQC2: Object destroyed during incubation.
-        // For more details see https://bugreports.qt.io/browse/QTBUG-50992
-        x: contentItem.x
-        y: contentItem.y
-        z: contentItem.z
         width: contentItem.width
         height: contentItem.height
-
         color: selectState ? ColorFactory.color(DesignFactory.Highlighting) : "#ffffff"
 
         CheckBox {
