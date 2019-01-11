@@ -14,7 +14,8 @@ DISTFILES += \
     $$PWD/pos/res/mipmap-anydpi-v26/ic_launcher.xml \
     $$PWD/pos/res/mipmap-anydpi-v26/ic_launcher_round.xml \
     $$PWD/pos/res/drawable/splashscreen.xml \
-    $$PWD/pos/res/layout/splashscreen.xml
+    $$PWD/pos/res/layout/splashscreen.xml\
+    $$PWD/pos/res/xml/provider_paths.xml
 }
 
 contains(DEFINES, WALLET_BUILD) {

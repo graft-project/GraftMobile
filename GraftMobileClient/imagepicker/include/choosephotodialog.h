@@ -10,10 +10,9 @@ class ChoosePhotoDialog : public QObject
     Q_OBJECT
     friend class ChoosePhotoDialogPrivate;
 public:
-    enum DialogType{
+    enum DialogType {
         TypePhotoLibrary = 0,
-        TypeCamera,
-        TypeSavedPhotoAlbums
+        TypeCamera
     };
     Q_ENUM(DialogType)
 
