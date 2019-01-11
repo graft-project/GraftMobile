@@ -114,7 +114,10 @@ Item {
                     }
                 }
             }
-            onClicked: popUp.open()
+            onClicked: {
+                ImagePicker.requestCameraPermission()
+                popUp.open()
+            }
         }
 
         Item {

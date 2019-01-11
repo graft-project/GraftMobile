@@ -25,12 +25,14 @@ Popup {
             onClicked: {
                 ImagePicker.openGallary()
                 popUp.close()
+                console.log("ABOUN BOTTON -->", ImagePicker.hasCameraPermission())
             }
         }
 
         SelectImageButton {
             selectIcon: "qrc:/imgs/photo.png"
             selectText: qsTr("Open camera")
+            visibilityAttentionText: !ImagePicker.hasCameraPermission()
             onClicked: {
                 ImagePicker.openCamera()
                 popUp.close()
