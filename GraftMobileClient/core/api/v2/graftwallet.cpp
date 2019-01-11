@@ -385,6 +385,7 @@ void GraftWallet::closeWallet()
     {
         mWallet->pauseRefresh();
         mManager->closeWallet(mWallet);
+        delete mWallet;
         mWallet = nullptr;
     }
 }
