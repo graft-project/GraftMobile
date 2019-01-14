@@ -115,7 +115,6 @@ Item {
                 }
             }
             onClicked: {
-                ImagePicker.requestCameraPermission()
                 popUp.cameraButtonEnabled = ImagePicker.hasCameraPermission()
                 popUp.open()
             }

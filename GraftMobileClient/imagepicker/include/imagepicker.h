@@ -2,6 +2,7 @@
 #define IMAGEPICKER_H
 
 #include "choosephotodialog.h"
+
 #include <QObject>
 #include <QUrl>
 
@@ -23,9 +24,10 @@ public:
 
 signals:
     void imageSelected(QUrl path) const;
+    void cameraAccessed(bool result) const;
 
 private slots:
-    void unlockCamera() const;
+    void unlockCamera(bool result) const;
 
 private:
     void saveImage(const QImage &image) const;
@@ -35,5 +37,6 @@ private:
 #ifdef Q_OS_ANDROID
     AndroidPermission *mAndroidPermission;
 #endif
+
 };
 #endif // IMAGEPICKER_H
