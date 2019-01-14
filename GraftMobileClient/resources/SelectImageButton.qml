@@ -5,9 +5,10 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 Button {
+    id: selectImageButton
+
     property alias selectIcon: selectIcon.source
     property alias selectText: selectText.text
-    property bool visibilityAttentionText: false
 
     Layout.fillWidth: true
     Layout.preferredHeight: 70
@@ -19,46 +20,40 @@ Button {
         y: 0
         height: background.parent.height
     }
-    enabled: !visibilityAttentionText
     contentItem: Item {
         anchors.fill: parent
 
-//        Rectangle {
-//            anchors.fill: parent
-//            color: visibilityAttentionText ? "#cecece" : "transparent"
+        RowLayout {
+            spacing: 20
+            anchors.verticalCenter: parent.verticalCenter
 
-            RowLayout {
-                spacing: 20
-                anchors.verticalCenter: parent.verticalCenter
+            Image {
+                id: selectIcon
+                Layout.leftMargin: 15
+                Layout.preferredHeight: 50
+                Layout.preferredWidth: 50
+                Layout.alignment: Qt.AlignLeft
+                opacity: selectImageButton.enabled ? 1.0 : 0.5
+            }
 
-                Image {
-                    id: selectIcon
-                    Layout.leftMargin: 15
-                    Layout.preferredHeight: 50
-                    Layout.preferredWidth: 50
-                    Layout.alignment: Qt.AlignLeft
-                    opacity: 0.5
+            ColumnLayout {
+                Layout.alignment: Qt.AlignLeft
+
+                Label {
+                    id: selectText
+                    font.pixelSize: 20
+                    color: selectImageButton.enabled ? "#3A3E3C" : "#99A0AD"
                 }
 
-                ColumnLayout {
-                    Layout.alignment: Qt.AlignLeft
-
-                    Label {
-                        id: selectText
-                        font.pixelSize: 20
-                        color: visibilityAttentionText ? "#818181" : "#3A3E3C"
-                    }
-
-                    Label {
-                        id: attentionText
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        visible: visibilityAttentionText
-                        color: "#60F33939"
-                        font.pixelSize: 12
-                        text: qsTr("Camera Access is disabled.")
-                    }
+                Label {
+                    id: attentionText
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    visible: !selectImageButton.enabled
+                    color: "#F33939"
+                    font.pixelSize: 12
+                    text: qsTr("Camera Access is disabled.")
                 }
             }
         }
     }
-//}
+}

@@ -5,6 +5,9 @@ import QtQuick.Layouts 1.3
 
 Popup {
     id: popUp
+
+    property alias cameraButtonEnabled: openCameraButton.enabled
+
     padding: 0
     topPadding: 0
     bottomPadding: 0
@@ -14,6 +17,7 @@ Popup {
     height: contentHeight
     topMargin: parent.height / 2
     leftMargin: parent.width / 2 - (popUp.width - 30) / 2
+    onOpened: cameraButtonEnabled = ImagePicker.hasCameraPermission()
 
     ColumnLayout {
         spacing: 0
@@ -25,14 +29,13 @@ Popup {
             onClicked: {
                 ImagePicker.openGallary()
                 popUp.close()
-                console.log("ABOUN BOTTON -->", ImagePicker.hasCameraPermission())
             }
         }
 
         SelectImageButton {
+            id: openCameraButton
             selectIcon: "qrc:/imgs/photo.png"
             selectText: qsTr("Open camera")
-            visibilityAttentionText: !ImagePicker.hasCameraPermission()
             onClicked: {
                 ImagePicker.openCamera()
                 popUp.close()
