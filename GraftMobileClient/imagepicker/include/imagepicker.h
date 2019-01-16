@@ -6,9 +6,7 @@
 #include <QObject>
 #include <QUrl>
 
-#ifdef Q_OS_ANDROID
-class AndroidPermission;
-#endif
+class AbstractPermission;
 
 class ImagePicker : public QObject
 {
@@ -32,11 +30,9 @@ private slots:
 private:
     void saveImage(const QImage &image) const;
     void getImage(ChoosePhotoDialog::DialogType type) const;
+
     QString mImagePath;
-
-#ifdef Q_OS_ANDROID
-    AndroidPermission *mAndroidPermission;
-#endif
-
+    AbstractPermission *mAbstractPermission;
 };
+
 #endif // IMAGEPICKER_H
