@@ -18,6 +18,7 @@ Dialog {
     padding: 5
     margins: 18
     focus: true
+    onOpened: textField.focus = true
     contentItem: ColumnLayout {
         spacing: 0
 
