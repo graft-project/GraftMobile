@@ -1,11 +1,11 @@
 #ifndef IMAGEPICKER_H
 #define IMAGEPICKER_H
 
-#include "abstractcamerapermission.h"
-#include "choosephotodialog.h"
-
 #include <QObject>
 #include <QUrl>
+
+#include "abstractcamerapermission.h"
+#include "choosephotodialog.h"
 
 class ImagePicker : public QObject
 {
