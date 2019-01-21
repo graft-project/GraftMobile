@@ -107,7 +107,7 @@ Item {
             }
             onClicked: {
                 if (Detector.isPlatform(Platform.IOS)) {
-                    popUp.open()
+                    popUp.opened()
                 } else {
                     fileDialog.open()
                 }

@@ -114,10 +114,7 @@ Item {
                     }
                 }
             }
-            onClicked: {
-                popUp.cameraButtonEnabled = ImagePicker.hasCameraPermission()
-                popUp.open()
-            }
+            onClicked: popUp.opened()
         }
 
         Item {

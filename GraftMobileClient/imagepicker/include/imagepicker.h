@@ -1,12 +1,11 @@
 #ifndef IMAGEPICKER_H
 #define IMAGEPICKER_H
 
+#include "abstractcamerapermission.h"
 #include "choosephotodialog.h"
 
 #include <QObject>
 #include <QUrl>
-
-class AbstractPermission;
 
 class ImagePicker : public QObject
 {
@@ -17,22 +16,23 @@ public:
     Q_INVOKABLE void openCamera() const;
     Q_INVOKABLE void openGallary() const;
 
-    Q_INVOKABLE bool hasCameraPermission() const;
+    Q_INVOKABLE int hasCameraPermission() const;
     Q_INVOKABLE void requestCameraPermission() const;
 
 signals:
     void imageSelected(QUrl path) const;
-    void cameraAccessed(bool result) const;
+    void cameraPermissionGranted(int result) const;
 
 private slots:
-    void unlockCamera(bool result) const;
+    void unlockCamera(int result) const;
 
 private:
     void saveImage(const QImage &image) const;
     void getImage(ChoosePhotoDialog::DialogType type) const;
+    void registerRVCameraPermission() const;
 
     QString mImagePath;
-    AbstractPermission *mAbstractPermission;
+    AbstractCameraPermission *mCameraPermission;
 };
 
 #endif // IMAGEPICKER_H

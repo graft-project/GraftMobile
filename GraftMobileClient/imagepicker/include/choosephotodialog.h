@@ -27,6 +27,8 @@ public:
     double compressionQuality() const;
     void setCompressionQuality(double compressionQuality);
 
+    bool isSourceTypeAvailable() const;
+
     QImage choosenImage() const;
 
 signals:

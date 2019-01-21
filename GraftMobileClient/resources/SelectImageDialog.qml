@@ -2,12 +2,10 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import org.camera.permission 1.0
 
 Popup {
     id: popUp
-
-    property alias cameraButtonEnabled: openCameraButton.enabled
-
     padding: 0
     topPadding: 0
     bottomPadding: 0
@@ -17,7 +15,6 @@ Popup {
     height: contentHeight
     topMargin: parent.height / 2
     leftMargin: parent.width / 2 - (popUp.width - 30) / 2
-    onOpened: cameraButtonEnabled = ImagePicker.hasCameraPermission()
 
     ColumnLayout {
         spacing: 0
@@ -41,5 +38,14 @@ Popup {
                 popUp.close()
             }
         }
+    }
+
+    function opened() {
+        if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.None) {
+            openCameraButton.enabled = true
+        } else {
+            openCameraButton.enabled = ImagePicker.hasCameraPermission() === AbstractCameraPermission.Granted
+        }
+        popUp.open()
     }
 }
