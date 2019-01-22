@@ -121,7 +121,8 @@ void GraftGenericAPIv1::restoreAccount(const QString &seed, const QString &passw
             this, &GraftGenericAPIv1::receiveRestoreAccountResponse);
 }
 
-void GraftGenericAPIv1::transferFee(const QString &address, const QString &amount)
+void GraftGenericAPIv1::transferFee(const QString &address, const QString &amount,
+                                    const QString &paymentID)
 {
     mRetries = 0;
     if (mAccountData.isEmpty())
@@ -133,6 +134,7 @@ void GraftGenericAPIv1::transferFee(const QString &address, const QString &amoun
     QJsonObject params;
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Address"), address);
+    params.insert(QStringLiteral("PaymentID"), paymentID);
     params.insert(QStringLiteral("Amount"), amount);
     QJsonObject data = buildMessage(QStringLiteral("GetTransferFee"), params);
     QByteArray array = QJsonDocument(data).toJson();
@@ -143,7 +145,8 @@ void GraftGenericAPIv1::transferFee(const QString &address, const QString &amoun
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveTransferFeeResponse);
 }
 
-void GraftGenericAPIv1::transfer(const QString &address, const QString &amount)
+void GraftGenericAPIv1::transfer(const QString &address, const QString &amount,
+                                 const QString &paymentID)
 {
     mRetries = 0;
     if (mAccountData.isEmpty())
@@ -155,6 +158,7 @@ void GraftGenericAPIv1::transfer(const QString &address, const QString &amount)
     QJsonObject params;
     params.insert(QStringLiteral("Account"), accountPlaceholder());
     params.insert(QStringLiteral("Address"), address);
+    params.insert(QStringLiteral("PaymentID"), paymentID);
     params.insert(QStringLiteral("Amount"), amount);
     QJsonObject data = buildMessage(QStringLiteral("Transfer"), params);
     QByteArray array = QJsonDocument(data).toJson();
