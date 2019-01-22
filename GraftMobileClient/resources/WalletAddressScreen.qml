@@ -78,7 +78,9 @@ BaseScreen {
                 spacing: 0
                 anchors {
                     fill: parent
-                    margins: 15
+                    leftMargin: 15
+                    rightMargin: 15
+                    bottomMargin: 15
                 }
 
                 Label {
