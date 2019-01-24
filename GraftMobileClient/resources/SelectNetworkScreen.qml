@@ -33,7 +33,6 @@ BaseScreen {
                     width: 5
                 }
                 flickableDirection: Flickable.AutoFlickIfNeeded
-//                clip: true
                 contentHeight: networkTypes.height
 
                 ColumnLayout {

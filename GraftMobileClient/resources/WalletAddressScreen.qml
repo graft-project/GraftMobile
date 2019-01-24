@@ -56,10 +56,7 @@ BaseScreen {
                 cache: false
                 height: (parent.height > parent.width ? parent.width : parent.height) - 20
                 width: height
-                anchors {
-                    centerIn: parent
-                    margins: 10
-                }
+                anchors.centerIn: parent
 
                 PopupMessageLabel {
                     id: walletAddressLabel
@@ -72,7 +69,7 @@ BaseScreen {
         Rectangle {
             color: "#ffffff"
             Layout.fillWidth: true
-            Layout.preferredHeight: 180
+            Layout.preferredHeight: 144
 
             ColumnLayout {
                 spacing: 0
@@ -88,6 +85,7 @@ BaseScreen {
                     Layout.fillWidth: true
                     Layout.leftMargin: 20
                     Layout.rightMargin: 20
+                    Layout.alignment: Qt.AlignTop
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WrapAnywhere
                     color: "#010101"

@@ -13,6 +13,7 @@ BaseScreen {
     state: screenState ? "overviewWallet" : "createWallet"
 
     Item {
+        id: rootScreen
         anchors {
             fill: parent
             topMargin: 15
@@ -43,7 +44,18 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
             }
-            mnemonicPhrase: GraftClient.getSeed()
+            mnemonicPhrase: "verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification"//GraftClient.getSeed()
+            Component.onCompleted: {
+                console.log("->", mnemonicPhraseView.implicitWidth, "---", rootScreen.width)
+                var ttt
+                ttt = rootScreen.width - mnemonicPhraseView.implicitWidth
+                if (ttt > 0) {
+                    console.log("----Good DONT SCALE----")
+                    mnemonicPhraseView.bbb = true
+                } else {
+                    console.log("----BAD----")
+                }
+            }
         }
 
         PopupMessageLabel {
