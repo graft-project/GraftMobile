@@ -28,6 +28,8 @@ BaseScreen {
                 top: parent.top
                 left: parent.left
                 right: parent.right
+                leftMargin: 10
+                rightMargin: 10
             }
             horizontalAlignment: Label.AlignHCenter
             color: "#ce2121"
@@ -44,19 +46,27 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
             }
-            mnemonicPhrase: "verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification verification"//GraftClient.getSeed()
-            Component.onCompleted: {
-                console.log("->", mnemonicPhraseView.implicitWidth, "---", rootScreen.width)
-                var ttt
-                ttt = rootScreen.width - mnemonicPhraseView.implicitWidth
-                if (ttt > 0) {
-                    console.log("----Good DONT SCALE----")
-                    mnemonicPhraseView.bbb = true
-                } else {
-                    console.log("----BAD----")
-                }
-            }
+            mnemonicPhrase: GraftClient.getSeed()// The longest work in list is "verification"
+            screenWidth: root.width
         }
+
+//        Label {
+//            id: mnemonicPhraseView
+//            font.pixelSize: 16
+//            anchors {
+//                verticalCenterOffset: Detector.isMobile() ? -15 : -20
+//                verticalCenter: parent.verticalCenter
+//                left: parent.left
+//                right: parent.right
+//                leftMargin: 25
+//                rightMargin: 25
+//            }
+//            font.wordSpacing: 25
+//            horizontalAlignment: Qt.AlignHCenter
+//            Layout.alignment: Label.AlignHCenter
+//            wrapMode: Label.WordWrap
+//            text: GraftClient.getSeed()
+//        }
 
         PopupMessageLabel {
             id: mnemonicPhraseLabel
