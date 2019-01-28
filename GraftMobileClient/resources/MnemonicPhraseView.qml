@@ -27,7 +27,7 @@ GridLayout {
             horizontalAlignment: Qt.AlignHCenter
             Layout.alignment: Label.AlignHCenter
             Layout.columnSpan: (index === 24 && gridLayout.columns === 3) ? 3 : 1 //For 3
-            Layout.columnSpan: (index === 24 && gridLayout.columns === 4) ? 4 : 1 //For 4
+//            Layout.columnSpan: (index === 24 && gridLayout.columns === 4) ? 4 : 1 //For 4
             text: modelData
         }
     }
