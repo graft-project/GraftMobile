@@ -46,27 +46,8 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
             }
-            mnemonicPhrase: GraftClient.getSeed()// The longest work in list is "verification"
-            screenWidth: root.width
+            mnemonicPhrase: GraftClient.getSeed()
         }
-
-//        Label {
-//            id: mnemonicPhraseView
-//            font.pixelSize: 16
-//            anchors {
-//                verticalCenterOffset: Detector.isMobile() ? -15 : -20
-//                verticalCenter: parent.verticalCenter
-//                left: parent.left
-//                right: parent.right
-//                leftMargin: 25
-//                rightMargin: 25
-//            }
-//            font.wordSpacing: 25
-//            horizontalAlignment: Qt.AlignHCenter
-//            Layout.alignment: Label.AlignHCenter
-//            wrapMode: Label.WordWrap
-//            text: GraftClient.getSeed()
-//        }
 
         PopupMessageLabel {
             id: mnemonicPhraseLabel

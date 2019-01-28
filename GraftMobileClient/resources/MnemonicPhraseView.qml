@@ -8,26 +8,24 @@ GridLayout {
 
     property string mnemonicPhrase: ""
     readonly property int mnemonicPhraseSize: 25
-    property real screenWidth: 0
 
-    columns: 3//screenWidth > 420 ? 5 : 4 // Use the 3 colums
+    anchors {
+        verticalCenter: parent.verticalCenter
+        leftMargin: 0
+        rightMargin: 0
+    }
+    columns: 5
     rows: 5
     columnSpacing: 5
-    rowSpacing: 5 //Detector.detectDevice() === Platform.IPhoneSE ? 25 : 45 ---Old version to use
+    rowSpacing: Detector.detectDevice() === Platform.IPhoneSE ? 25 : 45
 
     Repeater {
         id: repeater
         model: mnemonicPhrase.split(' ', mnemonicPhraseSize)
 
         Label {
-            id: labelText
             font.pixelSize: 14
-            Layout.fillWidth: true
-            Layout.minimumWidth: 80
-            horizontalAlignment: Qt.AlignHCenter
-            Layout.alignment: Label.AlignHCenter
-            Layout.columnSpan: (index === 24 && gridLayout.columns === 3) ? 3 : 1 //For 3
-//            Layout.columnSpan: (index === 24 && gridLayout.columns === 4) ? 4 : 1 //For 4
+            Layout.alignment: Qt.AlignHCenter
             text: modelData
         }
     }
