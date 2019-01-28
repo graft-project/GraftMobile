@@ -13,7 +13,6 @@ BaseScreen {
     state: screenState ? "overviewWallet" : "createWallet"
 
     Item {
-        id: rootScreen
         anchors {
             fill: parent
             topMargin: 15
