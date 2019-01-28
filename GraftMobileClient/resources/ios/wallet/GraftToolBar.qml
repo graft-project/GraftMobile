@@ -15,7 +15,7 @@ BaseGraftToolBar {
     }
 
     RowLayout {
-        spacing: (parent.width - walletButton.width * 5) / 10
+        spacing: (parent.width - walletButton.width * 5) / 5
         anchors {
             topMargin: Detector.detectDevice() === Platform.IPhoneX ? 3 : 0
             top: parent.top
