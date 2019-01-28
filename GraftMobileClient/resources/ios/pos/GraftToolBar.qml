@@ -14,7 +14,7 @@ BaseGraftToolBar {
     }
 
     RowLayout {
-        spacing: (parent.width - storeButton.width * 4) / 6
+        spacing: (parent.width - storeButton.width * 4) / 4
         anchors {
             topMargin: Detector.detectDevice() === Platform.IPhoneX ? 3 : 0
             top: parent.top

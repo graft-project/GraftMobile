@@ -13,7 +13,6 @@ BaseScreen {
     state: screenState ? "overviewWallet" : "createWallet"
 
     Item {
-        id: rootScreen
         anchors {
             fill: parent
             topMargin: 15
@@ -46,7 +45,7 @@ BaseScreen {
                 left: parent.left
                 right: parent.right
             }
-            mnemonicPhrase: GraftClient.getSeed()// The longest work in list is "verification"
+            mnemonicPhrase: GraftClient.getSeed()// The longest word in list is "verification"
             screenWidth: root.width
         }
 
