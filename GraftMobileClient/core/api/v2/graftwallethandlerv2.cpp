@@ -110,15 +110,17 @@ void GraftWalletHandlerV2::updateBalance()
     }
 }
 
-void GraftWalletHandlerV2::transferFee(const QString &address, const QString &amount)
+void GraftWalletHandlerV2::transferFee(const QString &address, const QString &amount,
+                                       const QString &paymentID)
 {
     if (mWallet)
     {
-        mWallet->prepareTransactionAsync(address, amount.toULongLong());
+        mWallet->prepareTransactionAsync(address, amount.toULongLong(), paymentID);
     }
 }
 
-void GraftWalletHandlerV2::transfer(const QString &address, const QString &amount)
+void GraftWalletHandlerV2::transfer(const QString &address, const QString &amount,
+                                    const QString &paymentID)
 {
     if (mWallet)
     {

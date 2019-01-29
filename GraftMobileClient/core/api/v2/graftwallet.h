@@ -34,8 +34,10 @@ public:
     uint64_t unlockedBalance() const;
     uint64_t lockedBalance() const;
 
-    bool prepareTransaction(const QString &address, uint64_t amount);
-    bool prepareTransactionAsync(const QString &address, uint64_t amount);
+    bool prepareTransaction(const QString &address, uint64_t amount,
+                            const QString paymentID = QString());
+    bool prepareTransactionAsync(const QString &address, uint64_t amount,
+                                 const QString paymentID = QString());
     bool prepareRTATransaction(const QVector<QPair<QString, uint64_t> > &addresses);
     bool prepareRTATransactionAsync(const QVector<QPair<QString, uint64_t> > &addresses);
     uint64_t currentTransactionFee() const;
@@ -44,7 +46,8 @@ public:
     void closeCurrentTransaction();
 
     QByteArrayList getRawCurrentTransaction() const;
-    QByteArrayList getRawTransaction(const QString &address, uint64_t amount);
+    QByteArrayList getRawTransaction(const QString &address, uint64_t amount,
+                                     const QString paymentID = QString());
     QByteArrayList getRawTransaction(const QVector<QPair<QString, uint64_t> > &addresses);
 
     void startRefresh();

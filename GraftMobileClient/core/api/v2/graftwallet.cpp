@@ -190,12 +190,14 @@ uint64_t GraftWallet::lockedBalance() const
     return 0;
 }
 
-bool GraftWallet::prepareTransaction(const QString &address, uint64_t amount)
+bool GraftWallet::prepareTransaction(const QString &address, uint64_t amount,
+                                     const QString paymentID)
 {
     if (mWallet)
     {
         closeCurrentTransaction();
-        mCurrentTransaction = mWallet->createTransaction(address.toStdString(), std::string(),
+        mCurrentTransaction = mWallet->createTransaction(address.toStdString(),
+                                                         paymentID.toStdString(),
                                                          amount, 0);
         mLastError = QString::fromStdString(mWallet->errorString());
         return mCurrentTransaction->status() == Monero::PendingTransaction::Status_Ok;
@@ -203,13 +205,14 @@ bool GraftWallet::prepareTransaction(const QString &address, uint64_t amount)
     return false;
 }
 
-bool GraftWallet::prepareTransactionAsync(const QString &address, uint64_t amount)
+bool GraftWallet::prepareTransactionAsync(const QString &address, uint64_t amount,
+                                          const QString paymentID)
 {
     if (mWallet)
     {
         closeCurrentTransaction();
         QFuture<bool> future = QtConcurrent::run(this, &GraftWallet::prepareTransaction,
-                                                 address, amount);
+                                                 address, amount, paymentID);
         QFutureWatcher<bool> *watcher = new QFutureWatcher<bool>();
         connect(watcher, &QFutureWatcher<bool>::finished, this, [this, watcher]() {
             QFuture<bool> future = watcher->future();
@@ -316,12 +319,14 @@ QByteArrayList GraftWallet::getRawCurrentTransaction() const
     return data;
 }
 
-QByteArrayList GraftWallet::getRawTransaction(const QString &address, uint64_t amount)
+QByteArrayList GraftWallet::getRawTransaction(const QString &address, uint64_t amount,
+                                              const QString paymentID)
 {
     QByteArrayList data;
     if (mWallet)
     {
-        Monero::PendingTransaction *tx = mWallet->createTransaction(address.toStdString(), std::string(),
+        Monero::PendingTransaction *tx = mWallet->createTransaction(address.toStdString(),
+                                                                    paymentID.toStdString(),
                                                                     amount, 0);
         std::vector<std::string> tx_data = tx->getRawTransaction();
         for (auto it = tx_data.cbegin(); it != tx_data.cend(); ++it)
