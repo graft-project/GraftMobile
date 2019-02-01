@@ -9,7 +9,6 @@ BaseLinearEditItem {
     id: linearEditItem
 
     property alias title: titleItem.text
-    property alias titleLabel: titleItem
     property alias text: editItem.text
     property alias wrapMode: editItem.wrapMode
     property alias inputMethodHints: editItem.inputMethodHints
@@ -19,6 +18,8 @@ BaseLinearEditItem {
     property alias passwordCharacter: editItem.passwordCharacter
     property alias inFocus: editItem.focus
     property alias placeholderEditItem: editItem.placeholderText
+    property real titleLabelWidth: titleItem.implicitWidth
+    property alias titleLabelCenter: titleItem.verticalCenter
     property bool inlineTitle: false
     property int fieldCursorPosition: 0
 

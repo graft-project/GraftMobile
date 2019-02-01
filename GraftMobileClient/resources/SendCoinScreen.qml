@@ -88,7 +88,6 @@ BaseScreen {
                         Layout.preferredHeight: 89
                         placeholderEditItem: qsTr("16 or 64 hexadecimal characters")
                         wrapMode: TextField.WrapAnywhere
-                        inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhUppercaseOnly | Qt.ImhLowercaseOnly
                         title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
                                    qsTr("Payment ID:") : qsTr("Payment ID")
                         validator: RegExpValidator {
@@ -98,11 +97,13 @@ BaseScreen {
                         Label {
                             anchors {
                                 left: parent.left
-                                leftMargin: paymentID.titleLabel.implicitWidth
-                                verticalCenter: paymentID.titleLabel.verticalCenter
+                                leftMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                                paymentID.titleLabelWidth : paymentID.titleLabelWidth + 4
+                                verticalCenter: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                                    paymentID.titleLabelCenter : parent.titleLabelCenter
                             }
                             color: "#BBBBBB"
-                            font.pixelSize: 16
+                            font.pixelSize: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 16 : 11
                             text: qsTr("(optional)")
                         }
                     }
