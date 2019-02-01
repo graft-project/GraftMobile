@@ -73,19 +73,6 @@ BaseScreen {
                             font.bold: true
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
-
-                        MessageDialog {
-                            id: mobileMessageDialog
-                            title: qsTr("Delete item")
-                            icon: StandardIcon.Warning
-                            text: qsTr("Are you sure that you want to remove this item?")
-                            standardButtons: StandardButton.Yes | StandardButton.No
-                            onYes: {
-                                ProductModel.removeProduct(index)
-                                GraftClient.saveProducts()
-                            }
-                        }
-
                         onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() :
                                                                     mobileMessageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
@@ -137,6 +124,18 @@ BaseScreen {
                     pushScreen.openQuickDealScreen()
                 }
             }
+        }
+    }
+
+    MessageDialog {
+        id: mobileMessageDialog
+        title: qsTr("Delete item")
+        icon: StandardIcon.Warning
+        text: qsTr("Are you sure that you want to remove this item?")
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            ProductModel.removeProduct(index)
+            GraftClient.saveProducts()
         }
     }
 
