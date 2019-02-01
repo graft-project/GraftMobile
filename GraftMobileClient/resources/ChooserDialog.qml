@@ -46,7 +46,7 @@ Dialog {
                 id: message
                 visible: dialogMode
                 Layout.fillWidth: true
-                Layout.minimumWidth: 250
+                Layout.maximumWidth: 250
                 Layout.rightMargin: 20
                 Layout.leftMargin: 20
                 wrapMode:Text.WordWrap
