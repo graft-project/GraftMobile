@@ -29,7 +29,7 @@ BaseScreen {
             enableScreen()
             if (result) {
                 pushScreen.openSendConfirmationScreen(receiversAddress.text,
-                                                      coinsAmountTextField.text, fee)
+                                                      coinsAmountTextField.text, fee, paymentID.text)
             }
         }
     }
@@ -78,6 +78,32 @@ BaseScreen {
                             regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
                                         /(^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94})/ :
                                         /(^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94})/
+                        }
+                    }
+
+                    LinearEditItem {
+                        id: paymentID
+                        Layout.fillWidth: true
+                        maximumLength: 64
+                        Layout.preferredHeight: 89
+                        placeholderEditItem: qsTr("16 or 64 hexadecimal characters")
+                        wrapMode: TextField.WrapAnywhere
+                        inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhUppercaseOnly | Qt.ImhLowercaseOnly
+                        title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                   qsTr("Payment ID:") : qsTr("Payment ID")
+                        validator: RegExpValidator {
+                            regExp: /([0-9A-Fa-f]{16}|[0-9A-Fa-f]{64})/
+                        }
+
+                        Label {
+                            anchors {
+                                left: parent.left
+                                leftMargin: paymentID.titleLabel.implicitWidth
+                                verticalCenter: paymentID.titleLabel.verticalCenter
+                            }
+                            color: "#BBBBBB"
+                            font.pixelSize: 16
+                            text: qsTr("(optional)")
                         }
                     }
 
@@ -167,6 +193,12 @@ BaseScreen {
             screenDialog.text = qsTr("Receiver's address is invalid! Please input correct " +
                                      "account address.")
             screenDialog.open()
+        } else if ((paymentID.text.length !== 16) && (paymentID.text.length !== 64) &&
+                   (paymentID.text.length !== 0)) {
+            screenDialog.title = qsTr("Input error")
+            screenDialog.text = qsTr("The payment ID must be 16 or 64 characters! " +
+                                     "Please input correct value.")
+            screenDialog.open()
         } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
             screenDialog.title = qsTr("Input error")
             screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! " +
@@ -180,7 +212,7 @@ BaseScreen {
         } else {
             disableScreen()
             busyIndicator.running = true
-            GraftClient.transferFee(receiversAddress.text, coinsAmountTextField.text)
+            GraftClient.transferFee(receiversAddress.text, coinsAmountTextField.text, paymentID.text)
         }
     }
 }
