@@ -1,13 +1,14 @@
 #ifndef IMAGEPICKER_H
 #define IMAGEPICKER_H
 
-#include <QObject>
-#include <QUrl>
-
+#include "imagepickerlibrary_global.h"
 #include "abstractcamerapermission.h"
 #include "choosephotodialog.h"
 
-class ImagePicker : public QObject
+#include <QObject>
+#include <QUrl>
+
+class IMAGEPICKERLIBRARYSHARED_EXPORT ImagePicker : public QObject
 {
     Q_OBJECT
 public:
@@ -21,7 +22,7 @@ public:
 
 signals:
     void imageSelected(QUrl path) const;
-    void cameraPermissionGranted(int result) const;
+    void cameraPermissionProvided(int result) const;
 
 private slots:
     void unlockCamera(int result) const;

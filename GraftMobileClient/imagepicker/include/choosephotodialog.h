@@ -1,11 +1,13 @@
 #ifndef CHOOSEPHOTODIALOG_H
 #define CHOOSEPHOTODIALOG_H
 
+#include "imagepickerlibrary_global.h"
+
 #include <QObject>
 
 class ChoosePhotoDialogPrivate;
 
-class ChoosePhotoDialog : public QObject
+class IMAGEPICKERLIBRARYSHARED_EXPORT ChoosePhotoDialog : public QObject
 {
     Q_OBJECT
     friend class ChoosePhotoDialogPrivate;

@@ -98,8 +98,8 @@ BaseScreen {
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
                 onClicked: {
-                    pushScreen.openEditingItemScreen(-1)
                     ImagePicker.requestCameraPermission()
+                    pushScreen.openEditingItemScreen(-1)
                 }
             }
 

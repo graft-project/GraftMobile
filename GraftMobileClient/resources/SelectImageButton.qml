@@ -29,7 +29,7 @@ Button {
 
             Image {
                 id: selectIcon
-                Layout.leftMargin: 15
+                Layout.leftMargin: 10
                 Layout.preferredHeight: 50
                 Layout.preferredWidth: 50
                 Layout.alignment: Qt.AlignLeft
@@ -38,16 +38,20 @@ Button {
 
             ColumnLayout {
                 Layout.alignment: Qt.AlignLeft
+                Layout.fillWidth: true
 
                 Label {
                     id: selectText
                     font.pixelSize: 20
+                    wrapMode: Label.WordWrap
+                    Layout.maximumWidth: selectImageButton.width - 70
                     color: selectImageButton.enabled ? "#3A3E3C" : "#99A0AD"
                 }
 
                 Label {
                     id: attentionText
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    wrapMode: Label.WordWrap
                     visible: !selectImageButton.enabled
                     color: "#F33939"
                     font.pixelSize: 12
