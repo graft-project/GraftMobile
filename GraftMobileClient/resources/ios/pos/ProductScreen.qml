@@ -86,22 +86,6 @@ BaseScreen {
                             }
                         }
 
-                        ChooserDialog {
-                            id: desktopMessageDialog
-                            topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
-                            leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
-                            dialogMode: true
-                            title: qsTr("Delete item")
-                            dialogMessage: qsTr("Are you sure that you want to remove this item?")
-                            confirmButtonText: qsTr("Yes")
-                            denyButtonText: qsTr("No")
-                            onConfirmed: {
-                                ProductModel.removeProduct(index)
-                                GraftClient.saveProducts()
-                            }
-                            onDenied: desktopMessageDialog.close()
-                        }
-
                         onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() :
                                                                     mobileMessageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
@@ -154,5 +138,21 @@ BaseScreen {
                 }
             }
         }
+    }
+
+    ChooserDialog {
+        id: desktopMessageDialog
+        topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
+        leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
+        dialogMode: true
+        title: qsTr("Delete item")
+        dialogMessage: qsTr("Are you sure that you want to remove this item?")
+        confirmButtonText: qsTr("Yes")
+        denyButtonText: qsTr("No")
+        onConfirmed: {
+            ProductModel.removeProduct(index)
+            GraftClient.saveProducts()
+        }
+        onDenied: desktopMessageDialog.close()
     }
 }
