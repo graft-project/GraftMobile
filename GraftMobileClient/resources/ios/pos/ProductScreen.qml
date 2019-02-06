@@ -73,35 +73,6 @@ BaseScreen {
                             font.bold: true
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
-
-                        MessageDialog {
-                            id: mobileMessageDialog
-                            title: qsTr("Delete item")
-                            icon: StandardIcon.Warning
-                            text: qsTr("Are you sure that you want to remove this item?")
-                            standardButtons: StandardButton.Yes | StandardButton.No
-                            onYes: {
-                                ProductModel.removeProduct(index)
-                                GraftClient.saveProducts()
-                            }
-                        }
-
-                        ChooserDialog {
-                            id: desktopMessageDialog
-                            topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
-                            leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
-                            dialogMode: true
-                            title: qsTr("Delete item")
-                            dialogMessage: qsTr("Are you sure that you want to remove this item?")
-                            confirmButtonText: qsTr("Yes")
-                            denyButtonText: qsTr("No")
-                            onConfirmed: {
-                                ProductModel.removeProduct(index)
-                                GraftClient.saveProducts()
-                            }
-                            onDenied: desktopMessageDialog.close()
-                        }
-
                         onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() :
                                                                     mobileMessageDialog.open()
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
@@ -154,5 +125,33 @@ BaseScreen {
                 }
             }
         }
+    }
+
+    MessageDialog {
+        id: mobileMessageDialog
+        title: qsTr("Delete item")
+        icon: StandardIcon.Warning
+        text: qsTr("Are you sure that you want to remove this item?")
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            ProductModel.removeProduct(index)
+            GraftClient.saveProducts()
+        }
+    }
+
+    ChooserDialog {
+        id: desktopMessageDialog
+        topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
+        leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
+        dialogMode: true
+        title: qsTr("Delete item")
+        dialogMessage: qsTr("Are you sure that you want to remove this item?")
+        confirmButtonText: qsTr("Yes")
+        denyButtonText: qsTr("No")
+        onConfirmed: {
+            ProductModel.removeProduct(index)
+            GraftClient.saveProducts()
+        }
+        onDenied: desktopMessageDialog.close()
     }
 }

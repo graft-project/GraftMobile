@@ -25,8 +25,10 @@ public slots:
     void createAccount(const QString &password) override;
     void restoreAccount(const QString &seed, const QString &password) override;
     void updateBalance() override;
-    void transferFee(const QString &address, const QString &amount) override;
-    void transfer(const QString &address, const QString &amount) override;
+    void transferFee(const QString &address, const QString &amount,
+                     const QString &paymentID = QString()) override;
+    void transfer(const QString &address, const QString &amount,
+                  const QString &paymentID = QString()) override;
 
     void sale(const QString &address, const QString &viewKey, double amount,
               const QString &saleDetails = QString()) override;

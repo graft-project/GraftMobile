@@ -36,7 +36,6 @@ BaseScreen {
             }
 
             RowLayout {
-                Layout.alignment: Qt.AlignTop
                 spacing: 10
 
                 LinearEditItem {
@@ -56,8 +55,9 @@ BaseScreen {
                 CurrencyComboBox {
                     id: currencyCBox
                     Layout.alignment: Qt.AlignTop
-                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 30 :
-                                           Detector.detectDevice() === Platform.IPhoneSE ? 165 : 50
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: 62
+                    Layout.preferredWidth: Detector.isPlatform(Platform.Android) ? 30 : 50
                     dropdownTitle: Detector.isPlatform(Platform.Android) ? qsTr("Currency") :
                                                                            qsTr("Currency:")
                 }

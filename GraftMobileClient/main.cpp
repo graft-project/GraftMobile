@@ -24,14 +24,6 @@
 static_assert(false, "You didn't add additional argument POS_BUILD or WALLET_BUILD for qmake in \'Build Settings->Build Steps\'");
 #endif
 
-// TODO: QTBUG-65820. QStandardPaths::AppDataLocation is worong ("/") in Android Debug builds
-// For more details see https://bugreports.qt.io/browse/QTBUG-65820?jql=text%20~%20%22QStandardPaths%205.9.4%22
-#if defined(Q_OS_ANDROID) && defined(QT_DEBUG)
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 4)
-static_assert(false, "QTBUG-65820 in Android Debug builds");
-#endif
-#endif
-
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
 #include <QSplashScreen>
 #include <QPixmap>

@@ -31,10 +31,12 @@ BaseCartScreen {
                 Layout.alignment: Qt.AlignCenter
                 Layout.preferredHeight: image.defaultSize
                 Layout.preferredWidth: image.defaultSize
+                bottomHeight: info.implicitHeight - 5 + exchangeView.implicitHeight + cancelButton.implicitHeight
                 Layout.topMargin: 25
             }
 
             Label {
+                id: info
                 Layout.alignment: Qt.AlignCenter
                 font {
                     bold: true
@@ -80,12 +82,14 @@ BaseCartScreen {
             }
 
             QuickExchangeView {
+                id: exchangeView
                 Layout.preferredHeight: 50
                 Layout.fillWidth: true
                 Layout.bottomMargin: 15
             }
 
             WideActionButton {
+                id: cancelButton
                 text: qsTr("Cancel")
                 Material.accent: ColorFactory.color(DesignFactory.LightButton)
                 Layout.leftMargin: 15

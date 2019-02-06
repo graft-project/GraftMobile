@@ -22,8 +22,10 @@ public slots:
     virtual void createAccount(const QString &password) = 0;
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;
     virtual void updateBalance() = 0;
-    virtual void transferFee(const QString &address, const QString &amount) = 0;
-    virtual void transfer(const QString &address, const QString &amount) = 0;
+    virtual void transferFee(const QString &address, const QString &amount,
+                             const QString &paymentID = QString()) = 0;
+    virtual void transfer(const QString &address, const QString &amount,
+                          const QString &paymentID = QString()) = 0;
 
 signals:
     void errorReceived(const QString &message);

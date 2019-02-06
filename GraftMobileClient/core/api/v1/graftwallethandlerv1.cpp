@@ -94,19 +94,21 @@ void GraftWalletHandlerV1::updateBalance()
     }
 }
 
-void GraftWalletHandlerV1::transferFee(const QString &address, const QString &amount)
+void GraftWalletHandlerV1::transferFee(const QString &address, const QString &amount,
+                                       const QString &paymentID)
 {
     if (mApi)
     {
-        mApi->transferFee(address, amount);
+        mApi->transferFee(address, amount, paymentID);
     }
 }
 
-void GraftWalletHandlerV1::transfer(const QString &address, const QString &amount)
+void GraftWalletHandlerV1::transfer(const QString &address, const QString &amount,
+                                    const QString &paymentID)
 {
     if (mApi)
     {
-        mApi->transfer(address, amount);
+        mApi->transfer(address, amount, paymentID);
     }
 }
 

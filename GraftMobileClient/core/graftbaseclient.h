@@ -27,8 +27,10 @@ public:
 
     Q_INVOKABLE void createAccount(const QString &password);
     Q_INVOKABLE void restoreAccount(const QString &seed, const QString &password);
-    Q_INVOKABLE void transfer(const QString &address, const QString &amount);
-    Q_INVOKABLE void transferFee(const QString &address, const QString &amount);
+    Q_INVOKABLE void transfer(const QString &address, const QString &amount,
+                              const QString &paymentID = QString());
+    Q_INVOKABLE void transferFee(const QString &address, const QString &amount,
+                                 const QString &paymentID = QString());
 
     Q_INVOKABLE QString getSeed() const;
     Q_INVOKABLE QString address() const;

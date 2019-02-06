@@ -16,59 +16,64 @@ Dialog {
     visible: false
     modal: true
     padding: 5
-    margins: 18
     focus: true
-    contentItem: ColumnLayout {
-        spacing: 0
+    onOpened: textField.focus = true
+    contentItem: Item {
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 0
 
-        TextField {
-            id: textField
-            focus: true
-            visible: !dialogMode
-            Layout.fillWidth: true
-            Layout.minimumWidth: 250
-            Layout.rightMargin: 20
-            Layout.leftMargin: 20
-            font.pixelSize: 24
-            echoMode: TextInput.Password
-            passwordCharacter: '•'
-            Keys.onPressed: {
-                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                    processing(leftButton)
+            TextField {
+                id: textField
+                focus: true
+                visible: !dialogMode
+                Layout.fillWidth: true
+                Layout.minimumWidth: 250
+                Layout.rightMargin: 20
+                Layout.leftMargin: 20
+                font.pixelSize: 24
+                echoMode: TextInput.Password
+                passwordCharacter: '•'
+                Keys.onPressed: {
+                    if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                        processing(leftButton)
+                    }
                 }
             }
-        }
 
-        Label {
-            id: message
-            visible: dialogMode
-            Layout.fillWidth: true
-            Layout.minimumWidth: 250
-            Layout.rightMargin: 20
-            Layout.leftMargin: 20
-            wrapMode:Text.WordWrap
-            font.pixelSize: 15
-        }
-
-        RowLayout {
-            spacing: 5
-            Layout.alignment: Qt.AlignRight | Qt.AlignBottom
-            Layout.rightMargin: 20
-
-            Button {
-                id: leftButton
-                flat: true
-                onClicked: confirmed()
-                Keys.onEnterPressed: processing(leftButton)
-                Keys.onReturnPressed: processing(leftButton)
+            Label {
+                id: message
+                visible: dialogMode
+                Layout.fillWidth: true
+                Layout.maximumWidth: 250
+                Layout.rightMargin: 20
+                Layout.leftMargin: 20
+                wrapMode:Text.WordWrap
+                font.pixelSize: 15
             }
 
-            Button {
-                id: rightButton
-                flat: true
-                onClicked: denied()
-                Keys.onEnterPressed: processing(rightButton)
-                Keys.onReturnPressed: processing(rightButton)
+            RowLayout {
+                spacing: 5
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight | Qt.AlignBottom
+                Layout.rightMargin: 20
+
+                Button {
+                    id: leftButton
+                    flat: true
+                    onClicked: confirmed()
+                    Keys.onEnterPressed: processing(leftButton)
+                    Keys.onReturnPressed: processing(leftButton)
+                }
+
+                Button {
+                    id: rightButton
+                    flat: true
+                    onClicked: denied()
+                    Keys.onEnterPressed: processing(rightButton)
+                    Keys.onReturnPressed: processing(rightButton)
+                }
             }
         }
     }
