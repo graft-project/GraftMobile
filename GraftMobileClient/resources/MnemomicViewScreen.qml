@@ -28,6 +28,8 @@ BaseScreen {
                 top: parent.top
                 left: parent.left
                 right: parent.right
+                leftMargin: 10
+                rightMargin: 10
             }
             horizontalAlignment: Label.AlignHCenter
             color: "#ce2121"
@@ -43,14 +45,14 @@ BaseScreen {
                 pixelSize: 16
             }
             anchors {
-                verticalCenterOffset: Detector.isMobile() ? -5 : -20
+                verticalCenterOffset: Detector.isMobile() ? -11 : -20
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right
                 leftMargin: 25
                 rightMargin: 25
             }
-            lineHeight: mnemonicScreen.width < 340 ? 30 : 40
+            lineHeight: mnemonicScreen.width < 340 ? 23 : 40
             lineHeightMode: Label.FixedHeight
             horizontalAlignment: Label.AlignHCenter
             wrapMode: Label.WordWrap
