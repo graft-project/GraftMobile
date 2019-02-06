@@ -13,6 +13,7 @@ BaseScreen {
     state: screenState ? "overviewWallet" : "createWallet"
 
     Item {
+        id: mnemonicScreen
         anchors {
             fill: parent
             topMargin: 15
@@ -37,15 +38,25 @@ BaseScreen {
                        "your wallet!\nCopy and store in the safe place this mnemonic password.")
         }
 
-        MnemonicPhraseView {
+        Label {
             id: mnemonicPhraseView
+            font {
+                wordSpacing: 25
+                pixelSize: 16
+            }
             anchors {
-                verticalCenterOffset: Detector.isMobile() ? -15 : -20
+                verticalCenterOffset: Detector.isMobile() ? -11 : -20
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right
+                leftMargin: 25
+                rightMargin: 25
             }
-            mnemonicPhrase: GraftClient.getSeed()
+            lineHeight: mnemonicScreen.width < 340 ? 23 : 40
+            lineHeightMode: Label.FixedHeight
+            horizontalAlignment: Label.AlignHCenter
+            wrapMode: Label.WordWrap
+            text: GraftClient.getSeed()
         }
 
         PopupMessageLabel {
