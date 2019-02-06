@@ -62,7 +62,7 @@ BaseScreen {
 
             Label {
                 Layout.fillWidth: true
-                visible: !paymentIDEmpty()
+                visible: !isPIDEmpty()
                 font {
                     pixelSize: 16
                     bold: true
@@ -73,7 +73,7 @@ BaseScreen {
 
             Label {
                 id: paymentID
-                visible: !paymentIDEmpty()
+                visible: !isPIDEmpty()
                 Layout.fillWidth: true
                 Layout.topMargin: -15
                 wrapMode: Label.WrapAnywhere
@@ -179,7 +179,7 @@ BaseScreen {
         passwordDialog.passwordTextField.clear()
     }
 
-    function paymentIDEmpty() {
+    function isPIDEmpty() {
         return paymentID.text.length === 0
     }
 }
