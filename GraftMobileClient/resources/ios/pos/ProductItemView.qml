@@ -22,7 +22,7 @@ Item {
     }
 
     SelectImageDialog {
-        id: imagePopUp
+        id: imageDialog
     }
 
     ColumnLayout {
@@ -136,7 +136,7 @@ Item {
                     }
                     onClicked: {
                         if (Detector.isPlatform(Platform.IOS)) {
-                            imagePopUp.openDialog()
+                            imageDialog.openDialog()
                         } else {
                             fileDialog.open()
                         }
