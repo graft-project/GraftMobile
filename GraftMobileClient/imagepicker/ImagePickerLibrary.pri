@@ -25,6 +25,8 @@ equals(ANDROID_TARGET_ARCH, x86) {
 }
 
 ios {
+    LIBS += -framework AVFoundation
+
     CONFIG(debug, debug|release) {
         LIBS += $$PWD/ios/debug/libImagePickerLibrary.a
     }

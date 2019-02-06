@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import org.camera.permission 1.0
 
 Popup {
     id: popUp
@@ -29,6 +30,7 @@ Popup {
         }
 
         SelectImageButton {
+            id: openCameraButton
             selectIcon: "qrc:/imgs/photo.png"
             selectText: qsTr("Open camera")
             onClicked: {
@@ -37,4 +39,14 @@ Popup {
             }
         }
     }
+
+    function openDialog() {
+        if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.None) {
+            openCameraButton.enabled = true
+        } else {
+            openCameraButton.enabled = ImagePicker.hasCameraPermission() === AbstractCameraPermission.Granted
+        }
+        popUp.open()
+    }
+
 }

@@ -64,6 +64,10 @@
             <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
         </activity>
 
+        <provider android:name="android.support.v4.content.FileProvider" android:authorities="${applicationId}.provider" android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths"/>
+        </provider>
+
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
     </application>
 

@@ -20,7 +20,7 @@ Item {
     }
 
     SelectImageDialog {
-        id: popUp
+        id: imageDialog
     }
 
     ColumnLayout {
@@ -114,7 +114,7 @@ Item {
                     }
                 }
             }
-            onClicked: popUp.open()
+            onClicked: imageDialog.openDialog()
         }
 
         Item {
