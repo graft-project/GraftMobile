@@ -40,7 +40,7 @@ Popup {
         }
     }
 
-    function opened() {
+    function openDialog() {
         if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.None) {
             openCameraButton.enabled = true
         } else {
