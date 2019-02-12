@@ -12,6 +12,7 @@ Dialog {
     property alias secondButton: rightButton
 
     height: 170
+    focus: true
     contentItem: ColumnLayout {
         spacing: 10
 
@@ -49,11 +50,26 @@ Dialog {
 
             Button {
                 id: leftButton
+                Keys.onEnterPressed: processing(leftButton, rightButton)
+                Keys.onReturnPressed: processing(leftButton, rightButton)
             }
 
             Button {
                 id: rightButton
+                focus: true
+                Keys.onEnterPressed: processing(rightButton, rightButton)
+                Keys.onReturnPressed: processing(rightButton, rightButton)
+                Keys.onPressed: {
+                    if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                        processing(rightButton, rightButton)
+                    }
+                }
             }
         }
+    }
+
+    function processing(itemPressed, itemFocus) {
+        itemPressed.clicked()
+        itemFocus.focus = true
     }
 }

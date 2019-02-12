@@ -38,8 +38,10 @@ public:
     void getBalance();
     void getSeed();
     void restoreAccount(const QString &seed, const QString &password);
-    void transferFee(const QString &address, const QString &amount);
-    void transfer(const QString &address, const QString &amount);
+    void transferFee(const QString &address, const QString &amount,
+                     const QString &paymentID = QString());
+    void transfer(const QString &address, const QString &amount,
+                  const QString &paymentID = QString());
 
     static double toCoins(double atomic);
     static double toAtomic(double coins);

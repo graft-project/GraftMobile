@@ -11,6 +11,7 @@ Dialog {
     modal: true
     padding: 5
     margins: 30
+    focus: true
     contentItem: ColumnLayout {
         spacing: 0
 
@@ -25,11 +26,20 @@ Dialog {
         }
 
         Button {
+            id: confirmButton
             flat: true
+            focus: true
             text: qsTr("Ok")
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             onClicked: confirmed()
+            Keys.onEnterPressed: processing()
+            Keys.onReturnPressed: processing()
         }
+    }
+
+    function processing() {
+        confirmButton.clicked()
+        confirmButton.focus = true
     }
 }

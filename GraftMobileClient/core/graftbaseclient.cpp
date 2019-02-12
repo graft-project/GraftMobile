@@ -136,7 +136,8 @@ void GraftBaseClient::restoreAccount(const QString &seed, const QString &passwor
     }
 }
 
-void GraftBaseClient::transfer(const QString &address, const QString &amount)
+void GraftBaseClient::transfer(const QString &address, const QString &amount,
+                               const QString &paymentID)
 {
     GraftBaseHandler *handler = graftHandler();
     if (handler)
@@ -145,11 +146,12 @@ void GraftBaseClient::transfer(const QString &address, const QString &amount)
                 this, &GraftBaseClient::transferReceived, Qt::UniqueConnection);
         QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
                                                'f', 0);
-        handler->transfer(address, customAmount);
+        handler->transfer(address, customAmount, paymentID);
     }
 }
 
-void GraftBaseClient::transferFee(const QString &address, const QString &amount)
+void GraftBaseClient::transferFee(const QString &address, const QString &amount,
+                                  const QString &paymentID)
 {
     GraftBaseHandler *handler = graftHandler();
     if (handler)
@@ -158,7 +160,7 @@ void GraftBaseClient::transferFee(const QString &address, const QString &amount)
                 this, &GraftBaseClient::transferFeeReceived, Qt::UniqueConnection);
         QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
                                                'f', 0);
-        handler->transferFee(address, customAmount);
+        handler->transferFee(address, customAmount, paymentID);
     }
 }
 

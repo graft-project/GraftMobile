@@ -56,6 +56,8 @@ void DesignFactory::init()
             window.callMethod<void>("clearFlags", "(I)V", 0x04000000);
             window.callMethod<void>("setStatusBarColor", "(I)V",
                                     QColor(color(AndroidStatusBar)).rgba());
+            window.callMethod<void>("setNavigationBarColor", "(I)V",
+                                    QColor(color(AndroidStatusBar)).rgba());
         });
     }
 #endif

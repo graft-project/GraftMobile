@@ -6,6 +6,7 @@ Image {
 
     property bool qrCodeSize: false
     property real defaultSize: Detector.isPlatform(Platform.Android) ? 160 : 180
+    property real bottomHeight: 0
 
     cache: false
     source: GraftClient.qrCodeImage()
@@ -17,7 +18,7 @@ Image {
 
             PropertyChanges {
                 target: qrCode
-                defaultSize: parent.width - 40
+                defaultSize: parent.width - bottomHeight
             }
         }
     ]
