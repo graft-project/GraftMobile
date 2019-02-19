@@ -11,6 +11,9 @@ import "../"
 
 BaseScreen {
     id: mainScreen
+
+    property int removeItemIndex: -1
+
     title: qsTr("Store")
     screenHeader {
         cartEnable: true
@@ -73,8 +76,11 @@ BaseScreen {
                             font.bold: true
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
-                        onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() :
-                                                                    mobileMessageDialog.open()
+                        onRemoveItemClicked: {
+                            removeItemIndex = index
+                            Detector.isDesktop() ? desktopMessageDialog.open() :
+                                                   mobileMessageDialog.open()
+                        }
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
                 }
@@ -134,8 +140,8 @@ BaseScreen {
         text: qsTr("Are you sure that you want to remove this item?")
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            ProductModel.removeProduct(index)
-            GraftClient.saveProducts()
+            deleteItem(removeItemIndex)
+            mobileMessageDialog.close()
         }
     }
 
@@ -149,9 +155,14 @@ BaseScreen {
         confirmButtonText: qsTr("Yes")
         denyButtonText: qsTr("No")
         onConfirmed: {
-            ProductModel.removeProduct(index)
-            GraftClient.saveProducts()
+            deleteItem(removeItemIndex)
+            desktopMessageDialog.close()
         }
         onDenied: desktopMessageDialog.close()
+    }
+
+    function deleteItem(index) {
+        ProductModel.removeProduct(index)
+        GraftClient.saveProducts()
     }
 }
