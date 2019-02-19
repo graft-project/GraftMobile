@@ -42,7 +42,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
+            bottomMargin: Detector.bottomNavigationBarHeight() + 15
         }
 
         PasswordFields {
