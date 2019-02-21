@@ -155,7 +155,13 @@ Item {
         id: fileDialog
         title: "Please choose a picture"
         folder: shortcuts.pictures
-        nameFilters: "Image files (*.jpg *.png)"
+        nameFilters: filenameExtension()
         onAccepted: previewImage.source = fileDialog.fileUrls.toString()
+    }
+
+    function filenameExtension() {
+        var extension = ["BMP (*.bmp *.dib)", "JPEG (*.jpg *.jpeg *.jpe *.jfif)", "PNG (*.png)"]
+        return Detector.isPlatform(Platform.MacOS) ?
+                    extension.concat("JPEG 2000 (*.jp2 *.jpc)").sort() : extension
     }
 }
