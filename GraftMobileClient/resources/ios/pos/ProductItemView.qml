@@ -15,6 +15,8 @@ Item {
     property alias descriptionText: description.text
     property alias price: price.text
     property alias productImage: previewImage.source
+    property alias screenWidth: imageDialog.rootScreenWidth
+    property alias screenHeight: imageDialog.rootScreenHeight
 
     Connections {
         target: Detector.isPlatform(Platform.Desktop) ? null : ImagePicker

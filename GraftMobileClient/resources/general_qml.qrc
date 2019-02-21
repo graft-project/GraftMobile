@@ -46,6 +46,8 @@
         <file alias="ServiceSettingsItem.qml">ServiceSettingsItem.qml</file>
         <file alias="QRCodeImage.qml">QRCodeImage.qml</file>
         <file alias="NetworkType.qml">NetworkType.qml</file>
+        <file alias="BaseSelectImageDialog.qml">BaseSelectImageDialog.qml</file>
+        <file alias="CameraPermissionDialog.qml">CameraPermissionDialog.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

@@ -45,6 +45,8 @@ BaseScreen {
             id: productItem
             Layout.fillWidth: true
             Layout.fillHeight: true
+            screenHeight: height
+            screenWidth: width
         }
 
         WideActionButton {
