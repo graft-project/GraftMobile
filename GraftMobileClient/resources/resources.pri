@@ -1,4 +1,5 @@
 RESOURCES += $$PWD/general_qml.qrc
+QTQUICK_COMPILER_SKIPPED_RESOURCES += $$PWD/general_qml.qrc
 
 ios {
 RESOURCES += $$PWD/ios_qml.qrc
