@@ -1,6 +1,7 @@
 QT += qml quick network widgets
 
 CONFIG += c++11
+CONFIG -= qtquickcompiler
 
 DEFINES += MAJOR_VERSION=1
 DEFINES += MINOR_VERSION=13
