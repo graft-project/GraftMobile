@@ -19,7 +19,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 5
             rightMargin: 5
-            bottomMargin: Detector.isSpecialTypeDevice() ? screenState ? 15 : Detector.bottomNavigationBarHeight() : 15
+            bottomMargin: Detector.isSpecialTypeDevice() && !screenState ? Detector.bottomNavigationBarHeight() : 15
         }
 
         Label {
