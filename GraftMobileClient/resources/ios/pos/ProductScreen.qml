@@ -11,9 +11,6 @@ import "../"
 
 BaseScreen {
     id: mainScreen
-
-    property int removeItemIndex: -1
-
     title: qsTr("Store")
     screenHeader {
         cartEnable: true
@@ -77,9 +74,10 @@ BaseScreen {
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
                         onRemoveItemClicked: {
-                            removeItemIndex = index
-                            Detector.isDesktop() ? desktopMessageDialog.open() :
-                                                   mobileMessageDialog.open()
+                            var dialog = Detector.isDesktop() ? desktopMessageDialog :
+                                                                mobileMessageDialog
+                            dialog.open()
+                            dialog.removeItemIndex = index
                         }
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
@@ -135,18 +133,25 @@ BaseScreen {
 
     MessageDialog {
         id: mobileMessageDialog
+
+        property int removeItemIndex: -1
+
         title: qsTr("Delete item")
         icon: StandardIcon.Warning
         text: qsTr("Are you sure that you want to remove this item?")
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
             deleteItem(removeItemIndex)
+            removeItemIndex = -1
             mobileMessageDialog.close()
         }
     }
 
     ChooserDialog {
         id: desktopMessageDialog
+
+        property int removeItemIndex: -1
+
         topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
         leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
         dialogMode: true
@@ -156,6 +161,7 @@ BaseScreen {
         denyButtonText: qsTr("No")
         onConfirmed: {
             deleteItem(removeItemIndex)
+            removeItemIndex = -1
             desktopMessageDialog.close()
         }
         onDenied: desktopMessageDialog.close()
