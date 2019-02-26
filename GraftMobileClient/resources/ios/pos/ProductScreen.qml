@@ -76,8 +76,8 @@ BaseScreen {
                         onRemoveItemClicked: {
                             var dialog = Detector.isDesktop() ? desktopMessageDialog :
                                                                 mobileMessageDialog
-                            dialog.open()
                             dialog.removeItemIndex = index
+                            dialog.open()
                         }
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
