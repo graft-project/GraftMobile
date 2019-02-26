@@ -53,11 +53,14 @@ BaseScreen {
 
                 ListView {
                     id: productList
-                    spacing: 0
-                    clip: true
-                    model: ProductModel
-                    delegate: productDelegate
                     anchors.fill: parent
+                    delegate: productDelegate
+                    model: ProductModel
+                    clip: true
+                    spacing: 0
+                    ScrollBar.vertical: ScrollBar {
+                        width: 5
+                    }
 
                     Component {
                         id: productDelegate
