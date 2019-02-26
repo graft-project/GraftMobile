@@ -65,6 +65,11 @@ QString GraftClientConstants::licenseConditions()
 
 QString GraftClientConstants::invalidCameraPermissionMessage()
 {
-    return tr("You haven't permission for the camera. Please, turn on camera permission "
-              "in settings of the application.");
+    static const QString message("You haven't permission for the camera. Please, turn on camera "
+                                 "permission in settings of the application%1");
+#ifdef Q_OS_ANDROID
+    return message.arg(" and than click on the 'Reset' button.");
+#else
+    return message.arg(".");
+#endif
 }
