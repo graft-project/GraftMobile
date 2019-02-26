@@ -1,3 +1,4 @@
+#include "abstractdevicetools.h"
 #include "devicedetector.h"
 
 #include <QGuiApplication>
