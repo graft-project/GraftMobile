@@ -19,7 +19,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 5
             rightMargin: 5
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? screenState ? 15 : 30 : 15
+            bottomMargin: Detector.isSpecialTypeDevice() && !screenState ? Detector.bottomNavigationBarHeight() : 15
         }
 
         Label {

@@ -24,7 +24,10 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            margins: 15
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Detector.bottomNavigationBarHeight() + 15
         }
 
         ServiceSettingsItem {

@@ -3,31 +3,13 @@
 
 #include <QObject>
 
+class AbstractDeviceTools;
 class QQmlEngine;
 
 class DeviceDetector : public QObject
 {
     Q_OBJECT
 public:
-    enum DeviceModels {
-        IPhoneNormal = 0,
-        IPhonePlus,
-        IPhoneSE,
-        IPhoneX,
-        IPadPro12_9,
-        IPadPro10_5,
-        IPad,
-        IPhone6S = IPhoneNormal,
-        IPhone7 = IPhoneNormal,
-        IPhone8 = IPhoneNormal,
-        IPhone6SPlus = IPhonePlus,
-        IPhone7Plus = IPhonePlus,
-        IPhone8Plus = IPhonePlus,
-        IPad9_7 = IPad,
-        IPad7_9 = IPad
-    };
-    Q_ENUM(DeviceModels)
-
     enum PlatformFlags {
         IOS = 0x01,
         Android = 0x02,
@@ -45,10 +27,17 @@ public:
 
     void registerTypes(QQmlEngine *engine);
 
-    Q_INVOKABLE static int detectDevice();
     Q_INVOKABLE static bool isPlatform(Platforms platform);
     Q_INVOKABLE static bool isDesktop();
     Q_INVOKABLE static bool isMobile();
+
+    Q_INVOKABLE bool isSpecialTypeDevice();
+
+    Q_INVOKABLE double bottomNavigationBarHeight();
+    Q_INVOKABLE double statusBarHeight();
+
+private:
+    AbstractDeviceTools *mDeviceType;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::Platforms)
 

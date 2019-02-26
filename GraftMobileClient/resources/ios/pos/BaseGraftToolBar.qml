@@ -8,6 +8,6 @@ Rectangle {
 
     signal seclectedButtonChanged(string buttonName)
 
-    height: Detector.detectDevice() === Platform.IPhoneX ? 85 : 49
+    height: Detector.bottomNavigationBarHeight() + 49
     color: ColorFactory.color(DesignFactory.IosNavigationBar)
 }

@@ -24,7 +24,7 @@ BaseScreen {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: Detector.detectDevice() === Platform.IPhoneX ? 44 : 20
+                Layout.preferredHeight: Detector.statusBarHeight()
                 Layout.alignment: Qt.AlignTop
                 color: ColorFactory.color(DesignFactory.IosNavigationBar)
                 visible: Detector.isPlatform(Platform.IOS)
@@ -105,7 +105,7 @@ BaseScreen {
                 text: qsTr("Accept")
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                Layout.bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
+                Layout.bottomMargin: Detector.bottomNavigationBarHeight() + 15
                 onClicked: {
                     disableScreen()
                     acceptAction()

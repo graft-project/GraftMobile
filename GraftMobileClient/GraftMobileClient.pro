@@ -96,7 +96,8 @@ SOURCES += main.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
     devicedetector.cpp \
-    core/graftclientconstants.cpp
+    core/graftclientconstants.cpp \
+    abstractdevicetools.cpp
 
 HEADERS += \
     core/config.h \
@@ -123,7 +124,8 @@ HEADERS += \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
     devicedetector.h \
-    core/graftclientconstants.h
+    core/graftclientconstants.h \
+    abstractdevicetools.h
 
 include(resources/resources.pri)
 
