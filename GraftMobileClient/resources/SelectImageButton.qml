@@ -16,10 +16,8 @@ Button {
     padding: 0
     topPadding: 0
     bottomPadding: 0
-    background {
-        y: 0
-        height: background.parent.height
-    }
+    topInset: 0
+    bottomInset: 0
     contentItem: Item {
         anchors.fill: parent
 
