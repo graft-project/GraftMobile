@@ -5,6 +5,7 @@
 #include "graftclientconstants.h"
 #include "quickexchangemodel.h"
 #include "graftclienttools.h"
+#include "blogrepresenter.h"
 #include "graftbaseclient.h"
 #include "qrcodegenerator.h"
 #include "accountmanager.h"
@@ -13,6 +14,7 @@
 #include "accountmodel.h"
 #include "config.h"
 
+#include <QNetworkAccessManager>
 #include <QRegularExpression>
 #include <QGuiApplication>
 #include <QStandardPaths>
@@ -49,7 +51,9 @@ static const QString scIp("ip");
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mQuickExchangeModel(nullptr)
+    ,mNetworkManager{new QNetworkAccessManager(this)}
     ,mImageProvider(nullptr)
+    ,mBlogRepresenter{new BlogRepresenter(mNetworkManager, this)}
     ,mAccountManager(new AccountManager())
     ,mCurrencyModel(nullptr)
     ,mAccountModel(nullptr)
@@ -58,6 +62,12 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mBalanceTimer(-1)
 {
     initSettings();
+
+    if (mBlogRepresenter)
+    {
+        connect(mBlogRepresenter, &BlogRepresenter::blogFeedPathChanged,
+                this, &GraftBaseClient::blogFeedPathChanged, Qt::UniqueConnection);
+    }
 }
 
 GraftBaseClient::~GraftBaseClient()
@@ -287,12 +297,7 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
 
 void GraftBaseClient::saveModel(const QString &fileName, const QByteArray &data) const
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!QFileInfo(dataPath).exists())
-    {
-        QDir().mkpath(dataPath);
-    }
-    QDir lDir(dataPath);
+    QDir lDir(appDataLocation());
     QFile lFile(lDir.filePath(fileName));
     if (lFile.open(QFile::WriteOnly))
     {
@@ -435,6 +440,17 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
     }
 }
 
+QString GraftBaseClient::appDataLocation() const
+{
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!QFileInfo(dataPath).exists())
+    {
+        QDir().mkpath(dataPath);
+    }
+    QDir lDir(dataPath);
+    return lDir.path();
+}
+
 void GraftBaseClient::updateAddressQRCode() const
 {
     if (mImageProvider)
@@ -454,6 +470,11 @@ bool GraftBaseClient::isDevMode() const
     return true;
 #endif
     return false;
+}
+
+QString GraftBaseClient::pathToFeeds() const
+{
+    return mBlogRepresenter ? mBlogRepresenter->pathToFeeds() : QString();
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const
@@ -628,12 +649,7 @@ void GraftBaseClient::removeSettings() const
 
 void GraftBaseClient::initSettings()
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!QFileInfo(dataPath).exists())
-    {
-        QDir().mkpath(dataPath);
-    }
-    QDir lDir(dataPath);
+    QDir lDir(appDataLocation());
     mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());

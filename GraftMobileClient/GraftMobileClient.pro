@@ -1,4 +1,4 @@
-QT += qml quick network widgets
+QT += qml quick network widgets xml xmlpatterns webview
 
 CONFIG += c++11
 
@@ -97,7 +97,9 @@ SOURCES += main.cpp \
     core/qrcodegenerator.cpp \
     devicedetector.cpp \
     core/graftclientconstants.cpp \
-    abstractdevicetools.cpp
+    abstractdevicetools.cpp \
+    core/feedmodel.cpp \
+    core/blogrepresenter.cpp
 
 HEADERS += \
     core/config.h \
@@ -125,7 +127,9 @@ HEADERS += \
     core/qrcodegenerator.h \
     devicedetector.h \
     core/graftclientconstants.h \
-    abstractdevicetools.h
+    abstractdevicetools.h \
+    core/feedmodel.h \
+    core/blogrepresenter.h
 
 include(resources/resources.pri)
 

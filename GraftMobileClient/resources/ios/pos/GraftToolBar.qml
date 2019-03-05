@@ -46,7 +46,8 @@ BaseGraftToolBar {
         ToolBarButton {
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
-            onClicked: Qt.openUrlExternally("https://www.graft.network/")
+            onClicked: pushScreen.openBlogScreen()
+//            onClicked: Qt.openUrlExternally("https://www.graft.network/")
         }
     }
 

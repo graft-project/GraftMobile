@@ -127,6 +127,11 @@ GraftApplicationWindow {
             isActive: SwipeView.isCurrentItem
         }
 
+        BlogScreen {
+            id: blogScreen
+            pushScreen: generalTransitions()
+        }
+
         function backButtonHandler() {
             if (!currentItem.backButtonHandler()) {
                 if (!allowClose) {
@@ -156,6 +161,7 @@ GraftApplicationWindow {
         var transitionsMap = {}
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openSettingsScreen"] = openSettingsScreen
+        transitionsMap["openBlogScreen"] = openBlogScreen
         transitionsMap["openMainScreen"] = openMainScreen
         return transitionsMap
     }
@@ -209,5 +215,10 @@ GraftApplicationWindow {
         if (GraftClient.isAccountExists()) {
             openMainScreen()
         }
+    }
+
+    function openBlogScreen() {
+        mainLayout.currentIndex = 4
+        selectButton("Blog")
     }
 }

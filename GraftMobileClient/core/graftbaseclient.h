@@ -4,9 +4,11 @@
 #include <QVariant>
 #include <QObject>
 
+class QNetworkAccessManager;
 class BarcodeImageProvider;
 class QuickExchangeModel;
 class GraftBaseHandler;
+class BlogRepresenter;
 class AccountManager;
 class CurrencyModel;
 class AccountModel;
@@ -74,7 +76,10 @@ public:
 
     Q_INVOKABLE bool isDevMode() const;
 
+    Q_INVOKABLE QString pathToFeeds() const;
+
 signals:
+    void blogFeedPathChanged(const QString &path) const;
     void errorReceived(const QString &message);
     void balanceUpdated();
     void createAccountReceived(bool isAccountCreated);
@@ -114,11 +119,14 @@ private:
     void initAccountModel(QQmlEngine *engine);
     void initCurrencyModel(QQmlEngine *engine);
     void initQuickExchangeModel(QQmlEngine *engine);
+    QString appDataLocation() const;
     void updateAddressQRCode() const;
 
 protected:
     QuickExchangeModel *mQuickExchangeModel;
+    QNetworkAccessManager *mNetworkManager;
     BarcodeImageProvider *mImageProvider;
+    BlogRepresenter *mBlogRepresenter;
     AccountManager *mAccountManager;
     CurrencyModel *mCurrencyModel;
     AccountModel *mAccountModel;
