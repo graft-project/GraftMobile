@@ -1,9 +1,9 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
-BorderlessButton {
+Button {
     id: coin
 
     property alias accountBalance: accountBalance.text
@@ -14,6 +14,9 @@ BorderlessButton {
     property bool coinVisible: true
 
     height: 60
+    flat: true
+    topInset: 0
+    bottomInset: 0
     enabled: coinVisible
 
     ColumnLayout {

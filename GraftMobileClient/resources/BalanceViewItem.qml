@@ -1,6 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.5
 import org.graft 1.0
 
 Rectangle {
@@ -31,8 +31,11 @@ Rectangle {
             verticalCenter: parent.verticalCenter
         }
 
-        BorderlessButton {
+        Button {
             id: unlockedMainBalance
+            flat: true
+            topInset: 0
+            bottomInset: 0
             enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
@@ -124,8 +127,11 @@ Rectangle {
             color: "#e6e6e8"
         }
 
-        BorderlessButton {
+        Button {
             id: lockedMainBalance
+            flat: true
+            topInset: 0
+            bottomInset: 0
             enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
