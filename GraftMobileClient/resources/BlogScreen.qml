@@ -19,25 +19,38 @@ BaseScreen {
 
     title: qsTr("Blog")
     screenHeader {
-        isNavigationButtonVisible: false
-        navigationButtonState: false
+        isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+        navigationButtonState: Detector.isPlatform(Platform.Android)
         actionButtonState: false
     }
-    specialBackMode: hideWebView
+    specialBackMode: {
+        hideWebView
+    }
+
+    ProgressBar {
+        id: progressBar
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+        height: 5
+        from: 0.0
+        to: 100.0
+        visible: webView.visible
+        value: webView.loadProgress
+        onValueChanged: height = value !== to ? 5 : 0
+    }
 
     WebView {
         id: webView
-        anchors.fill: parent
-
-        onUrlChanged: {
-            if (url.toString().includes("blog")) {
-                blogScreen.screenHeader.isNavigationButtonVisible = true
-                blogScreen.screenHeader.navigationButtonState = !Detector.isPlatform(Platform.Android)
-            } else {
-                blogScreen.screenHeader.isNavigationButtonVisible = Detector.isPlatform(Platform.Android)
-                blogScreen.screenHeader.navigationButtonState = Detector.isPlatform(Platform.Android)
-            }
+        anchors {
+            top: progressBar.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
         }
+        visible: false
     }
 
     ListView {
@@ -96,6 +109,18 @@ BaseScreen {
                     textFormat: Label.RichText
                     text: description
                     color: "#34435b"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        z: descriptionLabel.z - 1
+                        cursorShape: descriptionLabel.hoveredLink.length !== 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        onClicked: {
+                            var link = descriptionLabel.linkAt(mouseX, mouseY)
+                            if (link.length !== 0) {
+                                showWebView(link)
+                            }
+                        }
+                    }
                 }
 
                 Label {
@@ -124,15 +149,48 @@ BaseScreen {
         }
     }
 
+    states: [
+        State {
+            name: "showWebView"
+            PropertyChanges {
+                target: webView
+                visible: true
+            }
+            PropertyChanges {
+                target: listView
+                visible: false
+            }
+            PropertyChanges {
+                target: blogScreen.screenHeader
+                isNavigationButtonVisible: true
+                navigationButtonState: !Detector.isPlatform(Platform.Android)
+            }
+        },
+        State {
+            name: "hideWebView"
+            PropertyChanges {
+                target: webView
+                visible: false
+            }
+            PropertyChanges {
+                target: listView
+                visible: true
+            }
+            PropertyChanges {
+                target: blogScreen.screenHeader
+                isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                navigationButtonState: Detector.isPlatform(Platform.Android)
+            }
+        }
+    ]
+
     function showWebView(url) {
         webView.url = url
-        webView.visible = true
-        listView.visible = false
+        blogScreen.state = "showWebView"
     }
 
     function hideWebView() {
-        webView.url = "file:///"
-        webView.visible = false
-        listView.visible = true
+        webView.url = "http://localhost"
+        blogScreen.state = "hideWebView"
     }
 }
