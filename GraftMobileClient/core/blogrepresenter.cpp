@@ -2,11 +2,11 @@
 #include "feedmodel.h"
 
 #include <QNetworkAccessManager>
+#include <QRegularExpression>
 #include <QStandardPaths>
 #include <QNetworkReply>
 #include <QDomDocument>
 #include <QTimerEvent>
-#include <QRegExp>
 #include <QDir>
 
 static const QString scBlogCSS("https://www.graft.network/wp-content/themes/graft/style.css?ver=4.9.9");
@@ -136,12 +136,12 @@ bool BlogRepresenter::parseBlogFeeds(const QByteArray &feeds) const
                             QDomElement description = item.firstChildElement("description");
 
                             QString image;
-                            QRegExp rx("^<img src=\".{8,}\"");
-                            int capImage = rx.indexIn(content.text());
-                            if (capImage > -1)
+                            QRegularExpression rx("<img src=\".{8,}\"");
+                            QRegularExpressionMatch match = rx.match(content.text());
+                            if (match.hasMatch())
                             {
-                                image = rx.cap(capImage);
-                                image = image.remove(QRegExp("^<img src=\""));
+                                image = match.captured(0);
+                                image = image.remove(QRegularExpression("<img src=\""));
                                 image = image.mid(0, image.indexOf('"'));
                             }
 
@@ -286,15 +286,15 @@ void BlogRepresenter::createFullHTMLFeed() const
                     QFile feedHTML(lDir.filePath(QStringLiteral("%1").arg(fullFeedFile)));
                     if (feedHTML.open(QIODevice::WriteOnly))
                     {
-                        item->mFullFeedPath = feedHTML.fileName();
+                        item->mFullFeedPath = QStringLiteral("file://%1").arg(feedHTML.fileName());
                         QString parsedDescription = item->mDescription;
                         QString parsedContent = item->mContent;
-                        parsedDescription = parsedDescription.remove(parsedDescription.indexOf(QStringLiteral("<p>The post ")),
+                        parsedDescription = parsedDescription.remove(parsedDescription.indexOf(QStringLiteral("<p class=\"link-more\">")),
                                                                      parsedDescription.size());
                         item->mContent = parsedContent.remove(parsedContent.indexOf(QStringLiteral("<p>The post ")),
                                                               parsedContent.size());
                         item->mDescription = parsedDescription.replace(item->mLink,
-                                                                      item->mFullFeedPath);
+                                                                       item->mFullFeedPath);
                         mFeedModel->updateData(*item, i);
 
                         feed.replace(scCSS, lCSS);
@@ -303,6 +303,8 @@ void BlogRepresenter::createFullHTMLFeed() const
                         feed.replace(scLink, item->mLink);
                         feed.replace(scTitle, item->mTitle);
                         feed.replace(scContent, item->mContent);
+                        feed.replace(QStringLiteral("<iframe width=\"560\" height=\"315\""),
+                                     QStringLiteral("<iframe width=\"100%\" height=\"200\""));
 
                         feedHTML.write(feed.toUtf8());
                         feedHTML.close();

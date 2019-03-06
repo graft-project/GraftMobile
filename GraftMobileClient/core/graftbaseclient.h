@@ -116,6 +116,7 @@ private slots:
 
 private:
     void initSettings();
+    void initFeedModel(QQmlEngine *engine);
     void initAccountModel(QQmlEngine *engine);
     void initCurrencyModel(QQmlEngine *engine);
     void initQuickExchangeModel(QQmlEngine *engine);

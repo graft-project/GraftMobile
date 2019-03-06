@@ -12,6 +12,7 @@
 #include "currencymodel.h"
 #include "currencyitem.h"
 #include "accountmodel.h"
+#include "feedmodel.h"
 #include "config.h"
 
 #include <QNetworkAccessManager>
@@ -210,6 +211,7 @@ void GraftBaseClient::setQRCodeImage(const QImage &image)
 void GraftBaseClient::registerTypes(QQmlEngine *engine)
 {
     registerImageProvider(engine);
+    initFeedModel(engine);
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
@@ -397,6 +399,15 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
         saveBalance();
         mIsBalanceUpdated = true;
         emit balanceUpdated();
+    }
+}
+
+void GraftBaseClient::initFeedModel(QQmlEngine *engine)
+{
+    if(mBlogRepresenter)
+    {
+        engine->rootContext()->setContextProperty(QStringLiteral("FeedModel"),
+                                                  static_cast<QObject*>(mBlogRepresenter->feedModel()));
     }
 }
 
