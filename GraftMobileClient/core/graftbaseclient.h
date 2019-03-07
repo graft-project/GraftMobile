@@ -77,6 +77,7 @@ public:
     Q_INVOKABLE bool isDevMode() const;
 
     Q_INVOKABLE QString pathToFeeds() const;
+    Q_INVOKABLE void updateFeeds() const;
 
 signals:
     void blogFeedPathChanged(const QString &path) const;

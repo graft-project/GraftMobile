@@ -205,7 +205,7 @@ GraftApplicationWindow {
     }
 
     function clearStackViewers() {
-        for (var i = 0; i < mainLayout.count; ++i) {
+        for (var i = 0; i < mainLayout.count - 1; ++i) {
             mainLayout.itemAt(i).clearStackViewer()
         }
     }

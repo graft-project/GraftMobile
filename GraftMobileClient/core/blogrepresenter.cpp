@@ -2,6 +2,7 @@
 #include "feedmodel.h"
 
 #include <QNetworkAccessManager>
+#include <QSortFilterProxyModel>
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QNetworkReply>
@@ -15,7 +16,6 @@ static const QString scFullFeedHTMLTemplate(":/FullFeedTemplate.html");
 static const QString scFeedPubDate("ddd, dd MMM yyyy hh:mm:ss +0000");
 static const QString scBlogFeeds("https://www.graft.network/feed/");
 static const QString scFormattedTime("%formattedTime%");
-static const QString scFormattedDate("MMMM dd, yyyy");
 static const QString scTimeFromRSS("%timeFromRSS%");
 static const QString scFeedCSS(":/style.css");
 static const QString scContent("%content%");
@@ -31,12 +31,18 @@ static const int scRefreshRate{60000 * 60};
 BlogRepresenter::BlogRepresenter(QNetworkAccessManager *networkManager, QObject *parent)
     : QObject(parent)
     ,mNetworkManager{networkManager}
+    ,mSortModel{new QSortFilterProxyModel(this)}
     ,mFeedModel{new FeedModel(this)}
     ,mRefreshTimer{0}
 {
-    if (mNetworkManager && mFeedModel && !readBlogFeeds())
+    if (mNetworkManager && mSortModel && mFeedModel)
     {
+        mSortModel->setSourceModel(mFeedModel);
+        mSortModel->setSortRole(FeedModel::TimeStampRole);
+        mSortModel->sort(0, Qt::DescendingOrder);
+
         mRefreshTimer = startTimer(scRefreshRate);
+        readBlogFeeds();
         getBlogFeeds();
     }
 }
@@ -65,9 +71,9 @@ bool BlogRepresenter::readBlogFeeds() const
     return isFeedsReadSuccess;
 }
 
-FeedModel *BlogRepresenter::feedModel() const
+QObject *BlogRepresenter::feedModel() const
 {
-    return mFeedModel;
+    return mSortModel;
 }
 
 QString BlogRepresenter::pathToFeeds() const
@@ -151,11 +157,10 @@ bool BlogRepresenter::parseBlogFeeds(const QByteArray &feeds) const
                                 QDateTime data = QDateTime::fromString(pubDate.text(),
                                                                        scFeedPubDate);
                                 FeedModel::FeedItem *feedItem = new FeedModel::FeedItem(description.text(),
-                                                                                        pubDate.text(),
+                                                                                        data,
                                                                                         content.text(),
                                                                                         title.text(),
                                                                                         link.text());
-                                feedItem->mFormattedDate = data.toString(scFormattedDate);
                                 feedItem->mImage = image;
                                 mFeedModel->add(feedItem);
                             }
@@ -214,8 +219,14 @@ void BlogRepresenter::createShortHTMLFeed() const
                 {
                     QString formattedFeed = articleTemplate;
 
-                    formattedFeed.replace(scFormattedTime, item->mFormattedDate);
-                    formattedFeed.replace(scTimeFromRSS, item->mPubDate);
+                    QModelIndex modelIndex = mFeedModel->index(i);
+                    if (modelIndex.isValid())
+                    {
+                        formattedFeed.replace(scFormattedTime, mFeedModel->data(modelIndex,
+                                                                                FeedModel::FormattedDateRole).toString());
+                        formattedFeed.replace(scTimeFromRSS, mFeedModel->data(modelIndex,
+                                                                              FeedModel::PubDateRole).toString());
+                    }
                     formattedFeed.replace(scContent, item->mDescription);
                     formattedFeed.replace(scTitle, item->mTitle);
                     formattedFeed.replace(scImage, item->mImage);
@@ -298,8 +309,14 @@ void BlogRepresenter::createFullHTMLFeed() const
                         mFeedModel->updateData(*item, i);
 
                         feed.replace(scCSS, lCSS);
-                        feed.replace(scTimeFromRSS, item->mPubDate);
-                        feed.replace(scFormattedTime, item->mFormattedDate);
+                        QModelIndex modelIndex = mFeedModel->index(i);
+                        if (modelIndex.isValid())
+                        {
+                            feed.replace(scTimeFromRSS, mFeedModel->data(modelIndex,
+                                                                         FeedModel::PubDateRole).toString());
+                            feed.replace(scFormattedTime, mFeedModel->data(modelIndex,
+                                                                           FeedModel::FormattedDateRole).toString());
+                        }
                         feed.replace(scLink, item->mLink);
                         feed.replace(scTitle, item->mTitle);
                         feed.replace(scContent, item->mContent);

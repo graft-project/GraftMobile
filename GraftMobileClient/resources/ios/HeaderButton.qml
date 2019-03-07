@@ -10,9 +10,8 @@ Button {
 
     flat: true
     Material.foreground: pressed ? "#616A78" : ColorFactory.color(DesignFactory.LightText)
-    background: Rectangle {
+    background: Item {
         anchors.fill: parent
-        color: "transparent"
 
         Label {
             id: label

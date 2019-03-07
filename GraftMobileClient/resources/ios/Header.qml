@@ -34,6 +34,7 @@ BaseHeader {
                 id: navigationButton
                 anchors.centerIn: parent
                 visible: rootItem.isNavigationButtonVisible
+                width: name.length * 10
                 name: qsTr("Back")
                 onClicked: navigationButtonClicked()
             }
@@ -56,7 +57,7 @@ BaseHeader {
 
         Item {
             Layout.preferredWidth: 30
-            Layout.rightMargin: actionButton.name.length > 6 ? 10 : 0
+            Layout.rightMargin: actionButton.name.length >= 6 ? 10 : 0
             Layout.alignment: Qt.AlignRight
 
             CartItem {
@@ -70,6 +71,7 @@ BaseHeader {
             HeaderButton {
                 id: actionButton
                 anchors.centerIn: parent
+                width: name.length * 10
                 visible: rootItem.actionButtonState
                 name: qsTr("Done")
                 onClicked: actionButtonClicked()

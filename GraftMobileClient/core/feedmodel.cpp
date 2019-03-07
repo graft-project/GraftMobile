@@ -1,5 +1,8 @@
 #include "feedmodel.h"
 
+static const QString scFeedPubDate("ddd, dd MMM yyyy hh:mm:ss +0000");
+static const QString scFormattedDate("MMMM dd, yyyy");
+
 FeedModel::FeedModel(QObject *parent) : QAbstractListModel(parent)
 {
 }
@@ -20,13 +23,15 @@ QVariant FeedModel::data(const QModelIndex &index, int role) const
     switch (role)
     {
     case FormattedDateRole:
-        return feed->mFormattedDate;
+        return feed->mPubDate.toString(scFormattedDate);
     case FullFeedPathRole:
         return feed->mFullFeedPath;
+    case TimeStampRole:
+        return feed->mPubDate.toSecsSinceEpoch();
     case DescriptionRole:
         return feed->mDescription;
     case PubDateRole:
-        return feed->mPubDate;
+        return feed->mPubDate.toString(scFeedPubDate);
     case ContentRole:
         return feed->mContent;
     case TitleRole:
@@ -61,7 +66,6 @@ bool FeedModel::updateData(const FeedModel::FeedItem &feed, int index)
     FeedModel::FeedItem *item = itemAt(index);
     if (item)
     {
-        item->mFormattedDate = feed.mFormattedDate;
         item->mFullFeedPath = feed.mFullFeedPath;
         item->mDescription = feed.mDescription;
         item->mPubDate = feed.mPubDate;
@@ -102,6 +106,7 @@ QHash<int, QByteArray> FeedModel::roleNames() const
     roles[FormattedDateRole] = "formattedDate";
     roles[FullFeedPathRole] = "fullFeedPath";
     roles[DescriptionRole] = "description";
+    roles[TimeStampRole] = "timeStamp";
     roles[PubDateRole] = "pubDate";
     roles[ContentRole] = "content";
     roles[TitleRole] = "title";

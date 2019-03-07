@@ -21,10 +21,24 @@ BaseScreen {
     screenHeader {
         isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
         navigationButtonState: Detector.isPlatform(Platform.Android)
-        actionButtonState: false
+        actionButtonState: true
+        isBlog: true
     }
     specialBackMode: {
         hideWebView
+    }
+    action: {
+        if (webView.visible) {
+            webView.reload
+        } else {
+            GraftClient.updateFeeds
+        }
+    }
+
+    Component.onCompleted: {
+        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
+            screenHeader.actionText = qsTr("Update")
+        }
     }
 
     ProgressBar {

@@ -2,6 +2,7 @@
 #define FEEDMODEL_H
 
 #include <QAbstractListModel>
+#include <QDateTime>
 
 class FeedModel : public QAbstractListModel
 {
@@ -9,16 +10,15 @@ class FeedModel : public QAbstractListModel
 public:
     struct FeedItem
     {
-        QString	mFormattedDate;
         QString mFullFeedPath;
         QString	mDescription;
-        QString	mPubDate;
+        QDateTime mPubDate;
         QString	mContent;
         QString	mTitle;
         QString	mImage;
         QString	mLink;
 
-        FeedItem(const QString &description, const QString pubDate, const QString &content,
+        FeedItem(const QString &description, const QDateTime pubDate, const QString &content,
                  const QString &title, const QString &link)
             : mDescription{description}, mPubDate{pubDate}, mContent{content}, mTitle{title},
               mLink{link}
@@ -30,6 +30,7 @@ public:
         DescriptionRole = Qt::UserRole + 1,
         FormattedDateRole,
         FullFeedPathRole,
+        TimeStampRole,
         PubDateRole,
         ContentRole,
         TitleRole,

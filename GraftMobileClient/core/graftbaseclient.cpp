@@ -407,7 +407,7 @@ void GraftBaseClient::initFeedModel(QQmlEngine *engine)
     if(mBlogRepresenter)
     {
         engine->rootContext()->setContextProperty(QStringLiteral("FeedModel"),
-                                                  static_cast<QObject*>(mBlogRepresenter->feedModel()));
+                                                  mBlogRepresenter->feedModel());
     }
 }
 
@@ -486,6 +486,14 @@ bool GraftBaseClient::isDevMode() const
 QString GraftBaseClient::pathToFeeds() const
 {
     return mBlogRepresenter ? mBlogRepresenter->pathToFeeds() : QString();
+}
+
+void GraftBaseClient::updateFeeds() const
+{
+    if (mBlogRepresenter)
+    {
+        mBlogRepresenter->getBlogFeeds();
+    }
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

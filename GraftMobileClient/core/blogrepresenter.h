@@ -4,6 +4,7 @@
 #include <QObject>
 
 class QNetworkAccessManager;
+class QSortFilterProxyModel;
 class FeedModel;
 
 class BlogRepresenter : public QObject
@@ -17,7 +18,7 @@ public:
 
     bool readBlogFeeds() const;
 
-    FeedModel *feedModel() const;
+    QObject *feedModel() const;
 
     QString pathToFeeds() const;
 
@@ -38,6 +39,7 @@ private:
 
 private:
     QNetworkAccessManager *mNetworkManager;
+    QSortFilterProxyModel *mSortModel;
     mutable QString mLastBuildDate;
     mutable QString mFeedPath;
     FeedModel *mFeedModel;
