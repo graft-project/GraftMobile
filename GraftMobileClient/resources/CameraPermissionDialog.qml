@@ -4,12 +4,23 @@ import org.camera.permission 1.0
 BaseSelectImageDialog {
     property bool openDialog: false
 
-    onOpenDialogChanged: {
-        if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.None) {
-            cameraButtonEnabled = true
-        } else {
-            cameraButtonEnabled = ImagePicker.hasCameraPermission() === AbstractCameraPermission.Granted
+    Connections {
+        target: ImagePicker
+        onCameraPermissionProvided: {
+            if (result === AbstractCameraPermission.Denied) {
+                cameraButtonEnabled = false
+            }
+            if ((ImagePicker.hasCameraPermission() !== AbstractCameraPermission.Granted)) {
+                dialog.open()
+            }
         }
-        dialog.open()
+    }
+
+    onOpenDialogChanged: {
+        if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.Denied) {
+            ImagePicker.requestCameraPermission()
+        } else {
+            dialog.open()
+        }
     }
 }
