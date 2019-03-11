@@ -10,7 +10,7 @@ BaseSelectImageDialog {
             if (result === AbstractCameraPermission.Denied) {
                 cameraButtonEnabled = false
             }
-            if ((ImagePicker.hasCameraPermission() !== AbstractCameraPermission.Granted)) {
+            if ((result !== AbstractCameraPermission.Granted)) {
                 dialog.open()
             }
         }
