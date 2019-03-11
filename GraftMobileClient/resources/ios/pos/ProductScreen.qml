@@ -50,12 +50,15 @@ BaseScreen {
 
             ListView {
                 id: productList
-                spacing: 0
-                clip: true
-                model: ProductModel
-                delegate: productDelegate
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                delegate: productDelegate
+                model: ProductModel
+                clip: true
+                spacing: 0
+                ScrollBar.vertical: ScrollBar {
+                    width: 5
+                }
 
                 Component {
                     id: productDelegate
@@ -73,8 +76,12 @@ BaseScreen {
                             font.bold: true
                             color: ColorFactory.color(DesignFactory.MainText)
                         }
-                        onRemoveItemClicked: Detector.isDesktop() ? desktopMessageDialog.open() :
-                                                                    mobileMessageDialog.open()
+                        onRemoveItemClicked: {
+                            var dialog = Detector.isDesktop() ? desktopMessageDialog :
+                                                                mobileMessageDialog
+                            dialog.removeItemIndex = index
+                            dialog.open()
+                        }
                         onEditItemClicked: pushScreen.openEditingItemScreen(index)
                     }
                 }
@@ -129,18 +136,25 @@ BaseScreen {
 
     MessageDialog {
         id: mobileMessageDialog
+
+        property int removeItemIndex: -1
+
         title: qsTr("Delete item")
         icon: StandardIcon.Warning
         text: qsTr("Are you sure that you want to remove this item?")
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            ProductModel.removeProduct(index)
-            GraftClient.saveProducts()
+            deleteItem(removeItemIndex)
+            removeItemIndex = -1
+            mobileMessageDialog.close()
         }
     }
 
     ChooserDialog {
         id: desktopMessageDialog
+
+        property int removeItemIndex: -1
+
         topMargin: (mainScreen.height - desktopMessageDialog.height) / 2
         leftMargin: (mainScreen.width - desktopMessageDialog.width) / 2
         dialogMode: true
@@ -149,9 +163,15 @@ BaseScreen {
         confirmButtonText: qsTr("Yes")
         denyButtonText: qsTr("No")
         onConfirmed: {
-            ProductModel.removeProduct(index)
-            GraftClient.saveProducts()
+            deleteItem(removeItemIndex)
+            removeItemIndex = -1
+            desktopMessageDialog.close()
         }
         onDenied: desktopMessageDialog.close()
+    }
+
+    function deleteItem(index) {
+        ProductModel.removeProduct(index)
+        GraftClient.saveProducts()
     }
 }

@@ -83,6 +83,7 @@ BaseScreen {
                 Label {
                     id: address
                     Layout.fillWidth: true
+                    Layout.topMargin: Detector.isPlatform(Platform.Android) ? 15 : 0
                     Layout.leftMargin: 20
                     Layout.rightMargin: 20
                     Layout.alignment: Qt.AlignTop
