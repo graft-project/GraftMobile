@@ -87,7 +87,6 @@ GraftApplicationWindow {
 
     SwipeView {
         id: mainLayout
-        focus: true
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0

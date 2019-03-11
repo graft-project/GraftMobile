@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 
 BaseScreen {
@@ -44,6 +45,7 @@ BaseScreen {
             text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Done") :
                                                                          qsTr("Save changes")
             Layout.alignment: Qt.AlignBottom
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
                 save()

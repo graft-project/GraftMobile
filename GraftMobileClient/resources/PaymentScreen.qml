@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 
 BaseScreen {
@@ -77,6 +78,7 @@ BaseScreen {
                 rightMargin:15
                 bottomMargin: 15
             }
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
                 pushMainScreen()

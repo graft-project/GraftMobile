@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
+import org.navigation.attached.properties 1.0
 import "../"
 
 Page {
@@ -18,6 +19,7 @@ Page {
     signal attentionAccepted()
     signal errorMessage()
 
+    Navigation.implicitFirstComponent: screenHeader.Navigation.implicitFirstComponent
     onVisibleChanged: enableScreen()
 
     header: Header {
