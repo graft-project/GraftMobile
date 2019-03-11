@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import org.graft 1.0
+import org.navigation.attached.properties 1.0
 
 Rectangle {
     id: balance
@@ -10,6 +11,8 @@ Rectangle {
     property real amountLockGraftCost: 0.0
     property bool balanceVisible: true
     property int dotsCount: 0
+
+    Navigation.implicitFirstComponent: unlockedMainBalance
 
     height: 120
     color: "#FCF9F1"
@@ -36,6 +39,7 @@ Rectangle {
             enabled: balanceVisible
             Layout.fillWidth: true
             Layout.preferredHeight: 60
+            KeyNavigation.backtab: balance.Navigation.explicitLastComponent
             onClicked: pushScreen.openMainAddressScreen()
 
             RowLayout {

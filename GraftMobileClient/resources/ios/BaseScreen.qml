@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "../"
 
 Page {
@@ -19,7 +20,15 @@ Page {
     signal attentionAccepted()
     signal errorMessage()
 
-    onVisibleChanged: enableScreen()
+    Navigation.implicitFirstComponent: screenHeader.Navigation.implicitFirstComponent
+    onFocusChanged: {
+        if (basePage.focus) {
+            forceActiveFocus()
+        }
+    }
+    onVisibleChanged: {
+        enableScreen()
+    }
 
     header: Header {
         id: appHeader
@@ -44,6 +53,7 @@ Page {
         leftMargin: (parent.width - desktopDialog.width) / 2
         title: qsTr("Attention")
         onConfirmed: {
+            nextItemInFocusChain(true).forceActiveFocus(Qt.TabFocusReason)
             attentionAccepted()
             desktopDialog.close()
         }

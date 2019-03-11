@@ -101,11 +101,14 @@ BaseScreen {
             }
 
             WideActionButton {
-                id: payButton
+                id: acceptButton
+                focus: true
                 text: qsTr("Accept")
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: Detector.bottomNavigationBarHeight() + 15
+                KeyNavigation.tab: acceptButton
+                KeyNavigation.backtab: acceptButton
                 onClicked: {
                     disableScreen()
                     acceptAction()

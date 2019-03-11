@@ -6,6 +6,9 @@ import "../"
 
 BaseHeader {
     id: rootItem
+
+    property bool repeatFocus: false
+
     height: 60
     color: ColorFactory.color(DesignFactory.Foreground)
 
