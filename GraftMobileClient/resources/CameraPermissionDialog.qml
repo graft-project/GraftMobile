@@ -1,6 +1,5 @@
 import QtQuick 2.9
 import org.camera.permission 1.0
-
 import com.device.platform 1.0
 
 BaseSelectImageDialog {
@@ -20,10 +19,11 @@ BaseSelectImageDialog {
         if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.Denied) {
             if (Detector.isPlatform(Platform.IOS)) {
                 cameraButtonEnabled = false
+                dialog.open()
             } else if (Detector.isPlatform(Platform.Android)) {
                 ImagePicker.requestCameraPermission()
             }
-        } else { //for iOS dont need this condition.
+        } else {
             dialog.open()
         }
     }
