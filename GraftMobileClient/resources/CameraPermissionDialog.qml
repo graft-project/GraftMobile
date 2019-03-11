@@ -8,7 +8,7 @@ BaseSelectImageDialog {
     Connections {
         target: ImagePicker
         onCameraPermissionProvided: {
-            if (result === AbstractCameraPermission.Denied) {
+            if (Detector.isPlatform(Platform.Android) && result === AbstractCameraPermission.Denied) {
                 cameraButtonEnabled = false
                 dialog.open()
             }
