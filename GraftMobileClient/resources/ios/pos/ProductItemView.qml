@@ -35,17 +35,9 @@ Item {
             id: flickable
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.bottomMargin: -14
+            Layout.bottomMargin: 5
             ScrollBar.vertical: ScrollBar {
-                parent: flickable.parent
-                anchors {
-                    top: flickable.top
-                    bottom: flickable.bottom
-                    left: flickable.right
-                    right: flickable.right
-                    rightMargin: -5
-                }
-                size: 1.0
+                width: 5
             }
             clip: true
             flickableDirection: Flickable.AutoFlickIfNeeded
@@ -55,6 +47,8 @@ Item {
                 id: productView
                 spacing: 5
                 anchors {
+                    leftMargin: 5
+                    rightMargin: 5
                     left: parent.left
                     right: parent.right
                 }
