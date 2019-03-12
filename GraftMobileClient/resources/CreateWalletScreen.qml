@@ -51,7 +51,9 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
+            Layout.fillWidth: true
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Create New Wallet")
             onClicked: {
                 var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
@@ -97,7 +99,8 @@ BaseScreen {
 
         WideActionButton {
             id: restoreWalletButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Restore/Import Wallet")
             KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {

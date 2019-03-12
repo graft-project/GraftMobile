@@ -122,6 +122,7 @@ BaseScreen {
                 WideActionButton {
                     id: scanQRcodeButton
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignCenter
                     text: qsTr("Scan QR Code")
                     onClicked: {
                         sendOrScanScreen.enabled = false
@@ -132,7 +133,7 @@ BaseScreen {
                 WideActionButton {
                     id: sendCoinsButton
                     Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Send")
                     KeyNavigation.tab: sendOrScanScreen.Navigation.implicitFirstComponent
                     onClicked: checkingData()

@@ -85,7 +85,8 @@ BaseScreen {
 
             WideActionButton {
                 id: confirmButton
-                Layout.alignment: Qt.AlignBottom
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                 text: qsTr("Confirm")
                 enabled: enabledConfirmButton()
                 KeyNavigation.tab: root.Navigation.explicitFirstComponent

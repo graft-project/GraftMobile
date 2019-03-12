@@ -100,8 +100,8 @@ BaseScreen {
                 WideActionButton {
                     id: clipboardButton
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Copy to clipboard")
-                    Layout.alignment: Qt.AlignBottom
                     KeyNavigation.tab: balance.Navigation.implicitFirstComponent
                     onClicked: {
                         GraftClientTools.copyToClipboard(balanceState === "mainAddress" ?

@@ -77,6 +77,8 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             WideActionButton {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
                 onClicked: {
@@ -86,6 +88,8 @@ BasePaymentConfirmationScreen {
             }
 
             WideActionButton {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
                 text: qsTr("Pay")
                 KeyNavigation.tab: root.Navigation.implicitFirstComponent
                 onClicked: {

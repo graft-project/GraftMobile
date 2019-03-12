@@ -66,7 +66,8 @@ BaseScreen {
 
         WideActionButton {
             id: confirmButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Checkout")
             onClicked: checkout()
         }

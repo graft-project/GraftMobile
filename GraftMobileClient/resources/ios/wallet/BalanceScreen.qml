@@ -37,8 +37,10 @@ BaseBalanceScreen {
 
         WideActionButton {
             id: sendCoinsButton
+            Layout.fillWidth: true
             Layout.leftMargin: 15
             Layout.rightMargin: 15
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Send")
             KeyNavigation.tab: payButton.enabled ? null : baseBalanceScreen.Navigation.implicitFirstComponent
             onClicked: {
@@ -49,10 +51,12 @@ BaseBalanceScreen {
 
         WideActionButton {
             id: payButton
-            text: qsTr("Pay")
+            Layout.fillWidth: true
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
+            Layout.alignment: Qt.AlignCenter
+            text: qsTr("Pay")
             enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
             KeyNavigation.tab: baseBalanceScreen.Navigation.implicitFirstComponent
             onClicked: {

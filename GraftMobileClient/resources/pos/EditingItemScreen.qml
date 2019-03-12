@@ -51,6 +51,8 @@ BaseScreen {
 
         WideActionButton {
             id: multiTaskingButton
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Confirm")
             onClicked: confirmProductParameters()
         }

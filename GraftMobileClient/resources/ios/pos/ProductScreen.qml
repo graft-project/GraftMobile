@@ -100,11 +100,12 @@ BaseScreen {
 
             WideActionButton {
                 id: addButton
-                text: qsTr("Checkout")
-                Layout.alignment: Qt.AlignBottom
+                Layout.fillWidth: true
                 Layout.topMargin: 15
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+                text: qsTr("Checkout")
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
@@ -119,12 +120,13 @@ BaseScreen {
 
             WideActionButton {
                 id: quickDealButton
-                text: qsTr("Quick Deal")
-                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                Layout.alignment: Qt.AlignBottom
+                Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+                text: qsTr("Quick Deal")
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: {
                     disableScreen()
