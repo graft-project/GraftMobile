@@ -36,8 +36,11 @@ DEVID_CER = \"Developer ID Application: GRAFT Payments, LLC (5E52LHPZLS)\"
 CODESIGN = codesign --force --verify --deep --sign $$DEVID_CER
 BACKGROUND = $${BUILD_DIR}/graft_background.tiff
 
+CREATE_DMG_SH += $$PWD/create_dmg.sh
+exists($${CREATE_DMG_SH}) {
 QMAKE_POST_LINK += $${QT_DEPLOY} $$APP_FILE -qmldir=$${QML_DIR} $${ESCAPE_COMMAND}
 QMAKE_POST_LINK += $${CODESIGN} $$APP_FILE $${ESCAPE_COMMAND}
-QMAKE_POST_LINK += $$PWD/create_dmg.sh -s $$APP_FILE -o $${OUT_PWD} -b $${BACKGROUND} $${ESCAPE_COMMAND}
-QMAKE_POST_LINK += $$PWD/create_dmg.sh -s $$APP_FILE -o $${OUT_PWD} -b $${BACKGROUND} $${ESCAPE_COMMAND}
+QMAKE_POST_LINK += $${CREATE_DMG_SH} -s $$APP_FILE -o $${OUT_PWD} -b $${BACKGROUND} $${ESCAPE_COMMAND}
+QMAKE_POST_LINK += $${CREATE_DMG_SH} -s $$APP_FILE -o $${OUT_PWD} -b $${BACKGROUND} $${ESCAPE_COMMAND}
+}
 }
