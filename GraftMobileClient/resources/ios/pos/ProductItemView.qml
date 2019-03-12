@@ -47,6 +47,7 @@ Item {
                 id: productView
                 spacing: 5
                 anchors {
+                    leftMargin: 5
                     rightMargin: 5
                     left: parent.left
                     right: parent.right
