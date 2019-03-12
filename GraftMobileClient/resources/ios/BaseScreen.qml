@@ -49,8 +49,9 @@ Page {
 
     DesktopDialog {
         id: desktopDialog
-        topMargin: (parent.height - desktopDialog.height) / 2
+        width: parent.width / 1.2
         leftMargin: (parent.width - desktopDialog.width) / 2
+        topMargin: (parent.height - desktopDialog.height) / 2
         title: qsTr("Attention")
         onConfirmed: {
             nextItemInFocusChain(true).forceActiveFocus(Qt.TabFocusReason)
