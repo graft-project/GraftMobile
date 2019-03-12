@@ -115,7 +115,7 @@ BaseScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
-            Layout.alignment: Qt.AlignBottom
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Confirm")
             KeyNavigation.tab: sendCoinScreen.Navigation.implicitFirstComponent
             onClicked: passwordDialog.open()

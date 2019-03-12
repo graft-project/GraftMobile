@@ -54,6 +54,8 @@ BaseScreen {
 
         WideActionButton {
             id: resetWalletButton
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Reset Account")
             onClicked: {
                 okMode = true
@@ -64,6 +66,8 @@ BaseScreen {
 
         WideActionButton {
             id: mnemonicButton
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Show Mnemonic Password")
             onClicked: {
                 okMode = false
@@ -74,7 +78,8 @@ BaseScreen {
 
         WideActionButton {
             id: saveButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()

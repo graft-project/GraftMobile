@@ -78,13 +78,15 @@ BaseScreen {
                 }
 
                 WideActionButton {
-                    Layout.alignment: Qt.AlignBottom
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Scan QR Code")
                     onClicked: stackLayout.currentIndex = 1
                 }
 
                 WideActionButton {
-                    Layout.alignment: Qt.AlignBottom
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Add")
                     onClicked: addAccount()
                 }

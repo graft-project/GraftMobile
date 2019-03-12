@@ -103,10 +103,12 @@ BaseScreen {
             WideActionButton {
                 id: acceptButton
                 focus: true
-                text: qsTr("Accept")
+                Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: Detector.bottomNavigationBarHeight() + 15
+                Layout.alignment: Qt.AlignCenter
+                text: qsTr("Accept")
                 KeyNavigation.tab: acceptButton
                 KeyNavigation.backtab: acceptButton
                 onClicked: {

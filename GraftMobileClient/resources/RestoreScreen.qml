@@ -79,7 +79,8 @@ BaseScreen {
 
         WideActionButton {
             id: restoreWalletButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Restore")
             KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: validatePassword()
