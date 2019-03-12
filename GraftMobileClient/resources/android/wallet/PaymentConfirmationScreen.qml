@@ -88,8 +88,9 @@ BasePaymentConfirmationScreen {
             }
 
             WideActionButton {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight | Qt.AlignCenter
                 text: qsTr("CONFIRM")
-                Layout.alignment: Qt.AlignRight
                 onClicked: {
                     activityBusyIndicator = true
                     confirmPay()

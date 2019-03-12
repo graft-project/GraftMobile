@@ -21,6 +21,8 @@
 #include "designfactory.h"
 #include "QZXing.h"
 
+#include "navigationproperties.h"
+
 #if !defined(POS_BUILD) && !defined(WALLET_BUILD)
 static_assert(false, "You didn't add additional argument POS_BUILD or WALLET_BUILD for qmake in \'Build Settings->Build Steps\'");
 #endif
@@ -68,6 +70,7 @@ int main(int argc, char *argv[])
     QZXing::registerQMLTypes();
     DeviceDetector detector;
     detector.registerTypes(&engine);
+    NavigationProperties::registerTypes();
 #ifdef POS_BUILD
     app.setWindowIcon(QIcon(":/imgs/icon-pos.png"));
 

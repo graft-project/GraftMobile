@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QZXing 2.3
 import org.graft 1.0
+import "../components"
 
 Item {
     property string lastTag: ""
@@ -33,7 +34,7 @@ Item {
             }
             onCameraStateChanged: {
                 if (cameraState === Camera.UnloadedState) {
-                    camera.start()
+                    resetView()
                 }
             }
         }
@@ -99,7 +100,7 @@ Item {
 
     Item {
         id: messagesScreen
-        implicitHeight: 110
+        implicitHeight: 150
         implicitWidth: parent.width - 60
         anchors.centerIn: parent
         visible: false
@@ -111,6 +112,19 @@ Item {
             font.pixelSize: 16
             color: "#A8A8A8"
             text: GraftClientConstants.invalidCameraPermissionMessage()
+        }
+
+        WideActionButton {
+            id: resetButton
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                left: parent.left
+                rightMargin: 100
+                leftMargin: 100
+            }
+            text: qsTr("Reset")
+            onClicked: resetView()
         }
     }
 
@@ -132,6 +146,7 @@ Item {
     ]
 
     function resetView() {
+        state = "scanScreen"
         camera.start()
         lastTag = ""
     }

@@ -36,7 +36,6 @@ ApplicationWindow {
         opacityAnimator.onStopped: allowClose = false
     }
 
-
     function init() {
         if (Detector.isPlatform(Platform.IOS)) {
             root.visibility = ApplicationWindow.FullScreen

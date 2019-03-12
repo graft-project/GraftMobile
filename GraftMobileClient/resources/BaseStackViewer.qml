@@ -11,11 +11,14 @@ StackView {
 
     signal networkReplyError()
 
-    focus: true
+    focus: isActive
     onCurrentItemChanged: {
         if (isActive && menuLoader && menuLoader.status === Loader.Ready) {
             menuLoader.item.interactive = currentItem.isMenuActive && currentItem.isMenuVisible
         }
+        // TODO: (Fixed in - 5.11.0 Alpha) QTBUG-51321. StackView should clear focus when a new item is pushed. For more details see:
+        // https://bugreports.qt.io/browse/QTBUG-51321?jql=component%20%3D%20%22Quick%3A%20Controls%202%22%20AND%20text%20~%20%22Tab%22
+        currentItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
     }
 
     onNetworkReplyError: currentItem.networkReplyError()

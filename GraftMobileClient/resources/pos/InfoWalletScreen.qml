@@ -28,18 +28,20 @@ BaseBalanceScreen {
         }
 
         WideActionButton {
+            Layout.fillWidth: true
             Layout.leftMargin: 15
             Layout.rightMargin: 15
-            Layout.alignment: Qt.AlignBottom
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             enabled: false
             text: qsTr("Transfer to Paypal")
         }
 
         WideActionButton {
+            Layout.fillWidth: true
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
-            Layout.alignment: Qt.AlignBottom
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             enabled: false
             text: qsTr("Chase XXX929")
         }

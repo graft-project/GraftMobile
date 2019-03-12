@@ -84,7 +84,6 @@ SOURCES += main.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
     core/accountitem.cpp \
@@ -95,11 +94,13 @@ SOURCES += main.cpp \
     core/accountmanager.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
-    devicedetector.cpp \
     core/graftclientconstants.cpp \
-    abstractdevicetools.cpp \
     core/feedmodel.cpp \
-    core/blogrepresenter.cpp
+    core/blogrepresenter.cpp \
+    devicedetector.cpp \
+    designfactory.cpp \
+    navigationproperties.cpp \
+    abstractdevicetools.cpp
 
 HEADERS += \
     core/config.h \
@@ -114,7 +115,6 @@ HEADERS += \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
     core/accountitem.h \
@@ -125,11 +125,13 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    devicedetector.h \
     core/graftclientconstants.h \
-    abstractdevicetools.h \
     core/feedmodel.h \
-    core/blogrepresenter.h
+    core/blogrepresenter.h \
+    devicedetector.h \
+    designfactory.h \
+    navigationproperties.h \
+    abstractdevicetools.h
 
 include(resources/resources.pri)
 
