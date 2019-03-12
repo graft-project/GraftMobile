@@ -1,4 +1,4 @@
-QT += qml quick network widgets xml xmlpatterns webview
+QT += qml quick network widgets webview
 
 CONFIG += c++11
 

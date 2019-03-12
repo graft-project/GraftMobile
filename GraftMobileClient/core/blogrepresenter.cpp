@@ -4,9 +4,9 @@
 #include <QNetworkAccessManager>
 #include <QSortFilterProxyModel>
 #include <QRegularExpression>
+#include <QXmlStreamReader>
 #include <QStandardPaths>
 #include <QNetworkReply>
-#include <QDomDocument>
 #include <QTimerEvent>
 #include <QDir>
 
@@ -115,62 +115,88 @@ bool BlogRepresenter::parseBlogFeeds(const QByteArray &feeds) const
     bool isFeedsReadSuccess = false;
     if (!feeds.isEmpty() && mFeedModel)
     {
-        QDomDocument feedRss;
-        feedRss.setContent(feeds);
-
-        QDomNodeList lastBuildDateList = feedRss.elementsByTagName("lastBuildDate");
-        if (lastBuildDateList.size() == 1)
+        QXmlStreamReader feedRss(feeds);
+        if (feedRss.readNextStartElement() && feedRss.name() == QStringLiteral("rss"))
         {
-            QDomElement lastBuildDateNode = lastBuildDateList.item(0).toElement();
-            if (!lastBuildDateNode.isNull())
+            if (feedRss.readNextStartElement() && feedRss.name() == QStringLiteral("channel"))
             {
-                QString lastBuildDate = lastBuildDateNode.text();
-                if (!lastBuildDate.isEmpty() && lastBuildDate != mLastBuildDate)
+                while (feedRss.readNextStartElement())
                 {
-                    mLastBuildDate = lastBuildDate;
-
-                    QDomNodeList itemList = feedRss.elementsByTagName("item");
-                    for (int i = 0; i < itemList.size(); ++i)
+                    if (feedRss.name() == QStringLiteral("lastBuildDate"))
                     {
-                        QDomNode item = itemList.item(i);
-                        if (!item.isNull())
+                        QString lastBuildDate = feedRss.readElementText();
+
+                        if (!lastBuildDate.isEmpty() && lastBuildDate != mLastBuildDate)
                         {
-                            QDomElement link = item.firstChildElement("link");
-                            QDomElement title = item.firstChildElement("title");
-                            QDomElement pubDate = item.firstChildElement("pubDate");
-                            QDomElement content = item.firstChildElement("content:encoded");
-                            QDomElement description = item.firstChildElement("description");
-
-                            QString image;
-                            QRegularExpression rx("<img src=\".{8,}\"");
-                            QRegularExpressionMatch match = rx.match(content.text());
-                            if (match.hasMatch())
-                            {
-                                image = match.captured(0);
-                                image = image.remove(QRegularExpression("<img src=\""));
-                                image = image.mid(0, image.indexOf('"'));
-                            }
-
-                            if (!link.isNull() && !title.isNull() && !pubDate.isNull() && !content.isNull() &&
-                                !description.isNull())
-                            {
-                                QDateTime data = QDateTime::fromString(pubDate.text(),
-                                                                       scFeedPubDate);
-                                FeedModel::FeedItem *feedItem = new FeedModel::FeedItem(description.text(),
-                                                                                        data,
-                                                                                        content.text(),
-                                                                                        title.text(),
-                                                                                        link.text());
-                                feedItem->mImage = image;
-                                mFeedModel->add(feedItem);
-                            }
+                            mLastBuildDate = lastBuildDate;
                         }
                     }
-                    createFullHTMLFeed();
-                    createShortHTMLFeed();
-                    isFeedsReadSuccess = true;
+                    else
+                    {
+                        if (feedRss.name() == QStringLiteral("item"))
+                        {
+                            QString description, content, pubDate, title, link;
+                            while (feedRss.readNextStartElement())
+                            {
+                                if (feedRss.name() == QStringLiteral("title"))
+                                {
+                                    title = feedRss.readElementText();
+                                }
+                                else if (feedRss.name() == QStringLiteral("link"))
+                                {
+                                    link = feedRss.readElementText();
+                                }
+                                else if (feedRss.name() == QStringLiteral("pubDate"))
+                                {
+                                    pubDate = feedRss.readElementText();
+                                }
+                                else if (feedRss.name() == QStringLiteral("description"))
+                                {
+                                    description = feedRss.readElementText();
+                                }
+                                else if (feedRss.name() == QStringLiteral("encoded"))
+                                {
+                                    content = feedRss.readElementText();
+
+                                    QString image;
+                                    QRegularExpression rx("<img src=\".{8,}\"");
+                                    QRegularExpressionMatch match = rx.match(content);
+                                    if (match.hasMatch())
+                                    {
+                                        image = match.captured(0);
+                                        image = image.remove(QRegularExpression("<img src=\""));
+                                        image = image.mid(0, image.indexOf('"'));
+                                    }
+
+                                    if (!link.isEmpty() && !title.isEmpty() && !pubDate.isEmpty() && !content.isEmpty() &&
+                                        !description.isEmpty())
+                                    {
+                                        QDateTime data = QDateTime::fromString(pubDate, scFeedPubDate);
+                                        FeedModel::FeedItem *feedItem = new FeedModel::FeedItem(description,
+                                                                                                data,
+                                                                                                content,
+                                                                                                title,
+                                                                                                link);
+                                        feedItem->mImage = image;
+                                        mFeedModel->add(feedItem);
+                                    }
+                                }
+                                else
+                                {
+                                    feedRss.skipCurrentElement();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            feedRss.skipCurrentElement();
+                        }
+                    }
                 }
             }
+            createFullHTMLFeed();
+            createShortHTMLFeed();
+            isFeedsReadSuccess = true;
         }
     }
     return isFeedsReadSuccess;
