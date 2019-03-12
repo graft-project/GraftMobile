@@ -196,7 +196,7 @@ BaseScreen {
 
     function normalizeAmount(amount) {
         if (amount[amount.length - 1] === '.') {
-            amount = amount.replace('.', '')
+            amount = amount.slice(0, -1)
         }
         return amount
     }
