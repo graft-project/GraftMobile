@@ -8,10 +8,10 @@ class QNetworkAccessManager;
 class BarcodeImageProvider;
 class QuickExchangeModel;
 class GraftBaseHandler;
-class BlogRepresenter;
 class AccountManager;
 class CurrencyModel;
 class AccountModel;
+class BlogReader;
 class QQmlEngine;
 class QSettings;
 
@@ -76,8 +76,7 @@ public:
 
     Q_INVOKABLE bool isDevMode() const;
 
-    Q_INVOKABLE QString pathToFeeds() const;
-    Q_INVOKABLE void updateFeeds() const;
+    Q_INVOKABLE QObject *blogReader() const;
 
 signals:
     void blogFeedPathChanged(const QString &path) const;
@@ -117,7 +116,6 @@ private slots:
 
 private:
     void initSettings();
-    void initFeedModel(QQmlEngine *engine);
     void initAccountModel(QQmlEngine *engine);
     void initCurrencyModel(QQmlEngine *engine);
     void initQuickExchangeModel(QQmlEngine *engine);
@@ -128,11 +126,11 @@ protected:
     QuickExchangeModel *mQuickExchangeModel;
     QNetworkAccessManager *mNetworkManager;
     BarcodeImageProvider *mImageProvider;
-    BlogRepresenter *mBlogRepresenter;
     AccountManager *mAccountManager;
     CurrencyModel *mCurrencyModel;
     AccountModel *mAccountModel;
     QSettings *mClientSettings;
+    BlogReader *mBlogReader;
 
     QMap<int, double> mBalances;
 

@@ -14,7 +14,6 @@
 #include "config.h"
 
 #include <QStandardPaths>
-#include <QSettings>
 #include <QFileInfo>
 
 static const QString scProductModelDataFile("productList.dat");

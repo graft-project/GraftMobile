@@ -1,5 +1,5 @@
-#ifndef BLOGREPRESENTER_H
-#define BLOGREPRESENTER_H
+#ifndef BLOGREADER_H
+#define BLOGREADER_H
 
 #include <QObject>
 
@@ -7,20 +7,18 @@ class QNetworkAccessManager;
 class QSortFilterProxyModel;
 class FeedModel;
 
-class BlogRepresenter : public QObject
+class BlogReader : public QObject
 {
     Q_OBJECT
 public:
-    explicit BlogRepresenter(QNetworkAccessManager *networkManager, QObject *parent = nullptr);
-    ~BlogRepresenter() override;
-
-    void getBlogFeeds() const;
+    explicit BlogReader(QNetworkAccessManager *networkManager, QObject *parent = nullptr);
+    ~BlogReader() override;
 
     bool readBlogFeeds() const;
 
-    QObject *feedModel() const;
+    Q_INVOKABLE void getBlogFeeds() const;
 
-    QString pathToFeeds() const;
+    Q_INVOKABLE QObject *feedModel() const;
 
 signals:
     void blogFeedPathChanged(const QString &path) const;
@@ -46,4 +44,4 @@ private:
     int mRefreshTimer;
 };
 
-#endif // BLOGREPRESENTER_H
+#endif // BLOGREADER_H

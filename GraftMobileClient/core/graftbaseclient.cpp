@@ -5,14 +5,13 @@
 #include "graftclientconstants.h"
 #include "quickexchangemodel.h"
 #include "graftclienttools.h"
-#include "blogrepresenter.h"
 #include "graftbaseclient.h"
 #include "qrcodegenerator.h"
 #include "accountmanager.h"
 #include "currencymodel.h"
 #include "currencyitem.h"
 #include "accountmodel.h"
-#include "feedmodel.h"
+#include "blogreader.h"
 #include "config.h"
 
 #include <QNetworkAccessManager>
@@ -54,21 +53,15 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mQuickExchangeModel(nullptr)
     ,mNetworkManager{new QNetworkAccessManager(this)}
     ,mImageProvider(nullptr)
-    ,mBlogRepresenter{new BlogRepresenter(mNetworkManager, this)}
     ,mAccountManager(new AccountManager())
     ,mCurrencyModel(nullptr)
     ,mAccountModel(nullptr)
     ,mClientSettings(nullptr)
+    ,mBlogReader{new BlogReader(mNetworkManager, this)}
     ,mIsBalanceUpdated(false)
     ,mBalanceTimer(-1)
 {
     initSettings();
-
-    if (mBlogRepresenter)
-    {
-        connect(mBlogRepresenter, &BlogRepresenter::blogFeedPathChanged,
-                this, &GraftBaseClient::blogFeedPathChanged, Qt::UniqueConnection);
-    }
 }
 
 GraftBaseClient::~GraftBaseClient()
@@ -211,7 +204,6 @@ void GraftBaseClient::setQRCodeImage(const QImage &image)
 void GraftBaseClient::registerTypes(QQmlEngine *engine)
 {
     registerImageProvider(engine);
-    initFeedModel(engine);
     initAccountModel(engine);
     initCurrencyModel(engine);
     initQuickExchangeModel(engine);
@@ -402,15 +394,6 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
     }
 }
 
-void GraftBaseClient::initFeedModel(QQmlEngine *engine)
-{
-    if(mBlogRepresenter)
-    {
-        engine->rootContext()->setContextProperty(QStringLiteral("FeedModel"),
-                                                  mBlogRepresenter->feedModel());
-    }
-}
-
 void GraftBaseClient::initAccountModel(QQmlEngine *engine)
 {
     if(!mAccountModel)
@@ -483,17 +466,9 @@ bool GraftBaseClient::isDevMode() const
     return false;
 }
 
-QString GraftBaseClient::pathToFeeds() const
+QObject *GraftBaseClient::blogReader() const
 {
-    return mBlogRepresenter ? mBlogRepresenter->pathToFeeds() : QString();
-}
-
-void GraftBaseClient::updateFeeds() const
-{
-    if (mBlogRepresenter)
-    {
-        mBlogRepresenter->getBlogFeeds();
-    }
+    return mBlogReader ? mBlogReader : nullptr;
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

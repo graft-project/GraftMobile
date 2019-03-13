@@ -96,7 +96,7 @@ SOURCES += main.cpp \
     core/qrcodegenerator.cpp \
     core/graftclientconstants.cpp \
     core/feedmodel.cpp \
-    core/blogrepresenter.cpp \
+    core/blogreader.cpp \
     devicedetector.cpp \
     designfactory.cpp \
     navigationproperties.cpp \
@@ -127,7 +127,7 @@ HEADERS += \
     core/qrcodegenerator.h \
     core/graftclientconstants.h \
     core/feedmodel.h \
-    core/blogrepresenter.h \
+    core/blogreader.h \
     devicedetector.h \
     designfactory.h \
     navigationproperties.h \

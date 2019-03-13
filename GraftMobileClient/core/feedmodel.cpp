@@ -9,6 +9,7 @@ FeedModel::FeedModel(QObject *parent) : QAbstractListModel(parent)
 
 FeedModel::~FeedModel()
 {
+    qDeleteAll(mFeeds);
 }
 
 QVariant FeedModel::data(const QModelIndex &index, int role) const

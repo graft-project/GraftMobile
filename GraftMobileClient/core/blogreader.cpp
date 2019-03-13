@@ -1,4 +1,4 @@
-#include "blogrepresenter.h"
+#include "blogreader.h"
 #include "feedmodel.h"
 
 #include <QNetworkAccessManager>
@@ -28,7 +28,7 @@ static const QString scLink("%link%");
 static const QString scCSS("%CSS%");
 static const int scRefreshRate{60000 * 60};
 
-BlogRepresenter::BlogRepresenter(QNetworkAccessManager *networkManager, QObject *parent)
+BlogReader::BlogReader(QNetworkAccessManager *networkManager, QObject *parent)
     : QObject(parent)
     ,mNetworkManager{networkManager}
     ,mSortModel{new QSortFilterProxyModel(this)}
@@ -47,18 +47,11 @@ BlogRepresenter::BlogRepresenter(QNetworkAccessManager *networkManager, QObject 
     }
 }
 
-BlogRepresenter::~BlogRepresenter()
+BlogReader::~BlogReader()
 {
 }
 
-void BlogRepresenter::getBlogFeeds() const
-{
-    QNetworkReply *reply = mNetworkManager->get(QNetworkRequest(QUrl(scBlogFeeds)));
-    connect(reply, &QNetworkReply::finished,
-            this, &BlogRepresenter::receivedBlogFeeds, Qt::UniqueConnection);
-}
-
-bool BlogRepresenter::readBlogFeeds() const
+bool BlogReader::readBlogFeeds() const
 {
     bool isFeedsReadSuccess = false;
     QDir lDir(appDataLocation());
@@ -71,17 +64,19 @@ bool BlogRepresenter::readBlogFeeds() const
     return isFeedsReadSuccess;
 }
 
-QObject *BlogRepresenter::feedModel() const
+void BlogReader::getBlogFeeds() const
+{
+    QNetworkReply *reply = mNetworkManager->get(QNetworkRequest(QUrl(scBlogFeeds)));
+    connect(reply, &QNetworkReply::finished,
+            this, &BlogReader::receivedBlogFeeds, Qt::UniqueConnection);
+}
+
+QObject *BlogReader::feedModel() const
 {
     return mSortModel;
 }
 
-QString BlogRepresenter::pathToFeeds() const
-{
-    return mFeedPath;
-}
-
-void BlogRepresenter::timerEvent(QTimerEvent *event)
+void BlogReader::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == mRefreshTimer)
     {
@@ -90,12 +85,14 @@ void BlogRepresenter::timerEvent(QTimerEvent *event)
     QObject::timerEvent(event);
 }
 
-void BlogRepresenter::receivedBlogFeeds() const
+void BlogReader::receivedBlogFeeds() const
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     if (reply)
     {
         QByteArray feedRSS = reply->readAll();
+        reply->deleteLater();
+        reply = nullptr;
         if (!feedRSS.isEmpty())
         {
             QDir lDir(appDataLocation());
@@ -110,81 +107,71 @@ void BlogRepresenter::receivedBlogFeeds() const
     }
 }
 
-bool BlogRepresenter::parseBlogFeeds(const QByteArray &feeds) const
+bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
 {
     bool isFeedsReadSuccess = false;
     if (!feeds.isEmpty() && mFeedModel)
     {
         QXmlStreamReader feedRss(feeds);
-        if (feedRss.readNextStartElement() && feedRss.name() == QStringLiteral("rss"))
+        if (feedRss.readNextStartElement() && feedRss.name() == QStringLiteral("rss") &&
+            feedRss.readNextStartElement() && feedRss.name() == QStringLiteral("channel"))
         {
-            if (feedRss.readNextStartElement() && feedRss.name() == QStringLiteral("channel"))
+            while (feedRss.readNextStartElement())
             {
-                while (feedRss.readNextStartElement())
+                if (feedRss.name() == QStringLiteral("lastBuildDate"))
                 {
-                    if (feedRss.name() == QStringLiteral("lastBuildDate"))
+                    QString lastBuildDate = feedRss.readElementText();
+                    if (!lastBuildDate.isEmpty() && lastBuildDate != mLastBuildDate)
                     {
-                        QString lastBuildDate = feedRss.readElementText();
-
-                        if (!lastBuildDate.isEmpty() && lastBuildDate != mLastBuildDate)
-                        {
-                            mLastBuildDate = lastBuildDate;
-                        }
+                        mLastBuildDate = lastBuildDate;
                     }
-                    else
+                }
+                else if (feedRss.name() == QStringLiteral("item"))
+                {
+                    QString description, content, pubDate, title, link;
+                    while (feedRss.readNextStartElement())
                     {
-                        if (feedRss.name() == QStringLiteral("item"))
+                        if (feedRss.name() == QStringLiteral("title"))
                         {
-                            QString description, content, pubDate, title, link;
-                            while (feedRss.readNextStartElement())
+                            title = feedRss.readElementText();
+                        }
+                        else if (feedRss.name() == QStringLiteral("link"))
+                        {
+                            link = feedRss.readElementText();
+                        }
+                        else if (feedRss.name() == QStringLiteral("pubDate"))
+                        {
+                            pubDate = feedRss.readElementText();
+                        }
+                        else if (feedRss.name() == QStringLiteral("description"))
+                        {
+                            description = feedRss.readElementText();
+                        }
+                        else if (feedRss.name() == QStringLiteral("encoded"))
+                        {
+                            content = feedRss.readElementText();
+
+                            QString image;
+                            QRegularExpression rx("<img src=\".{8,}\"");
+                            QRegularExpressionMatch match = rx.match(content);
+                            if (match.hasMatch())
                             {
-                                if (feedRss.name() == QStringLiteral("title"))
-                                {
-                                    title = feedRss.readElementText();
-                                }
-                                else if (feedRss.name() == QStringLiteral("link"))
-                                {
-                                    link = feedRss.readElementText();
-                                }
-                                else if (feedRss.name() == QStringLiteral("pubDate"))
-                                {
-                                    pubDate = feedRss.readElementText();
-                                }
-                                else if (feedRss.name() == QStringLiteral("description"))
-                                {
-                                    description = feedRss.readElementText();
-                                }
-                                else if (feedRss.name() == QStringLiteral("encoded"))
-                                {
-                                    content = feedRss.readElementText();
+                                image = match.captured(0);
+                                image = image.remove(QRegularExpression("<img src=\""));
+                                image = image.mid(0, image.indexOf('"'));
+                            }
 
-                                    QString image;
-                                    QRegularExpression rx("<img src=\".{8,}\"");
-                                    QRegularExpressionMatch match = rx.match(content);
-                                    if (match.hasMatch())
-                                    {
-                                        image = match.captured(0);
-                                        image = image.remove(QRegularExpression("<img src=\""));
-                                        image = image.mid(0, image.indexOf('"'));
-                                    }
-
-                                    if (!link.isEmpty() && !title.isEmpty() && !pubDate.isEmpty() && !content.isEmpty() &&
-                                        !description.isEmpty())
-                                    {
-                                        QDateTime data = QDateTime::fromString(pubDate, scFeedPubDate);
-                                        FeedModel::FeedItem *feedItem = new FeedModel::FeedItem(description,
-                                                                                                data,
-                                                                                                content,
-                                                                                                title,
-                                                                                                link);
-                                        feedItem->mImage = image;
-                                        mFeedModel->add(feedItem);
-                                    }
-                                }
-                                else
-                                {
-                                    feedRss.skipCurrentElement();
-                                }
+                            if (!link.isEmpty() && !title.isEmpty() && !pubDate.isEmpty() &&
+                                !content.isEmpty() && !description.isEmpty())
+                            {
+                                QDateTime data = QDateTime::fromString(pubDate, scFeedPubDate);
+                                FeedModel::FeedItem *feedItem = new FeedModel::FeedItem(description,
+                                                                                        data,
+                                                                                        content,
+                                                                                        title,
+                                                                                        link);
+                                feedItem->mImage = image;
+                                mFeedModel->add(feedItem);
                             }
                         }
                         else
@@ -192,6 +179,10 @@ bool BlogRepresenter::parseBlogFeeds(const QByteArray &feeds) const
                             feedRss.skipCurrentElement();
                         }
                     }
+                }
+                else
+                {
+                    feedRss.skipCurrentElement();
                 }
             }
             createFullHTMLFeed();
@@ -202,7 +193,7 @@ bool BlogRepresenter::parseBlogFeeds(const QByteArray &feeds) const
     return isFeedsReadSuccess;
 }
 
-void BlogRepresenter::createShortHTMLFeed() const
+void BlogReader::createShortHTMLFeed() const
 {
     if (mFeedModel)
     {
@@ -282,7 +273,7 @@ void BlogRepresenter::createShortHTMLFeed() const
     }
 }
 
-void BlogRepresenter::createFullHTMLFeed() const
+void BlogReader::createFullHTMLFeed() const
 {
     static const QString scFullFeedPath("blog");
     if (mFeedModel)
@@ -358,7 +349,7 @@ void BlogRepresenter::createFullHTMLFeed() const
     }
 }
 
-QString BlogRepresenter::appDataLocation() const
+QString BlogReader::appDataLocation() const
 {
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     if (!QFileInfo(dataPath).exists())

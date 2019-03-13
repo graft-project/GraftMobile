@@ -9,8 +9,10 @@ import "components"
 BaseScreen {
     id: blogScreen
 
+    property QtObject blogReader: null
+
     Connections {
-        target: GraftClient
+        target: blogReader
 
         onBlogFeedPathChanged: {
             webView.url = path
@@ -31,11 +33,14 @@ BaseScreen {
         if (webView.visible) {
             webView.reload
         } else {
-            GraftClient.updateFeeds
+            if (blogReader !== null) {
+                blogReader.getBlogFeeds
+            }
         }
     }
 
     Component.onCompleted: {
+        blogReader = GraftClient.blogReader()
         if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
             screenHeader.actionText = qsTr("Update")
         }
@@ -72,94 +77,21 @@ BaseScreen {
         width: parent.width
         height: parent.height
         anchors.top: parent.top
-        model: FeedModel
+        model: blogReader !== null ? blogReader.feedModel() : null
         spacing: 3
         clip: true
 
-        delegate: Item {
-            height: contentLayout.height
+        delegate: BlogFeedDelegate {
             width: parent.width
 
-            ColumnLayout {
-                id: contentLayout
-                anchors {
-                    leftMargin: 20
-                    rightMargin: 20
-                    left: parent.left
-                    right: parent.right
-                }
+            titleText: title
+            titleImage: image
+            date: formattedDate
+            descriptionText: description
+            splitterVisible: index !== listView.count - 1
 
-                Label {
-                    Layout.topMargin: 20
-                    text: formattedDate
-                    font.pixelSize: 13
-                    color: "#14a8bb"
-                }
-
-                Label {
-                    Layout.fillWidth: true
-                    Layout.topMargin: 10
-                    font {
-                        pixelSize: 17
-                        bold: true
-                    }
-                    wrapMode: Label.WordWrap
-                    color: "#14a8bb"
-                    text: title
-                }
-
-                Image {
-                    id: titleImage
-                    asynchronous: true
-                    fillMode: Image.PreserveAspectFit
-                    sourceSize: Qt.size(parent.width, 150)
-                    source: image
-                }
-
-                Label {
-                    id: descriptionLabel
-                    Layout.fillWidth: true
-                    wrapMode: Label.WordWrap
-                    textFormat: Label.RichText
-                    text: description
-                    color: "#34435b"
-
-                    MouseArea {
-                        anchors.fill: parent
-                        z: descriptionLabel.z - 1
-                        cursorShape: descriptionLabel.hoveredLink.length !== 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
-                        onClicked: {
-                            var link = descriptionLabel.linkAt(mouseX, mouseY)
-                            if (link.length !== 0) {
-                                showWebView(link)
-                            }
-                        }
-                    }
-                }
-
-                Label {
-                    Layout.topMargin: 10
-                    Layout.bottomMargin: 20
-                    text: qsTr("Read more")
-                    font.underline: mouseArea.containsMouse
-                    color: "#14a8bb"
-
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-                        onClicked: showWebView(fullFeedPath)
-                    }
-                }
-
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 10
-                    visible: index !== listView.count - 1
-                    color: "#dedede"
-                }
-            }
+            onLinkClicked: showWebView(url)
+            onReadMoreClicked: showWebView(fullFeedPath)
         }
     }
 

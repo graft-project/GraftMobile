@@ -49,6 +49,7 @@
         <file alias="BaseSelectImageDialog.qml">BaseSelectImageDialog.qml</file>
         <file alias="CameraPermissionDialog.qml">CameraPermissionDialog.qml</file>
         <file alias="BlogScreen.qml">BlogScreen.qml</file>
+        <file alias="BlogFeedDelegate.qml">BlogFeedDelegate.qml</file>
         <file alias="FullFeedTemplate.html">FullFeedTemplate.html</file>
         <file alias="ShortFeedTemplate.html">ShortFeedTemplate.html</file>
         <file alias="style.css">style.css</file>
