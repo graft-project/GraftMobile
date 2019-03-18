@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     client.registerTypes(&engine);
 
     CurrencyModel model;
-    model.add(QStringLiteral("GRFT"), QStringLiteral("GRAFT"));
+    model.add(QStringLiteral("GRAFT"), QStringLiteral("GRFT"));
     engine.rootContext()->setContextProperty(QStringLiteral("CurrencyModel"), &model);
 
     QString imageDataLocation = callImageDataPath();

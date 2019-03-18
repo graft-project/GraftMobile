@@ -31,6 +31,7 @@ BaseLinearEditItem {
         cursorPosition: fieldCursorPosition
         verticalAlignment: Qt.AlignTop
         color: "#404040"
+        font.pixelSize: 16
         maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
         Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
         onWrapModeChanged: {

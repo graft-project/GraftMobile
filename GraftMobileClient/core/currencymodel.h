@@ -25,6 +25,7 @@ public:
 
     Q_INVOKABLE int indexOf(const QString &code) const;
     Q_INVOKABLE QString codeOf(const QString &name) const;
+    Q_INVOKABLE QString nameOf(const QString &code) const;
     Q_INVOKABLE QString imagePath(const QString &code) const;
 
     QVector<CurrencyItem *> currencies() const;
