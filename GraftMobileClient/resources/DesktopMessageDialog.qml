@@ -50,6 +50,10 @@ Dialog {
 
             Button {
                 id: leftButton
+                font {
+                    pixelSize: titleText.font.pixelSize
+                    capitalization: Font.MixedCase
+                }
                 Keys.onEnterPressed: processing(leftButton, rightButton)
                 Keys.onReturnPressed: processing(leftButton, rightButton)
             }
@@ -57,6 +61,10 @@ Dialog {
             Button {
                 id: rightButton
                 focus: true
+                font {
+                    pixelSize: titleText.font.pixelSize
+                    capitalization: Font.MixedCase
+                }
                 Keys.onEnterPressed: processing(rightButton, rightButton)
                 Keys.onReturnPressed: processing(rightButton, rightButton)
                 Keys.onPressed: {
