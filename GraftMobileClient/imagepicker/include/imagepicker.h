@@ -34,6 +34,7 @@ private:
 
     QString mImagePath;
     AbstractCameraPermission *mCameraPermission;
+    mutable bool mIsCameraOpeningNeeded;
 };
 
 #endif // IMAGEPICKER_H
