@@ -21,7 +21,7 @@ Dialog {
             Layout.minimumWidth: 200
             Layout.rightMargin: 20
             Layout.leftMargin: 20
-            wrapMode:Text.WordWrap
+            wrapMode: Text.WordWrap
             font.pixelSize: 15
         }
 
@@ -29,7 +29,8 @@ Dialog {
             id: confirmButton
             flat: true
             focus: true
-            text: qsTr("Ok")
+            font.pixelSize: message.font.pixelSize
+            text: qsTr("OK")
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             onClicked: confirmed()
