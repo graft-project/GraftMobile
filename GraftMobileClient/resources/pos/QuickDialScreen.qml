@@ -78,7 +78,7 @@ BaseScreen {
             disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
-                             currencyModel.codeOf(currencyCBox.currencyText), "")
+                             currencyCBox.currentText, "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
         }

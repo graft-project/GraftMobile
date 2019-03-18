@@ -83,6 +83,18 @@ QString CurrencyModel::codeOf(const QString &name) const
     return QString();
 }
 
+QString CurrencyModel::nameOf(const QString &code) const
+{
+    for (int i = 0; i < mCurrency.size(); ++i)
+    {
+        if (mCurrency.at(i)->code() == code)
+        {
+            return mCurrency.at(i)->name();
+        }
+    }
+    return QString();
+}
+
 QString CurrencyModel::imagePath(const QString &code) const
 {
     static QString path("qrc:/coins/%1.png");
