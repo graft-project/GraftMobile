@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import com.device.platform 1.0
 
 Dialog {
     property alias passwordTextField: textField
@@ -62,6 +63,11 @@ Dialog {
                 Button {
                     id: leftButton
                     flat: true
+                    font {
+                        pixelSize: message.font.pixelSize
+                        capitalization: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                        Font.MixedCase : Font.AllUppercase
+                    }
                     onClicked: confirmed()
                     Keys.onEnterPressed: processing(leftButton)
                     Keys.onReturnPressed: processing(leftButton)
@@ -70,6 +76,11 @@ Dialog {
                 Button {
                     id: rightButton
                     flat: true
+                    font {
+                        pixelSize: message.font.pixelSize
+                        capitalization: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                        Font.MixedCase : Font.AllUppercase
+                    }
                     onClicked: denied()
                     Keys.onEnterPressed: processing(rightButton)
                     Keys.onReturnPressed: processing(rightButton)

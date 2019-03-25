@@ -30,7 +30,8 @@ BaseScreen {
             enableScreen()
             if (result) {
                 pushScreen.openSendConfirmationScreen(receiversAddress.text,
-                                                      coinsAmountTextField.text, fee)
+                                                      normalizeAmount(coinsAmountTextField.text),
+                                                      fee)
             }
         }
     }
@@ -190,7 +191,14 @@ BaseScreen {
         } else {
             disableScreen()
             busyIndicator.running = true
-            GraftClient.transferFee(receiversAddress.text, coinsAmountTextField.text)
+            GraftClient.transferFee(receiversAddress.text, normalizeAmount(coinsAmountTextField.text))
         }
+    }
+
+    function normalizeAmount(amount) {
+        if (amount[amount.length - 1] === '.') {
+            amount = amount.slice(0, -1)
+        }
+        return amount
     }
 }

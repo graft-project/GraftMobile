@@ -1,4 +1,8 @@
-QT += qml quick network widgets webview
+QT += qml quick network webview
+
+win32|macx {
+QT += widgets
+}
 
 CONFIG += c++11
 
