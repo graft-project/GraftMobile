@@ -28,9 +28,16 @@ BUILD_DIR = release
 
 contains(QMAKE_TARGET.arch, x86) {
     COMPILER_VERSION = msvc2015_x86
+    PLATFORM_VERSION = x86
 } else {
     COMPILER_VERSION = msvc2017_x64
+    PLATFORM_VERSION = x64
 }
+
+SPARKLE_SOURCES = $$PWD/../3rdparty/sparkle/win/sparkle.*
+SPARKLE_SOURCES ~= s,/,\\,g
+WIN_SPARKLE_SOURCES = $$PWD/../3rdparty/sparkle/win/libs/$$PLATFORM_VERSION/WinSparkle.*
+WIN_SPARKLE_SOURCES ~= s,/,\\,g
 
 OPENSSL_DIR = $$PWD/../3rdparty/openssl/$$COMPILER_VERSION/$$BUILD_DIR/*.dll
 OPENSSL_DIR ~= s,/,\\,g
@@ -43,9 +50,11 @@ RES_DIR ~= s,/,\\,g
 
 ESCAPE_COMMAND = $$escape_expand(\\n\\t)
 
+win_sparkle_target = $$quote(cmd /c $(COPY_DIR) $${WIN_SPARKLE_SOURCES} $${EXE_DIR}) $${ESCAPE_COMMAND}
+sparkle_target = $$quote(cmd /c $(COPY_DIR) $${SPARKLE_SOURCES} $${EXE_DIR}) $${ESCAPE_COMMAND}
 openssl_target = $$quote(cmd /c $(COPY_DIR) $${OPENSSL_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
 nsis_target = $$quote(cmd /c $(COPY_DIR) $${RES_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
-QMAKE_POST_LINK += $${openssl_target} $${nsis_target}
+QMAKE_POST_LINK += $${openssl_target} $${nsis_target} $${sparkle_target} $${win_sparkle_target}
 
 NSIS_PATH = "C:\Program Files (x86)\NSIS\makensis.exe"
 INSTALL_SCRIPT = $${EXE_DIR}/install.nsi

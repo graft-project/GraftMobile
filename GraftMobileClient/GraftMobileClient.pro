@@ -54,6 +54,8 @@ HEADERS += \
     core/api/graftposhandler.h \
     core/graftposclient.h \
     core/defines.h
+
+DISTFILES += $$PWD/pos_update.xml
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -67,6 +69,14 @@ HEADERS += \
     core/api/v1/graftwallethandlerv1.h \
     core/api/graftwallethandler.h \
     core/graftwalletclient.h
+
+DISTFILES += $$PWD/wallet_update.xml
+}
+
+win32|macx {
+CONFIG(release, debug|release) {
+include(3rdparty/sparkle/sparkleUpdater.pri)
+}
 }
 
 win32 {
@@ -131,7 +141,8 @@ HEADERS += \
     devicedetector.h \
     designfactory.h \
     navigationproperties.h \
-    abstractdevicetools.h
+    abstractdevicetools.h \
+    sparkle.h
 
 include(resources/resources.pri)
 
