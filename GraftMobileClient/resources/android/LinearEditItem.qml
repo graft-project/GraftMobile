@@ -16,6 +16,9 @@ BaseLinearEditItem {
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
     property alias inFocus: editItem.focus
+    property alias placeholderEditItem: editItem.placeholderText
+    property real titleLabelWidth: titleItem.implicitWidth
+    property alias titleLabelCenter: titleItem.verticalCenter
     property int fieldCursorPosition: 0
 
     actionTextField: editItem

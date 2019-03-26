@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
+import org.navigation.attached.properties 1.0
 import "../components"
 import "../"
 
@@ -76,6 +77,8 @@ BasePaymentConfirmationScreen {
             spacing: 0
 
             WideActionButton {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
                 text: qsTr("Cancel")
                 Material.accent: "#7E726D"
                 onClicked: {
@@ -85,7 +88,10 @@ BasePaymentConfirmationScreen {
             }
 
             WideActionButton {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
                 text: qsTr("Pay")
+                KeyNavigation.tab: root.Navigation.implicitFirstComponent
                 onClicked: {
                     activityBusyIndicator = true
                     confirmPay()

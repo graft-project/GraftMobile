@@ -1,4 +1,8 @@
-QT += qml quick network widgets
+QT += qml quick network
+
+win32|macx {
+QT += widgets
+}
 
 CONFIG += c++11
 CONFIG -= qtquickcompiler
@@ -51,6 +55,8 @@ HEADERS += \
     core/api/graftposhandler.h \
     core/graftposclient.h \
     core/defines.h
+
+DISTFILES += $$PWD/pos_update.xml
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -64,6 +70,14 @@ HEADERS += \
     core/api/v1/graftwallethandlerv1.h \
     core/api/graftwallethandler.h \
     core/graftwalletclient.h
+
+DISTFILES += $$PWD/wallet_update.xml
+}
+
+win32|macx {
+CONFIG(release, debug|release) {
+include(3rdparty/sparkle/sparkleUpdater.pri)
+}
 }
 
 win32 {
@@ -85,7 +99,6 @@ SOURCES += main.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
     core/accountitem.cpp \
@@ -96,8 +109,10 @@ SOURCES += main.cpp \
     core/accountmanager.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
-    devicedetector.cpp \
     core/graftclientconstants.cpp \
+    devicedetector.cpp \
+    designfactory.cpp \
+    navigationproperties.cpp \
     abstractdevicetools.cpp
 
 HEADERS += \
@@ -113,7 +128,6 @@ HEADERS += \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
     core/accountitem.h \
@@ -124,9 +138,12 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
-    devicedetector.h \
     core/graftclientconstants.h \
-    abstractdevicetools.h
+    devicedetector.h \
+    designfactory.h \
+    navigationproperties.h \
+    abstractdevicetools.h \
+    sparkle.h
 
 include(resources/resources.pri)
 

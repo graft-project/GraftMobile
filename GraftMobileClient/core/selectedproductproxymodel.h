@@ -12,7 +12,7 @@ public:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
 protected:
-    QHash<int, QByteArray> roleNames() const;
+    QHash<int, QByteArray> roleNames() const override;
 };
 
 #endif // SELECTEDPRODUCTPROXYMODEL_H

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
@@ -22,7 +22,7 @@ ColumnLayout {
         id: graftCBox
         Material.background: "#00707070"
         Material.foreground: "#585858"
-        textRole: "name"
+        textRole: "code"
         Layout.fillWidth: true
         Layout.preferredHeight: 34
         leftPadding: -12

@@ -4,11 +4,12 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
 import org.graft 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 import "wallet"
 
 BaseScreen {
-    id: sendCoinScreen
+    id: sendOrScanScreen
     title: qsTr("Send")
     screenHeader.actionButtonState: true
     action: checkingData
@@ -29,28 +30,35 @@ BaseScreen {
             enableScreen()
             if (result) {
                 pushScreen.openSendConfirmationScreen(receiversAddress.text,
-                                                      coinsAmountTextField.text, fee)
+                                                      normalizeAmount(coinsAmountTextField.text),
+                                                      fee, paymentID.text)
             }
         }
     }
 
     Connections {
-        target: sendCoinScreen
+        target: sendOrScanScreen
         onAttentionAccepted: qRScanningView.resetView()
     }
 
     StackLayout {
         id: stackLayout
+        focus: true
         anchors.fill: parent
         onCurrentIndexChanged: {
             if (currentIndex === 1) {
-                sendCoinScreen.enabled = true
-                sendCoinScreen.screenHeader.actionButtonState = false
-                sendCoinScreen.specialBackMode = changeBehaviorButton
+                sendOrScanScreen.screenHeader.repeatFocus = true
+                sendOrScanScreen.enabled = true
+                sendOrScanScreen.screenHeader.actionButtonState = false
+                sendOrScanScreen.specialBackMode = changeBehaviorButton
             } else {
-                sendCoinScreen.screenHeader.actionButtonState = true
-                sendCoinScreen.specialBackMode = null
+                sendOrScanScreen.screenHeader.repeatFocus = false
+                sendOrScanScreen.screenHeader.actionButtonState = true
+                sendOrScanScreen.specialBackMode = null
             }
+            // TODO: (Fixed in - 5.11.0 Alpha) QTBUG-51321. StackView should clear focus when a new item is pushed. For more details see:
+            // https://bugreports.qt.io/browse/QTBUG-51321?jql=component%20%3D%20%22Quick%3A%20Controls%202%22%20AND%20text%20~%20%22Tab%22
+            currentItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
         }
 
         Item {
@@ -78,6 +86,33 @@ BaseScreen {
                             regExp: GraftClient.networkType() === GraftClientTools.Mainnet ?
                                         /(^G[0-9A-Za-z]{105}|^G[0-9A-Za-z]{94})/ :
                                         /(^F[0-9A-Za-z]{105}|^F[0-9A-Za-z]{94})/
+                        }
+                    }
+
+                    LinearEditItem {
+                        id: paymentID
+                        Layout.fillWidth: true
+                        maximumLength: 64
+                        Layout.preferredHeight: 89
+                        placeholderEditItem: qsTr("16 or 64 hexadecimal characters")
+                        wrapMode: TextField.WrapAnywhere
+                        title: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                   qsTr("Payment ID:") : qsTr("Payment ID")
+                        validator: RegExpValidator {
+                            regExp: /([0-9A-Fa-f]{16}|[0-9A-Fa-f]{64})/
+                        }
+
+                        Label {
+                            anchors {
+                                left: parent.left
+                                leftMargin: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                                paymentID.titleLabelWidth : paymentID.titleLabelWidth + 4
+                                verticalCenter: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                                    paymentID.titleLabelCenter : parent.titleLabelCenter
+                            }
+                            color: "#BBBBBB"
+                            font.pixelSize: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? 16 : 11
+                            text: qsTr("(optional)")
                         }
                     }
 
@@ -115,9 +150,10 @@ BaseScreen {
                 WideActionButton {
                     id: scanQRcodeButton
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignCenter
                     text: qsTr("Scan QR Code")
                     onClicked: {
-                        sendCoinScreen.enabled = false
+                        sendOrScanScreen.enabled = false
                         stackLayout.currentIndex = 1
                     }
                 }
@@ -125,8 +161,9 @@ BaseScreen {
                 WideActionButton {
                     id: sendCoinsButton
                     Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Send")
+                    KeyNavigation.tab: sendOrScanScreen.Navigation.implicitFirstComponent
                     onClicked: checkingData()
                 }
             }
@@ -134,6 +171,7 @@ BaseScreen {
 
         QRScanningView {
             id: qRScanningView
+            KeyNavigation.tab: sendOrScanScreen.Navigation.implicitFirstComponent
             onQrCodeDetected: {
                 if (GraftClient.isCorrectAddress(message)) {
                     receiversAddress.text = message
@@ -167,10 +205,11 @@ BaseScreen {
             screenDialog.text = qsTr("Receiver's address is invalid! Please input correct " +
                                      "account address.")
             screenDialog.open()
-        } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
+        } else if ((paymentID.text.length !== 16) && (paymentID.text.length !== 64) &&
+                   (paymentID.text.length !== 0)) {
             screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! " +
-                                     "Please input correct value.")
+            screenDialog.text = qsTr("The payment ID must be 16 or 64 characters! " +
+                                     "Please, input the correct payment ID.")
             screenDialog.open()
         } else if (GraftClient.balance(GraftClientTools.UnlockedBalance) < coinsAmountTextField.text) {
             screenDialog.title = qsTr("Input error")
@@ -180,7 +219,14 @@ BaseScreen {
         } else {
             disableScreen()
             busyIndicator.running = true
-            GraftClient.transferFee(receiversAddress.text, coinsAmountTextField.text)
+            GraftClient.transferFee(receiversAddress.text, normalizeAmount(coinsAmountTextField.text), paymentID.text)
         }
+    }
+
+    function normalizeAmount(amount) {
+        if (amount[amount.length - 1] === '.') {
+            amount = amount.slice(0, -1)
+        }
+        return amount
     }
 }

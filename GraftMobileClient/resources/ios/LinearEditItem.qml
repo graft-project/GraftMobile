@@ -17,6 +17,9 @@ BaseLinearEditItem {
     property alias echoMode: editItem.echoMode
     property alias passwordCharacter: editItem.passwordCharacter
     property alias inFocus: editItem.focus
+    property alias placeholderEditItem: editItem.placeholderText
+    property real titleLabelWidth: titleItem.implicitWidth
+    property alias titleLabelCenter: titleItem.verticalCenter
     property bool inlineTitle: false
     property int fieldCursorPosition: 0
 
@@ -31,6 +34,7 @@ BaseLinearEditItem {
         cursorPosition: fieldCursorPosition
         verticalAlignment: Qt.AlignTop
         color: "#404040"
+        font.pixelSize: 16
         maximumLength: letterCountingMode ? linearEditItem.maximumLength : 32767
         Material.accent: wrongFieldColor ? "#F33939" : "#9E9E9E"
         onWrapModeChanged: {

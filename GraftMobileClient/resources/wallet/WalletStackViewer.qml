@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.9
 import org.graft 1.0
 import "../"
 
@@ -75,8 +75,9 @@ BaseStackViewer {
                    "accountNumber": accountNumber, "accountType": type})
     }
 
-    function openSendConfirmationScreen(receiversAddress, coinsAmount, fee) {
+    function openSendConfirmationScreen(receiversAddress, coinsAmount, fee, paymentID) {
         stack.push("qrc:/SendConfirmationScreen.qml", {"pushScreen": walletsTransitions(),
-                   "address": receiversAddress, "amount": coinsAmount, "fee": fee})
+                   "address": receiversAddress, "amount": coinsAmount, "fee": fee,
+                   "payID": paymentID})
     }
 }
