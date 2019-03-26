@@ -30,7 +30,7 @@ static const QStringList scHttpSeedSupernodes{
                                               "testnet-pub-seed.graft.network:28900"
                                               //"18.214.245.162:28900",
                                               //"52.204.250.197:28900",
-                                              //"34.225.70.106:28880"
+                                              //"34.225.70.106:28900"
                                              };
 
 static const QStringList scHttpsSeedSupernodes{"testnet-pub-seed.graft.network:28943"};
