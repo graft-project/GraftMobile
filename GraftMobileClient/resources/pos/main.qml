@@ -59,6 +59,7 @@ GraftApplicationWindow {
 
     DesktopDialog {
         id: desktopMessageDialog
+        width: parent.width / 1.2 - 20
         topMargin: (parent.height - desktopMessageDialog.height) / 2
         leftMargin: (parent.width - desktopMessageDialog.width) / 2
         title: qsTr("Sale failed!")
