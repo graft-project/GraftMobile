@@ -40,7 +40,7 @@ static const QString scDAPIVersion("1.0F");
 
 namespace ExperimentalTestnetConfiguration
 {
-static const QString scConfigTitle("Alpha RTA Testnet");
+static const QString scConfigTitle("Public Devnet");
 
 static const QStringList scHttpSeedSupernodes{
                                               "testnet-dev-seed.graft.network:28600"
