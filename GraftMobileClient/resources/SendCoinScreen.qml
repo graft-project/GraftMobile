@@ -211,11 +211,6 @@ BaseScreen {
             screenDialog.text = qsTr("The payment ID must be 16 or 64 characters! " +
                                      "Please, input the correct payment ID.")
             screenDialog.open()
-        } else if ((0.0001 > coinsAmountTextField.text) || (coinsAmountTextField.text > 100000.0)) {
-            screenDialog.title = qsTr("Input error")
-            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! " +
-                                     "Please, input correct value.")
-            screenDialog.open()
         } else if (GraftClient.balance(GraftClientTools.UnlockedBalance) < coinsAmountTextField.text) {
             screenDialog.title = qsTr("Input error")
             screenDialog.text = qsTr("The amount which you want to send is higher than you have " +

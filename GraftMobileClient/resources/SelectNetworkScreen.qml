@@ -74,7 +74,7 @@ BaseScreen {
                         id: rtaTestNet
                         Layout.alignment: Qt.AlignTop
                         Layout.preferredHeight: implicitHeight
-                        type: qsTr("Alpha RTA Testnet")
+                        type: qsTr("Public Devnet")
                         group: networkGroup
                         Navigation.explicitLastComponent: enabledConfirmButton() ? null :
                                                           mainNet.Navigation.implicitFirstComponent
