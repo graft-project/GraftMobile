@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import org.graft 1.0
 import "components"
 
@@ -39,7 +40,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
+            bottomMargin: Detector.bottomNavigationBarHeight() + 15
         }
 
         LinearEditItem {
@@ -78,8 +79,10 @@ BaseScreen {
 
         WideActionButton {
             id: restoreWalletButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Restore")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: validatePassword()
         }
     }

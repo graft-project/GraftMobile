@@ -66,7 +66,8 @@ BaseScreen {
 
         WideActionButton {
             id: confirmButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Checkout")
             onClicked: checkout()
         }
@@ -77,7 +78,7 @@ BaseScreen {
             disableScreen()
             ProductModel.setQuickDealMode(true)
             ProductModel.add("", title.text, price.text,
-                             currencyModel.codeOf(currencyCBox.currencyText), "")
+                             currencyCBox.currentText, "")
             ProductModel.changeSelection(ProductModel.totalProductsCount() - 1)
             GraftClient.sale()
         }

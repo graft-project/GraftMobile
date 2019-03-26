@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import org.graft 1.0
 import "components"
 
@@ -13,12 +14,13 @@ BaseScreen {
     state: screenState ? "overviewWallet" : "createWallet"
 
     Item {
+        id: mnemonicScreen
         anchors {
             fill: parent
             topMargin: 15
             leftMargin: 5
             rightMargin: 5
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? screenState ? 15 : 30 : 15
+            bottomMargin: Detector.isSpecialTypeDevice() && !screenState ? Detector.bottomNavigationBarHeight() : 15
         }
 
         Label {
@@ -37,15 +39,25 @@ BaseScreen {
                        "your wallet!\nCopy and store in the safe place this mnemonic password.")
         }
 
-        MnemonicPhraseView {
+        Label {
             id: mnemonicPhraseView
+            font {
+                wordSpacing: 25
+                pixelSize: 16
+            }
             anchors {
-                verticalCenterOffset: Detector.isMobile() ? -15 : -20
+                verticalCenterOffset: Detector.isMobile() ? -11 : -20
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right
+                leftMargin: 25
+                rightMargin: 25
             }
-            mnemonicPhrase: GraftClient.getSeed()
+            lineHeight: mnemonicScreen.width < 340 ? 23 : 40
+            lineHeightMode: Label.FixedHeight
+            horizontalAlignment: Label.AlignHCenter
+            wrapMode: Label.WordWrap
+            text: GraftClient.getSeed()
         }
 
         PopupMessageLabel {
@@ -64,6 +76,7 @@ BaseScreen {
                 rightMargin: 10
             }
             text: qsTr("Copy to clipboard")
+            KeyNavigation.tab: saveButton.visible ? null : root.Navigation.implicitFirstComponent
             onClicked: {
                 GraftClientTools.copyToClipboard(GraftClient.getSeed())
                 mnemonicPhraseLabel.opacity = 1.0
@@ -81,6 +94,7 @@ BaseScreen {
                 rightMargin: 10
             }
             text: qsTr("I saved it!")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
                 save()

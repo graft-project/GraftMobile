@@ -22,7 +22,6 @@
         <file alias="QuickExchangeDelegate.qml">QuickExchangeDelegate.qml</file>
         <file alias="CoinListView.qml">CoinListView.qml</file>
         <file alias="BaseStackViewer.qml">BaseStackViewer.qml</file>
-        <file alias="MnemonicPhraseView.qml">MnemonicPhraseView.qml</file>
         <file alias="RestoreScreen.qml">RestoreScreen.qml</file>
         <file alias="MnemomicViewScreen.qml">MnemomicViewScreen.qml</file>
         <file alias="CreateWalletScreen.qml">CreateWalletScreen.qml</file>
@@ -47,6 +46,8 @@
         <file alias="ServiceSettingsItem.qml">ServiceSettingsItem.qml</file>
         <file alias="QRCodeImage.qml">QRCodeImage.qml</file>
         <file alias="NetworkType.qml">NetworkType.qml</file>
+        <file alias="BaseSelectImageDialog.qml">BaseSelectImageDialog.qml</file>
+        <file alias="CameraPermissionDialog.qml">CameraPermissionDialog.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

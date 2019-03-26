@@ -53,11 +53,14 @@ BaseScreen {
 
                 ListView {
                     id: productList
-                    spacing: 0
-                    clip: true
-                    model: ProductModel
-                    delegate: productDelegate
                     anchors.fill: parent
+                    delegate: productDelegate
+                    model: ProductModel
+                    clip: true
+                    spacing: 0
+                    ScrollBar.vertical: ScrollBar {
+                        width: 5
+                    }
 
                     Component {
                         id: productDelegate
@@ -97,16 +100,20 @@ BaseScreen {
                 buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
-                onClicked: pushScreen.openEditingItemScreen(-1)
+                onClicked: {
+                    ImagePicker.requestCameraPermission()
+                    pushScreen.openEditingItemScreen(-1)
+                }
             }
 
             WideActionButton {
                 id: addButton
-                text: qsTr("Checkout")
-                Layout.alignment: Qt.AlignBottom
+                Layout.fillWidth: true
                 Layout.topMargin: 15
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+                text: qsTr("Checkout")
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
@@ -121,12 +128,13 @@ BaseScreen {
 
             WideActionButton {
                 id: quickDealButton
-                text: qsTr("QUICK DEAL")
-                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                Layout.alignment: Qt.AlignBottom
+                Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+                text: qsTr("QUICK DEAL")
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
                 onClicked: {
                     disableScreen()

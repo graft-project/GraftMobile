@@ -25,7 +25,7 @@ GraftApplicationWindow {
     footer: Item {
         id: graftApplicationFooter
         height: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                                        Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
+                Detector.bottomNavigationBarHeight() + 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -87,7 +87,6 @@ GraftApplicationWindow {
 
     SwipeView {
         id: mainLayout
-        focus: true
         anchors.fill: parent
         interactive: false
         currentIndex: GraftClient.settings("license") ? GraftClient.isAccountExists() ? 2 : 1 : 0

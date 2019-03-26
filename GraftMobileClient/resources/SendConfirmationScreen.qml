@@ -3,6 +3,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 
 BaseScreen {
@@ -137,8 +138,9 @@ BaseScreen {
             Layout.leftMargin: 15
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
-            Layout.alignment: Qt.AlignBottom
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Confirm")
+            KeyNavigation.tab: sendCoinScreen.Navigation.implicitFirstComponent
             onClicked: passwordDialog.open()
         }
     }

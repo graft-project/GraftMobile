@@ -90,11 +90,13 @@ BaseCartScreen {
 
             WideActionButton {
                 id: cancelButton
-                text: qsTr("Cancel")
-                Material.accent: ColorFactory.color(DesignFactory.LightButton)
+                Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
                 Layout.bottomMargin: 15
+                Layout.alignment: Qt.AlignCenter
+                text: qsTr("Cancel")
+                Material.accent: ColorFactory.color(DesignFactory.LightButton)
                 onClicked: {
                     cartScreen.disableScreen()
                     cartScreen.rejectSale()

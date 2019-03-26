@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<manifest package="org.graft.pos" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.13.3" android:versionCode="11303" android:installLocation="auto">
+<manifest package="org.graft.pos" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.13.4" android:versionCode="11304" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Graft Point-of-Sale" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
-        <activity android:theme="@style/SplashTheme" android:label="Graft Point-of-Sale" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:screenOrientation="portrait" android:launchMode="singleTask">
+        <activity android:theme="@style/SplashTheme" android:label="Graft Point-of-Sale" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:screenOrientation="portrait" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -63,6 +63,10 @@
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" android:label="Graft Point-of-Sale">
             <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_NAME%% --"/>
         </activity>
+
+        <provider android:name="android.support.v4.content.FileProvider" android:authorities="${applicationId}.provider" android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths"/>
+        </provider>
 
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
     </application>

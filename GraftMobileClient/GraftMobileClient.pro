@@ -1,10 +1,14 @@
-QT += qml quick network widgets
+QT += qml quick network
+
+win32|macx {
+QT += widgets
+}
 
 CONFIG += c++11
 
 DEFINES += MAJOR_VERSION=1
 DEFINES += MINOR_VERSION=13
-DEFINES += BUILD_VERSION=3
+DEFINES += BUILD_VERSION=4
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -84,7 +88,6 @@ SOURCES += main.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
     core/accountitem.cpp \
@@ -95,8 +98,11 @@ SOURCES += main.cpp \
     core/accountmanager.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
+    core/graftclientconstants.cpp \
     devicedetector.cpp \
-    core/graftclientconstants.cpp
+    designfactory.cpp \
+    navigationproperties.cpp \
+    abstractdevicetools.cpp
 
 HEADERS += \
     core/config.h \
@@ -111,7 +117,6 @@ HEADERS += \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
     core/accountitem.h \
@@ -122,8 +127,11 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
+    core/graftclientconstants.h \
     devicedetector.h \
-    core/graftclientconstants.h
+    designfactory.h \
+    navigationproperties.h \
+    abstractdevicetools.h
 
 include(resources/resources.pri)
 

@@ -30,3 +30,8 @@ contains(DEFINES, WALLET_BUILD) {
         $$PWD/wallet/ioscamerapermission.cpp
 }
 
+OBJECTIVE_SOURCES += \
+    $$PWD/iostools.mm
+
+HEADERS += \
+    $$PWD/iostools.h

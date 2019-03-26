@@ -78,13 +78,15 @@ BaseScreen {
                 }
 
                 WideActionButton {
-                    Layout.alignment: Qt.AlignBottom
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Scan QR Code")
                     onClicked: stackLayout.currentIndex = 1
                 }
 
                 WideActionButton {
-                    Layout.alignment: Qt.AlignBottom
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                     text: qsTr("Add")
                     onClicked: addAccount()
                 }
@@ -105,8 +107,8 @@ BaseScreen {
                 screenDialog.text = qsTr("The account name already exists! Please, enter " +
                                          "another account name.")
                 screenDialog.open()
-            } else if (AccountModel.add(CoinModel.imagePath(CoinModel.codeOf(coinsComboBox.currentText)),
-                                        accountName.text, CoinModel.codeOf(coinsComboBox.currentText),
+            } else if (AccountModel.add(CoinModel.imagePath(coinsComboBox.currentText),
+                                        accountName.text, coinsComboBox.currentText,
                                         walletNumberText.text)) {
                 GraftClient.saveAccounts()
                 accountScreen.pushScreen.goBack()
