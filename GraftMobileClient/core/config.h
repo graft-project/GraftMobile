@@ -28,9 +28,9 @@ static const QString scConfigTitle("Public Testnet");
 
 static const QStringList scHttpSeedSupernodes{
                                               "testnet-pub-seed.graft.network:28900"
-                                              //"34.204.170.120:28900",
-                                              //"54.88.58.35:28900",
-                                              //"34.228.64.99:28900"
+                                              //"18.214.245.162:28900",
+                                              //"52.204.250.197:28900",
+                                              //"34.225.70.106:28900"
                                              };
 
 static const QStringList scHttpsSeedSupernodes{"testnet-pub-seed.graft.network:28943"};
