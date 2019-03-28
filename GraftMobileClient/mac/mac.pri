@@ -7,16 +7,14 @@ BUILD_DIR = $$PWD/pos
 
 DISTFILES += \
     $$BUILD_DIR/Info.plist \
-    $$BUILD_DIR/icon.icns \
-    $$BUILD_DIR/dsa_pub.pem
+    $$BUILD_DIR/icon.icns
 }
 contains(DEFINES, WALLET_BUILD) {
 BUILD_DIR = $$PWD/wallet
 
 DISTFILES += \
     $$BUILD_DIR/Info.plist \
-    $$BUILD_DIR/icon.icns \
-    $$BUILD_DIR/dsa_pub.pem
+    $$BUILD_DIR/icon.icns
 }
 
 QMAKE_INFO_PLIST = $${BUILD_DIR}/Info.plist
@@ -38,9 +36,17 @@ DEVID_CER = \"Developer ID Application: GRAFT Payments, LLC (5E52LHPZLS)\"
 CODESIGN = codesign --force --verify --deep --sign $$DEVID_CER
 BACKGROUND = $${BUILD_DIR}/graft_background.tiff
 
-DSA_KEY.files = $$BUILD_DIR/dsa_pub.pem
-DSA_KEY.path = Contents/Resources
-QMAKE_BUNDLE_DATA += DSA_KEY
+!contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
+DSA_PUB_PEM = $$BUILD_DIR/dsa_pub.pem
+
+exists($${DSA_PUB_PEM}) {
+    DISTFILES += DSA_PUB_PEM
+
+    DSA_KEY.files = $${DSA_PUB_PEM}
+    DSA_KEY.path = Contents/Resources
+    QMAKE_BUNDLE_DATA += DSA_KEY
+}
+}
 
 CREATE_DMG_SH += $$PWD/create_dmg.sh
 exists($${CREATE_DMG_SH}) {

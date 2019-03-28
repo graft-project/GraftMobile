@@ -39,6 +39,14 @@ or
 DEFINES+="POS_BUILD RES_IOS"
 ```
 
+**Sparkle**
+
+We have included the Sparkle updater for [macOS](https://sparkle-project.org/) and [Windows](https://winsparkle.org/) since 1.13.5 build. If you want to disable Sparkle when you build clients, you need to add `DISABLE_SPARKLE_UPDATER` to defines.
+
+```
+DEFINES+="DISABLE_SPARKLE_UPDATER"
+```
+
 ## Cloning ##
 
 Clone from upstream while borrowing from an existing local directory:
