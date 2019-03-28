@@ -1,13 +1,14 @@
 #ifndef SPARKLE_H
 #define SPARKLE_H
 
-#if defined(QT_NO_DEBUG) && defined(Q_OS_WIN) || defined(Q_OS_MAC) && !defined(Q_OS_IOS)
+#if defined(QT_NO_DEBUG) && (defined(Q_OS_WIN) || defined(Q_OS_MAC) && !defined(Q_OS_IOS)) && !defined(DISABLE_SPARKLE_UPDATER)
 #include <QSettings>
 
 #include "sparkleupdater.h"
+#define IS_ENABLE_SPARKLE
 #endif
 
-#if defined(QT_NO_DEBUG) && defined(Q_OS_WIN) || defined(Q_OS_MAC) && !defined(Q_OS_IOS)
+#ifdef IS_ENABLE_SPARKLE
 #ifdef Q_OS_WIN
 void exitFunction()
 {
@@ -28,7 +29,7 @@ static const QString scSparkleFeedUrl("https://raw.githubusercontent.com/graft-p
 
 void runSparkleUpdater()
 {
-#if defined(QT_NO_DEBUG) && defined(Q_OS_WIN) || defined(Q_OS_MAC) && !defined(Q_OS_IOS)
+#ifdef IS_ENABLE_SPARKLE
     SparkleUpdater::instance()->setLanguage(QStringLiteral("eng"));
     SparkleUpdater::instance()->setAppInfo(qApp->organizationName(), qApp->applicationName(), qApp->applicationVersion());
 #ifdef Q_OS_WIN
@@ -43,7 +44,7 @@ void runSparkleUpdater()
 
 void stopSparkleUpdater()
 {
-#if defined(QT_NO_DEBUG) && defined(Q_OS_WIN) || defined(Q_OS_MAC) && !defined(Q_OS_IOS)
+#ifdef IS_ENABLE_SPARKLE
     SparkleUpdater::instance()->clean();
 #endif
 }
