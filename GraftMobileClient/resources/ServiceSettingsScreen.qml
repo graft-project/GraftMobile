@@ -13,7 +13,7 @@ BaseScreen {
     title: qsTr("Settings")
     screenHeader {
         isNavigationButtonVisible: true
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
+        navigationButtonState: !Detector.isPlatform(Platform.Android)
     }
 
     Connections {
@@ -34,6 +34,9 @@ BaseScreen {
         ServiceSettingsItem {
             id: serviceSettingsFields
             Layout.fillWidth: true
+            addressTitle: Detector.isPlatform(Platform.Android) ? qsTr("Address") : qsTr("Address:")
+            portTitle: Detector.isPlatform(Platform.Android) ? qsTr("Port") : qsTr("Port:")
+            ipTitle: Detector.isPlatform(Platform.Android) ? qsTr("IP") : qsTr("IP:")
         }
 
         Item {
@@ -44,8 +47,7 @@ BaseScreen {
             id: saveButton
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
-            text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Done") :
-                                                                         qsTr("Save changes")
+            text: Detector.isPlatform(Platform.Android) ? qsTr("Save changes") : qsTr("Done")
             KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
