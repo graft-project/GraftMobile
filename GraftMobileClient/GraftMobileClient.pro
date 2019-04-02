@@ -75,8 +75,10 @@ DISTFILES += $$PWD/wallet_update.xml
 }
 
 win32|macx {
+!contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
 CONFIG(release, debug|release) {
 include(3rdparty/sparkle/sparkleUpdater.pri)
+}
 }
 }
 
