@@ -109,7 +109,7 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
     File "Qt5Core.dll"
     File "Qt5Gui.dll"
     File "Qt5Multimedia.dll"
-    File "Qt5MultimediaQuick_p.dll"
+    File "Qt5MultimediaQuick.dll"
     File "Qt5Network.dll"
     File "Qt5Qml.dll"
     File "Qt5Quick.dll"
