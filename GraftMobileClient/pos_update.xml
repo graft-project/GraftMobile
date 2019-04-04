@@ -17,7 +17,7 @@
             </description>
             <pubDate>Wed, 4 Apr 2019 20:00:00 +0000</pubDate>
             <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftPointOfSale-1.14.0.dmg"
-                       sparkle:dsaSignature="MEYCIQCgXFc1+TvKQPSrdWd3v8a9SM/SPBkbpzXTfL4Ro3Jv+wIhAJykhyRqmQFwuXrtdzterdMB7NKqMyfRDDoF5gDJWbi5"
+                       sparkle:dsaSignature="MEQCIEcs0sTw7WaABd0QAvU3MAS+Qsy/EwxTRdbgNInMFyCFAiAJRy6nEI2+rR+GtpeYxR3v20j8Hdfo88J3FPbcdgzNVw=="
                        sparkle:version="1.14.0"
                        length="0"
                        type="application/octet-stream" />
