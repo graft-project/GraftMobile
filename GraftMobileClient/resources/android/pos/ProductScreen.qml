@@ -100,10 +100,7 @@ BaseScreen {
                 buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
-                onClicked: {
-                    ImagePicker.requestCameraPermission()
-                    pushScreen.openEditingItemScreen(-1)
-                }
+                onClicked: pushScreen.openEditingItemScreen(-1)
             }
 
             WideActionButton {

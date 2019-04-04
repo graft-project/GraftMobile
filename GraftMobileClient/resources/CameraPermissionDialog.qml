@@ -1,15 +1,30 @@
 import QtQuick 2.9
 import org.camera.permission 1.0
+import com.device.platform 1.0
 
 BaseSelectImageDialog {
     property bool openDialog: false
 
-    onOpenDialogChanged: {
-        if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.None) {
-            cameraButtonEnabled = true
-        } else {
-            cameraButtonEnabled = ImagePicker.hasCameraPermission() === AbstractCameraPermission.Granted
+    Connections {
+        target: ImagePicker
+        onCameraPermissionProvided: {
+            if (Detector.isPlatform(Platform.Android) && result === AbstractCameraPermission.Denied) {
+                cameraButtonEnabled = false
+                dialog.open()
+            }
         }
-        dialog.open()
+    }
+
+    onOpenDialogChanged: {
+        if (ImagePicker.hasCameraPermission() === AbstractCameraPermission.Denied) {
+            if (Detector.isPlatform(Platform.IOS)) {
+                cameraButtonEnabled = false
+                dialog.open()
+            } else if (Detector.isPlatform(Platform.Android)) {
+                ImagePicker.requestCameraPermission()
+            }
+        } else {
+            dialog.open()
+        }
     }
 }

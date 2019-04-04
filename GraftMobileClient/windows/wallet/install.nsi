@@ -9,9 +9,9 @@
     !define COMPANYNAME "GRAFT Payments, LLC"
     !define DESCRIPTION "Graft Wallet"
     !define VERSIONMAJOR 1
-    !define VERSIONMINOR 13
-    !define VERSIONBUILD 4
-    !define VERSION "1.13.4"
+    !define VERSIONMINOR 14
+    !define VERSIONBUILD 0
+    !define VERSION "1.14.0"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
     !define LIC_NAME "license.rtf"
@@ -29,7 +29,7 @@
     VIProductVersion "${VERSION}.0"
     VIAddVersionKey ProductName "${DESCRIPTION}"
     VIAddVersionKey CompanyName "${COMPANYNAME}"
-    VIAddVersionKey LegalCopyright "2018 ${COMPANYNAME}"
+    VIAddVersionKey LegalCopyright "2019 ${COMPANYNAME}"
     VIAddVersionKey FileDescription "${DESCRIPTION}"
     VIAddVersionKey FileVersion "${VERSION}"
     VIAddVersionKey ProductVersion "${VERSION}"
@@ -109,7 +109,7 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
     File "Qt5Core.dll"
     File "Qt5Gui.dll"
     File "Qt5Multimedia.dll"
-    File "Qt5MultimediaQuick_p.dll"
+    File "Qt5MultimediaQuick.dll"
     File "Qt5Network.dll"
     File "Qt5Qml.dll"
     File "Qt5Quick.dll"

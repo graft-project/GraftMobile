@@ -5,28 +5,24 @@
         <description>Most recent updates to Graft Wallet Client</description>
         <language>en</language>
         <item>
-            <title>Version 1.13.4</title>
+            <title>Version 1.14.0</title>
             <description>
             <![CDATA[
                 <ul>
-                    <li>Fixed UI behaviour on small screens (SUP-67) [Android/iOS]</li>
-                    <li>Alpha RTA: Fixed app crash during wallet restoration</li>
-                    <li>Point-of-Sale: Fixed camera initialization and permission handling [Android/iOS]</li>
-                    <li>Fixed splash screen on large screens [Android]</li>
-                    <li>Improved key handling [MacOS/Windows]</li>
-                    <li>Improved general UI behaviour [Android/iOS]</li>
-                    <li>Fixed minor bugs</li>
+                    <li>Added support of payment id for Send</li>
+                    <li>Added support of auto updater for Windows and MacOS</li>
+                    <li>Fixed UI/UX bugs</li>
                 </ul>
             ]]>
             </description>
-            <pubDate>Mon, 18 Feb 2019 22:49:00 +0200</pubDate>
-            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.13.4/GraftWallet-1.13.4.dmg"
-                       sparkle:dsaSignature="MEQCIDacIoopfnEcfYWnkBfa+VkKn8apJJ9oPVeV4hM/o4+sAiBvANNfQ6YogjBZSC1KhEFwFZ5PNt0YH6gpt/Y2EYWqzA=="
-                       sparkle:version="1.13.4"
+            <pubDate>Wed, 4 Apr 2019 20:00:00 +0000</pubDate>
+            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftWallet-1.14.0.dmg"
+                       sparkle:dsaSignature="MEUCIDcWGJegYx+mrl3QlyXyT4w63cBLYpUmYf5uC3mofMJvAiEAjIp/+bdeNVyN389L6iBEr02I/l8Bs/fm+Y1dfYWCyfw="
+                       sparkle:version="1.14.0"
                        length="0"
                        type="application/octet-stream" />
-            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.13.4/GraftWallet-1.13.4.exe"
-                       sparkle:version="1.13.4"
+            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftWallet-1.14.0.exe"
+                       sparkle:version="1.14.0"
                        sparkle:os="windows-x64"
                        sparkle:installerArguments="/S"
                        length="0"
