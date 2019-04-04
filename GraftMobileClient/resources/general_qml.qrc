@@ -28,7 +28,6 @@
         <file alias="WalletAddressScreen.qml">WalletAddressScreen.qml</file>
         <file alias="CreateWalletStackViewer.qml">CreateWalletStackViewer.qml</file>
         <file alias="SettingsStackViewer.qml">SettingsStackViewer.qml</file>
-        <file alias="BorderlessButton.qml">BorderlessButton.qml</file>
         <file alias="SelectNetworkScreen.qml">SelectNetworkScreen.qml</file>
         <file alias="NetworkIndicator.qml">NetworkIndicator.qml</file>
         <file alias="SendCoinScreen.qml">SendCoinScreen.qml</file>
@@ -46,6 +45,8 @@
         <file alias="ServiceSettingsItem.qml">ServiceSettingsItem.qml</file>
         <file alias="QRCodeImage.qml">QRCodeImage.qml</file>
         <file alias="NetworkType.qml">NetworkType.qml</file>
+        <file alias="BaseSelectImageDialog.qml">BaseSelectImageDialog.qml</file>
+        <file alias="CameraPermissionDialog.qml">CameraPermissionDialog.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

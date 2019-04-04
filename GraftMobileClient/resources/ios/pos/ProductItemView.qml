@@ -15,6 +15,8 @@ Item {
     property alias descriptionText: description.text
     property alias price: price.text
     property alias productImage: previewImage.source
+    property alias screenWidth: imageDialog.rootScreenWidth
+    property alias screenHeight: imageDialog.rootScreenHeight
 
     Connections {
         target: Detector.isPlatform(Platform.Desktop) ? null : ImagePicker
@@ -33,17 +35,9 @@ Item {
             id: flickable
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.bottomMargin: -14
+            Layout.bottomMargin: 5
             ScrollBar.vertical: ScrollBar {
-                parent: flickable.parent
-                anchors {
-                    top: flickable.top
-                    bottom: flickable.bottom
-                    left: flickable.right
-                    right: flickable.right
-                    rightMargin: -5
-                }
-                size: 1.0
+                width: 5
             }
             clip: true
             flickableDirection: Flickable.AutoFlickIfNeeded
@@ -53,6 +47,8 @@ Item {
                 id: productView
                 spacing: 5
                 anchors {
+                    leftMargin: 5
+                    rightMargin: 5
                     left: parent.left
                     right: parent.right
                 }
@@ -155,7 +151,13 @@ Item {
         id: fileDialog
         title: "Please choose a picture"
         folder: shortcuts.pictures
-        nameFilters: "Image files (*.jpg *.png)"
+        nameFilters: filenameExtension()
         onAccepted: previewImage.source = fileDialog.fileUrls.toString()
+    }
+
+    function filenameExtension() {
+        var extension = ["BMP (*.bmp *.dib)", "JPEG (*.jpg *.jpeg *.jpe *.jfif)", "PNG (*.png)"]
+        return Detector.isPlatform(Platform.MacOS) ?
+                    extension.concat("JPEG 2000 (*.jp2 *.jpc)").sort() : extension
     }
 }

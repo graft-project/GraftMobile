@@ -1,22 +1,25 @@
 import QtQuick 2.9
 import QtQuick.Dialogs 1.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "../components"
 import "../"
 
 BaseScreen {
-    id: qrScanning
+    id: sendOrScanScreen
     title: qsTr("Pay")
     specialBackMode: Detector.isPlatform(Platform.IOS) ? pop : goBack
 
     Connections {
-        target: qrScanning
+        target: sendOrScanScreen
         onAttentionAccepted: qRScanningView.resetView()
     }
 
     QRScanningView {
         id: qRScanningView
         anchors.fill: parent
+        KeyNavigation.tab: sendOrScanScreen.Navigation.implicitFirstComponent
+        KeyNavigation.backtab: sendOrScanScreen.Navigation.implicitFirstComponent
         onQrCodeDetected: {
             if (GraftClient.isSaleQrCodeValid(message)) {
                 GraftClient.saleDetails(message)

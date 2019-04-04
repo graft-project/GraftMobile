@@ -91,12 +91,16 @@ BaseScreen {
 
             WideActionButton {
                 id: scanCardButton
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
                 text: qsTr("Scan Card")
                 onClicked: scanCardButton.text = qsTr("WILL BE SOON")
             }
 
             WideActionButton {
                 id: confirmButton
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignCenter
                 text: qsTr("Confirm")
                 onClicked: done()
             }

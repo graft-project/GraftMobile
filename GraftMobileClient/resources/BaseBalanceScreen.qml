@@ -3,9 +3,12 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
 import com.graft.design 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 
 BaseScreen {
+    id: baseScreen
+
     property alias amountUnlockGraft: balanceItem.amountUnlockGraftCost
     property alias amountLockGraft: balanceItem.amountLockGraftCost
     property alias graftWalletLogo: graftWalletLogo.source
@@ -16,6 +19,7 @@ BaseScreen {
         isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
         navigationButtonState: true
     }
+    Navigation.implicitFirstComponent: balanceItem.Navigation.implicitFirstComponent
 
     Rectangle {
         anchors.fill: parent
@@ -58,6 +62,7 @@ BaseScreen {
             BalanceViewItem {
                 id: balanceItem
                 Layout.fillWidth: true
+                Navigation.explicitLastComponent: baseScreen.Navigation.explicitLastComponent
             }
 
             Item {

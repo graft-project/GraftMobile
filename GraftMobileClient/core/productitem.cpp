@@ -112,6 +112,9 @@ void ProductItem::changeSelection()
 
 void ProductItem::removeImage()
 {
-    QFile lImage(mImagePath);
-    lImage.remove();
+    if (!mImagePath.isEmpty())
+    {
+        QFile lImage(mImagePath);
+        lImage.remove();
+    }
 }

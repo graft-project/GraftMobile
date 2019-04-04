@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 
 BaseScreen {
@@ -13,7 +14,6 @@ BaseScreen {
         isSettings: true
     }
     action: pushSettingsScreen
-
     onErrorMessage: busyIndicator.running = false
 
     Component.onCompleted: {
@@ -42,7 +42,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 15
             rightMargin: 15
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
+            bottomMargin: Detector.bottomNavigationBarHeight() + 15
         }
 
         PasswordFields {
@@ -51,7 +51,9 @@ BaseScreen {
 
         WideActionButton {
             id: createWalletButton
+            Layout.fillWidth: true
             Layout.topMargin: Detector.isPlatform(Platform.Desktop) ? 15 : 0
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Create New Wallet")
             onClicked: {
                 var checkDialog = Detector.isDesktop() ? dialogs.desktopMessageDialog :
@@ -97,8 +99,10 @@ BaseScreen {
 
         WideActionButton {
             id: restoreWalletButton
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Restore/Import Wallet")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
                 pushScreen.openRestoreWalletScreen()

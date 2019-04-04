@@ -45,29 +45,33 @@ BaseScreen {
             id: productItem
             Layout.fillWidth: true
             Layout.fillHeight: true
+            screenHeight: height
+            screenWidth: width
         }
 
         WideActionButton {
             id: multiTaskingButton
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
             text: qsTr("Confirm")
             onClicked: confirmProductParameters()
         }
     }
 
     function confirmProductParameters() {
-        var currencyCode = currencyModel.codeOf(productItem.currencyText)
         if (!openScreenDialog(productItem.titleText, productItem.price)) {
             disableScreen()
             if (index >= 0) {
                 ProductModel.setProductData(index, productItem.titleText, ProductModelEnum.TitleRole)
                 ProductModel.setProductData(index, productItem.productImage, ProductModelEnum.ImageRole)
                 ProductModel.setProductData(index, productItem.price, ProductModelEnum.CostRole)
-                ProductModel.setProductData(index, currencyCode, ProductModelEnum.CurrencyRole)
+                ProductModel.setProductData(index, productItem.currencyText,
+                                            ProductModelEnum.CurrencyRole)
                 ProductModel.setProductData(index, productItem.descriptionText,
                                             ProductModelEnum.DescriptionRole)
             } else {
                 ProductModel.add(productItem.productImage, productItem.titleText, productItem.price,
-                                 currencyCode, productItem.descriptionText)
+                                 productItem.currencyText, productItem.descriptionText)
             }
             editingItem.pushScreen.goBack()
             GraftClient.saveProducts()

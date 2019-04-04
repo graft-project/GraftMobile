@@ -24,7 +24,7 @@ GraftApplicationWindow {
     footer: Item {
         id: graftApplicationFooter
         height: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
-                    Detector.detectDevice() === Platform.IPhoneX ? 85 : 49 : 0
+                Detector.bottomNavigationBarHeight() + 49 : 0
         visible: !createWalletStackViewer.visible
 
         Loader {
@@ -59,6 +59,7 @@ GraftApplicationWindow {
 
     DesktopDialog {
         id: desktopMessageDialog
+        width: parent.width / 1.2 - 20
         topMargin: (parent.height - desktopMessageDialog.height) / 2
         leftMargin: (parent.width - desktopMessageDialog.width) / 2
         title: qsTr("Sale failed!")

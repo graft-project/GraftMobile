@@ -2,16 +2,18 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import org.graft 1.0
 import "components"
 
 BaseScreen {
+    id: root
     title: qsTr("Select Network")
     screenHeader {
         isNavigationButtonVisible: false
         navigationButtonState: true
     }
-    Component.onCompleted: mainNet.networkChecked = true
+    Navigation.explicitFirstComponent: mainNet.Navigation.implicitFirstComponent
 
     Item {
         anchors.fill: parent
@@ -23,7 +25,7 @@ BaseScreen {
                 topMargin: 15
                 leftMargin: 15
                 rightMargin: 15
-                bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
+                bottomMargin: Detector.bottomNavigationBarHeight() + 15
             }
 
             Flickable {
@@ -43,17 +45,20 @@ BaseScreen {
                     }
                     spacing: 20
 
+                    ButtonGroup {
+                        id: networkGroup
+                    }
+
                     NetworkType {
                         id: mainNet
+                        networkChecked: true
                         Layout.alignment: Qt.AlignTop
                         Layout.preferredHeight: implicitHeight
                         type: qsTr("Mainnet")
+                        group: networkGroup
+                        Navigation.explicitFirstComponent: enabledConfirmButton() ? confirmButton :
+                                                           rtaTestNet.Navigation.implicitFirstComponent
                         networkDescription: GraftClientConstants.mainnetDescription()
-                        onTypeSelected: {
-                            networkChecked = true
-                            testNet.networkChecked = false
-                            rtaTestNet.networkChecked = false
-                        }
                     }
 
                     NetworkType {
@@ -61,34 +66,30 @@ BaseScreen {
                         Layout.alignment: Qt.AlignTop
                         Layout.preferredHeight: implicitHeight
                         type: qsTr("Public Testnet")
+                        group: networkGroup
                         networkDescription: GraftClientConstants.publicTestnetDescription()
-                        onTypeSelected: {
-                            networkChecked = true
-                            mainNet.networkChecked = false
-                            rtaTestNet.networkChecked = false
-                        }
                     }
 
                     NetworkType {
                         id: rtaTestNet
                         Layout.alignment: Qt.AlignTop
                         Layout.preferredHeight: implicitHeight
-                        type: qsTr("Alpha RTA Testnet")
+                        type: qsTr("Public Devnet")
+                        group: networkGroup
+                        Navigation.explicitLastComponent: enabledConfirmButton() ? null :
+                                                          mainNet.Navigation.implicitFirstComponent
                         networkDescription: GraftClientConstants.alphaRTATestnetDescription()
-                        onTypeSelected: {
-                            networkChecked = true
-                            mainNet.networkChecked = false
-                            testNet.networkChecked = false
-                        }
                     }
                 }
             }
 
             WideActionButton {
-                Layout.alignment: Qt.AlignBottom
+                id: confirmButton
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                 text: qsTr("Confirm")
-                enabled: Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)
-                         ? true : !rtaTestNet.networkChecked
+                enabled: enabledConfirmButton()
+                KeyNavigation.tab: root.Navigation.explicitFirstComponent
                 onClicked: {
                     disableScreen()
                     setNetworkType()
@@ -105,6 +106,14 @@ BaseScreen {
             GraftClient.setNetworkType(1)
         } else if (rtaTestNet.networkChecked) {
             GraftClient.setNetworkType(2)
+        }
+    }
+
+    function enabledConfirmButton() {
+        if (Detector.isPlatform(Platform.IOS) || Detector.isPlatform(Platform.MacOS)) {
+            return true
+        } else {
+            return !rtaTestNet.networkChecked
         }
     }
 }

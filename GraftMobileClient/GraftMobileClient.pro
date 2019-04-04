@@ -1,10 +1,15 @@
-QT += qml quick network widgets
+QT += qml quick network
+
+win32|macx {
+QT += widgets
+}
 
 CONFIG += c++11
+CONFIG -= qtquickcompiler
 
 DEFINES += MAJOR_VERSION=1
-DEFINES += MINOR_VERSION=13
-DEFINES += BUILD_VERSION=4
+DEFINES += MINOR_VERSION=14
+DEFINES += BUILD_VERSION=0
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -50,6 +55,8 @@ HEADERS += \
     core/api/graftposhandler.h \
     core/graftposclient.h \
     core/defines.h
+
+DISTFILES += $$PWD/pos_update.xml
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -63,6 +70,16 @@ HEADERS += \
     core/api/v1/graftwallethandlerv1.h \
     core/api/graftwallethandler.h \
     core/graftwalletclient.h
+
+DISTFILES += $$PWD/wallet_update.xml
+}
+
+win32|macx {
+!contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
+CONFIG(release, debug|release) {
+include(3rdparty/sparkle/sparkleUpdater.pri)
+}
+}
 }
 
 win32 {
@@ -84,7 +101,6 @@ SOURCES += main.cpp \
     core/cardmodel.cpp \
     core/keygenerator.cpp \
     core/selectedproductproxymodel.cpp \
-    designfactory.cpp \
     core/currencymodel.cpp \
     core/currencyitem.cpp \
     core/accountitem.cpp \
@@ -95,8 +111,11 @@ SOURCES += main.cpp \
     core/accountmanager.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
+    core/graftclientconstants.cpp \
     devicedetector.cpp \
-    core/graftclientconstants.cpp
+    designfactory.cpp \
+    navigationproperties.cpp \
+    abstractdevicetools.cpp
 
 HEADERS += \
     core/config.h \
@@ -111,7 +130,6 @@ HEADERS += \
     core/cardmodel.h \
     core/keygenerator.h \
     core/selectedproductproxymodel.h \
-    designfactory.h \
     core/currencymodel.h \
     core/currencyitem.h \
     core/accountitem.h \
@@ -122,8 +140,12 @@ HEADERS += \
     core/accountmanager.h \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
+    core/graftclientconstants.h \
     devicedetector.h \
-    core/graftclientconstants.h
+    designfactory.h \
+    navigationproperties.h \
+    abstractdevicetools.h \
+    sparkle.h
 
 include(resources/resources.pri)
 

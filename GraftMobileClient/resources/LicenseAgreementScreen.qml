@@ -24,7 +24,7 @@ BaseScreen {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: Detector.detectDevice() === Platform.IPhoneX ? 44 : 20
+                Layout.preferredHeight: Detector.statusBarHeight()
                 Layout.alignment: Qt.AlignTop
                 color: ColorFactory.color(DesignFactory.IosNavigationBar)
                 visible: Detector.isPlatform(Platform.IOS)
@@ -101,11 +101,16 @@ BaseScreen {
             }
 
             WideActionButton {
-                id: payButton
-                text: qsTr("Accept")
+                id: acceptButton
+                focus: true
+                Layout.fillWidth: true
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
-                Layout.bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? 30 : 15
+                Layout.bottomMargin: Detector.bottomNavigationBarHeight() + 15
+                Layout.alignment: Qt.AlignCenter
+                text: qsTr("Accept")
+                KeyNavigation.tab: acceptButton
+                KeyNavigation.backtab: acceptButton
                 onClicked: {
                     disableScreen()
                     acceptAction()

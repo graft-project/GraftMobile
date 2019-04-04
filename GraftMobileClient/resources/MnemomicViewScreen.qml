@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import org.graft 1.0
 import "components"
 
@@ -19,7 +20,7 @@ BaseScreen {
             topMargin: 15
             leftMargin: 5
             rightMargin: 5
-            bottomMargin: Detector.detectDevice() === Platform.IPhoneX ? screenState ? 15 : 30 : 15
+            bottomMargin: Detector.isSpecialTypeDevice() && !screenState ? Detector.bottomNavigationBarHeight() : 15
         }
 
         Label {
@@ -75,6 +76,7 @@ BaseScreen {
                 rightMargin: 10
             }
             text: qsTr("Copy to clipboard")
+            KeyNavigation.tab: saveButton.visible ? null : root.Navigation.implicitFirstComponent
             onClicked: {
                 GraftClientTools.copyToClipboard(GraftClient.getSeed())
                 mnemonicPhraseLabel.opacity = 1.0
@@ -92,6 +94,7 @@ BaseScreen {
                 rightMargin: 10
             }
             text: qsTr("I saved it!")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
                 save()

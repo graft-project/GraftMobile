@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import com.graft.design 1.0
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "components"
 
 BaseScreen {
@@ -12,7 +13,7 @@ BaseScreen {
     title: qsTr("Settings")
     screenHeader {
         isNavigationButtonVisible: true
-        navigationButtonState: Detector.isPlatform(Platform.IOS | Platform.Desktop)
+        navigationButtonState: !Detector.isPlatform(Platform.Android)
     }
 
     Connections {
@@ -24,12 +25,18 @@ BaseScreen {
         spacing: 0
         anchors {
             fill: parent
-            margins: 15
+            topMargin: 15
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: Detector.bottomNavigationBarHeight() + 15
         }
 
         ServiceSettingsItem {
             id: serviceSettingsFields
             Layout.fillWidth: true
+            addressTitle: Detector.isPlatform(Platform.Android) ? qsTr("Address") : qsTr("Address:")
+            portTitle: Detector.isPlatform(Platform.Android) ? qsTr("Port") : qsTr("Port:")
+            ipTitle: Detector.isPlatform(Platform.Android) ? qsTr("IP") : qsTr("IP:")
         }
 
         Item {
@@ -38,9 +45,10 @@ BaseScreen {
 
         WideActionButton {
             id: saveButton
-            text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ? qsTr("Done") :
-                                                                         qsTr("Save changes")
-            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+            text: Detector.isPlatform(Platform.Android) ? qsTr("Save changes") : qsTr("Done")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
                 save()
