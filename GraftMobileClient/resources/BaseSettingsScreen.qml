@@ -127,8 +127,8 @@ BaseScreen {
     DesktopMessageDialog {
         id: desktopMessageDialog
         topMargin: (parent.height - desktopMessageDialog.height) / 2
-        leftMargin: 20
-        rightMargin: 20
+        leftMargin: 40
+        rightMargin: 40
         modal: true
         padding: 5
         messageTitle: qsTr("Would you like to reset the service settings %1?").arg(message)
