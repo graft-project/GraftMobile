@@ -20,6 +20,88 @@ BaseScreen {
         }
     }
 
+    ListModel {
+        id: buttonsModel
+
+        ListElement {
+            link: "https://www.graft.network/"
+            title: qsTr("Our site")
+            buttonColor: "#485975"
+        }
+
+        ListElement {
+            link: "https://discord.gg/BuZr5fy"
+            title: qsTr("Discord")
+            buttonColor: "#7289DA"
+        }
+
+        ListElement {
+            link: "https://www.graft.network/forum/"
+            title: qsTr("Forum")
+            buttonColor: "#485975"
+        }
+
+        ListElement {
+            link: "https://t.me/joinchat/EneBw0RALAOjkSL2mdt2Gw"
+            title: qsTr("Telegram")
+            buttonColor: "#2497D6"
+        }
+
+        ListElement {
+            link: "https://steemit.com/@graft"
+            title: qsTr("Steemit")
+            buttonColor: "#06D6A9"
+        }
+
+        ListElement {
+            link: "https://www.reddit.com/r/Graft/"
+            title: qsTr("Reddit")
+            buttonColor: "#FF4500"
+        }
+
+        ListElement {
+            link: "https://www.linkedin.com/company/graft-network/"
+            title: qsTr("LinkedIn")
+            buttonColor: "#0274B3"
+        }
+
+        ListElement {
+            link: "https://twitter.com/graftnetwork"
+            title: qsTr("Twitter")
+            buttonColor: "#34B3F7"
+        }
+
+        ListElement {
+            link: "https://www.facebook.com/Graft-460292407666720/"
+            title: qsTr("Facebook")
+            buttonColor: "#3A589E"
+        }
+
+        ListElement {
+            link: "https://bitcointalk.org/index.php?topic=2115188"
+            title: qsTr("BitcoinTalks")
+            buttonColor: "#485975"
+        }
+
+        ListElement {
+            link: "https://medium.com/@graftnetwork"
+            title: qsTr("Medium")
+            buttonColor: "#000000"
+        }
+
+        ListElement {
+            link: "https://www.instagram.com/graftnetwork/"
+            title: qsTr("Instagram")
+            buttonColor: "#E30088"
+        }
+
+        ListElement {
+            link: "https://www.youtube.com/channel/UCoMSpYdhQDDhhRcyilyyqtw"
+            title: qsTr("YouTube")
+            buttonColor: "#FB0007"
+        }
+    }
+
     title: qsTr("About Graft Blockchain")
     screenHeader {
         isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
@@ -135,95 +217,16 @@ BaseScreen {
                         rowSpacing: -5
                         columns: 2
 
-                        WideActionButton {
-                            Layout.fillWidth: true
-                            Layout.columnSpan: 2
-                            text: qsTr("Our site")
-                            onClicked: Qt.openUrlExternally("https://www.graft.network/")
-                        }
+                        Repeater {
+                            model: buttonsModel
 
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Discord")
-                            Material.accent: "#7289DA"
-                            onClicked: Qt.openUrlExternally("https://discord.gg/BuZr5fy")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Forum")
-                            Material.accent: "#485975"
-                            onClicked: Qt.openUrlExternally("https://www.graft.network/forum/")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Telegram")
-                            Material.accent: "#2497D6"
-                            onClicked: Qt.openUrlExternally("https://t.me/joinchat/EneBw0RALAOjkSL2mdt2Gw")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Steemit")
-                            Material.accent: "#06D6A9"
-                            onClicked: Qt.openUrlExternally("https://steemit.com/@graft")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Reddit")
-                            Material.accent: "#FF4500"
-                            onClicked: Qt.openUrlExternally("https://www.reddit.com/r/Graft/")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("LinkedIn")
-                            Material.accent: "#0274B3"
-                            onClicked: Qt.openUrlExternally("https://www.linkedin.com/company/graft-network/")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Twitter")
-                            Material.accent: "#34B3F7"
-                            onClicked: Qt.openUrlExternally("https://twitter.com/graftnetwork")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Facebook")
-                            Material.accent: "#3A589E"
-                            onClicked: Qt.openUrlExternally("https://www.facebook.com/Graft-460292407666720/")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("BitcoinTalks")
-                            Material.accent: "#485975"
-                            onClicked: Qt.openUrlExternally("https://bitcointalk.org/index.php?topic=2115188")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Medium")
-                            Material.accent: "#000000"
-                            onClicked: Qt.openUrlExternally("https://medium.com/@graftnetwork")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("Instagram")
-                            Material.accent: "#E30088"
-                            onClicked: Qt.openUrlExternally("https://www.instagram.com/graftnetwork/")
-                        }
-
-                        WideActionButton {
-                            Layout.preferredWidth: 164
-                            text: qsTr("YouTube")
-                            Material.accent: "#FB0007"
-                            onClicked: Qt.openUrlExternally("https://www.youtube.com/channel/UCoMSpYdhQDDhhRcyilyyqtw")
+                            WideActionButton {
+                                Layout.preferredWidth: index === 0 ? moreLayout.width : moreLayout.width / 2
+                                Layout.columnSpan: index === 0 ? 2 : 1
+                                onClicked: Qt.openUrlExternally(link)
+                                Material.accent: buttonColor
+                                text: title
+                            }
                         }
                     }
                 }
@@ -268,7 +271,7 @@ BaseScreen {
                         Layout.fillHeight: true
                         model: blogReader !== null ? blogReader.feedModel() : null
                         interactive: false
-                        spacing: 28
+                        spacing: 18
 
                         delegate: BlogFeedDelegate {
                             id: blogFeedDelegate
