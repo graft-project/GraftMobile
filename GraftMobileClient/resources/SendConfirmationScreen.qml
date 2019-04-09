@@ -10,6 +10,7 @@ BaseScreen {
     id: sendCoinScreen
 
     property alias address: receiversAddress.text
+    property alias payID: paymentID.text
     property string amount: ""
     property string fee: ""
 
@@ -54,6 +55,28 @@ BaseScreen {
             Label {
                 id: receiversAddress
                 Layout.fillWidth: true
+                Layout.topMargin: -15
+                wrapMode: Label.WrapAnywhere
+                font.pixelSize: 16
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
+            Label {
+                Layout.fillWidth: true
+                visible: !isPIDEmpty()
+                font {
+                    pixelSize: 16
+                    bold: true
+                }
+                text: Detector.isPlatform(Platform.IOS | Platform.Desktop) ?
+                                              qsTr("Payment ID:") : qsTr("Payment ID")
+            }
+
+            Label {
+                id: paymentID
+                visible: !isPIDEmpty()
+                Layout.fillWidth: true
+                Layout.topMargin: -15
                 wrapMode: Label.WrapAnywhere
                 font.pixelSize: 16
                 horizontalAlignment: Qt.AlignHCenter
@@ -147,7 +170,7 @@ BaseScreen {
         if (GraftClient.checkPassword(password)) {
             disableScreen()
             busyIndicator.running = true
-            GraftClient.transfer(receiversAddress.text, amount)
+            GraftClient.transfer(receiversAddress.text, amount, paymentID.text)
         } else {
             screenDialog.title = qsTr("Error")
             screenDialog.text = qsTr("You enter incorrect password!\nPlease try again...")
@@ -157,5 +180,8 @@ BaseScreen {
         }
         passwordDialog.passwordTextField.clear()
     }
-}
 
+    function isPIDEmpty() {
+        return paymentID.text.length === 0
+    }
+}

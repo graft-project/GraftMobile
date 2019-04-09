@@ -49,9 +49,9 @@ Page {
 
     DesktopDialog {
         id: desktopDialog
-        width: parent.width / 1.2
-        leftMargin: (parent.width - desktopDialog.width) / 2
+        width: parent.width / 1.2 - 20
         topMargin: (parent.height - desktopDialog.height) / 2
+        leftMargin: (parent.width - desktopDialog.width) / 2
         title: qsTr("Attention")
         onConfirmed: {
             nextItemInFocusChain(true).forceActiveFocus(Qt.TabFocusReason)
@@ -81,7 +81,7 @@ Page {
     }
 
     function priceRegExp() {
-        return /(([1-9]\d{0,5}\.\d{1,10})|([1-9]\d{0,5}))|([0]\.\d{1,10})|(.){0}/
+        return /^(180{1,8}|1[0-7]\d{8}|[1-9]\d{0,8}|0)(\.\d{0,10}){0,1}$/
     }
 
     function openScreenDialog(title, price) {
@@ -91,9 +91,6 @@ Page {
             screenDialog.text = qsTr("Please, enter the item title.")
         } else if (price === "") {
             screenDialog.text = qsTr("Please, enter the item price.")
-        } else if ((0.0001 > price) || (price > 100000.0)) {
-            screenDialog.text = qsTr("The amount must be more than 0 and less than 100 000! " +
-                                     "Please input correct value.")
         } else {
             return false
         }

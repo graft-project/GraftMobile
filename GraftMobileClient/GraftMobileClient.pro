@@ -5,10 +5,11 @@ QT += widgets
 }
 
 CONFIG += c++11
+CONFIG -= qtquickcompiler
 
 DEFINES += MAJOR_VERSION=1
-DEFINES += MINOR_VERSION=13
-DEFINES += BUILD_VERSION=4
+DEFINES += MINOR_VERSION=14
+DEFINES += BUILD_VERSION=0
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -54,6 +55,8 @@ HEADERS += \
     core/api/graftposhandler.h \
     core/graftposclient.h \
     core/defines.h
+
+DISTFILES += $$PWD/pos_update.xml
 }
 
 contains(DEFINES, WALLET_BUILD) {
@@ -67,6 +70,16 @@ HEADERS += \
     core/api/v1/graftwallethandlerv1.h \
     core/api/graftwallethandler.h \
     core/graftwalletclient.h
+
+DISTFILES += $$PWD/wallet_update.xml
+}
+
+win32|macx {
+!contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
+CONFIG(release, debug|release) {
+include(3rdparty/sparkle/sparkleUpdater.pri)
+}
+}
 }
 
 win32 {
@@ -135,7 +148,8 @@ HEADERS += \
     devicedetector.h \
     designfactory.h \
     navigationproperties.h \
-    abstractdevicetools.h
+    abstractdevicetools.h \
+    sparkle.h
 
 include(resources/resources.pri)
 

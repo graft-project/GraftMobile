@@ -19,6 +19,7 @@
 
 #include "devicedetector.h"
 #include "designfactory.h"
+#include "sparkle.h"
 #include "QZXing.h"
 
 #include "navigationproperties.h"
@@ -121,7 +122,9 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
 #endif
     if (engine.rootObjects().isEmpty())
+    {
         return -1;
+    }
 
 #ifdef Q_OS_ANDROID
     QtAndroid::hideSplashScreen();
@@ -130,5 +133,8 @@ int main(int argc, char *argv[])
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     splashScreen->deleteLater();
 #endif
-    return app.exec();
+    runSparkleUpdater();
+    int returnValue = app.exec();
+    stopSparkleUpdater();
+    return returnValue;
 }

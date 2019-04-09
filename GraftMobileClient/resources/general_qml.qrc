@@ -28,7 +28,6 @@
         <file alias="WalletAddressScreen.qml">WalletAddressScreen.qml</file>
         <file alias="CreateWalletStackViewer.qml">CreateWalletStackViewer.qml</file>
         <file alias="SettingsStackViewer.qml">SettingsStackViewer.qml</file>
-        <file alias="BorderlessButton.qml">BorderlessButton.qml</file>
         <file alias="SelectNetworkScreen.qml">SelectNetworkScreen.qml</file>
         <file alias="NetworkIndicator.qml">NetworkIndicator.qml</file>
         <file alias="SendCoinScreen.qml">SendCoinScreen.qml</file>

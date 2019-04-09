@@ -102,7 +102,12 @@ bool GraftBaseClient::isAccountExists() const
 void GraftBaseClient::resetData()
 {
     mAccountManager->clearData();
-    graftHandler()->resetData();
+    GraftBaseHandler *handler = graftHandler();
+    if (handler)
+    {
+        handler->resetData();
+        handler->disconnect();
+    }
     mBalances.clear();
     saveBalance();
     mIsBalanceUpdated = false;
