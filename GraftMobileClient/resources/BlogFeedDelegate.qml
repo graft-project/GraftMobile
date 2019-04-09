@@ -1,92 +1,103 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
+import com.device.platform 1.0
+import "components"
 
-ColumnLayout {
+Pane {
     id: contentLayout
 
     property alias titleText: titleLabel.text
     property alias titleImage: titleImage.source
-    property alias date: formattedDateLabel.text
     property alias descriptionText: descriptionLabel.text
-    property alias splitterVisible: bottomSplitter.visible
 
     signal readMoreClicked()
     signal linkClicked(var url)
 
-    anchors {
-        leftMargin: 20
-        rightMargin: 20
-        left: parent.left
-        right: parent.right
-    }
+    padding: 0
+    Material.elevation: 6
+    height: mainLayout.implicitHeight
 
-    Label {
-        id: formattedDateLabel
-        Layout.topMargin: 20
-        font.pixelSize: 13
-        color: "#14a8bb"
-    }
+    contentItem: Rectangle {
+        ColumnLayout {
+            id: mainLayout
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
 
-    Label {
-        id: titleLabel
-        Layout.fillWidth: true
-        Layout.topMargin: 10
-        font {
-            pixelSize: 17
-            bold: true
+        Image {
+            id: titleImage
+            asynchronous: true
+            fillMode: Image.PreserveAspectFit
+            sourceSize: Qt.size(parent.width, 150)
         }
-        wrapMode: Label.WordWrap
-        color: "#14a8bb"
-    }
 
-    Image {
-        id: titleImage
-        asynchronous: true
-        fillMode: Image.PreserveAspectFit
-        sourceSize: Qt.size(parent.width, 150)
-    }
+            ColumnLayout {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.rightMargin: 12
+                Layout.leftMargin: 12
 
-    Label {
-        id: descriptionLabel
-        Layout.fillWidth: true
-        wrapMode: Label.WordWrap
-        textFormat: Label.RichText
-        color: "#34435b"
+                Label {
+                    id: titleLabel
+                    Layout.topMargin: 7
+                    Layout.fillWidth: true
+                    wrapMode: Label.WordWrap
+                    font.bold: true
+                    color: "#000000"
+                }
 
-        MouseArea {
-            anchors.fill: parent
-            z: descriptionLabel.z - 1
-            cursorShape: descriptionLabel.hoveredLink.length !== 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
-            onClicked: {
-                var link = descriptionLabel.linkAt(mouseX, mouseY)
-                if (link.length !== 0) {
-                    linkClicked(link)
+                Label {
+                    id: descriptionLabel
+                    Layout.bottomMargin: 12
+                    Layout.fillWidth: true
+                    Layout.topMargin: 7
+                    wrapMode: Label.WordWrap
+                    elide: Label.ElideRight
+                    maximumLineCount: 3
+                    color: "#000000"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        z: descriptionLabel.z - 1
+                        cursorShape: descriptionLabel.hoveredLink.length !== 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        onClicked: {
+                            var link = descriptionLabel.linkAt(mouseX, mouseY)
+                            if (link.length !== 0) {
+                                linkClicked(link)
+                            }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.bottomMargin: 12
+                    Layout.preferredHeight: 35
+                    Layout.alignment: Qt.AlignCenter | Qt.AlignBottom
+                    radius: Detector.isPlatform(Platform.Android) ? 3 : 6
+                    border.color: "#324259"
+                    color: "#FFFFFF"
+
+                    Label {
+                        anchors.centerIn: parent
+                        font {
+                            pixelSize: 14
+                            bold: true
+                        }
+                        color: "#34435B"
+                        text: qsTr("Read more")
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: readMoreClicked()
+                    }
                 }
             }
         }
-    }
-
-    Label {
-        Layout.topMargin: 10
-        Layout.bottomMargin: 20
-        text: qsTr("Read more")
-        font.underline: mouseArea.containsMouse
-        color: "#14a8bb"
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-            onClicked: readMoreClicked()
-        }
-    }
-
-    Rectangle {
-        id: bottomSplitter
-        Layout.fillWidth: true
-        Layout.preferredHeight: 10
-        color: "#dedede"
     }
 }

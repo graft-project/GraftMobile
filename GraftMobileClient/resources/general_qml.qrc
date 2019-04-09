@@ -115,6 +115,7 @@
         <file alias="whiteSettings.png">imgs/whiteSettings.png</file>
         <file alias="rss_feed.png">imgs/rss_feed.png</file>
         <file alias="refresh.png">imgs/refresh.png</file>
+        <file alias="next_step.png">imgs/next_step.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

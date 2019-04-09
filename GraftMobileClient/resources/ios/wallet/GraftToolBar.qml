@@ -59,7 +59,7 @@ BaseGraftToolBar {
             id: aboutButton
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
-            onClicked: Qt.openUrlExternally("https://www.graft.network/")
+            onClicked: pushScreen.openBlogScreen()
         }
     }
 
