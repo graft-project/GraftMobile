@@ -213,18 +213,23 @@ BaseScreen {
                     }
 
                     GridLayout {
-                        columnSpacing: -5
-                        rowSpacing: -5
+                        Layout.alignment: Qt.AlignHCenter
+                        columnSpacing: 0
+                        rowSpacing: 0
                         columns: 2
 
                         Repeater {
                             model: buttonsModel
 
                             WideActionButton {
-                                Layout.preferredWidth: index === 0 ? moreLayout.width : moreLayout.width / 2
+                                Layout.preferredWidth: index === 0 ? moreLayout.width - (rightInset + leftInset) : moreLayout.width / 2 - rightInset
                                 Layout.columnSpan: index === 0 ? 2 : 1
                                 onClicked: Qt.openUrlExternally(link)
                                 Material.accent: buttonColor
+                                bottomInset: 4
+                                rightInset: 4
+                                leftInset: 4
+                                topInset: 4
                                 text: title
                             }
                         }
