@@ -75,10 +75,12 @@
     !insertmacro MUI_LANGUAGE "English"
     !insertmacro MUI_RESERVEFILE_LANGDLL
 
+    !include "CheckRedistPackage.nsh"
+
 InstType "Standart"
- 
+
 Section "Install"
- 
+
 ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
 IntFmt $0 "0x%08X" $0
 
@@ -101,8 +103,7 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
     AddSize 1024
     SetOutPath "$INSTDIR"
     File "${APPNAME}.exe"
-    File /nonfatal "vcredist_x64.exe"
-    File /nonfatal "vcredist_x86.exe"
+    Call IncludeRedistPackage
     File "d3dcompiler_47.dll"
     File "libeay32.dll"
     File "libEGL.dll"
@@ -227,11 +228,19 @@ FunctionEnd
 
 Function .onInit
 ${If} ${RunningX64}
-    StrCpy $REDIST_PACKAGE "vcredist_x64.exe"
+    IfFileExists vcredist_x64.exe x64fileExist x64fileNotExist
+    x64fileExist:
+        StrCpy $REDIST_PACKAGE "vcredist_x64.exe"
+    x64fileNotExist:
+        StrCpy $REDIST_PACKAGE "vc_redist.x64.exe"
     StrCpy $REDIST_PACKAGE_VERSION "2017"
     StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
 ${Else}
-    StrCpy $REDIST_PACKAGE "vcredist_x86.exe"
+    IfFileExists vcredist_x86.exe x86fileExist x86fileNotExist
+    x86fileExist:
+        StrCpy $REDIST_PACKAGE "vcredist_x86.exe"
+    x86fileNotExist:
+        StrCpy $REDIST_PACKAGE "vc_redist.x86.exe"
     StrCpy $REDIST_PACKAGE_VERSION "2015"
     StrCpy $INSTDIR "$PROGRAMFILES\${APPNAME}"
 ${EndIf}
