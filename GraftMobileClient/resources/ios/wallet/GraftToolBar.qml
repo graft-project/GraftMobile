@@ -7,10 +7,10 @@ BaseGraftToolBar {
     onSeclectedButtonChanged: {
         clearSelection()
         switch (buttonName) {
-            case "Wallet": walletButton.buttonColor = highlight; break;
-            case "Transaction": transactionButton.buttonColor = highlight; break;
-            case "Transfer": transferButton.buttonColor = highlight; break;
-            case "Settings": settingsButton.buttonColor = highlight; break;
+            case "Wallet": walletButton.buttonColor = highlight; break
+            case "Transaction": transactionButton.buttonColor = highlight; break
+            case "Transfer": transferButton.buttonColor = highlight; break
+            case "Settings": settingsButton.buttonColor = highlight; break
         }
     }
 
