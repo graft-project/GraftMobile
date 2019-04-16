@@ -186,91 +186,10 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                 }
             }
             createFullHTMLFeed();
-            createShortHTMLFeed();
             isFeedsReadSuccess = true;
         }
     }
     return isFeedsReadSuccess;
-}
-
-void BlogReader::createShortHTMLFeed() const
-{
-    if (mFeedModel)
-    {
-        QString lHTMLTemplate;
-        QString lCSS;
-
-        QFile lHTMLTemplateFile(scShortFeedHTMLTemplate);
-        if (lHTMLTemplateFile.open(QIODevice::ReadOnly))
-        {
-            lHTMLTemplate = lHTMLTemplateFile.readAll();
-            lHTMLTemplateFile.close();
-        }
-
-        QDir lCSSDir(appDataLocation());
-        QFile lCSSTemplateFile(lCSSDir.filePath(scFeedCSS));
-        if (lCSSTemplateFile.open(QIODevice::ReadOnly))
-        {
-            lCSS = lCSSTemplateFile.readAll();
-            lCSSTemplateFile.close();
-        }
-
-        if (!lHTMLTemplate.isEmpty() && !lCSS.isEmpty())
-        {
-            QString feed = lHTMLTemplate;
-            feed.replace(scCSS, lCSS);
-
-            static const QString scStartArticleTag("<!--");
-            static const QString scEndArticleTag("-->");
-            const int startArticleTagIndex = lHTMLTemplate.indexOf(scStartArticleTag) +
-                                             scStartArticleTag.size();
-            const int endArticleTagIndex = lHTMLTemplate.indexOf(scEndArticleTag);
-            const QString articleTemplate = lHTMLTemplate.mid(startArticleTagIndex,
-                                                              endArticleTagIndex -
-                                                              startArticleTagIndex);
-
-            for (int i = 0; i < mFeedModel->rowCount(); ++i)
-            {
-                FeedModel::FeedItem *item = mFeedModel->itemAt(i);
-                if (item)
-                {
-                    QString formattedFeed = articleTemplate;
-
-                    QModelIndex modelIndex = mFeedModel->index(i);
-                    if (modelIndex.isValid())
-                    {
-                        formattedFeed.replace(scFormattedTime, mFeedModel->data(modelIndex,
-                                                                                FeedModel::FormattedDateRole).toString());
-                        formattedFeed.replace(scTimeFromRSS, mFeedModel->data(modelIndex,
-                                                                              FeedModel::PubDateRole).toString());
-                    }
-                    formattedFeed.replace(scContent, item->mDescription);
-                    formattedFeed.replace(scTitle, item->mTitle);
-                    formattedFeed.replace(scImage, item->mImage);
-                    formattedFeed.replace(scLink, item->mLink);
-
-                    if (i != mFeedModel->rowCount() - 1)
-                    {
-                        formattedFeed.append(scArticle);
-                    }
-
-                    feed.replace(scArticle, formattedFeed);
-
-                }
-            }
-            feed = feed.replace(QStringLiteral("Continue reading"), QStringLiteral("Read more"));
-
-            QDir lDir(appDataLocation());
-            QFile feedHTML(lDir.filePath(scShortFeedHTMLTemplate.mid(2, scShortFeedHTMLTemplate.size())));
-            if (feedHTML.open(QIODevice::WriteOnly))
-            {
-                mFeedPath = QStringLiteral("file://%1").arg(feedHTML.fileName());
-                emit blogFeedPathChanged(mFeedPath);
-                feedHTML.write(feed.toUtf8());
-                feedHTML.close();
-            }
-        }
-    }
 }
 
 void BlogReader::createFullHTMLFeed() const
@@ -314,7 +233,7 @@ void BlogReader::createFullHTMLFeed() const
                     QFile feedHTML(lDir.filePath(QStringLiteral("%1").arg(fullFeedFile)));
                     if (feedHTML.open(QIODevice::WriteOnly))
                     {
-                        item->mFullFeedPath = QStringLiteral("file://%1").arg(feedHTML.fileName());
+                        item->mFullFeedPath = QStringLiteral("file:///%1").arg(feedHTML.fileName());
                         QString parsedDescription = item->mDescription;
                         QString parsedContent = item->mContent;
                         parsedDescription = parsedDescription.remove(parsedDescription.indexOf(QStringLiteral("<p class=\"link-more\">")),

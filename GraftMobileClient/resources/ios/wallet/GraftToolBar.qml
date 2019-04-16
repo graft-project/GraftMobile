@@ -11,6 +11,7 @@ BaseGraftToolBar {
             case "Transaction": transactionButton.buttonColor = highlight; break;
             case "Transfer": transferButton.buttonColor = highlight; break;
             case "Settings": settingsButton.buttonColor = highlight; break;
+            case "About": aboutButton.buttonColor = highlight; break;
         }
     }
 
@@ -65,6 +66,7 @@ BaseGraftToolBar {
 
     function clearSelection() {
         var dafaultColor = "transparent"
+        aboutButton.buttonColor = dafaultColor
         walletButton.buttonColor = dafaultColor
         transactionButton.buttonColor = dafaultColor
         transferButton.buttonColor = dafaultColor

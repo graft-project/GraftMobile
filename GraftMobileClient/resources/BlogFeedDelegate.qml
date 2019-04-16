@@ -28,12 +28,12 @@ Pane {
                 right: parent.right
             }
 
-        Image {
-            id: titleImage
-            asynchronous: true
-            fillMode: Image.PreserveAspectFit
-            sourceSize: Qt.size(parent.width, 150)
-        }
+            Image {
+                id: titleImage
+                asynchronous: true
+                fillMode: Image.PreserveAspectFit
+                sourceSize: Qt.size(parent.width, 150)
+            }
 
             ColumnLayout {
                 Layout.fillHeight: true

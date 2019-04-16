@@ -12,14 +12,6 @@ BaseScreen {
 
     property QtObject blogReader: null
 
-    Connections {
-        target: blogReader
-
-        onBlogFeedPathChanged: {
-            webView.url = path
-        }
-    }
-
     ListModel {
         id: buttonsModel
 

@@ -79,7 +79,6 @@ public:
     Q_INVOKABLE QObject *blogReader() const;
 
 signals:
-    void blogFeedPathChanged(const QString &path) const;
     void errorReceived(const QString &message);
     void balanceUpdated();
     void createAccountReceived(bool isAccountCreated);

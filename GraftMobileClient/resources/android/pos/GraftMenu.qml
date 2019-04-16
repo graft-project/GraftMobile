@@ -66,21 +66,11 @@ BaseMenu {
 
         MenuLabelItem {
             Layout.fillWidth: true
-            menuIcon: "qrc:/imgs/rss_feed.png"
-            menuTitle: qsTr("Blog")
-            onClicked: {
-                pushScreen.hideMenu()
-                pushScreen.openBlogScreen()
-            }
-        }
-
-        MenuLabelItem {
-            Layout.fillWidth: true
             menuIcon: "qrc:/imgs/info.png"
             menuTitle: qsTr("About")
             onClicked: {
                 pushScreen.hideMenu()
-                Qt.openUrlExternally("https://www.graft.network/")
+                pushScreen.openBlogScreen()
             }
         }
     }

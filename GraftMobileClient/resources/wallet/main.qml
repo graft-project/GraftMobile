@@ -219,6 +219,6 @@ GraftApplicationWindow {
 
     function openBlogScreen() {
         mainLayout.currentIndex = 4
-        selectButton("Blog")
+        selectButton("About")
     }
 }

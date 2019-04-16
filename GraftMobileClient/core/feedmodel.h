@@ -18,7 +18,7 @@ public:
         QString	mImage;
         QString	mLink;
 
-        FeedItem(const QString &description, const QDateTime pubDate, const QString &content,
+        FeedItem(const QString &description, const QDateTime &pubDate, const QString &content,
                  const QString &title, const QString &link)
             : mDescription{description}, mPubDate{pubDate}, mContent{content}, mTitle{title},
               mLink{link}

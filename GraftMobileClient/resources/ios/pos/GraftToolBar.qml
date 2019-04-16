@@ -10,6 +10,7 @@ BaseGraftToolBar {
             case "Store": storeButton.buttonColor = highlight; break;
             case "Wallet": walletButton.buttonColor = highlight; break;
             case "Settings": settingsButton.buttonColor = highlight; break;
+            case "About": aboutButton.buttonColor = highlight; break;
         }
     }
 
@@ -44,6 +45,7 @@ BaseGraftToolBar {
         }
 
         ToolBarButton {
+            id: aboutButton
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
             onClicked: pushScreen.openBlogScreen()
@@ -52,6 +54,7 @@ BaseGraftToolBar {
 
     function clearSelection() {
         var dafaultColor = "transparent"
+        aboutButton.buttonColor = dafaultColor
         storeButton.buttonColor = dafaultColor
         walletButton.buttonColor = dafaultColor
         settingsButton.buttonColor = dafaultColor
