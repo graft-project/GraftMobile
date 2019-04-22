@@ -10,7 +10,6 @@
 #include <QTimerEvent>
 #include <QDir>
 
-static const QString scBlogCSS("https://www.graft.network/wp-content/themes/graft/style.css?ver=4.9.9");
 static const QString scFullFeedHTMLTemplate(":/FullFeedTemplate.html");
 static const QString scFeedPubDate("ddd, dd MMM yyyy hh:mm:ss +0000");
 static const QString scBlogFeeds("https://www.graft.network/feed/");
@@ -18,11 +17,9 @@ static const QString scFormattedTime("%formattedTime%");
 static const QString scTimeFromRSS("%timeFromRSS%");
 static const QString scFeedCSS(":/style.css");
 static const QString scContent("%content%");
-static const QString scArticle("%ARTICLE%");
 static const QString scFeedHTML("%1.html");
 static const QString scFeeds("feeds.xml");
 static const QString scTitle("%title%");
-static const QString scImage("%image%");
 static const QString scLink("%link%");
 static const QString scCSS("%CSS%");
 static const int scRefreshRate{60000 * 60};
@@ -66,8 +63,11 @@ bool BlogReader::readBlogFeeds() const
 void BlogReader::getBlogFeeds() const
 {
     QNetworkReply *reply = mNetworkManager->get(QNetworkRequest(QUrl(scBlogFeeds)));
-    connect(reply, &QNetworkReply::finished,
-            this, &BlogReader::receivedBlogFeeds, Qt::UniqueConnection);
+    if (reply)
+    {
+        connect(reply, &QNetworkReply::finished,
+                this, &BlogReader::receivedBlogFeeds, Qt::UniqueConnection);
+    }
 }
 
 QObject *BlogReader::feedModel() const
