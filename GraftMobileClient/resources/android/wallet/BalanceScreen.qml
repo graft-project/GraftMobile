@@ -14,6 +14,21 @@ BaseBalanceScreen {
         }
     }
 
+    // TODO: QTBUG-74076. The application is crash or will hang when request permission, after the
+    // native Android keyboard. For more details see https://bugreports.qt.io/browse/QTBUG-74076
+    Connections {
+        target: GraftClientTools
+
+        onCameraPermissionGranted: {
+            if (result !== GraftClientTools.Unknown) {
+                switch (button) {
+                    case GraftClientTools.Send: pushSendCoinScreen(); break
+                    case GraftClientTools.Pay: pushQRCodeScanner(); break
+                }
+            }
+        }
+    }
+
     ColumnLayout {
         spacing: 0
         anchors.fill: parent
@@ -41,10 +56,10 @@ BaseBalanceScreen {
             Layout.rightMargin: 15
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Send")
-            onClicked: {
-                disableScreen()
-                pushScreen.openSendCoinScreen()
-            }
+
+            // TODO: QTBUG-74076. The application is crash or will hang when request permission, after the
+            // native Android keyboard. For more details see https://bugreports.qt.io/browse/QTBUG-74076
+            onClicked: GraftClientTools.requestCameraPermission(GraftClientTools.Send)
         }
 
         WideActionButton {
@@ -56,10 +71,20 @@ BaseBalanceScreen {
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Pay")
             enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
-            onClicked: {
-                disableScreen()
-                pushScreen.openQRCodeScanner()
-            }
+
+            // TODO: QTBUG-74076. The application is crash or will hang when request permission, after the
+            // native Android keyboard. For more details see https://bugreports.qt.io/browse/QTBUG-74076
+            onClicked: GraftClientTools.requestCameraPermission(GraftClientTools.Pay)
         }
+    }
+
+    function pushSendCoinScreen() {
+        disableScreen()
+        pushScreen.openSendCoinScreen()
+    }
+
+    function pushQRCodeScanner() {
+        disableScreen()
+        pushScreen.openQRCodeScanner()
     }
 }
