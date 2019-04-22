@@ -62,11 +62,14 @@ bool BlogReader::readBlogFeeds() const
 
 void BlogReader::getBlogFeeds() const
 {
-    QNetworkReply *reply = mNetworkManager->get(QNetworkRequest(QUrl(scBlogFeeds)));
-    if (reply)
+    if (mNetworkManager)
     {
-        connect(reply, &QNetworkReply::finished,
-                this, &BlogReader::receivedBlogFeeds, Qt::UniqueConnection);
+        QNetworkReply *reply = mNetworkManager->get(QNetworkRequest(QUrl(scBlogFeeds)));
+        if (reply)
+        {
+            connect(reply, &QNetworkReply::finished,
+                    this, &BlogReader::receivedBlogFeeds, Qt::UniqueConnection);
+        }
     }
 }
 
