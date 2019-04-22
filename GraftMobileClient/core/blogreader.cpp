@@ -11,7 +11,6 @@
 #include <QDir>
 
 static const QString scBlogCSS("https://www.graft.network/wp-content/themes/graft/style.css?ver=4.9.9");
-static const QString scShortFeedHTMLTemplate(":/ShortFeedTemplate.html");
 static const QString scFullFeedHTMLTemplate(":/FullFeedTemplate.html");
 static const QString scFeedPubDate("ddd, dd MMM yyyy hh:mm:ss +0000");
 static const QString scBlogFeeds("https://www.graft.network/feed/");
