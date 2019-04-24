@@ -51,13 +51,13 @@ static const QString scIp("ip");
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mQuickExchangeModel(nullptr)
-    ,mNetworkManager{new QNetworkAccessManager(this)}
+    ,mNetworkManager{nullptr}
     ,mImageProvider(nullptr)
     ,mAccountManager(new AccountManager())
     ,mCurrencyModel(nullptr)
     ,mAccountModel(nullptr)
     ,mClientSettings(nullptr)
-    ,mBlogReader{new BlogReader(mNetworkManager, this)}
+    ,mBlogReader{new BlogReader(this)}
     ,mIsBalanceUpdated(false)
     ,mBalanceTimer(-1)
 {
@@ -473,7 +473,19 @@ bool GraftBaseClient::isDevMode() const
 
 QObject *GraftBaseClient::blogReader() const
 {
-    return mBlogReader ? mBlogReader : nullptr;
+    return mBlogReader;
+}
+
+void GraftBaseClient::setNetworkManager(QNetworkAccessManager *networkManager)
+{
+    if (networkManager && mNetworkManager != networkManager)
+    {
+        mNetworkManager = networkManager;
+        if (mBlogReader)
+        {
+            mBlogReader->setNetworkManager(mNetworkManager);
+        }
+    }
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const

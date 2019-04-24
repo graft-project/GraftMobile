@@ -101,9 +101,7 @@ BaseScreen {
         actionButtonState: true
         isBlog: true
     }
-    specialBackMode: {
-        hideWebView
-    }
+    specialBackMode: hideWebView
     action: {
         if (webView.visible) {
             webView.reload

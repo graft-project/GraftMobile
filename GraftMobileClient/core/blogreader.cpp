@@ -24,23 +24,21 @@ static const QString scLink("%link%");
 static const QString scCSS("%CSS%");
 static const int scRefreshRate{60000 * 60};
 
-BlogReader::BlogReader(QNetworkAccessManager *networkManager, QObject *parent)
+BlogReader::BlogReader(QObject *parent)
     : QObject(parent)
-    ,mNetworkManager{networkManager}
+    ,mNetworkManager{nullptr}
     ,mSortModel{new QSortFilterProxyModel(this)}
     ,mFeedModel{new FeedModel(this)}
     ,mRefreshTimer{0}
 {
-    if (mNetworkManager && mSortModel && mFeedModel)
+    if (mSortModel && mFeedModel)
     {
         mSortModel->setSourceModel(mFeedModel);
         mSortModel->setSortRole(FeedModel::TimeStampRole);
         mSortModel->sort(0, Qt::DescendingOrder);
-
-        mRefreshTimer = startTimer(scRefreshRate);
         readBlogFeeds();
-        getBlogFeeds();
     }
+    refreshFeeds();
 }
 
 BlogReader::~BlogReader()
@@ -232,7 +230,7 @@ void BlogReader::createFullHTMLFeed() const
                     QString fullFeedFile = item->mTitle;
                     fullFeedFile = scFeedHTML.arg(fullFeedFile.remove(QRegExp("[\\s\\,\\–\\!\\.\?\\-\\(\\)\\*]")));
 
-                    QFile feedHTML(lDir.filePath(QStringLiteral("%1").arg(fullFeedFile)));
+                    QFile feedHTML(lDir.filePath(fullFeedFile));
                     if (feedHTML.open(QIODevice::WriteOnly))
                     {
                         item->mFullFeedPath = QStringLiteral("file:///%1").arg(feedHTML.fileName());
@@ -279,4 +277,24 @@ QString BlogReader::appDataLocation() const
     }
     QDir lDir(dataPath);
     return lDir.path();
+}
+
+void BlogReader::refreshFeeds()
+{
+    if (mRefreshTimer != 0)
+    {
+        killTimer(mRefreshTimer);
+        mRefreshTimer = 0;
+    }
+    mRefreshTimer = startTimer(scRefreshRate);
+    getBlogFeeds();
+}
+
+void BlogReader::setNetworkManager(QNetworkAccessManager *networkManager)
+{
+    if (mNetworkManager && mNetworkManager != networkManager)
+    {
+        mNetworkManager = networkManager;
+        refreshFeeds();
+    }
 }

@@ -179,6 +179,11 @@ double GraftGenericAPIv1::toAtomic(double coins)
     return coins * 10000000000;
 }
 
+QNetworkAccessManager *GraftGenericAPIv1::networkManager() const
+{
+    return mManager;
+}
+
 QString GraftGenericAPIv1::accountPlaceholder() const
 {
     return QString("????");

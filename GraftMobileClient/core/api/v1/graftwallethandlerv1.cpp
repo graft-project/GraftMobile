@@ -9,6 +9,7 @@ GraftWalletHandlerV1::GraftWalletHandlerV1(const QString &dapiVersion, const QSt
     ,mBlockNumber(0)
 {
     mApi = new GraftWalletAPIv1(addresses, dapiVersion, this);
+    mManager = mApi->networkManager();
     connect(mApi, &GraftWalletAPIv1::createAccountReceived,
             this, &GraftWalletHandlerV1::createAccountReceived);
     connect(mApi, &GraftWalletAPIv1::restoreAccountReceived,

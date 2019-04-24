@@ -120,6 +120,7 @@ void GraftPOSClient::changeGraftHandler()
 #endif
         break;
     }
+    setNetworkManager(mClientHandler->networkManager());
     connect(mClientHandler, &GraftPOSHandler::saleReceived, this, &GraftPOSClient::receiveSale);
     connect(mClientHandler, &GraftPOSHandler::rejectSaleReceived,
             this, &GraftPOSClient::rejectSaleReceived);
