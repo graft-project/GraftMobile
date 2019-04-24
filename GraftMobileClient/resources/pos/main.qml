@@ -206,8 +206,10 @@ GraftApplicationWindow {
     }
 
     function clearStackViewers() {
-        for (var i = 0; i < mainLayout.count - 1; ++i) {
-            mainLayout.itemAt(i).clearStackViewer()
+        for (var i = 0; i < mainLayout.count; ++i) {
+            if (mainLayout.itemAt(i).clearStackViewer !== undefined) {
+                mainLayout.itemAt(i).clearStackViewer()
+            }
         }
     }
 

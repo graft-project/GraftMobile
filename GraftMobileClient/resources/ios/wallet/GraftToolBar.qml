@@ -65,11 +65,11 @@ BaseGraftToolBar {
     }
 
     function clearSelection() {
-        var dafaultColor = "transparent"
-        aboutButton.buttonColor = dafaultColor
-        walletButton.buttonColor = dafaultColor
-        transactionButton.buttonColor = dafaultColor
-        transferButton.buttonColor = dafaultColor
-        settingsButton.buttonColor = dafaultColor
+        var defaultColor = "transparent"
+        aboutButton.buttonColor = defaultColor
+        walletButton.buttonColor = defaultColor
+        transactionButton.buttonColor = defaultColor
+        transferButton.buttonColor = defaultColor
+        settingsButton.buttonColor = defaultColor
     }
 }
