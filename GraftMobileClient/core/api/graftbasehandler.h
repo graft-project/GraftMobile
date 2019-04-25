@@ -23,9 +23,12 @@ public:
 
     virtual void resetData() = 0;
 
-    QNetworkAccessManager *networkManager() const
+    void setNetworkManager(QNetworkAccessManager *networkManager)
     {
-        return mManager;
+        if (networkManager && mManager != networkManager)
+        {
+            mManager = networkManager;
+        }
     }
 
 public slots:

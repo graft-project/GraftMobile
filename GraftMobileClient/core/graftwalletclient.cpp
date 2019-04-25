@@ -144,7 +144,7 @@ void GraftWalletClient::changeGraftHandler()
 #endif
         break;
     }
-    setNetworkManager(mClientHandler->networkManager());
+    mClientHandler->setNetworkManager(mNetworkManager);
     connect(mClientHandler, &GraftWalletHandler::saleDetailsReceived,
             this, &GraftWalletClient::receiveSaleDetails);
     connect(mClientHandler, &GraftWalletHandler::payReceived,

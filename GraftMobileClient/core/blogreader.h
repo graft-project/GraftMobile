@@ -11,7 +11,7 @@ class BlogReader : public QObject
 {
     Q_OBJECT
 public:
-    explicit BlogReader(QObject *parent = nullptr);
+    explicit BlogReader(QNetworkAccessManager *networkManager, QObject *parent = nullptr);
     ~BlogReader() override;
 
     bool readBlogFeeds() const;
@@ -19,8 +19,6 @@ public:
     Q_INVOKABLE void getBlogFeeds() const;
 
     Q_INVOKABLE QObject *feedModel() const;
-
-    void setNetworkManager(QNetworkAccessManager *networkManager);
 
 protected:
     void timerEvent(QTimerEvent *event) override;

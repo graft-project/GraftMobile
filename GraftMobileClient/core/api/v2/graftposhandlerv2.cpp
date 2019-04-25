@@ -11,7 +11,7 @@ GraftPOSHandlerV2::GraftPOSHandlerV2(const QString &dapiVersion, const QStringLi
     ,tRetryStatus(false)
 {
     mApi = new GraftPOSAPIv2(addresses, dapiVersion, this);
-    mManager = mApi->networkManager();
+    mApi->setNetworkManager(mManager);
     connect(mApi, &GraftPOSAPIv2::saleResponseReceived, this, &GraftPOSHandlerV2::receiveSale);
     connect(mApi, &GraftPOSAPIv2::rejectSaleResponseReceived,
             this, &GraftPOSHandlerV2::receiveRejectSale);

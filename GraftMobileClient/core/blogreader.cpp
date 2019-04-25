@@ -24,9 +24,9 @@ static const QString scLink("%link%");
 static const QString scCSS("%CSS%");
 static const int scRefreshRate{60000 * 60};
 
-BlogReader::BlogReader(QObject *parent)
+BlogReader::BlogReader(QNetworkAccessManager *networkManager, QObject *parent)
     : QObject(parent)
-    ,mNetworkManager{nullptr}
+    ,mNetworkManager{networkManager}
     ,mSortModel{new QSortFilterProxyModel(this)}
     ,mFeedModel{new FeedModel(this)}
     ,mRefreshTimer{0}
@@ -288,13 +288,4 @@ void BlogReader::refreshFeeds()
     }
     mRefreshTimer = startTimer(scRefreshRate);
     getBlogFeeds();
-}
-
-void BlogReader::setNetworkManager(QNetworkAccessManager *networkManager)
-{
-    if (mNetworkManager && mNetworkManager != networkManager)
-    {
-        mNetworkManager = networkManager;
-        refreshFeeds();
-    }
 }

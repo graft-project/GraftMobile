@@ -46,7 +46,7 @@ public:
     static double toCoins(double atomic);
     static double toAtomic(double coins);
 
-    QNetworkAccessManager *networkManager() const;
+    void setNetworkManager(QNetworkAccessManager *networkManager);
 
 signals:
     void error(const QString &message);

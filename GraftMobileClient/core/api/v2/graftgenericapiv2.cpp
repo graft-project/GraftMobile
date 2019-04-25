@@ -70,9 +70,12 @@ uint64_t GraftGenericAPIv2::toAtomic(const QString &coins)
     return static_cast<uint64_t>(coins.toDouble() * 10000000000);
 }
 
-QNetworkAccessManager *GraftGenericAPIv2::networkManager() const
+void GraftGenericAPIv2::setNetworkManager(QNetworkAccessManager *networkManager)
 {
-    return mManager;
+    if (networkManager && mManager != networkManager)
+    {
+        mManager = networkManager;
+    }
 }
 
 QString GraftGenericAPIv2::accountPlaceholder() const

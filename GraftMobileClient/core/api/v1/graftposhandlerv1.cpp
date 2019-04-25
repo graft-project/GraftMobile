@@ -8,7 +8,7 @@ GraftPOSHandlerV1::GraftPOSHandlerV1(const QString &dapiVersion, const QStringLi
     : GraftPOSHandler(parent)
 {
     mApi = new GraftPOSAPIv1(addresses, dapiVersion, this);
-    mManager = mApi->networkManager();
+    mApi->setNetworkManager(mManager);
     connect(mApi, &GraftPOSAPIv1::createAccountReceived,
             this, &GraftPOSHandlerV1::createAccountReceived);
     connect(mApi, &GraftPOSAPIv1::restoreAccountReceived,
