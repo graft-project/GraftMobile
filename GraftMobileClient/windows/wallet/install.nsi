@@ -16,7 +16,6 @@
     !define ABOUTURL "https://www.graft.network"
     !define LIC_NAME "license.rtf"
     !define ARPPATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-    !define INSTALLSIZE 33727070
 
     Var REDIST_PACKAGE
 
@@ -134,12 +133,15 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
     File /r "QtQuick.2"
     File /r "scenegraph"
 
+    ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+    IntFmt $0 "0x%08X" $0
+
     WriteRegStr HKLM "${ARPPATH}" "DisplayName" "${APPNAME}"
     WriteRegStr HKLM "${ARPPATH}" "UninstallString" "$INSTDIR\uninstall.exe"
     WriteRegStr HKLM "${ARPPATH}" "QuietUninstallString" "$INSTDIR\uninstall.exe"
-    WriteRegStr HKLM "${ARPPATH}" "DisplayIcon" "$INSTDIR\${APPICON}.ico"
+    WriteRegStr HKLM "${ARPPATH}" "DisplayIcon" "$INSTDIR\${APPNAME}.exe,0"
     WriteRegStr HKLM "${ARPPATH}" "Publisher" "${COMPANYNAME}"
-    WriteRegDWORD HKLM "${ARPPATH}" "EstimatedSize" ${INSTALLSIZE}
+    WriteRegDWORD HKLM "${ARPPATH}" "EstimatedSize" "$0"
     WriteRegStr HKLM "${ARPPATH}" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
     WriteRegDWORD HKLM "${ARPPATH}" "VersionMajor" ${VERSIONMAJOR}
     WriteRegDWORD HKLM "${ARPPATH}" "VersionMinor" ${VERSIONMINOR}
@@ -191,6 +193,7 @@ Section "Uninstall"
     Delete "$LOCALAPPDATA\${APPNAME}\csi.dat"
     Delete "$LOCALAPPDATA\${APPNAME}\cun.dat"
     RMDir "$LOCALAPPDATA\${APPNAME}"
+    DeleteRegKey HKLM "${ARPPATH}"
 
     ; Remove app settings
     SetShellVarContext current
