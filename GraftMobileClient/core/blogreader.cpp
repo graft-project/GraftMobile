@@ -16,6 +16,7 @@ static const QString scBlogFeeds("https://www.graft.network/feed/");
 static const QString scFormattedTime("%formattedTime%");
 static const QString scTimeFromRSS("%timeFromRSS%");
 static const QString scFeedCSS(":/style.css");
+static const QString scBlogDirectory("blog");
 static const QString scContent("%content%");
 static const QString scFeedHTML("%1.html");
 static const QString scFeeds("feeds.xml");
@@ -124,11 +125,12 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                     if (!lastBuildDate.isEmpty() && lastBuildDate != mLastBuildDate)
                     {
                         mLastBuildDate = lastBuildDate;
+                        removeFeeds();
                     }
                 }
                 else if (feedRss.name() == QStringLiteral("item"))
                 {
-                    QString description, content, pubDate, title, link;
+                    QString description, content, pubDate, title, link, id;
                     while (feedRss.readNextStartElement())
                     {
                         if (feedRss.name() == QStringLiteral("title"))
@@ -146,6 +148,11 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                         else if (feedRss.name() == QStringLiteral("description"))
                         {
                             description = feedRss.readElementText();
+                        }
+                        else if (feedRss.name() == QStringLiteral("guid"))
+                        {
+                            id = feedRss.readElementText();
+                            id = id.remove(QStringLiteral("https://www.graft.network/?p="));
                         }
                         else if (feedRss.name() == QStringLiteral("encoded"))
                         {
@@ -169,7 +176,8 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                                                                                         data,
                                                                                         content,
                                                                                         title,
-                                                                                        link);
+                                                                                        link,
+                                                                                        id);
                                 feedItem->mImage = image;
                                 mFeedModel->add(feedItem);
                             }
@@ -194,7 +202,6 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
 
 void BlogReader::createFullHTMLFeed() const
 {
-    static const QString scFullFeedPath("blog");
     if (mFeedModel)
     {
         QString lHTMLTemplate;
@@ -208,8 +215,8 @@ void BlogReader::createFullHTMLFeed() const
         }
 
         QDir lDir(appDataLocation());
-        lDir.mkdir(scFullFeedPath);
-        lDir.cd(scFullFeedPath);
+        lDir.mkdir(scBlogDirectory);
+        lDir.cd(scBlogDirectory);
 
         QDir lCSSDir(appDataLocation());
         QFile lCSSTemplateFile(lCSSDir.filePath(scFeedCSS));
@@ -227,10 +234,7 @@ void BlogReader::createFullHTMLFeed() const
                 FeedModel::FeedItem *item = mFeedModel->itemAt(i);
                 if (item)
                 {
-                    QString fullFeedFile = item->mTitle;
-                    fullFeedFile = scFeedHTML.arg(fullFeedFile.remove(QRegExp("[\\s\\,\\–\\!\\.\?\\-\\(\\)\\*]")));
-
-                    QFile feedHTML(lDir.filePath(fullFeedFile));
+                    QFile feedHTML(lDir.filePath(scFeedHTML.arg(item->mID)));
                     if (feedHTML.open(QIODevice::WriteOnly))
                     {
                         item->mFullFeedPath = QStringLiteral("file:///%1").arg(feedHTML.fileName());
@@ -256,8 +260,8 @@ void BlogReader::createFullHTMLFeed() const
                         feed.replace(scLink, item->mLink);
                         feed.replace(scTitle, item->mTitle);
                         feed.replace(scContent, item->mContent);
-                        feed.replace(QStringLiteral("<iframe width=\"560\" height=\"315\""),
-                                     QStringLiteral("<iframe width=\"100%\" height=\"200\""));
+                        feed.replace(QRegExp("width=\"\\d{1,3}\" height=\"\\d{1,3}\""),
+                                     QStringLiteral("width=\"100%\" height=\"200\""));
 
                         feedHTML.write(feed.toUtf8());
                         feedHTML.close();
@@ -288,4 +292,18 @@ void BlogReader::refreshFeeds()
     }
     mRefreshTimer = startTimer(scRefreshRate);
     getBlogFeeds();
+}
+
+void BlogReader::removeFeeds() const
+{
+    QDir lBlogDir(appDataLocation());
+    if (lBlogDir.cd(scBlogDirectory))
+    {
+        lBlogDir.removeRecursively();
+    }
+    QDir lWebViewDir(appDataLocation());
+    if (lWebViewDir.cd(QStringLiteral("QtWebEngine")))
+    {
+        lWebViewDir.removeRecursively();
+    }
 }

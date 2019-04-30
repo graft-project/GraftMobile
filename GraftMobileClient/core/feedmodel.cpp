@@ -41,6 +41,8 @@ QVariant FeedModel::data(const QModelIndex &index, int role) const
         return feed->mImage;
     case LinkRole:
         return feed->mLink;
+    case IDRole:
+        return feed->mID;
     default:
         return QVariant();
     }
@@ -74,6 +76,7 @@ bool FeedModel::updateData(const FeedModel::FeedItem &feed, int index)
         item->mTitle = feed.mTitle;
         item->mImage = feed.mImage;
         item->mLink = feed.mLink;
+        item->mID = feed.mID;
 
         QModelIndex modelIndex = this->index(index);
         emit dataChanged(modelIndex, modelIndex);
@@ -113,5 +116,6 @@ QHash<int, QByteArray> FeedModel::roleNames() const
     roles[TitleRole] = "title";
     roles[ImageRole] = "image";
     roles[LinkRole] = "link";
+    roles[IDRole] = "id";
     return roles;
 }

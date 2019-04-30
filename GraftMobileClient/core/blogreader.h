@@ -31,6 +31,7 @@ private:
     void createFullHTMLFeed() const;
     QString appDataLocation() const;
     void refreshFeeds();
+    void removeFeeds() const;
 
 private:
     QNetworkAccessManager *mNetworkManager;

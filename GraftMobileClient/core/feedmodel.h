@@ -17,11 +17,12 @@ public:
         QString	mTitle;
         QString	mImage;
         QString	mLink;
+        QString	mID;
 
         FeedItem(const QString &description, const QDateTime &pubDate, const QString &content,
-                 const QString &title, const QString &link)
+                 const QString &title, const QString &link, const QString &id)
             : mDescription{description}, mPubDate{pubDate}, mContent{content}, mTitle{title},
-              mLink{link}
+              mLink{link}, mID{id}
         {
         }
     };
@@ -35,7 +36,8 @@ public:
         ContentRole,
         TitleRole,
         ImageRole,
-        LinkRole
+        LinkRole,
+        IDRole
     };
     Q_ENUM(FeedRoles)
 
