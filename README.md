@@ -41,11 +41,19 @@ DEFINES+="POS_BUILD RES_IOS"
 
 **Sparkle**
 
-We have included the Sparkle updater for [macOS](https://sparkle-project.org/) and [Windows](https://winsparkle.org/) since 1.13.5 build. If you want to disable Sparkle when you build clients, you need to add `DISABLE_SPARKLE_UPDATER` to defines.
+We have included the Sparkle updater for [macOS](https://sparkle-project.org/) and [Windows](https://winsparkle.org/) since 1.14.0 build. If you want to disable Sparkle when you build clients, you need to add `DISABLE_SPARKLE_UPDATER` to defines.
 
 ```
 DEFINES+="DISABLE_SPARKLE_UPDATER"
 ```
+
+Use `REQUIRE_ENABLED_SPARKLE` to require the inclusion of Sparkle.
+
+```
+DEFINES+="REQUIRE_ENABLED_SPARKLE"
+```
+
+`DSA_PUB_PEM_MISSING` used to show user that **dsa_pub.pem** is missing in the project directory.
 
 ## Cloning ##
 

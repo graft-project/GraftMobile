@@ -36,16 +36,17 @@ DEVID_CER = \"Developer ID Application: GRAFT Payments, LLC (5E52LHPZLS)\"
 CODESIGN = codesign --force --verify --deep --sign $$DEVID_CER
 BACKGROUND = $${BUILD_DIR}/graft_background.tiff
 
-!contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
 DSA_PUB_PEM = $$BUILD_DIR/dsa_pub.pem
-
 exists($${DSA_PUB_PEM}) {
+!contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
     DISTFILES += DSA_PUB_PEM
 
     DSA_KEY.files = $${DSA_PUB_PEM}
     DSA_KEY.path = Contents/Resources
     QMAKE_BUNDLE_DATA += DSA_KEY
 }
+} else {
+    DEFINES += DSA_PUB_PEM_MISSING
 }
 
 CREATE_DMG_SH += $$PWD/create_dmg.sh

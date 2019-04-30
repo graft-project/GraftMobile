@@ -122,9 +122,6 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
     File "Qt5Widgets.dll"
     File "ssleay32.dll"
     File "WinSparkle.dll"
-    File "WinSparkle.lib"
-    File "WinSparkle.pdb"
-    File "sparkle.lib"
 
     File /r "bearer"
     File /r "iconengines"
