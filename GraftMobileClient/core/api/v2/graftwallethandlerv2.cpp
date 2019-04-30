@@ -8,7 +8,6 @@ GraftWalletHandlerV2::GraftWalletHandlerV2(const QString &dapiVersion, const QSt
     : GraftWalletHandler(parent)
 {
     mApi = new GraftWalletAPIv2(addresses, dapiVersion, this);
-    mApi->setNetworkManager(mManager);
     connect(mApi, &GraftWalletAPIv2::saleDetailsReceived,
             this, &GraftWalletHandlerV2::receiveSaleDetails);
     connect(mApi, &GraftWalletAPIv2::rejectPayReceived,
