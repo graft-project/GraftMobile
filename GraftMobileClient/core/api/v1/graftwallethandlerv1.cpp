@@ -48,6 +48,15 @@ void GraftWalletHandlerV1::setAccountData(const QByteArray &accountData, const Q
     }
 }
 
+void GraftWalletHandlerV1::setNetworkManager(QNetworkAccessManager *networkManager)
+{
+    GraftBaseHandler::setNetworkManager(networkManager);
+    if (mManager && mApi)
+    {
+        mApi->setNetworkManager(mManager);
+    }
+}
+
 QByteArray GraftWalletHandlerV1::accountData() const
 {
     if (mApi)

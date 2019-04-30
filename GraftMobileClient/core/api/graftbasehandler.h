@@ -23,7 +23,7 @@ public:
 
     virtual void resetData() = 0;
 
-    void setNetworkManager(QNetworkAccessManager *networkManager)
+    virtual void setNetworkManager(QNetworkAccessManager *networkManager)
     {
         if (networkManager && mManager != networkManager)
         {

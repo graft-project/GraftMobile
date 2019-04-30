@@ -11,7 +11,6 @@ GraftPOSHandlerV2::GraftPOSHandlerV2(const QString &dapiVersion, const QStringLi
     ,tRetryStatus(false)
 {
     mApi = new GraftPOSAPIv2(addresses, dapiVersion, this);
-    mApi->setNetworkManager(mManager);
     connect(mApi, &GraftPOSAPIv2::saleResponseReceived, this, &GraftPOSHandlerV2::receiveSale);
     connect(mApi, &GraftPOSAPIv2::rejectSaleResponseReceived,
             this, &GraftPOSHandlerV2::receiveRejectSale);
@@ -48,6 +47,15 @@ void GraftPOSHandlerV2::setAccountData(const QByteArray &accountData, const QStr
     if (mWallet)
     {
         mWallet->restoreWallet(accountData, password);
+    }
+}
+
+void GraftPOSHandlerV2::setNetworkManager(QNetworkAccessManager *networkManager)
+{
+    GraftBaseHandler::setNetworkManager(networkManager);
+    if (mManager && mApi)
+    {
+        mApi->setNetworkManager(mManager);
     }
 }
 
