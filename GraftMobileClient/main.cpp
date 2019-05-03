@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
 
     GraftPOSClient client;
     client.registerTypes(&engine);
+    detector.setNetworkManager(client.networkManager());
 
     CurrencyModel model;
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRFT"));
@@ -106,6 +107,7 @@ int main(int argc, char *argv[])
 
     GraftWalletClient client;
     client.registerTypes(&engine);
+    detector.setNetworkManager(client.networkManager());
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);

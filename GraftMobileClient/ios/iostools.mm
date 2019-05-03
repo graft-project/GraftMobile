@@ -12,6 +12,12 @@
 @implementation QIOSApplicationDelegate (ApplicationDelegate)
 @end
 
+#ifdef POS_BUILD
+static const QString scUpdateAppLink("itms-apps://itunes.apple.com/us/app/graft-mobile-point-of-sale/id1354423996");
+#elif WALLET_BUILD
+static const QString scUpdateAppLink("itms-apps://itunes.apple.com/us/app/graft-cryptopay-wallet/id1354423228");
+#endif
+
 IOSTools::IOSTools(QObject *parent)
     : AbstractDeviceTools(parent)
 {
@@ -59,4 +65,30 @@ double IOSTools::statusBarHeight() const
 {
     isSpecialTypeDevice();
     return mStatusBarHeight;
+}
+
+void IOSTools::checkAppVersion() const
+{
+    if (@available(iOS 6.0, *))
+    {
+        NSError* error = nil;
+        NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+        NSData* data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+        if (!error)
+        {
+            NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (!error && [lookup[@"resultCount"] integerValue] == 1)
+            {
+                NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+                if (![appStoreVersion isEqualToString:currentVersion])
+                {
+                    emit updateNeeded(scUpdateAppLink, QString::fromNSString(appStoreVersion));
+                    qDebug("Need to update [%s != %s]", [appStoreVersion UTF8String], [currentVersion UTF8String]);
+                }
+            }
+        }
+    }
 }
