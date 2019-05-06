@@ -24,6 +24,8 @@ contains(DEFINES, WALLET_BUILD) {
 TARGET = GraftWallet
 }
 
+include($$PWD/3rdparty/openssl/openSSL.pri)
+
 ios {
 include(ios/ios.pri)
 }
