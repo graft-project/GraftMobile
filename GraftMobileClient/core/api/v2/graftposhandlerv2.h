@@ -18,6 +18,7 @@ public:
                          const QStringList &internalAddresses = QStringList()) override;
 
     void setAccountData(const QByteArray &accountData, const QString &password) override;
+    void setNetworkManager(QNetworkAccessManager *networkManager) override;
     QByteArray accountData() const override;
     QString password() const override;
 

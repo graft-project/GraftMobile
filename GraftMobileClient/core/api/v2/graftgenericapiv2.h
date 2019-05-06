@@ -40,6 +40,8 @@ public:
     static double toAtomic(double coins);
     static uint64_t toAtomic(const QString &coins);
 
+    void setNetworkManager(QNetworkAccessManager *networkManager);
+
 signals:
     void error(const QString &message);
 

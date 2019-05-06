@@ -47,6 +47,10 @@
         <file alias="NetworkType.qml">NetworkType.qml</file>
         <file alias="BaseSelectImageDialog.qml">BaseSelectImageDialog.qml</file>
         <file alias="CameraPermissionDialog.qml">CameraPermissionDialog.qml</file>
+        <file alias="BlogScreen.qml">BlogScreen.qml</file>
+        <file alias="BlogFeedDelegate.qml">BlogFeedDelegate.qml</file>
+        <file alias="FullFeedTemplate.html">FullFeedTemplate.html</file>
+        <file alias="style.css">style.css</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>
@@ -107,6 +111,8 @@
         <file alias="icon-pos.png">imgs/icon-pos.png</file>
         <file alias="icon-wallet.png">imgs/icon-wallet.png</file>
         <file alias="whiteSettings.png">imgs/whiteSettings.png</file>
+        <file alias="refresh.png">imgs/refresh.png</file>
+        <file alias="next_step.png">imgs/next_step.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

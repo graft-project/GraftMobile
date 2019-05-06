@@ -1,4 +1,4 @@
-QT += qml quick network
+QT += qml quick network webview
 
 win32|macx {
 QT += widgets
@@ -112,6 +112,8 @@ SOURCES += main.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
     core/graftclientconstants.cpp \
+    core/feedmodel.cpp \
+    core/blogreader.cpp \
     devicedetector.cpp \
     designfactory.cpp \
     navigationproperties.cpp \
@@ -141,6 +143,8 @@ HEADERS += \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
     core/graftclientconstants.h \
+    core/feedmodel.h \
+    core/blogreader.h \
     devicedetector.h \
     designfactory.h \
     navigationproperties.h \

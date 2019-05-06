@@ -10,6 +10,7 @@ BaseGraftToolBar {
             case "Store": storeButton.buttonColor = highlight; break
             case "Wallet": walletButton.buttonColor = highlight; break
             case "Settings": settingsButton.buttonColor = highlight; break
+            case "About": aboutButton.buttonColor = highlight; break
         }
     }
 
@@ -44,16 +45,18 @@ BaseGraftToolBar {
         }
 
         ToolBarButton {
+            id: aboutButton
             text: qsTr("About")
             source: "qrc:/imgs/infoIos.png"
-            onClicked: Qt.openUrlExternally("https://www.graft.network/")
+            onClicked: pushScreen.openBlogScreen()
         }
     }
 
     function clearSelection() {
-        var dafaultColor = "transparent"
-        storeButton.buttonColor = dafaultColor
-        walletButton.buttonColor = dafaultColor
-        settingsButton.buttonColor = dafaultColor
+        var defaultColor = "transparent"
+        aboutButton.buttonColor = defaultColor
+        storeButton.buttonColor = defaultColor
+        walletButton.buttonColor = defaultColor
+        settingsButton.buttonColor = defaultColor
     }
 }

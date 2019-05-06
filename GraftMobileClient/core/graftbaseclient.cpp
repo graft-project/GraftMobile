@@ -11,8 +11,10 @@
 #include "currencymodel.h"
 #include "currencyitem.h"
 #include "accountmodel.h"
+#include "blogreader.h"
 #include "config.h"
 
+#include <QNetworkAccessManager>
 #include <QRegularExpression>
 #include <QGuiApplication>
 #include <QStandardPaths>
@@ -49,11 +51,13 @@ static const QString scIp("ip");
 GraftBaseClient::GraftBaseClient(QObject *parent)
     : QObject(parent)
     ,mQuickExchangeModel(nullptr)
+    ,mNetworkManager{new QNetworkAccessManager(this)}
     ,mImageProvider(nullptr)
     ,mAccountManager(new AccountManager())
     ,mCurrencyModel(nullptr)
     ,mAccountModel(nullptr)
     ,mClientSettings(nullptr)
+    ,mBlogReader{new BlogReader(mNetworkManager, this)}
     ,mIsBalanceUpdated(false)
     ,mBalanceTimer(-1)
 {
@@ -292,12 +296,7 @@ void GraftBaseClient::registerImageProvider(QQmlEngine *engine)
 
 void GraftBaseClient::saveModel(const QString &fileName, const QByteArray &data) const
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!QFileInfo(dataPath).exists())
-    {
-        QDir().mkpath(dataPath);
-    }
-    QDir lDir(dataPath);
+    QDir lDir(appDataLocation());
     QFile lFile(lDir.filePath(fileName));
     if (lFile.open(QFile::WriteOnly))
     {
@@ -440,6 +439,17 @@ void GraftBaseClient::initQuickExchangeModel(QQmlEngine *engine)
     }
 }
 
+QString GraftBaseClient::appDataLocation() const
+{
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!QFileInfo(dataPath).exists())
+    {
+        QDir().mkpath(dataPath);
+    }
+    QDir lDir(dataPath);
+    return lDir.path();
+}
+
 void GraftBaseClient::updateAddressQRCode() const
 {
     if (mImageProvider)
@@ -459,6 +469,11 @@ bool GraftBaseClient::isDevMode() const
     return true;
 #endif
     return false;
+}
+
+QObject *GraftBaseClient::blogReader() const
+{
+    return mBlogReader;
 }
 
 QVariant GraftBaseClient::settings(const QString &key) const
@@ -633,12 +648,7 @@ void GraftBaseClient::removeSettings() const
 
 void GraftBaseClient::initSettings()
 {
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (!QFileInfo(dataPath).exists())
-    {
-        QDir().mkpath(dataPath);
-    }
-    QDir lDir(dataPath);
+    QDir lDir(appDataLocation());
     mClientSettings = new QSettings(lDir.filePath(scSettingsDataFile), QSettings::IniFormat, this);
     mBalances.insert(GraftClientTools::LockedBalance, settings(scLockedBalance).toDouble());
     mBalances.insert(GraftClientTools::UnlockedBalance, settings(scUnlockedBalancee).toDouble());

@@ -3,11 +3,16 @@
 
 #include <QObject>
 
+class QNetworkAccessManager;
+
 class GraftBaseHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit GraftBaseHandler(QObject *parent = nullptr) : QObject(parent) {}
+    explicit GraftBaseHandler(QObject *parent = nullptr)
+        : QObject(parent)
+        ,mManager{nullptr}
+    {}
 
     virtual void changeAddresses(const QStringList &addresses,
                                  const QStringList &internalAddresses = QStringList()) = 0;
@@ -17,6 +22,14 @@ public:
     virtual QString password() const = 0;
 
     virtual void resetData() = 0;
+
+    virtual void setNetworkManager(QNetworkAccessManager *networkManager)
+    {
+        if (networkManager && mManager != networkManager)
+        {
+            mManager = networkManager;
+        }
+    }
 
 public slots:
     virtual void createAccount(const QString &password) = 0;
@@ -37,6 +50,9 @@ signals:
     void balanceReceived(double balance, double unlockedBalance);
     void transferFeeReceived(bool result, double fee);
     void transferReceived(bool result);
+
+protected:
+    QNetworkAccessManager *mManager;
 };
 
 #endif // GRAFTBASEHANDLER_H

@@ -13,7 +13,7 @@ GraftGenericAPIv1::GraftGenericAPIv1(const QStringList &addresses, const QString
     mRetries = 0;
     mCurrentAddress = -1;
     mAddresses = addresses;
-    mManager = new QNetworkAccessManager(this);
+    mManager = nullptr;
     mRequest = QNetworkRequest(nextAddress());
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 }
@@ -177,6 +177,14 @@ double GraftGenericAPIv1::toCoins(double atomic)
 double GraftGenericAPIv1::toAtomic(double coins)
 {
     return coins * 10000000000;
+}
+
+void GraftGenericAPIv1::setNetworkManager(QNetworkAccessManager *networkManager)
+{
+    if (networkManager && mManager != networkManager)
+    {
+        mManager = networkManager;
+    }
 }
 
 QString GraftGenericAPIv1::accountPlaceholder() const
