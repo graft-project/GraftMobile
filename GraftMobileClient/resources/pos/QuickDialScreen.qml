@@ -28,7 +28,6 @@ BaseScreen {
             LinearEditItem {
                 id: title
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
                 title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") :
                                                                qsTr("Item title:")
                 showLengthIndicator: true
@@ -67,7 +66,7 @@ BaseScreen {
         WideActionButton {
             id: confirmButton
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+            Layout.alignment: Qt.AlignBottom
             text: qsTr("Checkout")
             onClicked: checkout()
         }
