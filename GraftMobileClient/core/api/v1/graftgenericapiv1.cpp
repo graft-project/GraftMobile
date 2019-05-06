@@ -13,6 +13,7 @@ GraftGenericAPIv1::GraftGenericAPIv1(const QStringList &addresses, const QString
     mRetries = 0;
     mCurrentAddress = -1;
     mAddresses = addresses;
+    mManager = nullptr;
     mRequest = QNetworkRequest(nextAddress());
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 }

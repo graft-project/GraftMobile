@@ -47,7 +47,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    QStringList links() const;
+    bool isLinkExists(const QString &link) const;
 
     bool updateData(const FeedItem &feed, int index);
     FeedItem *itemAt(int index) const;

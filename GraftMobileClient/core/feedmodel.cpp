@@ -54,14 +54,25 @@ int FeedModel::rowCount(const QModelIndex &parent) const
     return mFeeds.count();
 }
 
-QStringList FeedModel::links() const
+bool FeedModel::isLinkExists(const QString &link) const
 {
-    QStringList links;
-    for (const auto &feed : mFeeds)
+    const auto feedItem = std::find_if(mFeeds.constBegin(), mFeeds.constEnd(),
+                                       [&link](FeedItem *feedItem)
     {
-        links.append(feed->mLink);
+        if (feedItem)
+        {
+            if (feedItem->mLink == link)
+            {
+                return true;
+            }
+        }
+        return false;
+    });
+    if (feedItem != mFeeds.constEnd())
+    {
+        return true;
     }
-    return links;
+    return false;
 }
 
 bool FeedModel::updateData(const FeedModel::FeedItem &feed, int index)
@@ -96,7 +107,7 @@ FeedModel::FeedItem *FeedModel::itemAt(int index) const
 
 void FeedModel::add(FeedModel::FeedItem *feed)
 {
-    if (feed && !links().contains(feed->mLink))
+    if (feed && !isLinkExists(feed->mLink))
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         mFeeds.append(feed);

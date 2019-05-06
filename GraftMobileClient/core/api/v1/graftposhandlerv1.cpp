@@ -44,7 +44,7 @@ void GraftPOSHandlerV1::setAccountData(const QByteArray &accountData, const QStr
 
 void GraftPOSHandlerV1::setNetworkManager(QNetworkAccessManager *networkManager)
 {
-    GraftBaseHandler::setNetworkManager(networkManager);
+    GraftPOSHandler::setNetworkManager(networkManager);
     if (mManager && mApi)
     {
         mApi->setNetworkManager(mManager);
