@@ -184,7 +184,6 @@ BaseScreen {
                     messageDialog.open()
                     return
                 }
-                companyNameTextField.actionTextField.clear()
                 serviceSettingsFields.clear()
                 serviceSettingsFields.defaultSettings()
             }
