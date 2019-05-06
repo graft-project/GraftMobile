@@ -56,23 +56,12 @@ int FeedModel::rowCount(const QModelIndex &parent) const
 
 bool FeedModel::isLinkExists(const QString &link) const
 {
-    const auto feedItem = std::find_if(mFeeds.constBegin(), mFeeds.constEnd(),
+    const auto it = std::find_if(mFeeds.constBegin(), mFeeds.constEnd(),
                                        [&link](FeedItem *feedItem)
     {
-        if (feedItem)
-        {
-            if (feedItem->mLink == link)
-            {
-                return true;
-            }
-        }
-        return false;
+        return feedItem && feedItem->mLink == link;
     });
-    if (feedItem != mFeeds.constEnd())
-    {
-        return true;
-    }
-    return false;
+    return it != mFeeds.constEnd();
 }
 
 bool FeedModel::updateData(const FeedModel::FeedItem &feed, int index)
