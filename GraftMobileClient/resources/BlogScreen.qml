@@ -136,9 +136,9 @@ BaseScreen {
             }
 
             ColumnLayout {
-                Layout.topMargin: 30
-                Layout.leftMargin: 30
-                Layout.rightMargin: 30
+                Layout.topMargin: 15
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
 
                 Image {
                     Layout.preferredHeight: 96
@@ -162,7 +162,7 @@ BaseScreen {
                     spacing: 25
 
                     Label {
-                        Layout.topMargin: 25
+                        Layout.topMargin: 15
                         Layout.fillWidth: true
                         wrapMode: Label.WordWrap
                         horizontalAlignment: Label.AlignHCenter
@@ -229,7 +229,7 @@ BaseScreen {
                 WideActionButton {
                     id: moreButton
                     Layout.topMargin: 9
-                    Layout.bottomMargin: 20
+                    Layout.bottomMargin: 15
                     Layout.preferredHeight: 56
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignCenter
@@ -242,7 +242,7 @@ BaseScreen {
             }
 
             Rectangle {
-                Layout.preferredHeight: listView.childrenRect.height + newsTitle.height * 2
+                Layout.preferredHeight: listView.childrenRect.height + newsTitle.height * 2 + 10
                 Layout.fillWidth: true
                 color: "#F4F4F4"
 
@@ -250,12 +250,12 @@ BaseScreen {
                     id: blogLayout
                     anchors {
                         fill: parent
-                        topMargin: 13
+                        topMargin: 10
                     }
 
                     Label {
                         id: newsTitle
-                        Layout.leftMargin: 25
+                        Layout.leftMargin: 15
                         text: qsTr("Latest news:")
                         font.pixelSize: 20
                     }
@@ -266,12 +266,12 @@ BaseScreen {
                         Layout.fillHeight: true
                         model: blogReader !== null ? blogReader.feedModel() : null
                         interactive: false
-                        spacing: 18
+                        spacing: 15
 
                         delegate: BlogFeedDelegate {
                             id: blogFeedDelegate
-                            width: listView.width - 50
-                            x: 25
+                            width: listView.width - 30
+                            x: 15
 
                             titleText: title
                             titleImage: image
