@@ -296,7 +296,7 @@ BaseScreen {
         height: 5
         from: 0.0
         to: 100.0
-        visible: webView.visible
+        visible: webView.loading
         value: webView.loadProgress
         onValueChanged: height = value !== to ? 5 : 0
     }
@@ -312,12 +312,17 @@ BaseScreen {
         visible: false
     }
 
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: webView.loading
+    }
+
     states: [
         State {
             name: "showWebView"
             PropertyChanges {
                 target: webView
-                visible: true
+                visible: loadProgress === 100
             }
             PropertyChanges {
                 target: listView
@@ -353,7 +358,6 @@ BaseScreen {
     }
 
     function hideWebView() {
-        webView.url = "http://localhost"
         blogScreen.state = "hideWebView"
     }
 }
