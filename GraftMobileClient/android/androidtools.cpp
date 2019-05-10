@@ -4,37 +4,29 @@
 #include <QVersionNumber>
 #include <QNetworkReply>
 
+#ifdef Q_OS_ANDROID
 #include <QAndroidJniEnvironment>
 #include <QtAndroid>
+#endif
 
-static const QString scDivContainsAppVersionRegExp("<span class=\"htlgb\"><div class=\"IQ1z0d\"><span class=\"htlgb\">%1<\\/span><\\/div><\\/span>");
+static const QString scDivContainsAppVersionRegExp(R"(<span class="htlgb"><div class="IQ1z0d"><span class="htlgb">%1</span></div></span>)");
 static const QString scCheckUpdateLink("https://play.google.com/store/apps/details?id=%1");
 static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
-static const QString scAppVersionRegExp("\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}");
+static const QString scAppVersionRegExp(R"(\d{1,2}\.\d{1,2}\.\d{1,2})");
 static const QString scUpdateLink("market://details?id=%1");
 
 AndroidTools::AndroidTools(QObject *parent)
     : AbstractDeviceTools(parent)
     ,mAppVersion{scVersionNumber.toString()}
 {
+#ifdef Q_OS_ANDROID
     QAndroidJniObject appContext = QtAndroid::androidContext();
     QAndroidJniObject packageManager = appContext.callObjectMethod("getPackageManager",
                                                                    "()Landroid/content/pm/PackageManager;");
     QAndroidJniObject packageNameStr = appContext.callObjectMethod("getPackageName",
                                                                    "()Ljava/lang/String;");
     mPackageName = packageNameStr.toString();
-
-    QAndroidJniEnvironment env;
-    if (env->ExceptionCheck())
-    {
-        QAndroidJniObject packageInfo = packageManager.callObjectMethod("getPackageInfo",
-                                                                        "(Ljava/lang/String;I)Landroid.content.pm.PackageInfo;",
-                                                                        packageNameStr.object(),
-                                                                        jint(0));
-        const QAndroidJniObject versionName = packageInfo.getObjectField("versionName", "Ljava/lang/String;");
-        mAppVersion = versionName.toString();
-        env->ExceptionClear();
-    }
+#endif
 }
 
 AndroidTools::~AndroidTools()
@@ -81,6 +73,7 @@ void AndroidTools::processCheckAppVersion() const
         if (!html.isEmpty())
         {
             QRegExp regExp(scDivContainsAppVersionRegExp.arg(scAppVersionRegExp));
+            regExp.indexIn(html);
             for (const auto &capturedText: regExp.capturedTexts())
             {
                 QRegExp newestVersionRegExp(scAppVersionRegExp);
