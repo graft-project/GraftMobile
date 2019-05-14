@@ -5,6 +5,7 @@ import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import org.graft.models 1.0
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "../components"
 import "../"
 
@@ -54,6 +55,7 @@ BaseScreen {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Confirm")
+            KeyNavigation.tab: editingItem.Navigation.implicitFirstComponent
             onClicked: confirmProductParameters()
         }
     }

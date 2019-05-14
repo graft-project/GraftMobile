@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "../components"
 
 BaseScreen {
@@ -68,6 +69,7 @@ BaseScreen {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             text: qsTr("Checkout")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: checkout()
         }
     }

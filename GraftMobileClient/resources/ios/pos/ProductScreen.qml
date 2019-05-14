@@ -92,10 +92,7 @@ BaseScreen {
                 buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
-                onClicked: {
-                    disableScreen()
-                    pushScreen.openEditingItemScreen(-1)
-                }
+                onClicked: pushScreen.openEditingItemScreen(-1)
             }
 
             WideActionButton {
@@ -107,6 +104,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                 text: qsTr("Checkout")
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+                KeyNavigation.tab: quickDealButton.enabled ? null : addNewProduct
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
                         disableScreen()
@@ -128,6 +126,7 @@ BaseScreen {
                 text: qsTr("Quick Deal")
                 Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
                 enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+                KeyNavigation.tab: addNewProduct
                 onClicked: {
                     disableScreen()
                     pushScreen.openQuickDealScreen()

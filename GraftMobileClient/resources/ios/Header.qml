@@ -82,7 +82,6 @@ BaseHeader {
                 name: qsTr("Done")
                 onClicked: actionButtonClicked()
                 onPressed: actionButton.focus = true
-                onReleased: actionButton.focus = false
             }
         }
     }

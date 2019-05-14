@@ -20,6 +20,7 @@ BaseScreen {
         navigationButtonState: true
     }
     Navigation.implicitFirstComponent: balanceItem.Navigation.implicitFirstComponent
+    Navigation.implicitLastComponent: balanceItem.Navigation.implicitLastComponent
 
     Rectangle {
         anchors.fill: parent
