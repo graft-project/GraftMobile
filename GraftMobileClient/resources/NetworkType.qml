@@ -47,7 +47,10 @@ ColumnLayout {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: type.checked = true
+            onClicked: {
+                type.checked = true
+                type.forceActiveFocus()
+            }
         }
     }
 }
