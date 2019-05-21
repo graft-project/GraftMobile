@@ -4,8 +4,11 @@
 #include <QQmlEngine>
 
 #ifdef Q_OS_ANDROID
+#include <QGuiApplication>
+#include <QFontDatabase>
 #include <QtAndroid>
 #include <QColor>
+#include <QFont>
 #endif
 
 DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
@@ -22,6 +25,7 @@ DesignFactory::DesignFactory(QObject *parent) : QObject(parent)
     mColors.insert(MainText, QStringLiteral("#404040"));
     mColors.insert(ProductText, QStringLiteral("#000000"));
     mColors.insert(LightButton, QStringLiteral("#7e726d"));
+    setApplicationFont();
     init();
 
     #ifdef Q_OS_IOS
@@ -42,6 +46,22 @@ void DesignFactory::registrate(QQmlContext *context)
 {
     qmlRegisterType<DesignFactory>("com.graft.design", 1, 0, "DesignFactory");
     context->setContextProperty(QStringLiteral("ColorFactory"), this);
+}
+
+void DesignFactory::setApplicationFont() const
+{
+#ifdef Q_OS_ANDROID
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Light.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/Roboto-Medium.ttf");
+    int id = QFontDatabase::addApplicationFont(":/fonts/Roboto-Regular.ttf");
+    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(id);
+    if (!loadedFontFamilies.empty())
+    {
+        QString font = loadedFontFamilies.at(0);
+        QGuiApplication::setFont(QFont(font));
+    }
+#endif
 }
 
 void DesignFactory::init()
