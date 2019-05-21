@@ -119,6 +119,11 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
     File "Qt5Widgets.dll"
     File "ssleay32.dll"
     File "WinSparkle.dll"
+    File "Qt5WebChannel.dll"
+    File "Qt5WebEngine.dll"
+    File "Qt5WebEngineCore.dll"
+    File "Qt5WebView.dll"
+    File "QtWebEngineProcess.exe"
 
     File /r "bearer"
     File /r "iconengines"
@@ -132,6 +137,9 @@ Section "!${APPNAME} ${VERSION}" SecGraftWallet
     File /r "QtQuick"
     File /r "QtQuick.2"
     File /r "scenegraph"
+    File /r "QtWebEngine"
+    File /r "QtWebView"
+    File /r "webview"
 
     ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
     IntFmt $0 "0x%08X" $0

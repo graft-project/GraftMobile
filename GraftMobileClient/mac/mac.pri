@@ -52,6 +52,20 @@ exists($${DSA_PUB_PEM}) {
 CREATE_DMG_SH += $$PWD/create_dmg.sh
 exists($${CREATE_DMG_SH}) {
 QMAKE_POST_LINK += $${QT_DEPLOY} $$APP_FILE -qmldir=$${QML_DIR} $${ESCAPE_COMMAND}
+
+CONFIG(release, debug|release) {
+QTWEBENGINE_DIR = $${APP_FILE}/Contents/Resources/qml/QtWebEngine
+QTWEBVIEW_DIR = $${APP_FILE}/Contents/Resources/qml/QtWebView
+
+!exists($${QTWEBENGINE_DIR}) {
+webengine_target = $$quote(cp -R $${QML_DIR}/QtWebEngine $${QTWEBENGINE_DIR}) $${ESCAPE_COMMAND}
+}
+!exists($${QTWEBVIEW_DIR}) {
+webview_target = $$quote(cp -R $${QML_DIR}/QtWebView $${QTWEBVIEW_DIR}) $${ESCAPE_COMMAND}
+}
+QMAKE_POST_LINK += $${webengine_target} $${webview_target}
+}
+
 QMAKE_POST_LINK += $${CODESIGN} $$APP_FILE $${ESCAPE_COMMAND}
 QMAKE_POST_LINK += $${CREATE_DMG_SH} -s $$APP_FILE -o $${OUT_PWD} -b $${BACKGROUND} $${ESCAPE_COMMAND}
 QMAKE_POST_LINK += $${CREATE_DMG_SH} -s $$APP_FILE -o $${OUT_PWD} -b $${BACKGROUND} $${ESCAPE_COMMAND}
