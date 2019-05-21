@@ -15,6 +15,8 @@ BaseScreen {
     }
     Navigation.explicitFirstComponent: mainNet.Navigation.implicitFirstComponent
 
+    onVisibleChanged: mainNet.networkChecked = true
+
     Item {
         anchors.fill: parent
 
