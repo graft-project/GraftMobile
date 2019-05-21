@@ -33,6 +33,7 @@ public:
     void registrate(QQmlContext *context);
 
 private:
+    void setApplicationFont() const;
     void init();
     QMap<int, QString> mColors;
 };
