@@ -16,6 +16,7 @@ Page {
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property var screenDialog: Detector.isDesktop() ? desktopDialog : mobileDialog
 
+    signal replyOnFocusReason()
     signal networkReplyError()
     signal attentionAccepted()
     signal errorMessage()
@@ -97,5 +98,14 @@ Page {
         screenDialog.title = qsTr("Input error")
         screenDialog.open()
         return true
+    }
+
+    function disableVisualFocus(component) {
+        if (component.focus) {
+            if (component.visualFocus) {
+                component.focus = false
+            }
+            component.focus = true
+        }
     }
 }

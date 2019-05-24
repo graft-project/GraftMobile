@@ -15,6 +15,7 @@ BaseScreen {
     }
     Navigation.explicitFirstComponent: mainNet.Navigation.implicitFirstComponent
 
+    onReplyOnFocusReason: disableVisualFocus(mainNet.Navigation.implicitFirstComponent)
     onVisibleChanged: mainNet.networkChecked = true
 
     Item {
