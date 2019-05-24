@@ -21,6 +21,8 @@ BaseScreen {
     }
     Navigation.implicitFirstComponent: balanceItem.Navigation.implicitFirstComponent
 
+    onReplyOnFocusReason: disableVisualFocus(balanceItem.Navigation.implicitFirstComponent)
+
     Rectangle {
         anchors.fill: parent
         color: "#FFFFFF"
