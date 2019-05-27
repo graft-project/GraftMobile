@@ -103,10 +103,7 @@ BaseScreen {
             Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
             text: qsTr("Restore/Import Wallet")
             KeyNavigation.tab: root.Navigation.implicitFirstComponent
-            onClicked: {
-                disableScreen()
-                pushScreen.openRestoreWalletScreen()
-            }
+            onClicked: pushScreen.openRestoreWalletScreen()
         }
     }
 

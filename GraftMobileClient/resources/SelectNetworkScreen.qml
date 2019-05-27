@@ -94,7 +94,6 @@ BaseScreen {
                 enabled: enabledConfirmButton()
                 KeyNavigation.tab: root.Navigation.explicitFirstComponent
                 onClicked: {
-                    disableScreen()
                     setNetworkType()
                     pushScreen.openCreateWalletScreen()
                 }
