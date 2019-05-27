@@ -92,6 +92,7 @@ BaseScreen {
                 buttonTitle: qsTr("Add new product")
                 Layout.preferredHeight: 60
                 Layout.fillWidth: true
+                KeyNavigation.tab: !addButton.enabled && !quickDealButton.enabled ? addNewProduct : null
                 onClicked: pushScreen.openEditingItemScreen(-1)
             }
 
