@@ -85,14 +85,14 @@ SectionEnd
 
 Section "!${APPNAME} ${VERSION}" SecGraftWallet
 
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" Finded ContinueInstall
     Finded:
     MessageBox MB_YESNO "Can not proceed installation because another copy of application is running. Please close application if you want to continue. Do you want to close it now?" /SD IDYES IDYES Close
     Abort
     Close:
-    nsProcess::KillProcess "${APPNAME}.exe" $R0
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::KillProcess} "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" Close
 
     ContinueInstall:
@@ -177,15 +177,15 @@ FunctionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" Find ContinueUninstall
     Find:
     MessageBox MB_YESNO "Can not uninstall application while it is running. Please close application if you want to continue. Do you want to close it now?" /SD IDYES IDYES CloseNow
     Abort
 
     CloseNow:
-    nsProcess::KillProcess "${APPNAME}.exe" $R0
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::KillProcess} "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" CloseNow
 
     ContinueUninstall:
