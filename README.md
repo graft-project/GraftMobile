@@ -4,8 +4,9 @@ Clients:
 * Point of Sale (POS)
 * Wallet
 
-More information about currently available clients features you can find 
-[here](FEATURES.md).
+More information about currently available clients features you can find [here](FEATURES.md).
+
+An instruction for NSIS installation and the creation of GRAFT clients installer can found [here](doc/NSIS_DOC.md).
 
 ## Build Settings ##
 **POS**
