@@ -175,7 +175,7 @@ AccountManager::AccountVersion AccountManager::versionOf(const QString &filename
     {
 #if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
         return Version0;
-#elif defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+#elif defined(Q_OS_WIN) || defined(Q_OS_MACOS) || defined(Q_OS_LINUX)
         return Version1;
 #endif
     }

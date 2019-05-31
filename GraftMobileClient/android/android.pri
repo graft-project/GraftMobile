@@ -1,5 +1,11 @@
 QT += androidextras
 
+HEADERS += \
+    $$PWD/androidtools.h
+
+SOURCES += \
+    $$PWD/androidtools.cpp
+
 contains(DEFINES, POS_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/pos
 DISTFILES += \
@@ -33,16 +39,4 @@ DISTFILES += \
     $$PWD/wallet/res/mipmap-anydpi-v26/ic_launcher_round.xml \
     $$PWD/wallet/res/drawable/splashscreen.xml \
     $$PWD/wallet/res/layout/splashscreen.xml
-}
-
-SSL_PWD = $$PWD/3rdparty/openssl
-
-equals(ANDROID_TARGET_ARCH, armeabi-v7a) {
-    ANDROID_EXTRA_LIBS += $$SSL_PWD/armeabi-v7a/libcrypto.so
-    ANDROID_EXTRA_LIBS += $$SSL_PWD/armeabi-v7a/libssl.so
-}
-
-equals(ANDROID_TARGET_ARCH, x86)  {
-    ANDROID_EXTRA_LIBS += $$SSL_PWD/x86/libcrypto.so
-    ANDROID_EXTRA_LIBS += $$SSL_PWD/x86/libssl.so
 }

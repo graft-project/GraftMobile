@@ -13,6 +13,7 @@ Rectangle {
     property int dotsCount: 0
 
     Navigation.implicitFirstComponent: unlockedMainBalance
+    Navigation.implicitLastComponent: lockedMainBalance
 
     height: 120
     color: "#FCF9F1"

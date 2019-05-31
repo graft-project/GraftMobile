@@ -16,6 +16,10 @@ BaseHeader {
         if (isSettings) {
             actionButton.image.source = "qrc:/imgs/whiteSettings.png"
             actionButton.image.height = 23
+        } else if (isBlog) {
+            actionButton.image.source = "qrc:/imgs/refresh.svg"
+            actionButton.image.height = 23
+            actionButton.image.width = 23
         } else {
             actionButton.image.source = "qrc:/imgs/done.png"
         }

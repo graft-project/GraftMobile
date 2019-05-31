@@ -1,5 +1,9 @@
+QMAKE_TARGET_BUNDLE_PREFIX = com.graft
+
 contains(DEFINES, POS_BUILD) {
     TARGET = GraftMobilePointOfSale
+
+    QMAKE_BUNDLE = pos
 
     app_splash_screen.files = $$files($$PWD/pos/SplashScreen/*)
     QMAKE_BUNDLE_DATA += app_splash_screen
@@ -12,6 +16,8 @@ contains(DEFINES, POS_BUILD) {
 
 contains(DEFINES, WALLET_BUILD) {
     TARGET = GraftCryptoPayWallet
+
+    QMAKE_BUNDLE = wallet
 
     app_splash_screen.files = $$files($$PWD/wallet/SplashScreen/*)
     QMAKE_BUNDLE_DATA += app_splash_screen

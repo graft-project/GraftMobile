@@ -5,24 +5,26 @@
         <description>Most recent updates to Graft Point-of-Sale Client</description>
         <language>en</language>
         <item>
-            <title>Version 1.14.0</title>
+            <title>Version 1.14.1</title>
             <description>
             <![CDATA[
                 <ul>
-                    <li>Added support of payment id for Send</li>
+                    <li>Added support of payment id for Send (GraftMobile#8)</li>
                     <li>Added support of auto updater for Windows and MacOS</li>
+                    <li>Updated About page and integrated Graft Blog</li>
+                    <li>Fixed black screen on MacOS</li>
                     <li>Fixed UI/UX bugs</li>
                 </ul>
             ]]>
             </description>
             <pubDate>Wed, 4 Apr 2019 20:00:00 +0000</pubDate>
-            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftPointOfSale-1.14.0.dmg"
-                       sparkle:dsaSignature="MEQCIEcs0sTw7WaABd0QAvU3MAS+Qsy/EwxTRdbgNInMFyCFAiAJRy6nEI2+rR+GtpeYxR3v20j8Hdfo88J3FPbcdgzNVw=="
-                       sparkle:version="1.14.0"
+            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.1/GraftPointOfSale-1.14.1.dmg"
+                       sparkle:dsaSignature="MEUCIQCIR445M1wTnj6kIzO4SFHGfAgsSzdRbv3lsKLwyGhcBgIgB+4s8KV5ZO1UmzxLiz32BsF3Obv2FyArZhJFMFeNyUo="
+                       sparkle:version="1.14.1"
                        length="0"
                        type="application/octet-stream" />
-            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftPointOfSale-1.14.0.exe"
-                       sparkle:version="1.14.0"
+            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.1/GraftPointOfSale-1.14.1.exe"
+                       sparkle:version="1.14.1"
                        sparkle:os="windows-x64"
                        sparkle:installerArguments="/S"
                        length="0"

@@ -10,13 +10,12 @@
     !define DESCRIPTION "Graft Point-of-Sale"
     !define VERSIONMAJOR 1
     !define VERSIONMINOR 14
-    !define VERSIONBUILD 0
-    !define VERSION "1.14.0"
+    !define VERSIONBUILD 1
+    !define VERSION "1.14.1"
     !define APPICON "icon.ico"
     !define ABOUTURL "https://www.graft.network"
     ; !define LIC_NAME "license.rtf"
     !define ARPPATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-    !define INSTALLSIZE 33727070
 
     Var REDIST_PACKAGE
 
@@ -75,10 +74,12 @@
     !insertmacro MUI_LANGUAGE "English"
     !insertmacro MUI_RESERVEFILE_LANGDLL
 
+    !include "CheckRedistPackage.nsh"
+
 InstType "Standart"
- 
+
 Section "Install"
- 
+
 ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
 IntFmt $0 "0x%08X" $0
 
@@ -86,14 +87,14 @@ SectionEnd
 
 Section "!${APPNAME} ${VERSION}" SecGraftPOS
 
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" Finded ContinueInstall
     Finded:
     MessageBox MB_YESNO "Can not proceed installation because another copy of application is running. Please close application if you want to continue. Do you want to close it now?" /SD IDYES IDYES Close
     Abort
     Close:
-    nsProcess::KillProcess "${APPNAME}.exe" $R0
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::KillProcess} "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" Close
 
     ContinueInstall:
@@ -101,8 +102,7 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
     AddSize 1024
     SetOutPath "$INSTDIR"
     File "${APPNAME}.exe"
-    File /nonfatal "vcredist_x64.exe"
-    File /nonfatal "vcredist_x86.exe"
+    Call IncludeRedistPackage
     File "d3dcompiler_47.dll"
     File "libeay32.dll"
     File "libEGL.dll"
@@ -121,9 +121,11 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
     File "Qt5Widgets.dll"
     File "ssleay32.dll"
     File "WinSparkle.dll"
-    File "WinSparkle.lib"
-    File "WinSparkle.pdb"
-    File "sparkle.lib"
+    File "Qt5WebChannel.dll"
+    File "Qt5WebEngine.dll"
+    File "Qt5WebEngineCore.dll"
+    File "Qt5WebView.dll"
+    File "QtWebEngineProcess.exe"
 
     File /r "bearer"
     File /r "iconengines"
@@ -138,13 +140,19 @@ Section "!${APPNAME} ${VERSION}" SecGraftPOS
     File /r "QtQuick"
     File /r "QtQuick.2"
     File /r "scenegraph"
+    File /r "QtWebEngine"
+    File /r "QtWebView"
+    File /r "webview"
+
+    ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+    IntFmt $0 "0x%08X" $0
 
     WriteRegStr HKLM "${ARPPATH}" "DisplayName" "${APPNAME}"
     WriteRegStr HKLM "${ARPPATH}" "UninstallString" "$INSTDIR\uninstall.exe"
     WriteRegStr HKLM "${ARPPATH}" "QuietUninstallString" "$INSTDIR\uninstall.exe"
-    WriteRegStr HKLM "${ARPPATH}" "DisplayIcon" "$INSTDIR\${APPICON}.ico"
+    WriteRegStr HKLM "${ARPPATH}" "DisplayIcon" "$INSTDIR\${APPNAME}.exe,0"
     WriteRegStr HKLM "${ARPPATH}" "Publisher" "${COMPANYNAME}"
-    WriteRegDWORD HKLM "${ARPPATH}" "EstimatedSize" ${INSTALLSIZE}
+    WriteRegDWORD HKLM "${ARPPATH}" "EstimatedSize" "$0"
     WriteRegStr HKLM "${ARPPATH}" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
     WriteRegDWORD HKLM "${ARPPATH}" "VersionMajor" ${VERSIONMAJOR}
     WriteRegDWORD HKLM "${ARPPATH}" "VersionMinor" ${VERSIONMINOR}
@@ -172,15 +180,15 @@ FunctionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" Find ContinueUninstall
     Find:
     MessageBox MB_YESNO "Can not uninstall application while it is running. Please close application if you want to continue. Do you want to close it now?" IDYES CloseNow
     Abort
 
     CloseNow:
-    nsProcess::KillProcess "${APPNAME}.exe" $R0
-    nsProcess::FindProcess "${APPNAME}.exe" $R0
+    ${nsProcess::KillProcess} "${APPNAME}.exe" $R0
+    ${nsProcess::FindProcess} "${APPNAME}.exe" $R0
     StrCmp $R0 "1" CloseNow
 
     ContinueUninstall:
@@ -196,6 +204,7 @@ Section "Uninstall"
     Delete "$LOCALAPPDATA\${APPNAME}\csi.dat"
     Delete "$LOCALAPPDATA\${APPNAME}\cun.dat"
     RMDir "$LOCALAPPDATA\${APPNAME}"
+    DeleteRegKey HKLM "${ARPPATH}"
 
     ; Remove app settings
     SetShellVarContext current
@@ -227,11 +236,19 @@ FunctionEnd
 
 Function .onInit
 ${If} ${RunningX64}
-    StrCpy $REDIST_PACKAGE "vcredist_x64.exe"
+    IfFileExists vcredist_x64.exe x64fileExist x64fileNotExist
+    x64fileExist:
+        StrCpy $REDIST_PACKAGE "vcredist_x64.exe"
+    x64fileNotExist:
+        StrCpy $REDIST_PACKAGE "vc_redist.x64.exe"
     StrCpy $REDIST_PACKAGE_VERSION "2017"
     StrCpy $INSTDIR "$PROGRAMFILES64\${APPNAME}"
 ${Else}
-    StrCpy $REDIST_PACKAGE "vcredist_x86.exe"
+    IfFileExists vcredist_x86.exe x86fileExist x86fileNotExist
+    x86fileExist:
+        StrCpy $REDIST_PACKAGE "vcredist_x86.exe"
+    x86fileNotExist:
+        StrCpy $REDIST_PACKAGE "vc_redist.x86.exe"
     StrCpy $REDIST_PACKAGE_VERSION "2015"
     StrCpy $INSTDIR "$PROGRAMFILES\${APPNAME}"
 ${EndIf}

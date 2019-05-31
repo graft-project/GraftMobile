@@ -38,7 +38,11 @@ BaseScreen {
 
     Connections {
         target: sendOrScanScreen
-        onAttentionAccepted: qRScanningView.resetView()
+        onAttentionAccepted: {
+            if (stackLayout.currentIndex == 1) {
+                qRScanningView.resetView()
+            }
+        }
     }
 
     StackLayout {

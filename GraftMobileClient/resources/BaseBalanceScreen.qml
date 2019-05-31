@@ -20,6 +20,9 @@ BaseScreen {
         navigationButtonState: true
     }
     Navigation.implicitFirstComponent: balanceItem.Navigation.implicitFirstComponent
+    Navigation.implicitLastComponent: balanceItem.Navigation.implicitLastComponent
+
+    onReplyOnFocusReason: disableVisualFocus(balanceItem.Navigation.implicitFirstComponent)
 
     Rectangle {
         anchors.fill: parent

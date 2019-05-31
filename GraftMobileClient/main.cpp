@@ -4,6 +4,7 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFileInfo>
+#include <QtWebView>
 #include <QDir>
 
 #include "core/selectedproductproxymodel.h"
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QNetworkProxyFactory::setUseSystemConfiguration(true);
     QApplication app(argc, argv);
+    QtWebView::initialize();
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     QPixmap background(":/imgs/SplashScreen.png");
     QSplashScreen *splashScreen = new QSplashScreen(background.scaled(386, 715));
@@ -77,6 +79,7 @@ int main(int argc, char *argv[])
 
     GraftPOSClient client;
     client.registerTypes(&engine);
+    detector.setNetworkManager(client.networkManager());
 
     CurrencyModel model;
     model.add(QStringLiteral("GRAFT"), QStringLiteral("GRFT"));
@@ -104,6 +107,7 @@ int main(int argc, char *argv[])
 
     GraftWalletClient client;
     client.registerTypes(&engine);
+    detector.setNetworkManager(client.networkManager());
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);

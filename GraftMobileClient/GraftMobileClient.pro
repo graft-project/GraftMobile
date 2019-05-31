@@ -1,4 +1,4 @@
-QT += qml quick network
+QT += qml quick network webview
 
 win32|macx {
 QT += widgets
@@ -9,7 +9,7 @@ CONFIG -= qtquickcompiler
 
 DEFINES += MAJOR_VERSION=1
 DEFINES += MINOR_VERSION=14
-DEFINES += BUILD_VERSION=0
+DEFINES += BUILD_VERSION=1
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -23,6 +23,8 @@ TARGET = GraftPointOfSale
 contains(DEFINES, WALLET_BUILD) {
 TARGET = GraftWallet
 }
+
+include($$PWD/3rdparty/openssl/openSSL.pri)
 
 ios {
 include(ios/ios.pri)
@@ -112,6 +114,8 @@ SOURCES += main.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
     core/graftclientconstants.cpp \
+    core/feedmodel.cpp \
+    core/blogreader.cpp \
     devicedetector.cpp \
     designfactory.cpp \
     navigationproperties.cpp \
@@ -141,6 +145,8 @@ HEADERS += \
     core/graftclienttools.h \
     core/qrcodegenerator.h \
     core/graftclientconstants.h \
+    core/feedmodel.h \
+    core/blogreader.h \
     devicedetector.h \
     designfactory.h \
     navigationproperties.h \

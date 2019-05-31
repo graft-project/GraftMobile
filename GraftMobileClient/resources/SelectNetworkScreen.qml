@@ -15,6 +15,9 @@ BaseScreen {
     }
     Navigation.explicitFirstComponent: mainNet.Navigation.implicitFirstComponent
 
+    onReplyOnFocusReason: disableVisualFocus(mainNet.Navigation.implicitFirstComponent)
+    onVisibleChanged: mainNet.networkChecked = true
+
     Item {
         anchors.fill: parent
 
@@ -91,7 +94,6 @@ BaseScreen {
                 enabled: enabledConfirmButton()
                 KeyNavigation.tab: root.Navigation.explicitFirstComponent
                 onClicked: {
-                    disableScreen()
                     setNetworkType()
                     pushScreen.openCreateWalletScreen()
                 }

@@ -15,6 +15,7 @@ Page {
     property alias isMenuVisible: appHeader.isNavigationButtonVisible
     property alias screenDialog: attentionDialog
 
+    signal replyOnFocusReason()
     signal networkReplyError()
     signal attentionAccepted()
     signal errorMessage()

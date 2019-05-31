@@ -47,6 +47,7 @@ Item {
             focus: visible
             fillMode: VideoOutput.PreserveAspectCrop
             filters: [ zxingFilter ]
+            Component.onCompleted: setOrientation()
         }
 
         Rectangle {
@@ -134,6 +135,7 @@ Item {
 
             PropertyChanges { target: scanScreen; visible: true }
             PropertyChanges { target: messagesScreen; visible: false }
+            when: camera.availability === Camera.Available
         },
 
         State {
@@ -146,11 +148,19 @@ Item {
     ]
 
     function resetView() {
-        state = "scanScreen"
         camera.start()
         lastTag = ""
     }
 
     //TODO: Only for don't write check platforms always where used this method
     function stopScanningView() { }
+
+    function setOrientation() {
+        switch (GraftClientTools.cameraOrientation()) {
+            case 270: videoOutput.orientation = 90; return
+            case 90: videoOutput.orientation = -90; return
+            case 180: videoOutput.orientation = 180; return
+            case 0: videoOutput.orientation = 0; return
+        }
+    }
 }

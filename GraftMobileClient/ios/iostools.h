@@ -15,6 +15,8 @@ public:
     double bottomNavigationBarHeight() const override;
     double statusBarHeight() const override;
 
+    void checkAppVersion() const override;
+
 private:
     mutable bool mIsIphoneXTypeDevice;
     mutable double mBottomNavigationBarHeight;

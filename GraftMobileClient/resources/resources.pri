@@ -7,6 +7,7 @@ RESOURCES += $$PWD/ios_qml.qrc
 
 android {
 RESOURCES += $$PWD/android_qml.qrc
+RESOURCES += $$PWD/fonts_qml.qrc
 }
 
 win32|macx|unix {

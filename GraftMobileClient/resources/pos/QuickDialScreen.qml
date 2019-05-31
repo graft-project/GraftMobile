@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import com.graft.design 1.0
 import com.device.platform 1.0
+import org.navigation.attached.properties 1.0
 import "../components"
 
 BaseScreen {
@@ -28,7 +29,6 @@ BaseScreen {
             LinearEditItem {
                 id: title
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
                 title: Detector.isPlatform(Platform.Android) ? qsTr("Item title") :
                                                                qsTr("Item title:")
                 showLengthIndicator: true
@@ -67,8 +67,9 @@ BaseScreen {
         WideActionButton {
             id: confirmButton
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+            Layout.alignment: Qt.AlignBottom
             text: qsTr("Checkout")
+            KeyNavigation.tab: root.Navigation.implicitFirstComponent
             onClicked: checkout()
         }
     }

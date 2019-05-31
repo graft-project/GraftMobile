@@ -14,7 +14,6 @@
 #include "config.h"
 
 #include <QStandardPaths>
-#include <QSettings>
 #include <QFileInfo>
 
 static const QString scProductModelDataFile("productList.dat");
@@ -121,6 +120,7 @@ void GraftPOSClient::changeGraftHandler()
 #endif
         break;
     }
+    mClientHandler->setNetworkManager(mNetworkManager);
     connect(mClientHandler, &GraftPOSHandler::saleReceived, this, &GraftPOSClient::receiveSale);
     connect(mClientHandler, &GraftPOSHandler::rejectSaleReceived,
             this, &GraftPOSClient::rejectSaleReceived);

@@ -21,6 +21,9 @@ DISTFILES += \
     $$RESOURCE_DIR/resource.rc
 }
 
+CHECKREDISTPACKAGE_NSH = $$PWD/CheckRedistPackage.nsh
+DISTFILES += $$CHECKREDISTPACKAGE_NSH
+
 RC_FILE = $$RESOURCE_DIR/resource.rc
 
 CONFIG(release, debug|release) {
@@ -34,12 +37,13 @@ contains(QMAKE_TARGET.arch, x86) {
     PLATFORM_VERSION = x64
 }
 
-SPARKLE_SOURCES = $$PWD/../3rdparty/sparkle/win/sparkle.*
-SPARKLE_SOURCES ~= s,/,\\,g
-WIN_SPARKLE_SOURCES = $$PWD/../3rdparty/sparkle/win/libs/$$PLATFORM_VERSION/WinSparkle.*
+WIN_SPARKLE_SOURCES = $$PWD/../3rdparty/sparkle/win/libs/$$PLATFORM_VERSION/WinSparkle.dll
 WIN_SPARKLE_SOURCES ~= s,/,\\,g
 
-OPENSSL_DIR = $$PWD/../3rdparty/openssl/$$COMPILER_VERSION/$$BUILD_DIR/*.dll
+CHECKREDISTPACKAGE_SOURCES = $${CHECKREDISTPACKAGE_NSH}
+CHECKREDISTPACKAGE_SOURCES ~= s,/,\\,g
+
+OPENSSL_DIR = $$PWD/../3rdparty/openssl/windows/$$COMPILER_VERSION/$$BUILD_DIR/*.dll
 OPENSSL_DIR ~= s,/,\\,g
 
 EXE_DIR = $${OUT_PWD}/$$DESTDIR
@@ -50,11 +54,11 @@ RES_DIR ~= s,/,\\,g
 
 ESCAPE_COMMAND = $$escape_expand(\\n\\t)
 
+checkredist_target = $$quote(cmd /c $(COPY_DIR) $${CHECKREDISTPACKAGE_SOURCES} $${EXE_DIR}) $${ESCAPE_COMMAND}
 win_sparkle_target = $$quote(cmd /c $(COPY_DIR) $${WIN_SPARKLE_SOURCES} $${EXE_DIR}) $${ESCAPE_COMMAND}
-sparkle_target = $$quote(cmd /c $(COPY_DIR) $${SPARKLE_SOURCES} $${EXE_DIR}) $${ESCAPE_COMMAND}
 openssl_target = $$quote(cmd /c $(COPY_DIR) $${OPENSSL_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
 nsis_target = $$quote(cmd /c $(COPY_DIR) $${RES_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
-QMAKE_POST_LINK += $${openssl_target} $${nsis_target} $${sparkle_target} $${win_sparkle_target}
+QMAKE_POST_LINK += $${openssl_target} $${nsis_target} $${sparkle_target} $${win_sparkle_target} $${checkredist_target}
 
 NSIS_PATH = "C:\Program Files (x86)\NSIS\makensis.exe"
 INSTALL_SCRIPT = $${EXE_DIR}/install.nsi
@@ -70,6 +74,23 @@ QML_DIR ~= s,/,\\,g
 EXE_FILE = $${OUT_PWD}/$${DESTDIR}/$${TARGET}.exe
 EXE_FILE ~= s,/,\\,g
 
-QMAKE_POST_LINK += $${QT_DEPLOY} -qmldir $${QML_DIR} $$EXE_FILE $${ESCAPE_COMMAND}
+QTWEBENGINE_DIR = $${EXE_DIR}/QtWebEngine
+QTWEBENGINE_DIR ~= s,/,\\,g
+
+QTWEBVIEW_DIR = $${EXE_DIR}/QtWebView
+QTWEBVIEW_DIR ~= s,/,\\,g
+
+QMAKE_POST_LINK += $${QT_DEPLOY} --qmldir $${QML_DIR} $$EXE_FILE $${ESCAPE_COMMAND}
+
+CONFIG(release, debug|release) {
+!exists($${QTWEBENGINE_DIR}) {
+webengine_target = $$quote(cmd /c $(COPY_DIR) $${QML_DIR}\\QtWebEngine\\* $${QTWEBENGINE_DIR}) $${ESCAPE_COMMAND}
+}
+!exists($${QTWEBVIEW_DIR}) {
+webview_target = $$quote(cmd /c $(COPY_DIR) $${QML_DIR}\\QtWebView\\* $${QTWEBVIEW_DIR}) $${ESCAPE_COMMAND}
+}
+QMAKE_POST_LINK += $${webengine_target} $${webview_target}
+}
+
 QMAKE_POST_LINK += $${NSIS_PATH} $${INSTALL_SCRIPT} $${ESCAPE_COMMAND}
 }
