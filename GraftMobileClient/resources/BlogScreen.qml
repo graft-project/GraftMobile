@@ -486,4 +486,12 @@ BaseScreen {
             blogReader.getBlogFeeds()
         }
     }
+
+    function backButtonHandler() {
+        var back = blogScreen.state === "showWebView"
+        if (back) {
+            blogScreen.specialBackMode()
+        }
+        return back
+    }
 }
