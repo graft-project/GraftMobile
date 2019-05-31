@@ -20,6 +20,9 @@ public:
 
     Q_INVOKABLE QObject *feedModel() const;
 
+signals:
+    void updated() const;
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 
