@@ -5,24 +5,28 @@
         <description>Most recent updates to Graft Wallet Client</description>
         <language>en</language>
         <item>
-            <title>Version 1.14.0</title>
+            <title>Version 1.14.1</title>
             <description>
             <![CDATA[
                 <ul>
-                    <li>Added support of payment id for Send</li>
+                    <li>Added support of payment id for Send (GraftMobile#8)</li>
                     <li>Added support of auto updater for Windows and MacOS</li>
+                    <li>Updated About page and integrated Graft Blog</li>
+                    <li>Wallet: Disabled max send limit (GraftMobile#9)</li>
+                    <li>Fixed black screen on MacOS</li>
+                    <li>Fixed crash on MacOS during Send (GraftMobile#14)</li>
                     <li>Fixed UI/UX bugs</li>
                 </ul>
             ]]>
             </description>
             <pubDate>Wed, 4 Apr 2019 20:00:00 +0000</pubDate>
-            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftWallet-1.14.0.dmg"
+            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.1/GraftWallet-1.14.1.dmg"
                        sparkle:dsaSignature="MEUCIAaTgDTQqFP9hZpi0iuMJxtGyC2ah2AClIEuNUFuaz7cAiEAioKapgNNHQ1ys7B97Fk1kso4o+iteQZgwWume+1Mx7M="
-                       sparkle:version="1.14.0"
+                       sparkle:version="1.14.1"
                        length="0"
                        type="application/octet-stream" />
-            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.0/GraftWallet-1.14.0.exe"
-                       sparkle:version="1.14.0"
+            <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.1/GraftWallet-1.14.1.exe"
+                       sparkle:version="1.14.1"
                        sparkle:os="windows-x64"
                        sparkle:installerArguments="/S"
                        length="0"
