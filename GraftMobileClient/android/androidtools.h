@@ -23,7 +23,7 @@ private:
     static QString getPackageName();
 
 private:
-    static QString mPackageName;
+    QString mPackageName;
 };
 
 #endif // ANDROIDTOOLS_H
