@@ -20,7 +20,10 @@ private slots:
     void processCheckAppVersion() const;
 
 private:
-    static void getPackageName();
+    static QString getPackageName();
+
+private:
+    static QString mPackageName;
 };
 
 #endif // ANDROIDTOOLS_H

@@ -14,12 +14,11 @@ static const QString scCheckUpdateLink("https://play.google.com/store/apps/detai
 static const QVersionNumber scVersionNumber(MAJOR_VERSION, MINOR_VERSION, BUILD_VERSION);
 static const QString scAppVersionRegExp(R"(\d{1,2}\.\d{1,2}\.\d{1,2})");
 static const QString scUpdateLink("market://details?id=%1");
-static QString mPackageName;
 
 AndroidTools::AndroidTools(QObject *parent)
     : AbstractDeviceTools(parent)
 {
-    getPackageName();
+    mPackageName = getPackageName();
 }
 
 AndroidTools::~AndroidTools()
@@ -85,14 +84,16 @@ void AndroidTools::processCheckAppVersion() const
     }
 }
 
-void AndroidTools::getPackageName()
+QString AndroidTools::getPackageName()
 {
+    static QString packageName;
 #ifdef Q_OS_ANDROID
     QAndroidJniObject appContext = QtAndroid::androidContext();
     QAndroidJniObject packageManager = appContext.callObjectMethod("getPackageManager",
                                                                    "()Landroid/content/pm/PackageManager;");
     QAndroidJniObject packageNameStr = appContext.callObjectMethod("getPackageName",
                                                                    "()Ljava/lang/String;");
-    mPackageName = packageNameStr.toString();
+    packageName = packageNameStr.toString();
 #endif
+    return packageName;
 }
