@@ -49,6 +49,7 @@
         <file alias="CameraPermissionDialog.qml">CameraPermissionDialog.qml</file>
         <file alias="BlogScreen.qml">BlogScreen.qml</file>
         <file alias="BlogFeedDelegate.qml">BlogFeedDelegate.qml</file>
+        <file alias="ReloadIndicator.qml">ReloadIndicator.qml</file>
         <file alias="FullFeedTemplate.html">FullFeedTemplate.html</file>
         <file alias="style.css">style.css</file>
     </qresource>
@@ -111,8 +112,9 @@
         <file alias="icon-pos.png">imgs/icon-pos.png</file>
         <file alias="icon-wallet.png">imgs/icon-wallet.png</file>
         <file alias="whiteSettings.png">imgs/whiteSettings.png</file>
-        <file alias="refresh.png">imgs/refresh.png</file>
         <file alias="next_step.png">imgs/next_step.png</file>
+        <file alias="refresh.svg">imgs/refresh.svg</file>
+        <file alias="g-blog.svg">imgs/g-blog.svg</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

@@ -11,6 +11,8 @@ BaseScreen {
     id: blogScreen
 
     property QtObject blogReader: null
+    property string lastLoadedURL: ""
+    property string lastScreenState: ""
 
     ListModel {
         id: buttonsModel
@@ -95,6 +97,7 @@ BaseScreen {
     }
 
     title: qsTr("About Graft Blockchain")
+    state: "hideWebView"
     screenHeader {
         isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
         navigationButtonState: Detector.isPlatform(Platform.Android)
@@ -102,12 +105,15 @@ BaseScreen {
         isBlog: true
     }
     specialBackMode: hideWebView
-    action: {
-        if (webView.visible) {
-            webView.reload
-        } else {
-            if (blogReader !== null) {
-                blogReader.getBlogFeeds
+    action: update
+
+    Connections {
+        target: blogReader
+
+        onUpdated: {
+            if (lastScreenState.length !== 0) {
+                blogScreen.state = lastScreenState
+                reloadIndicator.stopReloading()
             }
         }
     }
@@ -120,34 +126,52 @@ BaseScreen {
     }
 
     Flickable {
+        id: flickable
         anchors.fill: parent
         ScrollBar.vertical: ScrollBar {
             width: 5
         }
         clip: true
         contentHeight: mainLayout.implicitHeight
+        boundsBehavior: Flickable.DragOverBounds
+
+        ReloadIndicator {
+            id: reloadIndicator
+            anchors {
+                bottomMargin: flickable.contentY <= 0 ? Math.abs(flickable.contentY) / -2.5 : 0
+                bottom: flickable.contentItem.top
+                horizontalCenter: flickable.contentItem.horizontalCenter
+            }
+            height: 35
+            z: height
+            imageRotation: flickable.contentY < 0 ? Math.abs(flickable.contentY) * 3 : 0
+            onStartReload: blogScreen.update()
+        }
 
         ColumnLayout {
             id: mainLayout
             anchors {
+                topMargin: 0
                 top: parent.top
                 left: parent.left
                 right: parent.right
             }
 
             ColumnLayout {
-                Layout.topMargin: 15
+                Layout.topMargin: 35
                 Layout.leftMargin: 15
                 Layout.rightMargin: 15
 
                 Image {
-                    Layout.preferredHeight: 96
+                    Layout.preferredHeight: 86
                     Layout.alignment: Qt.AlignHCenter
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/imgs/g-max.png"
+                    sourceSize: Qt.size(Layout.preferredHeight, Layout.preferredHeight)
+                    source: "qrc:/imgs/g-blog.svg"
                 }
 
                 Label {
+                    Layout.topMargin: 10
                     Layout.fillWidth: true
                     wrapMode: Label.WordWrap
                     horizontalAlignment: Label.AlignHCenter
@@ -277,7 +301,13 @@ BaseScreen {
                             titleImage: image
                             descriptionText: description
 
-                            onLinkClicked: showWebView(url)
+                            onLinkClicked: {
+                                if (url.toString().search(/^https{0,1}/g) !== -1) {
+                                    Qt.openUrlExternally(url)
+                                } else {
+                                    showWebView(url)
+                                }
+                            }
                             onReadMoreClicked: showWebView(fullFeedPath)
                         }
                     }
@@ -310,38 +340,56 @@ BaseScreen {
             bottom: parent.bottom
         }
         visible: false
-    }
-
-    BusyIndicator {
-        anchors.centerIn: parent
-        running: webView.loading
+        onLoadingChanged: {
+            if (loadRequest.url.toString().search(/^https{0,1}/g) !== -1) {
+                stop()
+                if (lastLoadedURL.length !== 0) {
+                    webView.url = lastLoadedURL
+                }
+                if (loadRequest.status === WebView.LoadStartedStatus) {
+                    Qt.openUrlExternally(loadRequest.url)
+                }
+            } else {
+                if (loadRequest.status === WebView.LoadSucceededStatus) {
+                    blogScreen.state = "showWebView"
+                }
+            }
+        }
     }
 
     states: [
         State {
             name: "showWebView"
             PropertyChanges {
-                target: webView
-                visible: loadProgress === 100
+                target: flickable
+                visible: false
             }
             PropertyChanges {
-                target: listView
-                visible: false
+                target: webView
+                visible: loadProgress === 100
             }
             PropertyChanges {
                 target: blogScreen.screenHeader
                 isNavigationButtonVisible: true
                 navigationButtonState: !Detector.isPlatform(Platform.Android)
             }
+            PropertyChanges {
+                target: reloadIndicator
+                anchors.bottomMargin: flickable.contentY <= 0 ? Math.abs(flickable.contentY) / -2.5 : 0
+            }
         },
         State {
             name: "hideWebView"
+            PropertyChanges {
+                target: flickable
+                visible: true
+            }
             PropertyChanges {
                 target: webView
                 visible: false
             }
             PropertyChanges {
-                target: listView
+                target: blogLayout
                 visible: true
             }
             PropertyChanges {
@@ -349,15 +397,93 @@ BaseScreen {
                 isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
                 navigationButtonState: Detector.isPlatform(Platform.Android)
             }
+            PropertyChanges {
+                target: reloadIndicator
+                imageRotation: flickable.contentY < 0 ? Math.abs(flickable.contentY) * 3 : 0
+                anchors.bottomMargin: flickable.contentY <= 0 ? Math.abs(flickable.contentY) / -2.5 : 0
+            }
+        },
+        State {
+            name: "updating"
+            PropertyChanges {
+                target: flickable
+                interactive: false
+                visible: lastScreenState === "hideWebView"
+            }
+            PropertyChanges {
+                target: webView
+                visible: false
+            }
+            PropertyChanges {
+                target: blogLayout
+                visible: false
+            }
+            PropertyChanges {
+                target: mainLayout
+                anchors.topMargin: 25
+            }
+            PropertyChanges {
+                target: reloadIndicator
+                anchors.bottomMargin: -50
+            }
+
+            onCompleted: {
+                if (lastScreenState === "showWebView") {
+                    blogScreen.screenHeader.isNavigationButtonVisible = true
+                    blogScreen.screenHeader.navigationButtonState = !Detector.isPlatform(Platform.Android)
+                } else {
+                    blogScreen.screenHeader.isNavigationButtonVisible = Detector.isPlatform(Platform.Android)
+                    blogScreen.screenHeader.navigationButtonState = Detector.isPlatform(Platform.Android)
+                }
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: "updating"
+            to: "hideWebView"
+
+            PropertyAnimation {
+                target: reloadIndicator
+                property: "anchors.bottomMargin"
+                to: 0
+                duration: 600
+                easing.type: Easing.InSine
+            }
+
+            PropertyAnimation {
+                target: mainLayout
+                property: "anchors.topMargin"
+                to: 0
+                duration: 600
+                easing.type: Easing.InSine
+            }
         }
     ]
 
     function showWebView(url) {
         webView.url = url
+        lastLoadedURL = url
         blogScreen.state = "showWebView"
     }
 
     function hideWebView() {
         blogScreen.state = "hideWebView"
+    }
+
+    function update() {
+        if (blogScreen.state !== "updating") {
+            lastScreenState = blogScreen.state
+            blogScreen.state = "updating"
+        }
+        if (lastScreenState === "showWebView") {
+            webView.reload()
+        } else if (lastScreenState === "hideWebView" && blogReader !== null) {
+            if (!reloadIndicator.isReloaded) {
+                reloadIndicator.startReloading()
+            }
+            blogReader.getBlogFeeds()
+        }
     }
 }

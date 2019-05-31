@@ -127,6 +127,10 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                         mLastBuildDate = lastBuildDate;
                         removeFeeds();
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
                 else if (feedRss.name() == QStringLiteral("item"))
                 {
@@ -149,6 +153,7 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                         {
                             description = feedRss.readElementText();
                         }
+                        // used for creating a unique name of the HTML page for every feed item
                         else if (feedRss.name() == QStringLiteral("guid"))
                         {
                             id = feedRss.readElementText();
@@ -157,14 +162,18 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
                         else if (feedRss.name() == QStringLiteral("encoded"))
                         {
                             content = feedRss.readElementText();
+                            // removing these tags helps open URL links on the same page when a
+                            // user clicks on them on a QWebView
+                            content = content.remove(QRegExp(R"( rel="noopener")"));
+                            content = content.remove(QRegExp(R"( target="_blank")"));
 
                             QString image;
-                            QRegularExpression rx("<img src=\".{8,}\"");
+                            QRegularExpression rx(R"(<img src=".{8,}")");
                             QRegularExpressionMatch match = rx.match(content);
                             if (match.hasMatch())
                             {
                                 image = match.captured(0);
-                                image = image.remove(QRegularExpression("<img src=\""));
+                                image = image.remove(QRegularExpression(R"(<img src=")"));
                                 image = image.mid(0, image.indexOf('"'));
                             }
 
@@ -197,6 +206,7 @@ bool BlogReader::parseBlogFeeds(const QByteArray &feeds) const
             isFeedsReadSuccess = true;
         }
     }
+    emit updated();
     return isFeedsReadSuccess;
 }
 
@@ -240,10 +250,20 @@ void BlogReader::createFullHTMLFeed() const
                         item->mFullFeedPath = QStringLiteral("file:///%1").arg(feedHTML.fileName());
                         QString parsedDescription = item->mDescription;
                         QString parsedContent = item->mContent;
-                        parsedDescription = parsedDescription.remove(parsedDescription.indexOf(QStringLiteral("<p class=\"link-more\">")),
-                                                                     parsedDescription.size());
-                        item->mContent = parsedContent.remove(parsedContent.indexOf(QStringLiteral("<p>The post ")),
-                                                              parsedContent.size());
+                        // removed "Continue reading" paragraph from description
+                        int removeLinkMoreIndex = parsedDescription.indexOf(QLatin1String(R"(<p class="link-more">)"));
+                        if (removeLinkMoreIndex >= 0)
+                        {
+                            parsedDescription = parsedDescription.remove(removeLinkMoreIndex,
+                                                                         parsedDescription.size());
+                        }
+                        // removed "The post" paragraph from description
+                        int removePostPargraphIndex = parsedContent.indexOf(QLatin1String("<p>The post "));
+                        if (removePostPargraphIndex >= 0)
+                        {
+                            item->mContent = parsedContent.remove(removePostPargraphIndex,
+                                                                  parsedContent.size());
+                        }
                         item->mDescription = parsedDescription.replace(item->mLink,
                                                                        item->mFullFeedPath);
                         mFeedModel->updateData(*item, i);
@@ -260,8 +280,8 @@ void BlogReader::createFullHTMLFeed() const
                         feed.replace(scLink, item->mLink);
                         feed.replace(scTitle, item->mTitle);
                         feed.replace(scContent, item->mContent);
-                        feed.replace(QRegExp("width=\"\\d{1,3}\" height=\"\\d{1,3}\""),
-                                     QStringLiteral("width=\"100%\" height=\"200\""));
+                        feed.replace(QRegExp(R"(width="\d{1,3}" height="\d{1,3}")"),
+                                     QLatin1String(R"(width="100%" height="200")"));
 
                         feedHTML.write(feed.toUtf8());
                         feedHTML.close();
