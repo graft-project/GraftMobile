@@ -458,6 +458,11 @@ void GraftBaseClient::updateAddressQRCode() const
     }
 }
 
+QNetworkAccessManager *GraftBaseClient::networkManager() const
+{
+    return mNetworkManager;
+}
+
 QString GraftBaseClient::versionNumber() const
 {
     return scVersionNumber.toString();

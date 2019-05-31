@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class QNetworkAccessManager;
 class AbstractDeviceTools;
 class QQmlEngine;
 
@@ -27,6 +28,8 @@ public:
 
     void registerTypes(QQmlEngine *engine);
 
+    void setNetworkManager(QNetworkAccessManager *networkManager);
+
     Q_INVOKABLE static bool isPlatform(Platforms platform);
     Q_INVOKABLE static bool isDesktop();
     Q_INVOKABLE static bool isMobile();
@@ -36,7 +39,13 @@ public:
     Q_INVOKABLE double bottomNavigationBarHeight();
     Q_INVOKABLE double statusBarHeight();
 
+    Q_INVOKABLE void checkAppVersion();
+
+signals:
+    void updateNeeded(const QString &updateLink, const QString &newVersion) const;
+
 private:
+    QNetworkAccessManager *mNetworkManager;
     AbstractDeviceTools *mDeviceType;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(DeviceDetector::Platforms)

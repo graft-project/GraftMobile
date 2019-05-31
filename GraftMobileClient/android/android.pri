@@ -1,5 +1,11 @@
 QT += androidextras
 
+HEADERS += \
+    $$PWD/androidtools.h
+
+SOURCES += \
+    $$PWD/androidtools.cpp
+
 contains(DEFINES, POS_BUILD) {
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/pos
 DISTFILES += \

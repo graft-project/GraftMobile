@@ -78,6 +78,8 @@ public:
 
     Q_INVOKABLE QObject *blogReader() const;
 
+    QNetworkAccessManager *networkManager() const;
+
 signals:
     void errorReceived(const QString &message);
     void balanceUpdated();

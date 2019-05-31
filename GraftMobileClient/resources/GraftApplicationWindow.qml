@@ -8,6 +8,15 @@ ApplicationWindow {
     property bool allowClose: false
     property var handleBackEvent: null
 
+    Connections {
+        target: Detector
+        onUpdateNeeded: {
+            updatePopup.link = updateLink
+            updatePopup.version = newVersion
+            updatePopup.open()
+        }
+    }
+
     visible: true
     height: 683
     width: 384
@@ -36,7 +45,19 @@ ApplicationWindow {
         opacityAnimator.onStopped: allowClose = false
     }
 
+    UpdatePopup {
+        id: updatePopup
+        padding: 0
+        topPadding: 0
+        bottomPadding: 0
+        width: root.width / 1.2
+        height: contentHeight
+        topMargin: (root.height - height) / 2
+        leftMargin: (root.width - width) / 2
+    }
+
     function init() {
+        Detector.checkAppVersion()
         if (Detector.isPlatform(Platform.IOS)) {
             root.visibility = ApplicationWindow.FullScreen
         } else if (Detector.isPlatform(Platform.MacOS)) {

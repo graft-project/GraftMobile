@@ -10,19 +10,44 @@
 #include "ios/iostools.h"
 #endif
 
+#ifdef Q_OS_ANDROID
+#include "android/androidtools.h"
+#endif
+
 DeviceDetector::DeviceDetector(QObject *parent)
     : QObject(parent)
+    ,mNetworkManager{nullptr}
     ,mDeviceType{nullptr}
 {
 #ifdef Q_OS_IOS
     mDeviceType = new IOSTools(this);
+#elif defined(Q_OS_ANDROID)
+    mDeviceType = new AndroidTools(this);
 #endif
+
+    if (mDeviceType)
+    {
+        connect(mDeviceType, &AbstractDeviceTools::updateNeeded,
+                this, &DeviceDetector::updateNeeded);
+    }
 }
 
 void DeviceDetector::registerTypes(QQmlEngine *engine)
 {
     engine->rootContext()->setContextProperty(QStringLiteral("Detector"), this);
     qmlRegisterType<DeviceDetector>("com.device.platform", 1, 0, "Platform");
+}
+
+void DeviceDetector::setNetworkManager(QNetworkAccessManager *networkManager)
+{
+    if (networkManager && mNetworkManager != networkManager)
+    {
+        mNetworkManager = networkManager;
+        if (mDeviceType)
+        {
+            mDeviceType->setNetworkManager(mNetworkManager);
+        }
+    }
 }
 
 bool DeviceDetector::isPlatform(DeviceDetector::Platforms platform)
@@ -65,4 +90,12 @@ double DeviceDetector::bottomNavigationBarHeight()
 double DeviceDetector::statusBarHeight()
 {
     return mDeviceType ? mDeviceType->statusBarHeight() : 0.0;
+}
+
+void DeviceDetector::checkAppVersion()
+{
+    if (mDeviceType)
+    {
+        mDeviceType->checkAppVersion();
+    }
 }

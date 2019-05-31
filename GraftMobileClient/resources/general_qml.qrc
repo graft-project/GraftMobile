@@ -51,6 +51,7 @@
         <file alias="BlogFeedDelegate.qml">BlogFeedDelegate.qml</file>
         <file alias="ReloadIndicator.qml">ReloadIndicator.qml</file>
         <file alias="FullFeedTemplate.html">FullFeedTemplate.html</file>
+        <file alias="UpdatePopup.qml">UpdatePopup.qml</file>
         <file alias="style.css">style.css</file>
     </qresource>
     <qresource prefix="/pos">
