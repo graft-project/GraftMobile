@@ -21,7 +21,7 @@
             </description>
             <pubDate>Wed, 4 Apr 2019 20:00:00 +0000</pubDate>
             <enclosure url="https://github.com/graft-project/GraftMobile/releases/download/v1.14.1/GraftWallet-1.14.1.dmg"
-                       sparkle:dsaSignature="MEUCIAaTgDTQqFP9hZpi0iuMJxtGyC2ah2AClIEuNUFuaz7cAiEAioKapgNNHQ1ys7B97Fk1kso4o+iteQZgwWume+1Mx7M="
+                       sparkle:dsaSignature="MEQCIGEPLsY1EIhU8qtKpzGbBPzhBhaCtBNvwgTYvTr3crBWAiAlfDau2S+5U0at1EWTVuBNGY7XYr5uyNxnFHrAXHRGjA=="
                        sparkle:version="1.14.1"
                        length="0"
                        type="application/octet-stream" />
