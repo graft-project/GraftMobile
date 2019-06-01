@@ -9,7 +9,6 @@
             <description>
             <![CDATA[
                 <ul>
-                    <li>Added support of payment id for Send (GraftMobile#8)</li>
                     <li>Added support of auto updater for Windows and MacOS</li>
                     <li>Updated About page and integrated Graft Blog</li>
                     <li>Fixed black screen on MacOS</li>
