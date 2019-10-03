@@ -9,8 +9,8 @@ import "components"
 BaseScreen {
     id: baseScreen
 
-    property alias amountUnlockGraft: balanceItem.amountUnlockGraftCost
-    property alias amountLockGraft: balanceItem.amountLockGraftCost
+    property alias amountUnlockGraft: balanceItem.unlockedBalance
+    property alias amountLockGraft: balanceItem.totalBalance
     property alias graftWalletLogo: graftWalletLogo.source
     default property alias content: placeholder.data
 

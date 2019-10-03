@@ -53,6 +53,7 @@
         <file alias="FullFeedTemplate.html">FullFeedTemplate.html</file>
         <file alias="UpdatePopup.qml">UpdatePopup.qml</file>
         <file alias="style.css">style.css</file>
+        <file>TransactionView.qml</file>
     </qresource>
     <qresource prefix="/pos">
         <file alias="main.qml">pos/main.qml</file>

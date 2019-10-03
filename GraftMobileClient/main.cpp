@@ -24,6 +24,10 @@
 
 #include "navigationproperties.h"
 
+#include "core/txhistory/TransactionInfo.h"
+#include "core/txhistory/TransactionHistory.h"
+#include "core/txhistory/TransactionHistoryModel.h"
+
 #if !defined(POS_BUILD) && !defined(WALLET_BUILD)
 static_assert(false, "You didn't add additional argument POS_BUILD or WALLET_BUILD for qmake in \'Build Settings->Build Steps\'");
 #endif
@@ -108,6 +112,8 @@ int main(int argc, char *argv[])
     GraftWalletClient client;
     client.registerTypes(&engine);
     detector.setNetworkManager(client.networkManager());
+    qmlRegisterUncreatableType<TransactionInfo>("com.graft.", 1, 0, "TransactionInfo", "Attempt to create TransactionInfo");
+    
 
     CardModel cardModel;
     engine.rootContext()->setContextProperty(QStringLiteral("CardModel"), &cardModel);
@@ -115,6 +121,24 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty(QStringLiteral("PaymentProductModel"),
                                              client.paymentProductModel());
     engine.rootContext()->setContextProperty(QStringLiteral("GraftClient"), &client);
+    
+    TransactionHistoryModel txHistoryModel;
+    engine.rootContext()->setContextProperty(QStringLiteral("TxHistoryModel"), &txHistoryModel);
+    TransactionHistory txHistory;
+    QList<TransactionInfo*> txList;
+    for (int i = 0; i < 10; ++i) {
+        txList.append(new TransactionInfo(TransactionInfo::In,
+                                          TransactionInfo::Completed,
+                                          50210.9831514600,
+                                          0,
+                                          369556,
+                                          "cda0bb95f9398d3d3acd7bc42ad1d15d4bc4a545d91573bf7622f7335de7ee87",
+                                          QDateTime::fromString("2019-07-07T16:52:51", Qt::ISODate),
+                                          "01234567890"));
+    }
+    txHistory.set(txList);
+    txHistoryModel.setTransactionHistory(&txHistory);
+        
 
 #if defined(Q_OS_IOS)
     IOSCameraPermission cameraPermission;

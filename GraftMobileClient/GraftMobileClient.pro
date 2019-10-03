@@ -114,12 +114,16 @@ SOURCES += main.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
     core/graftclientconstants.cpp \
-    core/feedmodel.cpp \
     core/blogreader.cpp \
+    core/feedmodel.cpp \
     devicedetector.cpp \
     designfactory.cpp \
     navigationproperties.cpp \
-    abstractdevicetools.cpp
+    abstractdevicetools.cpp \
+    core/txhistory/TransactionHistory.cpp \
+    core/txhistory/TransactionHistoryModel.cpp \
+    core/txhistory/TransactionInfo.cpp 
+    
 
 HEADERS += \
     core/config.h \
@@ -151,7 +155,11 @@ HEADERS += \
     designfactory.h \
     navigationproperties.h \
     abstractdevicetools.h \
-    sparkle.h
+    sparkle.h \
+    core/txhistory/TransactionHistory.h \
+    core/txhistory/TransactionHistoryModel.h \
+    core/txhistory/TransactionInfo.h 
+
 
 include(resources/resources.pri)
 
