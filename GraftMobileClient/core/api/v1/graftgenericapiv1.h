@@ -8,6 +8,7 @@
 
 class QNetworkAccessManager;
 class QNetworkReply;
+class QJsonArray;
 
 class GraftGenericAPIv1 : public QObject
 {
@@ -36,6 +37,7 @@ public:
 
     void createAccount(const QString &password);
     void getBalance();
+    void getTransactionHistory(quint64 fromBlock);
     void getSeed();
     void restoreAccount(const QString &seed, const QString &password);
     void transferFee(const QString &address, const QString &amount,
@@ -59,6 +61,8 @@ signals:
                                 const QString &seed);
     void transferFeeReceived(int result, double fee);
     void transferReceived(int result);
+    void transactionHistoryReceived(const QJsonArray &txOut, const QJsonArray &txIn, const QJsonArray &txPending,
+                                    const QJsonArray &txFailed, const QJsonArray &txPool);
 
 protected:
     QString accountPlaceholder() const;
@@ -75,6 +79,7 @@ private slots:
     void receiveRestoreAccountResponse();
     void receiveTransferFeeResponse();
     void receiveTransferResponse();
+    void receiveGetTransactionsResponse();
 
 protected:
     QNetworkAccessManager *mManager;

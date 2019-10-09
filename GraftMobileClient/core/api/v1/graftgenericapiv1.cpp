@@ -3,6 +3,7 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include "../../config.h"
 
 GraftGenericAPIv1::GraftGenericAPIv1(const QStringList &addresses, const QString &dapiVersion,
@@ -83,6 +84,27 @@ void GraftGenericAPIv1::getBalance()
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveGetBalanceResponse);
+}
+
+void GraftGenericAPIv1::getTransactionHistory(quint64 fromBlock)
+{
+    mRetries = 0;
+    if (mAccountData.isEmpty())
+    {
+        qDebug() << "GraftGenericAPI: Account Data is empty.";
+        emit error(QStringLiteral("Couldn't find account data."));
+        return;
+    }
+    QJsonObject params;
+    params.insert(QStringLiteral("Account"), accountPlaceholder());
+    params.insert(QStringLiteral("MinBlock"),   QJsonValue::fromVariant(fromBlock));
+    QJsonObject data = buildMessage(QStringLiteral("GetWalletTransactions"), params);
+    QByteArray array = QJsonDocument(data).toJson();
+    array.replace(accountPlaceholder(), mAccountData);
+    mTimer.start();
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv1::receiveGetTransactionsResponse);
 }
 
 void GraftGenericAPIv1::getSeed()
@@ -219,11 +241,11 @@ QJsonObject GraftGenericAPIv1::processReply(QNetworkReply *reply)
     if (reply->error() == QNetworkReply::NoError)
     {
         QByteArray rawData = reply->readAll();
-        qDebug() << rawData;
+        // qDebug() << rawData;
         if (!rawData.isEmpty())
         {
             QJsonObject response = QJsonDocument::fromJson(rawData).object();
-            qDebug() << response.toVariantMap();
+            // qDebug() << response.toVariantMap();
             if (response.contains(QLatin1String("result")))
             {
                 object = response.value(QLatin1String("result")).toObject();
@@ -484,5 +506,30 @@ void GraftGenericAPIv1::receiveTransferResponse()
             connect(reply, &QNetworkReply::finished,
                     this, &GraftGenericAPIv1::receiveTransferResponse);
         }
+    }
+}
+
+void GraftGenericAPIv1::receiveGetTransactionsResponse()
+{
+    mLastError.clear();
+    qDebug() << "GetWalletTransactions Response Received:\nTime: " << mTimer.elapsed();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    qDebug() << "GetWalletTransactions processing reply";
+    QJsonObject object = processReply(reply);
+    qDebug() << "GetWalletTransactions Response Processed\nTime: " << mTimer.elapsed();
+    if (!object.isEmpty())
+    {
+        emit transactionHistoryReceived(
+                    object.value("TransfersOut").toArray(),
+                    object.value("TransfersIn").toArray(),
+                    object.value("TransfersFailed").toArray(),
+                    object.value("TransfersPending").toArray(),
+                    object.value("TransfersPool").toArray()
+                    );
+    }
+    else
+    {
+        mRequest.setUrl(nextAddress());
+        // getTransactionHistory(); // TODO: do we need this?
     }
 }

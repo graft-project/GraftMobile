@@ -50,6 +50,8 @@ public:
     Q_INVOKABLE TransactionInfo *transaction(int index);
     Q_INVOKABLE QList<TransactionInfo*> getAll() const;
     Q_INVOKABLE void set(const QList<TransactionInfo *> items);
+    QByteArray serialize() const;
+    bool deserialize(const QByteArray &data);
     
     quint64 count() const;
     QDateTime firstDateTime() const;

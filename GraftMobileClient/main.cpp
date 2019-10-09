@@ -125,19 +125,9 @@ int main(int argc, char *argv[])
     TransactionHistoryModel txHistoryModel;
     engine.rootContext()->setContextProperty(QStringLiteral("TxHistoryModel"), &txHistoryModel);
     TransactionHistory txHistory;
-    QList<TransactionInfo*> txList;
-    for (int i = 0; i < 10; ++i) {
-        txList.append(new TransactionInfo(TransactionInfo::In,
-                                          TransactionInfo::Completed,
-                                          50210.9831514600,
-                                          0,
-                                          369556,
-                                          "cda0bb95f9398d3d3acd7bc42ad1d15d4bc4a545d91573bf7622f7335de7ee87",
-                                          QDateTime::fromString("2019-07-07T16:52:51", Qt::ISODate),
-                                          "01234567890"));
-    }
-    txHistory.set(txList);
+
     txHistoryModel.setTransactionHistory(&txHistory);
+    client.setTransactionHistoryModel(&txHistoryModel);
         
 
 #if defined(Q_OS_IOS)

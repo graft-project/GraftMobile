@@ -1,7 +1,14 @@
 #include "graftwallethandlerv1.h"
 #include "graftwalletapiv1.h"
 
+#include "core/txhistory/TransactionInfo.h"
+
 #include <QTimer>
+#include <QJsonArray>
+
+
+
+
 
 GraftWalletHandlerV1::GraftWalletHandlerV1(const QString &dapiVersion, const QStringList addresses,
                                            QObject *parent)
@@ -27,6 +34,7 @@ GraftWalletHandlerV1::GraftWalletHandlerV1(const QString &dapiVersion, const QSt
     connect(mApi, &GraftWalletAPIv1::getPayStatusReceived,
             this, &GraftWalletHandlerV1::receivePayStatus);
     connect(mApi, &GraftWalletAPIv1::error, this, &GraftWalletHandlerV1::errorReceived);
+    connect(mApi, &GraftWalletAPIv1::transactionHistoryReceived, this, &GraftWalletHandlerV1::receiveTransactionHistory);
 }
 
 void GraftWalletHandlerV1::changeAddresses(const QStringList &addresses,
@@ -100,6 +108,14 @@ void GraftWalletHandlerV1::updateBalance()
     if (mApi)
     {
         mApi->getBalance();
+    }
+}
+
+void GraftWalletHandlerV1::updateTransactionHistory()
+{
+    if (mApi)
+    {
+        mApi->getTransactionHistory(m_lastTxHistoryBlock);
     }
 }
 
@@ -209,3 +225,58 @@ void GraftWalletHandlerV1::receiveTransfer(int result)
 {
     emit transferReceived(result == 0);
 }
+
+void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfersOut, const QJsonArray &transfersIn, const QJsonArray &transfersPending, const QJsonArray &transfersFailed, const QJsonArray &transfersPool)
+{
+    QList<TransactionInfo*> tx_history;
+    
+    for (int i = 0; i < transfersOut.size(); ++i) {
+        QJsonObject item = transfersOut.at(i).toObject();
+        if (!item.isEmpty()) {
+            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, TransactionInfo::Out, TransactionInfo::Completed));
+        } else {
+            qWarning() << "Empty tx";
+        }
+    }
+    
+    for (int i = 0; i < transfersIn.size(); ++i) {
+        QJsonObject item = transfersIn.at(i).toObject();
+        if (!item.isEmpty()) {
+            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, TransactionInfo::In, TransactionInfo::Completed));
+        } else {
+            qWarning() << "Empty tx";
+        }
+    }
+    
+    for (int i = 0; i < transfersPending.size(); ++i) {
+        QJsonObject item = transfersPending.at(i).toObject();
+        if (!item.isEmpty()) {
+            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+                                                         TransactionInfo::Pending));
+        } else {
+            qWarning() << "Empty tx";
+        }
+    }
+    
+    for (int i = 0; i < transfersPool.size(); ++i) {
+        QJsonObject item = transfersPool.at(i).toObject();
+        if (!item.isEmpty()) {
+            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+                                                         TransactionInfo::Pending));
+        } else {
+            qWarning() << "Empty tx";
+        }
+    }
+    for (int i = 0; i < transfersFailed.size(); ++i) {
+        QJsonObject item = transfersFailed.at(i).toObject();
+        if (!item.isEmpty()) {
+            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+                                                         TransactionInfo::Failed));
+        } else {
+            qWarning() << "Empty tx";
+        }
+    }
+    qDebug() << "received history: " << tx_history.size();
+    emit transactionHistoryReceived(tx_history);
+}
+

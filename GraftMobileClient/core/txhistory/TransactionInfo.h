@@ -39,8 +39,8 @@ class Transfer;
 class TransactionInfo : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Direction direction READ direction)
-    Q_PROPERTY(Status status READ status)
+    Q_PROPERTY(QVariant direction READ direction)
+    Q_PROPERTY(QVariant status READ status)
     Q_PROPERTY(double amount READ amount)
     Q_PROPERTY(double fee READ fee)
     Q_PROPERTY(quint64 blockHeight READ height)
@@ -49,6 +49,7 @@ class TransactionInfo : public QObject
     Q_PROPERTY(QString hash READ hash)
     Q_PROPERTY(QDateTime timestamp READ timestamp)
     Q_PROPERTY(QString paymentId READ paymentId) 
+    Q_PROPERTY(QString destinations_formatted READ destinations_formatted)
     
 public:
     enum Direction {
@@ -69,9 +70,10 @@ public:
     explicit TransactionInfo(Direction direction, Status status, double amount,
         double fee, quint64 height, const QString &hash, const QDateTime &timestamp,
         const QString &paymentId, QObject * parent = nullptr);
+    ~TransactionInfo();
     
-    Direction direction() const;
-    Status status() const;
+    QVariant direction() const;
+    QVariant status() const;
     double amount() const  { return m_amount; }
     double fee() const     { return m_fee; }
     quint64 height() const { return m_height; }
@@ -83,6 +85,10 @@ public:
     QString paymentId() const   { return m_paymentId; }
     QString destinations_formatted() const;
     Q_INVOKABLE QList<Transfer*> transfers() const;
+    
+    static TransactionInfo * createFromTransferEntry(const QJsonObject &item, TransactionInfo::Direction direction, 
+                                                     TransactionInfo::Status status);
+
     
 private:
     Direction   m_direction = In;

@@ -90,3 +90,4 @@ void TransactionHistory::set(const QList<TransactionInfo *> items)
     m_tinfo = items;
     emit refreshFinished();
 }
+

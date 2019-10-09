@@ -10,6 +10,9 @@
 #include "productmodel.h"
 #include "keygenerator.h"
 #include "config.h"
+#include "core/txhistory/TransactionHistoryModel.h"
+#include "core/txhistory/TransactionInfo.h"
+#include "core/txhistory/TransactionHistory.h"
 
 #include <QRegularExpressionMatch>
 #include <QRegularExpression>
@@ -21,6 +24,8 @@ GraftWalletClient::GraftWalletClient(QObject *parent)
     mBlockNumber = 0;
     changeGraftHandler();
     mPaymentProductModel = new ProductModel(this);
+    
+    
 }
 
 GraftWalletClient::~GraftWalletClient()
@@ -155,6 +160,11 @@ void GraftWalletClient::changeGraftHandler()
             this, &GraftWalletClient::payStatusReceived);
     connect(mClientHandler, &GraftWalletHandler::errorReceived,
             this, &GraftWalletClient::errorReceived);
+    connect(mClientHandler, &GraftBaseHandler::transactionHistoryReceived,
+            this, [this](const QList<TransactionInfo*> &tx_items) {
+        mTxHistoryModel->setTransactionHistoryItems(tx_items);
+    });
+    
     initAccountSettings();
 }
 

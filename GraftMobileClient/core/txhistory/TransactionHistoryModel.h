@@ -61,6 +61,7 @@ public:
 
     TransactionHistoryModel(QObject * parent = 0);
     void setTransactionHistory(TransactionHistory * th);
+    void setTransactionHistoryItems(const QList<TransactionInfo*> &items);
     TransactionHistory * transactionHistory() const;
     /**
      * @brief dateFrom - returns firstmost transaction datetime

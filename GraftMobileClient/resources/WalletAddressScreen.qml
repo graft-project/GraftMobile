@@ -89,13 +89,20 @@ BaseScreen {
                 onClicked: {
                     console.log("Clicked on: ", index)
                     console.log("pushscreen: " + pushScreen)
-                    pushScreen.openTransactionInfoScreen(index);
-                    
+                    pushScreen.openTransactionInfoScreen(transaction);
                 }
             }
         }
     }
-
+    
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        width: 60
+        height: 60
+        running: GraftClient.updatingTransactions
+    }
+    
     ColumnLayout {
         spacing: 0
         anchors.fill: parent
@@ -108,6 +115,8 @@ BaseScreen {
             totalBalance: GraftClient.balance(GraftClientTools.LockedBalance)
             height: 80
         }
+        
+
 
         CoinAccountDelegate {
             id: coinAccountDelegate
@@ -134,7 +143,6 @@ BaseScreen {
                 width: 5
             }
             clip: true
-            
         }
         // qr code view
         ColumnLayout {

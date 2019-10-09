@@ -54,6 +54,13 @@ void TransactionHistoryModel::setTransactionHistory(TransactionHistory *th)
     emit transactionHistoryChanged();
 }
 
+void TransactionHistoryModel::setTransactionHistoryItems(const QList<TransactionInfo *> &items)
+{
+    beginResetModel();
+    m_transactionHistory->set(items);
+    endResetModel();
+}
+
 TransactionHistory *TransactionHistoryModel::transactionHistory() const
 {
     return m_transactionHistory;
@@ -83,11 +90,11 @@ QVariant TransactionHistoryModel::data(const QModelIndex &index, int role) const
         result = QVariant::fromValue(tInfo);
         break;
     case TransactionDirectionRole:
-        result = QVariant::fromValue(tInfo->direction());
+        result = tInfo->direction();
         break;
         
     case TransactionStatusRole:
-        result = QVariant::fromValue(tInfo->status());
+        result = tInfo->status();
         break;
         
     case TransactionAmountRole:
@@ -116,9 +123,6 @@ QVariant TransactionHistoryModel::data(const QModelIndex &index, int role) const
         result = tInfo->destinations_formatted();
         break;
     }
-    qDebug() << "role: " << 
-                QMetaEnum::fromType<TransactionHistoryModel::TransactionInfoRole>().valueToKey(role)
-             << ", result: " << result;
     return result;
 }
 
@@ -130,18 +134,18 @@ int TransactionHistoryModel::rowCount(const QModelIndex &parent) const
 
 QHash<int, QByteArray> TransactionHistoryModel::roleNames() const
 {
-    static QHash<int, QByteArray> roleNames;/* = QAbstractListModel::roleNames();*/
+    QHash<int, QByteArray> roleNames;/* = QAbstractListModel::roleNames();*/
 
-        roleNames.insert(TransactionRole, "transaction");
-        roleNames.insert(TransactionDirectionRole, "direction");
-        roleNames.insert(TransactionStatusRole, "status");
-        roleNames.insert(TransactionAmountRole, "amount");
-        roleNames.insert(TransactionFeeRole, "fee");
-        roleNames.insert(TransactionBlockHeightRole, "blockHeight");
-        roleNames.insert(TransactionHashRole, "hash");
-        roleNames.insert(TransactionTimeStampRole, "timeStamp");
-        roleNames.insert(TransactionPaymentIdRole, "paymentId");
-        roleNames.insert(TransactionDestinationsRole, "destinations");
+    roleNames.insert(TransactionRole, "transaction");
+    roleNames.insert(TransactionDirectionRole, "direction");
+    roleNames.insert(TransactionStatusRole, "status");
+    roleNames.insert(TransactionAmountRole, "amount");
+    roleNames.insert(TransactionFeeRole, "fee");
+    roleNames.insert(TransactionBlockHeightRole, "blockHeight");
+    roleNames.insert(TransactionHashRole, "hash");
+    roleNames.insert(TransactionTimeStampRole, "timeStamp");
+    roleNames.insert(TransactionPaymentIdRole, "paymentId");
+    roleNames.insert(TransactionDestinationsRole, "destinations");
 
     return roleNames;
 }

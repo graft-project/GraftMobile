@@ -56,6 +56,7 @@ Rectangle {
 
                 if (balanceVisible) {
                     pushScreen.openMainAddressScreen()
+                    GraftClient.updateTransactionHistory()
                 }
             }
 

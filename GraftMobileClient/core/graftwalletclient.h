@@ -33,6 +33,7 @@ public slots:
 private slots:
     void receiveSaleDetails(int result, const QString &payDetails);
     void receivePay(int result);
+    
 
 private:
     void changeGraftHandler() override;

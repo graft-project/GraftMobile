@@ -13,6 +13,8 @@
 #include "accountmodel.h"
 #include "blogreader.h"
 #include "config.h"
+#include "core/txhistory/TransactionInfo.h"
+
 
 #include <QNetworkAccessManager>
 #include <QRegularExpression>
@@ -263,6 +265,23 @@ void GraftBaseClient::updateBalance()
     }
 }
 
+void GraftBaseClient::updateTransactionHistory()
+{
+    if (graftHandler() && !mAccountManager->account().isEmpty())
+    {
+        connect(graftHandler(), &GraftBaseHandler::transactionHistoryReceived,
+                this, [this]() {
+            this->mUpdatingTransactions = false;
+            emit updatingTransactionsChanged(mUpdatingTransactions);
+        }, Qt::UniqueConnection); 
+        
+        mUpdatingTransactions = true;
+        emit updatingTransactionsChanged(mUpdatingTransactions);
+        
+        graftHandler()->updateTransactionHistory();
+    }
+}
+
 void GraftBaseClient::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == mBalanceTimer)
@@ -461,6 +480,11 @@ void GraftBaseClient::updateAddressQRCode() const
 QNetworkAccessManager *GraftBaseClient::networkManager() const
 {
     return mNetworkManager;
+}
+
+void GraftBaseClient::setTransactionHistoryModel(TransactionHistoryModel *model)
+{
+    mTxHistoryModel = model;
 }
 
 QString GraftBaseClient::versionNumber() const

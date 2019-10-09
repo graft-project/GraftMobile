@@ -28,8 +28,11 @@
 
 #include "TransactionInfo.h"
 #include "Transfer.h"
+#include "core/api/v1/graftgenericapiv1.h"
 #include <QDateTime>
 #include <QDebug>
+#include <QJsonObject>
+#include <QJsonArray>
 
 
 
@@ -53,24 +56,59 @@ TransactionInfo::TransactionInfo(TransactionInfo::Direction direction, Transacti
     
 }
 
-TransactionInfo::Direction TransactionInfo::direction() const
+TransactionInfo::~TransactionInfo()
 {
-    return m_direction;
+    qDeleteAll(m_transfers);
 }
 
-TransactionInfo::Status TransactionInfo::status() const
+QVariant TransactionInfo::direction() const
 {
-    return m_status;
+    return QVariant::fromValue(m_direction);
+}
+
+QVariant TransactionInfo::status() const
+{
+    return QVariant::fromValue(m_status);
 }
 
 QString TransactionInfo::destinations_formatted() const
 {
-    // TODO
-    return QString();     
+    QString destinations;
+    for (auto const& t: transfers()) {
+        if (!destinations.isEmpty())
+          destinations += "<br> ";
+        destinations +=  QString::number(t->amount()) + ": " + t->address();
+    }
+    return destinations;
 }
 
 QList<Transfer*> TransactionInfo::transfers() const
 {
     return m_transfers;
 }
+
+TransactionInfo *TransactionInfo::createFromTransferEntry(const QJsonObject &item, TransactionInfo::Direction direction, TransactionInfo::Status status)
+{
+    
+    TransactionInfo * result = new TransactionInfo(direction,
+                                                   status,
+                                                   GraftGenericAPIv1::toCoins(item.value("amount").toDouble()),
+                                                   GraftGenericAPIv1::toCoins(item.value("fee").toDouble()),
+                                                   item.value("height").toVariant().toLongLong(),
+                                                   item.value("txid").toString(),
+                                                   QDateTime::fromTime_t(item.value("timestamp").toVariant().toULongLong()),
+                                                   item.value("payment_id").toString());
+    
+    QJsonArray destinations = item.value("destinations").toArray();
+  
+    for (int i = 0; i < destinations.size(); ++i) {
+        QJsonObject destination = destinations.at(i).toObject();
+  
+        result->m_transfers.push_back(new Transfer(GraftGenericAPIv1::toCoins(destination.value("amount").toDouble()),
+                                                   destination.value("address").toString()));
+    }
+    return result;
+    
+}
+
 

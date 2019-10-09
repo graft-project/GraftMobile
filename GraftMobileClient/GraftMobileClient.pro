@@ -158,7 +158,8 @@ HEADERS += \
     sparkle.h \
     core/txhistory/TransactionHistory.h \
     core/txhistory/TransactionHistoryModel.h \
-    core/txhistory/TransactionInfo.h 
+    core/txhistory/TransactionInfo.h \
+    core/txhistory/Transfer.h 
 
 
 include(resources/resources.pri)

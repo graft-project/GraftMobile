@@ -14,10 +14,12 @@ class AccountModel;
 class BlogReader;
 class QQmlEngine;
 class QSettings;
+class TransactionHistoryModel;
 
 class GraftBaseClient : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool updatingTransactions READ updatingTransactions  NOTIFY updatingTransactionsChanged)
 public:
     explicit GraftBaseClient(QObject *parent = nullptr);
     virtual ~GraftBaseClient() override;
@@ -62,7 +64,6 @@ public:
     void saveBalance() const;
 
     void updateQuickExchange(double cost);
-
     Q_INVOKABLE bool checkPassword(const QString &password) const;
 
     Q_INVOKABLE QString networkName() const;
@@ -79,6 +80,9 @@ public:
     Q_INVOKABLE QObject *blogReader() const;
 
     QNetworkAccessManager *networkManager() const;
+    
+    void setTransactionHistoryModel(TransactionHistoryModel * model);
+    bool updatingTransactions() const {return  mUpdatingTransactions; }
 
 signals:
     void errorReceived(const QString &message);
@@ -89,10 +93,12 @@ signals:
     void transferFeeReceived(bool result, double fee);
     void networkTypeChanged();
     void settingsChanged();
+    void updatingTransactionsChanged(bool);
 
 public slots:
     void saveAccounts() const;
     void updateBalance();
+    void updateTransactionHistory();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -134,10 +140,12 @@ protected:
     BlogReader *mBlogReader;
 
     QMap<int, double> mBalances;
+    TransactionHistoryModel * mTxHistoryModel = nullptr;
 
 private:
     bool mIsBalanceUpdated;
     int mBalanceTimer;
+    bool mUpdatingTransactions = false;
 };
 
 #endif // GRAFTBASECLIENT_H
