@@ -49,6 +49,19 @@ QList<TransactionInfo *> TransactionHistory::getAll() const
     return m_tinfo;
 }
 
+void TransactionHistory::set(const QList<TransactionInfo *> items, bool append)
+{
+    emit refreshStarted();
+    if (append) {
+        std::copy(items.rbegin(), items.rend(), std::front_inserter(m_tinfo));
+    } else {
+        qDeleteAll(m_tinfo);
+        m_tinfo = items;
+    }
+    qDebug() << "tx history count: " << this->count();
+    emit refreshFinished();
+}
+
 quint64 TransactionHistory::count() const
 {
     return m_tinfo.count();
@@ -84,10 +97,5 @@ TransactionHistory::TransactionHistory(QObject *parent)
 
 
 
-void TransactionHistory::set(const QList<TransactionInfo *> items)
-{
-    emit refreshStarted();
-    m_tinfo = items;
-    emit refreshFinished();
-}
+
 

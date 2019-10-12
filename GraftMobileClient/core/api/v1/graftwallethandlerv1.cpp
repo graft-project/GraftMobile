@@ -231,10 +231,14 @@ void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfers
 {
     QList<TransactionInfo*> tx_history;
     
+    quint64 last_block = 0;
+    
     for (int i = 0; i < transfersOut.size(); ++i) {
         QJsonObject item = transfersOut.at(i).toObject();
         if (!item.isEmpty()) {
             tx_history.push_back(TransactionInfo::createFromTransferEntry(item, TransactionInfo::Out, TransactionInfo::Completed));
+            if (tx_history.back()->height() > last_block)
+                last_block = tx_history.back()->height();
         } else {
             qWarning() << "Empty tx";
         }
@@ -244,10 +248,15 @@ void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfers
         QJsonObject item = transfersIn.at(i).toObject();
         if (!item.isEmpty()) {
             tx_history.push_back(TransactionInfo::createFromTransferEntry(item, TransactionInfo::In, TransactionInfo::Completed));
+            if (tx_history.back()->height() > last_block)
+                last_block = tx_history.back()->height();
         } else {
             qWarning() << "Empty tx";
         }
     }
+    
+    m_lastTxHistoryBlock = last_block;
+    qDebug() << "m_lastTxHistoryBlock: " << m_lastTxHistoryBlock;
     
     // sort list by timestamp, descending order
     std::sort(tx_history.begin(), tx_history.end(), [](TransactionInfo *lhs, TransactionInfo *rhs)->bool {

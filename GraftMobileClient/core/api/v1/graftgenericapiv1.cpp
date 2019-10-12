@@ -97,7 +97,7 @@ void GraftGenericAPIv1::getTransactionHistory(quint64 fromBlock)
     }
     QJsonObject params;
     params.insert(QStringLiteral("Account"), accountPlaceholder());
-    params.insert(QStringLiteral("MinBlock"),   QJsonValue::fromVariant(fromBlock));
+    params.insert(QStringLiteral("MinHeight"),   QJsonValue::fromVariant(fromBlock));
     QJsonObject data = buildMessage(QStringLiteral("GetWalletTransactions"), params);
     QByteArray array = QJsonDocument(data).toJson();
     array.replace(accountPlaceholder(), mAccountData);

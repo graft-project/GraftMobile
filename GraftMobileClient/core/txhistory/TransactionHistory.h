@@ -49,7 +49,7 @@ public:
     explicit TransactionHistory(QObject *parent = nullptr);
     Q_INVOKABLE TransactionInfo *transaction(int index);
     Q_INVOKABLE QList<TransactionInfo*> getAll() const;
-    Q_INVOKABLE void set(const QList<TransactionInfo *> items);
+    Q_INVOKABLE void set(const QList<TransactionInfo *> items, bool append = true);
     QByteArray serialize() const;
     bool deserialize(const QByteArray &data);
     
