@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QJsonArray>
 
+#include <algorithm>
 
 
 
@@ -248,10 +249,16 @@ void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfers
         }
     }
     
+    // sort list by timestamp, descending order
+    std::sort(tx_history.begin(), tx_history.end(), [](TransactionInfo *lhs, TransactionInfo *rhs)->bool {
+       return  lhs->timestamp() > rhs->timestamp();
+    });
+    
+    
     for (int i = 0; i < transfersPending.size(); ++i) {
         QJsonObject item = transfersPending.at(i).toObject();
         if (!item.isEmpty()) {
-            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+            tx_history.push_front(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
                                                          TransactionInfo::Pending));
         } else {
             qWarning() << "Empty tx";
@@ -261,7 +268,7 @@ void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfers
     for (int i = 0; i < transfersPool.size(); ++i) {
         QJsonObject item = transfersPool.at(i).toObject();
         if (!item.isEmpty()) {
-            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+            tx_history.push_front(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
                                                          TransactionInfo::Pending));
         } else {
             qWarning() << "Empty tx";
@@ -270,7 +277,7 @@ void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfers
     for (int i = 0; i < transfersFailed.size(); ++i) {
         QJsonObject item = transfersFailed.at(i).toObject();
         if (!item.isEmpty()) {
-            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+            tx_history.push_front(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
                                                          TransactionInfo::Failed));
         } else {
             qWarning() << "Empty tx";
