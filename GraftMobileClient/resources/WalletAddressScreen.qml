@@ -15,6 +15,7 @@ BaseScreen {
     property alias accountBalance: coinAccountDelegate.accountBalance
     property string accountNumber: ""
     property string accountType: ""
+    property bool  txListLoaded: false
 
     state: balanceState
     Component.onCompleted: {
@@ -24,85 +25,6 @@ BaseScreen {
         }
     }
 
-    // Delegate to display transaction in listview
-    
-    Component {
-        id: txDelegate
-        Item {
-            width: parent.width;
-            height: 80
-            Column {
-                width: parent.width
-                spacing: 10 
-               
-                Flow {
-                    width: parent.width
-                    spacing: 2
-                    id: txView
-                    Text {
-                        id: hashField;
-                        text: 'id: <b>' + hash + '</b>'
-                        elide: Text.ElideMiddle
-                        width: parent.width
-                    }
-                    
-                    Text {
-                        text: 'Height: <b>'  + blockHeight + '</b>'
-                    }
-                    
-                    Text {
-                        text: 'TimeStamp: <b>'  + timeStamp + '</b>'
-                    }
-                    
-                    
-                    Text {
-                        text: 'Direction: <b>'  + direction.toString() + '</b>'
-                    }
-                    Text {
-                        text: 'Status: <b>' + status.toString() + '</b>'
-                    }
-    
-                    Text {
-                        text: 'Amount: <b>'  + amount + '</b>'
-                    }
-                    
-                    Text {
-                        text: 'Fee: <b>'  + fee + '</b>'
-                    }
-                    
-                    Text {
-                        text: 'PaymentID: <b>' + paymentId + '</b>'
-                    }
-                }
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: "gray"
-                }
-                
-            }
-
-          
-            MouseArea {
-                id: clickArea;
-                anchors.fill: parent;
-                onClicked: {
-                    console.log("Clicked on: ", index)
-                    console.log("pushscreen: " + pushScreen)
-                    pushScreen.openTransactionInfoScreen(transaction);
-                }
-            }
-        }
-    }
-    
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        width: 60
-        height: 60
-        running: GraftClient.updatingTransactions
-    }
-    
     ColumnLayout {
         spacing: 0
         anchors.fill: parent
@@ -128,22 +50,6 @@ BaseScreen {
             bottomLineVisible: false
         }
         
-
-        // tx history view
-        ListView {
-            id: txListView
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            model: TxHistoryModel
-            delegate: txDelegate
-            visible: mainBalance.checked
-            flickableDirection: Flickable.VerticalFlick
-            boundsBehavior: Flickable.StopAtBounds
-            ScrollBar.vertical: ScrollBar {
-                width: 5
-            }
-            clip: true
-        }
         // qr code view
         ColumnLayout {
             id: qrCodeView

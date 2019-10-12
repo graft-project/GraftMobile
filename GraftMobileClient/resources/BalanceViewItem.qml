@@ -50,15 +50,15 @@ Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 80
             KeyNavigation.backtab: balance.Navigation.explicitLastComponent
-            checkable: !balanceVisible
             onClicked: {
-                console.log("currentItem: " + currentItem)
-
+                console.log("balanceVisible: " + balanceVisible)
                 if (balanceVisible) {
                     pushScreen.openMainAddressScreen()
+                } else {
                     GraftClient.updateTransactionHistory()
+                    pushScreen.openTransactionHistoryScreen()
                 }
-            }
+           }
 
             RowLayout {
                 spacing: 0
@@ -123,7 +123,7 @@ Rectangle {
 
                 Image {
                     id: unlockedArrow
-                    visible: balanceVisible
+                    // visible: balanceVisible
                     source: "qrc:/imgs/arrow.png"
                     Layout.preferredHeight: 20
                     Layout.preferredWidth: 15

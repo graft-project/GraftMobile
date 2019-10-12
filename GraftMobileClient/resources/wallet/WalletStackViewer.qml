@@ -27,6 +27,7 @@ BaseStackViewer {
         transitionsMap["openBalanceScreen"] = openBalanceScreen
         transitionsMap["openSendConfirmationScreen"] = openSendConfirmationScreen
         transitionsMap["goBack"] = goBack
+        transitionsMap["openTransactionHistoryScreen"] = openTransactionHistoryScreen
         transitionsMap["openTransactionInfoScreen"] = openTransactionInfoScreen
         return transitionsMap
     }
@@ -67,6 +68,10 @@ BaseStackViewer {
 
     function openMainAddressScreen() {
         stack.push("qrc:/WalletAddressScreen.qml", {"pushScreen": walletsTransitions()})
+    }
+    
+    function openTransactionHistoryScreen() {
+        stack.push("qrc:/TransactionHistoryScreen.qml", {"pushScreen": walletsTransitions()})
     }
     
     function openTransactionInfoScreen(transaction) {
