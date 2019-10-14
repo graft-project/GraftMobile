@@ -39,8 +39,8 @@ class Transfer;
 class TransactionInfo : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariant direction READ direction)
-    Q_PROPERTY(QVariant status READ status)
+    Q_PROPERTY(Direction direction READ direction)
+    Q_PROPERTY(Status status READ status)
     Q_PROPERTY(double amount READ amount)
     Q_PROPERTY(double fee READ fee)
     Q_PROPERTY(quint64 blockHeight READ height)
@@ -72,8 +72,8 @@ public:
         const QString &paymentId, QObject * parent = nullptr);
     ~TransactionInfo();
     
-    QVariant direction() const;
-    QVariant status() const;
+    Direction direction() const;
+    Status status() const;
     double amount() const  { return m_amount; }
     double fee() const     { return m_fee; }
     quint64 height() const { return m_height; }

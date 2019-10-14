@@ -19,75 +19,153 @@ BaseScreen {
     }
 
     // Delegate to display transaction in listview
-    
     Component {
-        id: txDelegate
+        id: txDelegate    
+        
         Item {
-            width: parent.width;
-            height: 80
-            Column {
+            height: 55
+            width: parent.width
+            Component.onCompleted: {
+                console.log("Root item width: ", width)
+            }
+
+            RowLayout {
+                id: txViewItem
+                anchors.topMargin: 5
+                anchors.bottomMargin: 5
+                spacing: 5
+                Layout.maximumWidth: parent.width - 10
+                
+                // direction icon
+                Image {
+                    Layout.leftMargin: 5
+                    source: direction === TransactionInfo.In ? "imgs/incoming_tx_arrow.png"
+                                                             : "imgs/outgoing_tx_arrow.png"
+                    
+                }
+                
+                // tx_id + status + timestamp
+                Column {
+                    // tx_id
+                    Text {
+                        text: hash
+                        width: 240
+                        elide: Qt.ElideMiddle
+                        Component.onCompleted: {
+                            console.log("width: ", width, " rowLayout width: ", txViewItem.width, " column width: ", parent.width)
+                        }
+                    }
+                    // complete / incomplete / failed
+                    Text {
+                        text: status === TransactionInfo.Completed ? 
+                                  qsTr("Completed - Block height: ") + blockHeight
+                                : status === TransactionInfo.Pending ? 
+                                  qsTr("Pending transaction")
+                                : qsTr("Failed transaction")
+                        
+                        Component.onCompleted: {
+                            console.log("width: ", width, " rowLayout width: ", txViewItem.width)
+                        }
+                    }
+                    // timestamp
+                    Text {
+                        
+                        text: timeStamp
+                    }
+                }
+                
+                // Amount + fee
+                Column {
+                    Layout.leftMargin: 1
+                    // Layout.topMargin: 20
+                    Text {
+                        text: (direction === TransactionInfo.In ? "+ " : "- ") + "GRFT " + amount
+                        color: (direction === TransactionInfo.In ? "#4FB67A" : "#FC581F")
+                    }
+                    Text {
+                        text: qsTr("Fee: ") + fee
+                        color: (direction === TransactionInfo.In ? "#4FB67A" : "#FC581F")
+                    }
+                }
+            }
+            Rectangle {
+                height: 1
                 width: parent.width
-                spacing: 10 
-               
-                Flow {
-                    width: parent.width
-                    spacing: 2
-                    id: txView
-                    Text {
-                        id: hashField;
-                        text: 'id: <b>' + hash + '</b>'
-                        elide: Text.ElideMiddle
-                        width: parent.width
-                    }
-                    
-                    Text {
-                        text: 'Height: <b>'  + blockHeight + '</b>'
-                    }
-                    
-                    Text {
-                        text: 'TimeStamp: <b>'  + timeStamp + '</b>'
-                    }
-                    
-                    
-                    Text {
-                        text: 'Direction: <b>'  + direction.toString() + '</b>'
-                    }
-                    Text {
-                        text: 'Status: <b>' + status.toString() + '</b>'
-                    }
-    
-                    Text {
-                        text: 'Amount: <b>'  + amount + '</b>'
-                    }
-                    
-                    Text {
-                        text: 'Fee: <b>'  + fee + '</b>'
-                    }
-                    
-                    Text {
-                        text: 'PaymentID: <b>' + paymentId + '</b>'
-                    }
-                }
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: "gray"
-                }
+                color: "lightgray"
+                anchors.top: txViewItem.bottom 
+                anchors.topMargin: 1
                 
             }
 
-          
             MouseArea {
                 id: clickArea;
-                anchors.fill: parent;
+                anchors.fill: parent
                 onClicked: {
                     console.log("Clicked on: ", index)
-                    console.log("pushscreen: " + pushScreen)
-                    pushScreen.openTransactionInfoScreen(transaction);
+                    pushScreen.openTransactionDetailsScreen(transaction);
+                    
                 }
+                
             }
         }
     }
+    
+//    Component {
+//        id: txDelegate
+//        Row {
+//            id: txViewItem
+//            width: parent.width;
+//            height: 80
+            
+//            // direction icon
+//            Image {
+//                source: "imgs/incoming_tx_arrow.png"
+//            }
+//            // tx_id + status + timestamp
+//            Column {
+//                width: txViewItem.width / 2
+//                // tx_id
+//                Text {
+//                    text: hash
+//                }
+//                // complete / incomplete / failed
+//                Text {
+//                    text: status === TransactionInfo.Completed ? 
+//                              qsTr("Completed - Block height: ") + blockHeight
+//                            : status === TransactionInfo.Pending ? 
+//                              qsTr("Pending transaction")
+//                            : qsTr("Failed transaction")
+//                }
+//                // timestamp
+//                Text {
+//                    text: timeStamp
+//                }
+//            }
+            
+//            // Amount + fee
+//            Column {
+//                width: txViewItem / 3
+//                Text {
+//                    text: (direction === TransactionInfo.In ? "+ " : "- ") + "GRFT " + amount
+//                    color: (direction === TransactionInfo.In ? "#4FB67A" : "#FC581F")
+//                }
+//                Text {
+//                    text: qsTr("Fee: ") + amount
+//                    color: (direction === TransactionInfo.In ? "#4FB67A" : "#FC581F")
+//                }
+//            }
+            
+//            MouseArea {
+//                id: clickArea;
+//                anchors.fill: parent;
+//                onClicked: {
+//                    console.log("Clicked on: ", index)
+//                    console.log("pushscreen: " + pushScreen)
+//                    pushScreen.openTransactionInfoScreen(transaction);
+//                }
+//            }
+//        }
+//    }
     
     BusyIndicator {
         id: busyIndicator
@@ -108,6 +186,7 @@ BaseScreen {
             id: txListView
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.maximumWidth: tx_history.width
             model: TxHistoryModel
             delegate: txDelegate
             flickableDirection: Flickable.VerticalFlick
@@ -116,6 +195,9 @@ BaseScreen {
                 width: 5
             }
             clip: true
+            Component.onCompleted: {
+                console.log("width: " + width)
+            }
         }
     }
 

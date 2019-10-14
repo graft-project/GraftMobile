@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
     GraftWalletClient client;
     client.registerTypes(&engine);
     detector.setNetworkManager(client.networkManager());
-    qmlRegisterUncreatableType<TransactionInfo>("com.graft.", 1, 0, "TransactionInfo", "Attempt to create TransactionInfo");
+    qmlRegisterUncreatableType<TransactionInfo>("org.graft", 1, 0, "TransactionInfo", "Attempt to create TransactionInfo");
     
 
     CardModel cardModel;
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
     IOSCameraPermission cameraPermission;
     engine.rootContext()->setContextProperty(QStringLiteral("IOSCameraPermission"), &cameraPermission);
 #endif
-
+    
     engine.load(QUrl(QLatin1String("qrc:/wallet/main.qml")));
 #endif
     if (engine.rootObjects().isEmpty())

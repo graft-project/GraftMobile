@@ -28,7 +28,7 @@ BaseStackViewer {
         transitionsMap["openSendConfirmationScreen"] = openSendConfirmationScreen
         transitionsMap["goBack"] = goBack
         transitionsMap["openTransactionHistoryScreen"] = openTransactionHistoryScreen
-        transitionsMap["openTransactionInfoScreen"] = openTransactionInfoScreen
+        transitionsMap["openTransactionDetailsScreen"] = openTransactionDetailsScreen
         return transitionsMap
     }
 
@@ -74,8 +74,8 @@ BaseStackViewer {
         stack.push("qrc:/TransactionHistoryScreen.qml", {"pushScreen": walletsTransitions()})
     }
     
-    function openTransactionInfoScreen(transaction) {
-        stack.push("qrc:/TransactionView.qml", {"pushScreen" : walletsTransitions(),
+    function openTransactionDetailsScreen(transaction) {
+        stack.push("qrc:/TransactionDetailsScreen.qml", {"pushScreen" : walletsTransitions(),
                    "transaction" : transaction })
     }
 

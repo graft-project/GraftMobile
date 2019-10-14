@@ -118,6 +118,8 @@
         <file alias="next_step.png">imgs/next_step.png</file>
         <file alias="refresh.svg">imgs/refresh.svg</file>
         <file alias="g-blog.svg">imgs/g-blog.svg</file>
+        <file alias="incoming_tx_arrow.png">imgs/incoming_tx_arrow.png</file>
+        <file alias="outgoing_tx_arrow.png">imgs/outgoing_tx_arrow.png</file>
     </qresource>
     <qresource prefix="/coins">
         <file alias="bcc.png">imgs/coins/bcc.png</file>

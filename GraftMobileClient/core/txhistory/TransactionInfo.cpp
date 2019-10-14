@@ -61,14 +61,14 @@ TransactionInfo::~TransactionInfo()
     qDeleteAll(m_transfers);
 }
 
-QVariant TransactionInfo::direction() const
+TransactionInfo::Direction TransactionInfo::direction() const
 {
-    return QVariant::fromValue(m_direction);
+    return m_direction;
 }
 
-QVariant TransactionInfo::status() const
+TransactionInfo::Status TransactionInfo::status() const
 {
-    return QVariant::fromValue(m_status);
+    return m_status;
 }
 
 QString TransactionInfo::destinations_formatted() const
