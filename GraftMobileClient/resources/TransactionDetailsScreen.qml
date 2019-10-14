@@ -8,14 +8,7 @@ import "components"
 
 BaseScreen {
     id: txInfo
-
-//    property alias accountName: coinAccountDelegate.accountTitle
-//    property alias accountImage: coinAccountDelegate.productImage
-//    property alias accountBalance: coinAccountDelegate.accountBalance
-    property string accountNumber: ""
-    property string accountType: ""
     property QtObject transaction
-    
     title: qsTr("Transaction details")
 
     Component.onCompleted: {
@@ -24,48 +17,119 @@ BaseScreen {
             background.color = "#ffffff"
         }
     }
-
- 
-
+    
+    function printableTxStatus(status) {
+        switch (status) {
+        case TransactionInfo.Completed:
+            return qsTr("Completed")
+        case TransactionInfo.Pending:
+            return qsTr("Pending")
+        case TransactionInfo.Failed:
+            return qsTr("Failed")
+        }
+    }
+    
     ColumnLayout {
+        id: rootLayout
         spacing: 0
         anchors.fill: parent
-        // tx_id
-        Text {
-            id: tx_id
-            text: "id: " + transaction.hash.toString()
+        property color backgroundInColor: "#0A4FB67A"
+        property color foregroundInColor: "#FF4FB67A"
+        property color backgroundOutColor: "#0AFC581F"
+        property color foregroundOutColor: "#FFFC581F"
+        
+        // amount
+        Rectangle {
+           width: parent.width
+           color: (transaction.direction === TransactionInfo.In ? rootLayout.backgroundInColor : rootLayout.backgroundOutColor)
+           Layout.fillHeight: true
+           Layout.maximumHeight: 60
+           Text {
+               anchors.centerIn: parent
+               font.pointSize: 16
+               text:  (transaction.direction === TransactionInfo.In ? "+ " : "- ") + "GRFT " + transaction.amount
+               color: (transaction.direction === TransactionInfo.In ? rootLayout.foregroundInColor : rootLayout.foregroundOutColor)
+           }
         }
-        Text {
-            text: "timestamp: " + transaction.timestamp.toString()
-        }
-        Text {
-            text: "direction: " + transaction.direction.toString()
-        }
-
-        Text {
-            text: "status: " + transaction.status.toString()
-        }
-        Text {
-            text: "block height: " + transaction.blockHeight.toString()
-        }
-
-        Text {
-            text: "amount: " + transaction.amount.toString()
+        // delimiter
+        Rectangle {
+            height: 1
+            width: parent.width
+            color: "lightgray"
+            anchors.topMargin: 1
         }
         
-        Text {
-            text: "Destinations: \n" + transaction.destinations_formatted.toString()
-                  
+        Column {
+            Layout.maximumHeight: 45
+            Layout.topMargin: 10
+            Layout.bottomMargin: 10
+            spacing: 2
+            Text {
+                text: transaction.timestamp.toString()
+                font.bold: true
+            }
+            
+            Text {
+                id: tx_id
+                text: "TX ID: " + transaction.hash.toString()
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log(transaction.hash.toString())
+                    }
+                }
+            }
+            
+          
+        }
+        // delimiter
+        Rectangle {
+            height: 1
+            width: parent.width
+            color: "lightgray"
+            anchors.topMargin: 1
+        }
+        Column {
+            Layout.maximumHeight: 45
+            Layout.topMargin: 10
+            Layout.bottomMargin: 10
+            spacing: 2
+            Text {
+                text: qsTr("Block height: ") + transaction.blockHeight.toString()
+            }
+            
+            Text {
+                text: qsTr("Fee: ") + transaction.fee
+            }
+            
+            Text {
+                text: qsTr("Status: ") + txInfo.printableTxStatus(transaction.status)
+            }
+            
+            Item {
+                width: 1
+                height: 20
+            }
+            
+            Text {
+                text: qsTr("Destinations: \n") + transaction.destinations_formatted.toString()
+            }
+            
+            Item {
+                width: 1
+                height: 20
+            }
+            
+            Text {
+                text: qsTr("Payment ID: ") + transaction.paymentId
+            }
+                        
+        }
+        Item {
+            Layout.fillHeight: true
         }
         
-        Text {
-            text: "fee: " + transaction.fee
-        }
         
-        Text {
-            text: "payment id: " + transaction.paymentId
-        }
-     
 
     }
 }
