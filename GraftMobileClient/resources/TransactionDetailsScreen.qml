@@ -33,10 +33,12 @@ BaseScreen {
         id: rootLayout
         spacing: 0
         anchors.fill: parent
+        
         property color backgroundInColor: "#0A4FB67A"
         property color foregroundInColor: "#FF4FB67A"
         property color backgroundOutColor: "#0AFC581F"
         property color foregroundOutColor: "#FFFC581F"
+        property int fontSize: 10
         
         // amount
         Rectangle {
@@ -59,19 +61,25 @@ BaseScreen {
             anchors.topMargin: 1
         }
         
+        
+        
         Column {
             Layout.maximumHeight: 45
             Layout.topMargin: 10
             Layout.bottomMargin: 10
+            Layout.rightMargin: 10
+            Layout.leftMargin: 10
             spacing: 2
             Text {
                 text: transaction.timestamp.toString()
                 font.bold: true
+                font.pointSize: rootLayout.fontSize
             }
             
             Text {
                 id: tx_id
                 text: "TX ID: " + transaction.hash.toString()
+                font.pointSize: 10
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -89,21 +97,27 @@ BaseScreen {
             color: "lightgray"
             anchors.topMargin: 1
         }
+
         Column {
             Layout.maximumHeight: 45
             Layout.topMargin: 10
             Layout.bottomMargin: 10
+            Layout.rightMargin: 10
+            Layout.leftMargin: 10
             spacing: 2
             Text {
                 text: qsTr("Block height: ") + transaction.blockHeight.toString()
+                font.pointSize: rootLayout.fontSize
             }
             
             Text {
                 text: qsTr("Fee: ") + transaction.fee
+                font.pointSize: rootLayout.fontSize
             }
             
             Text {
                 text: qsTr("Status: ") + txInfo.printableTxStatus(transaction.status)
+                font.pointSize: rootLayout.fontSize
             }
             
             Item {
@@ -113,6 +127,7 @@ BaseScreen {
             
             Text {
                 text: qsTr("Destinations: \n") + transaction.destinations_formatted.toString()
+                font.pointSize: rootLayout.fontSize
             }
             
             Item {
@@ -122,6 +137,7 @@ BaseScreen {
             
             Text {
                 text: qsTr("Payment ID: ") + transaction.paymentId
+                font.pointSize: rootLayout.fontSize
             }
                         
         }
