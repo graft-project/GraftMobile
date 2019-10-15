@@ -23,7 +23,7 @@ BaseScreen {
         id: txDelegate    
         
         Item {
-            height: 65
+            height: tx_history.height / 8
             width: parent.width
             Component.onCompleted: {
                 console.log("Root item width: ", width)
@@ -32,12 +32,13 @@ BaseScreen {
             RowLayout {
                 id: txViewItem
                 spacing: 5
-                Layout.maximumWidth: parent.width - 10
-                anchors.centerIn: parent
+                width: parent.width
+                anchors.verticalCenter: parent.verticalCenter
                 
                 // direction icon
                 Image {
-                    Layout.leftMargin: 10
+                    width: parent.width / 7
+                    Layout.leftMargin: 15
                     Layout.rightMargin: 10
                     source: direction === TransactionInfo.In ? "imgs/incoming_tx_arrow.png"
                                                              : "imgs/outgoing_tx_arrow.png"
@@ -46,14 +47,12 @@ BaseScreen {
                 
                 // tx_id + status + timestamp
                 Column {
+                    width: parent.width / 2 + 20
                     // tx_id
                     Text {
                         text: hash
-                        width: 220
+                        width: parent.width
                         elide: Qt.ElideMiddle
-                        Component.onCompleted: {
-                            console.log("width: ", width, " rowLayout width: ", txViewItem.width, " column width: ", parent.width)
-                        }
                     }
                     // complete / incomplete / failed
                     Text {
@@ -63,14 +62,14 @@ BaseScreen {
                                   qsTr("Pending transaction")
                                 : qsTr("Failed transaction")
                         
-                        Component.onCompleted: {
-                            console.log("width: ", width, " rowLayout width: ", txViewItem.width)
-                        }
+                        
                     }
                     // timestamp
                     Text {
-                        
                         text: timeStamp
+                    }
+                    Component.onCompleted: {
+                        console.log("width: ", width, " rowLayout width: ", txViewItem.width)
                     }
                 }
                 
@@ -78,7 +77,8 @@ BaseScreen {
                 Column {
                     Layout.leftMargin: 10
                     Layout.rightMargin: 10
-                    width: 85
+                    width: parent.width / 3 - 50
+                    
                     
                     Text {
                         text: (direction === TransactionInfo.In ? "+ " : "- ") + "GRFT " + amount
