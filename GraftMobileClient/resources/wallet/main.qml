@@ -112,6 +112,8 @@ GraftApplicationWindow {
             isActive: SwipeView.isCurrentItem
         }
 
+        
+        
         WalletStackViewer {
             id: walletViewer
             pushScreen: generalTransitions()
@@ -154,6 +156,7 @@ GraftApplicationWindow {
         transitionsMap["hideMenu"] = hideMenu
         transitionsMap["openMainScreen"] = openMainScreen
         transitionsMap["openCreateWalletStackViewer"] = openCreateWalletStackViewer
+        
         return transitionsMap
     }
 
@@ -163,6 +166,7 @@ GraftApplicationWindow {
         transitionsMap["openSettingsScreen"] = openSettingsScreen
         transitionsMap["openBlogScreen"] = openBlogScreen
         transitionsMap["openMainScreen"] = openMainScreen
+        transitionsMap["openTransactionHistoryScreen"] = openTransactionHistoryScreen
         return transitionsMap
     }
 
@@ -178,6 +182,12 @@ GraftApplicationWindow {
         mainLayout.currentIndex = 2
         selectButton("Wallet")
     }
+    
+    function openTransactionHistoryScreen() {
+        walletViewer.openTransactionHistoryScreen()
+        selectButton("Transaction")
+    }
+    
 
     function openCreateWalletStackViewer() {
         clearStackViewers()

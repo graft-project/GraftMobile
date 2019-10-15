@@ -185,6 +185,7 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
+        console.log("main.openSettingsScreen")
         mainLayout.currentIndex = 3
         selectButton("Settings")
     }

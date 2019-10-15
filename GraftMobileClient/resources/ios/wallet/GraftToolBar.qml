@@ -33,11 +33,12 @@ BaseGraftToolBar {
 
         ToolBarButton {
             id: transactionButton
-            text: qsTr("Transaction")
+            text: qsTr("Transactions")
             source: "qrc:/imgs/transactionIos.png"
-            enabled: false
-            opacity: 0.2
-            onClicked: pushScreen.openTransactionScreen()
+            onClicked: {
+                onClicked: pushScreen.openTransactionHistoryScreen()
+                GraftClient.updateTransactionHistory()
+            }
         }
 
         ToolBarButton {

@@ -51,7 +51,6 @@ Rectangle {
             Layout.preferredHeight: 80
             KeyNavigation.backtab: balance.Navigation.explicitLastComponent
             onClicked: {
-                console.log("balanceVisible: " + balanceVisible)
                 if (balanceVisible) {
                     pushScreen.openMainAddressScreen()
                 } else {
