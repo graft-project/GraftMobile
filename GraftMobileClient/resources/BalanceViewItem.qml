@@ -80,26 +80,50 @@ Rectangle {
                     spacing: 0
                     Layout.leftMargin: 14
                     Layout.alignment: Qt.AlignLeft
+                    Layout.rightMargin: 25
 
                     RowLayout {
                         Layout.fillWidth: true
-                        spacing: 10
+                        // spacing: -2
 
                         Label {
                             color: "#233146"
-                            font.pixelSize: 20
-                            text: qsTr("Balance")
+                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignRight
+                            horizontalAlignment: Text.AlignLeft
+                            font.pixelSize: 16
+                            text: qsTr("Unlocked: ") 
                         }
+                        
+                        Label {
+                            color: "#233146"
+                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignRight
+                            horizontalAlignment: Text.AlignRight
+                            font.pixelSize: 16
+                            text: unlockedBalance
+                        }
+                    }
+                    RowLayout {
 
                         Label {
                             Layout.fillWidth: true
-                            Layout.rightMargin: 12
+                            Layout.alignment: Qt.AlignRight
+                            horizontalAlignment: Text.AlignLeft
+                            color: "#404040"
+                            font.pixelSize: 18
+                            text: qsTr("Total: ")
+                        }
+                        
+                        Label {
+                            Layout.fillWidth: true
                             Layout.alignment: Qt.AlignRight
                             horizontalAlignment: Text.AlignRight
                             color: "#404040"
-                            font.pixelSize: 20
-                            text: unlockedBalance + " / " + totalBalance
+                            font.pixelSize: 18
+                            text: totalBalance
                         }
+                        
                     }
 
                     RowLayout {

@@ -409,7 +409,7 @@ void GraftBaseClient::receiveBalance(double balance, double unlockedBalance)
 {
     if (balance >= 0 && unlockedBalance >= 0)
     {
-        mBalances.insert(GraftClientTools::LockedBalance, balance - unlockedBalance);
+        mBalances.insert(GraftClientTools::LockedBalance, balance);
         mBalances.insert(GraftClientTools::UnlockedBalance, unlockedBalance);
         mBalances.insert(GraftClientTools::LocalBalance, unlockedBalance);
         saveBalance();
