@@ -25,9 +25,6 @@ BaseScreen {
         Item {
             height: tx_history.height / 8
             width: parent.width
-            Component.onCompleted: {
-                console.log("Root item width: ", width)
-            }
 
             RowLayout {
                 id: txViewItem
@@ -67,9 +64,6 @@ BaseScreen {
                     // timestamp
                     Text {
                         text: timeStamp
-                    }
-                    Component.onCompleted: {
-                        console.log("width: ", width, " rowLayout width: ", txViewItem.width)
                     }
                 }
                 
