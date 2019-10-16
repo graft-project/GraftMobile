@@ -237,61 +237,43 @@ void GraftWalletHandlerV1::receiveTransactionHistory(const QJsonArray &transfers
              << " failedTxes: " << transfersFailed.size()
              << " poolTxes: " << transfersPool.size();
     
-    for (int i = 0; i < transfersOut.size(); ++i) {
-        QJsonObject item = transfersOut.at(i).toObject();
-        if (!item.isEmpty()) {
-            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, TransactionInfo::Out, TransactionInfo::Completed));
-            if (tx_history.back()->height() > m_lastTxHistoryBlock)
-                m_lastTxHistoryBlock = tx_history.back()->height();
-        } else {
-            qWarning() << "Empty tx";
-        }
-    }
+    auto process = [this](const QJsonArray & in, TransactionInfo::Direction direction, TransactionInfo::Status status, QList<TransactionInfo*> &out)
+    {
+        for (int i = 0; i < in.size(); ++i) {
+            QJsonObject item = in.at(i).toObject();
+            TransactionInfo * tx = nullptr;
+            if (!item.isEmpty()) {
+                if (status == TransactionInfo::Completed) {
+                    tx  = TransactionInfo::createFromTransferEntry(item, direction, status);
+                    out.push_back(tx);
+                } else {
+                    tx = TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
+                                                                             status);
+                    out.push_front(tx);
+                }
+                if (tx->height() > m_lastTxHistoryBlock)
+                    m_lastTxHistoryBlock = tx->height();    
+                
+                qDebug() << "added tx, status: " << tx->status() << ", direction: " << tx->direction();
+            } else {
+                qWarning() << "Empty tx";
+            }
+        }   
+    };
     
-    for (int i = 0; i < transfersIn.size(); ++i) {
-        QJsonObject item = transfersIn.at(i).toObject();
-        if (!item.isEmpty()) {
-            tx_history.push_back(TransactionInfo::createFromTransferEntry(item, TransactionInfo::In, TransactionInfo::Completed));
-            if (tx_history.back()->height() > m_lastTxHistoryBlock)
-                m_lastTxHistoryBlock = tx_history.back()->height();
-        } else {
-            qWarning() << "Empty tx";
-        }
-    }
+    process(transfersOut, TransactionInfo::Out, TransactionInfo::Completed, tx_history);
+    process(transfersIn, TransactionInfo::In, TransactionInfo::Completed, tx_history);
     
     // sort list by timestamp, descending order
     std::sort(tx_history.begin(), tx_history.end(), [](TransactionInfo *lhs, TransactionInfo *rhs)->bool {
        return  lhs->timestamp() > rhs->timestamp();
     });
     
-    for (int i = 0; i < transfersPending.size(); ++i) {
-        QJsonObject item = transfersPending.at(i).toObject();
-        if (!item.isEmpty()) {
-            tx_history.push_front(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
-                                                         TransactionInfo::Pending));
-        } else {
-            qWarning() << "Empty tx";
-        }
-    }
-    for (int i = 0; i < transfersPool.size(); ++i) {
-        QJsonObject item = transfersPool.at(i).toObject();
-        if (!item.isEmpty()) {
-            tx_history.push_front(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
-                                                         TransactionInfo::Pending));
-        } else {
-            qWarning() << "Empty tx";
-        }
-    }
-    
-    for (int i = 0; i < transfersFailed.size(); ++i) {
-        QJsonObject item = transfersFailed.at(i).toObject();
-        if (!item.isEmpty()) {
-            tx_history.push_front(TransactionInfo::createFromTransferEntry(item, item.value("type") == "out" ? TransactionInfo::Out : TransactionInfo::In,
-                                                         TransactionInfo::Failed));
-        } else {
-            qWarning() << "Empty tx";
-        }
-    }
+    // direction not used for incomplete tx
+    process(transfersPending, TransactionInfo::Out, TransactionInfo::Pending, tx_history);
+    process(transfersPool, TransactionInfo::Out, TransactionInfo::Pending, tx_history);
+    process(transfersFailed, TransactionInfo::Out, TransactionInfo::Pending, tx_history);
+
     qDebug() << "received tx count: " << tx_history.size();
     emit transactionHistoryReceived(tx_history);
 }
