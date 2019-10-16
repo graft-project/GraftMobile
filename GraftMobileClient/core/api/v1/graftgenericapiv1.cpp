@@ -89,6 +89,7 @@ void GraftGenericAPIv1::getBalance()
 void GraftGenericAPIv1::getTransactionHistory(quint64 fromBlock)
 {
     mRetries = 0;
+    qDebug() << "Requesting tx history from block: " << fromBlock;
     if (mAccountData.isEmpty())
     {
         qDebug() << "GraftGenericAPI: Account Data is empty.";
@@ -522,8 +523,8 @@ void GraftGenericAPIv1::receiveGetTransactionsResponse()
         emit transactionHistoryReceived(
                     object.value("TransfersOut").toArray(),
                     object.value("TransfersIn").toArray(),
-                    object.value("TransfersFailed").toArray(),
                     object.value("TransfersPending").toArray(),
+                    object.value("TransfersFailed").toArray(),
                     object.value("TransfersPool").toArray()
                     );
     }
