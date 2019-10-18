@@ -15,6 +15,7 @@ BaseScreen {
     property alias accountBalance: coinAccountDelegate.accountBalance
     property string accountNumber: ""
     property string accountType: ""
+    property bool  txListLoaded: false
 
     state: balanceState
     Component.onCompleted: {
@@ -32,9 +33,12 @@ BaseScreen {
             id: mainBalance
             visible: false
             Layout.fillWidth: true
-            amountUnlockGraftCost: GraftClient.balance(GraftClientTools.UnlockedBalance)
-            amountLockGraftCost: GraftClient.balance(GraftClientTools.LockedBalance)
+            unlockedBalance: GraftClient.balance(GraftClientTools.UnlockedBalance)
+            totalBalance: GraftClient.balance(GraftClientTools.LockedBalance)
+            height: 80
         }
+        
+
 
         CoinAccountDelegate {
             id: coinAccountDelegate
@@ -45,73 +49,79 @@ BaseScreen {
             topLineVisible: false
             bottomLineVisible: false
         }
+        
+        // qr code view
+        ColumnLayout {
+            id: qrCodeView
+            visible: !mainBalance.checked
+            Rectangle {
+                id: background
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                color: "#e9e9e9"
 
-        Rectangle {
-            id: background
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: "#e9e9e9"
-
-            Image {
-                id: qrCodeImage
-                cache: false
-                height: (parent.height > parent.width ? parent.width : parent.height) - 20
-                width: height
-                anchors.centerIn: parent
-
-                PopupMessageLabel {
-                    id: walletAddressLabel
+                Image {
+                    id: qrCodeImage
+                    cache: false
+                    height: (parent.height > parent.width ? parent.width : parent.height) - 20
+                    width: height
                     anchors.centerIn: parent
-                    labelText: qsTr("Wallet address is copied!")
+
+                    PopupMessageLabel {
+                        id: walletAddressLabel
+                        anchors.centerIn: parent
+                        labelText: qsTr("Wallet address is copied!")
+                    }
+                }
+            }
+
+            Rectangle {
+                color: "#ffffff"
+                Layout.fillWidth: true
+                Layout.preferredHeight: 144
+
+                ColumnLayout {
+                    spacing: 0
+                    anchors {
+                        fill: parent
+                        leftMargin: 15
+                        rightMargin: 15
+                        bottomMargin: 15
+                    }
+
+                    Label {
+                        id: address
+                        Layout.fillWidth: true
+                        Layout.topMargin: Detector.isPlatform(Platform.Android) ? 15 : 0
+                        Layout.leftMargin: 20
+                        Layout.rightMargin: 20
+                        Layout.alignment: Qt.AlignTop
+                        horizontalAlignment: Text.AlignHCenter
+                        wrapMode: Text.WrapAnywhere
+                        color: "#010101"
+                        font {
+                            bold: true
+                            pixelSize: 16
+                        }
+                    }
+
+                    WideActionButton {
+                        id: clipboardButton
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+                        text: qsTr("Copy to clipboard")
+                        KeyNavigation.tab: balance.Navigation.implicitFirstComponent
+                        onClicked: {
+                            GraftClientTools.copyToClipboard(balanceState === "mainAddress" ?
+                                                             GraftClient.address() : accountNumber)
+                            walletAddressLabel.opacity = 1.0
+                            walletAddressLabel.timer.start()
+                        }
+                    }
                 }
             }
         }
 
-        Rectangle {
-            color: "#ffffff"
-            Layout.fillWidth: true
-            Layout.preferredHeight: 144
-
-            ColumnLayout {
-                spacing: 0
-                anchors {
-                    fill: parent
-                    leftMargin: 15
-                    rightMargin: 15
-                    bottomMargin: 15
-                }
-
-                Label {
-                    id: address
-                    Layout.fillWidth: true
-                    Layout.topMargin: Detector.isPlatform(Platform.Android) ? 15 : 0
-                    Layout.leftMargin: 20
-                    Layout.rightMargin: 20
-                    Layout.alignment: Qt.AlignTop
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WrapAnywhere
-                    color: "#010101"
-                    font {
-                        bold: true
-                        pixelSize: 16
-                    }
-                }
-
-                WideActionButton {
-                    id: clipboardButton
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
-                    text: qsTr("Copy to clipboard")
-                    KeyNavigation.tab: balance.Navigation.implicitFirstComponent
-                    onClicked: {
-                        GraftClientTools.copyToClipboard(balanceState === "mainAddress" ?
-                                                         GraftClient.address() : accountNumber)
-                        walletAddressLabel.opacity = 1.0
-                        walletAddressLabel.timer.start()
-                    }
-                }
-            }
-        }
     }
 
     states: [
@@ -127,6 +137,7 @@ BaseScreen {
                 visible: true
                 balanceVisible: false
             }
+
             PropertyChanges {
                 target: coinAccountDelegate
                 visible: false

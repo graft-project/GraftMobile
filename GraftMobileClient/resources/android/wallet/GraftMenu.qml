@@ -38,12 +38,11 @@ BaseMenu {
             id: transactionItem
             Layout.fillWidth: true
             menuIcon: "qrc:/imgs/transaction.png"
-            menuTitle: qsTr("Transaction")
-            enabled: false
-            opacity: 0.2
+            menuTitle: qsTr("Transactions")
             onClicked: {
                 pushScreen.hideMenu()
-                pushScreen.openTransactionScreen()
+                pushScreen.openTransactionHistoryScreen()
+                GraftClient.updateTransactionHistory()
             }
         }
 

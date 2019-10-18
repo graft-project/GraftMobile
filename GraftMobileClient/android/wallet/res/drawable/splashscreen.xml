@@ -2,7 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <bitmap android:src="@mipmap/bg"
-                android:gravity="clip_horizontal|fill_horizontal|center_vertical"/>
+                android:gravity="fill"
+		/>
     </item>
     <item>
         <bitmap android:src="@mipmap/logo"

@@ -4,6 +4,7 @@
 #include <QObject>
 
 class QNetworkAccessManager;
+class TransactionInfo;
 
 class GraftBaseHandler : public QObject
 {
@@ -35,6 +36,7 @@ public slots:
     virtual void createAccount(const QString &password) = 0;
     virtual void restoreAccount(const QString &seed, const QString &password) = 0;
     virtual void updateBalance() = 0;
+    virtual void updateTransactionHistory() = 0;
     virtual void transferFee(const QString &address, const QString &amount,
                              const QString &paymentID = QString()) = 0;
     virtual void transfer(const QString &address, const QString &amount,
@@ -50,6 +52,7 @@ signals:
     void balanceReceived(double balance, double unlockedBalance);
     void transferFeeReceived(bool result, double fee);
     void transferReceived(bool result);
+    void transactionHistoryReceived(const QList<TransactionInfo*> &tx_history);
 
 protected:
     QNetworkAccessManager *mManager;

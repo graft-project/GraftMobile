@@ -5,6 +5,7 @@
 
 class GraftPOSAPIv1;
 
+
 class GraftPOSHandlerV1 : public GraftPOSHandler
 {
     Q_OBJECT

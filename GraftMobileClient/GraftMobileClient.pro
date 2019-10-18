@@ -8,8 +8,8 @@ CONFIG += c++11
 CONFIG -= qtquickcompiler
 
 DEFINES += MAJOR_VERSION=1
-DEFINES += MINOR_VERSION=14
-DEFINES += BUILD_VERSION=1
+DEFINES += MINOR_VERSION=15
+DEFINES += BUILD_VERSION=0
 
 win32|macx|unix {
 DEFINES += RES_IOS
@@ -114,12 +114,16 @@ SOURCES += main.cpp \
     core/graftclienttools.cpp \
     core/qrcodegenerator.cpp \
     core/graftclientconstants.cpp \
-    core/feedmodel.cpp \
     core/blogreader.cpp \
+    core/feedmodel.cpp \
     devicedetector.cpp \
     designfactory.cpp \
     navigationproperties.cpp \
-    abstractdevicetools.cpp
+    abstractdevicetools.cpp \
+    core/txhistory/TransactionHistory.cpp \
+    core/txhistory/TransactionHistoryModel.cpp \
+    core/txhistory/TransactionInfo.cpp 
+    
 
 HEADERS += \
     core/config.h \
@@ -151,7 +155,12 @@ HEADERS += \
     designfactory.h \
     navigationproperties.h \
     abstractdevicetools.h \
-    sparkle.h
+    sparkle.h \
+    core/txhistory/TransactionHistory.h \
+    core/txhistory/TransactionHistoryModel.h \
+    core/txhistory/TransactionInfo.h \
+    core/txhistory/Transfer.h 
+
 
 include(resources/resources.pri)
 
