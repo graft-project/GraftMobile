@@ -1,9 +1,9 @@
 [submodule "GraftMobileClient/qzxing"]
-        path = GraftMobileClient/qzxing
-        url = https://github.com/EDDragonWolf/QZXingBinaries.git
+    path = GraftMobileClient/qzxing
+    url = https://github.com/graft-project/QZXingBinaries.git
 [submodule "GraftMobileClient/qrcodegenerator"]
-        path = GraftMobileClient/qrcodegenerator
-        url = https://github.com/EDDragonWolf/QR-Code-generator.git
+    path = GraftMobileClient/qrcodegenerator
+    url = https://github.com/EDDragonWolf/QR-Code-generator.git
 [submodule "GraftMobileClient/libwallet"]
 	path = GraftMobileClient/libwallet
 	url = https://gitlab.com/EDDragonWolf/explibwallet.git
