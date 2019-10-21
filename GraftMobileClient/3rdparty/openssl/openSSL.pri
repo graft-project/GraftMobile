@@ -25,6 +25,11 @@ LIB_PWD = $$PWD/android
 equals(ANDROID_TARGET_ARCH, armeabi-v7a) {
     COMPILER_VERSION = armeabi-v7a
 }
+
+equals(ANDROID_TARGET_ARCH, arm64-v8a)  {
+    COMPILER_VERSION = arm64-v8a
+}
+
 equals(ANDROID_TARGET_ARCH, x86)  {
     COMPILER_VERSION = x86
 }
