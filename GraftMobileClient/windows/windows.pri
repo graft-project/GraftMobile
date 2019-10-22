@@ -60,8 +60,8 @@ openssl_target = $$quote(cmd /c $(COPY_DIR) $${OPENSSL_DIR} $${EXE_DIR}) $${ESCA
 nsis_target = $$quote(cmd /c $(COPY_DIR) $${RES_DIR} $${EXE_DIR}) $${ESCAPE_COMMAND}
 QMAKE_POST_LINK += $${openssl_target} $${nsis_target} $${sparkle_target} $${win_sparkle_target} $${checkredist_target}
 
-NSIS_PATH = "C:\Program Files (x86)\NSIS\makensis.exe"
-INSTALL_SCRIPT = $${EXE_DIR}/install.nsi
+NSIS_PATH = $$shell_quote(C:\Program Files (x86)\NSIS\makensis.exe)
+INSTALL_SCRIPT = $$shell_quote($$shell_path($${EXE_DIR}/install.nsi))
 
 QT_DEPLOY = $$QMAKE_QMAKE
 QT_DEPLOY ~= s,qmake.exe,windeployqt.exe,g
