@@ -19,6 +19,8 @@ BUILD_TARGET = release
 LIBS += -L$$LIB_PWD/$$BUILD_TARGET -llibeay32 -lssleay32
 }
 
+# Qt since 5.12.5 uses openssl 1.1
+# see https://github.com/KDAB/android_openssl for details
 android {
 
 LIB_PWD = $$PWD/android
@@ -34,8 +36,8 @@ equals(ANDROID_TARGET_ARCH, x86)  {
     COMPILER_VERSION = x86
 }
 
-ANDROID_EXTRA_LIBS += $$LIB_PWD/$$COMPILER_VERSION/libcrypto.so
-ANDROID_EXTRA_LIBS += $$LIB_PWD/$$COMPILER_VERSION/libssl.so
+ANDROID_EXTRA_LIBS += $$LIB_PWD/$$COMPILER_VERSION/libcrypto_1_1.so
+ANDROID_EXTRA_LIBS += $$LIB_PWD/$$COMPILER_VERSION/libssl_1_1.so
 
-LIBS += -L$$LIB_PWD/$$COMPILER_VERSION -lcrypto -lssl
+LIBS += -L$$LIB_PWD/$$COMPILER_VERSION -lcrypto_1_1 -lssl_1_1
 }
