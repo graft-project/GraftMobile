@@ -1,5 +1,6 @@
 #include "graftwalletlistener.h"
 #include "graftwallet.h"
+#include "core/txhistory/TransactionInfo.h"
 #include <QtConcurrent/QtConcurrent>
 #include <QStandardPaths>
 #include <QFileInfo>
@@ -420,6 +421,17 @@ QString GraftWallet::lastError() const
         return QString::fromStdString(mWallet->errorString());
     }
     return mLastError;
+}
+
+QList<TransactionInfo *> GraftWallet::history() const
+{
+    QList<TransactionInfo *> result;
+
+    std::vector<Monero::TransactionInfo *> history = mWallet->history()->getAll();
+    for (const auto * txInfo : history) {
+        result.push_back(TransactionInfo::createFromMoneroTransactionInfo(txInfo));
+    }
+    return result;
 }
 
 QString GraftWallet::nextAddress()

@@ -2,6 +2,7 @@
 #include "graftwalletapiv2.h"
 #include "graftwallet.h"
 
+
 GraftWalletHandlerV2::GraftWalletHandlerV2(const QString &dapiVersion, const QStringList &addresses,
                                            const QStringList &internalAddresses, bool testnet,
                                            QObject *parent)
@@ -281,4 +282,11 @@ void GraftWalletHandlerV2::processPayResult(bool result)
         mBlockNumber = 0;
     }
     emit payStatusReceived(result);
+}
+
+void GraftWalletHandlerV2::updateTransactionHistory()
+{
+    if (mWallet) {
+        emit this->transactionHistoryReceived(mWallet->history());
+    }
 }

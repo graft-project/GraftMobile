@@ -35,6 +35,10 @@
 #include <QVariant>
 #include <QDebug>
 
+namespace Monero {
+class TransactionInfo;
+}
+
 class Transfer;
 class TransactionInfo : public QObject
 {
@@ -88,6 +92,8 @@ public:
     
     static TransactionInfo * createFromTransferEntry(const QJsonObject &item, TransactionInfo::Direction direction, 
                                                      TransactionInfo::Status status);
+    static TransactionInfo * createFromMoneroTransactionInfo(const Monero::TransactionInfo * info);
+
 
     
 private:

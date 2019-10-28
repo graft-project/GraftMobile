@@ -5,6 +5,9 @@
 
 #include "wallet2_api.h"
 
+
+class TransactionInfo;
+
 class GraftWallet : public QObject
 {
     Q_OBJECT
@@ -61,6 +64,7 @@ public:
     void refreshWallet();
 
     QString lastError() const;
+    QList<TransactionInfo*> history() const;
 
 signals:
     void updated();
