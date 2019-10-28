@@ -75,6 +75,7 @@ BaseScreen {
 
                     NetworkType {
                         id: rtaTestNet
+                        visible: false
                         Layout.alignment: Qt.AlignTop
                         Layout.preferredHeight: implicitHeight
                         type: qsTr("Public Devnet")
