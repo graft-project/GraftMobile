@@ -29,6 +29,7 @@
 #include "TransactionInfo.h"
 #include "Transfer.h"
 #include "core/api/v1/graftgenericapiv1.h"
+#include "wallet2_api.h"
 #include <QDateTime>
 #include <QDebug>
 #include <QJsonObject>
@@ -109,6 +110,24 @@ TransactionInfo *TransactionInfo::createFromTransferEntry(const QJsonObject &ite
     }
     return result;
     
+}
+
+TransactionInfo *TransactionInfo::createFromMoneroTransactionInfo(const Monero::TransactionInfo *info)
+{
+    TransactionInfo * result = new TransactionInfo(
+                info->direction() == Monero::TransactionInfo::Direction_In ? TransactionInfo::In : TransactionInfo::Out,
+                info->isFailed() ? TransactionInfo::Failed : info->isPending() ? TransactionInfo::Pending : TransactionInfo::Completed,
+                GraftGenericAPIv1::toCoins(info->amount()),
+                GraftGenericAPIv1::toCoins(info->fee()),
+                info->blockHeight(),
+                QString::fromStdString(info->hash()),
+                QDateTime::fromTime_t(info->timestamp()),
+                QString::fromStdString(info->paymentId()));
+    for (const auto & transfer : info->transfers()) {
+        result->m_transfers.push_back(new Transfer(GraftGenericAPIv1::toCoins(transfer.amount),
+                                                   QString::fromStdString(transfer.address)));
+    }
+    return result;
 }
 
 

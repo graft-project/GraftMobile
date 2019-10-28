@@ -49,6 +49,7 @@ private slots:
     void receiveRejectPay(int result);
     void receivePayStatus(int status);
     void processPayResult(bool result);
+    void updateTransactionHistory() override;
 
 private:
     GraftWalletAPIv2 *mApi;
