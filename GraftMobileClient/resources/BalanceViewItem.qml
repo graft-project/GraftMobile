@@ -54,8 +54,13 @@ Rectangle {
                 if (balanceVisible) {
                     pushScreen.openMainAddressScreen()
                 } else {
-                    GraftClient.updateTransactionHistory()
-                    pushScreen.openTransactionHistoryScreen()
+                    if (GraftClient.isBalanceUpdated()) {
+                        GraftClient.updateTransactionHistory()
+                        pushScreen.openTransactionHistoryScreen()
+                    } else {
+                        // TODO: provide some feedback to user
+                        console.debug("Balance isn't updated, please wait")
+                    }
                 }
            }
 
