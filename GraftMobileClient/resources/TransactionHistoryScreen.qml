@@ -11,13 +11,6 @@ BaseScreen {
     
     title: qsTr("Transaction history")
         
-    Component.onCompleted: {
-        if (Detector.isPlatform(Platform.IOS | Platform.Desktop)) {
-            navigationText: qsTr("Cancel")
-            background.color = "#ffffff"
-        }
-    }
-
     // Delegate to display transaction in listview
     Component {
         id: txDelegate    
