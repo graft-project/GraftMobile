@@ -121,6 +121,18 @@ GraftApplicationWindow {
             isActive: SwipeView.isCurrentItem
         }
 
+        
+        TransactionHistoryScreen {
+            id: txHistoryViewer
+            pushScreen: generalTransitions()
+            // on android we don't have bottom buttons bar so we need to be able to invoke "menu" from here
+            screenHeader {
+                isNavigationButtonVisible: Detector.isPlatform(Platform.Android)
+                navigationButtonState: Detector.isPlatform(Platform.Android)
+                actionButtonState: false
+            }
+        }
+        
         SettingsStackViewer {
             id: settingsStackViewer
             pushScreen: generalTransitions()
@@ -184,7 +196,7 @@ GraftApplicationWindow {
     }
     
     function openTransactionHistoryScreen() {
-        walletViewer.openTransactionHistoryScreen()
+        mainLayout.currentIndex = 3
         selectButton("Transaction")
     }
     
@@ -195,7 +207,7 @@ GraftApplicationWindow {
     }
 
     function openSettingsScreen() {
-        mainLayout.currentIndex = 3
+        mainLayout.currentIndex = 4
         selectButton("Settings")
     }
 
@@ -230,7 +242,7 @@ GraftApplicationWindow {
     }
 
     function openBlogScreen() {
-        mainLayout.currentIndex = 4
+        mainLayout.currentIndex = 5
         selectButton("About")
     }
 }
