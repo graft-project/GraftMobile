@@ -70,7 +70,7 @@ BaseBalanceScreen {
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Pay")
-            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
 
             // TODO: QTBUG-74076. The application is crash or will hang when request permission, after the
             // native Android keyboard. For more details see https://bugreports.qt.io/browse/QTBUG-74076

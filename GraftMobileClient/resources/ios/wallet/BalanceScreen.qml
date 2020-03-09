@@ -57,7 +57,7 @@ BaseBalanceScreen {
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Pay")
-            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
             KeyNavigation.tab: baseBalanceScreen.Navigation.implicitFirstComponent
             onClicked: {
                 disableScreen()
