@@ -104,7 +104,7 @@ BaseScreen {
                 Layout.rightMargin: 15
                 Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                 text: qsTr("Checkout")
-                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
                 KeyNavigation.tab: quickDealButton.enabled ? null : addNewProduct
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
