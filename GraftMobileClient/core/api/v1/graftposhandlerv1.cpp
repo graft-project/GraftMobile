@@ -143,6 +143,11 @@ void GraftPOSHandlerV1::saleStatus(const QString &pid, int blockNumber)
     }
 }
 
+void GraftPOSHandlerV1::updateTransactionHistory()
+{
+  // dummy method
+}
+
 void GraftPOSHandlerV1::receiveRejectSale(int result)
 {
     emit rejectSaleReceived(result == 0);

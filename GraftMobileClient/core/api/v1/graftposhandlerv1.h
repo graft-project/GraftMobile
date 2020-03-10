@@ -36,6 +36,7 @@ public slots:
               const QString &saleDetails = QString()) override;
     void rejectSale(const QString &pid) override;
     void saleStatus(const QString &pid, int blockNumber) override;
+    void updateTransactionHistory() override;
 
 private slots:
     void receiveRejectSale(int result);
