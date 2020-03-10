@@ -1,7 +1,7 @@
 #include "accountmodelserializator.h"
 #include "barcodeimageprovider.h"
 #include "api/graftbasehandler.h"
-#include "api/v1/graftgenericapiv1.h"
+#include "api/v3/graftgenericapiv3.h"
 #include "graftclientconstants.h"
 #include "quickexchangemodel.h"
 #include "graftclienttools.h"
@@ -155,7 +155,7 @@ void GraftBaseClient::transfer(const QString &address, const QString &amount,
     {
         connect(handler, &GraftBaseHandler::transferReceived,
                 this, &GraftBaseClient::transferReceived, Qt::UniqueConnection);
-        QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
+        QString customAmount = QString::number(GraftGenericAPIv3::toAtomic(amount.toDouble()),
                                                'f', 0);
         handler->transfer(address, customAmount, paymentID);
     }
@@ -169,7 +169,7 @@ void GraftBaseClient::transferFee(const QString &address, const QString &amount,
     {
         connect(handler, &GraftBaseHandler::transferFeeReceived,
                 this, &GraftBaseClient::transferFeeReceived, Qt::UniqueConnection);
-        QString customAmount = QString::number(GraftGenericAPIv1::toAtomic(amount.toDouble()),
+        QString customAmount = QString::number(GraftGenericAPIv3::toAtomic(amount.toDouble()),
                                                'f', 0);
         handler->transferFee(address, customAmount, paymentID);
     }

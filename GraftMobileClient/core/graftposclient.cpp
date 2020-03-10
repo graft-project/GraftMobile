@@ -6,7 +6,7 @@
 #include "accountmanager.h"
 #include "keygenerator.h"
 #include "productmodel.h"
-#include "api/v1/graftposhandlerv1.h"
+#include "api/v3/graftposhandlerv3.h"
 #if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
 #include "api/v2/graftposhandlerv2.h"
 #endif
@@ -108,7 +108,7 @@ void GraftPOSClient::changeGraftHandler()
     {
     case GraftClientTools::Mainnet:
     case GraftClientTools::PublicTestnet:
-        mClientHandler = new GraftPOSHandlerV1(dapiVersion(), getServiceAddresses(), this);
+        mClientHandler = new GraftPOSHandlerV3(dapiVersion(), getServiceAddresses(), this);
         break;
     case GraftClientTools::PublicExperimentalTestnet:
 #if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
@@ -116,7 +116,7 @@ void GraftPOSClient::changeGraftHandler()
                                                getServiceAddresses(true),
                                                networkType() != GraftClientTools::Mainnet, this);
 #else
-        mClientHandler = new GraftPOSHandlerV1(dapiVersion(), getServiceAddresses(), this);
+        mClientHandler = new GraftPOSHandlerV3(dapiVersion(), getServiceAddresses(), this);
 #endif
         break;
     }

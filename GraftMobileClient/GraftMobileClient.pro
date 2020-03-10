@@ -47,13 +47,13 @@ include(imagepicker/ImagePickerLibrary.pri)
 }
 
 SOURCES += \
-    core/api/v1/graftposapiv1.cpp \
-    core/api/v1/graftposhandlerv1.cpp \
+    #core/api/v1/graftposapiv1.cpp \
+    #core/api/v1/graftposhandlerv1.cpp \
     core/graftposclient.cpp
 
 HEADERS += \
-    core/api/v1/graftposapiv1.h \
-    core/api/v1/graftposhandlerv1.h \
+    #core/api/v1/graftposapiv1.h \
+    #core/api/v1/graftposhandlerv1.h \
     core/api/graftposhandler.h \
     core/graftposclient.h \
     core/defines.h
@@ -63,18 +63,21 @@ DISTFILES += $$PWD/pos_update.xml
 
 contains(DEFINES, WALLET_BUILD) {
 SOURCES += \
-    core/api/v1/graftwalletapiv1.cpp \
-    core/api/v1/graftwallethandlerv1.cpp \
+    #core/api/v1/graftwalletapiv1.cpp \
+    #core/api/v1/graftwallethandlerv1.cpp \
     core/graftwalletclient.cpp
 
 HEADERS += \
-    core/api/v1/graftwalletapiv1.h \
-    core/api/v1/graftwallethandlerv1.h \
+    #core/api/v1/graftwalletapiv1.h \
+    #core/api/v1/graftwallethandlerv1.h \
     core/api/graftwallethandler.h \
     core/graftwalletclient.h
 
 DISTFILES += $$PWD/wallet_update.xml
 }
+
+include(core/api/v3/graftapiv3.pri)
+
 
 win32|macx {
 !contains(DEFINES, DISABLE_SPARKLE_UPDATER) {
@@ -93,7 +96,7 @@ include(mac/mac.pri)
 }
 
 SOURCES += main.cpp \
-    core/api/v1/graftgenericapiv1.cpp \
+    #core/api/v1/graftgenericapiv1.cpp \
     core/productmodel.cpp \
     core/productitem.cpp \
     core/productmodelserializator.cpp \
@@ -127,7 +130,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     core/config.h \
-    core/api/v1/graftgenericapiv1.h \
+    #core/api/v1/graftgenericapiv1.h \
     core/api/graftbasehandler.h \
     core/productmodel.h \
     core/productitem.h \
