@@ -37,7 +37,7 @@ include(android/android.pri)
 include(qzxing/QZXing.pri)
 include(QRCodeGenerator.pri)
 include(libwallet/libwallet.pri)
-include(libcncrypto/libcncrypto.pri)
+include(libgraft/libgraft.pri)
 ios|macx {
 include(core/api/v2/graftapiv2.pri)
 }
