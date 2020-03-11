@@ -270,15 +270,51 @@ QJsonObject GraftGenericAPIv3::processReply(QNetworkReply *reply)
     return object;
 }
 
-QUrl GraftGenericAPIv3::nextAddress()
+bool GraftGenericAPIv3::processReplyRest(QNetworkReply *reply, int &httpStatus, QJsonObject &response)
+{
+    bool result = false;
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        QByteArray rawData = reply->readAll();
+        // qDebug() << rawData;
+        if (!rawData.isEmpty())
+        {
+            response = QJsonDocument::fromJson(rawData).object();
+            result = true;
+        }
+        else
+        {
+            mLastError = QLatin1String("Couldn't parse request response.");
+        }
+    }
+    else
+    {
+        mLastError = reply->errorString();
+    }
+    reply->deleteLater();
+    reply = nullptr;
+    return result;
+}
+
+QUrl GraftGenericAPIv3::nextAddress(const QString &endpoint)
 {
     mCurrentAddress++;
     if (mCurrentAddress >= mAddresses.count())
     {
         mCurrentAddress = 0;
     }
-    return QUrl(scUrl.arg(mAddresses.value(mCurrentAddress)));
+    if (endpoint.isEmpty())
+    {
+        return QUrl(scUrl.arg(mAddresses.value(mCurrentAddress)));
+    }
+    else
+    {
+        return QUrl(scDapiUrl.arg(mAddresses.value(mCurrentAddress)).arg(endpoint));
+    }
 }
+
+
 
 QNetworkReply *GraftGenericAPIv3::retry()
 {
@@ -548,5 +584,47 @@ QJsonObject GraftGenericAPIv3::NodeAddress::toJson() const
     QJsonObject result;
     result.insert("Id", QJsonValue(Id));
     result.insert("WalletAddress", QJsonValue(WalletAddress));
+    return result;
+}
+
+GraftGenericAPIv3::NodeId GraftGenericAPIv3::NodeId::fromJson(const QJsonObject &arg)
+{
+    NodeId result;
+    result.Id = arg.value("Id").toString();
+    return result;
+}
+
+QJsonObject GraftGenericAPIv3::NodeId::toJson() const
+{
+    QJsonObject result;
+    result.insert("Id", QJsonValue(Id));
+    return result;
+}
+
+GraftGenericAPIv3::PaymentData GraftGenericAPIv3::PaymentData::fromJson(const QJsonObject &arg)
+{
+    PaymentData result;
+    
+    for (const auto key : arg.value("AuthSampleKeys").toArray()) {
+        NodeId id = NodeId::fromJson(key.toObject());
+        result.AuthSampleKeys.push_back(id);
+    }
+    
+    result.EncryptedPayment = arg.value("EncryptedPayment").toString();
+    result.PosProxy = NodeAddress::fromJson(arg.value("PosProxy").toObject());
+    return result;
+}
+
+QJsonObject GraftGenericAPIv3::PaymentData::toJson() const
+{
+    QJsonObject result;
+    QJsonArray AuthSampleKeysJson;
+    for (const auto & key : AuthSampleKeys) {
+        AuthSampleKeysJson.push_back(QJsonValue(key.toJson()));
+    }
+    result["AuthSampleKeys"] = QJsonValue(AuthSampleKeysJson);
+    result["PosProxy"]  = QJsonValue(PosProxy.toJson());
+    result["EncryptedPayment"] = QJsonValue(EncryptedPayment);
+    
     return result;
 }

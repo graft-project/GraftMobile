@@ -14,17 +14,21 @@ class GraftGenericAPIv3 : public QObject
 {
     Q_OBJECT
 public:
+    // copy-pasted from graft-ng/
     enum OperationStatus
     {
-        StatusNone = 0,
-        StatusProcessing = 1,
-        StatusApproved = 2,
-        StatusFailed =  3,
-        StatusWalletRejected = 4,
-        StatusPOSRejected = 5
+        None = 0,
+        InProgress = 2,    // non-continous (compatibility issues)
+        Success = 3,
+        FailRejectedByPOS, // rejected by PoS
+        FailZeroFee,       // rejected by auth sample due low or zero fee
+        FailDoubleSpend,   // rejected by auth sample due double spend
+        FailTimedOut,      // timed out
+        FailTxRejected     // tx rejected by cryptonode
+        
     };
     
-    // TODO: reuse serialization from graft-ng?
+    // TODO: reuse structures/serialization from graft-ng?
     struct NodeAddress 
     {
         NodeAddress() {}
@@ -33,6 +37,24 @@ public:
         static NodeAddress fromJson(const QJsonObject &arg);
         QJsonObject toJson() const;
     };
+    
+    struct NodeId
+    {
+        NodeId() {}
+        QString Id;
+        static NodeId fromJson(const QJsonObject &arg);
+        QJsonObject toJson() const;
+    };
+    
+    struct PaymentData 
+    {
+        QString EncryptedPayment;
+        QList<NodeId> AuthSampleKeys;
+        NodeAddress PosProxy;
+        static PaymentData fromJson(const QJsonObject &arg);
+        QJsonObject toJson() const;
+    };
+    
 
     explicit GraftGenericAPIv3(const QStringList &addresses, const QString &dapiVersion,
                                QObject *parent = nullptr);
@@ -79,7 +101,8 @@ protected:
     QByteArray serializeAmount(double amount) const;
     QJsonObject buildMessage(const QString &key, const QJsonObject &params = QJsonObject()) const;
     QJsonObject processReply(QNetworkReply *reply);
-    QUrl nextAddress();
+    bool processReplyRest(QNetworkReply *reply, int &httpStatus, QJsonObject &response);
+    QUrl nextAddress(const QString &endpoint = QString());
     QNetworkReply *retry();
 
 private slots:

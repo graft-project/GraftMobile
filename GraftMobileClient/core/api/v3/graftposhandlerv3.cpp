@@ -17,12 +17,12 @@ GraftPOSHandlerV3::GraftPOSHandlerV3(const QString &dapiVersion, const QStringLi
     connect(mApi, &GraftPOSAPIv3::transferReceived, this, &GraftPOSHandlerV3::receiveTransfer);
     connect(mApi, &GraftPOSAPIv3::balanceReceived, this, &GraftPOSHandlerV3::receiveBalance);
 
-    connect(mApi, &GraftPOSAPIv3::saleResponseReceived, this, &GraftPOSHandlerV3::saleReceived);
-    connect(mApi, &GraftPOSAPIv3::rejectSaleResponseReceived,
-            this, &GraftPOSHandlerV3::receiveRejectSale);
-    connect(mApi, &GraftPOSAPIv3::getSaleStatusResponseReceived,
-            this, &GraftPOSHandlerV3::receiveSaleStatus);
-    connect(mApi, &GraftPOSAPIv3::error, this, &GraftPOSHandlerV3::errorReceived);
+//    connect(mApi, &GraftPOSAPIv3::saleResponseReceived, this, &GraftPOSHandlerV3::saleReceived);
+//    connect(mApi, &GraftPOSAPIv3::rejectSaleResponseReceived,
+//            this, &GraftPOSHandlerV3::receiveRejectSale);
+//    connect(mApi, &GraftPOSAPIv3::getSaleStatusResponseReceived,
+//            this, &GraftPOSHandlerV3::receiveSaleStatus);
+//    connect(mApi, &GraftPOSAPIv3::error, this, &GraftPOSHandlerV3::errorReceived);
 }
 
 void GraftPOSHandlerV3::changeAddresses(const QStringList &addresses, const QStringList &internalAddresses)
@@ -116,12 +116,12 @@ void GraftPOSHandlerV3::transfer(const QString &address, const QString &amount,
     }
 }
 
-void GraftPOSHandlerV3::sale(const QString &address, const QString &viewKey,
+void GraftPOSHandlerV3::sale(const QString &address, 
                              double amount, const QString &saleDetails)
 {
     if (mApi)
     {
-        mApi->sale(address, viewKey, amount, saleDetails);
+        mApi->sale(address, amount, saleDetails);
     }
 }
 
@@ -135,17 +135,22 @@ void GraftPOSHandlerV3::rejectSale(const QString &pid)
 
 void GraftPOSHandlerV3::saleStatus(const QString &pid, int blockNumber)
 {
-    Q_UNUSED(blockNumber);
+    Q_UNUSED(blockNumber)
     if (mApi)
     {
         mLastPID = pid;
-        mApi->getSaleStatus(pid);
+        mApi->saleStatus(pid, blockNumber);
     }
 }
 
 void GraftPOSHandlerV3::updateTransactionHistory()
 {
-  // dummy method
+    // dummy method
+}
+
+void GraftPOSHandlerV3::receiveSale(const QString &pid, int blockNumber)
+{
+  // TODO   
 }
 
 void GraftPOSHandlerV3::receiveRejectSale(int result)
@@ -153,22 +158,24 @@ void GraftPOSHandlerV3::receiveRejectSale(int result)
     emit rejectSaleReceived(result == 0);
 }
 
-void GraftPOSHandlerV3::receiveSaleStatus(int result, int status)
+void GraftPOSHandlerV3::receiveSaleStatus(/*int result, */int status)
 {
-    if (result == 0)
+    if (/*result == 0*/true)
     {
         switch (status) {
-        case GraftPOSAPIv3::StatusProcessing:
+        case GraftPOSAPIv3::InProgress:
             saleStatus(mLastPID, 0);
             break;
-        case GraftPOSAPIv3::StatusApproved:
+        case GraftPOSAPIv3::Success:
             mLastPID.clear();
             emit saleStatusReceived(true);
             break;
-        case GraftPOSAPIv3::StatusNone:
-        case GraftPOSAPIv3::StatusFailed:
-        case GraftPOSAPIv3::StatusPOSRejected:
-        case GraftPOSAPIv3::StatusWalletRejected:
+        // TODO: threat errors different way
+        case GraftPOSAPIv3::FailRejectedByPOS:
+        case GraftPOSAPIv3::FailZeroFee:
+        case GraftPOSAPIv3::FailDoubleSpend:
+        case GraftPOSAPIv3::FailTimedOut:
+        case GraftPOSAPIv3::FailTxRejected:
         default:
             mLastPID.clear();
             emit saleStatusReceived(false);

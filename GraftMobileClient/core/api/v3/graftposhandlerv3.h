@@ -32,15 +32,16 @@ public slots:
     void transfer(const QString &address, const QString &amount,
                   const QString &paymentID = QString()) override;
 
-    void sale(const QString &address, const QString &viewKey, double amount,
+    void sale(const QString &address, double amount,
               const QString &saleDetails = QString()) override;
     void rejectSale(const QString &pid) override;
     void saleStatus(const QString &pid, int blockNumber) override;
     void updateTransactionHistory() override;
 
 private slots:
+    void receiveSale(const QString &pid, int blockNumber);
     void receiveRejectSale(int result);
-    void receiveSaleStatus(int result, int status);
+    void receiveSaleStatus(int status);
     void receiveBalance(double balance, double unlockedBalance);
     void receiveTransferFee(int result, double fee);
     void receiveTransfer(int result);

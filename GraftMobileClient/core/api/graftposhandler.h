@@ -10,7 +10,7 @@ public:
     explicit GraftPOSHandler(QObject *parent = nullptr) : GraftBaseHandler(parent) {}
 
 public slots:
-    virtual void sale(const QString &address, const QString &viewKey, double amount,
+    virtual void sale(const QString &address, double amount,
                       const QString &saleDetails = QString()) = 0;
     virtual void rejectSale(const QString &pid) = 0;
     virtual void saleStatus(const QString &pid, int blockNumber) = 0;
