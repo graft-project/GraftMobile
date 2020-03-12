@@ -258,7 +258,8 @@ QJsonObject GraftGenericAPIv3::processReply(QNetworkReply *reply)
         }
         else
         {
-            mLastError = QLatin1String("Couldn't parse request response.");
+            mLastError = QLatin1String("Couldn't parse request response, url: ") + reply->request().url().toString();
+            
         }
     }
     else
@@ -277,15 +278,16 @@ bool GraftGenericAPIv3::processReplyRest(QNetworkReply *reply, int &httpStatus, 
     {
         httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         QByteArray rawData = reply->readAll();
-        // qDebug() << rawData;
         if (!rawData.isEmpty())
         {
             response = QJsonDocument::fromJson(rawData).object();
             result = true;
+        } else if (httpStatus == 202) { // some calls return 202 and empty body
+            result = true;
         }
         else
         {
-            mLastError = QLatin1String("Couldn't parse request response.");
+            mLastError = QLatin1String("Couldn't parse request response, url: ") + reply->request().url().toString();
         }
     }
     else

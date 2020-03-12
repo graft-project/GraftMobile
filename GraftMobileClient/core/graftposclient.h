@@ -4,7 +4,7 @@
 #include "graftbaseclient.h"
 
 class SelectedProductProxyModel;
-class GraftPOSHandler;
+class GraftPOSHandlerV3;
 class ProductModel;
 
 class GraftPOSClient : public GraftBaseClient
@@ -38,7 +38,7 @@ private:
     void changeGraftHandler() override;
     GraftBaseHandler *graftHandler() const override;
 
-    GraftPOSHandler *mClientHandler;
+    GraftPOSHandlerV3 *mClientHandler;
     QString mPID;
     int mBlockNumber;
     ProductModel *mProductModel;

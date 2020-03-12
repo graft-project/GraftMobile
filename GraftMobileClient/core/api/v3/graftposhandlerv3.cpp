@@ -17,12 +17,11 @@ GraftPOSHandlerV3::GraftPOSHandlerV3(const QString &dapiVersion, const QStringLi
     connect(mApi, &GraftPOSAPIv3::transferReceived, this, &GraftPOSHandlerV3::receiveTransfer);
     connect(mApi, &GraftPOSAPIv3::balanceReceived, this, &GraftPOSHandlerV3::receiveBalance);
 
-//    connect(mApi, &GraftPOSAPIv3::saleResponseReceived, this, &GraftPOSHandlerV3::saleReceived);
-//    connect(mApi, &GraftPOSAPIv3::rejectSaleResponseReceived,
+    connect(mApi, &GraftPOSAPIv3::saleResponseReceived, this, &GraftPOSHandlerV3::saleReceived);
+//  connect(mApi, &GraftPOSAPIv3::rejectSaleResponseReceived,
 //            this, &GraftPOSHandlerV3::receiveRejectSale);
-//    connect(mApi, &GraftPOSAPIv3::getSaleStatusResponseReceived,
-//            this, &GraftPOSHandlerV3::receiveSaleStatus);
-//    connect(mApi, &GraftPOSAPIv3::error, this, &GraftPOSHandlerV3::errorReceived);
+    connect(mApi, &GraftPOSAPIv3::saleStatusResponseReceived, this, &GraftPOSHandlerV3::receiveSaleStatus);
+    connect(mApi, &GraftPOSAPIv3::error, this, &GraftPOSHandlerV3::errorReceived);
 }
 
 void GraftPOSHandlerV3::changeAddresses(const QStringList &addresses, const QStringList &internalAddresses)
@@ -71,8 +70,20 @@ QString GraftPOSHandlerV3::password() const
 
 void GraftPOSHandlerV3::resetData()
 {
-
+    
 }
+
+GraftPOSHandlerV3::PaymentRequest GraftPOSHandlerV3::paymentRequest() const
+{
+    PaymentRequest result;
+    result.blockHash    = mApi->blockHash();
+    result.blockHeight  = mApi->blockHeight();
+    result.paymentId    = mApi->paymentId();
+    result.posPubKey    = mApi->posPubkey();
+    result.walletEncryptionKey = mApi->walletEncryptionKey();
+    return result;
+}
+
 
 void GraftPOSHandlerV3::createAccount(const QString &password)
 {
@@ -208,4 +219,16 @@ void GraftPOSHandlerV3::receiveTransferFee(int result, double fee)
 void GraftPOSHandlerV3::receiveTransfer(int result)
 {
     emit transferReceived(result == 0);
+}
+
+QJsonObject GraftPOSHandlerV3::PaymentRequest::toJson() const
+{
+    QJsonObject result;
+    result.insert("posWallet", QJsonValue(posWallet));
+    result.insert("posPubkey", QJsonValue(posPubKey));
+    result.insert("walletEncryptionKey", QJsonValue(walletEncryptionKey));
+    result.insert("blockHash", QJsonValue(blockHash));
+    result.insert("blockHeight", QJsonValue(blockHeight));
+    result.insert("paymentId", QJsonValue(paymentId));
+    return result;
 }

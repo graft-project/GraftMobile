@@ -11,6 +11,7 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <QCryptographicHash>
+#include <QTimer>
 
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -28,12 +29,15 @@ namespace {
         return QString(hash.result().toHex());
     }
     
+    static constexpr int ERROR_INVALID_PAYMENT_ID = -32051;
+    
 }
 
 GraftPOSAPIv3::GraftPOSAPIv3(const QStringList &addresses, const QString &dapiVersion,
                              QObject *parent)
     : GraftGenericAPIv3(addresses, dapiVersion, parent)
 {
+
 }
 
 void GraftPOSAPIv3::sale(const QString &address, double amount,
@@ -53,25 +57,56 @@ void GraftPOSAPIv3::rejectSale(const QString &pid)
 void GraftPOSAPIv3::saleStatus(const QString &pid, int blockNumber)
 {
     
+    Q_UNUSED(blockNumber)
+    
+    mRetries = 0;
+    mRequest.setUrl(nextAddress(QStringLiteral("get_payment_status")));
+    
     QJsonObject params;
     params.insert(QStringLiteral("PaymentID"), pid);
-    QJsonObject data = buildMessage(QStringLiteral("GetSaleStatus"), params);
-    QByteArray array = QJsonDocument(data).toJson();
+    QByteArray array = QJsonDocument(params).toJson();
     mTimer.start();
+    mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveSaleStatusResponse);
+}
+
+QString GraftPOSAPIv3::paymentId() const
+{
+    return m_paymentId;
+}
+
+QString GraftPOSAPIv3::walletEncryptionKey() const
+{
+    return QString::fromStdString(epee::string_tools::pod_to_hex(m_wallet_secret_key));
+}
+
+QString GraftPOSAPIv3::posPubkey() const
+{
+    return QString::fromStdString(epee::string_tools::pod_to_hex(m_public_key));
+}
+
+QString GraftPOSAPIv3::blockHash() const
+{
+    return m_presaleResponse.BlockHash;
+}
+
+int GraftPOSAPIv3::blockHeight() const
+{
+    return m_presaleResponse.BlockNumber;
 }
 
 void GraftPOSAPIv3::presale()
 {
     mRetries = 0;
     mRequest.setUrl(nextAddress(QStringLiteral("presale")));
-    crypto::public_key pub_key;
-    crypto::generate_keys(pub_key, m_secret_key);
-    QString paymentId = generate_payment_id(pub_key);
+    
+    crypto::generate_keys(m_public_key, m_secret_key);
+    m_paymentId = generate_payment_id(m_public_key);
     QJsonObject params;
-    params.insert("PaymentID", paymentId);
+    params.insert("PaymentID", m_paymentId);
     QByteArray data = QJsonDocument(params).toJson();
+    mLastRequest = data;
     mTimer.start();
     QNetworkReply * reply = mManager->post(mRequest, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receivePresaleResponse);
@@ -90,6 +125,7 @@ void GraftPOSAPIv3::sale()
         crypto::public_key pkey;
         if (!epee::string_tools::hex_to_pod(key_str.toStdString(), pkey)) {
             qCritical() << "Failed to parse key from: " << key_str;
+            emit error(QStringLiteral("Failed to parse auth sample key"));
             return; //
         }
         auth_sample_pubkeys.push_back(pkey);
@@ -107,124 +143,97 @@ void GraftPOSAPIv3::sale()
     std::string encryptedPurchaseDetails;
     graft::crypto_tools::encryptMessage(m_saleDetails.toStdString(), wallet_pub_key_vector, encryptedPurchaseDetails);
     
+    // encrypt whole container with auth_sample keys + wallet key;
+    // TODO: by the specs it should be only encrypted with auth sample keys, auth sample should return
+    // plain-text amount and encrypted payment details; for simplicity we just add wallet key to the one-to-many scheme
+    std::string encrypted_payment_blob;
+    auth_sample_pubkeys.push_back(wallet_pub_key);
+    graft::crypto_tools::encryptMessage(QJsonDocument(paymentInfo).toJson().toStdString(), auth_sample_pubkeys, encrypted_payment_blob);
+    paymentData.EncryptedPayment = QString::fromStdString(epee::string_tools::buff_to_hex_nodelimer(encrypted_payment_blob));
     
-
-//            request::PaymentInfo payment_info;
-//            payment_info.Amount = amount;
-//            std::string encryptedPurchaseDetails;
-//            graft::crypto_tools::encryptMessage(SALE_ITEMS, wallet_pub_key_vector, encryptedPurchaseDetails);
-//            payment_info.Details = epee::string_tools::buff_to_hex_nodelimer(encryptedPurchaseDetails);
-//            // encrypt whole container with auth_sample keys + wallet key;
-//            // TODO: by the specs it should be only encrypted with auth sample keys, auth sample should return
-//            // plain-text amount and encrypted payment details; for simplicity we just add wallet key to the one-to-many scheme
-//            std::string encrypted_payment_blob;
-//            auth_sample_pubkeys.push_back(wallet_pub_key);
-//            graft::crypto_tools::encryptMessage(graft::to_json_str(payment_info), auth_sample_pubkeys, encrypted_payment_blob);
+    // 3.3. Set pos proxy addess and wallet in sale request
+    paymentData.PosProxy = m_presaleResponse.PosProxy;
     
-//            // 3.3. Set pos proxy addess and wallet in sale request
-//            sale_req.paymentData.PosProxy = m_presale_resp.PosProxy;
-//            sale_req.paymentData.EncryptedPayment = epee::string_tools::buff_to_hex_nodelimer(encrypted_payment_blob);
-//            sale_req.PaymentID = m_payment_id;
+    QJsonObject request;
+    request.insert("PaymentID", m_paymentId);
+    request.insert("paymentData", paymentData.toJson());
     
-//            // 3.4. call "/sale"
-//            std::string dummy;
-//            int http_status = 0;
-//            ErrorResponse err_resp;
+    // 3.4. call "/sale"
+    QByteArray data = QJsonDocument(request).toJson();
     
-//            bool r = invoke_http_rest("/dapi/v2.0/sale", sale_req, dummy, err_resp, m_http_client, http_status, m_network_timeout, "POST");
-//            if (!r) {
-//                MERROR("Failed to invoke sale: " << graft::to_json_str(err_resp));
-//            }
-    
-    
-    
-//    mLastRequest = array;
-//    QNetworkReply *reply = mManager->post(mRequest, array);
-//    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveSaleResponse);
+    mLastRequest = data;
+    QNetworkReply *reply = mManager->post(mRequest, data);
+    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveSaleResponse);
 }
 
 void GraftPOSAPIv3::receivePresaleResponse()
 {
     mLastError.clear();
-    qDebug() << "presale Response Received:\nTime: " << mTimer.elapsed();
+    qDebug() << "/presale Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     
     QJsonObject object;
     int httpStatusCode = 0;
     
     if (processReplyRest(reply, httpStatusCode, object)) {
-        if (httpStatusCode == 200) {
-            m_presaleResponse.fromJson(object);
-            emit presaleResponseReceived(true);
-        } else if (httpStatusCode == 500) {
-            mLastError = object.value("message").toString();
-            emit presaleResponseReceived(false);
-        }
-    }
-    else // network error, retry;
-    {
-        QNetworkReply *reply = retry();
-        if (reply)
-        {
-            connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receivePresaleResponse);
-        }
+        m_presaleResponse = PresaleResponse::fromJson(object);
+        sale();
+    } else {
+        mLastError = object.value("message").toString();
+        emit error(mLastError);
     }
 }
 
 void GraftPOSAPIv3::receiveSaleResponse()
 {
     mLastError.clear();
-    qDebug() << "Sale Response Received:\nTime: " << mTimer.elapsed();
+    qDebug() << "/sale Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     
     QJsonObject object;
     int httpStatusCode = 0;
     
     if (processReplyRest(reply, httpStatusCode, object)) {
-        emit 
-    }
-    
-    
-    if (!object.isEmpty())
-    {
-        emit saleResponseReceived(object.value(QLatin1String("Result")).toInt(),
-                                  object.value(QLatin1String("PaymentID")).toString(),
-                                  object.value(QLatin1String("BlockNum")).toInt());
-    }
-    else
-    {
-        QNetworkReply *reply = retry();
-        if (reply)
-        {
-            connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveSaleResponse);
-        }
+        emit saleResponseReceived(0, m_paymentId, 0);
+    } else {
+        emit error(mLastError);
     }
 }
 
 void GraftPOSAPIv3::receiveRejectSaleResponse()
 {
-    mLastError.clear();
-    qDebug() << "RejectSale Response Received:\nTime: " << mTimer.elapsed();
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
-    QJsonObject object = processReply(reply);
-    if (!object.isEmpty())
-    {
-        emit rejectSaleResponseReceived(object.value(QLatin1String("Result")).toInt());
-    }
-    else
-    {
-        QNetworkReply *reply = retry();
-        if (reply)
-        {
-            connect(reply, &QNetworkReply::finished,
-                    this, &GraftPOSAPIv3::receiveRejectSaleResponse);
-        }
-    }
+  
 }
 
 void GraftPOSAPIv3::receiveSaleStatusResponse()
 {
-    // TODO;
+    mLastError.clear();
+    qDebug() << "/get_payment_status Response Received:\nTime: " << mTimer.elapsed();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    
+    QJsonObject object;
+    
+    // specific case: in case wallet is not called /pay yet - supernode will respond with "Payment ID is invalid" error
+    int httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    QByteArray rawData = reply->readAll();
+    if (!rawData.isEmpty()) {
+        object = QJsonDocument::fromJson(rawData).object();
+    }
+    
+    if (reply->error() == QNetworkReply::NoError) {
+        emit saleStatusResponseReceived(object.value("Status").toInt());
+    } else if (httpStatusCode == 500 && object.value("code").toInt() == ERROR_INVALID_PAYMENT_ID) { // try again
+        // just pass GUI "inProgress" status
+        // TODO: make sense to introduce some 'intermediate' status e.g. SalePosted ?
+        emit saleStatusResponseReceived(static_cast<int>(OperationStatus::InProgress));
+    } else {
+        mLastError = QString("Failed to call '%1' - '%2'")
+                .arg(mRequest.url().toString())
+                .arg(reply->errorString());
+        emit error(mLastError);
+    }
+    reply->deleteLater();
+    reply = nullptr;
 }
 
 GraftPOSAPIv3::PresaleResponse GraftPOSAPIv3::PresaleResponse::fromJson(const QJsonObject &arg)
@@ -235,6 +244,6 @@ GraftPOSAPIv3::PresaleResponse GraftPOSAPIv3::PresaleResponse::fromJson(const QJ
     for (const auto item: arg.value("AuthSample").toArray()) {
         result.AuthSample.push_back(item.toString());
     }
-    result.NodeAddress = GraftGenericAPIv3::NodeAddress::fromJson(arg.value("NodeAddress").toObject());
+    result.PosProxy = GraftGenericAPIv3::NodeAddress::fromJson(arg.value("PosProxy").toObject());
     return result;
 }

@@ -15,6 +15,8 @@
 
 #include <QStandardPaths>
 #include <QFileInfo>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 static const QString scProductModelDataFile("productList.dat");
 
@@ -81,8 +83,15 @@ void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNumber
     const bool isStatusOk = (result == 0);
     mPID = pid;
     mBlockNumber = blockNumber;
-    QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
-            .arg(mProductModel->totalCost()).arg(blockNumber);
+        
+    GraftPOSHandlerV3::PaymentRequest paymentRequest = mClientHandler->paymentRequest();
+    paymentRequest.posWallet = mAccountManager->address();
+    
+//    QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
+//            .arg(mProductModel->totalCost()).arg(blockNumber);
+    
+    QString qrText = QJsonDocument(paymentRequest.toJson()).toJson();
+        
     setQRCodeImage(QRCodeGenerator::encode(qrText));
     emit saleReceived(isStatusOk);
     if (isStatusOk)
