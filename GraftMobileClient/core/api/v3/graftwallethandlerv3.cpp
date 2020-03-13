@@ -11,34 +11,34 @@
 
 
 
-GraftWalletHandlerv3::GraftWalletHandlerv3(const QString &dapiVersion, const QStringList addresses,
+GraftWalletHandlerV3::GraftWalletHandlerV3(const QString &dapiVersion, const QStringList addresses,
                                            QObject *parent)
     : GraftWalletHandler(parent)
     ,mBlockNumber(0)
 {
     mApi = new GraftWalletAPIv3(addresses, dapiVersion, this);
     connect(mApi, &GraftWalletAPIv3::createAccountReceived,
-            this, &GraftWalletHandlerv3::createAccountReceived);
+            this, &GraftWalletHandlerV3::createAccountReceived);
     connect(mApi, &GraftWalletAPIv3::restoreAccountReceived,
-            this, &GraftWalletHandlerv3::restoreAccountReceived);
+            this, &GraftWalletHandlerV3::restoreAccountReceived);
     connect(mApi, &GraftWalletAPIv3::transferFeeReceived,
-            this, &GraftWalletHandlerv3::receiveTransferFee);
+            this, &GraftWalletHandlerV3::receiveTransferFee);
     connect(mApi, &GraftWalletAPIv3::transferReceived,
-            this, &GraftWalletHandlerv3::receiveTransfer);
-    connect(mApi, &GraftWalletAPIv3::balanceReceived, this, &GraftWalletHandlerv3::receiveBalance);
+            this, &GraftWalletHandlerV3::receiveTransfer);
+    connect(mApi, &GraftWalletAPIv3::balanceReceived, this, &GraftWalletHandlerV3::receiveBalance);
 
     connect(mApi, &GraftWalletAPIv3::getPOSDataReceived,
-            this, &GraftWalletHandlerv3::saleDetailsReceived);
+            this, &GraftWalletHandlerV3::saleDetailsReceived);
     connect(mApi, &GraftWalletAPIv3::rejectPayReceived,
-            this, &GraftWalletHandlerv3::receiveRejectPay);
-    connect(mApi, &GraftWalletAPIv3::payReceived, this, &GraftWalletHandlerv3::payReceived);
+            this, &GraftWalletHandlerV3::receiveRejectPay);
+    connect(mApi, &GraftWalletAPIv3::payReceived, this, &GraftWalletHandlerV3::payReceived);
     connect(mApi, &GraftWalletAPIv3::getPayStatusReceived,
-            this, &GraftWalletHandlerv3::receivePayStatus);
-    connect(mApi, &GraftWalletAPIv3::error, this, &GraftWalletHandlerv3::errorReceived);
-    connect(mApi, &GraftWalletAPIv3::transactionHistoryReceived, this, &GraftWalletHandlerv3::receiveTransactionHistory);
+            this, &GraftWalletHandlerV3::receivePayStatus);
+    connect(mApi, &GraftWalletAPIv3::error, this, &GraftWalletHandlerV3::errorReceived);
+    connect(mApi, &GraftWalletAPIv3::transactionHistoryReceived, this, &GraftWalletHandlerV3::receiveTransactionHistory);
 }
 
-void GraftWalletHandlerv3::changeAddresses(const QStringList &addresses,
+void GraftWalletHandlerV3::changeAddresses(const QStringList &addresses,
                                            const QStringList &internalAddresses)
 {
     Q_UNUSED(internalAddresses);
@@ -48,7 +48,7 @@ void GraftWalletHandlerv3::changeAddresses(const QStringList &addresses,
     }
 }
 
-void GraftWalletHandlerv3::setAccountData(const QByteArray &accountData, const QString &password)
+void GraftWalletHandlerV3::setAccountData(const QByteArray &accountData, const QString &password)
 {
     if (mApi)
     {
@@ -56,7 +56,7 @@ void GraftWalletHandlerv3::setAccountData(const QByteArray &accountData, const Q
     }
 }
 
-void GraftWalletHandlerv3::setNetworkManager(QNetworkAccessManager *networkManager)
+void GraftWalletHandlerV3::setNetworkManager(QNetworkAccessManager *networkManager)
 {
     GraftWalletHandler::setNetworkManager(networkManager);
     if (mManager && mApi)
@@ -65,7 +65,7 @@ void GraftWalletHandlerv3::setNetworkManager(QNetworkAccessManager *networkManag
     }
 }
 
-QByteArray GraftWalletHandlerv3::accountData() const
+QByteArray GraftWalletHandlerV3::accountData() const
 {
     if (mApi)
     {
@@ -74,7 +74,7 @@ QByteArray GraftWalletHandlerv3::accountData() const
     return QByteArray();
 }
 
-QString GraftWalletHandlerv3::password() const
+QString GraftWalletHandlerV3::password() const
 {
     if (mApi)
     {
@@ -83,12 +83,12 @@ QString GraftWalletHandlerv3::password() const
     return QString();
 }
 
-void GraftWalletHandlerv3::resetData()
+void GraftWalletHandlerV3::resetData()
 {
 
 }
 
-void GraftWalletHandlerv3::createAccount(const QString &password)
+void GraftWalletHandlerV3::createAccount(const QString &password)
 {
     if (mApi)
     {
@@ -96,7 +96,7 @@ void GraftWalletHandlerv3::createAccount(const QString &password)
     }
 }
 
-void GraftWalletHandlerv3::restoreAccount(const QString &seed, const QString &password)
+void GraftWalletHandlerV3::restoreAccount(const QString &seed, const QString &password)
 {
     if (mApi)
     {
@@ -104,7 +104,7 @@ void GraftWalletHandlerv3::restoreAccount(const QString &seed, const QString &pa
     }
 }
 
-void GraftWalletHandlerv3::updateBalance()
+void GraftWalletHandlerV3::updateBalance()
 {
     if (mApi)
     {
@@ -112,7 +112,7 @@ void GraftWalletHandlerv3::updateBalance()
     }
 }
 
-void GraftWalletHandlerv3::updateTransactionHistory()
+void GraftWalletHandlerV3::updateTransactionHistory()
 {
     if (mApi)
     {
@@ -120,7 +120,7 @@ void GraftWalletHandlerv3::updateTransactionHistory()
     }
 }
 
-void GraftWalletHandlerv3::transferFee(const QString &address, const QString &amount,
+void GraftWalletHandlerV3::transferFee(const QString &address, const QString &amount,
                                        const QString &paymentID)
 {
     if (mApi)
@@ -129,7 +129,7 @@ void GraftWalletHandlerv3::transferFee(const QString &address, const QString &am
     }
 }
 
-void GraftWalletHandlerv3::transfer(const QString &address, const QString &amount,
+void GraftWalletHandlerV3::transfer(const QString &address, const QString &amount,
                                     const QString &paymentID)
 {
     if (mApi)
@@ -138,7 +138,7 @@ void GraftWalletHandlerv3::transfer(const QString &address, const QString &amoun
     }
 }
 
-void GraftWalletHandlerv3::saleDetails(const QString &pid, int blockNumber)
+void GraftWalletHandlerV3::saleDetails(const QString &pid, int blockNumber)
 {
     if (mApi)
     {
@@ -146,7 +146,7 @@ void GraftWalletHandlerv3::saleDetails(const QString &pid, int blockNumber)
     }
 }
 
-void GraftWalletHandlerv3::rejectPay(const QString &pid, int blockNumber)
+void GraftWalletHandlerV3::rejectPay(const QString &pid, int blockNumber)
 {
     if (mApi)
     {
@@ -154,7 +154,7 @@ void GraftWalletHandlerv3::rejectPay(const QString &pid, int blockNumber)
     }
 }
 
-void GraftWalletHandlerv3::pay(const QString &pid, const QString &address, double amount,
+void GraftWalletHandlerV3::pay(const QString &pid, const QString &address, double amount,
                                int blockNumber)
 {
     if (mApi)
@@ -165,7 +165,7 @@ void GraftWalletHandlerv3::pay(const QString &pid, const QString &address, doubl
     }
 }
 
-void GraftWalletHandlerv3::payStatus(const QString &pid, int blockNumber)
+void GraftWalletHandlerV3::payStatus(const QString &pid, int blockNumber)
 {
     Q_UNUSED(blockNumber);
     if (mApi)
@@ -174,26 +174,27 @@ void GraftWalletHandlerv3::payStatus(const QString &pid, int blockNumber)
     }
 }
 
-void GraftWalletHandlerv3::receiveRejectPay(int result)
+void GraftWalletHandlerV3::receiveRejectPay(int result)
 {
     emit rejectPayReceived(result == 0);
 }
 
-void GraftWalletHandlerv3::receivePayStatus(int result, int status)
+void GraftWalletHandlerV3::receivePayStatus(int result, int status)
 {
     if (result == 0)
     {
         switch (status) {
-        case GraftWalletAPIv3::StatusProcessing:
+        case GraftWalletAPIv3::InProgress:
             payStatus(mLastPID, mBlockNumber);
             break;
-        case GraftWalletAPIv3::StatusApproved:
+        case GraftWalletAPIv3::Success:
             emit payStatusReceived(true);
             break;
-        case GraftWalletAPIv3::StatusNone:
-        case GraftWalletAPIv3::StatusFailed:
-        case GraftWalletAPIv3::StatusPOSRejected:
-        case GraftWalletAPIv3::StatusWalletRejected:
+        case GraftWalletAPIv3::None:
+        case GraftWalletAPIv3::FailTxRejected:
+        case GraftWalletAPIv3::FailTimedOut:
+        case GraftWalletAPIv3::FailZeroFee:
+        case GraftWalletAPIv3::FailRejectedByPOS:
         default:
             emit payStatusReceived(false);
             break;
@@ -205,13 +206,13 @@ void GraftWalletHandlerv3::receivePayStatus(int result, int status)
     }
 }
 
-void GraftWalletHandlerv3::receiveBalance(double balance, double unlockedBalance)
+void GraftWalletHandlerV3::receiveBalance(double balance, double unlockedBalance)
 {
-    QTimer::singleShot(20000, this, &GraftWalletHandlerv3::updateBalance);
+    QTimer::singleShot(20000, this, &GraftWalletHandlerV3::updateBalance);
     emit balanceReceived(balance, unlockedBalance);
 }
 
-void GraftWalletHandlerv3::receiveTransferFee(int result, double fee)
+void GraftWalletHandlerV3::receiveTransferFee(int result, double fee)
 {
     bool status = result == 0;
     double lFee = 0;
@@ -222,12 +223,12 @@ void GraftWalletHandlerv3::receiveTransferFee(int result, double fee)
     emit transferFeeReceived(status, lFee);
 }
 
-void GraftWalletHandlerv3::receiveTransfer(int result)
+void GraftWalletHandlerV3::receiveTransfer(int result)
 {
     emit transferReceived(result == 0);
 }
 
-void GraftWalletHandlerv3::receiveTransactionHistory(const QJsonArray &transfersOut, const QJsonArray &transfersIn, const QJsonArray &transfersPending, const QJsonArray &transfersFailed, const QJsonArray &transfersPool)
+void GraftWalletHandlerV3::receiveTransactionHistory(const QJsonArray &transfersOut, const QJsonArray &transfersIn, const QJsonArray &transfersPending, const QJsonArray &transfersFailed, const QJsonArray &transfersPool)
 {
     QList<TransactionInfo*> tx_history;
     

@@ -1,6 +1,6 @@
 #include "productmodelserializator.h"
-#include "api/v1/graftwalletapiv1.h"
-#include "api/v1/graftwallethandlerv1.h"
+#include "api/v3/graftwalletapiv3.h"
+#include "api/v3/graftwallethandlerv3.h"
 #if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
 #include "api/v2/graftwallethandlerv2.h"
 #endif
@@ -137,16 +137,16 @@ void GraftWalletClient::changeGraftHandler()
     {
     case GraftClientTools::Mainnet:
     case GraftClientTools::PublicTestnet:
-        mClientHandler = new GraftWalletHandlerV1(dapiVersion(), getServiceAddresses(), this);
+        mClientHandler = new GraftWalletHandlerV3(dapiVersion(), getServiceAddresses(), this);
         break;
-    case GraftClientTools::PublicExperimentalTestnet:
-#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
-        mClientHandler = new GraftWalletHandlerV2(dapiVersion(), getServiceAddresses(),
-                                                  getServiceAddresses(true),
-                                                  networkType() != GraftClientTools::Mainnet, this);
-#else
-        mClientHandler = new GraftWalletHandlerV1(dapiVersion(), getServiceAddresses(), this);
-#endif
+//    case GraftClientTools::PublicExperimentalTestnet:
+//#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+//        mClientHandler = new GraftWalletHandlerV2(dapiVersion(), getServiceAddresses(),
+//                                                  getServiceAddresses(true),
+//                                                  networkType() != GraftClientTools::Mainnet, this);
+//#else
+//        mClientHandler = new GraftWalletHandlerV1(dapiVersion(), getServiceAddresses(), this);
+//#endif
         break;
     }
     mClientHandler->setNetworkManager(mNetworkManager);

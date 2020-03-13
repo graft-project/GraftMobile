@@ -9,11 +9,11 @@ class GraftWalletAPIv3;
  * \brief The GraftPOSHandlerv3 class - what does this class do and what is for?
  */
 
-class GraftWalletHandlerv3 : public GraftWalletHandler
+class GraftWalletHandlerV3 : public GraftWalletHandler
 {
     Q_OBJECT
 public:
-    explicit GraftWalletHandlerv3(const QString &dapiVersion, const QStringList addresses,
+    explicit GraftWalletHandlerV3(const QString &dapiVersion, const QStringList addresses,
                                   QObject *parent = nullptr);
 
     void changeAddresses(const QStringList &addresses,
