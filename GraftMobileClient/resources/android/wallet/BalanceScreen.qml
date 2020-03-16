@@ -6,11 +6,16 @@ import "../components"
 
 BaseBalanceScreen {
 
+    function isPayEnabled() {
+        return GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet 
+            || GraftClient.networkType() === GraftClientTools.PublicTestnet
+    }
+
     Connections {
         target: GraftClient
 
         onNetworkTypeChanged: {
-            payButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+            payButton.enabled = isPayEnabled()
         }
     }
 
@@ -69,8 +74,8 @@ BaseBalanceScreen {
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignCenter
-            text: qsTr("Pay")
-            enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
+            text: qsTr("Pay 11")
+            enabled: isPayEnabled()
 
             // TODO: QTBUG-74076. The application is crash or will hang when request permission, after the
             // native Android keyboard. For more details see https://bugreports.qt.io/browse/QTBUG-74076
