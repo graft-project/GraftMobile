@@ -5,8 +5,18 @@ INCLUDEPATH += $$PWD/include \
 ## TODO: there're mix of copy-pasted epee/libcncrypto header files, sort them out to a separate directories (too keep the same directory structure as in GraftNetwork project)
 
 android {
-## TODO
+    INCLUDEPATH += $$PWD/include/external/android 
+    LIBS += -L$$PWD/lib/android/$$ANDROID_TARGET_ARCH -lepee -leasylogging
+    LIBS += -L$$PWD/../libwallet/wallet/linux -lepee -leasylogging 
+	# XXX: order matters (utils first), wont link otherwise (undefined reference to cn_clow_hash, chacha8)
+    LIBS += -L$$PWD/lib/linux -lutils -lcncrypto 
+    LIBS += -lboost_filesystem \
+		-lboost_thread \
+                -lboost_system \
+		-lboost_chrono
 
+    
+    
 } else {
     linux {
         # XXX: order matters (epee first), wont link otherwise (undefined reference to easylogging)
