@@ -2,9 +2,11 @@
 #define GRAFTWALLETCLIENT_H
 
 #include "graftbaseclient.h"
+#include "api/v3/graftgenericapiv3.h"
 
 class GraftWalletHandler;
 class ProductModel;
+
 
 class GraftWalletClient : public GraftBaseClient
 {
@@ -31,7 +33,7 @@ public slots:
     void payStatus();
 
 private slots:
-    void receiveSaleDetails(int result, const QString &payDetails);
+    void receiveSaleDetails(int result, const GraftGenericAPIv3::PaymentData &pd, const GraftGenericAPIv3::NodeAddress &addr);
     void receivePay(int result);
     
 
@@ -40,10 +42,11 @@ private:
     GraftBaseHandler *graftHandler() const override;
 
     GraftWalletHandler *mClientHandler;
+    QString mMerchantAddress;
     QString mPID;
     QString mPrivateKey;
     int mBlockNumber;
-
+    QString mBlockHash;
     double mTotalCost;
     ProductModel *mPaymentProductModel;
 };

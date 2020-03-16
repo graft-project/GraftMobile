@@ -2,6 +2,7 @@
 #define GRAFTPOSHANDLERV3_H
 
 #include "../graftposhandler.h"
+#include "privatepaymentdetails.h"
 
 class GraftPOSAPIv3;
 
@@ -10,17 +11,6 @@ class GraftPOSHandlerV3 : public GraftPOSHandler
 {
     Q_OBJECT
 public:
-    // payment data to be scanned as qr-code by wallet;
-    struct PaymentRequest
-    {
-        QString posWallet; // destination address for payment;
-        QString posPubKey;
-        QString walletEncryptionKey;
-        QString blockHash;
-        int blockHeight = 0;
-        QString paymentId;
-        QJsonObject toJson() const;
-    };
     
     explicit GraftPOSHandlerV3(const QString &dapiVersion, const QStringList addresses,
                                QObject *parent = nullptr);
@@ -35,7 +25,7 @@ public:
 
     void resetData() override;
     
-    PaymentRequest paymentRequest() const;
+    PrivatePaymentDetails paymentRequest() const;
 
 public slots:
     void createAccount(const QString &password) override;

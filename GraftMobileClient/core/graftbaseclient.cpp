@@ -61,7 +61,7 @@ GraftBaseClient::GraftBaseClient(QObject *parent)
     ,mClientSettings(nullptr)
     ,mBlogReader{new BlogReader(mNetworkManager, this)}
     ,mIsBalanceUpdated(false)
-    ,mBalanceTimer(-1)
+    ,mBalanceTimer(-11)
 {
     initSettings();
 }

@@ -37,7 +37,7 @@ public slots:
     void transfer(const QString &address, const QString &amount,
                   const QString &paymentID = QString()) override;
 
-    void saleDetails(const QString &pid, int blockNumber) override;
+    void saleDetails(const QString &pid, int blockNumber, const QString &blockHash) override;
     void rejectPay(const QString &pid, int blockNumber) override;
     void pay(const QString &pid, const QString &address, double amount, int blockNumber) override;
     void payStatus(const QString &pid, int blockNumber) override;

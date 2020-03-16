@@ -27,7 +27,7 @@ GraftWalletHandlerV3::GraftWalletHandlerV3(const QString &dapiVersion, const QSt
             this, &GraftWalletHandlerV3::receiveTransfer);
     connect(mApi, &GraftWalletAPIv3::balanceReceived, this, &GraftWalletHandlerV3::receiveBalance);
 
-    connect(mApi, &GraftWalletAPIv3::getPOSDataReceived,
+    connect(mApi, &GraftWalletAPIv3::paymentDataReceived,
             this, &GraftWalletHandlerV3::saleDetailsReceived);
     connect(mApi, &GraftWalletAPIv3::rejectPayReceived,
             this, &GraftWalletHandlerV3::receiveRejectPay);
@@ -138,11 +138,11 @@ void GraftWalletHandlerV3::transfer(const QString &address, const QString &amoun
     }
 }
 
-void GraftWalletHandlerV3::saleDetails(const QString &pid, int blockNumber)
+void GraftWalletHandlerV3::saleDetails(const QString &pid, int blockNumber, const QString &blockHash)
 {
     if (mApi)
     {
-        mApi->getPOSData(pid, blockNumber);
+        mApi->getPaymentData(pid, blockHash, (quint64) blockNumber);
     }
 }
 

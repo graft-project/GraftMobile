@@ -29,7 +29,6 @@ namespace {
         return QString(hash.result().toHex());
     }
     
-    static constexpr int ERROR_INVALID_PAYMENT_ID = -32051;
     
 }
 
@@ -139,9 +138,11 @@ void GraftPOSAPIv3::sale()
 
     // encrypt purchase details only with wallet key    
     QJsonObject paymentInfo;
-    paymentInfo.insert("Amount", QJsonValue(m_amount));
+    paymentInfo.insert("Amount", QJsonValue::fromVariant((quint64)toAtomic(m_amount)));
     std::string encryptedPurchaseDetails;
+    
     graft::crypto_tools::encryptMessage(m_saleDetails.toStdString(), wallet_pub_key_vector, encryptedPurchaseDetails);
+    paymentInfo.insert("Details",  QString::fromStdString(epee::string_tools::buff_to_hex_nodelimer(encryptedPurchaseDetails)));
     
     // encrypt whole container with auth_sample keys + wallet key;
     // TODO: by the specs it should be only encrypted with auth sample keys, auth sample should return

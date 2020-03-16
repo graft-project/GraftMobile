@@ -28,9 +28,11 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/graftgenericapiv3.cpp \
+    $$PWD/privatepaymentdetails.cpp
 
 HEADERS += \
-    $$PWD/graftgenericapiv3.h 
+    $$PWD/graftgenericapiv3.h  \
+    $$PWD/privatepaymentdetails.h
 
 
 

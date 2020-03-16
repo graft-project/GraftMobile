@@ -18,6 +18,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+
+
+
 static const QString scProductModelDataFile("productList.dat");
 
 GraftPOSClient::GraftPOSClient(QObject *parent)
@@ -84,13 +87,19 @@ void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNumber
     mPID = pid;
     mBlockNumber = blockNumber;
         
-    GraftPOSHandlerV3::PaymentRequest paymentRequest = mClientHandler->paymentRequest();
-    paymentRequest.posWallet = mAccountManager->address();
+    PrivatePaymentDetails paymentRequest = mClientHandler->paymentRequest();
+    paymentRequest.posAddress.WalletAddress = mAccountManager->address();
     
 //    QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
 //            .arg(mProductModel->totalCost()).arg(blockNumber);
     
     QString qrText = QJsonDocument(paymentRequest.toJson()).toJson();
+    
+#if 1     // debug
+    QFile f("/tmp/rta-qr-code.json");
+    f.open(QIODevice::WriteOnly);
+    f.write(qrText.toLocal8Bit());
+#endif            
         
     setQRCodeImage(QRCodeGenerator::encode(qrText));
     emit saleReceived(isStatusOk);

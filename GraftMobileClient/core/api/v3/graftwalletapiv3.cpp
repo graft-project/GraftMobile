@@ -4,28 +4,37 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDebug>
+#include <QTimer>
+
+namespace  {
+    static constexpr size_t PAYMENT_DATA_EXPIRE_TIME_MS = 5 * 1000;
+}
 
 GraftWalletAPIv3::GraftWalletAPIv3(const QStringList &addresses, const QString &dapiVersion, QObject *parent)
     : GraftGenericAPIv3(addresses, dapiVersion, parent)
 {
 }
 
-void GraftWalletAPIv3::getPOSData(const QString &pid, int blockNum)
+void GraftWalletAPIv3::getPaymentData(const QString &pid, const QString &blockHash, quint64 blockHeight)
 {
+    
     mRetries = 0;
-    QJsonObject params;
-    params.insert(QStringLiteral("PaymentID"), pid);
-    params.insert(QStringLiteral("BlockNum"), blockNum);
-    QJsonObject data = buildMessage(QStringLiteral("WalletGetPosData"), params);
-    QByteArray array = QJsonDocument(data).toJson();
+    
+    mRequest.setUrl(nextAddress(QStringLiteral("get_payment_data")));
     mTimer.start();
-    mLastRequest = array;
-    QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPIv3::receiveGetPOSDataResponse);
+    
+    mLastPID = pid;
+    mLastBlockHeight = blockHeight;
+    mLastBlockHash  = blockHash;
+    
+    getPaymentData();
 }
+
+
 
 void GraftWalletAPIv3::rejectPay(const QString &pid, int blockNum)
 {
+#if 0
     mRetries = 0;
     QJsonObject params;
     params.insert(QStringLiteral("PaymentID"), pid);
@@ -36,6 +45,7 @@ void GraftWalletAPIv3::rejectPay(const QString &pid, int blockNum)
     mLastRequest = array;
     QNetworkReply *reply = mManager->post(mRequest, array);
     connect(reply, &QNetworkReply::finished, this, &GraftWalletAPIv3::receiveRejectPayResponse);
+#endif    
 }
 
 void GraftWalletAPIv3::pay(const QString &pid, const QString &address, double amount, int blockNum)
@@ -69,26 +79,67 @@ void GraftWalletAPIv3::getPayStatus(const QString &pid)
     connect(reply, &QNetworkReply::finished, this, &GraftWalletAPIv3::receivePayStatusResponse);
 }
 
-void GraftWalletAPIv3::receiveGetPOSDataResponse()
+void GraftWalletAPIv3::getPaymentData()
+{
+    QJsonObject params;
+    params.insert(QStringLiteral("PaymentID"), mLastPID);
+    params.insert(QStringLiteral("BlockHeight"), QJsonValue((int)mLastBlockHeight));
+    params.insert(QStringLiteral("BlockHash"), mLastBlockHash);
+    
+    QByteArray array = QJsonDocument(params).toJson();
+    
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftWalletAPIv3::receivePaymentDataResponse);
+}
+
+void GraftWalletAPIv3::receivePaymentDataResponse()
 {
     mLastError.clear();
-    qDebug() << "GetPOSData Response Received:\nTime: " << mTimer.elapsed();
+    qDebug() << "/get_payment_data Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
-    QJsonObject object = processReply(reply);
-    if (!object.isEmpty())
-    {
-        emit getPOSDataReceived(object.value(QLatin1String("Result")).toInt(),
-                                object.value(QLatin1String("POSSaleDetails")).toString());
-    }
-    else
-    {
-        QNetworkReply *reply = retry();
-        if (reply)
-        {
-            connect(reply, &QNetworkReply::finished, this,
-                    &GraftWalletAPIv3::receiveGetPOSDataResponse);
-        }
-    }
+    
+    QJsonObject object;
+    
+    // specific case: in case wallet is not called /pay yet - supernode will respond with "Payment ID is invalid" error
+    int httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    
+    do {
+        /// in case httpStatusCode == 202 - means we don't have a payment data yet;
+        qDebug() << "http status: " << httpStatusCode;
+        if (httpStatusCode == 202) {
+            // TODO: try again until sale timeout
+            qDebug() << "Try again here. or returns status to try again?";
+            if (mTimer.hasExpired(PAYMENT_DATA_EXPIRE_TIME_MS)) {
+                qDebug() << "get_payment_data expired; TODO: inform GUI";
+                emit paymentDataReceived(1, PaymentData(), NodeAddress());
+            } else {
+                QTimer::singleShot(500, this, [this]() {
+                   getPaymentData(); 
+                });
+            }
+
+        } else if (reply->error() == QNetworkReply::NoError && httpStatusCode == 200) {
+            QByteArray rawData = reply->readAll();
+            if (!rawData.isEmpty()) {
+                object = QJsonDocument::fromJson(rawData).object();
+            }
+            QJsonObject paymentDataJson = object.value("paymentData").toObject();
+            PaymentData paymentData = PaymentData::fromJson(paymentDataJson);
+            QJsonObject walletProxyJson  = object.value("WalletProxy").toObject();
+            NodeAddress walletProxy = NodeAddress::fromJson(walletProxyJson);
+            emit paymentDataReceived(0, paymentData, walletProxy);
+        } else {
+            mLastError = QString("Failed to call '%1' - '%2'")
+                    .arg(mRequest.url().toString())
+                    .arg(reply->errorString());
+            emit error(mLastError);
+        }    
+    } while (false);
+    
+    
+    reply->deleteLater();
+    reply = nullptr;
 }
 
 void GraftWalletAPIv3::receiveRejectPayResponse()
@@ -143,3 +194,4 @@ void GraftWalletAPIv3::receivePayStatusResponse()
                                   object.value(QLatin1String("Status")).toInt());
     }
 }
+

@@ -4,6 +4,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QTimer>
 #include "../../config.h"
 
 GraftGenericAPIv3::GraftGenericAPIv3(const QStringList &addresses, const QString &dapiVersion,
@@ -242,7 +243,7 @@ QJsonObject GraftGenericAPIv3::processReply(QNetworkReply *reply)
     if (reply->error() == QNetworkReply::NoError)
     {
         QByteArray rawData = reply->readAll();
-        // qDebug() << rawData;
+        qDebug() << rawData;
         if (!rawData.isEmpty())
         {
             QJsonObject response = QJsonDocument::fromJson(rawData).object();
@@ -414,7 +415,10 @@ void GraftGenericAPIv3::receiveGetBalanceResponse()
     else
     {
         mRequest.setUrl(nextAddress());
-        getBalance();
+        QTimer::singleShot(500, this, [this]() {
+            getBalance();
+        });
+        
     }
 }
 

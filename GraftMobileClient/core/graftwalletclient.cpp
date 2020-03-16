@@ -1,9 +1,11 @@
 #include "productmodelserializator.h"
 #include "api/v3/graftwalletapiv3.h"
 #include "api/v3/graftwallethandlerv3.h"
+#include "api/v3/privatepaymentdetails.h"
 #if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
 #include "api/v2/graftwallethandlerv2.h"
 #endif
+
 #include "graftwalletclient.h"
 #include "graftclienttools.h"
 #include "accountmanager.h"
@@ -14,8 +16,73 @@
 #include "core/txhistory/TransactionInfo.h"
 #include "core/txhistory/TransactionHistory.h"
 
+#include "epee/string_tools.h"
+#include "utils/cryptmsg.h"
+#include "epee/misc_log_ex.h"
+
 #include <QRegularExpressionMatch>
 #include <QRegularExpression>
+#include <QJsonDocument>
+#include <iostream>
+
+namespace  {
+
+bool decryptPaymentData(const QString &encryptedPaymentHex, const QString &walletPrivateKey, quint64 &amount, QByteArray &paymentDetails)
+{
+    
+    crypto::secret_key wallet_key;
+    if (!epee::string_tools::hex_to_pod(walletPrivateKey.toStdString(), wallet_key)) {
+        qCritical() << "Failed to parse private key from: " << walletPrivateKey;
+    } 
+    
+    std::string encryptedPaymentInfoBlob;
+    if (!epee::string_tools::parse_hexstr_to_binbuff(encryptedPaymentHex.toStdString(), encryptedPaymentInfoBlob)) {
+        qCritical() << "Failed to deserialize EncryptedPayment from: " << encryptedPaymentHex;
+        return false;
+    }
+    qDebug() << "encrypted paymment binarized";
+    
+    std::string paymentInfoStr;
+    qDebug() << "decrypting: " << QByteArray::fromStdString(encryptedPaymentInfoBlob).toHex().length() << " bytes, " << QByteArray::fromStdString(encryptedPaymentInfoBlob).toHex();
+    qDebug() << "with key: " << walletPrivateKey;
+    if (!graft::crypto_tools::decryptMessage(encryptedPaymentInfoBlob, wallet_key, paymentInfoStr)) {
+        qCritical() << "Failed to decrypt EncryptedPaymentInfo with key";
+        return false; 
+
+    }
+    qDebug() << "encrypted payment decrypted " << paymentInfoStr.c_str();
+    
+    QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(paymentInfoStr));
+    if (doc.isEmpty()) {
+        qCritical() << "Failed to parse payment info from: " << QString::fromStdString(paymentInfoStr);
+        return false;
+    }
+    
+    QJsonObject paymentInfo = doc.object();
+    
+    amount = static_cast<quint64>(paymentInfo.value("Amount").toVariant().toLongLong());
+    
+    // decrypt payment details
+    if (!epee::string_tools::parse_hexstr_to_binbuff(paymentInfo.value("Details").toString().toStdString(), encryptedPaymentInfoBlob)) {
+        qCritical() << "Failed to deserialize PaymentInfo from: " << paymentInfo.value("Details").toString();
+        return false;
+    }
+    
+    std::string _paymentDetails;
+    
+    if (!graft::crypto_tools::decryptMessage(encryptedPaymentInfoBlob, wallet_key, _paymentDetails)) {
+        qCritical() << "Failed to decrypt payment info from " << paymentInfo.value("Details").toString();
+        return false;
+    }
+    
+    paymentDetails = QByteArray::fromStdString(_paymentDetails);
+    
+    return  true;
+}
+
+
+
+}
 
 GraftWalletClient::GraftWalletClient(QObject *parent)
     : GraftBaseClient(parent)
@@ -58,25 +125,39 @@ bool GraftWalletClient::isCorrectAddress(const QString &data) const
 
 bool GraftWalletClient::isSaleQrCodeValid(const QString &data) const
 {
-    if (!data.isEmpty())
-    {
-        QStringList dataList = data.split(';');
-        return dataList.count() == 4;
-    }
-    return false;
+    QJsonObject object = QJsonDocument::fromJson(data.toLatin1()).object();
+    PrivatePaymentDetails ppd = PrivatePaymentDetails::fromJson(object);
+    return ppd.isValid();
 }
 
 void GraftWalletClient::saleDetails(const QString &data)
 {
-    if (isSaleQrCodeValid(data))
+    QString _data = data;
+    
+    if (data == "debug") {
+        QFile f("/tmp/rta-qr-code.json");
+        f.open(QIODevice::ReadOnly);
+        _data = f.readAll();
+    }
+    
+    
+    
+    if (isSaleQrCodeValid(_data))
     {
-        QStringList dataList = data.split(';');
-        mPID = dataList.value(0);
-        mPrivateKey = dataList.value(1);
-        mTotalCost = dataList.value(2).toDouble();
-        mBlockNumber = dataList.value(3).toInt();
-        updateQuickExchange(mTotalCost);
-        mClientHandler->saleDetails(mPID, mBlockNumber);
+        QJsonObject object = QJsonDocument::fromJson(_data.toLatin1()).object();
+        PrivatePaymentDetails ppd = PrivatePaymentDetails::fromJson(object);
+
+        mPID = ppd.paymentId;
+        mMerchantAddress = ppd.posAddress.WalletAddress;
+        mPrivateKey = ppd.key;
+        
+        // mTotalCost = dataList.value(2).toDouble(); // XXX this will received from dapi
+       
+        mBlockNumber = ppd.blockHeight;
+        mBlockHash   = ppd.blockHash;
+                
+        // updateQuickExchange(mTotalCost); // XXX: this needs to be called after payment data received from dapi
+        mClientHandler->saleDetails(mPID, mBlockNumber, mBlockHash);
     }
     else
     {
@@ -108,13 +189,23 @@ void GraftWalletClient::payStatus()
     }
 }
 
-void GraftWalletClient::receiveSaleDetails(int result, const QString &payDetails)
+void GraftWalletClient::receiveSaleDetails(int result, const GraftGenericAPIv3::PaymentData &pd, const GraftGenericAPIv3::NodeAddress &addr)
 {
     const bool isStatusOk = (result == 0);
     mPaymentProductModel->clear();
-    QByteArray data = QByteArray::fromHex(payDetails.toLatin1());
-    ProductModelSerializator::deserialize(data, mPaymentProductModel);
-    emit saleDetailsReceived(isStatusOk);
+    
+    qDebug() << "Payment Data received: " << pd.toJson();
+    quint64 amount = 0;
+    QByteArray data;
+    // decrypt payment data
+    if (!decryptPaymentData(pd.EncryptedPayment, mPrivateKey, amount, data)) {
+        emit saleDetailsReceived(false);
+    } else {
+        ProductModelSerializator::deserialize(data, mPaymentProductModel);
+        mTotalCost = GraftWalletAPIv3::toCoins(amount);
+        updateQuickExchange(mTotalCost);
+        emit saleDetailsReceived(isStatusOk);
+    }
 }
 
 void GraftWalletClient::receivePay(int result)
@@ -146,7 +237,7 @@ void GraftWalletClient::changeGraftHandler()
 //                                                  networkType() != GraftClientTools::Mainnet, this);
 //#else
 //        mClientHandler = new GraftWalletHandlerV1(dapiVersion(), getServiceAddresses(), this);
-//#endif
+//#endifEncryptedPayment
         break;
     }
     mClientHandler->setNetworkManager(mNetworkManager);

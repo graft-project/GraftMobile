@@ -73,17 +73,16 @@ void GraftPOSHandlerV3::resetData()
     
 }
 
-GraftPOSHandlerV3::PaymentRequest GraftPOSHandlerV3::paymentRequest() const
+PrivatePaymentDetails GraftPOSHandlerV3::paymentRequest() const
 {
-    PaymentRequest result;
+    PrivatePaymentDetails result;
     result.blockHash    = mApi->blockHash();
     result.blockHeight  = mApi->blockHeight();
     result.paymentId    = mApi->paymentId();
-    result.posPubKey    = mApi->posPubkey();
-    result.walletEncryptionKey = mApi->walletEncryptionKey();
-    return result;
+    result.posAddress.Id   = mApi->posPubkey();
+    result.key = mApi->walletEncryptionKey();
+    return result;   
 }
-
 
 void GraftPOSHandlerV3::createAccount(const QString &password)
 {
@@ -221,14 +220,3 @@ void GraftPOSHandlerV3::receiveTransfer(int result)
     emit transferReceived(result == 0);
 }
 
-QJsonObject GraftPOSHandlerV3::PaymentRequest::toJson() const
-{
-    QJsonObject result;
-    result.insert("posWallet", QJsonValue(posWallet));
-    result.insert("posPubkey", QJsonValue(posPubKey));
-    result.insert("walletEncryptionKey", QJsonValue(walletEncryptionKey));
-    result.insert("blockHash", QJsonValue(blockHash));
-    result.insert("blockHeight", QJsonValue(blockHeight));
-    result.insert("paymentId", QJsonValue(paymentId));
-    return result;
-}

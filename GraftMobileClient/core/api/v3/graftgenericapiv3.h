@@ -28,6 +28,8 @@ public:
         
     };
     
+    static constexpr int ERROR_INVALID_PAYMENT_ID = -32051;
+    
     // TODO: reuse structures/serialization from graft-ng?
     struct NodeAddress 
     {
