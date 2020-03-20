@@ -87,6 +87,7 @@ bool GraftWallet::restoreWallet(const QByteArray &data, const QString &password)
 {
     if (!mWallet)
     {
+        qDebug() << "restoring wallet from: " << data << ", password: " << password << ", testnet: " << mTestnet;
         mWallet = mManager->createWalletFromData(data.toStdString(), password.toStdString(),
                                                  mTestnet, cacheFilePath().toStdString());
         if (mWallet)
