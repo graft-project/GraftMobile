@@ -6,7 +6,7 @@
     url = https://github.com/EDDragonWolf/QR-Code-generator.git
 [submodule "GraftMobileClient/libwallet"]
 	path = GraftMobileClient/libwallet
-	url = https://gitlab.com/EDDragonWolf/explibwallet.git
+	url = https://github.com/graft-project/explibwallet.git 
 [submodule "GraftMobileClient/3rdparty/sparkle"]
 	path = GraftMobileClient/3rdparty/sparkle
 	url = https://github.com/EDDragonWolf/SparkleUpdater.git
