@@ -78,6 +78,9 @@ public:
                      const QString &paymentID = QString());
     void transfer(const QString &address, const QString &amount,
                   const QString &paymentID = QString());
+    // used in both wallet/pos
+    void saleStatus(const QString &pid, int blockNumber);
+    
 
     static double toCoins(double atomic);
     static double toAtomic(double coins);
@@ -97,6 +100,7 @@ signals:
     void transferReceived(int result);
     void transactionHistoryReceived(const QJsonArray &txOut, const QJsonArray &txIn, const QJsonArray &txPending,
                                     const QJsonArray &txFailed, const QJsonArray &txPool);
+    void saleStatusResponseReceived(int status);
 
 protected:
     QString accountPlaceholder() const;
@@ -115,6 +119,7 @@ private slots:
     void receiveTransferFeeResponse();
     void receiveTransferResponse();
     void receiveGetTransactionsResponse();
+    void receiveSaleStatusResponse();
 
 protected:
     QNetworkAccessManager *mManager;

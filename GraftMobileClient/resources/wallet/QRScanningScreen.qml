@@ -32,7 +32,7 @@ BaseScreen {
         }
     }
 
-    /*
+    
     Button {
         width: parent.width
         height: 50
@@ -40,9 +40,10 @@ BaseScreen {
         onClicked: {
             console.log("Clicked")
             GraftClient.saleDetails("debug")
+            pushScreen.openPaymentConfirmationScreen()
         }
     }
-    */
+    
     
 
     function pop() {

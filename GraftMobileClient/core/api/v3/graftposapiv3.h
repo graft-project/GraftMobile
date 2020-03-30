@@ -15,7 +15,6 @@ public:
 
     void sale(const QString &address, double amount, const QString &saleDetails = QString());
     void rejectSale(const QString &pid);
-    void saleStatus(const QString &pid, int blockNumber);
     QString paymentId() const;
     QString walletEncryptionKey() const;
     QString posPubkey() const;
@@ -46,7 +45,7 @@ private slots:
     void receivePresaleResponse();
     void receiveSaleResponse();
     void receiveRejectSaleResponse();
-    void receiveSaleStatusResponse();
+    
     
 private:
     crypto::public_key m_public_key;

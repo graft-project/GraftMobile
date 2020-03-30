@@ -32,10 +32,12 @@ GraftWalletHandlerV3::GraftWalletHandlerV3(const QString &dapiVersion, const QSt
     connect(mApi, &GraftWalletAPIv3::rejectPayReceived,
             this, &GraftWalletHandlerV3::receiveRejectPay);
     connect(mApi, &GraftWalletAPIv3::payReceived, this, &GraftWalletHandlerV3::payReceived);
-    connect(mApi, &GraftWalletAPIv3::getPayStatusReceived,
+    connect(mApi, &GraftWalletAPIv3::saleStatusResponseReceived,
             this, &GraftWalletHandlerV3::receivePayStatus);
     connect(mApi, &GraftWalletAPIv3::error, this, &GraftWalletHandlerV3::errorReceived);
     connect(mApi, &GraftWalletAPIv3::transactionHistoryReceived, this, &GraftWalletHandlerV3::receiveTransactionHistory);
+    connect(mApi, &GraftWalletAPIv3::supernodeInfoReceived, this, &GraftWalletHandlerV3::receiveSupernodeInfo);
+    connect(mApi, &GraftWalletAPIv3::buildRtaTransactionReceived, this, &GraftWalletHandlerV3::receiveBuildRtaTransaction);
 }
 
 void GraftWalletHandlerV3::changeAddresses(const QStringList &addresses,
@@ -167,21 +169,43 @@ void GraftWalletHandlerV3::pay(const QString &pid, const QString &address, doubl
 
 void GraftWalletHandlerV3::payStatus(const QString &pid, int blockNumber)
 {
-    Q_UNUSED(blockNumber);
     if (mApi)
     {
-        mApi->getPayStatus(pid);
+        qDebug() << "Polling payment status: " << pid;
+        mApi->saleStatus(pid, blockNumber);
     }
 }
+
+void GraftWalletHandlerV3::buildRtaTransaction(const QString &pid, const QString &dstAddress, const QStringList &keys, const QStringList &wallets,  double amount, double feeRatio, int blockNumber)
+{
+    if (mApi) {
+        mApi->buildRtaTransaction(pid, dstAddress, keys, wallets, amount, feeRatio, blockNumber);
+    }
+}
+
+void GraftWalletHandlerV3::getSupernodeInfo(const QStringList &keys)
+{
+    if (mApi) {
+        mApi->getSupernodeInfo(keys);
+    }
+}
+
+void GraftWalletHandlerV3::submitRtaTx(const QString &txHex, const QString &txKeyHex)
+{
+    if (mApi) {
+        mApi->submitRtaTx(txHex, txKeyHex);
+    }
+}
+
 
 void GraftWalletHandlerV3::receiveRejectPay(int result)
 {
     emit rejectPayReceived(result == 0);
 }
 
-void GraftWalletHandlerV3::receivePayStatus(int result, int status)
+void GraftWalletHandlerV3::receivePayStatus(int status)
 {
-    if (result == 0)
+    if ((true))
     {
         switch (status) {
         case GraftWalletAPIv3::InProgress:
@@ -277,5 +301,17 @@ void GraftWalletHandlerV3::receiveTransactionHistory(const QJsonArray &transfers
 
     qDebug() << "received tx count: " << tx_history.size();
     emit transactionHistoryReceived(tx_history);
+}
+
+void GraftWalletHandlerV3::receiveBuildRtaTransaction(int result, const QString &errorMessage, const QStringList &ptxVector, double recipientAmount, double feePerDestination)
+{
+    emit buildRtaTransactionReceived(result, errorMessage, ptxVector, recipientAmount, feePerDestination);
+}
+
+void GraftWalletHandlerV3::receiveSupernodeInfo(const QStringList &wallets)
+{
+    // TODO: check if wallets match to keys
+    emit getSupernodeInfoReceived(wallets);
+
 }
 

@@ -53,22 +53,7 @@ void GraftPOSAPIv3::rejectSale(const QString &pid)
     
 }
 
-void GraftPOSAPIv3::saleStatus(const QString &pid, int blockNumber)
-{
-    
-    Q_UNUSED(blockNumber)
-    
-    mRetries = 0;
-    mRequest.setUrl(nextAddress(QStringLiteral("get_payment_status")));
-    
-    QJsonObject params;
-    params.insert(QStringLiteral("PaymentID"), pid);
-    QByteArray array = QJsonDocument(params).toJson();
-    mTimer.start();
-    mLastRequest = array;
-    QNetworkReply *reply = mManager->post(mRequest, array);
-    connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveSaleStatusResponse);
-}
+
 
 QString GraftPOSAPIv3::paymentId() const
 {
@@ -201,41 +186,6 @@ void GraftPOSAPIv3::receiveSaleResponse()
     }
 }
 
-void GraftPOSAPIv3::receiveRejectSaleResponse()
-{
-  
-}
-
-void GraftPOSAPIv3::receiveSaleStatusResponse()
-{
-    mLastError.clear();
-    qDebug() << "/get_payment_status Response Received:\nTime: " << mTimer.elapsed();
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
-    
-    QJsonObject object;
-    
-    // specific case: in case wallet is not called /pay yet - supernode will respond with "Payment ID is invalid" error
-    int httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    QByteArray rawData = reply->readAll();
-    if (!rawData.isEmpty()) {
-        object = QJsonDocument::fromJson(rawData).object();
-    }
-    
-    if (reply->error() == QNetworkReply::NoError) {
-        emit saleStatusResponseReceived(object.value("Status").toInt());
-    } else if (httpStatusCode == 500 && object.value("code").toInt() == ERROR_INVALID_PAYMENT_ID) { // try again
-        // just pass GUI "inProgress" status
-        // TODO: make sense to introduce some 'intermediate' status e.g. SalePosted ?
-        emit saleStatusResponseReceived(static_cast<int>(OperationStatus::InProgress));
-    } else {
-        mLastError = QString("Failed to call '%1' - '%2'")
-                .arg(mRequest.url().toString())
-                .arg(reply->errorString());
-        emit error(mLastError);
-    }
-    reply->deleteLater();
-    reply = nullptr;
-}
 
 GraftPOSAPIv3::PresaleResponse GraftPOSAPIv3::PresaleResponse::fromJson(const QJsonObject &arg)
 {

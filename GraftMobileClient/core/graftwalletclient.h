@@ -31,10 +31,15 @@ public slots:
     void rejectPay();
     void pay();
     void payStatus();
+    void buildRtaTransaction();
 
 private slots:
     void receiveSaleDetails(int result, const GraftGenericAPIv3::PaymentData &pd, const GraftGenericAPIv3::NodeAddress &addr);
     void receivePay(int result);
+    void receiveBuildRtaTransaction(int result, const QString &errorMessage, const QStringList &ptxVector, double recepientAmount, 
+                                    double feePerDestination);
+    
+    
     
 
 private:
@@ -43,12 +48,17 @@ private:
 
     GraftWalletHandler *mClientHandler;
     QString mMerchantAddress;
+    QString mMerchantKey;
+    QStringList mKeys;    //  pos + pos proxy + wallet proxy + auth sample keys
+    QStringList mWallets; //  pos proxy + wallet proxy + auth sample wallets
     QString mPID;
     QString mPrivateKey;
     int mBlockNumber;
     QString mBlockHash;
     double mTotalCost;
     ProductModel *mPaymentProductModel;
+    QStringList mPtxList;
+    
 };
 
 #endif // GRAFTWALLETCLIENT_H

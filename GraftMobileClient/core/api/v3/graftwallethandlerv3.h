@@ -41,15 +41,22 @@ public slots:
     void rejectPay(const QString &pid, int blockNumber) override;
     void pay(const QString &pid, const QString &address, double amount, int blockNumber) override;
     void payStatus(const QString &pid, int blockNumber) override;
+    void buildRtaTransaction(const QString &pid, const QString &dstAddress, const QStringList &keys, const QStringList &wallets,
+                             double amount, double feeRatio, int blockNumber) override;
+    void getSupernodeInfo(const QStringList &keys) override;
+    void submitRtaTx(const QString &txHex, const QString &txKeyHex) override;
 
 private slots:
     void receiveRejectPay(int result);
-    void receivePayStatus(int result, int status);
+    void receivePayStatus(int status);
     void receiveBalance(double balance, double unlockedBalance);
     void receiveTransferFee(int result, double fee);
     void receiveTransfer(int result);
     void receiveTransactionHistory(const QJsonArray &transfersOut, const QJsonArray &transfersIn, const QJsonArray &transfersPending,
                                     const QJsonArray &transfersFailed, const QJsonArray &transfersPool);
+    void receiveBuildRtaTransaction(int result, const QString &errorMessage, const QStringList &ptxVector, double recepientAmount, 
+                                    double feePerDestination);
+    void receiveSupernodeInfo(const QStringList &wallets);
 
 private:
     GraftWalletAPIv3 *mApi;

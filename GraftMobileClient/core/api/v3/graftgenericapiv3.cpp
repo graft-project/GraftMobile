@@ -7,6 +7,10 @@
 #include <QTimer>
 #include "../../config.h"
 
+namespace  {
+    static constexpr size_t BALANCE_UPDATE_INTERVAL_MS = 1000;
+}
+
 GraftGenericAPIv3::GraftGenericAPIv3(const QStringList &addresses, const QString &dapiVersion,
                                      QObject *parent)
     : QObject(parent)
@@ -193,6 +197,24 @@ void GraftGenericAPIv3::transfer(const QString &address, const QString &amount,
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv3::receiveTransferResponse);
 }
 
+void GraftGenericAPIv3::saleStatus(const QString &pid, int blockNumber)
+{
+    
+    Q_UNUSED(blockNumber)
+    
+    mRetries = 0;
+    mRequest.setUrl(nextAddress(QStringLiteral("get_payment_status")));
+    
+    QJsonObject params;
+    params.insert(QStringLiteral("PaymentID"), pid);
+    QByteArray array = QJsonDocument(params).toJson();
+    mTimer.start();
+    mLastRequest = array;
+    QNetworkReply *reply = mManager->post(mRequest, array);
+    connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv3::receiveSaleStatusResponse);
+}
+
+
 double GraftGenericAPIv3::toCoins(double atomic)
 {
     return (1.0 * atomic) / 10000000000.0;
@@ -240,10 +262,11 @@ QJsonObject GraftGenericAPIv3::buildMessage(const QString &key, const QJsonObjec
 QJsonObject GraftGenericAPIv3::processReply(QNetworkReply *reply)
 {
     QJsonObject object;
+    QByteArray rawData = reply->readAll();
+    qDebug() << __FUNCTION__ << " reply from: " << reply->request().url() << ", data: " << rawData << ", httpStatus: " 
+             << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if (reply->error() == QNetworkReply::NoError)
     {
-        QByteArray rawData = reply->readAll();
-        qDebug() << rawData;
         if (!rawData.isEmpty())
         {
             QJsonObject response = QJsonDocument::fromJson(rawData).object();
@@ -415,7 +438,7 @@ void GraftGenericAPIv3::receiveGetBalanceResponse()
     else
     {
         mRequest.setUrl(nextAddress());
-        QTimer::singleShot(500, this, [this]() {
+        QTimer::singleShot(BALANCE_UPDATE_INTERVAL_MS, this, [this]() {
             getBalance();
         });
         
@@ -575,6 +598,37 @@ void GraftGenericAPIv3::receiveGetTransactionsResponse()
         mRequest.setUrl(nextAddress());
         // getTransactionHistory(); // TODO: do we need this?
     }
+}
+
+void GraftGenericAPIv3::receiveSaleStatusResponse()
+{
+    mLastError.clear();
+    qDebug() << "/get_payment_status Response Received:\nTime: " << mTimer.elapsed();
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+    
+    QJsonObject object;
+    
+    // specific case: in case wallet is not called /pay yet - supernode will respond with "Payment ID is invalid" error
+    int httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    QByteArray rawData = reply->readAll();
+    if (!rawData.isEmpty()) {
+        object = QJsonDocument::fromJson(rawData).object();
+    }
+    
+    if (reply->error() == QNetworkReply::NoError) {
+        emit saleStatusResponseReceived(object.value("Status").toInt());
+    } else if (httpStatusCode == 500 && object.value("code").toInt() == ERROR_INVALID_PAYMENT_ID) { // try again
+        // just pass GUI "inProgress" status
+        // TODO: make sense to introduce some 'intermediate' status e.g. SalePosted ?
+        emit saleStatusResponseReceived(static_cast<int>(OperationStatus::InProgress));
+    } else {
+        mLastError = QString("Failed to call '%1' - '%2'")
+                .arg(mRequest.url().toString())
+                .arg(reply->errorString());
+        emit error(mLastError);
+    }
+    reply->deleteLater();
+    reply = nullptr;
 }
 
 GraftGenericAPIv3::NodeAddress GraftGenericAPIv3::NodeAddress::fromJson(const QJsonObject &arg)
