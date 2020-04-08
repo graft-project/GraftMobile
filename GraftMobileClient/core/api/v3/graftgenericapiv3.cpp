@@ -7,8 +7,13 @@
 #include <QTimer>
 #include "../../config.h"
 
+#include <crypto/crypto.h>
+#include <epee/string_tools.h>
+#include <utils/cryptmsg.h>
+
 namespace  {
     static constexpr size_t BALANCE_UPDATE_INTERVAL_MS = 1000;
+    
 }
 
 GraftGenericAPIv3::GraftGenericAPIv3(const QStringList &addresses, const QString &dapiVersion,
@@ -223,6 +228,27 @@ double GraftGenericAPIv3::toCoins(double atomic)
 double GraftGenericAPIv3::toAtomic(double coins)
 {
     return coins * 10000000000;
+}
+
+void GraftGenericAPIv3::encryptOneToMany(const std::string &input, const QStringList &keys_serialized, std::string &encryptedHex)
+{
+    std::vector<crypto::public_key> keys;
+    
+    deserializeKeys(keys_serialized, keys);
+    
+    std::string buf;
+    graft::crypto_tools::encryptMessage(input, keys, buf);
+    encryptedHex = epee::string_tools::buff_to_hex_nodelimer(buf);
+}
+
+void GraftGenericAPIv3::deserializeKeys(const QStringList &serialized_keys, std::vector<crypto::public_key> &keys)
+{
+    keys.clear();
+    for (const auto & ks : serialized_keys) {
+        crypto::public_key key;
+        epee::string_tools::hex_to_pod(ks.toStdString(), key);
+        keys.push_back(key);
+    }
 }
 
 void GraftGenericAPIv3::setNetworkManager(QNetworkAccessManager *networkManager)
@@ -615,13 +641,15 @@ void GraftGenericAPIv3::receiveSaleStatusResponse()
         object = QJsonDocument::fromJson(rawData).object();
     }
     
-    if (reply->error() == QNetworkReply::NoError) {
-        emit saleStatusResponseReceived(object.value("Status").toInt());
-    } else if (httpStatusCode == 500 && object.value("code").toInt() == ERROR_INVALID_PAYMENT_ID) { // try again
+    if (httpStatusCode == 500 && object.value("code").toInt() == ERROR_INVALID_PAYMENT_ID) { // try again
         // just pass GUI "inProgress" status
         // TODO: make sense to introduce some 'intermediate' status e.g. SalePosted ?
-        emit saleStatusResponseReceived(static_cast<int>(OperationStatus::InProgress));
+        qDebug() << "payment " << m_paymentId << " insn't known yet";
+        emit saleStatusResponseReceived(static_cast<int>(OperationStatus::None));
+    } else if (httpStatusCode == 200 && object.contains("Status")) {
+        emit saleStatusResponseReceived(object.value("Status").toInt());
     } else {
+        qCritical() << __FUNCTION__ << "Unhandled error: rawData: " << rawData << ", http_status: " << httpStatusCode;
         mLastError = QString("Failed to call '%1' - '%2'")
                 .arg(mRequest.url().toString())
                 .arg(reply->errorString());
@@ -687,4 +715,80 @@ QJsonObject GraftGenericAPIv3::PaymentData::toJson() const
     result["EncryptedPayment"] = QJsonValue(EncryptedPayment);
     
     return result;
+}
+
+GraftGenericAPIv3::PaymentStatus GraftGenericAPIv3::PaymentStatus::fromJson(const QJsonObject &arg)
+{
+    PaymentStatus result;
+    result.Status = arg.value("Status").toInt();
+    result.PaymentID = arg.value("PaymentID").toString();
+    result.Signature = arg.value("Signature").toString();
+    return result;
+}
+
+QJsonObject GraftGenericAPIv3::PaymentStatus::toJson() const
+{
+    QJsonObject result;
+    result["Status"] = Status;
+    result["PaymentID"]  = PaymentID;
+    result["Signature"] = Signature;
+    return result;
+}
+
+void GraftGenericAPIv3::PaymentStatus::sign(const crypto::public_key &pubkey, const crypto::secret_key &seckey)
+{
+    
+    std::string msg = PaymentID.toStdString() + std::to_string(Status) + std::to_string(PaymentBlock);
+    crypto::hash hash;
+    crypto::cn_fast_hash(msg.data(), msg.size(), hash);
+    
+    crypto::signature sig;
+    crypto::generate_signature(hash, pubkey,  seckey, sig);
+    Signature = QString::fromStdString(epee::string_tools::pod_to_hex(sig));
+}
+
+GraftGenericAPIv3::EncryptedPaymentStatus GraftGenericAPIv3::EncryptedPaymentStatus::fromJson(const QJsonObject &arg)
+{
+    EncryptedPaymentStatus result;
+    result.PaymentID = arg.value("PaymentID").toString();
+    result.PaymentStatusBlob = arg.value("PaymentStatusBlob").toString();
+    return result;
+}
+
+QJsonObject GraftGenericAPIv3::EncryptedPaymentStatus::toJson() const
+{
+    QJsonObject result;
+    result["PaymentID"]  = PaymentID;
+    result["PaymentStatusBlob"] = PaymentStatusBlob;
+    return result;
+}
+
+
+bool GraftGenericAPIv3::EncryptedPaymentStatus::encrypt(const GraftGenericAPIv3::PaymentStatus &ps, const std::vector<crypto::public_key> &keys)
+{
+    QString ps_str = QJsonDocument(ps.toJson()).toJson();
+    std::string encryptedBlob;
+    graft::crypto_tools::encryptMessage(ps_str.toStdString(), keys, encryptedBlob);
+    PaymentStatusBlob = QString::fromStdString(epee::string_tools::buff_to_hex_nodelimer(encryptedBlob));
+    return true;
+}
+
+bool GraftGenericAPIv3::EncryptedPaymentStatus::decrypt(const crypto::secret_key &key, GraftGenericAPIv3::PaymentStatus &status)
+{
+    std::string paymentStatusJson;
+    std::string encryptedBlob;
+    epee::string_tools::parse_hexstr_to_binbuff(PaymentStatusBlob.toStdString(), encryptedBlob);
+    
+    if (!graft::crypto_tools::decryptMessage(encryptedBlob, key, paymentStatusJson)) {
+        return false;
+    }
+    
+    QJsonObject json = QJsonDocument::fromJson(QByteArray::fromStdString(paymentStatusJson)).object();
+    if (json.isEmpty()) {
+        qCritical() << "Failed to deserialize payment status from: " << QString::fromStdString(paymentStatusJson);
+        return false;
+    }
+    
+    status = PaymentStatus::fromJson(json);
+    return true;
 }

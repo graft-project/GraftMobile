@@ -81,19 +81,6 @@ bool decryptPaymentData(const QString &encryptedPaymentHex, const QString &walle
     return  true;
 }
 
-static void encryptOneToMany(const std::string &input, const QStringList &keys_serialized, std::string &encryptedHex)
-{
-    std::vector<crypto::public_key> keys;
-    for (const auto & ks : keys_serialized) {
-        crypto::public_key key;
-        epee::string_tools::hex_to_pod(ks.toStdString(), key);
-        keys.push_back(key);
-    }
-    
-    std::string buf;
-    graft::crypto_tools::encryptMessage(input, keys, buf);
-    encryptedHex = epee::string_tools::buff_to_hex_nodelimer(buf);
-}
 
 
 
@@ -264,16 +251,14 @@ void GraftWalletClient::receiveBuildRtaTransaction(int result, const QString &er
     } else {
         // submit transaction
         qDebug() << "Submitting transaction, amount: " << recepientAmount << ", fee per each destination: " << feePerDestination;
-        // TODO:
-        // 1. de-serialize ptxVector using `PendingTransaction` interface
         for (const auto &ptx_hex : ptxVector) {
             Monero::PtxProxy * ptxProxy = Monero::PtxProxy::deserialize(ptx_hex.toStdString());
             // 2. get serialized 'cryptonote::transaction' from `PendingTransaction` object
             // 3. get transaction key (to be added to `PendingTransaction` interface)
             // 4. encrypt both tx and key and call `/dapi/v2.0/pay`
             std::string tx_hex, tx_key_hex;
-            encryptOneToMany(ptxProxy->txBlob(), mKeys, tx_hex);
-            encryptOneToMany(ptxProxy->txKeyBlob(), mKeys, tx_key_hex);
+            GraftGenericAPIv3::encryptOneToMany(ptxProxy->txBlob(), mKeys, tx_hex);
+            GraftGenericAPIv3::encryptOneToMany(ptxProxy->txKeyBlob(), mKeys, tx_key_hex);
             mClientHandler->submitRtaTx(QString::fromStdString(tx_hex), QString::fromStdString(tx_key_hex));
             qDebug() << "submitting tx: " << ptxProxy->txHash().c_str();
             delete ptxProxy;

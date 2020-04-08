@@ -12,7 +12,7 @@ class GraftPOSHandlerV3 : public GraftPOSHandler
     Q_OBJECT
 public:
     
-    explicit GraftPOSHandlerV3(const QString &dapiVersion, const QStringList addresses,
+    explicit GraftPOSHandlerV3(const QString &dapiVersion, GraftGenericAPIv3::NetType nettype, const QStringList addresses,
                                QObject *parent = nullptr);
 
     void changeAddresses(const QStringList &addresses,
@@ -49,10 +49,13 @@ private slots:
     void receiveBalance(double balance, double unlockedBalance);
     void receiveTransferFee(int result, double fee);
     void receiveTransfer(int result);
+    void receiveRtaTxValidated(bool result);
+    void receiveSaleApproveProcessed(bool result);
 
 private:
     GraftPOSAPIv3 *mApi;
     QString mLastPID;
+    bool m_rtaTxProcessed = false;
 };
 
 #endif // GRAFTPOSHANDLERV3_H

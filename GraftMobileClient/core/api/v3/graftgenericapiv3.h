@@ -6,6 +6,9 @@
 #include <QJsonObject>
 #include <QObject>
 
+
+#include <crypto/crypto.h>
+
 class QNetworkAccessManager;
 class QNetworkReply;
 class QJsonArray;
@@ -57,6 +60,35 @@ public:
         QJsonObject toJson() const;
     };
     
+    struct PaymentStatus
+    {
+        QString PaymentID;
+        uint64_t PaymentBlock = 0;
+        int Status = 0;
+        QString Signature;
+        static PaymentStatus fromJson(const QJsonObject &arg);
+        QJsonObject toJson() const;
+        void sign(const crypto::public_key &pubkey, const crypto::secret_key &secket);
+    };
+    
+    
+    
+    struct EncryptedPaymentStatus
+    {
+        QString PaymentID;
+        QString PaymentStatusBlob;
+        static EncryptedPaymentStatus fromJson(const QJsonObject &arg);
+        QJsonObject toJson() const;
+        bool encrypt(const PaymentStatus &ps, const std::vector<crypto::public_key> &keys);
+        bool decrypt(const crypto::secret_key &key, PaymentStatus &status);
+    };
+    
+    
+    enum NetType
+    {
+        MAINNET = 0,
+        TESTNET
+    };
 
     explicit GraftGenericAPIv3(const QStringList &addresses, const QString &dapiVersion,
                                QObject *parent = nullptr);
@@ -84,6 +116,8 @@ public:
 
     static double toCoins(double atomic);
     static double toAtomic(double coins);
+    static void encryptOneToMany(const std::string &input, const QStringList &keys_serialized, std::string &encryptedHex);
+    static void deserializeKeys(const QStringList &serialized_keys, std::vector<crypto::public_key> &keys);
 
     void setNetworkManager(QNetworkAccessManager *networkManager);
 
@@ -136,6 +170,7 @@ protected:
     QString mLastError;
     int mRetries;
     QByteArray mLastRequest;
+    QString m_paymentId;
 };
 
 #endif // GRAFTGENERICAPIV3_H

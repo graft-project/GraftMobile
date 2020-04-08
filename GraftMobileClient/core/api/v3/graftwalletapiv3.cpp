@@ -20,9 +20,6 @@ GraftWalletAPIv3::GraftWalletAPIv3(const QStringList &addresses, const QString &
 
 void GraftWalletAPIv3::getPaymentData(const QString &pid, const QString &blockHash, quint64 blockHeight)
 {
-    
-    
-    
     mLastPID = pid;
     mLastBlockHeight = blockHeight;
     mLastBlockHash  = blockHash;
@@ -52,6 +49,7 @@ void GraftWalletAPIv3::getSupernodeInfo(const QStringList &ids)
 void GraftWalletAPIv3::rejectPay(const QString &pid, int blockNum)
 {
 #if 0
+    // there's no way to reject pay from wallet side after tx submitted
     mRetries = 0;
     QJsonObject params;
     params.insert(QStringLiteral("PaymentID"), pid);

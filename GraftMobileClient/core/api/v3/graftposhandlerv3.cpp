@@ -2,12 +2,13 @@
 #include "graftposapiv3.h"
 
 #include <QTimer>
+#include <QDebug>
 
-GraftPOSHandlerV3::GraftPOSHandlerV3(const QString &dapiVersion, const QStringList addresses,
+GraftPOSHandlerV3::GraftPOSHandlerV3(const QString &dapiVersion, GraftGenericAPIv3::NetType nettype, const QStringList addresses,
                                      QObject *parent)
     : GraftPOSHandler(parent)
 {
-    mApi = new GraftPOSAPIv3(addresses, dapiVersion, this);
+    mApi = new GraftPOSAPIv3(addresses, nettype, dapiVersion, this);
     connect(mApi, &GraftPOSAPIv3::createAccountReceived,
             this, &GraftPOSHandlerV3::createAccountReceived);
     connect(mApi, &GraftPOSAPIv3::restoreAccountReceived,
@@ -18,10 +19,13 @@ GraftPOSHandlerV3::GraftPOSHandlerV3(const QString &dapiVersion, const QStringLi
     connect(mApi, &GraftPOSAPIv3::balanceReceived, this, &GraftPOSHandlerV3::receiveBalance);
 
     connect(mApi, &GraftPOSAPIv3::saleResponseReceived, this, &GraftPOSHandlerV3::saleReceived);
-//  connect(mApi, &GraftPOSAPIv3::rejectSaleResponseReceived,
-//            this, &GraftPOSHandlerV3::receiveRejectSale);
-    connect(mApi, &GraftPOSAPIv3::saleStatusResponseReceived, this, &GraftPOSHandlerV3::receiveSaleStatus);
+    connect(mApi, &GraftPOSAPIv3::rejectSaleResponseReceived,
+            this, &GraftPOSHandlerV3::receiveRejectSale);
+    connect(mApi, &GraftGenericAPIv3::saleStatusResponseReceived, this, &GraftPOSHandlerV3::receiveSaleStatus);
+    connect(mApi, &GraftPOSAPIv3::rtaTxValidated, this, &GraftPOSHandlerV3::receiveRtaTxValidated);
+    connect(mApi, &GraftPOSAPIv3::saleApproveProcessed, this, &GraftPOSHandlerV3::receiveSaleApproveProcessed);
     connect(mApi, &GraftPOSAPIv3::error, this, &GraftPOSHandlerV3::errorReceived);
+    
 }
 
 void GraftPOSHandlerV3::changeAddresses(const QStringList &addresses, const QStringList &internalAddresses)
@@ -131,6 +135,7 @@ void GraftPOSHandlerV3::sale(const QString &address,
 {
     if (mApi)
     {
+        m_rtaTxProcessed = false;
         mApi->sale(address, amount, saleDetails);
     }
 }
@@ -168,13 +173,25 @@ void GraftPOSHandlerV3::receiveRejectSale(int result)
     emit rejectSaleReceived(result == 0);
 }
 
-void GraftPOSHandlerV3::receiveSaleStatus(/*int result, */int status)
+void GraftPOSHandlerV3::receiveSaleStatus(int status)
 {
+    qDebug() << __FUNCTION__ << status;
     if (/*result == 0*/true)
     {
         switch (status) {
-        case GraftPOSAPIv3::InProgress:
-            saleStatus(mLastPID, 0);
+        case GraftPOSAPIv3::None: // no rta tx published  yet, keep polling
+            QTimer::singleShot(1000, [this]() {
+                saleStatus(mLastPID, 0);
+            });
+            break;
+        case GraftPOSAPIv3::InProgress: // rta transaction published, quorum started to validate it
+            if (!m_rtaTxProcessed) {
+                mApi->getRtaTx(mLastPID);
+            } else {
+                QTimer::singleShot(1000, [this]() {
+                    saleStatus(mLastPID, 0);
+                }); 
+            }
             break;
         case GraftPOSAPIv3::Success:
             mLastPID.clear();
@@ -218,5 +235,29 @@ void GraftPOSHandlerV3::receiveTransferFee(int result, double fee)
 void GraftPOSHandlerV3::receiveTransfer(int result)
 {
     emit transferReceived(result == 0);
+}
+
+void GraftPOSHandlerV3::receiveRtaTxValidated(bool result)
+{
+    m_rtaTxProcessed = true;
+    if (!result) {
+        emit saleStatusReceived(result);
+    } else {
+        m_rtaTxProcessed = true;
+        // call api->approveSale();
+        mApi->approveSale(mLastPID);
+    }
+}
+
+void GraftPOSHandlerV3::receiveSaleApproveProcessed(bool result)
+{
+    if (!result) {
+        emit saleStatusReceived(false);
+    } else {
+        // keep polling for sale status
+        mApi->saleStatus(mLastPID, 0);
+    }
+        
+       
 }
 

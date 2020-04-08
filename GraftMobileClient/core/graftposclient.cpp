@@ -90,8 +90,8 @@ void GraftPOSClient::receiveSale(int result, const QString &pid, int blockNumber
     PrivatePaymentDetails paymentRequest = mClientHandler->paymentRequest();
     paymentRequest.posAddress.WalletAddress = mAccountManager->address();
     
-//    QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
-//            .arg(mProductModel->totalCost()).arg(blockNumber);
+//  QString qrText = QString("%1;%2;%3;%4").arg(pid).arg(mAccountManager->address())
+//          .arg(mProductModel->totalCost()).arg(blockNumber);
     
     QString qrText = QJsonDocument(paymentRequest.toJson()).toJson();
     
@@ -123,11 +123,13 @@ void GraftPOSClient::changeGraftHandler()
     {
         mClientHandler->deleteLater();
     }
+    GraftGenericAPIv3::NetType nettype = networkType() == GraftClientTools::Mainnet ? GraftGenericAPIv3::MAINNET : GraftGenericAPIv3::TESTNET;
+    
     switch (networkType())
     {
     case GraftClientTools::Mainnet:
     case GraftClientTools::PublicTestnet:
-        mClientHandler = new GraftPOSHandlerV3(dapiVersion(), getServiceAddresses(), this);
+        mClientHandler = new GraftPOSHandlerV3(dapiVersion(), nettype, getServiceAddresses(), this);
         break;
     case GraftClientTools::PublicExperimentalTestnet:
 #if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
@@ -135,7 +137,7 @@ void GraftPOSClient::changeGraftHandler()
                                                getServiceAddresses(true),
                                                networkType() != GraftClientTools::Mainnet, this);
 #else
-        mClientHandler = new GraftPOSHandlerV3(dapiVersion(), getServiceAddresses(), this);
+        mClientHandler = new GraftPOSHandlerV3(dapiVersion(), nettype, getServiceAddresses(), this);
 #endif
         break;
     }
