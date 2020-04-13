@@ -22,10 +22,8 @@ public:
 signals:
     // void getPOSDataReceived(int result, const QString &payDetails);
     void paymentDataReceived(int status, const PaymentData &pd, const NodeAddress &walletProxy);
-    
     void rejectPayReceived(int result);
     void payReceived(int result);
-    void getPayStatusReceived(int result, int status);
     void buildRtaTransactionReceived(int result, const QString &errorMessage, const QStringList &ptxBlobs, quint64 recepientAmount, quint64 feePerDestination);
     void supernodeInfoReceived(const QStringList &wallets);
 private:

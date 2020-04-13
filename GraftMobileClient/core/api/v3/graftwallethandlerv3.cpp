@@ -32,7 +32,7 @@ GraftWalletHandlerV3::GraftWalletHandlerV3(const QString &dapiVersion, const QSt
     connect(mApi, &GraftWalletAPIv3::rejectPayReceived,
             this, &GraftWalletHandlerV3::receiveRejectPay);
     connect(mApi, &GraftWalletAPIv3::payReceived, this, &GraftWalletHandlerV3::payReceived);
-    connect(mApi, &GraftWalletAPIv3::saleStatusResponseReceived,
+    connect(mApi, &GraftGenericAPIv3::saleStatusResponseReceived,
             this, &GraftWalletHandlerV3::receivePayStatus);
     connect(mApi, &GraftWalletAPIv3::error, this, &GraftWalletHandlerV3::errorReceived);
     connect(mApi, &GraftWalletAPIv3::transactionHistoryReceived, this, &GraftWalletHandlerV3::receiveTransactionHistory);
@@ -179,6 +179,8 @@ void GraftWalletHandlerV3::payStatus(const QString &pid, int blockNumber)
 void GraftWalletHandlerV3::buildRtaTransaction(const QString &pid, const QString &dstAddress, const QStringList &keys, const QStringList &wallets,  double amount, double feeRatio, int blockNumber)
 {
     if (mApi) {
+        mLastPID = pid;
+        mBlockNumber = blockNumber;
         mApi->buildRtaTransaction(pid, dstAddress, keys, wallets, amount, feeRatio, blockNumber);
     }
 }
@@ -208,13 +210,16 @@ void GraftWalletHandlerV3::receivePayStatus(int status)
     if ((true))
     {
         switch (status) {
+        case GraftWalletAPIv3::None:
         case GraftWalletAPIv3::InProgress:
-            payStatus(mLastPID, mBlockNumber);
+            QTimer::singleShot(1000, [this]() {
+                payStatus(mLastPID, mBlockNumber);
+            });
             break;
         case GraftWalletAPIv3::Success:
             emit payStatusReceived(true);
             break;
-        case GraftWalletAPIv3::None:
+        
         case GraftWalletAPIv3::FailTxRejected:
         case GraftWalletAPIv3::FailTimedOut:
         case GraftWalletAPIv3::FailZeroFee:

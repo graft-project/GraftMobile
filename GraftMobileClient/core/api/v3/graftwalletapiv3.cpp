@@ -308,7 +308,7 @@ void GraftWalletAPIv3::receiveGetSupernodeInfo()
 
 void GraftWalletAPIv3::receiveSubmitRtaTx()
 {
-    qDebug() << "RejectPay Response Received:\nTime: " << mTimer.elapsed();
+    qDebug() << "pay Response Received:\nTime: " << mTimer.elapsed();
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     int httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if (reply->error() == QNetworkReply::NoError) {
