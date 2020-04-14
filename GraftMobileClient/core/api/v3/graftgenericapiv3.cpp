@@ -13,6 +13,8 @@
 
 namespace  {
     static constexpr size_t BALANCE_UPDATE_INTERVAL_MS = 1000;
+    static constexpr size_t PAYMENT_TIMEOUT_MS = 30 * 1000;
+    
     
 }
 
@@ -644,7 +646,6 @@ void GraftGenericAPIv3::receiveSaleStatusResponse()
     if (httpStatusCode == 500 && object.value("code").toInt() == ERROR_INVALID_PAYMENT_ID) { // try again
         // just pass GUI "inProgress" status
         // TODO: make sense to introduce some 'intermediate' status e.g. SalePosted ?
-        qDebug() << "payment " << m_paymentId << " insn't known yet";
         emit saleStatusResponseReceived(static_cast<int>(OperationStatus::None));
     } else if (httpStatusCode == 200 && object.contains("Status")) {
         emit saleStatusResponseReceived(object.value("Status").toInt());

@@ -164,6 +164,7 @@ void GraftWalletHandlerV3::pay(const QString &pid, const QString &address, doubl
         mLastPID = pid;
         mBlockNumber = blockNumber;
         mApi->pay(pid, address, amount, blockNumber);
+        
     }
 }
 
@@ -212,6 +213,12 @@ void GraftWalletHandlerV3::receivePayStatus(int status)
         switch (status) {
         case GraftWalletAPIv3::None:
         case GraftWalletAPIv3::InProgress:
+            if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
+                qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
+                emit payStatusReceived(false);
+                return;
+            }
+            
             QTimer::singleShot(1000, [this]() {
                 payStatus(mLastPID, mBlockNumber);
             });
@@ -310,6 +317,7 @@ void GraftWalletHandlerV3::receiveTransactionHistory(const QJsonArray &transfers
 
 void GraftWalletHandlerV3::receiveBuildRtaTransaction(int result, const QString &errorMessage, const QStringList &ptxVector, double recipientAmount, double feePerDestination)
 {
+    mPaymentTimer.start(); // start checking for a timeout
     emit buildRtaTransactionReceived(result, errorMessage, ptxVector, recipientAmount, feePerDestination);
 }
 

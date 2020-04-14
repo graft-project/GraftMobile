@@ -11,6 +11,7 @@
 
 namespace  {
     static constexpr size_t PAYMENT_DATA_EXPIRE_TIME_MS = 15 * 1000;
+    
 }
 
 GraftWalletAPIv3::GraftWalletAPIv3(const QStringList &addresses, const QString &dapiVersion, QObject *parent)

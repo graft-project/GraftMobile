@@ -2,6 +2,7 @@
 #define GRAFTBASEHANDLER_H
 
 #include <QObject>
+#include <QElapsedTimer>
 
 class QNetworkAccessManager;
 class TransactionInfo;
@@ -10,6 +11,8 @@ class GraftBaseHandler : public QObject
 {
     Q_OBJECT
 public:
+    static constexpr size_t PAYMENT_TIMEOUT_MS = 40 * 1000; // wait 40 seconds before giving up
+    
     explicit GraftBaseHandler(QObject *parent = nullptr)
         : QObject(parent)
         ,mManager{nullptr}
@@ -56,6 +59,7 @@ signals:
 
 protected:
     QNetworkAccessManager *mManager;
+    QElapsedTimer mPaymentTimer;
 };
 
 #endif // GRAFTBASEHANDLER_H
