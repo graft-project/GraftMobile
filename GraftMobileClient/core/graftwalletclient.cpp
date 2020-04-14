@@ -137,15 +137,14 @@ bool GraftWalletClient::isSaleQrCodeValid(const QString &data) const
 void GraftWalletClient::saleDetails(const QString &data)
 {
     QString _data = data;
-    
+
+#ifdef Q_OS_LINUX    
     if (data == "debug") {
         QFile f("/tmp/rta-qr-code.json");
         f.open(QIODevice::ReadOnly);
         _data = f.readAll();
     }
-    
-    
-    
+#endif    
     if (isSaleQrCodeValid(_data))
     {
         QJsonObject object = QJsonDocument::fromJson(_data.toLatin1()).object();
@@ -167,7 +166,8 @@ void GraftWalletClient::saleDetails(const QString &data)
     }
     else
     {
-        emit saleDetailsReceived(false);
+        qCritical() << "Failed to deserialize qr code from: " << _data;
+        emit errorReceived("Failed to deserialize QR Code");
     }
 }
 
