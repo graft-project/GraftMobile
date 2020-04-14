@@ -36,7 +36,8 @@ BaseScreen {
     Button {
         width: parent.width
         height: 50
-      
+        text: "[Read QR code]"
+        visible: Detector.isDesktop()
         onClicked: {
             console.log("Clicked")
             GraftClient.saleDetails("debug")
