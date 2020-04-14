@@ -43,7 +43,6 @@ public slots:
     void updateTransactionHistory() override;
 
 private slots:
-    void receiveSale(const QString &pid, int blockNumber);
     void receiveRejectSale(int result);
     void receiveSaleStatus(int status);
     void receiveBalance(double balance, double unlockedBalance);

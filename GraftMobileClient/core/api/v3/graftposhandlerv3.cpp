@@ -135,6 +135,7 @@ void GraftPOSHandlerV3::sale(const QString &address,
 {
     if (mApi)
     {
+        mPaymentTimer.start();
         m_rtaTxProcessed = false;
         mApi->sale(address, amount, saleDetails);
     }
@@ -163,10 +164,6 @@ void GraftPOSHandlerV3::updateTransactionHistory()
     // dummy method
 }
 
-void GraftPOSHandlerV3::receiveSale(const QString &pid, int blockNumber)
-{
-  // TODO   
-}
 
 void GraftPOSHandlerV3::receiveRejectSale(int result)
 {
@@ -178,6 +175,12 @@ void GraftPOSHandlerV3::receiveSaleStatus(int status)
     qDebug() << __FUNCTION__ << status;
     if (/*result == 0*/true)
     {
+        if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
+            qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
+            emit saleStatusReceived(false);
+            return;
+        }
+        
         switch (status) {
         case GraftPOSAPIv3::None: // no rta tx published  yet, keep polling
             QTimer::singleShot(1000, [this]() {
@@ -185,6 +188,11 @@ void GraftPOSHandlerV3::receiveSaleStatus(int status)
             });
             break;
         case GraftPOSAPIv3::InProgress: // rta transaction published, quorum started to validate it
+            if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
+                qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
+                emit saleStatusReceived(false);
+                return;
+            }
             if (!m_rtaTxProcessed) {
                 mApi->getRtaTx(mLastPID);
             } else {
@@ -195,6 +203,7 @@ void GraftPOSHandlerV3::receiveSaleStatus(int status)
             break;
         case GraftPOSAPIv3::Success:
             mLastPID.clear();
+            
             emit saleStatusReceived(true);
             break;
         // TODO: threat errors different way
