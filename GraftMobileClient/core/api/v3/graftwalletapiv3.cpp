@@ -10,7 +10,7 @@
 
 
 namespace  {
-    static constexpr size_t PAYMENT_DATA_EXPIRE_TIME_MS = 5 * 1000;
+    static constexpr size_t PAYMENT_DATA_EXPIRE_TIME_MS = 15 * 1000;
 }
 
 GraftWalletAPIv3::GraftWalletAPIv3(const QStringList &addresses, const QString &dapiVersion, QObject *parent)
@@ -172,6 +172,7 @@ void GraftWalletAPIv3::receivePaymentDataResponse()
             qDebug() << "Try again here. or returns status to try again?";
             if (mTimer.hasExpired(PAYMENT_DATA_EXPIRE_TIME_MS)) {
                 qWarning() << "get_payment_data expired";
+                
                 emit paymentDataReceived(1, PaymentData(), NodeAddress());
             } else {
                 QTimer::singleShot(500, this, [this]() {

@@ -207,12 +207,15 @@ void GraftWalletClient::receiveSaleDetails(int result, const GraftGenericAPIv3::
     const bool isStatusOk = (result == 0);
     mPaymentProductModel->clear();
     
-    qDebug() << "Payment Data received: " << pd.toJson();
+    if (!isStatusOk) {
+        emit payStatusReceived(false);
+        return;
+    }
     quint64 amount = 0;
     QByteArray data;
     // decrypt payment data
     if (!decryptPaymentData(pd.EncryptedPayment, mPrivateKey, amount, data)) {
-        emit saleDetailsReceived(false);
+        emit payStatusReceived(false);
     } else {
         mKeys.clear();
         mWallets.clear();
