@@ -212,14 +212,14 @@ void GraftWalletClient::receiveSaleDetails(int result, const GraftGenericAPIv3::
         return;
     }
     quint64 amount = 0;
-    QByteArray data;
+    QByteArray hexData;
     // decrypt payment data
-    if (!decryptPaymentData(pd.EncryptedPayment, mPrivateKey, amount, data)) {
+    if (!decryptPaymentData(pd.EncryptedPayment, mPrivateKey, amount, hexData)) {
         emit payStatusReceived(false);
     } else {
         mKeys.clear();
         mWallets.clear();
-        ProductModelSerializator::deserialize(data, mPaymentProductModel);
+        ProductModelSerializator::deserialize(QByteArray::fromHex(hexData), mPaymentProductModel);
         mTotalCost = GraftWalletAPIv3::toCoins(amount);
         mKeys.push_back(mMerchantKey);
         mKeys.push_back(pd.PosProxy.Id);
