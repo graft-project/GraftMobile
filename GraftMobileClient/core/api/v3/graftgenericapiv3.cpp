@@ -13,9 +13,6 @@
 
 namespace  {
     static constexpr size_t BALANCE_UPDATE_INTERVAL_MS = 1000;
-    static constexpr size_t PAYMENT_TIMEOUT_MS = 30 * 1000;
-    
-    
 }
 
 GraftGenericAPIv3::GraftGenericAPIv3(const QStringList &addresses, const QString &dapiVersion,

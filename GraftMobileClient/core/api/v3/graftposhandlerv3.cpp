@@ -172,56 +172,53 @@ void GraftPOSHandlerV3::receiveRejectSale(int result)
 
 void GraftPOSHandlerV3::receiveSaleStatus(int status)
 {
-    qDebug() << __FUNCTION__ << status;
-    if (/*result == 0*/true)
-    {
+    qDebug() << __FUNCTION__ << ": " << status;
+    
+    if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
+        qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
+        emit saleStatusReceived(false);
+        return;
+    }
+    
+    switch (status) {
+    case GraftPOSAPIv3::None: // no rta tx published  yet, keep polling
+        if (!mLastPID.isEmpty()) {
+            QTimer::singleShot(1000, [this]() {
+                saleStatus(mLastPID, 0);
+            });
+        }
+        break;
+    case GraftPOSAPIv3::InProgress: // rta transaction published, quorum started to validate it
         if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
             qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
             emit saleStatusReceived(false);
             return;
         }
-        
-        switch (status) {
-        case GraftPOSAPIv3::None: // no rta tx published  yet, keep polling
+        if (!m_rtaTxProcessed) {
+            mApi->getRtaTx(mLastPID);
+        } else {
             QTimer::singleShot(1000, [this]() {
                 saleStatus(mLastPID, 0);
-            });
-            break;
-        case GraftPOSAPIv3::InProgress: // rta transaction published, quorum started to validate it
-            if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
-                qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
-                emit saleStatusReceived(false);
-                return;
-            }
-            if (!m_rtaTxProcessed) {
-                mApi->getRtaTx(mLastPID);
-            } else {
-                QTimer::singleShot(1000, [this]() {
-                    saleStatus(mLastPID, 0);
-                }); 
-            }
-            break;
-        case GraftPOSAPIv3::Success:
-            mLastPID.clear();
-            
-            emit saleStatusReceived(true);
-            break;
-        // TODO: threat errors different way
-        case GraftPOSAPIv3::FailRejectedByPOS:
-        case GraftPOSAPIv3::FailZeroFee:
-        case GraftPOSAPIv3::FailDoubleSpend:
-        case GraftPOSAPIv3::FailTimedOut:
-        case GraftPOSAPIv3::FailTxRejected:
-        default:
-            mLastPID.clear();
-            emit saleStatusReceived(false);
-            break;
+            }); 
         }
-    }
-    else
-    {
+        break;
+    case GraftPOSAPIv3::Success:
+        mLastPID.clear();
+        
+        emit saleStatusReceived(true);
+        break;
+        // TODO: threat errors different way
+    case GraftPOSAPIv3::FailRejectedByPOS:
+    case GraftPOSAPIv3::FailZeroFee:
+    case GraftPOSAPIv3::FailDoubleSpend:
+    case GraftPOSAPIv3::FailTimedOut:
+    case GraftPOSAPIv3::FailTxRejected:
+    default:
+        mLastPID.clear();
         emit saleStatusReceived(false);
+        break;
     }
+    
 }
 
 void GraftPOSHandlerV3::receiveBalance(double balance, double unlockedBalance)

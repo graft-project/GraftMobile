@@ -50,11 +50,23 @@ void GraftPOSAPIv3::sale(const QString &address, double amount,
     m_amount = amount;
     m_address = address;
     m_saleDetails = saleDetails;
+    m_txBlob.clear();
     presale();
 }
 
 void GraftPOSAPIv3::rejectSale(const QString &pid)
 {
+    if (m_txBlob.empty()) {
+        // wallet didn't sent tx yet and we don't know Wallet Proxy public key yet;
+        // options: 
+        //   1. just stop polling for get_payment_status and return to main screen
+        //   2. make "Cancel" disabled until wallet processes payment but still have a timeout?
+        //   3. anything else?
+        // TODO: cancel "get_payment_status" polling
+        emit GraftGenericAPIv3::saleStatusResponseReceived(OperationStatus::FailRejectedByPOS);
+        return;
+    }
+    
     EncryptedPaymentStatus req;
     PaymentStatus paymentStatus;
     paymentStatus.Status = static_cast<int>(FailRejectedByPOS);
