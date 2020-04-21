@@ -55,6 +55,7 @@ private:
     GraftPOSAPIv3 *mApi;
     QString mLastPID;
     bool m_rtaTxProcessed = false;
+    int m_saleStatus = -1;
 };
 
 #endif // GRAFTPOSHANDLERV3_H

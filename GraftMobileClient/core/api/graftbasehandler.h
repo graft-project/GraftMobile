@@ -11,7 +11,8 @@ class GraftBaseHandler : public QObject
 {
     Q_OBJECT
 public:
-    static constexpr size_t PAYMENT_TIMEOUT_MS = 40 * 1000; // wait 40 seconds before giving up
+    static constexpr size_t PAYMENT_STARTED_MAX_WAIT_TIME_MS = 60 * 1000 * 2; // POS waits for payment started (InProgress)
+    static constexpr size_t PAYMENT_COMPLETED_MAX_WAIT_TIME_MS = 20 * 1000;   // POS waits for payment completed
     
     explicit GraftBaseHandler(QObject *parent = nullptr)
         : QObject(parent)

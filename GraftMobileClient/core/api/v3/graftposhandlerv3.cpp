@@ -174,26 +174,30 @@ void GraftPOSHandlerV3::receiveSaleStatus(int status)
 {
     qDebug() << __FUNCTION__ << ": " << status;
     
-    if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
-        qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
-        emit saleStatusReceived(false);
-        return;
-    }
-    
     switch (status) {
     case GraftPOSAPIv3::None: // no rta tx published  yet, keep polling
-        if (!mLastPID.isEmpty()) {
-            QTimer::singleShot(1000, [this]() {
-                saleStatus(mLastPID, 0);
-            });
+        if (mPaymentTimer.hasExpired(PAYMENT_STARTED_MAX_WAIT_TIME_MS)) {
+            qCritical() << "Payment wasn't processed in " << PAYMENT_STARTED_MAX_WAIT_TIME_MS/1000.0 << " seconds";
+            emit saleStatusReceived(false);
+            
+        } else {
+            if (!mLastPID.isEmpty()) {
+                QTimer::singleShot(1000, [this]() {
+                    saleStatus(mLastPID, 0);
+                });
+            }
         }
         break;
     case GraftPOSAPIv3::InProgress: // rta transaction published, quorum started to validate it
-        if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
-            qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
+        if (m_saleStatus != GraftPOSAPIv3::InProgress)
+            mPaymentTimer.start();
+        
+        if (mPaymentTimer.hasExpired(PAYMENT_COMPLETED_MAX_WAIT_TIME_MS)) {
+            qCritical() << "Payment wasn't processed in " << PAYMENT_COMPLETED_MAX_WAIT_TIME_MS/1000.0 << " seconds";
             emit saleStatusReceived(false);
             return;
         }
+        
         if (!m_rtaTxProcessed) {
             mApi->getRtaTx(mLastPID);
         } else {
@@ -218,7 +222,8 @@ void GraftPOSHandlerV3::receiveSaleStatus(int status)
         emit saleStatusReceived(false);
         break;
     }
-    
+    if (m_saleStatus != status)
+        m_saleStatus = status;
 }
 
 void GraftPOSHandlerV3::receiveBalance(double balance, double unlockedBalance)
