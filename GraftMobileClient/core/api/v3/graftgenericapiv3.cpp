@@ -207,14 +207,15 @@ void GraftGenericAPIv3::saleStatus(const QString &pid, int blockNumber)
     Q_UNUSED(blockNumber)
     
     mRetries = 0;
-    mRequest.setUrl(nextAddress(QStringLiteral("get_payment_status")));
     
+    
+    QNetworkRequest request = prepareRequest("get_payment_status");
     QJsonObject params;
     params.insert(QStringLiteral("PaymentID"), pid);
     QByteArray array = QJsonDocument(params).toJson();
     mTimer.start();
     mLastRequest = array;
-    QNetworkReply *reply = mManager->post(mRequest, array);
+    QNetworkReply *reply = mManager->post(request, array);
     connect(reply, &QNetworkReply::finished, this, &GraftGenericAPIv3::receiveSaleStatusResponse);
 }
 
@@ -273,7 +274,9 @@ QByteArray GraftGenericAPIv3::serializeAmount(double amount) const
 QJsonObject GraftGenericAPIv3::buildMessage(const QString &key, const QJsonObject &params) const
 {
     QJsonObject data;
-    data.insert(QStringLiteral("jsonrpc"), QStringLiteral("2.0"));
+    data.insert(QStringLiteral("jsonrpc"), QStringLiteral("2.0"));   
+    
+
     data.insert(QStringLiteral("id"), QStringLiteral("0"));
     data.insert(QStringLiteral("method"), key);
     data.insert(QStringLiteral("dapi_version"), mDAPIVersion);
@@ -373,6 +376,7 @@ QNetworkReply *GraftGenericAPIv3::retry()
     {
         mRetries++;
         mRequest.setUrl(nextAddress());
+        qDebug() << "retrying api call for endpoint: " << mRequest.url().toString();
         return mManager->post(mRequest, mLastRequest);
     }
     else
@@ -382,6 +386,15 @@ QNetworkReply *GraftGenericAPIv3::retry()
     }
     return nullptr;
 }
+
+QNetworkRequest GraftGenericAPIv3::prepareRequest(const QString &endpoint)
+{
+    QNetworkRequest req;
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    req.setUrl(nextAddress(endpoint));
+    return req;
+}
+
 
 void GraftGenericAPIv3::receiveCreateAccountResponse()
 {
@@ -466,7 +479,6 @@ void GraftGenericAPIv3::receiveGetBalanceResponse()
         QTimer::singleShot(BALANCE_UPDATE_INTERVAL_MS, this, [this]() {
             getBalance();
         });
-        
     }
 }
 
@@ -649,7 +661,7 @@ void GraftGenericAPIv3::receiveSaleStatusResponse()
     } else {
         qCritical() << __FUNCTION__ << "Unhandled error: rawData: " << rawData << ", http_status: " << httpStatusCode;
         mLastError = QString("Failed to call '%1' - '%2'")
-                .arg(mRequest.url().toString())
+                .arg(reply->request().url().toString())
                 .arg(reply->errorString());
         emit error(mLastError);
     }

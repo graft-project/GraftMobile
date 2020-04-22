@@ -90,12 +90,11 @@ void GraftPOSAPIv3::rejectSale(const QString &pid)
     deserializeKeys(memberKeys, keys);
     req.encrypt(paymentStatus, keys);
     
-    mRequest.setUrl(nextAddress(QStringLiteral("pos_reject_payment")));
+    QNetworkRequest request = prepareRequest("pos_reject_payment");
     mRetries = 0;
     QByteArray data = QJsonDocument(req.toJson()).toJson();
-    mLastRequest = data;
     mTimer.start();
-    QNetworkReply * reply = mManager->post(mRequest, data);
+    QNetworkReply * reply = mManager->post(request, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveRejectSaleResponse);
 }
 
@@ -110,11 +109,12 @@ void GraftPOSAPIv3::approveSale(const QString &pid)
         emit error(mLastError);
         return;
     }
-    mRequest.setUrl(nextAddress(QStringLiteral("approve_payment")));
+    QNetworkRequest request = prepareRequest("approve_payment");
+    
     QJsonObject params;
     params.insert("TxBlob", QString::fromStdString(encrypted_tx_hex));
     QByteArray data = QJsonDocument(params).toJson();
-    mLastRequest = data;
+
     mTimer.start();
     QNetworkReply * reply = mManager->post(mRequest, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveApproveSale);
@@ -128,14 +128,13 @@ void GraftPOSAPIv3::getRtaTx(const QString &pid)
     std::string _pid = pid.toStdString();
     crypto::cn_fast_hash(_pid.data(), _pid.size(), hash);
     crypto::generate_signature(hash, m_public_key, m_secret_key, sign);
-    mRequest.setUrl(nextAddress(QStringLiteral("get_tx")));
+    QNetworkRequest request = prepareRequest("get_tx");
     QJsonObject params;
     params.insert("PaymentID", pid);
     params.insert("Signature", QString::fromStdString(epee::string_tools::pod_to_hex(sign)));
     QByteArray data = QJsonDocument(params).toJson();
-    mLastRequest = data;
     mTimer.start();
-    QNetworkReply * reply = mManager->post(mRequest, data);
+    QNetworkReply * reply = mManager->post(request, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveGetRtaTxResponse);
 }
     
@@ -170,16 +169,14 @@ int GraftPOSAPIv3::blockHeight() const
 void GraftPOSAPIv3::presale()
 {
     mRetries = 0;
-    mRequest.setUrl(nextAddress(QStringLiteral("presale")));
-    
+    QNetworkRequest req = prepareRequest("presale");
     crypto::generate_keys(m_public_key, m_secret_key);
     m_paymentId = generate_payment_id(m_public_key);
     QJsonObject params;
     params.insert("PaymentID", m_paymentId);
     QByteArray data = QJsonDocument(params).toJson();
-    mLastRequest = data;
     mTimer.start();
-    QNetworkReply * reply = mManager->post(mRequest, data);
+    QNetworkReply * reply = mManager->post(req, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receivePresaleResponse);
     
 }
@@ -187,8 +184,7 @@ void GraftPOSAPIv3::presale()
 void GraftPOSAPIv3::sale()
 {
     mRetries = 0;
-    
-    mRequest.setUrl(nextAddress(QStringLiteral("sale")));
+    QNetworkRequest req = prepareRequest("sale");
     PaymentData paymentData;
     
     std::vector<crypto::public_key> auth_sample_pubkeys;
@@ -234,8 +230,7 @@ void GraftPOSAPIv3::sale()
     // 3.4. call "/sale"
     QByteArray data = QJsonDocument(request).toJson();
     
-    mLastRequest = data;
-    QNetworkReply *reply = mManager->post(mRequest, data);
+    QNetworkReply *reply = mManager->post(req, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveSaleResponse);
 }
 

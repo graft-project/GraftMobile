@@ -144,6 +144,7 @@ protected:
     bool processReplyRest(QNetworkReply *reply, int &httpStatus, QJsonObject &response);
     QUrl nextAddress(const QString &endpoint = QString());
     QNetworkReply *retry();
+    QNetworkRequest prepareRequest(const QString &endpoint = QString());
 
 private slots:
     void receiveCreateAccountResponse();
