@@ -109,6 +109,7 @@ void GraftPOSAPIv3::approveSale(const QString &pid)
         emit error(mLastError);
         return;
     }
+    
     QNetworkRequest request = prepareRequest("approve_payment");
     
     QJsonObject params;
@@ -116,7 +117,7 @@ void GraftPOSAPIv3::approveSale(const QString &pid)
     QByteArray data = QJsonDocument(params).toJson();
 
     mTimer.start();
-    QNetworkReply * reply = mManager->post(mRequest, data);
+    QNetworkReply * reply = mManager->post(request, data);
     connect(reply, &QNetworkReply::finished, this, &GraftPOSAPIv3::receiveApproveSale);
 }
 
@@ -334,9 +335,10 @@ void GraftPOSAPIv3::receiveApproveSale()
         // TODO better to signal to the "upper level" so it handles the logic?
         emit saleApproveProcessed(true);
     } else {
-        qDebug() << "/approve_payment failed";
+        qDebug() << "/approve_payment failed, http status: " << httpStatusCode << ", response: " << reply->readAll();
         emit saleApproveProcessed(false);
     }
+    reply->deleteLater();
 }
 
 
