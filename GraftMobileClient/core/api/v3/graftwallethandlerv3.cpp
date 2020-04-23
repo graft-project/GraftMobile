@@ -213,8 +213,8 @@ void GraftWalletHandlerV3::receivePayStatus(int status)
         switch (status) {
         case GraftWalletAPIv3::None:
         case GraftWalletAPIv3::InProgress:
-            if (mPaymentTimer.hasExpired(PAYMENT_TIMEOUT_MS)) {
-                qCritical() << "Payment wasn't processed in " << PAYMENT_TIMEOUT_MS/1000.0 << " seconds";
+            if (mPaymentTimer.hasExpired(PAYMENT_COMPLETED_MAX_WAIT_TIME_MS)) {
+                qCritical() << "Payment wasn't processed in " << PAYMENT_COMPLETED_MAX_WAIT_TIME_MS/1000.0 << " seconds";
                 emit payStatusReceived(false);
                 return;
             }
