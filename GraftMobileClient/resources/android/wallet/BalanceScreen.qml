@@ -74,7 +74,7 @@ BaseBalanceScreen {
             Layout.rightMargin: 15
             Layout.bottomMargin: 15
             Layout.alignment: Qt.AlignCenter
-            text: qsTr("Pay 11")
+            text: qsTr("Pay")
             enabled: isPayEnabled()
 
             // TODO: QTBUG-74076. The application is crash or will hang when request permission, after the
