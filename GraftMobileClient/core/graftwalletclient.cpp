@@ -19,7 +19,7 @@
 #include "epee/string_tools.h"
 #include "utils/cryptmsg.h"
 #include "epee/misc_log_ex.h"
-#include "libwallet/wallet2_api.h"
+#include "wallet/wallet2_api.h"
 
 #include <QRegularExpressionMatch>
 #include <QRegularExpression>
