@@ -33,8 +33,8 @@ BaseScreen {
             }
         }
         onNetworkTypeChanged: {
-            addButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
-            quickDealButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
+            addButton.enabled = true;
+            //quickDealButton.enabled = GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
         }
     }
 
@@ -111,7 +111,7 @@ BaseScreen {
                 Layout.rightMargin: 15
                 Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                 text: qsTr("Checkout")
-                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet || GraftClientTools.PublicTestnet
+                enabled: true
                 onClicked: {
                     if (ProductModel.totalCost() > 0) {
                         disableScreen()
@@ -132,7 +132,7 @@ BaseScreen {
                 Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
                 text: qsTr("QUICK DEAL")
                 Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
-                enabled: GraftClient.networkType() === GraftClientTools.PublicExperimentalTestnet
+                enabled: true
                 onClicked: {
                     disableScreen()
                     pushScreen.openQuickDealScreen()
