@@ -29,6 +29,7 @@ public slots:
     void sale();
     void rejectSale();
     void saleStatus();
+    void test();
 
 private slots:
     void receiveSale(int result, const QString &pid, int blockNumber);

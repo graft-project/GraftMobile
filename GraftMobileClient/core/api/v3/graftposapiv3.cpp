@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QCryptographicHash>
 #include <QTimer>
+#include <QFile>
 
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -284,6 +285,14 @@ void GraftPOSAPIv3::receiveRejectSaleResponse()
     }
 }
 
+void dbgSaveResponse(const QString &prefix, const QByteArray &obj)
+{
+    QString filename = prefix + "_" + QDateTime::currentDateTime().toString(Qt::ISODateWithMs) + ".json";
+    QFile f(filename);
+    f.open(QIODevice::WriteOnly);
+    f.write(obj);
+}
+
 void GraftPOSAPIv3::receiveGetRtaTxResponse()
 {
     mLastError.clear();
@@ -296,6 +305,15 @@ void GraftPOSAPIv3::receiveGetRtaTxResponse()
     if (processReplyRest(reply, httpStatusCode, object)) {
         // 1. decrypt tx, tx_key and tx amount;
         uint64_t amount = 0;
+        
+        // dbgSaveResponse("get_tx", QJsonDocument(object).toJson());
+        
+        qDebug() << "TxBlob: " << object.value("TxBlob");
+        qDebug() << "TxKeyBlob: " << object.value("TxKeyBlob");
+        qDebug() << "address: " << m_address;
+        qDebug() << "m_secret_key: " << QString::fromStdString(epee::string_tools::pod_to_hex(m_secret_key));
+        
+        
         if (!graft::rta_helpers::gui::decrypt_tx_and_amount(m_address.toStdString(), static_cast<int>(m_nettype), 
                                                               m_secret_key,
                                                               object.value("TxKeyBlob").toString().toStdString(),

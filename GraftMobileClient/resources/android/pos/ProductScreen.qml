@@ -138,6 +138,22 @@ BaseScreen {
                     pushScreen.openQuickDealScreen()
                 }
             }
+            
+            WideActionButton {
+                id: debugButton
+                Layout.fillWidth: true
+                Layout.leftMargin: 15
+                Layout.rightMargin: 15
+                Layout.bottomMargin: 15
+                Layout.alignment: Qt.AlignBottom | Qt.AlignCenter
+                text: qsTr("Debug")
+                Material.accent: ColorFactory.color(DesignFactory.CircleBackground)
+                enabled: true
+                
+                onClicked: {
+                    GraftClient.test();
+                }
+            }
         }
     }
 }
