@@ -43,7 +43,8 @@ include(core/api/v2/graftapiv2.pri)
 
 contains(DEFINES, POS_BUILD) {
 ios|android {
-include(imagepicker/ImagePickerLibrary.pri)
+# disable imagepicker - no sources to build android armv8a-64 yet
+# include(imagepicker/ImagePickerLibrary.pri)
 }
 
 SOURCES += \

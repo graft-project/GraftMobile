@@ -49,7 +49,7 @@ static_assert(false, "You didn't add additional argument POS_BUILD or WALLET_BUI
 
 #ifdef POS_BUILD
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
-#include "imagepicker.h"
+// #include "imagepicker.h"
 #endif
 #endif
 
@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
     }
 
 #if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
-    ImagePicker picker(imageDataLocation);
-    engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
+//    ImagePicker picker(imageDataLocation);
+//    engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 #endif
 
     engine.rootContext()->setContextProperty(QStringLiteral("SelectedProductModel"),
