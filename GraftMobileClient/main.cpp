@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         QDir().mkpath(imageDataLocation);
     }
 
-#if defined(Q_OS_ANDROID) || defined (Q_OS_IOS)
+#if /*defined(Q_OS_ANDROID) ||*/ defined (Q_OS_IOS)
     ImagePicker picker(imageDataLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("ImagePicker"), &picker);
 #endif
