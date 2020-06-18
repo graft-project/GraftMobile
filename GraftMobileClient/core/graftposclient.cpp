@@ -123,6 +123,7 @@ void GraftPOSClient::saleStatus()
     mClientHandler->saleStatus(mPID, mBlockNumber);
 }
 
+// XXX: this code crashing on android armv7
 void GraftPOSClient::test()
 {
     
@@ -135,15 +136,16 @@ void GraftPOSClient::test()
         return;
     }
     uint64_t amount = 0;
-    std::string tx_blob_result;    
+    std::string tx_blob_result, error;
     if (!graft::rta_helpers::gui::decrypt_tx_and_amount(address, 
                                                         static_cast<int>(1), 
-                                                          key,
-                                                          tx_key_blob,
-                                                          tx_blob,
-                                                          amount, 
-                                                          tx_blob_result)) {
-        QString err = QString("failed to decrypt amount from tx for payment");
+                                                        key,
+                                                        tx_key_blob,
+                                                        tx_blob,
+                                                        amount, 
+                                                        tx_blob_result, 
+                                                        error)) {
+        QString err = QString("failed to decrypt amount from tx for payment %1").arg(QString::fromStdString(error));
         emit errorReceived(err);
         
     } else {
