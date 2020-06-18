@@ -312,15 +312,16 @@ void GraftPOSAPIv3::receiveGetRtaTxResponse()
         qDebug() << "TxKeyBlob: " << object.value("TxKeyBlob");
         qDebug() << "address: " << m_address;
         qDebug() << "m_secret_key: " << QString::fromStdString(epee::string_tools::pod_to_hex(m_secret_key));
-        
+        std::string err;
         
         if (!graft::rta_helpers::gui::decrypt_tx_and_amount(m_address.toStdString(), static_cast<int>(m_nettype), 
                                                               m_secret_key,
                                                               object.value("TxKeyBlob").toString().toStdString(),
                                                               object.value("TxBlob").toString().toStdString(),
                                                               amount, 
-                                                              m_txBlob)) {
-            mLastError = QString("failed to decrypt amount from tx for payment %1").arg(m_paymentId);
+                                                              m_txBlob,
+                                                              err)) {
+            mLastError = QString("failed to decrypt amount from tx for payment %1: %2").arg(m_paymentId).arg(QString::fromStdString(err));
             qCritical() << mLastError;
             emit error(mLastError);
             return;
